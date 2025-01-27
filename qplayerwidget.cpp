@@ -262,7 +262,7 @@ void QPlaylistEdit::on_addButton_clicked() {
     foreach (QString filePath, files){
         QList<QStandardItem *> items;
 
-        QString localDirPath = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/playlists/" + QString::number(m_player->getId()) + "_playlist";
+        QString localDirPath = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "dm_assis_files/playlists/" + QString::number(m_player->getId()) + "_playlist";
 
         QStringList fileDirs = filePath.split("/");
         QString fileName = fileDirs.at(fileDirs.size()-1);
