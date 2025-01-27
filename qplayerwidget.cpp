@@ -8,6 +8,7 @@
 
 #include <QApplication>
 #include <QDir>
+#include <QStandardPaths>
 #include <QFileDialog>
 #include <QFileInfo>
 #include "QMessageBox"
@@ -261,7 +262,7 @@ void QPlaylistEdit::on_addButton_clicked() {
     foreach (QString filePath, files){
         QList<QStandardItem *> items;
 
-        QString localDirPath = QCoreApplication::applicationDirPath() + "/playlists/" + QString::number(m_player->getId()) + "_playlist";
+        QString localDirPath = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/playlists/" + QString::number(m_player->getId()) + "_playlist";
 
         QStringList fileDirs = filePath.split("/");
         QString fileName = fileDirs.at(fileDirs.size()-1);
@@ -272,8 +273,8 @@ void QPlaylistEdit::on_addButton_clicked() {
         }
 
         //qDebug() << copiedFilePath;
-
-        QFile::copy(filePath, copiedFilePath);
+        if(!QDir(copiedFilePath).exists())
+            QFile::copy(filePath, copiedFilePath);
 
         items.append((new QStandardItem(QDir(copiedFilePath).dirName())));
         items.append(new QStandardItem(copiedFilePath));
