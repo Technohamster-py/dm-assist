@@ -61,18 +61,29 @@ void MainWindow::loadConfigFile() {
         }
         QDomDocument configDocument;
         configDocument.setContent(&configFile);
-        QFileInfo fileInfo(configFile.fileName());
 
         QDomElement mainNode = configDocument.documentElement();
         QDomNodeList players = mainNode.childNodes();
 
         for (int i=0; i<players.count(); i++){
             QDomElement playerNode = players.at(i).toElement();
-            QString absolutePath = fileInfo.dir().canonicalPath() + "/" + playerNode.firstChild().toText().data();
-            int playerId = playerNode.attribute("id").toInt();
-            QFile playerFile(absolutePath);
-            playerList[i]->loadFromXml(&playerFile);
+            QString absolutePath = playerNode.firstChild().toText().data();     ///< Получаем абсолютный путь к папке с плейлистом
+
+            int playerId = playerNode.attribute("id").toInt();                  ///< Получаем Id плейлиста
+
+            /// Получаем имя папки плейлиста (имя самого плейлиста)
+            QFileInfo dirInfo(absolutePath);
+            if (dirInfo.isDir()){
+                playerList[playerId]->setPlaylistName(dirInfo.fileName());
+            }
+
+            QDir playerDir(absolutePath);
+            if (!playerDir.exists())
+                playerList[playerId]->addMedia(QStringList());
+            else
+                playerList[playerId]->addMedia(playerDir.entryList(QDir::Files));
         }
+        configFile.close();
     }
 }
 
@@ -101,13 +112,12 @@ void MainWindow::saveConfigFile() {
         QString baseDir = fileInfo.dir().canonicalPath() + "/";
 
         for (int i = 0; i < 9; ++i) {
-            QString playerFileName = QString("playlist%1.xml").arg(QString::number(i));
-            playerList[i]->saveToXml(baseDir + playerFileName);
             QDomElement playlist_node = configDocument.createElement("playlist");
             playlist_node.setAttribute("id", i);
-            playlist_node.setNodeValue(playerFileName);
+            playlist_node.setNodeValue(playerList[i]->getLocalDirPath());
             root.appendChild(playlist_node);
         }
         xmlContent << configDocument.toString();
+        configFile.close();
     }
 }
