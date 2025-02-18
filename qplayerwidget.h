@@ -12,6 +12,7 @@
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 #include <QStandardItem>
+#include <QStandardPaths>
 #include <QShortcut>
 #include <QWidget>
 
@@ -39,10 +40,14 @@ public:
     void loadFromXml(QFile *xmlFile);
     void setPlayShortcut(QString key);
 
+    QString getLocalDirPath() const {return localDir;};
+    void setLocalDirPath(QString localDirPath);
+
     QMediaPlaylist *playlist; ///< Плейлист проигрывателя
 
 signals:
     void playlistNameChanged();
+    void localDirPathChanged();
     void playerStarted();
     void playerStopped();
 
@@ -53,6 +58,7 @@ public slots:
 
 protected:
     QString playlistName = "playlist";
+    QString localDir = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "dm_assis_files/playlists/";
     int id;
     bool isActive;
 
@@ -77,6 +83,8 @@ Q_OBJECT
 
 public:
     explicit QPlaylistEdit(QWidget *parent = nullptr, QPlayer *player = nullptr);
+
+    void addMediaFiles(QStringList fileNames);
 
     ~QPlaylistEdit() override;
 

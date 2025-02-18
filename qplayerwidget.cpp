@@ -8,7 +8,6 @@
 
 #include <QApplication>
 #include <QDir>
-#include <QStandardPaths>
 #include <QFileDialog>
 #include <QFileInfo>
 #include "QMessageBox"
@@ -20,6 +19,7 @@ QPlayer::QPlayer(QWidget *parent, QString title, int numId) :
 
     id = numId;
     playlistName = title;
+    localDir = localDir + playlistName;
 
     ui->titleLabel->setText(playlistName);
     ui->numberLabel->setText(QString::number(id));
@@ -60,6 +60,8 @@ QPlayer::QPlayer(QWidget *parent, QFile *xmlFile) :
 
     loadFromXml(xmlFile);
 
+    localDir = localDir + playlistName;
+
     ui->titleLabel->setText(playlistName);
     ui->numberLabel->setText(QString::number(id));
 }
@@ -71,6 +73,8 @@ QPlayer::QPlayer(QWidget *parent, int numId) : QWidget(parent), ui(new Ui::QPlay
     ui->numberLabel->setText(QString::number(id));
 
     QString xmlConfigPath = QCoreApplication::applicationDirPath() + "/configs/" + id + "_playlist.xml";
+
+    localDir = localDir + playlistName + "_" + QString::number(id);
 
     m_player = new QMediaPlayer(this);
     playlist = new QMediaPlaylist(this);
@@ -222,6 +226,11 @@ void QPlayer::edit() {
     on_editButton_clicked();
 }
 
+void QPlayer::setLocalDirPath(QString localDirPath) {
+    localDir = localDirPath;
+    emit localDirPathChanged();
+}
+
 
 
 ////////////////////////////////////////////////////
@@ -258,34 +267,11 @@ void QPlaylistEdit::on_addButton_clicked() {
                                                       tr("Add tracks"),
                                                       QString(),
                                                       tr("Audio files (*.mp3)"));
-
-    foreach (QString filePath, files){
-        QList<QStandardItem *> items;
-
-        QString localDirPath = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "dm_assis_files/playlists/" + QString::number(m_player->getId()) + "_playlist";
-
-        QStringList fileDirs = filePath.split("/");
-        QString fileName = fileDirs.at(fileDirs.size()-1);
-        QString copiedFilePath = localDirPath + "/" + fileName;
-
-        if(!QDir(localDirPath).exists()){
-            QDir().mkpath(localDirPath);
-        }
-
-        //qDebug() << copiedFilePath;
-        if(!QDir(copiedFilePath).exists())
-            QFile::copy(filePath, copiedFilePath);
-
-        items.append((new QStandardItem(QDir(copiedFilePath).dirName())));
-        items.append(new QStandardItem(copiedFilePath));
-        m_playlistModel->appendRow(items);
-        m_player->playlist->addMedia(QUrl(copiedFilePath));
-    }
+    addMediaFiles(files);
 }
 
 void QPlaylistEdit::on_removeButton_clicked() {
     int index = ui->playlistView->selectionModel()->selection().indexes()[0].row();
-    qDebug() << "Index " << index;
     m_playlistModel->removeRow(index);
     m_player->playlist->removeMedia(index);
 }
@@ -321,5 +307,30 @@ void QPlaylistEdit::on_uploadButton_clicked() {
     if (!configFileName.isEmpty())
     {
         m_player->loadFromXml(new QFile(configFileName));
+    }
+}
+
+void QPlaylistEdit::addMediaFiles(QStringList fileNames) {
+    foreach (QString filePath, fileNames){
+        QList<QStandardItem *> items;
+
+        QString localDirPath = m_player->getLocalDirPath();
+
+        QStringList fileDirs = filePath.split("/");
+        QString fileName = fileDirs.at(fileDirs.size()-1);
+        QString copiedFilePath = localDirPath + "/" + fileName;
+
+        if(!QDir(localDirPath).exists()){
+            QDir().mkpath(localDirPath);
+        }
+
+        //qDebug() << copiedFilePath;
+        if(!QDir(copiedFilePath).exists())
+            QFile::copy(filePath, copiedFilePath);
+
+        items.append((new QStandardItem(QDir(copiedFilePath).dirName())));
+        items.append(new QStandardItem(copiedFilePath));
+        m_playlistModel->appendRow(items);
+        m_player->playlist->addMedia(QUrl(copiedFilePath));
     }
 }
