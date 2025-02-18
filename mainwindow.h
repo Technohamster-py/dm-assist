@@ -30,8 +30,6 @@ protected:
     QList<QPushButton*> playButtonsList;
     QList<QPushButton*> editButtonList;
 
-    //TODO переделать на цикле
-
 private:
     Ui::MainWindow *ui;
 
