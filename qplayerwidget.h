@@ -43,6 +43,8 @@ public:
     QString getLocalDirPath() const {return localDir;};
     void setLocalDirPath(QString localDirPath);
 
+    void addMedia(QStringList trackList);
+
     QMediaPlaylist *playlist; ///< Плейлист проигрывателя
 
 signals:

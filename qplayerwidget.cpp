@@ -231,6 +231,17 @@ void QPlayer::setLocalDirPath(QString localDirPath) {
     emit localDirPathChanged();
 }
 
+void QPlayer::addMedia(QStringList trackList) {
+    foreach (QString filePath, trackList){
+            QString copiedFilePath = localDir + "/" + filePath;
+            if (!QDir(localDir).exists())
+                QDir().mkpath(localDir);
+            if(!QDir(copiedFilePath).exists())
+                QFile::copy(filePath, copiedFilePath);
+            playlist->addMedia(QUrl(copiedFilePath));
+        }
+}
+
 
 
 ////////////////////////////////////////////////////
@@ -324,7 +335,6 @@ void QPlaylistEdit::addMediaFiles(QStringList fileNames) {
             QDir().mkpath(localDirPath);
         }
 
-        //qDebug() << copiedFilePath;
         if(!QDir(copiedFilePath).exists())
             QFile::copy(filePath, copiedFilePath);
 
