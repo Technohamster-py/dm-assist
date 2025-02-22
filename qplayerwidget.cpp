@@ -114,11 +114,11 @@ void QPlayer::on_editButton_clicked() {
 void QPlayer::setPlaylistName(QString name) {
     if(name != playlistName){
         playlistName = name;
-        QFileInfo fileInfo(localDir);
-        QString parentPath = fileInfo.dir().absolutePath();
-        QString newPath = QDir(parentPath).filePath(playlistName);
-        QFile::rename(localDir, newPath);
-        localDir = newPath;
+//        QFileInfo fileInfo(localDir);
+//        QString parentPath = fileInfo.dir().absolutePath();
+//        QString newPath = QDir(parentPath).filePath(playlistName);
+//        QFile::rename(localDir, newPath);
+//        localDir = newPath;
         emit playlistNameChanged();
     }
 }
