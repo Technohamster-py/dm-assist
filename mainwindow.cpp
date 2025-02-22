@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     playerWidgetsList = {ui->player1, ui->player2, ui->player3, ui->player4, ui->player5, ui->player6, ui->player7, ui->player8, ui->player9};
     playButtonsList = {ui->play1, ui->play2, ui->play3, ui->play4, ui->play5, ui->play6, ui->play7, ui->play8, ui->play9};
     editButtonList = {ui->edit1, ui->edit2, ui->edit3, ui->edit4, ui->edit5, ui->edit6, ui->edit7, ui->edit8, ui->edit9};
+    stopShortcut = new QShortcut(this);
     configurePlayers();
 }
 
@@ -36,6 +37,8 @@ void MainWindow::configurePlayers() {
         connect(playButtonsList[i], SIGNAL(clicked(bool)), playerList[i], SLOT(play()));
         connect(editButtonList[i], SIGNAL(clicked(bool)), playerList[i], SLOT(edit()));
     }
+    stopShortcut->setKey(QString("Ctrl+0"));
+    connect(stopShortcut, SIGNAL(activated()), this, SLOT(stopAll()));
 }
 
 void MainWindow::stopAll() {

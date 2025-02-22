@@ -30,6 +30,8 @@ protected:
     QList<QPushButton*> playButtonsList;
     QList<QPushButton*> editButtonList;
 
+    QShortcut *stopShortcut;
+
 private:
     Ui::MainWindow *ui;
 
