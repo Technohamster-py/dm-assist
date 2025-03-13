@@ -10,6 +10,9 @@
 #include "QDomDocument"
 
 
+static void copyAllFiles(const QString& sourcePath, const QString& destPath);
+
+
 MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
@@ -21,6 +24,17 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 MainWindow::~MainWindow() {
+    QMessageBox::StandardButton reply = QMessageBox::question(this,
+                                                              "Сохранение конфигурации",
+                                                              "Сохранить конфиг?",
+                                                              QMessageBox::Yes | QMessageBox::No);
+
+    if(reply == QMessageBox::Yes)
+        saveConfigFile();
+
+    foreach(QPlayer* player, playerList){
+        delete player;
+    }
     delete ui;
 }
 
@@ -103,6 +117,7 @@ void MainWindow::saveConfigFile() {
             QMessageBox::critical(this, tr("Open file error"), configFile.errorString());
             return;
         }
+
         QFileInfo fileInfo(configFile.fileName());
 
         QTextStream xmlContent(&configFile);
@@ -121,5 +136,27 @@ void MainWindow::saveConfigFile() {
         }
         xmlContent << configDocument.toString();
         configFile.close();
+    }
+}
+
+static void copyAllFiles(const QString& sourcePath, const QString& destPath){
+    QDir sourceDir(sourcePath);
+    if (!sourceDir.exists())
+        return;
+
+    QDir destDir(destPath);
+    if (!destDir.exists())
+        destDir.mkpath(".");
+
+    QStringList files = sourceDir.entryList(QDir::Files);
+    foreach(const QString& file, files){
+        QString srcFilePath = sourceDir.filePath(file);
+        QString destFilePath = destDir.filePath(file);
+
+        if (QFile::exists(destFilePath))
+            QFile::remove(destFilePath);
+
+        if (!QFile::copy(srcFilePath, destFilePath))
+            return;
     }
 }
