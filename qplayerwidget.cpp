@@ -209,7 +209,6 @@ void QPlayer::stop() {
 }
 
 void QPlayer::play() {
-    qDebug() << id;
     emit playerStarted();
     isActive = true;
     m_player->play();
