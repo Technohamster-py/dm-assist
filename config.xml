@@ -1,3 +1,5 @@
 <music-player>
-    <playlist id="">path/to/file.xml</playlist>
+    <playlist id="widget_id_1">playlist_name_1</playlist>
+    <playlist id="widget_id_2">playlist_name_2</playlist>
+    <playlist id="widget_id_3">playlist_name_3</playlist>
 </music-player>
