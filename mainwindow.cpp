@@ -8,6 +8,7 @@
 #include "QFile"
 #include "QFileInfo"
 #include "QDomDocument"
+#include "qsaveconfigdialog.h"
 
 
 static void copyAllFiles(const QString& sourcePath, const QString& destPath);
@@ -104,10 +105,13 @@ void MainWindow::loadConfigFile() {
 }
 
 void MainWindow::saveConfigFile() {
-    QString fileName = QFileDialog::getSaveFileName(this,
-                                                    tr("Save to"),
-                                                    QDir::homePath(),
-                                                    tr("xml file (*.xml)"));
+    SaveConfigDialog dialog(this);
+    QString fileName = "";
+
+    if (dialog.exec() == QDialog::Accepted) {
+        fileName = dialog.filename;
+    }
+
     if(fileName.isEmpty())
         return;
     else{
