@@ -108,39 +108,43 @@ void MainWindow::saveConfigFile() {
     SaveConfigDialog dialog(this);
     QString fileName = "";
 
-    if (dialog.exec() == QDialog::Accepted) {
+    if (dialog.exec() == QDialog::Accepted)
         fileName = dialog.filename;
-    }
 
     if(fileName.isEmpty())
         return;
-    else{
-        QFile configFile(fileName);
-        if (!configFile.open(QIODevice::ReadWrite))
-        {
-            QMessageBox::critical(this, tr("Open file error"), configFile.errorString());
-            return;
-        }
 
-        QFileInfo fileInfo(configFile.fileName());
-
-        QTextStream xmlContent(&configFile);
-        QDomDocument configDocument;
-
-        QDomElement root = configDocument.createElement("music-player");
-        configDocument.appendChild(root);
-
-        QString baseDir = fileInfo.dir().canonicalPath() + "/";
-
-        for (int i = 0; i < 9; ++i) {
-            QDomElement playlist_node = configDocument.createElement("playlist");
-            playlist_node.setAttribute("id", i);
-            playlist_node.setNodeValue(playerList[i]->getLocalDirPath());
-            root.appendChild(playlist_node);
-        }
-        xmlContent << configDocument.toString();
-        configFile.close();
+    QFile configFile(fileName);
+    if (!configFile.open(QIODevice::ReadWrite))
+    {
+        QMessageBox::critical(this, tr("Open file error"), configFile.errorString());
+        return;
     }
+
+    QFileInfo fileInfo(configFile.fileName());
+    QString baseDir = fileInfo.canonicalPath() + "/";
+
+    QTextStream xmlContent(&configFile);
+    QDomDocument configDocument;
+
+    QDomElement root = configDocument.createElement("music-player");
+    configDocument.appendChild(root);
+
+    for (int i = 0; i < 9; ++i) {
+        QDomElement playlist_node = configDocument.createElement("playlist");
+        playlist_node.setAttribute("id", i);
+
+        QString playlistPath = baseDir + playerList[i]->getPlaylistName();
+        copyAllFiles(playerList[i]->getLocalDirPath(), playlistPath);
+
+        QDomText textNode = configDocument.createTextNode(playlistPath);
+        playlist_node.appendChild(textNode);
+
+        root.appendChild(playlist_node);
+    }
+
+    xmlContent << configDocument.toString();
+    configFile.close();
 }
 
 static void copyAllFiles(const QString& sourcePath, const QString& destPath){
