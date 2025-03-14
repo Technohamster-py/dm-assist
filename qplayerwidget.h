@@ -60,7 +60,7 @@ public slots:
 
 protected:
     QString playlistName = "playlist";
-    QString localDir = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/dm_assis_files/playlists/tmp";
+    QString localDir = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/dm_assis_files/playlists/tmp/";
     int id;
     bool isActive;
 
