@@ -13,11 +13,13 @@ set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.12.12/5.12.12/mingw73_64/lib/cmake")
 set(HEADER_FILES
         mainwindow.h
         qplayerwidget.h
+        qsaveconfigdialog.h
 )
 
 set(SOURCE_FILES
         mainwindow.cpp
         qplayerwidget.cpp
+        qsaveconfigdialog.cpp
 )
 
 set(UI_FILES
@@ -40,7 +42,7 @@ find_package(Qt5 COMPONENTS
         Widgets
         Multimedia
         Xml
-        LinguistTools
+        #LinguistTools
         REQUIRED)
 
 qt5_add_resources(RESOURCES_ADD ${RESOURCES})
@@ -56,8 +58,8 @@ include_directories(
         static
 )
 
-qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
-add_custom_target(translations DEPENDS ${QM_FILES})
+#qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
+#add_custom_target(translations DEPENDS ${QM_FILES})
 
 add_executable(${PROJECT_NAME} main.cpp
         ${HEADER_FILES}
@@ -66,7 +68,7 @@ add_executable(${PROJECT_NAME} main.cpp
         ${RESOURCES_ADD}
 )
 
-add_dependencies(${PROJECT_NAME} translations)
+#add_dependencies(${PROJECT_NAME} translations)
 
 target_link_libraries(${PROJECT_NAME}
         Qt5::Core
