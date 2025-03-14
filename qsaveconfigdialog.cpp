@@ -59,13 +59,14 @@ void SaveConfigDialog::onBrowseClicked() {
                                                           "Выберите папку",
                                                           rootFolderEdit->text().trimmed());
     if (!directory.isEmpty()) {
+        showWarning(QString("Проект будет сохранен в папку %1/%2").arg(directory, projectNameEdit->text().trimmed()));
         rootFolderEdit->setText(directory);
     }
 }
 
 void SaveConfigDialog::onSaveClicked() {
     QString projectName = projectNameEdit->text().trimmed();
-    QString rootFolder = rootFolderEdit->text().trimmed();
+    QString rootFolder = rootFolderEdit->text().trimmed() + "/" + projectName;
 
     // Проверяем введенные данные
     if (projectName.isEmpty()) {
@@ -78,10 +79,8 @@ void SaveConfigDialog::onSaveClicked() {
     }
 
     QDir dir(rootFolder);
-    if (!dir.exists()) {
-        showWarning("Указанная папка не существует.");
-        return;
-    }
+    if (!dir.exists())
+        dir.mkpath(".");
 
     // Проверяем, пуста ли папка
     if (!dir.entryList(QDir::NoDotAndDotDot | QDir::AllEntries).isEmpty()) {
