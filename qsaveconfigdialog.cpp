@@ -55,7 +55,9 @@ SaveConfigDialog::SaveConfigDialog(QWidget *parent)  : QDialog(parent), warningL
 }
 
 void SaveConfigDialog::onBrowseClicked() {
-    QString directory = QFileDialog::getExistingDirectory(this, "Выберите папку");
+    QString directory = QFileDialog::getExistingDirectory(this,
+                                                          "Выберите папку",
+                                                          rootFolderEdit->text().trimmed());
     if (!directory.isEmpty()) {
         rootFolderEdit->setText(directory);
     }
