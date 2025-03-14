@@ -11,6 +11,7 @@
 
 
 static void copyAllFiles(const QString& sourcePath, const QString& destPath);
+static void moveAllFiles(const QString& sourcePath, const QString& destPath);
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -158,5 +159,16 @@ static void copyAllFiles(const QString& sourcePath, const QString& destPath){
 
         if (!QFile::copy(srcFilePath, destFilePath))
             return;
+    }
+}
+
+static void moveAllFiles(const QString& sourcePath, const QString& destPath){
+    copyAllFiles(sourcePath, destPath);
+
+    QDir sourceDir(sourcePath);
+    QStringList files = sourceDir.entryList(QDir::Files);
+    foreach(const QString& file, files) {
+        QString srcFilePath = sourceDir.filePath(file);
+        QFile::remove(srcFilePath);
     }
 }
