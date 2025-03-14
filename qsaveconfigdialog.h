@@ -14,18 +14,6 @@
 #include <QHBoxLayout>
 #include <QDir>
 #include <QFile>
-#include <QTextStream>
-
-#include <QFileDialog>
-#include <QDialog>
-#include <QLineEdit>
-#include <QPushButton>
-#include <QLabel>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QDir>
-#include <QFile>
-#include <QTextStream>
 
 class SaveConfigDialog : public QDialog {
 Q_OBJECT

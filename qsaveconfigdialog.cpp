@@ -1,4 +1,5 @@
 #include "qsaveconfigdialog.h"
+#include "QStandardPaths"
 
 SaveConfigDialog::SaveConfigDialog(QWidget *parent)  : QDialog(parent), warningLabel(nullptr) {
     setWindowTitle("Сохранение проекта");
@@ -49,6 +50,8 @@ SaveConfigDialog::SaveConfigDialog(QWidget *parent)  : QDialog(parent), warningL
     layout->addLayout(buttonLayout);
 
     setLayout(layout);
+
+    rootFolderEdit->setText(QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/dm_assis_files/saves");
 }
 
 void SaveConfigDialog::onBrowseClicked() {
@@ -91,8 +94,8 @@ void SaveConfigDialog::onSaveClicked() {
         showWarning("Не удалось создать файл.");
         return;
     }
-    configFile.close();
 
+    configFile.close();
     accept(); // Закрытие диалога при успешном сохранении
 }
 
