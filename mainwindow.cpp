@@ -136,7 +136,7 @@ void MainWindow::saveConfigFile() {
         playlist_node.setAttribute("id", i);
 
         QString playlistPath = baseDir + playerList[i]->getPlaylistName();
-        copyAllFiles(playerList[i]->getLocalDirPath(), playlistPath);
+        moveAllFiles(playerList[i]->getLocalDirPath(), playlistPath);
 
         QDomText textNode = configDocument.createTextNode(playlistPath);
         playlist_node.appendChild(textNode);
