@@ -114,6 +114,7 @@ void QPlayer::on_editButton_clicked() {
 void QPlayer::setPlaylistName(QString name) {
     if(name != playlistName){
         playlistName = name;
+        ui->titleLabel->setText(name);
         QFileInfo fileInfo(localDir);
         QString parentPath = fileInfo.dir().absolutePath();
         QString newPath = QDir(parentPath).filePath(playlistName);
