@@ -100,20 +100,24 @@ void MainWindow::loadConfigFile() {
 
         for (int i=0; i<players.count(); i++){
             QDomElement playerNode = players.at(i).toElement();
-            QString absolutePath = playerNode.firstChild().toText().data();     ///< Получаем абсолютный путь к папке с плейлистом
+            QString absolutePath = playerNode.firstChild().toText().data();     // Получаем абсолютный путь к папке с плейлистом
 
             int playerId = playerNode.attribute("id").toInt();                  ///< Получаем Id плейлиста
 
             /// Получаем имя папки плейлиста (имя самого плейлиста)
+            qDebug() << QString("AbsolutePath: %1").arg(absolutePath);
             QFileInfo dirInfo(absolutePath);
             if (dirInfo.isDir()){
                 playerList[playerId]->setPlaylistName(dirInfo.fileName());
+//                qDebug() << QString("playlist name [ %1 ]: %2").arg(QString::number(playerId), dirInfo.fileName());
             }
 
             QDir playerDir(absolutePath);
             if (!playerDir.exists())
                 playerList[playerId]->addMedia(QStringList());
+//                qDebug() << "PlayerDir exist";
             else
+//                qDebug() << "PlayerDir not exist";
                 playerList[playerId]->addMedia(playerDir.entryList(QDir::Files));
         }
         configFile.close();
@@ -167,6 +171,14 @@ void MainWindow::saveConfigFile() {
 
     xmlContent << configDocument.toString();
     configFile.close();
+}
+
+void MainWindow::on_actionOpen_triggered() {
+    loadConfigFile();
+}
+
+void MainWindow::on_actionSave_triggered() {
+    saveConfigFile();
 }
 
 
