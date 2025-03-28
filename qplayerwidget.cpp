@@ -205,22 +205,34 @@ void QPlayer::saveToXml(QString pathToXml) {
     xmlContent << xmlConfig.toString();
 }
 
+/**
+ * Действия по активации шортката проигрывания
+ */
 void QPlayer::playShortcutTriggered() {
     play();
 }
 
+/**
+ * Остановить проигрывание
+ */
 void QPlayer::stop() {
     emit  playerStopped();
     isActive = false;
     m_player->stop();
 }
 
+/**
+ * Запустить проигрывание
+ */
 void QPlayer::play() {
     emit playerStarted();
     isActive = true;
     m_player->play();
 }
 
+/**
+ * Действие по нажатию кнопки проигрывания
+ */
 void QPlayer::on_playButton_clicked() {
     play();
 }
@@ -237,11 +249,19 @@ void QPlayer::edit() {
     on_editButton_clicked();
 }
 
+/**
+ * Установить имя локальной папки
+ * @param localDirPath путь к локальной папке
+ */
 void QPlayer::setLocalDirPath(QString localDirPath) {
     localDir = localDirPath;
     emit localDirPathChanged();
 }
 
+/**
+ * Добавить треки
+ * @param trackList список путей к файлам музыки
+ */
 void QPlayer::addMedia(QStringList trackList) {
     foreach (QString filePath, trackList){
             QString copiedFilePath = localDir + "/" + filePath;

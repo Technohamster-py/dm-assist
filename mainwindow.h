@@ -25,12 +25,12 @@ public:
 public slots:
     void stopAll();
 protected:
-    QList<QPlayer*> playerList;
-    QList<QWidget*> playerWidgetsList;
-    QList<QPushButton*> playButtonsList;
-    QList<QPushButton*> editButtonList;
+    QList<QPlayer*> playerList;             ///< Список всех плееров
+    QList<QWidget*> playerWidgetsList;      ///< Список всех контейнеров для плееров
+    QList<QPushButton*> playButtonsList;    ///< Список всех кнопок play
+    QList<QPushButton*> editButtonList;     ///< Список всех кнопок вызова диалога изменения
 
-    QShortcut *stopShortcut;
+    QShortcut *stopShortcut;                ///< Шорткат для остановки всех плееров
 
 private:
     Ui::MainWindow *ui;

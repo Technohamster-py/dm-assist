@@ -25,10 +25,14 @@ MainWindow::MainWindow(QWidget *parent) :
     configurePlayers();
 }
 
+/**
+ * Закрытие главного окна
+ * @details При закрытии окна производится сохранение конфигурационного файла
+ */
 MainWindow::~MainWindow() {
     QMessageBox::StandardButton reply = QMessageBox::question(this,
                                                               "Сохранение конфигурации",
-                                                              "Сохранить конфиг?",
+                                                              "Сохранить проект?",
                                                               QMessageBox::Yes | QMessageBox::No);
 
     if(reply == QMessageBox::Yes)
@@ -40,6 +44,13 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
+
+/**
+ * Конфигурирование плееров
+ *
+ * @details подключение всех плееров к их виджетам.
+ * Подключение сигналов о начале проигрывания, изменения и остановке к плеерам.
+ */
 void MainWindow::configurePlayers() {
 
     for (int i = 0; i < 9; ++i) {
@@ -47,6 +58,7 @@ void MainWindow::configurePlayers() {
     }
 
     for (int i = 0; i < 9; ++i) {
+        /// При запуске одного плеера останавливаются все остальные
         connect(playerList[i], SIGNAL(playerStarted()), this, SLOT(stopAll()));
         playerList[i]->setPlayShortcut(QString("Ctrl+%1").arg(QString::number(i+1)));
         connect(playButtonsList[i], SIGNAL(clicked(bool)), playerList[i], SLOT(play()));
@@ -56,6 +68,9 @@ void MainWindow::configurePlayers() {
     connect(stopShortcut, SIGNAL(activated()), this, SLOT(stopAll()));
 }
 
+/**
+ * Остановка всех плееров
+ */
 void MainWindow::stopAll() {
     for (int i = 0; i < 9; ++i) {
         playerList[i]->stop();
@@ -105,6 +120,12 @@ void MainWindow::loadConfigFile() {
     }
 }
 
+
+/**
+ * Сохранение конфигурационного файла
+ * @details У пользователя запрашивается название проекта и корневая папка сохранения.
+ * После этого все файлы из рабочей папки копируются в папку сохранения и создается .xml конфиг
+ */
 void MainWindow::saveConfigFile() {
     SaveConfigDialog dialog(this);
     QString fileName = "";
@@ -148,6 +169,12 @@ void MainWindow::saveConfigFile() {
     configFile.close();
 }
 
+
+/**
+ * Копирование всех фалов из папки sourcePath в папку destPath
+ * @param sourcePath изначальное расположение
+ * @param destPath целевое расположение
+ */
 static void copyAllFiles(const QString& sourcePath, const QString& destPath){
     QDir sourceDir(sourcePath);
     if (!sourceDir.exists())
@@ -170,6 +197,12 @@ static void copyAllFiles(const QString& sourcePath, const QString& destPath){
     }
 }
 
+
+/**
+ * Перемещение всех файлов из папки sourcePath в папку destPath
+ * @param sourcePath начальное расположение
+ * @param destPath целевое расположение
+ */
 static void moveAllFiles(const QString& sourcePath, const QString& destPath){
     copyAllFiles(sourcePath, destPath);
 
