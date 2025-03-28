@@ -52,20 +52,6 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="uploadButton">
-        <property name="toolTip">
-         <string>Load from config file</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="static/app_resources.qrc">
-          <normaloff>:/upload.svg</normaloff>:/upload.svg</iconset>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="folderButton">
         <property name="toolTip">
          <string>Add folder</string>
