@@ -13,6 +13,7 @@
 
 static void copyAllFiles(const QString& sourcePath, const QString& destPath);
 static void moveAllFiles(const QString& sourcePath, const QString& destPath);
+static bool removeDirectoryRecursively(const QString &directoryPath, bool deleteSelf=true);
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -39,6 +40,7 @@ MainWindow::~MainWindow() {
         saveConfigFile();
 
     foreach(QPlayer* player, playerList){
+        removeDirectoryRecursively(player->getLocalDirPath());
         delete player;
     }
     delete ui;
@@ -227,4 +229,38 @@ static void moveAllFiles(const QString& sourcePath, const QString& destPath){
         QString srcFilePath = sourceDir.filePath(file);
         QFile::remove(srcFilePath);
     }
+}
+
+
+static bool removeDirectoryRecursively(const QString &directoryPath, bool deleteSelf) {
+ QDir dir(directoryPath);
+
+ // Проверяем, существует ли директория
+ if (!dir.exists()) {
+//     qDebug() << "Директория не существует:" << directoryPath;
+     return false; // Если директория не существует, возвращаем false
+ }
+
+ // Получаем список всех файлов и поддиректорий
+         foreach (QString file, dir.entryList(QDir::NoDotAndDotDot | QDir::AllEntries)) {
+         QString fullPath = dir.absoluteFilePath(file);
+         if (QFileInfo(fullPath).isDir()) {
+             // Если это поддиректория, рекурсивно вызываем функцию
+             if (!removeDirectoryRecursively(fullPath)) {
+                 return false; // Если не удалось удалить поддиректорию, возвращаем false
+             }
+         } else {
+             // Удаляем файл
+             if (!QFile::remove(fullPath)) {
+//                 qDebug() << "Не удалось удалить файл:" << fullPath;
+                 return false; // Если файл не удалось удалить, возвращаем false
+             }
+         }
+     }
+
+ // После удаления всех файлов и поддиректорий удаляем саму директорию
+ if(deleteSelf)
+    return dir.rmdir("."); // dir.rmdir(".") удаляет саму папку
+ else
+     return true;
 }
