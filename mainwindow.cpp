@@ -80,7 +80,7 @@ void MainWindow::stopAll() {
 void MainWindow::loadConfigFile() {
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open player config file"),
-                                                    QDir::homePath(),
+                                                    QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/dm_assis_files/saves",
                                                     tr("Xml file (*.xml)"));
     if(fileName.isEmpty())
         return;
@@ -105,20 +105,23 @@ void MainWindow::loadConfigFile() {
             int playerId = playerNode.attribute("id").toInt();                  ///< Получаем Id плейлиста
 
             /// Получаем имя папки плейлиста (имя самого плейлиста)
-            qDebug() << QString("AbsolutePath: %1").arg(absolutePath);
             QFileInfo dirInfo(absolutePath);
             if (dirInfo.isDir()){
                 playerList[playerId]->setPlaylistName(dirInfo.fileName());
-//                qDebug() << QString("playlist name [ %1 ]: %2").arg(QString::number(playerId), dirInfo.fileName());
             }
 
             QDir playerDir(absolutePath);
-            if (!playerDir.exists())
+            if (!playerDir.exists()) {
                 playerList[playerId]->addMedia(QStringList());
-//                qDebug() << "PlayerDir exist";
-            else
-//                qDebug() << "PlayerDir not exist";
-                playerList[playerId]->addMedia(playerDir.entryList(QDir::Files));
+            }
+            else{
+                QStringList fileNames = playerDir.entryList(QDir::Files);
+                QStringList fullPaths;
+                for (const QString &fileName : fileNames) {
+                    fullPaths.append(playerDir.absoluteFilePath(fileName));
+                }
+                playerList[playerId]->addMedia(fullPaths);
+            }
         }
         configFile.close();
     }
