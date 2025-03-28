@@ -453,7 +453,7 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>DM-assist music</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
@@ -1274,7 +1274,7 @@
      <x>0</x>
      <y>0</y>
      <width>416</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="cursor">
