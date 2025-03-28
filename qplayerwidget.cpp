@@ -37,6 +37,9 @@ QPlayer::QPlayer(QWidget *parent, QString title, int numId) :
     connect(ui->nextButton, &QPushButton::clicked, playlist, &QMediaPlaylist::next);
     connect(ui->prevButton, &QPushButton::clicked, playlist, &QMediaPlaylist::previous);
     connect(playKey, SIGNAL(activated()), this, SLOT(playShortcutTriggered()));
+
+    if (parent != nullptr)
+        ui->numberLabel->setVisible(false);
 }
 
 QPlayer::QPlayer(QWidget *parent, QFile *xmlFile) :
@@ -64,6 +67,9 @@ QPlayer::QPlayer(QWidget *parent, QFile *xmlFile) :
 
     ui->titleLabel->setText(playlistName);
     ui->numberLabel->setText(QString::number(id));
+
+    if (parent != nullptr)
+        ui->numberLabel->setVisible(false);
 }
 
 QPlayer::QPlayer(QWidget *parent, int numId) : QWidget(parent), ui(new Ui::QPlayer) {
@@ -91,6 +97,8 @@ QPlayer::QPlayer(QWidget *parent, int numId) : QWidget(parent), ui(new Ui::QPlay
     connect(ui->prevButton, &QPushButton::clicked, playlist, &QMediaPlaylist::previous);
     connect(playKey, SIGNAL(activated()), this, SLOT(playShortcutTriggered()));
 
+    if (parent != nullptr)
+        ui->numberLabel->setVisible(false);
 }
 
 QPlayer::~QPlayer() {
