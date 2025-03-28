@@ -61,7 +61,7 @@ include_directories(
 qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
 add_custom_target(translations DEPENDS ${QM_FILES})
 
-add_executable(${PROJECT_NAME} main.cpp
+add_executable(${PROJECT_NAME} WIN32 main.cpp
         ${HEADER_FILES}
         ${SOURCE_FILES}
         ${UI_FILES}
