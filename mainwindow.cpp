@@ -187,11 +187,11 @@ void MainWindow::on_actionSave_triggered() {
     saveConfigFile();
 }
 
- void MainWindow::selectDevice() {
+void MainWindow::selectDevice() {
 
- }
+}
 
- void MainWindow::configureMenu() {
+void MainWindow::configureMenu() {
     _deviceMenu = ui->menubar.addMenu(tr("Devices"));
     QList<QAudioDeviceInfo> devices = QAudioDeviceInfo::availableDevices(QAudio::AudioOutput);
     _deviceActionGroup = new QActionGroup(this);
@@ -209,8 +209,11 @@ void MainWindow::on_actionSave_triggered() {
      if (!devices.isEmpty())
      {
          _deviceActionGroup->actions().first()->setChecked(true);
+         _audioOutput = new QAudioOutput(devices.first());
      }
- }
+
+     connect(_deviceActionGroup, &QActionGroup::triggered, this, selectDevice());
+}
 
 
 /**

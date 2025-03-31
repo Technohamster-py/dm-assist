@@ -285,6 +285,10 @@ void QPlayer::addMedia(QStringList trackList) {
     }
 }
 
+void QPlayer::setAudioDevice(QAudioOutput device) {
+
+}
+
 
 
 ////////////////////////////////////////////////////

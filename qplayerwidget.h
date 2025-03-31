@@ -6,6 +6,7 @@
 #define DM_ASSIST_QPLAYERWIDGET_H
 
 #include <QApplication>
+#include "QAudioOutput"
 #include <QDialog>
 #include <QDomDocument>
 #include <QFile>
@@ -39,6 +40,7 @@ public:
     void saveToXml(QString pathToXml = QCoreApplication::applicationDirPath());
     void loadFromXml(QFile *xmlFile);
     void setPlayShortcut(QString key);
+    void setAudioDevice(QAudioOutput device);
 
     QString getLocalDirPath() const {return localDir;};
     void setLocalDirPath(QString localDirPath);

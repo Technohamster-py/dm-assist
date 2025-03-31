@@ -37,7 +37,7 @@ protected:
 
 private:
     Ui::MainWindow *ui;
-    QAudioOutput _audioOutput;
+    QAudioOutput *_audioOutput;
     QMenu *_deviceMenu;
     QActionGroup *_deviceActionGroup;
 
