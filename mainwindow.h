@@ -5,9 +5,12 @@
 #ifndef DM_ASSIST_MAINWINDOW_H
 #define DM_ASSIST_MAINWINDOW_H
 
+#include "QAction"
+#include "QAudioOutput"
+#include "QAudioDeviceInfo"
 #include <QMainWindow>
+#include "QMenu"
 #include "qplayerwidget.h"
-
 
 
 QT_BEGIN_NAMESPACE
@@ -34,14 +37,19 @@ protected:
 
 private:
     Ui::MainWindow *ui;
+    QAudioOutput _audioOutput;
+    QMenu *_deviceMenu;
+    QActionGroup *_deviceActionGroup;
 
     void configurePlayers();
+    void configureMenu();
 
 private slots:
     void loadConfigFile();
     void saveConfigFile();
     void on_actionOpen_triggered();
     void on_actionSave_triggered();
+    void selectDevice();
 };
 
 

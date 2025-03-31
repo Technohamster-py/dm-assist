@@ -23,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     playButtonsList = {ui->play1, ui->play2, ui->play3, ui->play4, ui->play5, ui->play6, ui->play7, ui->play8, ui->play9};
     editButtonList = {ui->edit1, ui->edit2, ui->edit3, ui->edit4, ui->edit5, ui->edit6, ui->edit7, ui->edit8, ui->edit9};
     stopShortcut = new QShortcut(this);
+    configureMenu();
     configurePlayers();
 }
 
@@ -185,6 +186,31 @@ void MainWindow::on_actionOpen_triggered() {
 void MainWindow::on_actionSave_triggered() {
     saveConfigFile();
 }
+
+ void MainWindow::selectDevice() {
+
+ }
+
+ void MainWindow::configureMenu() {
+    _deviceMenu = ui->menubar.addMenu(tr("Devices"));
+    QList<QAudioDeviceInfo> devices = QAudioDeviceInfo::availableDevices(QAudio::AudioOutput);
+    _deviceActionGroup = new QActionGroup(this);
+    _deviceActionGroup->setExclusive(true);
+
+    for (const QAudioDeviceInfo &device : devices)
+    {
+        QAction *deviceAction = new QAction(device.deviceName(), this);
+        deviceAction->setCheckable(true);
+        deviceAction->setData(QVariant::fromValue(device));
+        _deviceMenu->addAction(deviceAction);
+        _deviceActionGroup->addAction(deviceAction);
+    }
+
+     if (!devices.isEmpty())
+     {
+         _deviceActionGroup->actions().first()->setChecked(true);
+     }
+ }
 
 
 /**
