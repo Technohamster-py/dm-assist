@@ -46,7 +46,6 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-
 /**
  * Конфигурирование плееров
  *
@@ -61,6 +60,7 @@ void MainWindow::configurePlayers() {
 
     for (int i = 0; i < 9; ++i) {
         /// При запуске одного плеера останавливаются все остальные
+        playerList[i]->setLocalDirPath(workingDir + "playlists/tmp");
         connect(playerList[i], SIGNAL(playerStarted()), this, SLOT(stopAll()));
         playerList[i]->setPlayShortcut(QString("Ctrl+%1").arg(QString::number(i+1)));
         connect(playButtonsList[i], SIGNAL(clicked(bool)), playerList[i], SLOT(play()));
@@ -128,7 +128,6 @@ void MainWindow::loadConfigFile() {
         configFile.close();
     }
 }
-
 
 /**
  * Сохранение конфигурационного файла

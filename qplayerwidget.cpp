@@ -263,7 +263,7 @@ void QPlayer::edit() {
  * @param localDirPath путь к локальной папке
  */
 void QPlayer::setLocalDirPath(QString localDirPath) {
-    localDir = localDirPath;
+    localDir = localDirPath + playlistName;
     emit localDirPathChanged();
 }
 

@@ -35,12 +35,14 @@ protected:
 
     QShortcut *stopShortcut;                ///< Шорткат для остановки всех плееров
 
+    QString workingDir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/dm_assis_files/";
+    void saveSettings();
+    void loadSettings();
+
 private:
     Ui::MainWindow *ui;
 
     void configurePlayers();
-    void saveSettings();
-    void loadSettings();
 
 private slots:
     void loadConfigFile();
