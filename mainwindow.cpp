@@ -186,6 +186,15 @@ void MainWindow::on_actionSave_triggered() {
     saveConfigFile();
 }
 
+void MainWindow::saveSettings() {
+    QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
+    settings.sync();
+}
+
+void MainWindow::loadSettings() {
+    QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
+}
+
 
 /**
  * Копирование всех фалов из папки sourcePath в папку destPath

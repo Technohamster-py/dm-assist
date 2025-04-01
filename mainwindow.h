@@ -6,9 +6,12 @@
 #define DM_ASSIST_MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSettings>
 #include "qplayerwidget.h"
 
-
+#define ORGANIZATION_NAME "Technohaster"
+#define ORGANIZATION_DOMAIN "github.com/Technohamster-py"
+#define APPLICATION_NAME "DM-assist"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -36,6 +39,8 @@ private:
     Ui::MainWindow *ui;
 
     void configurePlayers();
+    void saveSettings();
+    void loadSettings();
 
 private slots:
     void loadConfigFile();
