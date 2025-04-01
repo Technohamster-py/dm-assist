@@ -38,7 +38,7 @@ MainWindow::~MainWindow() {
 
     if(reply == QMessageBox::Yes)
         saveConfigFile();
-
+    saveSettings();
     foreach(QPlayer* player, playerList){
         removeDirectoryRecursively(player->getLocalDirPath());
         delete player;
@@ -187,11 +187,13 @@ void MainWindow::on_actionSave_triggered() {
 
 void MainWindow::saveSettings() {
     QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
+    settings.setValue("general/dir", workingDir);
     settings.sync();
 }
 
 void MainWindow::loadSettings() {
     QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
+    workingDir = settings.value("general/dir", workingDir).toString();
 }
 
 
