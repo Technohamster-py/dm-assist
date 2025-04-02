@@ -23,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     playButtonsList = {ui->play1, ui->play2, ui->play3, ui->play4, ui->play5, ui->play6, ui->play7, ui->play8, ui->play9};
     editButtonList = {ui->edit1, ui->edit2, ui->edit3, ui->edit4, ui->edit5, ui->edit6, ui->edit7, ui->edit8, ui->edit9};
     stopShortcut = new QShortcut(this);
+    loadSettings();
     configurePlayers();
 }
 
