@@ -14,18 +14,21 @@ set(HEADER_FILES
         mainwindow.h
         qplayerwidget.h
         qsaveconfigdialog.h
+        settingsdialog.h
 )
 
 set(SOURCE_FILES
         mainwindow.cpp
         qplayerwidget.cpp
         qsaveconfigdialog.cpp
+        settingsdialog.cpp
 )
 
 set(UI_FILES
         mainwindow.ui
         qplayer.ui
         qplaylistedit.ui
+        settingsdialog.ui
 )
 
 set(TS_FILES
