@@ -17,14 +17,23 @@ class SettingsDialog : public QDialog {
 Q_OBJECT
 
 public:
-    explicit SettingsDialog(QWidget *parent = nullptr);
+    explicit SettingsDialog(QString organisationName, QString applicationName, QWidget *parent = nullptr);
     ~SettingsDialog() override;
+
+protected:
+    void loadSettings();
+    void saveSettings();
 
 private slots:
     void onTreeItemSelected(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
+    void on_folderButton_clicked();
+
 private:
     Ui::SettingsDialog *ui;
+
+    QString m_organisationName;
+    QString m_applicationName;
 };
 
 

@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     editButtonList = {ui->edit1, ui->edit2, ui->edit3, ui->edit4, ui->edit5, ui->edit6, ui->edit7, ui->edit8, ui->edit9};
     stopShortcut = new QShortcut(this);
     loadSettings();
+    saveSettings();
     configurePlayers();
 }
 
@@ -195,6 +196,14 @@ void MainWindow::saveSettings() {
 void MainWindow::loadSettings() {
     QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
     workingDir = settings.value("general/dir", workingDir).toString();
+}
+
+void MainWindow::on_actionSettings_triggered() {
+    if(!settingsDialog)
+    {
+        settingsDialog = new SettingsDialog(ORGANIZATION_NAME, APPLICATION_NAME, this);
+    }
+    settingsDialog->exec();
 }
 
 

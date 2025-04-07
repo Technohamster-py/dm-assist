@@ -8,6 +8,8 @@
 #include <QMainWindow>
 #include <QSettings>
 #include "qplayerwidget.h"
+#include "settingsdialog.h"
+
 
 #define ORGANIZATION_NAME "Technohaster"
 #define ORGANIZATION_DOMAIN "github.com/Technohamster-py"
@@ -41,7 +43,7 @@ protected:
 
 private:
     Ui::MainWindow *ui;
-
+    SettingsDialog *settingsDialog;
     void configurePlayers();
 
 private slots:
@@ -49,6 +51,7 @@ private slots:
     void saveConfigFile();
     void on_actionOpen_triggered();
     void on_actionSave_triggered();
+    void on_actionSettings_triggered();
 };
 
 
