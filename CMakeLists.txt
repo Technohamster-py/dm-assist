@@ -13,14 +13,12 @@ set(BASS_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass/bass.lib)
 #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc")
 
 set(HEADER_FILES
-        audioplayerwidget.h
         mainwindow.h
         qplayerwidget.h
         qsaveconfigdialog.h
 )
 
 set(SOURCE_FILES
-        audioplayerwidget.cpp
         mainwindow.cpp
         qplayerwidget.cpp
         qsaveconfigdialog.cpp
