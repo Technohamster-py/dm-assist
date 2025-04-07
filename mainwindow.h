@@ -6,10 +6,8 @@
 #define DM_ASSIST_MAINWINDOW_H
 
 #include "QAction"
-#include "QAudioOutput"
-#include "QAudioDeviceInfo"
 #include <QMainWindow>
-#include "QMenu"
+#include <QShortcut>
 #include "qplayerwidget.h"
 
 
@@ -27,29 +25,23 @@ public:
 
 public slots:
     void stopAll();
-protected:
-    QList<QPlayer*> playerList;             ///< Список всех плееров
-    QList<QWidget*> playerWidgetsList;      ///< Список всех контейнеров для плееров
-    QList<QPushButton*> playButtonsList;    ///< Список всех кнопок play
-    QList<QPushButton*> editButtonList;     ///< Список всех кнопок вызова диалога изменения
-
-    QShortcut *stopShortcut;                ///< Шорткат для остановки всех плееров
 
 private:
     Ui::MainWindow *ui;
-    QAudioOutput *_audioOutput;
-    QMenu *_deviceMenu;
-    QActionGroup *_deviceActionGroup;
 
-    void configurePlayers();
-    void configureMenu();
+    int deviceIndex = -1;
+
+    QVector<QPlayer*> players;
+
+    void setupPlayers();
+    void setupShortcuts();
+    void handlePlayerActivation(int index);
 
 private slots:
     void loadConfigFile();
     void saveConfigFile();
     void on_actionOpen_triggered();
     void on_actionSave_triggered();
-    void selectDevice();
 };
 
 

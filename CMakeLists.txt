@@ -8,15 +8,19 @@ set(CMAKE_AUTOUIC ON)
 
 #set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin/Release)
 set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.12.12/5.12.12/mingw73_64/lib/cmake")
+set(BASS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass)
+set(BASS_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass/bass.lib)
 #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc")
 
 set(HEADER_FILES
+        audioplayerwidget.h
         mainwindow.h
         qplayerwidget.h
         qsaveconfigdialog.h
 )
 
 set(SOURCE_FILES
+        audioplayerwidget.cpp
         mainwindow.cpp
         qplayerwidget.cpp
         qsaveconfigdialog.cpp
@@ -56,6 +60,7 @@ include_directories(
         ${Qt5Multimedia_INCLUDE_DIRS}  #the directories
         translations
         static
+        lib
 )
 
 qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
@@ -76,6 +81,7 @@ target_link_libraries(${PROJECT_NAME}
         Qt5::Widgets
         Qt5::Multimedia
         Qt5::Xml
+        ${BASS_LIBRARY}
 )
 
 #target_sources(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/static/resources.rc)

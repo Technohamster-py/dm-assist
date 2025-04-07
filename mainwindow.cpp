@@ -1,6 +1,7 @@
  //
 // Created by arseniy on 11.10.2024.
 //
+#include <QTextStream>
 #include "mainwindow.h"
 #include "ui_MainWindow.h"
 #include "QFileDialog"
@@ -11,6 +12,8 @@
 #include "qsaveconfigdialog.h"
 
 
+
+
 static void copyAllFiles(const QString& sourcePath, const QString& destPath);
 static void moveAllFiles(const QString& sourcePath, const QString& destPath);
 static bool removeDirectoryRecursively(const QString &directoryPath, bool deleteSelf=true);
@@ -19,12 +22,16 @@ static bool removeDirectoryRecursively(const QString &directoryPath, bool delete
 MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
-    playerWidgetsList = {ui->player1, ui->player2, ui->player3, ui->player4, ui->player5, ui->player6, ui->player7, ui->player8, ui->player9};
-    playButtonsList = {ui->play1, ui->play2, ui->play3, ui->play4, ui->play5, ui->play6, ui->play7, ui->play8, ui->play9};
-    editButtonList = {ui->edit1, ui->edit2, ui->edit3, ui->edit4, ui->edit5, ui->edit6, ui->edit7, ui->edit8, ui->edit9};
-    stopShortcut = new QShortcut(this);
-    configureMenu();
-    configurePlayers();
+
+    setupPlayers();
+
+    for (int i = 0; i < players.size(); ++i) {
+        int row = i / 3;
+        int col = i % 3;
+        ui->mainLayout->addWidget(players[i], row, col);
+    }
+
+    setupShortcuts();
 }
 
 /**
@@ -40,7 +47,7 @@ MainWindow::~MainWindow() {
     if(reply == QMessageBox::Yes)
         saveConfigFile();
 
-    foreach(QPlayer* player, playerList){
+    foreach(QPlayer* player, players){
         removeDirectoryRecursively(player->getLocalDirPath());
         delete player;
     }
@@ -54,21 +61,39 @@ MainWindow::~MainWindow() {
  * @details подключение всех плееров к их виджетам.
  * Подключение сигналов о начале проигрывания, изменения и остановке к плеерам.
  */
-void MainWindow::configurePlayers() {
+void MainWindow::setupPlayers() {
+     for (int i = 0; i < 9; ++i) {
+         auto *player = new QPlayer(this, i + 1, QString("Player %1").arg(i + 1));
 
-    for (int i = 0; i < 9; ++i) {
-        playerList.append(new QPlayer(playerWidgetsList[i], i+1));
-    }
+         // Подключим слот — если кто-то начал играть вручную
+         connect(player, &QPlayer::playerStarted, [this, i]() {
+             handlePlayerActivation(i);
+         });
 
-    for (int i = 0; i < 9; ++i) {
-        /// При запуске одного плеера останавливаются все остальные
-        connect(playerList[i], SIGNAL(playerStarted()), this, SLOT(stopAll()));
-        playerList[i]->setPlayShortcut(QString("Ctrl+%1").arg(QString::number(i+1)));
-        connect(playButtonsList[i], SIGNAL(clicked(bool)), playerList[i], SLOT(play()));
-        connect(editButtonList[i], SIGNAL(clicked(bool)), playerList[i], SLOT(edit()));
+         players.append(player);
+     }
+}
+
+void MainWindow::setupShortcuts() {
+    for (int i = 0; i < players.size(); ++i) {
+        QString key = QString("Ctrl+%1").arg(i + 1);
+        auto *shortcut = new QShortcut(QKeySequence(key), this);
+        connect(shortcut, &QShortcut::activated, [this, i]() {
+            handlePlayerActivation(i);
+        });
+
+        players[i]->setPlayShortcut(QString::number(i + 1));
     }
-    stopShortcut->setKey(QString("Ctrl+0"));
-    connect(stopShortcut, SIGNAL(activated()), this, SLOT(stopAll()));
+}
+
+
+void MainWindow::handlePlayerActivation(int index) {
+    for (int i = 0; i < players.size(); ++i) {
+        if (i == index)
+            players[i]->play();
+        else
+            players[i]->stop();
+    }
 }
 
 /**
@@ -76,7 +101,7 @@ void MainWindow::configurePlayers() {
  */
 void MainWindow::stopAll() {
     for (int i = 0; i < 9; ++i) {
-        playerList[i]->stop();
+        players[i]->stop();
     }
 }
 
@@ -99,10 +124,10 @@ void MainWindow::loadConfigFile() {
         configDocument.setContent(&configFile);
 
         QDomElement mainNode = configDocument.documentElement();
-        QDomNodeList players = mainNode.childNodes();
+        QDomNodeList playersNodeList = mainNode.childNodes();
 
-        for (int i=0; i<players.count(); i++){
-            QDomElement playerNode = players.at(i).toElement();
+        for (int i=0; i < playersNodeList.count(); i++){
+            QDomElement playerNode = playersNodeList.at(i).toElement();
             QString absolutePath = playerNode.firstChild().toText().data();     // Получаем абсолютный путь к папке с плейлистом
 
             int playerId = playerNode.attribute("id").toInt();                  ///< Получаем Id плейлиста
@@ -110,12 +135,12 @@ void MainWindow::loadConfigFile() {
             /// Получаем имя папки плейлиста (имя самого плейлиста)
             QFileInfo dirInfo(absolutePath);
             if (dirInfo.isDir()){
-                playerList[playerId]->setPlaylistName(dirInfo.fileName());
+                players[playerId]->setPlaylistName(dirInfo.fileName());
             }
 
             QDir playerDir(absolutePath);
             if (!playerDir.exists()) {
-                playerList[playerId]->addMedia(QStringList());
+                players[playerId]->addMedia(QStringList());
             }
             else{
                 QStringList fileNames = playerDir.entryList(QDir::Files);
@@ -123,7 +148,7 @@ void MainWindow::loadConfigFile() {
                 for (const QString &fileName : fileNames) {
                     fullPaths.append(playerDir.absoluteFilePath(fileName));
                 }
-                playerList[playerId]->addMedia(fullPaths);
+                players[playerId]->addMedia(fullPaths);
             }
         }
         configFile.close();
@@ -166,8 +191,8 @@ void MainWindow::saveConfigFile() {
         QDomElement playlist_node = configDocument.createElement("playlist");
         playlist_node.setAttribute("id", i);
 
-        QString playlistPath = baseDir + playerList[i]->getPlaylistName();
-        moveAllFiles(playerList[i]->getLocalDirPath(), playlistPath);
+        QString playlistPath = baseDir + players[i]->getPlaylistName();
+        moveAllFiles(players[i]->getLocalDirPath(), playlistPath);
 
         QDomText textNode = configDocument.createTextNode(playlistPath);
         playlist_node.appendChild(textNode);
@@ -185,34 +210,6 @@ void MainWindow::on_actionOpen_triggered() {
 
 void MainWindow::on_actionSave_triggered() {
     saveConfigFile();
-}
-
-void MainWindow::selectDevice() {
-
-}
-
-void MainWindow::configureMenu() {
-    _deviceMenu = ui->menubar.addMenu(tr("Devices"));
-    QList<QAudioDeviceInfo> devices = QAudioDeviceInfo::availableDevices(QAudio::AudioOutput);
-    _deviceActionGroup = new QActionGroup(this);
-    _deviceActionGroup->setExclusive(true);
-
-    for (const QAudioDeviceInfo &device : devices)
-    {
-        QAction *deviceAction = new QAction(device.deviceName(), this);
-        deviceAction->setCheckable(true);
-        deviceAction->setData(QVariant::fromValue(device));
-        _deviceMenu->addAction(deviceAction);
-        _deviceActionGroup->addAction(deviceAction);
-    }
-
-     if (!devices.isEmpty())
-     {
-         _deviceActionGroup->actions().first()->setChecked(true);
-         _audioOutput = new QAudioOutput(devices.first());
-     }
-
-     connect(_deviceActionGroup, &QActionGroup::triggered, this, selectDevice());
 }
 
 

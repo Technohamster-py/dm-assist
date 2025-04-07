@@ -1,114 +1,99 @@
-//
-// Created by arsen on 06.03.2024.
-//
-
 #ifndef DM_ASSIST_QPLAYERWIDGET_H
 #define DM_ASSIST_QPLAYERWIDGET_H
 
-#include <QApplication>
-#include "QAudioOutput"
-#include <QDialog>
-#include <QDomDocument>
-#include <QFile>
-#include <QMediaPlayer>
-#include <QMediaPlaylist>
-#include <QStandardItem>
-#include <QStandardPaths>
-#include <QShortcut>
+#include <QCoreApplication>
 #include <QWidget>
+#include <QShortcut>
+#include <QDomDocument>
+#include <QStandardPaths>
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include "lib/bass/bass.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class QPlayer; class QPlaylistEdit;}
+namespace Ui { class QPlayer; }
 QT_END_NAMESPACE
 
 class QPlayer : public QWidget {
 Q_OBJECT
 
 public:
-    QPlayer(QWidget *parent, QString title, int numId);
-    QPlayer(QWidget *parent, QFile *xmlFile);
-    QPlayer(QWidget *parent, int numId);
-
+    explicit QPlayer(QWidget *parent = nullptr, int id = 0, QString title = "Playlist");
     ~QPlayer() override;
 
-    [[nodiscard]] QString getPlaylistName() const{return playlistName;};
-    void setPlaylistName(QString name);
+    QString getPlaylistName() const { return playlistName; }
+    void setPlaylistName(const QString &name);
 
-    [[nodiscard]] int getId() const{return id;};
-    [[nodiscard]] bool isPlaying() const {return isActive;};
+    void addMedia(const QStringList &files);
+    QString getLocalDirPath() const { return localDir; }
 
-    void saveToXml(QString pathToXml = QCoreApplication::applicationDirPath());
-    void loadFromXml(QFile *xmlFile);
     void setPlayShortcut(QString key);
-    void setAudioDevice(QAudioOutput device);
 
-    QString getLocalDirPath() const {return localDir;};
-    void setLocalDirPath(QString localDirPath);
-
-    void addMedia(QStringList trackList);
-
-    QMediaPlaylist *playlist; ///< Плейлист проигрывателя
+    void setAudioOutput(const QString &deviceName);
+    QString currentDeviceName() const;
+    QStringList availableAudioDevices() const;
 
 signals:
-    void playlistNameChanged();
-    void localDirPathChanged();
     void playerStarted();
     void playerStopped();
+    void playlistNameChanged();
+    void localDirPathChanged();
 
 public slots:
-    void stop();
     void play();
+    void stop();
     void edit();
 
 protected:
-    QString playlistName = "playlist";
-    QString localDir = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/dm_assis_files/playlists/tmp/";
-    int id;
-    bool isActive;
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    void dropEvent(QDropEvent *event) override;
 
 private slots:
-    void on_editButton_clicked();
     void on_playButton_clicked();
+    void on_editButton_clicked();
     void playShortcutTriggered();
 
 private:
-    Ui::QPlayer *ui;
-    QDomDocument xmlConfig;
+    void freeStreams();
 
+    Ui::QPlayer *ui;
     QShortcut *playKey;
 
-    //QStandardItemModel *m_playlistModel; ///< Модель данных плейлиста для отображения
-    QMediaPlayer *m_player; ///< Проигрыватель
+    QString playlistName;
+    QString localDir;
+    int id;
+    bool isActive = false;
+
+    QList<QString> filePaths;    // Список треков
+    QList<HSTREAM> streams;      // Потоки BASS
+
+    int deviceIndex = -1;
+
 };
 
+
+#include <QDialog>
+#include <QListWidget>
+
+namespace Ui {
+    class QPlaylistEdit;
+}
 
 class QPlaylistEdit : public QDialog {
 Q_OBJECT
 
 public:
-    explicit QPlaylistEdit(QWidget *parent = nullptr, QPlayer *player = nullptr);
+    explicit QPlaylistEdit(QWidget *parent = nullptr, const QStringList &tracks = {});
+    ~QPlaylistEdit();
 
-    void addMediaFiles(QStringList fileNames);
-
-    ~QPlaylistEdit() override;
+    QStringList getUpdatedPlaylist() const;
 
 private slots:
-    void on_addButton_clicked();
-    void on_removeButton_clicked();
-    void on_folderButton_clicked();
-    void on_uploadButton_clicked();
-
-    void on_buttonBox_accepted();
-    void on_buttonBox_rejected();
+    void on_addFilesButton_clicked();
 
 private:
     Ui::QPlaylistEdit *ui;
-    QPlayer *m_player;
-    QStandardItemModel *m_playlistModel;
-
-    int m_selectedIndex;
-
-    void displayPlaylist();
+    QListWidget *listWidget;
 };
 
-#endif //DM_ASSIST_QPLAYERWIDGET_H
+#endif // DM_ASSIST_QPLAYERWIDGET_H
