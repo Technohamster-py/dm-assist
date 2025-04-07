@@ -34,8 +34,14 @@ QPlayer::QPlayer(QWidget *parent, int id, QString title)
     localDir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QString("/playlist_%1/").arg(id);
     QDir().mkpath(localDir);
 
+    BASS_Free();
+
     if (!BASS_Init(BASS_DEVICE_INDEX, 44100, 0, nullptr, nullptr)) {
-        QMessageBox::critical(this, "BASS", "Failed to initialize BASS for device.");
+        auto err = BASS_ErrorGetCode();
+        qDebug() << "BASS init error:" << err;
+        QMessageBox::critical(this, "BASS Init Failed",
+                              QString("Could not initialize BASS on selected device.\nError code: %1").arg(err));
+        return;
     }
 
     connect(ui->playButton, &QPushButton::clicked, this, &QPlayer::on_playButton_clicked);
