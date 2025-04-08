@@ -34,7 +34,7 @@ QPlayer::QPlayer(QWidget *parent, int id, QString title)
 
     setAcceptDrops(true);
 
-    localDir = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + QString("/dm_assist_files/playlists/tmp/playlist_%1/").arg(id);
+    localDir = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + QString("/dm_assist_files/playlists/tmp/").arg(id);
     QDir().mkpath(localDir);
 
     BASS_Free();
@@ -91,7 +91,14 @@ void QPlayer::playShortcutTriggered() {
 void QPlayer::addMedia(const QStringList &files) {
     for (const QString &file : files) {
         QFileInfo info(file);
+        qDebug() << file;
         QString dest = localDir + "/" + info.fileName();
+        qDebug() << dest;
+
+        QDir destDir(localDir);
+        if (!destDir.exists())
+            destDir.mkpath(".");
+
         if (QFile::exists(dest)) {
             QFile::remove(dest);
         }
@@ -118,8 +125,6 @@ void QPlayer::edit() {
     QPlaylistEdit editor(this, filePaths, playlistName);
     if (editor.exec() == QDialog::Accepted) {
         QStringList newList = editor.getUpdatedPlaylist();
-
-        // Обновим копии файлов, удалим старые
         QDir dir(localDir);
         for (const QFileInfo &file : dir.entryInfoList(QDir::Files)) {
             QFile::remove(file.absoluteFilePath());

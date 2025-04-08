@@ -259,15 +259,15 @@ static void moveAllFiles(const QString& sourcePath, const QString& destPath){
 
 
 static bool removeDirectoryRecursively(const QString &directoryPath, bool deleteSelf) {
- QDir dir(directoryPath);
+    QDir dir(directoryPath);
 
- // Проверяем, существует ли директория
- if (!dir.exists()) {
-//     qDebug() << "Директория не существует:" << directoryPath;
+    // Проверяем, существует ли директория
+    if (!dir.exists()) {
+    //     qDebug() << "Директория не существует:" << directoryPath;
      return false; // Если директория не существует, возвращаем false
- }
+    }
 
- // Получаем список всех файлов и поддиректорий
+    // Получаем список всех файлов и поддиректорий
          foreach (QString file, dir.entryList(QDir::NoDotAndDotDot | QDir::AllEntries)) {
          QString fullPath = dir.absoluteFilePath(file);
          if (QFileInfo(fullPath).isDir()) {
@@ -278,15 +278,15 @@ static bool removeDirectoryRecursively(const QString &directoryPath, bool delete
          } else {
              // Удаляем файл
              if (!QFile::remove(fullPath)) {
-//                 qDebug() << "Не удалось удалить файл:" << fullPath;
+    //                 qDebug() << "Не удалось удалить файл:" << fullPath;
                  return false; // Если файл не удалось удалить, возвращаем false
              }
          }
      }
 
- // После удаления всех файлов и поддиректорий удаляем саму директорию
- if(deleteSelf)
-    return dir.rmdir("."); // dir.rmdir(".") удаляет саму папку
- else
-     return true;
+    // После удаления всех файлов и поддиректорий удаляем саму директорию
+    if(deleteSelf)
+        return dir.rmdir("."); // dir.rmdir(".") удаляет саму папку
+    else
+        return true;
 }
