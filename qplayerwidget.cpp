@@ -12,6 +12,9 @@
 #include <QStandardPaths>
 #include <QPushButton>
 
+#include <QRegExp>
+#include <QRegExpValidator>
+
 #include "bass/bass.h"
 
 #define BASS_DEVICE_INDEX 1 // Можно сделать параметром, если нужно
@@ -251,6 +254,10 @@ QPlaylistEdit::QPlaylistEdit(QWidget *parent, const QStringList &tracks, QString
 {
     ui->setupUi(this);
     resize(400, 300);
+
+    QRegExp regex("[A-Za-z0-9\\-_ ]+");
+    QRegExpValidator *validator = new QRegExpValidator(regex, ui->titleEdit);
+    ui->titleEdit->setValidator(validator);
 
     ui->titleEdit->setText(title);
     ui->playlistWidget->addItems(tracks);
