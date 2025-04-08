@@ -52,20 +52,6 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="folderButton">
-        <property name="toolTip">
-         <string>Add folder</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="static/app_resources.qrc">
-          <normaloff>:/folder.svg</normaloff>:/folder.svg</iconset>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="addButton">
         <property name="toolTip">
          <string>Add audio file</string>
@@ -97,7 +83,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QTableView" name="playlistView"/>
+    <widget class="QListWidget" name="playlistWidget"/>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
