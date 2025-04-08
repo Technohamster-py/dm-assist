@@ -143,7 +143,6 @@ void QPlayer::play() {
     if (!streams.isEmpty()) {
         BASS_ChannelPlay(streams.first(), FALSE);
         isActive = true;
-        ui->playButton->setText("Stop");
     }
 }
 
@@ -152,7 +151,6 @@ void QPlayer::stop() {
         BASS_ChannelStop(stream);
     }
     isActive = false;
-    ui->playButton->setText("Play");
     emit playerStopped();
 }
 
