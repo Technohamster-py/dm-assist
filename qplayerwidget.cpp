@@ -30,6 +30,7 @@ QPlayer::QPlayer(QWidget *parent, int id, QString title)
 {
     ui->setupUi(this);
     ui->titleLabel->setText(playlistName);
+    ui->numberLabel->setText(QString::number(id));
 
     setAcceptDrops(true);
 
