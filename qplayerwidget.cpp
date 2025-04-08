@@ -34,7 +34,7 @@ QPlayer::QPlayer(QWidget *parent, int id, QString title)
 
     setAcceptDrops(true);
 
-    localDir = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + QString("dm-assist/playlists/tmp/playlist_%1/").arg(id);
+    localDir = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + QString("/dm_assist_files/playlists/tmp/playlist_%1/").arg(id);
     QDir().mkpath(localDir);
 
     BASS_Free();
@@ -104,6 +104,10 @@ void QPlayer::addMedia(const QStringList &files) {
 
 void QPlayer::on_playButton_clicked() {
     play();
+}
+
+void QPlayer::on_stopButton_clicked() {
+    stop();
 }
 
 void QPlayer::on_editButton_clicked() {
@@ -246,7 +250,6 @@ QPlaylistEdit::QPlaylistEdit(QWidget *parent, const QStringList &tracks)
     ui->playlistWidget->addItems(tracks);
     ui->playlistWidget->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->playlistWidget->setDragDropMode(QAbstractItemView::InternalMove);
-    connect(ui->addButton, &QPushButton::clicked, this, &QPlaylistEdit::on_addButton_clicked);
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &QPlaylistEdit::accept);
     connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &QPlaylistEdit::reject);
 }
