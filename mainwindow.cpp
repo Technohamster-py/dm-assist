@@ -108,7 +108,7 @@ void MainWindow::stopAll() {
 void MainWindow::loadConfigFile() {
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open player config file"),
-                                                    QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/dm_assis_files/saves",
+                                                    QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/dm_assist_files/saves",
                                                     tr("Xml file (*.xml)"));
     if(fileName.isEmpty())
         return;
