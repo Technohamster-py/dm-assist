@@ -1,5 +1,6 @@
 #include "qplayerwidget.h"
 #include "ui_qplayer.h"
+#include "ui_qplaylistedit.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -9,15 +10,16 @@
 #include <QDebug>
 #include <QFile>
 #include <QStandardPaths>
-
-
-#include <QVBoxLayout>
 #include <QPushButton>
-#include <QFileDialog>
 
 #include "bass/bass.h"
 
 #define BASS_DEVICE_INDEX 1 // Можно сделать параметром, если нужно
+
+
+////////////////////////////////////////////////
+/////////       QPlayer                  ///////
+////////////////////////////////////////////////
 
 QPlayer::QPlayer(QWidget *parent, int id, QString title)
         : QWidget(parent),
@@ -31,7 +33,7 @@ QPlayer::QPlayer(QWidget *parent, int id, QString title)
 
     setAcceptDrops(true);
 
-    localDir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QString("/playlist_%1/").arg(id);
+    localDir = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + QString("dm-assist/playlists/tmp/playlist_%1/").arg(id);
     QDir().mkpath(localDir);
 
     BASS_Free();
@@ -55,17 +57,29 @@ QPlayer::~QPlayer() {
     delete ui;
 }
 
+
 void QPlayer::setPlaylistName(const QString &name) {
-    playlistName = name;
-    ui->titleLabel->setText(name);
-    emit playlistNameChanged();
+    if(name != playlistName){
+        playlistName = name;
+        ui->titleLabel->setText(name);
+        QFileInfo fileInfo(localDir);
+        QString parentPath = fileInfo.dir().absolutePath();
+        QString newPath = QDir(parentPath).filePath(playlistName);
+        QFile::rename(localDir, newPath);
+
+        QDir newDir(newPath);
+        QStringList newFileNames = newDir.entryList(QDir::Files);
+        filePaths.clear();
+        addMedia(newFileNames);
+        localDir = newPath;
+        emit playlistNameChanged();
+    }
 }
 
 void QPlayer::setPlayShortcut(QString key) {
     if (playKey)
         delete playKey;
-
-    playKey = new QShortcut(QKeySequence("Ctrl+" + key), this);
+    playKey = new QShortcut(QKeySequence(key), this);
     connect(playKey, &QShortcut::activated, this, &QPlayer::playShortcutTriggered);
 }
 
@@ -108,6 +122,9 @@ void QPlayer::edit() {
         }
 
         filePaths.clear();
+
+        setPlaylistName(editor.getPlaylistName());
+
         addMedia(newList); // это скопирует в локальную папку и обновит filePaths
     }
 }
@@ -218,46 +235,41 @@ void QPlayer::setAudioOutput(const QString &deviceName) {
     qDebug() << "Audio output set to:" << deviceName;
 }
 
-
+////////////////////////////////////////////////
+/////////       QPlaylistEdit            ///////
+////////////////////////////////////////////////
 
 QPlaylistEdit::QPlaylistEdit(QWidget *parent, const QStringList &tracks)
-        : QDialog(parent),
-          ui(nullptr)
+        : QDialog(parent), ui(new Ui::QPlaylistEdit)
 {
-    setWindowTitle("Edit Playlist");
+    ui->setupUi(this);
     resize(400, 300);
 
-    QVBoxLayout *layout = new QVBoxLayout(this);
-
-    listWidget = new QListWidget(this);
-    listWidget->addItems(tracks);
-    listWidget->setSelectionMode(QAbstractItemView::SingleSelection);
-    listWidget->setDragDropMode(QAbstractItemView::InternalMove);
-
-    QPushButton *addButton = new QPushButton("Add Files", this);
-    QPushButton *okButton = new QPushButton("OK", this);
-
-    layout->addWidget(listWidget);
-    layout->addWidget(addButton);
-    layout->addWidget(okButton);
-
-    connect(addButton, &QPushButton::clicked, this, &QPlaylistEdit::on_addFilesButton_clicked);
-    connect(okButton, &QPushButton::clicked, this, &QPlaylistEdit::accept);
+    ui->playlistWidget->addItems(tracks);
+    ui->playlistWidget->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->playlistWidget->setDragDropMode(QAbstractItemView::InternalMove);
+    connect(ui->addButton, &QPushButton::clicked, this, &QPlaylistEdit::on_addButton_clicked);
+    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &QPlaylistEdit::accept);
+    connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &QPlaylistEdit::reject);
 }
 
 QPlaylistEdit::~QPlaylistEdit() = default;
 
-void QPlaylistEdit::on_addFilesButton_clicked() {
+void QPlaylistEdit::on_addButton_clicked() {
     QStringList files = QFileDialog::getOpenFileNames(this, "Add audio files", QString(), "Audio Files (*.mp3 *.wav)");
     for (const QString &file : files) {
-        listWidget->addItem(file);
+        ui->playlistWidget->addItem(file);
     }
 }
 
 QStringList QPlaylistEdit::getUpdatedPlaylist() const {
     QStringList result;
-    for (int i = 0; i < listWidget->count(); ++i) {
-        result << listWidget->item(i)->text();
+    for (int i = 0; i < ui->playlistWidget->count(); ++i) {
+        result << ui->playlistWidget->item(i)->text();
     }
     return result;
+}
+
+QString QPlaylistEdit::getPlaylistName() const {
+    return ui->titleEdit->text();
 }

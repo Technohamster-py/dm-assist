@@ -2,16 +2,18 @@
 #define DM_ASSIST_QPLAYERWIDGET_H
 
 #include <QCoreApplication>
-#include <QWidget>
-#include <QShortcut>
+#include <QDialog>
 #include <QDomDocument>
-#include <QStandardPaths>
 #include <QDragEnterEvent>
 #include <QDropEvent>
+#include <QListWidget>
+#include <QShortcut>
+#include <QStandardPaths>
+#include <QWidget>
 #include "lib/bass/bass.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class QPlayer; }
+namespace Ui { class QPlayer; class QPlaylistEdit;}
 QT_END_NAMESPACE
 
 class QPlayer : public QWidget {
@@ -72,12 +74,6 @@ private:
 };
 
 
-#include <QDialog>
-#include <QListWidget>
-
-namespace Ui {
-    class QPlaylistEdit;
-}
 
 class QPlaylistEdit : public QDialog {
 Q_OBJECT
@@ -87,13 +83,13 @@ public:
     ~QPlaylistEdit();
 
     QStringList getUpdatedPlaylist() const;
+    QString getPlaylistName() const;
 
 private slots:
-    void on_addFilesButton_clicked();
+    void on_addButton_clicked();
 
 private:
     Ui::QPlaylistEdit *ui;
-    QListWidget *listWidget;
 };
 
 #endif // DM_ASSIST_QPLAYERWIDGET_H
