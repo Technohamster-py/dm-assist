@@ -115,7 +115,7 @@ void QPlayer::on_editButton_clicked() {
 }
 
 void QPlayer::edit() {
-    QPlaylistEdit editor(this, filePaths);
+    QPlaylistEdit editor(this, filePaths, playlistName);
     if (editor.exec() == QDialog::Accepted) {
         QStringList newList = editor.getUpdatedPlaylist();
 
@@ -241,12 +241,13 @@ void QPlayer::setAudioOutput(const QString &deviceName) {
 /////////       QPlaylistEdit            ///////
 ////////////////////////////////////////////////
 
-QPlaylistEdit::QPlaylistEdit(QWidget *parent, const QStringList &tracks)
+QPlaylistEdit::QPlaylistEdit(QWidget *parent, const QStringList &tracks, QString title)
         : QDialog(parent), ui(new Ui::QPlaylistEdit)
 {
     ui->setupUi(this);
     resize(400, 300);
 
+    ui->titleEdit->setText(title);
     ui->playlistWidget->addItems(tracks);
     ui->playlistWidget->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->playlistWidget->setDragDropMode(QAbstractItemView::InternalMove);

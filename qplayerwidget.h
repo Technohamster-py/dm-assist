@@ -80,7 +80,7 @@ class QPlaylistEdit : public QDialog {
 Q_OBJECT
 
 public:
-    explicit QPlaylistEdit(QWidget *parent = nullptr, const QStringList &tracks = {});
+    explicit QPlaylistEdit(QWidget *parent = nullptr, const QStringList &tracks = {}, QString title = "title");
     ~QPlaylistEdit();
 
     QStringList getUpdatedPlaylist() const;
