@@ -47,7 +47,6 @@ QPlayer::QPlayer(QWidget *parent, int id, QString title)
     }
 
     connect(ui->playButton, &QPushButton::clicked, this, &QPlayer::on_playButton_clicked);
-    connect(ui->editButton, &QPushButton::clicked, this, &QPlayer::on_editButton_clicked);
 }
 
 QPlayer::~QPlayer() {
