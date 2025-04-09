@@ -7,9 +7,15 @@
 
 #include "QAction"
 #include <QMainWindow>
+#include <QSettings>
 #include <QShortcut>
 #include "qplayerwidget.h"
+#include "settingsdialog.h"
 
+
+#define ORGANIZATION_NAME "Technohaster"
+#define ORGANIZATION_DOMAIN "github.com/Technohamster-py"
+#define APPLICATION_NAME "DM-assist"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -26,6 +32,10 @@ public:
 public slots:
     void stopAll();
 
+    QString workingDir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/dm_assist_files/";
+    void saveSettings();
+    void loadSettings();
+
 private:
     Ui::MainWindow *ui;
 
@@ -36,12 +46,15 @@ private:
     void setupPlayers();
     void setupShortcuts();
     void handlePlayerActivation(int index);
+    SettingsDialog *settingsDialog;
+    void configurePlayers();
 
 private slots:
     void loadConfigFile();
     void saveConfigFile();
     void on_actionOpen_triggered();
     void on_actionSave_triggered();
+    void on_actionSettings_triggered();
 };
 
 

@@ -12,8 +12,6 @@
 #include "qsaveconfigdialog.h"
 
 
-
-
 static void copyAllFiles(const QString& sourcePath, const QString& destPath);
 static void moveAllFiles(const QString& sourcePath, const QString& destPath);
 static bool removeDirectoryRecursively(const QString &directoryPath, bool deleteSelf=true);
@@ -46,7 +44,7 @@ MainWindow::~MainWindow() {
 
     if(reply == QMessageBox::Yes)
         saveConfigFile();
-
+    saveSettings();
     foreach(QPlayer* player, players){
         removeDirectoryRecursively(player->getLocalDirPath());
         delete player;
@@ -210,6 +208,25 @@ void MainWindow::on_actionOpen_triggered() {
 
 void MainWindow::on_actionSave_triggered() {
     saveConfigFile();
+}
+
+void MainWindow::saveSettings() {
+    QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
+    settings.setValue("general/dir", workingDir);
+    settings.sync();
+}
+
+void MainWindow::loadSettings() {
+    QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
+    workingDir = settings.value("general/dir", workingDir).toString();
+}
+
+void MainWindow::on_actionSettings_triggered() {
+    if(!settingsDialog)
+    {
+        settingsDialog = new SettingsDialog(ORGANIZATION_NAME, APPLICATION_NAME, this);
+    }
+    settingsDialog->exec();
 }
 
 

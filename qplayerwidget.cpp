@@ -1,6 +1,10 @@
+//
+// Created by arsen on 06.03.2024.
+//
+
 #include "qplayerwidget.h"
-#include "ui_qplayer.h"
-#include "ui_qplaylistedit.h"
+#include "ui_QPlayer.h"
+#include "ui_QPlaylistEdit.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -193,6 +197,16 @@ void QPlayer::dropEvent(QDropEvent *event) {
         addMedia(files);
     }
 }
+
+/**
+ * Установить имя локальной папки
+ * @param localDirPath путь к локальной папке
+ */
+void QPlayer::setLocalDirPath(QString localDirPath) {
+    localDir = localDirPath + playlistName;
+    emit localDirPathChanged();
+}
+
 
 QStringList QPlayer::availableAudioDevices() const {
     QStringList list;
