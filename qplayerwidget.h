@@ -33,6 +33,7 @@ public:
     void setPlayShortcut(QString key);
 
     void setAudioOutput(const QString &deviceName);
+    void setAudioOutput(int deviceIndex);
     QString currentDeviceName() const;
     QStringList availableAudioDevices() const;
 
@@ -78,7 +79,7 @@ private:
     QList<QString> filePaths;    // Список треков
     QList<HSTREAM> streams;      // Потоки BASS
 
-    int deviceIndex = -1;
+    int m_deviceIndex = -1;
 
     int currentTrackIndex = 0;
 

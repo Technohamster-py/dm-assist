@@ -11,10 +11,6 @@
 #include "QDomDocument"
 #include "qsaveconfigdialog.h"
 
-
-#include <qdebug.h>
-
-
 static void copyAllFiles(const QString& sourcePath, const QString& destPath);
 static void moveAllFiles(const QString& sourcePath, const QString& destPath);
 static bool removeDirectoryRecursively(const QString &directoryPath, bool deleteSelf=true);
@@ -224,6 +220,9 @@ void MainWindow::saveSettings() {
 void MainWindow::loadSettings() {
     QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
     workingDir = settings.value("general/dir", workingDir).toString();
+    for (QPlayer *player : players) {
+        player->setAudioOutput(settings.value("general/audioDevice", 0).toInt());
+    }
 }
 
 void MainWindow::on_actionSettings_triggered() {
@@ -232,6 +231,7 @@ void MainWindow::on_actionSettings_triggered() {
         settingsDialog = new SettingsDialog(ORGANIZATION_NAME, APPLICATION_NAME, this);
     }
     settingsDialog->exec();
+    loadSettings();
 }
 
 
@@ -285,7 +285,6 @@ static bool removeDirectoryRecursively(const QString &directoryPath, bool delete
 
     // Проверяем, существует ли директория
     if (!dir.exists()) {
-    //     qDebug() << "Директория не существует:" << directoryPath;
      return false; // Если директория не существует, возвращаем false
     }
 
@@ -300,7 +299,6 @@ static bool removeDirectoryRecursively(const QString &directoryPath, bool delete
          } else {
              // Удаляем файл
              if (!QFile::remove(fullPath)) {
-    //                 qDebug() << "Не удалось удалить файл:" << fullPath;
                  return false; // Если файл не удалось удалить, возвращаем false
              }
          }

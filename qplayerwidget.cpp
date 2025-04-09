@@ -11,7 +11,6 @@
 #include <QMimeData>
 #include <QFileInfo>
 #include <QDir>
-#include <QDebug>
 #include <QFile>
 #include <QStandardPaths>
 #include <QPushButton>
@@ -48,7 +47,6 @@ QPlayer::QPlayer(QWidget *parent, int id, QString title)
 
     if (!BASS_Init(BASS_DEVICE_INDEX, 44100, 0, nullptr, nullptr)) {
         auto err = BASS_ErrorGetCode();
-        qDebug() << "BASS init error:" << err;
         QMessageBox::critical(this, "BASS Init Failed",
                               QString("Could not initialize BASS on selected device.\nError code: %1").arg(err));
         return;
@@ -97,9 +95,7 @@ void QPlayer::playShortcutTriggered() {
 void QPlayer::addMedia(const QStringList &files) {
     for (const QString &file : files) {
         QFileInfo info(file);
-        qDebug() << file;
         QString dest = localDir + "/" + info.fileName();
-        qDebug() << dest;
 
         QDir destDir(localDir);
         if (!destDir.exists())
@@ -243,9 +239,9 @@ QStringList QPlayer::availableAudioDevices() const {
 }
 
 QString QPlayer::currentDeviceName() const {
-    if (deviceIndex < 0) return {};
+    if (m_deviceIndex < 0) return {};
     BASS_DEVICEINFO info;
-    if (BASS_GetDeviceInfo(deviceIndex, &info))
+    if (BASS_GetDeviceInfo(m_deviceIndex, &info))
         return QString::fromLocal8Bit(info.name);
     return {};
 }
@@ -263,12 +259,11 @@ void QPlayer::setAudioOutput(const QString &deviceName) {
     }
 
     if (found == -1) {
-        qWarning() << "Audio device not found:" << deviceName;
         return;
     }
 
     // Если уже такой активен — ничего не делаем
-    if (deviceIndex == found) return;
+    if (m_deviceIndex == found) return;
 
     stop();
     freeStreams();
@@ -279,8 +274,27 @@ void QPlayer::setAudioOutput(const QString &deviceName) {
         return;
     }
 
-    deviceIndex = found;
-    qDebug() << "Audio output set to:" << deviceName;
+    m_deviceIndex = found;
+}
+
+void QPlayer::setAudioOutput(int deviceIndex) {
+    if (deviceIndex == -1) {
+        return;
+    }
+
+    // Если уже такой активен — ничего не делаем
+    if (m_deviceIndex == deviceIndex) return;
+
+    stop();
+    freeStreams();
+    BASS_Free();
+
+    if (!BASS_Init(deviceIndex, 44100, 0, nullptr, nullptr)) {
+        QMessageBox::critical(this, "BASS Init Failed", "Could not initialize BASS on selected device.");
+        return;
+    }
+
+    m_deviceIndex = deviceIndex;
 }
 
 ////////////////////////////////////////////////

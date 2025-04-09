@@ -8,6 +8,8 @@
 #include <QSettings>
 #include <QFileDialog>
 #include <utility>
+#include <QDebug>
+#include "lib/bass/bass.h"
 
 
 SettingsDialog::SettingsDialog(QString organisationName, QString applicationName, QWidget *parent) :
@@ -20,8 +22,9 @@ SettingsDialog::SettingsDialog(QString organisationName, QString applicationName
     ui->navTree->expandAll();
     ui->navTree->setColumnHidden(1, true);
 
+    populateAudioDevices();
+
     connect(ui->navTree, &QTreeWidget::currentItemChanged, this, &SettingsDialog::onTreeItemSelected);
-    connect(ui->applyButton, &QPushButton::clicked, this, &QDialog::accept);
     connect(ui->cancelButton, &QPushButton::clicked, this, &QDialog::reject);
 }
 
@@ -55,7 +58,37 @@ void SettingsDialog::on_folderButton_clicked() {
 }
 
 void SettingsDialog::saveSettings() {
+    QSettings settings(m_organisationName, m_applicationName);
+    settings.setValue("general/audioDevice", deviceIndices[ui->deviceComboBox->currentIndex()]);
+    settings.setValue("general/dir", ui->folderEdit->text());
+    settings.sync();
+    accept();
+}
 
+void SettingsDialog::populateAudioDevices() {
+    deviceNames.clear();
+    deviceIndices.clear();
+    ui->deviceComboBox->clear();
+
+    BASS_DEVICEINFO info;
+
+    for (int i = 0; BASS_GetDeviceInfo(i, &info); i++) {
+        if (info.flags & BASS_DEVICE_ENABLED)
+        {
+            QString deviceName = QString::fromLocal8Bit(info.name);
+            deviceNames << deviceName;
+            deviceIndices << i;
+            ui->deviceComboBox->addItem(deviceName);
+        }
+    }
+    if (!deviceIndices.isEmpty())
+    {
+        ui->deviceComboBox->setCurrentIndex(0);
+    }
+}
+
+void SettingsDialog::on_applyButton_clicked() {
+    saveSettings();
 }
 
 

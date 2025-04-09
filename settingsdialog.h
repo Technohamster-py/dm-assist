@@ -26,6 +26,7 @@ protected:
 
 private slots:
     void onTreeItemSelected(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+    void on_applyButton_clicked();
 
     void on_folderButton_clicked();
 
@@ -34,6 +35,10 @@ private:
 
     QString m_organisationName;
     QString m_applicationName;
+
+    void populateAudioDevices();
+    QStringList deviceNames;
+    QVector<int> deviceIndices;
 };
 
 
