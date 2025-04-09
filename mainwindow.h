@@ -26,13 +26,12 @@ Q_OBJECT
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
+    QString workingDir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/dm_assist_files/";
 
     ~MainWindow() override;
 
 public slots:
     void stopAll();
-
-    QString workingDir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/dm_assist_files/";
     void saveSettings();
     void loadSettings();
 
@@ -47,7 +46,6 @@ private:
     void setupShortcuts();
     void handlePlayerActivation(int index);
     SettingsDialog *settingsDialog;
-    void configurePlayers();
 
 private slots:
     void loadConfigFile();

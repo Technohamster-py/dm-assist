@@ -27,6 +27,7 @@ public:
     void setPlaylistName(const QString &name);
 
     void addMedia(const QStringList &files);
+    void setLocalDirPath(QString localDirPath);
     QString getLocalDirPath() const { return localDir; }
 
     void setPlayShortcut(QString key);
