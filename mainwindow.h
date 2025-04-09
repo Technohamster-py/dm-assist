@@ -45,7 +45,7 @@ private:
     void setupPlayers();
     void setupShortcuts();
     void handlePlayerActivation(int index);
-    SettingsDialog *settingsDialog;
+    SettingsDialog *settingsDialog = nullptr;
 
 private slots:
     void loadConfigFile();

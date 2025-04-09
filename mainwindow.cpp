@@ -32,6 +32,9 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->mainLayout->addWidget(players[i], row, col);
     }
 
+    loadSettings();
+    saveSettings();
+
     setupShortcuts();
 }
 
@@ -155,7 +158,6 @@ void MainWindow::loadConfigFile() {
         configFile.close();
     }
 }
-
 
 /**
  * Сохранение конфигурационного файла

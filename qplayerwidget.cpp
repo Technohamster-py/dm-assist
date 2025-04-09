@@ -64,7 +64,6 @@ QPlayer::~QPlayer() {
     delete ui;
 }
 
-
 void QPlayer::setPlaylistName(const QString &name) {
     if(name != playlistName){
         playlistName = name;
@@ -178,7 +177,6 @@ void QPlayer::playTrackAt(int index) {
     ui->playButton->setText("Stop");
 }
 
-
 void QPlayer::playNextTrack() {
     ++currentTrackIndex;
 
@@ -188,7 +186,6 @@ void QPlayer::playNextTrack() {
 
     playTrackAt(currentTrackIndex);
 }
-
 
 void QPlayer::stop() {
     for (HSTREAM stream : streams) {
@@ -234,7 +231,6 @@ void QPlayer::setLocalDirPath(QString localDirPath) {
     localDir = localDirPath + playlistName;
     emit localDirPathChanged();
 }
-
 
 QStringList QPlayer::availableAudioDevices() const {
     QStringList list;
