@@ -36,6 +36,10 @@ public:
     QString currentDeviceName() const;
     QStringList availableAudioDevices() const;
 
+
+    void playTrackAt(int index);
+
+
 signals:
     void playerStarted();
     void playerStopped();
@@ -57,6 +61,9 @@ private slots:
     void on_editButton_clicked();
     void playShortcutTriggered();
 
+    void playNextTrack();
+
+
 private:
     void freeStreams();
 
@@ -72,6 +79,8 @@ private:
     QList<HSTREAM> streams;      // Потоки BASS
 
     int deviceIndex = -1;
+
+    int currentTrackIndex = 0;
 
 };
 

@@ -146,21 +146,49 @@ void QPlayer::edit() {
 }
 
 void QPlayer::play() {
-    stop();         // Остановим текущий поток
-    freeStreams();  // Освободим старые
+    stop();         // остановить предыдущее
+    freeStreams();  // очистить
 
-    for (const QString &file : filePaths) {
-        HSTREAM stream = BASS_StreamCreateFile(FALSE, file.toStdString().c_str(), 0, 0, BASS_SAMPLE_LOOP);
-        if (stream) {
-            streams.append(stream);
-        }
+    if (filePaths.isEmpty()) return;
+
+    for (const QString &file: filePaths) {
+        HSTREAM stream = BASS_StreamCreateFile(FALSE, file.toStdString().c_str(), 0, 0, 0);
+        streams.append(stream);
     }
 
-    if (!streams.isEmpty()) {
-        BASS_ChannelPlay(streams.first(), FALSE);
-        isActive = true;
-    }
+    currentTrackIndex = 0;
+    playTrackAt(currentTrackIndex);
 }
+
+void QPlayer::playTrackAt(int index) {
+    if (index < 0 || index >= streams.size()) return;
+
+    stop(); // на всякий случай
+
+    HSTREAM stream = streams[index];
+    BASS_ChannelPlay(stream, FALSE);
+
+    // Установка синхронизации на окончание трека
+    BASS_ChannelSetSync(stream, BASS_SYNC_END, 0, [](HSYNC, DWORD handle, DWORD, void *user) {
+        QPlayer *self = static_cast<QPlayer*>(user);
+        QMetaObject::invokeMethod(self, "playNextTrack", Qt::QueuedConnection);
+    }, this);
+
+    isActive = true;
+    ui->playButton->setText("Stop");
+}
+
+
+void QPlayer::playNextTrack() {
+    ++currentTrackIndex;
+
+    if (currentTrackIndex >= streams.size()) {
+        currentTrackIndex = 0; // или stop(), если не нужно зацикливать
+    }
+
+    playTrackAt(currentTrackIndex);
+}
+
 
 void QPlayer::stop() {
     for (HSTREAM stream : streams) {
