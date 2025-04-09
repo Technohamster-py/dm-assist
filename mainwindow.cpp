@@ -12,6 +12,9 @@
 #include "qsaveconfigdialog.h"
 
 
+#include <qdebug.h>
+
+
 static void copyAllFiles(const QString& sourcePath, const QString& destPath);
 static void moveAllFiles(const QString& sourcePath, const QString& destPath);
 static bool removeDirectoryRecursively(const QString &directoryPath, bool deleteSelf=true);
