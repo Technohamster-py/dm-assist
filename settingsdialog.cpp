@@ -23,6 +23,7 @@ SettingsDialog::SettingsDialog(QString organisationName, QString applicationName
     ui->navTree->setColumnHidden(1, true);
 
     populateAudioDevices();
+    loadSettings();
 
     connect(ui->navTree, &QTreeWidget::currentItemChanged, this, &SettingsDialog::onTreeItemSelected);
     connect(ui->cancelButton, &QPushButton::clicked, this, &QDialog::reject);
@@ -47,6 +48,7 @@ void SettingsDialog::loadSettings() {
     QSettings settings(m_organisationName, m_applicationName);
 
     ui->folderEdit->setText(settings.value("general/dir", "").toString());
+    ui->deviceComboBox->setCurrentIndex(settings.value("general/audioDevice", 0).toInt());
 }
 
 void SettingsDialog::on_folderButton_clicked() {
