@@ -45,10 +45,11 @@ void SettingsDialog::onTreeItemSelected(QTreeWidgetItem *current, QTreeWidgetIte
 }
 
 void SettingsDialog::loadSettings() {
+
     QSettings settings(m_organisationName, m_applicationName);
 
-    ui->folderEdit->setText(settings.value("general/dir", "").toString());
-    ui->deviceComboBox->setCurrentIndex(settings.value("general/audioDevice", 0).toInt());
+    ui->folderEdit->setText(settings.value(paths.general.dir, "").toString());
+    ui->deviceComboBox->setCurrentIndex(settings.value(paths.general.audioDevice, 0).toInt());
 }
 
 void SettingsDialog::on_folderButton_clicked() {
@@ -61,8 +62,8 @@ void SettingsDialog::on_folderButton_clicked() {
 
 void SettingsDialog::saveSettings() {
     QSettings settings(m_organisationName, m_applicationName);
-    settings.setValue("general/audioDevice", deviceIndices[ui->deviceComboBox->currentIndex()]);
-    settings.setValue("general/dir", ui->folderEdit->text());
+    settings.setValue(paths.general.audioDevice, deviceIndices[ui->deviceComboBox->currentIndex()]);
+    settings.setValue(paths.general.dir, ui->folderEdit->text());
     settings.sync();
     accept();
 }

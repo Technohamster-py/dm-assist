@@ -7,7 +7,7 @@
 
 #include <QDialog>
 #include <QTreeWidget>
-
+#include "settings.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class SettingsDialog; }
@@ -23,6 +23,7 @@ public:
 protected:
     void loadSettings();
     void saveSettings();
+    Settings paths;
 
 private slots:
     void onTreeItemSelected(QTreeWidgetItem *current, QTreeWidgetItem *previous);

@@ -1,15 +1,16 @@
  //
 // Created by arseniy on 11.10.2024.
 //
-#include <QTextStream>
 #include "mainwindow.h"
 #include "ui_MainWindow.h"
-#include "QFileDialog"
-#include "QMessageBox"
-#include "QFile"
-#include "QFileInfo"
+
 #include "QDomDocument"
+#include "QFile"
+#include "QFileDialog"
+#include "QFileInfo"
+#include "QMessageBox"
 #include "qsaveconfigdialog.h"
+#include <QTextStream>
 
 static void copyAllFiles(const QString& sourcePath, const QString& destPath);
 static void moveAllFiles(const QString& sourcePath, const QString& destPath);
@@ -194,18 +195,18 @@ void MainWindow::on_actionSave_triggered() {
 
 void MainWindow::saveSettings() {
     QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
-    settings.setValue("general/dir", workingDir);
+    settings.setValue(paths.general.dir, workingDir);
     settings.sync();
 }
 
 void MainWindow::loadSettings() {
     QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
-    workingDir = settings.value("general/dir", workingDir).toString();
+    workingDir = settings.value(paths.general.dir, workingDir).toString();
     QDir dir(workingDir);
     if (!dir.exists())
         dir.mkpath(".");
     for (QPlayer *player : players) {
-        player->setAudioOutput(settings.value("general/audioDevice", 0).toInt());
+        player->setAudioOutput(settings.value(paths.general.audioDevice, 0).toInt());
     }
 }
 
