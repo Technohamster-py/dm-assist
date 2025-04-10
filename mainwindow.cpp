@@ -201,6 +201,9 @@ void MainWindow::saveSettings() {
 void MainWindow::loadSettings() {
     QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
     workingDir = settings.value("general/dir", workingDir).toString();
+    QDir dir(workingDir);
+    if (!dir.exists())
+        dir.mkpath(".");
     for (QPlayer *player : players) {
         player->setAudioOutput(settings.value("general/audioDevice", 0).toInt());
     }
