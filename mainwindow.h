@@ -32,6 +32,7 @@ public:
 
 public slots:
     void stopAll();
+    void stopOtherPlayers(int exeptId);
     void saveSettings();
     void loadSettings();
 
@@ -44,7 +45,6 @@ private:
 
     void setupPlayers();
     void setupShortcuts();
-    void handlePlayerActivation(int index);
     SettingsDialog *settingsDialog = nullptr;
 
 private slots:

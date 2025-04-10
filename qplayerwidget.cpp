@@ -88,7 +88,7 @@ void QPlayer::setPlayShortcut(QString key) {
 }
 
 void QPlayer::playShortcutTriggered() {
-    emit playerStarted(); // для внешнего управления, если нужно
+    emit playerStarted(id); // для внешнего управления, если нужно
     play();
 }
 
@@ -141,7 +141,7 @@ void QPlayer::edit() {
 }
 
 void QPlayer::play() {
-    stop();         // остановить предыдущее
+    emit playerStarted(id);
     freeStreams();  // очистить
 
     if (filePaths.isEmpty()) return;

@@ -25,6 +25,7 @@ public:
 
     QString getPlaylistName() const { return playlistName; }
     void setPlaylistName(const QString &name);
+    int getPlaylistId() const {return id;}
 
     void addMedia(const QStringList &files);
     void setLocalDirPath(QString localDirPath);
@@ -42,7 +43,7 @@ public:
 
 
 signals:
-    void playerStarted();
+    void playerStarted(int id);
     void playerStopped();
     void playlistNameChanged();
     void localDirPathChanged();

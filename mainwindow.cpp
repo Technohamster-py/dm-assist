@@ -26,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
         int row = i / 3;
         int col = i % 3;
         ui->mainLayout->addWidget(players[i], row, col);
+        connect(players[i], SIGNAL(playerStarted(int)), this, SLOT(stopOtherPlayers(int)));
     }
 
     loadSettings();
@@ -63,13 +64,7 @@ MainWindow::~MainWindow() {
  */
 void MainWindow::setupPlayers() {
      for (int i = 0; i < 9; ++i) {
-         auto *player = new QPlayer(this, i + 1, QString("Player %1").arg(i + 1));
-
-         // Подключим слот — если кто-то начал играть вручную
-         connect(player, &QPlayer::playerStarted, [this, i]() {
-             handlePlayerActivation(i);
-         });
-
+         auto *player = new QPlayer(this, i, QString("Player %1").arg(i + 1));
          players.append(player);
      }
 }
@@ -78,21 +73,7 @@ void MainWindow::setupShortcuts() {
     for (int i = 0; i < players.size(); ++i) {
         QString key = QString("Ctrl+%1").arg(i + 1);
         auto *shortcut = new QShortcut(QKeySequence(key), this);
-        connect(shortcut, &QShortcut::activated, [this, i]() {
-            handlePlayerActivation(i);
-        });
-
         players[i]->setPlayShortcut(QString::number(i + 1));
-    }
-}
-
-
-void MainWindow::handlePlayerActivation(int index) {
-    for (int i = 0; i < players.size(); ++i) {
-        if (i == index)
-            players[i]->play();
-        else
-            players[i]->stop();
     }
 }
 
@@ -232,6 +213,13 @@ void MainWindow::on_actionSettings_triggered() {
     }
     settingsDialog->exec();
     loadSettings();
+}
+
+void MainWindow::stopOtherPlayers(int exeptId) {
+    for (int i = 0; i < 9; ++i) {
+        if (players[i]->getPlaylistId() != exeptId)
+            players[i]->stop();
+    }
 }
 
 
