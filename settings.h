@@ -9,8 +9,9 @@
 
 struct Settings{
     struct General{
-        QString dir = "general/dir";                    ///< String
         QString audioDevice = "general/audioDevice";    ///< int
+        QString dir = "general/dir";                    ///< String
+        QString lang = "general/lang";                  ///< String
     };
 
     General general;
