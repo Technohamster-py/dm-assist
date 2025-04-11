@@ -64,26 +64,6 @@
     <string>Ctrl+O</string>
    </property>
   </action>
-  <action name="actionLight">
-   <property name="text">
-    <string>Light</string>
-   </property>
-  </action>
-  <action name="actionDark">
-   <property name="text">
-    <string>Dark</string>
-   </property>
-  </action>
-  <action name="actionRu">
-   <property name="text">
-    <string>Русский</string>
-   </property>
-  </action>
-  <action name="actionEng">
-   <property name="text">
-    <string>English</string>
-   </property>
-  </action>
   <action name="actionNew">
    <property name="text">
     <string>New</string>
