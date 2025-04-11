@@ -100,6 +100,7 @@ public:
 
 private slots:
     void on_addButton_clicked();
+    void om_removeButton_clicked();
 
 private:
     Ui::QPlaylistEdit *ui;

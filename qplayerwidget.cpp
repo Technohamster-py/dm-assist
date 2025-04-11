@@ -336,3 +336,10 @@ QStringList QPlaylistEdit::getUpdatedPlaylist() const {
 QString QPlaylistEdit::getPlaylistName() const {
     return ui->titleEdit->text();
 }
+
+void QPlaylistEdit::om_removeButton_clicked() {
+    auto selectedTracks = ui->playlistWidget->selectedItems();
+    for (QListWidgetItem *track : selectedTracks) {
+        delete ui->playlistWidget->takeItem(ui->playlistWidget->row(track));
+    }
+}
