@@ -8,6 +8,7 @@ int main(int argc, char *argv[]) {
     QCoreApplication::setApplicationName(APPLICATION_NAME);
 
     QApplication a(argc, argv);
+    QApplication::setWindowIcon(QIcon(":/app-icon.png"));
     MainWindow window;
     window.show();
 
