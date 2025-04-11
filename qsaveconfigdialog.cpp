@@ -2,25 +2,25 @@
 #include "QStandardPaths"
 
 SaveConfigDialog::SaveConfigDialog(QWidget *parent)  : QDialog(parent), warningLabel(nullptr) {
-    setWindowTitle("Сохранение проекта");
+    setWindowTitle(tr("Сохранение проекта"));
     resize(400, 200);
 
     // Метки
-    QLabel* projectNameLabel = new QLabel("Имя проекта:", this);
-    QLabel* rootFolderLabel = new QLabel("Корневая папка:", this);
+    QLabel* projectNameLabel = new QLabel(tr("Имя проекта:"), this);
+    QLabel* rootFolderLabel = new QLabel(tr("Корневая папка:"), this);
 
     // Поля ввода
     projectNameEdit = new QLineEdit(this);
     rootFolderEdit = new QLineEdit(this);
 
     // Кнопка выбора директории
-    QPushButton* browseButton = new QPushButton("Выбрать папку...", this);
+    QPushButton* browseButton = new QPushButton(tr("Выбрать папку..."), this);
     connect(browseButton, &QPushButton::clicked, this, &SaveConfigDialog::onBrowseClicked);
 
     // Кнопки действий
-    QPushButton* saveButton = new QPushButton("Сохранить", this);
+    QPushButton* saveButton = new QPushButton(tr("Сохранить"), this);
     connect(saveButton, &QPushButton::clicked, this, &SaveConfigDialog::onSaveClicked);
-    QPushButton* cancelButton = new QPushButton("Отмена", this);
+    QPushButton* cancelButton = new QPushButton(tr("Отмена"), this);
     connect(cancelButton, &QPushButton::clicked, this, &QDialog::reject);
 
     // Метка для предупреждений
@@ -56,10 +56,10 @@ SaveConfigDialog::SaveConfigDialog(QWidget *parent)  : QDialog(parent), warningL
 
 void SaveConfigDialog::onBrowseClicked() {
     QString directory = QFileDialog::getExistingDirectory(this,
-                                                          "Выберите папку",
+                                                          tr("Выберите папку"),
                                                           rootFolderEdit->text().trimmed());
     if (!directory.isEmpty()) {
-        showWarning(QString("Проект будет сохранен в папку %1/%2").arg(directory, projectNameEdit->text().trimmed()));
+        showWarning(QString(tr("Проект будет сохранен в папку %1/%2")).arg(directory, projectNameEdit->text().trimmed()));
         rootFolderEdit->setText(directory);
     }
 }
@@ -70,11 +70,11 @@ void SaveConfigDialog::onSaveClicked() {
 
     // Проверяем введенные данные
     if (projectName.isEmpty()) {
-        showWarning("Введите имя проекта.");
+        showWarning(tr("Введите имя проекта."));
         return;
     }
     if (rootFolder.isEmpty()) {
-        showWarning("Укажите корневую папку.");
+        showWarning(tr("Укажите корневую папку."));
         return;
     }
 
@@ -84,7 +84,7 @@ void SaveConfigDialog::onSaveClicked() {
 
     // Проверяем, пуста ли папка
     if (!dir.entryList(QDir::NoDotAndDotDot | QDir::AllEntries).isEmpty()) {
-        showWarning("Указанная папка не пуста.");
+        showWarning(tr("Указанная папка не пуста."));
         return;
     }
 
@@ -92,7 +92,7 @@ void SaveConfigDialog::onSaveClicked() {
     filename = dir.filePath(projectName + ".xml");
     QFile configFile(filename);
     if (!configFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        showWarning("Не удалось создать файл.");
+        showWarning(tr("Не удалось создать файл."));
         return;
     }
 
