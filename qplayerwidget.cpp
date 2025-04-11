@@ -167,7 +167,7 @@ void QPlayer::playTrackAt(int index) {
     }, this);
 
     isActive = true;
-    ui->playButton->setText("Stop");
+    ui->playButton->setStyleSheet("background-color: #a5bfda;");
 }
 
 void QPlayer::playNextTrack() {
@@ -186,6 +186,7 @@ void QPlayer::stop() {
     }
     isActive = false;
     emit playerStopped();
+    ui->playButton->setStyleSheet("background: transparent;");
 }
 
 void QPlayer::freeStreams() {
