@@ -40,6 +40,8 @@ private:
     void populateAudioDevices();
     QStringList deviceNames;
     QVector<int> deviceIndices;
+
+    void populateLanguages();
 };
 
 

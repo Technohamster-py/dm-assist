@@ -23,6 +23,8 @@ SettingsDialog::SettingsDialog(QString organisationName, QString applicationName
     ui->navTree->setColumnHidden(1, true);
 
     populateAudioDevices();
+    populateLanguages();
+
     loadSettings();
 
     connect(ui->navTree, &QTreeWidget::currentItemChanged, this, &SettingsDialog::onTreeItemSelected);
@@ -50,6 +52,11 @@ void SettingsDialog::loadSettings() {
 
     ui->folderEdit->setText(settings.value(paths.general.dir, "").toString());
     ui->deviceComboBox->setCurrentIndex(settings.value(paths.general.audioDevice, 0).toInt());
+
+    QString currentLanguage = settings.value(paths.general.lang, "ru_RU").toString();
+    int index = ui->languageComboBox->findData(currentLanguage);
+    if (index != -1)
+        ui->languageComboBox->setCurrentIndex(index);
 }
 
 void SettingsDialog::on_folderButton_clicked() {
@@ -64,8 +71,8 @@ void SettingsDialog::saveSettings() {
     QSettings settings(m_organisationName, m_applicationName);
     settings.setValue(paths.general.audioDevice, deviceIndices[ui->deviceComboBox->currentIndex()]);
     settings.setValue(paths.general.dir, ui->folderEdit->text());
+    settings.setValue(paths.general.lang, ui->languageComboBox->currentData().toString());
     settings.sync();
-    accept();
 }
 
 void SettingsDialog::populateAudioDevices() {
@@ -92,6 +99,21 @@ void SettingsDialog::populateAudioDevices() {
 
 void SettingsDialog::on_applyButton_clicked() {
     saveSettings();
+    accept();
+}
+
+void SettingsDialog::populateLanguages() {
+    QDir langDir(QCoreApplication::applicationDirPath() + "/translations");
+    QStringList qmFiles = langDir.entryList(QStringList() << "dm-assist_*.qm", QDir::Files);
+
+    for (const QString &file : qmFiles)
+    {
+        QString locale = file.mid(10, file.length() - 13); // "dm-assist" (9 chars) + ".qm" (3 chars)
+        QLocale ql(locale.mid(0, 2));
+        QString langName = ql.nativeLanguageName();
+        ui->languageComboBox->addItem(langName, locale);
+    }
+    ui->languageComboBox->model()->sort(0);
 }
 
 

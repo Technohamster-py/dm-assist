@@ -34,6 +34,9 @@ MainWindow::MainWindow(QWidget *parent) :
     saveSettings();
 
     setupShortcuts();
+
+    connect(ui->actionSave, SIGNAL(triggered(bool)), this, SLOT(saveConfigFile()));
+    connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(loadConfigFile()));
 }
 
 /**
@@ -42,8 +45,8 @@ MainWindow::MainWindow(QWidget *parent) :
  */
 MainWindow::~MainWindow() {
     QMessageBox::StandardButton reply = QMessageBox::question(this,
-                                                              "Сохранение конфигурации",
-                                                              "Сохранить проект?",
+                                                              tr("Сохранение конфигурации"),
+                                                              tr("Сохранить проект?"),
                                                               QMessageBox::Yes | QMessageBox::No);
 
     if(reply == QMessageBox::Yes)
@@ -185,14 +188,6 @@ void MainWindow::saveConfigFile() {
     configFile.close();
 }
 
-void MainWindow::on_actionOpen_triggered() {
-    loadConfigFile();
-}
-
-void MainWindow::on_actionSave_triggered() {
-    saveConfigFile();
-}
-
 void MainWindow::saveSettings() {
     QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
     settings.setValue(paths.general.dir, workingDir);
@@ -208,6 +203,7 @@ void MainWindow::loadSettings() {
     for (QPlayer *player : players) {
         player->setAudioOutput(settings.value(paths.general.audioDevice, 0).toInt());
     }
+    changeLanguage(settings.value(paths.general.lang, "ru_RU").toString());
 }
 
 void MainWindow::on_actionSettings_triggered() {
@@ -228,11 +224,11 @@ void MainWindow::stopOtherPlayers(int exeptId) {
 
 void MainWindow::changeLanguage(const QString &languageCode) {
     qApp->removeTranslator(&translator);
-    if (translator.load("translations/dm-assist_" + languageCode + ".qm"))
+    if (translator.load(QCoreApplication::applicationDirPath() + "/translations/dm-assist_" + languageCode + ".qm"))
     {
         qApp->installTranslator(&translator);
         currentLanguage = languageCode;
-        ui->retranslateui(this);
+        ui->retranslateUi(this);
     }
 }
 
