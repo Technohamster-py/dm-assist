@@ -226,6 +226,16 @@ void MainWindow::stopOtherPlayers(int exeptId) {
     }
 }
 
+void MainWindow::changeLanguage(const QString &languageCode) {
+    qApp->removeTranslator(&translator);
+    if (translator.load("translations/dm-assist_" + languageCode + ".qm"))
+    {
+        qApp->installTranslator(&translator);
+        currentLanguage = languageCode;
+        ui->retranslateui(this);
+    }
+}
+
 
 /**
  * Копирование всех фалов из папки sourcePath в папку destPath

@@ -9,6 +9,7 @@
 #include <QMainWindow>
 #include <QSettings>
 #include <QShortcut>
+#include <QTranslator>
 #include "qplayerwidget.h"
 #include "settingsdialog.h"
 
@@ -30,6 +31,11 @@ public:
 
     ~MainWindow() override;
 
+    void changeLanguage(const QString &languageCode);
+
+signals:
+    void languageChanged(const QString &languageCode);
+
 public slots:
     void stopAll();
     void stopOtherPlayers(int exeptId);
@@ -38,9 +44,10 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
+    QTranslator translator;
+    QString currentLanguage;
 
     int deviceIndex = -1;
-
     QVector<QPlayer*> players;
 
     void setupPlayers();
