@@ -67,7 +67,9 @@ include_directories(
 qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
 add_custom_target(translations DEPENDS ${QM_FILES})
 
-add_executable(${PROJECT_NAME} WIN32 main.cpp
+add_executable(${PROJECT_NAME}
+        WIN32
+        main.cpp
         ${HEADER_FILES}
         ${SOURCE_FILES}
         ${UI_FILES}
@@ -84,8 +86,6 @@ target_link_libraries(${PROJECT_NAME}
         Qt5::Xml
         ${BASS_LIBRARY}
 )
-
-#target_sources(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/static/resources.rc)
 
 if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     set(DEBUG_SUFFIX)
