@@ -101,9 +101,6 @@ void QPlayer::addMedia(const QStringList &files) {
         if (!destDir.exists())
             destDir.mkpath(".");
 
-        if (QFile::exists(dest)) {
-            QFile::remove(dest);
-        }
         QFile::copy(file, dest);
         filePaths.append(dest);
     }
