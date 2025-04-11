@@ -4,229 +4,185 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.ui" line="456"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="594"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="638"/>
-        <source>MainWindow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="496"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="611"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="645"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="611"/>
         <source>7</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1327"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="599"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="640"/>
+        <location filename="../mainwindow.ui" line="61"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="87"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="599"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="546"/>
-        <location filename="../mainwindow.ui" line="635"/>
-        <location filename="../mainwindow.ui" line="724"/>
-        <location filename="../mainwindow.ui" line="813"/>
-        <location filename="../mainwindow.ui" line="902"/>
-        <location filename="../mainwindow.ui" line="991"/>
-        <location filename="../mainwindow.ui" line="1080"/>
-        <location filename="../mainwindow.ui" line="1169"/>
-        <location filename="../mainwindow.ui" line="1258"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="613"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="616"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="619"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="622"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="625"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="628"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="631"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="634"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="637"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="647"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="650"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="653"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="656"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="659"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="662"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="665"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="668"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="671"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="613"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="616"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="619"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="622"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="625"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="628"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="631"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="634"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="637"/>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Пуск</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="590"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="614"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="648"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="614"/>
         <source>8</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="679"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="617"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="651"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="617"/>
         <source>9</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="768"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="620"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="654"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="620"/>
         <source>4</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="857"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="623"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="657"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="623"/>
         <source>5</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="946"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="626"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="660"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="626"/>
         <source>6</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1035"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="629"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="663"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="629"/>
         <source>1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1124"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="632"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="666"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="632"/>
         <source>2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1213"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="635"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="669"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="635"/>
         <source>3</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1285"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="638"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="672"/>
+        <location filename="../mainwindow.ui" line="40"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="96"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="638"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1289"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="639"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="673"/>
-        <source>Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1300"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="641"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="675"/>
-        <source>Language</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1319"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="595"/>
+        <location filename="../mainwindow.ui" line="77"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="95"/>
         <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="639"/>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
+        <source>Settings</source>
+        <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1322"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="597"/>
-        <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1330"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="601"/>
-        <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1335"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="603"/>
         <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="641"/>
+        <source>Language</source>
+        <translation>Язык</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="14"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="82"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="594"/>
+        <source>DM-assist music</source>
+        <translation>DM-assist музыка</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="53"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="83"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="595"/>
+        <source>Save</source>
+        <translation>Сохранить</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="56"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="85"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="597"/>
+        <source>Ctrl+S</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="64"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="89"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="601"/>
+        <source>Ctrl+O</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="603"/>
         <source>Light</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1340"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="604"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="642"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="604"/>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1345"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="605"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="643"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="605"/>
         <source>Русский</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1350"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="606"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="644"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="606"/>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1355"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="607"/>
+        <location filename="../mainwindow.ui" line="69"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="91"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="607"/>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Новый</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1358"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="609"/>
+        <location filename="../mainwindow.ui" line="72"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="93"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="609"/>
         <source>Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1293"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="640"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="674"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_MainWindow.h" line="640"/>
         <source>Theme</source>
+        <translation>Тема</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="50"/>
+        <source>Сохранение конфигурации</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="52"/>
-        <source>Open player config file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="54"/>
-        <source>Xml file (*.xml)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="62"/>
-        <source>Open File error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="95"/>
-        <source>Save to</source>
+        <location filename="../mainwindow.cpp" line="51"/>
+        <source>Сохранить проект?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="97"/>
-        <source>xml file (*.xml)</source>
-        <translation type="unfinished"></translation>
+        <source>Open player config file</source>
+        <translation>Открыть конфигурационный файл проекта</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="104"/>
+        <location filename="../mainwindow.cpp" line="99"/>
+        <source>Xml file (*.xml)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="107"/>
+        <source>Open File error</source>
+        <translation>Open file error</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="163"/>
         <source>Open file error</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -390,148 +346,276 @@
 <context>
     <name>QPlayer</name>
     <message>
-        <location filename="../qplayer.ui" line="20"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="139"/>
+        <location filename="../qplayer.ui" line="32"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="142"/>
         <location filename="../cmake-build-release/DM-assist_autogen/include/ui_QPlayer.h" line="139"/>
         <source>QPlayer</source>
         <translation>QPlayer</translation>
     </message>
     <message>
-        <location filename="../qplayer.ui" line="57"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="140"/>
+        <location filename="../qplayer.ui" line="95"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="144"/>
         <location filename="../cmake-build-release/DM-assist_autogen/include/ui_QPlayer.h" line="140"/>
         <source>num</source>
         <translation>num</translation>
     </message>
     <message>
-        <location filename="../qplayer.ui" line="69"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="141"/>
+        <location filename="../qplayer.ui" line="81"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="143"/>
         <location filename="../cmake-build-release/DM-assist_autogen/include/ui_QPlayer.h" line="141"/>
         <source>Title</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../qplayer.ui" line="95"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="143"/>
         <location filename="../cmake-build-release/DM-assist_autogen/include/ui_QPlayer.h" line="143"/>
         <source>previous track</source>
         <translation>предыдущий трек</translation>
     </message>
     <message>
-        <location filename="../qplayer.ui" line="109"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="147"/>
+        <location filename="../qplayer.ui" line="115"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="146"/>
         <location filename="../cmake-build-release/DM-assist_autogen/include/ui_QPlayer.h" line="147"/>
         <source>stop</source>
         <translation>Стоп</translation>
     </message>
     <message>
-        <location filename="../qplayer.ui" line="123"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="151"/>
+        <location filename="../qplayer.ui" line="161"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="154"/>
         <location filename="../cmake-build-release/DM-assist_autogen/include/ui_QPlayer.h" line="151"/>
         <source>play</source>
         <translation>Пуск</translation>
     </message>
     <message>
-        <location filename="../qplayer.ui" line="137"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="155"/>
         <location filename="../cmake-build-release/DM-assist_autogen/include/ui_QPlayer.h" line="155"/>
         <source>pause</source>
         <translation>Пауза</translation>
     </message>
     <message>
-        <location filename="../qplayer.ui" line="151"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="159"/>
         <location filename="../cmake-build-release/DM-assist_autogen/include/ui_QPlayer.h" line="159"/>
         <source>next track</source>
         <translation>Следующий трек</translation>
     </message>
     <message>
-        <location filename="../qplayer.ui" line="165"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="163"/>
+        <location filename="../qplayer.ui" line="129"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="150"/>
         <location filename="../cmake-build-release/DM-assist_autogen/include/ui_QPlayer.h" line="163"/>
         <source>Edit playlist</source>
         <translation>Редактировать плейлист</translation>
     </message>
     <message>
-        <location filename="../qplayerwidget.cpp" line="139"/>
         <source>Can not open XML config: </source>
-        <translation>Невозможно открыть XML конфиг: </translation>
+        <translation type="vanished">Невозможно открыть XML конфиг: </translation>
     </message>
     <message>
-        <location filename="../qplayerwidget.cpp" line="141"/>
         <source>File error</source>
-        <translation>Ошибка файла</translation>
+        <translation type="vanished">Ошибка файла</translation>
     </message>
     <message>
-        <location filename="../qplayerwidget.cpp" line="180"/>
         <source>XML file error</source>
-        <translation>Ошибка XML файла</translation>
+        <translation type="vanished">Ошибка XML файла</translation>
     </message>
     <message>
-        <location filename="../qplayerwidget.cpp" line="181"/>
         <source>Can not open XML config file</source>
-        <translation>Невозможно открыть XML файл кнофигурации</translation>
+        <translation type="vanished">Невозможно открыть XML файл кнофигурации</translation>
     </message>
 </context>
 <context>
     <name>QPlaylistEdit</name>
     <message>
         <location filename="../qplaylistedit.ui" line="14"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplaylistedit.h" line="123"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_QPlaylistEdit.h" line="105"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplaylistedit.h" line="104"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_QPlaylistEdit.h" line="114"/>
         <source>QPlaylistEdit</source>
         <translation>QPlaylistEdit</translation>
     </message>
     <message>
-        <location filename="../qplaylistedit.ui" line="57"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplaylistedit.h" line="125"/>
-        <source>Load from config file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qplaylistedit.ui" line="71"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplaylistedit.h" line="129"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_QPlaylistEdit.h" line="116"/>
         <source>Add folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qplaylistedit.ui" line="85"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplaylistedit.h" line="133"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_QPlaylistEdit.h" line="107"/>
+        <location filename="../qplaylistedit.ui" line="57"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplaylistedit.h" line="106"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_QPlaylistEdit.h" line="120"/>
         <source>Add audio file</source>
         <translation>Добавить аудиофайл</translation>
     </message>
     <message>
-        <location filename="../qplaylistedit.ui" line="99"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplaylistedit.h" line="137"/>
-        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_QPlaylistEdit.h" line="111"/>
+        <location filename="../qplaylistedit.ui" line="71"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplaylistedit.h" line="110"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_QPlaylistEdit.h" line="124"/>
         <source>Remove file from playlist</source>
         <translation>Удалить файл из плейлиста</translation>
     </message>
     <message>
-        <location filename="../qplayerwidget.cpp" line="272"/>
         <source>Track title</source>
-        <translation>Название трека</translation>
+        <translation type="vanished">Название трека</translation>
     </message>
     <message>
-        <location filename="../qplayerwidget.cpp" line="272"/>
         <source>File path</source>
-        <translation>Путь к файлу</translation>
+        <translation type="vanished">Путь к файлу</translation>
     </message>
     <message>
-        <location filename="../qplayerwidget.cpp" line="290"/>
         <source>Add tracks</source>
-        <translation>Дбавиьт треки</translation>
+        <translation type="vanished">Дбавиьт треки</translation>
     </message>
     <message>
-        <location filename="../qplayerwidget.cpp" line="292"/>
         <source>Audio files (*.mp3)</source>
-        <translation>аудиофайлы (*mp3)</translation>
+        <translation type="vanished">аудиофайлы (*mp3)</translation>
+    </message>
+</context>
+<context>
+    <name>SaveConfigDialog</name>
+    <message>
+        <location filename="../qsaveconfigdialog.cpp" line="5"/>
+        <source>Сохранение проекта</source>
+        <translation>Сохранение проекта</translation>
     </message>
     <message>
-        <location filename="../qplayerwidget.cpp" line="323"/>
-        <source>Open folder</source>
-        <translation type="unfinished"></translation>
+        <location filename="../qsaveconfigdialog.cpp" line="9"/>
+        <source>Имя проекта:</source>
+        <translation>Имя проекта:</translation>
+    </message>
+    <message>
+        <location filename="../qsaveconfigdialog.cpp" line="10"/>
+        <source>Корневая папка:</source>
+        <translation>Корневая папка:</translation>
+    </message>
+    <message>
+        <location filename="../qsaveconfigdialog.cpp" line="17"/>
+        <source>Выбрать папку...</source>
+        <translation>Выбрать папку...</translation>
+    </message>
+    <message>
+        <location filename="../qsaveconfigdialog.cpp" line="21"/>
+        <source>Сохранить</source>
+        <translation>Сохранить</translation>
+    </message>
+    <message>
+        <location filename="../qsaveconfigdialog.cpp" line="23"/>
+        <source>Отмена</source>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <location filename="../qsaveconfigdialog.cpp" line="59"/>
+        <source>Выберите папку</source>
+        <translation>Выбрать папку</translation>
+    </message>
+    <message>
+        <location filename="../qsaveconfigdialog.cpp" line="62"/>
+        <source>Проект будет сохранен в папку %1/%2</source>
+        <translation>Проект будет сохранен в папку %1/%2</translation>
+    </message>
+    <message>
+        <location filename="../qsaveconfigdialog.cpp" line="73"/>
+        <source>Введите имя проекта.</source>
+        <translation>Введите имя проекта.</translation>
+    </message>
+    <message>
+        <location filename="../qsaveconfigdialog.cpp" line="77"/>
+        <source>Укажите корневую папку.</source>
+        <translation>Укажите корневую папку.</translation>
+    </message>
+    <message>
+        <location filename="../qsaveconfigdialog.cpp" line="87"/>
+        <source>Указанная папка не пуста.</source>
+        <translation>Указанная папка не пуста.</translation>
+    </message>
+    <message>
+        <location filename="../qsaveconfigdialog.cpp" line="95"/>
+        <source>Не удалось создать файл.</source>
+        <translation>Не удалосьсоздать файл</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog</name>
+    <message>
+        <location filename="../settingsdialog.ui" line="29"/>
+        <location filename="../settingsdialog.ui" line="54"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="187"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="189"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_SettingsDialog.h" line="181"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_SettingsDialog.h" line="183"/>
+        <source>Settings</source>
+        <translation>Настройки</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="64"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="195"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_SettingsDialog.h" line="188"/>
+        <source>General</source>
+        <translation>Общее</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="67"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="194"/>
+        <source>0</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="72"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="198"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_SettingsDialog.h" line="190"/>
+        <source>Apperance</source>
+        <translation>Внешний вид</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="75"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="197"/>
+        <source>1</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="95"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="201"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_SettingsDialog.h" line="193"/>
+        <source>Language</source>
+        <translation>Язык</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="105"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="202"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_SettingsDialog.h" line="194"/>
+        <source>Audio output</source>
+        <translation>Аудио выход</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="119"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="203"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_SettingsDialog.h" line="195"/>
+        <source>Working folder</source>
+        <translation>Рабочая папка</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="131"/>
+        <location filename="../settingsdialog.ui" line="134"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="205"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="207"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_SettingsDialog.h" line="197"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_SettingsDialog.h" line="199"/>
+        <source>Browse</source>
+        <translation>Обзор</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="154"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="208"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_SettingsDialog.h" line="200"/>
+        <source>Theme</source>
+        <translation>Тема</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="183"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="209"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_SettingsDialog.h" line="201"/>
+        <source>Apply</source>
+        <translation>Применить</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="190"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="210"/>
+        <location filename="../cmake-build-release/DM-assist_autogen/include/ui_SettingsDialog.h" line="202"/>
+        <source>Cancel</source>
+        <translation>Отмена</translation>
     </message>
 </context>
 <context>
