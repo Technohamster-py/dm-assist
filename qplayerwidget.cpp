@@ -319,7 +319,7 @@ QPlaylistEdit::QPlaylistEdit(QWidget *parent, const QStringList &tracks, QString
 QPlaylistEdit::~QPlaylistEdit() = default;
 
 void QPlaylistEdit::on_addButton_clicked() {
-    QStringList files = QFileDialog::getOpenFileNames(this, "Add audio files", QString(), "Audio Files (*.mp3 *.wav)");
+    QStringList files = QFileDialog::getOpenFileNames(this, "Add audio files", QStandardPaths::writableLocation(QStandardPaths::MusicLocation), "Audio Files (*.mp3 *.wav)");
     for (const QString &file : files) {
         ui->playlistWidget->addItem(file);
     }
