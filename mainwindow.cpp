@@ -30,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->mainLayout->addWidget(players[i], row, col);
         connect(players[i], SIGNAL(playerStarted(int)), this, SLOT(stopOtherPlayers(int)));
     }
+    adjustSize();
 
     loadSettings();
     saveSettings();
