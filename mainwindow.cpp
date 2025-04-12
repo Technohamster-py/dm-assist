@@ -1,4 +1,4 @@
- //
+//
 // Created by arseniy on 11.10.2024.
 //
 #include "mainwindow.h"
@@ -79,7 +79,7 @@ void MainWindow::setupPlayers() {
 
 void MainWindow::setupShortcuts() {
     for (int i = 0; i < players.size(); ++i) {
-        QString key = QString("Ctrl+%1").arg(i + 1);
+        QString key = QString("Ctrl+%1").arg(i);
         players[i]->setPlayShortcut(key);
     }
 }
