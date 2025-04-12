@@ -4,6 +4,7 @@
 #include "mainwindow.h"
 #include "ui_MainWindow.h"
 
+#include <QDesktopServices>
 #include "QDomDocument"
 #include "QFile"
 #include "QFileDialog"
@@ -37,6 +38,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->actionSave, SIGNAL(triggered(bool)), this, SLOT(saveConfigFile()));
     connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(loadConfigFile()));
+    connect(ui->actionHelp, SIGNAL(triggered(bool)), this, SLOT(openHelp()));
+    connect(ui->actionDonate, SIGNAL(triggered(bool)), this, SLOT(openDonate()));
+
 }
 
 /**
@@ -230,6 +234,16 @@ void MainWindow::changeLanguage(const QString &languageCode) {
         currentLanguage = languageCode;
         ui->retranslateUi(this);
     }
+}
+
+void MainWindow::openHelp() {
+    QUrl url("https://github.com/Technohamster-py/dm-assist/wiki/%D0%9D%D0%B0%D1%87%D0%B0%D0%BB%D0%BE");
+    QDesktopServices::openUrl(url);
+}
+
+void MainWindow::openDonate() {
+    QUrl url("https://pay.cloudtips.ru/p/8f6d339a");
+    QDesktopServices::openUrl(url);
 }
 
 

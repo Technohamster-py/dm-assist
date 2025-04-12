@@ -42,6 +42,9 @@ public slots:
     void saveSettings();
     void loadSettings();
 
+    void openHelp();
+    void openDonate();
+
 private:
     Ui::MainWindow *ui;
     QTranslator translator;
