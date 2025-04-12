@@ -31,8 +31,7 @@ QPlayer::QPlayer(QWidget *parent, int id, QString title)
         : QWidget(parent),
           ui(new Ui::QPlayer),
           id(id),
-          playlistName(std::move(title)),
-          playKey(nullptr)
+          playlistName(std::move(title))
 {
     ui->setupUi(this);
     ui->titleLabel->setText(playlistName);
@@ -52,7 +51,11 @@ QPlayer::QPlayer(QWidget *parent, int id, QString title)
         return;
     }
 
+    playKey = new QShortcut(this);
+
     connect(ui->playButton, &QPushButton::clicked, this, &QPlayer::on_playButton_clicked);
+    connect(playKey, SIGNAL(activated()), this, SLOT(playShortcutTriggered()));
+
 }
 
 QPlayer::~QPlayer() {
@@ -81,14 +84,10 @@ void QPlayer::setPlaylistName(const QString &name) {
 }
 
 void QPlayer::setPlayShortcut(QString key) {
-    if (playKey)
-        delete playKey;
-    playKey = new QShortcut(QKeySequence(key), this);
-    connect(playKey, &QShortcut::activated, this, &QPlayer::playShortcutTriggered);
+    playKey->setKey(key);
 }
 
 void QPlayer::playShortcutTriggered() {
-    emit playerStarted(id); // для внешнего управления, если нужно
     play();
 }
 

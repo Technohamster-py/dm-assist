@@ -80,8 +80,7 @@ void MainWindow::setupPlayers() {
 void MainWindow::setupShortcuts() {
     for (int i = 0; i < players.size(); ++i) {
         QString key = QString("Ctrl+%1").arg(i + 1);
-        auto *shortcut = new QShortcut(QKeySequence(key), this);
-        players[i]->setPlayShortcut(QString::number(i + 1));
+        players[i]->setPlayShortcut(key);
     }
 }
 
