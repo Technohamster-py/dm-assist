@@ -31,10 +31,83 @@ void ThemeManager::applyPreset(ThemeManager::PresetTheme theme) {
     qApp->setPalette(palette);
 }
 
-bool ThemeManager::loadFromXml(const QString &path) {
+bool ThemeManager::loadFromXml(const QString& path) {
     QFile file(path);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Cannot open theme file:" << path;
         return false;
     }
+
+    QXmlStreamReader xml(&file);
+    QPalette palette;
+
+    QMap<QString, QPalette::ColorRole> roleMap = {
+            {"Window", QPalette::Window},
+            {"WindowText", QPalette::WindowText},
+            {"Base", QPalette::Base},
+            {"AlternateBase", QPalette::AlternateBase},
+            {"ToolTipBase", QPalette::ToolTipBase},
+            {"ToolTipText", QPalette::ToolTipText},
+            {"Text", QPalette::Text},
+            {"Button", QPalette::Button},
+            {"ButtonText", QPalette::ButtonText},
+            {"BrightText", QPalette::BrightText},
+            {"Highlight", QPalette::Highlight},
+            {"HighlightedText", QPalette::HighlightedText},
+            {"Link", QPalette::Link},
+            {"LinkVisited", QPalette::LinkVisited},
+#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+            {"PlaceholderText", QPalette::PlaceholderText},
+#endif
+    };
+
+    QMap<QString, QPalette::ColorGroup> groupMap = {
+            {"active", QPalette::Active},
+            {"inactive", QPalette::Inactive},
+            {"disabled", QPalette::Disabled}
+    };
+
+    while (!xml.atEnd()) {
+        xml.readNext();
+
+        if (xml.isStartElement() && groupMap.contains(xml.name().toString().toLower())) {
+            QPalette::ColorGroup group = groupMap[xml.name().toString().toLower()];
+
+            while (!(xml.isEndElement() && xml.name().toString().toLower() == groupMap.key(group)) && !xml.atEnd()) {
+                xml.readNext();
+
+                if (xml.isStartElement() && xml.name() == "colorrole") {
+                    QString roleStr = xml.attributes().value("role").toString();
+
+                    if (!roleMap.contains(roleStr))
+                        continue;
+
+                    QPalette::ColorRole role = roleMap[roleStr];
+
+                    // Перейти к <color>
+                    while (!(xml.isStartElement() && xml.name() == "color") && !xml.atEnd())
+                        xml.readNext();
+
+                    if (xml.isStartElement() && xml.name() == "color") {
+                        auto a = xml.attributes();
+                        QColor color(
+                                a.value("red").toInt(),
+                                a.value("green").toInt(),
+                                a.value("blue").toInt(),
+                                a.hasAttribute("alpha") ? a.value("alpha").toInt() : 255
+                        );
+                        palette.setColor(group, role, color);
+                    }
+                }
+            }
+        }
+    }
+
+    if (xml.hasError()) {
+        qWarning() << "XML parse error:" << xml.errorString();
+        return false;
+    }
+
+    qApp->setPalette(palette);
+    return true;
 }
