@@ -66,16 +66,19 @@
       <property name="text">
        <string>0</string>
       </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsUserCheckable|ItemIsEnabled</set>
+      </property>
      </item>
      <item>
       <property name="text">
-       <string>Apperance</string>
+       <string>Appearance</string>
       </property>
       <property name="text">
        <string>1</string>
       </property>
       <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable</set>
+       <set>ItemIsSelectable|ItemIsUserCheckable|ItemIsEnabled</set>
       </property>
      </item>
     </widget>
@@ -85,7 +88,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="generalPage">
         <layout class="QFormLayout" name="formLayout">
@@ -156,7 +159,45 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QComboBox" name="themeComboBox"/>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QComboBox" name="themeComboBox">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <item>
+              <property name="text">
+               <string>Light</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Dark</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="themeButton">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Browse</string>
+             </property>
+             <property name="icon">
+              <iconset resource="static/app_resources.qrc">
+               <normaloff>:/folder.svg</normaloff>:/folder.svg</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </widget>

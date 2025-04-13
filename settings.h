@@ -14,7 +14,12 @@ struct Settings{
         QString lang = "general/lang";                  ///< String
     };
 
+    struct Appearance{
+        QString theme = "appearance/theme";
+    };
+
     General general;
+    Appearance appearance;
 };
 
 #endif //DM_ASSIST_SETTINGS_H

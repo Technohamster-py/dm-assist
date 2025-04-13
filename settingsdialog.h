@@ -30,6 +30,7 @@ private slots:
     void on_applyButton_clicked();
 
     void on_folderButton_clicked();
+    void on_themeButton_clicked();
 
 private:
     Ui::SettingsDialog *ui;
@@ -42,6 +43,7 @@ private:
     QVector<int> deviceIndices;
 
     void populateLanguages();
+    void populateThemes();
 };
 
 
