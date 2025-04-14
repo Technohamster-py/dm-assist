@@ -1,55 +1,67 @@
 //
-// Created by akhomchenko on 25.03.24.
+// Created by arseniy on 11.10.2024.
 //
 
 #ifndef DM_ASSIST_MAINWINDOW_H
 #define DM_ASSIST_MAINWINDOW_H
 
+#include "QAction"
 #include <QMainWindow>
-#include "encounter.h"
-#include "qplayerinitiativeview.h"
-#include "qinitiativetrackerwidget.h"
-#include "qplayer.h"
+#include <QSettings>
+#include <QShortcut>
+#include <QTranslator>
+#include "qplayerwidget.h"
+#include "settingsdialog.h"
 
 
+#define ORGANIZATION_NAME "Technohaster"
+#define ORGANIZATION_DOMAIN "github.com/Technohamster-py"
+#define APPLICATION_NAME "DM-assist"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow {
-    Q_OBJECT
+Q_OBJECT
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
+    QString workingDir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/dm_assist_files/";
 
     ~MainWindow() override;
 
+    void changeLanguage(const QString &languageCode);
+
+signals:
+    void languageChanged(const QString &languageCode);
+
 public slots:
-    void stopAllMusic();
+    void stopAll();
+    void stopOtherPlayers(int exeptId);
+    void saveSettings();
+    void loadSettings();
 
-protected slots:
-    void slotShareTracker(Encounter *encounter);
-
-protected:
-    qPlayerInitiativeView* playerInitiativeView;
-    QInitiativeTrackerWidget* initiativeWidget;
-
-    QPlayer *player1;
-    QPlayer *player2;
-    QPlayer *player3;
-    QPlayer *player4;
-    QPlayer *player5;
-    QPlayer *player6;
-    QPlayer *player7;
-    QPlayer *player8;
-    QPlayer *player9;
-    QPlayer *player0;
+    void openHelp();
+    void openDonate();
 
 private:
     Ui::MainWindow *ui;
+    QTranslator translator;
+    QString currentLanguage;
 
-    void configurePlayers();
+    int deviceIndex = -1;
+    QVector<QPlayer*> players;
+
+    void setupPlayers();
+    void setupShortcuts();
+    SettingsDialog *settingsDialog = nullptr;
+    Settings paths;
+
+private slots:
+    void loadConfigFile();
+    void saveConfigFile();
+    void on_actionSettings_triggered();
 };
 
 

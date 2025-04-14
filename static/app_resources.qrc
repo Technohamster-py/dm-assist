@@ -1,20 +1,13 @@
 <RCC version="1.0">
     <qresource prefix="/">
-        <file>add.svg</file>
-        <file>book.svg</file>
-        <file>close.svg</file>
-        <file>compass.svg</file>
-        <file>double-sword.svg</file>
-        <file>dragon.svg</file>
         <file>edit.svg</file>
-        <file>export.svg</file>
-        <file>human.svg</file>
+        <file>add.svg</file>
+        <file>folder.svg</file>
         <file>remove.svg</file>
-        <file>save.svg</file>
         <file>search.svg</file>
         <file>settings.svg</file>
-        <file>shield.svg</file>
-        <file>sword.svg</file>
+        <file>upload.svg</file>
+        <file>app-icon.png</file>
     </qresource>
     <qresource prefix="player">
         <file>next.svg</file>
@@ -25,21 +18,5 @@
     </qresource>
     <qresource prefix="map">
         <file>torch.svg</file>
-    </qresource>
-    <qresource prefix="initiative tracker">
-        <file>back.svg</file>
-        <file>forward.svg</file>
-        <file>share.svg</file>
-    </qresource>
-    <qresource prefix="charSheet">
-        <file>run.svg</file>
-        <file>wing.svg</file>
-        <file>swim.svg</file>
-    </qresource>
-    <qresource prefix="spell">
-        <file>clock.svg</file>
-        <file>hand.svg</file>
-        <file>ruler.svg</file>
-        <file>sound.svg</file>
     </qresource>
 </RCC>

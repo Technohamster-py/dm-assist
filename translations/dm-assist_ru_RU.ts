@@ -4,475 +4,366 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="254"/>
-        <source>MainWindow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="255"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="262"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="263"/>
-        <source>New</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="256"/>
+        <location filename="../.idea/shelf/Uncommitted_changes_before_Update_at_09_04_2025_17_40_[Changes]/mainwindow.ui" line="78"/>
+        <location filename="../mainwindow.ui" line="75"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="257"/>
-        <source>Spells</source>
-        <translation type="unfinished"></translation>
+        <source>Play</source>
+        <translation type="vanished">Пуск</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="258"/>
-        <source>Monsters</source>
-        <translation type="unfinished"></translation>
+        <location filename="../.idea/shelf/Uncommitted_changes_before_Update_at_09_04_2025_17_40_[Changes]/mainwindow.ui" line="36"/>
+        <location filename="../mainwindow.ui" line="46"/>
+        <source>File</source>
+        <translation>Файл</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="259"/>
-        <source>Magic items</source>
-        <translation type="unfinished"></translation>
+        <location filename="../.idea/shelf/Uncommitted_changes_before_Update_at_09_04_2025_17_40_[Changes]/mainwindow.ui" line="40"/>
+        <location filename="../mainwindow.ui" line="91"/>
+        <source>Settings</source>
+        <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="260"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="264"/>
-        <source>Encounter builder</source>
-        <translation type="unfinished"></translation>
+        <location filename="../.idea/shelf/Uncommitted_changes_before_Update_at_09_04_2025_17_40_[Changes]/mainwindow.ui" line="51"/>
+        <source>Language</source>
+        <translation>Язык</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="261"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="265"/>
-        <source>Character creator</source>
-        <translation type="unfinished"></translation>
+        <location filename="../.idea/shelf/Uncommitted_changes_before_Update_at_09_04_2025_17_40_[Changes]/mainwindow.ui" line="14"/>
+        <location filename="../mainwindow.ui" line="20"/>
+        <source>DM-assist music</source>
+        <translation>DM-assist музыка</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="266"/>
-        <source>Add map</source>
-        <translation type="unfinished"></translation>
+        <location filename="../.idea/shelf/Uncommitted_changes_before_Update_at_09_04_2025_17_40_[Changes]/mainwindow.ui" line="70"/>
+        <location filename="../mainwindow.ui" line="67"/>
+        <source>Save</source>
+        <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="267"/>
-        <source>Character</source>
-        <translation type="unfinished"></translation>
+        <location filename="../.idea/shelf/Uncommitted_changes_before_Update_at_09_04_2025_17_40_[Changes]/mainwindow.ui" line="73"/>
+        <location filename="../mainwindow.ui" line="70"/>
+        <source>Ctrl+S</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="268"/>
-        <source>Monster</source>
-        <translation type="unfinished"></translation>
+        <location filename="../.idea/shelf/Uncommitted_changes_before_Update_at_09_04_2025_17_40_[Changes]/mainwindow.ui" line="81"/>
+        <location filename="../mainwindow.ui" line="78"/>
+        <source>Ctrl+O</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="269"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="270"/>
-        <source>Map</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="271"/>
-        <source>Campain settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="272"/>
-        <source>Export campain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="273"/>
+        <location filename="../.idea/shelf/Uncommitted_changes_before_Update_at_09_04_2025_17_40_[Changes]/mainwindow.ui" line="86"/>
         <source>Light</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="274"/>
+        <location filename="../.idea/shelf/Uncommitted_changes_before_Update_at_09_04_2025_17_40_[Changes]/mainwindow.ui" line="91"/>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="275"/>
-        <source>Campain</source>
-        <translation type="unfinished"></translation>
+        <location filename="../.idea/shelf/Uncommitted_changes_before_Update_at_09_04_2025_17_40_[Changes]/mainwindow.ui" line="96"/>
+        <source>Русский</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="276"/>
-        <source>Add</source>
-        <translation type="unfinished"></translation>
+        <location filename="../.idea/shelf/Uncommitted_changes_before_Update_at_09_04_2025_17_40_[Changes]/mainwindow.ui" line="101"/>
+        <source>English</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="277"/>
-        <source>Glossary</source>
-        <translation type="unfinished"></translation>
+        <location filename="../.idea/shelf/Uncommitted_changes_before_Update_at_09_04_2025_17_40_[Changes]/mainwindow.ui" line="106"/>
+        <location filename="../mainwindow.ui" line="83"/>
+        <source>New</source>
+        <translation>Новый</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="278"/>
-        <source>Classes</source>
-        <translation type="unfinished"></translation>
+        <location filename="../.idea/shelf/Uncommitted_changes_before_Update_at_09_04_2025_17_40_[Changes]/mainwindow.ui" line="109"/>
+        <location filename="../mainwindow.ui" line="86"/>
+        <source>Ctrl+N</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="279"/>
-        <source>Races</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="280"/>
-        <source>Tools</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="281"/>
-        <source>Window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="282"/>
+        <location filename="../.idea/shelf/Uncommitted_changes_before_Update_at_09_04_2025_17_40_[Changes]/mainwindow.ui" line="44"/>
         <source>Theme</source>
+        <translation>Тема</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="52"/>
+        <source>Сохранение конфигурации</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="283"/>
-        <source>toolBar</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QDndCharacterWidget</name>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="432"/>
-        <source>QDndCharacterWidget</source>
+        <location filename="../mainwindow.cpp" line="53"/>
+        <source>Сохранить проект?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="433"/>
-        <source>Character Name</source>
-        <translation type="unfinished"></translation>
+        <location filename="../mainwindow.cpp" line="98"/>
+        <source>Open player config file</source>
+        <translation>Открыть конфигурационный файл проекта</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="434"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="435"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="447"/>
-        <source>speed</source>
-        <translation type="unfinished"></translation>
+        <location filename="../mainwindow.cpp" line="100"/>
+        <source>Xml file (*.xml)</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="437"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="452"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="453"/>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <location filename="../mainwindow.cpp" line="108"/>
+        <source>Open File error</source>
+        <translation>Open file error</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="438"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="444"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="448"/>
-        <source>ft</source>
-        <translation type="unfinished"></translation>
+        <location filename="../mainwindow.cpp" line="164"/>
+        <source>Open file error</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="441"/>
-        <source>maxHP</source>
-        <translation type="unfinished"></translation>
+        <location filename="../mainwindow.ui" line="56"/>
+        <source>About</source>
+        <translation>Справка</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="442"/>
-        <source>/</source>
-        <translation type="unfinished"></translation>
+        <location filename="../mainwindow.ui" line="96"/>
+        <source>Help</source>
+        <translation>Помощь</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="443"/>
-        <source>HP</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="445"/>
-        <source>Initiative:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="449"/>
-        <source>initiative bonus</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="450"/>
-        <source>Class (subclass)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="451"/>
-        <source>level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="458"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="476"/>
-        <source>STR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="460"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="478"/>
-        <source>CON</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="462"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="480"/>
-        <source>DEX</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="464"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="482"/>
-        <source>INT</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="466"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="484"/>
-        <source>WIS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="468"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="486"/>
-        <source>CHA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="471"/>
-        <source>Save Throws</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QInitiativeTrackerWidget</name>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="214"/>
-        <source>QInitiativeTrackerWidget</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="215"/>
-        <source>Initiative tracker</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="217"/>
-        <source>Previous turn</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="221"/>
-        <source>NextTurn</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="225"/>
-        <source>Open player wiev</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="228"/>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="229"/>
-        <source>AC:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="230"/>
-        <source>HP:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="231"/>
-        <source>/</source>
-        <translation type="unfinished"></translation>
+        <location filename="../mainwindow.ui" line="101"/>
+        <source>Donate</source>
+        <translation>Поддержать</translation>
     </message>
 </context>
 <context>
     <name>QPlayer</name>
     <message>
-        <location filename="../qplayer.ui" line="20"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="139"/>
+        <location filename="../.idea/shelf/Uncommitted_changes_before_Update_at_09_04_2025_17_40_[Changes]/qplayer.ui" line="20"/>
+        <location filename="../qplayer.ui" line="32"/>
         <source>QPlayer</source>
         <translation>QPlayer</translation>
     </message>
     <message>
-        <location filename="../qplayer.ui" line="57"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="140"/>
+        <location filename="../.idea/shelf/Uncommitted_changes_before_Update_at_09_04_2025_17_40_[Changes]/qplayer.ui" line="75"/>
+        <location filename="../qplayer.ui" line="95"/>
         <source>num</source>
         <translation>num</translation>
     </message>
     <message>
-        <location filename="../qplayer.ui" line="69"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="141"/>
+        <location filename="../.idea/shelf/Uncommitted_changes_before_Update_at_09_04_2025_17_40_[Changes]/qplayer.ui" line="87"/>
+        <location filename="../qplayer.ui" line="81"/>
         <source>Title</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../qplayer.ui" line="95"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="143"/>
         <source>previous track</source>
-        <translation>предыдущий трек</translation>
+        <translation type="vanished">предыдущий трек</translation>
     </message>
     <message>
-        <location filename="../qplayer.ui" line="109"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="147"/>
+        <location filename="../.idea/shelf/Uncommitted_changes_before_Update_at_09_04_2025_17_40_[Changes]/qplayer.ui" line="107"/>
+        <location filename="../qplayer.ui" line="115"/>
         <source>stop</source>
         <translation>Стоп</translation>
     </message>
     <message>
-        <location filename="../qplayer.ui" line="123"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="151"/>
+        <location filename="../.idea/shelf/Uncommitted_changes_before_Update_at_09_04_2025_17_40_[Changes]/qplayer.ui" line="143"/>
+        <location filename="../qplayer.ui" line="161"/>
         <source>play</source>
         <translation>Пуск</translation>
     </message>
     <message>
-        <location filename="../qplayer.ui" line="137"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="155"/>
         <source>pause</source>
-        <translation>Пауза</translation>
+        <translation type="vanished">Пауза</translation>
     </message>
     <message>
-        <location filename="../qplayer.ui" line="151"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="159"/>
         <source>next track</source>
-        <translation>Следующий трек</translation>
+        <translation type="vanished">Следующий трек</translation>
     </message>
     <message>
-        <location filename="../qplayer.ui" line="165"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="163"/>
+        <location filename="../.idea/shelf/Uncommitted_changes_before_Update_at_09_04_2025_17_40_[Changes]/qplayer.ui" line="121"/>
+        <location filename="../qplayer.ui" line="129"/>
         <source>Edit playlist</source>
         <translation>Редактировать плейлист</translation>
     </message>
     <message>
-        <location filename="../qplayer.cpp" line="116"/>
         <source>Can not open XML config: </source>
-        <translation>Невозможно открыть XML конфиг: </translation>
+        <translation type="vanished">Невозможно открыть XML конфиг: </translation>
     </message>
     <message>
-        <location filename="../qplayer.cpp" line="118"/>
         <source>File error</source>
-        <translation>Ошибка файла</translation>
+        <translation type="vanished">Ошибка файла</translation>
     </message>
     <message>
-        <location filename="../qplayer.cpp" line="159"/>
         <source>XML file error</source>
-        <translation>Ошибка XML файла</translation>
+        <translation type="vanished">Ошибка XML файла</translation>
     </message>
     <message>
-        <location filename="../qplayer.cpp" line="160"/>
         <source>Can not open XML config file</source>
-        <translation>Невозможно открыть XML файл кнофигурации</translation>
+        <translation type="vanished">Невозможно открыть XML файл кнофигурации</translation>
     </message>
 </context>
 <context>
     <name>QPlaylistEdit</name>
     <message>
         <location filename="../qplaylistedit.ui" line="14"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplaylistedit.h" line="105"/>
         <source>QPlaylistEdit</source>
         <translation>QPlaylistEdit</translation>
     </message>
     <message>
         <location filename="../qplaylistedit.ui" line="57"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplaylistedit.h" line="107"/>
         <source>Add audio file</source>
         <translation>Добавить аудиофайл</translation>
     </message>
     <message>
         <location filename="../qplaylistedit.ui" line="71"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplaylistedit.h" line="111"/>
         <source>Remove file from playlist</source>
         <translation>Удалить файл из плейлиста</translation>
     </message>
     <message>
-        <location filename="../qplaylistedit.cpp" line="22"/>
         <source>Track title</source>
-        <translation>Название трека</translation>
+        <translation type="vanished">Название трека</translation>
     </message>
     <message>
-        <location filename="../qplaylistedit.cpp" line="22"/>
         <source>File path</source>
-        <translation>Путь к файлу</translation>
+        <translation type="vanished">Путь к файлу</translation>
     </message>
     <message>
-        <location filename="../qplaylistedit.cpp" line="40"/>
         <source>Add tracks</source>
-        <translation>Дбавиьт треки</translation>
+        <translation type="vanished">Дбавиьт треки</translation>
     </message>
     <message>
-        <location filename="../qplaylistedit.cpp" line="42"/>
         <source>Audio files (*.mp3)</source>
-        <translation>аудиофайлы (*mp3)</translation>
+        <translation type="vanished">аудиофайлы (*mp3)</translation>
     </message>
 </context>
 <context>
-    <name>dndSpellWidget</name>
+    <name>SaveConfigDialog</name>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_dndspellwidget.h" line="216"/>
-        <source>dndSpellWidget</source>
-        <translation type="unfinished"></translation>
+        <location filename="../qsaveconfigdialog.cpp" line="5"/>
+        <source>Сохранение проекта</source>
+        <translation>Сохранение проекта</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_dndspellwidget.h" line="217"/>
-        <source>title</source>
-        <translation>Название</translation>
+        <location filename="../qsaveconfigdialog.cpp" line="9"/>
+        <source>Имя проекта:</source>
+        <translation>Имя проекта:</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_dndspellwidget.h" line="218"/>
-        <source>TextLabel</source>
-        <translation></translation>
+        <location filename="../qsaveconfigdialog.cpp" line="10"/>
+        <source>Корневая папка:</source>
+        <translation>Корневая папка:</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_dndspellwidget.h" line="220"/>
-        <source>Компоненты</source>
-        <translation></translation>
+        <location filename="../qsaveconfigdialog.cpp" line="17"/>
+        <source>Выбрать папку...</source>
+        <translation>Выбрать папку...</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_dndspellwidget.h" line="221"/>
-        <source>range</source>
-        <translation></translation>
+        <location filename="../qsaveconfigdialog.cpp" line="21"/>
+        <source>Сохранить</source>
+        <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_dndspellwidget.h" line="222"/>
-        <source>class
-another class</source>
-        <translation></translation>
+        <location filename="../qsaveconfigdialog.cpp" line="23"/>
+        <source>Отмена</source>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <location filename="../qsaveconfigdialog.cpp" line="59"/>
+        <source>Выберите папку</source>
+        <translation>Выбрать папку</translation>
+    </message>
+    <message>
+        <location filename="../qsaveconfigdialog.cpp" line="62"/>
+        <source>Проект будет сохранен в папку %1/%2</source>
+        <translation>Проект будет сохранен в папку %1/%2</translation>
+    </message>
+    <message>
+        <location filename="../qsaveconfigdialog.cpp" line="73"/>
+        <source>Введите имя проекта.</source>
+        <translation>Введите имя проекта.</translation>
+    </message>
+    <message>
+        <location filename="../qsaveconfigdialog.cpp" line="77"/>
+        <source>Укажите корневую папку.</source>
+        <translation>Укажите корневую папку.</translation>
+    </message>
+    <message>
+        <location filename="../qsaveconfigdialog.cpp" line="87"/>
+        <source>Указанная папка не пуста.</source>
+        <translation>Указанная папка не пуста.</translation>
+    </message>
+    <message>
+        <location filename="../qsaveconfigdialog.cpp" line="95"/>
+        <source>Не удалось создать файл.</source>
+        <translation>Не удалосьсоздать файл</translation>
     </message>
 </context>
 <context>
-    <name>qDndInitiativeEntityEditWidget</name>
+    <name>SettingsDialog</name>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndinitiativeentityeditwidget.h" line="107"/>
-        <source>qDndInitiativeEntityEditWidget</source>
+        <location filename="../settingsdialog.ui" line="29"/>
+        <location filename="../settingsdialog.ui" line="54"/>
+        <source>Settings</source>
+        <translation>Настройки</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="64"/>
+        <source>General</source>
+        <translation>Общее</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="67"/>
+        <source>0</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndinitiativeentityeditwidget.h" line="108"/>
+        <location filename="../settingsdialog.ui" line="72"/>
+        <source>Apperance</source>
+        <translation>Внешний вид</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="75"/>
         <source>1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndinitiativeentityeditwidget.h" line="109"/>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <location filename="../settingsdialog.ui" line="95"/>
+        <source>Language</source>
+        <translation>Язык</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndinitiativeentityeditwidget.h" line="111"/>
-        <source>/</source>
-        <translation type="unfinished"></translation>
+        <location filename="../settingsdialog.ui" line="105"/>
+        <source>Audio output</source>
+        <translation>Аудио выход</translation>
     </message>
-</context>
-<context>
-    <name>qPlayerInitiativeView</name>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayerinitiativeview.h" line="82"/>
-        <source>qPlayerInitiativeView</source>
-        <translation type="unfinished"></translation>
+        <location filename="../settingsdialog.ui" line="119"/>
+        <source>Working folder</source>
+        <translation>Рабочая папка</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="131"/>
+        <location filename="../settingsdialog.ui" line="134"/>
+        <source>Browse</source>
+        <translation>Обзор</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="154"/>
+        <source>Theme</source>
+        <translation>Тема</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="183"/>
+        <source>Apply</source>
+        <translation>Применить</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="190"/>
+        <source>Cancel</source>
+        <translation>Отмена</translation>
     </message>
 </context>
 </TS>
