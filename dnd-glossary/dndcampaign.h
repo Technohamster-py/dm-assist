@@ -12,7 +12,7 @@
 #include "dndcharacter.h"
 #include "dndmonster.h"
 #include "qplayer.h"
-#include "encounter.h"
+#include "../initiative-tracker/encounter.h"
 
 class dndCampaign : public QObject{
     Q_OBJECT

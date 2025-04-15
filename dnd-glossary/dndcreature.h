@@ -9,7 +9,7 @@
 #include <QFile>
 #include <QPixmap>
 #include <QMap>
-#include "creature.h"
+#include "../base/creature.h"
 
 class dndCreature : public Creature{
     Q_OBJECT
