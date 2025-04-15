@@ -12,18 +12,12 @@ set(BASS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass)
 set(BASS_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass/bass.lib)
 #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc")
 
-set(HEADER_FILES
-        mainwindow.h
-        qplayerwidget.h
-        qsaveconfigdialog.h
-        settingsdialog.h
-)
-
 set(SOURCE_FILES
-        mainwindow.cpp
-        qplayerwidget.cpp
-        qsaveconfigdialog.cpp
-        settingsdialog.cpp
+        mainwindow.h    mainwindow.cpp
+        qplayerwidget.h qplayerwidget.cpp
+        qsaveconfigdialog.h qsaveconfigdialog.cpp
+        settings.h  settingsdialog.cpp
+        thememanager.h  thememanager.cpp
 )
 
 set(UI_FILES
@@ -70,7 +64,6 @@ add_custom_target(translations DEPENDS ${QM_FILES})
 add_executable(${PROJECT_NAME}
         WIN32
         main.cpp
-        ${HEADER_FILES}
         ${SOURCE_FILES}
         ${UI_FILES}
         ${RESOURCES_ADD}

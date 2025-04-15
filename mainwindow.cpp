@@ -12,6 +12,7 @@
 #include "QMessageBox"
 #include "qsaveconfigdialog.h"
 #include <QTextStream>
+#include "thememanager.h"
 
 static void copyAllFiles(const QString& sourcePath, const QString& destPath);
 static void moveAllFiles(const QString& sourcePath, const QString& destPath);
@@ -208,6 +209,15 @@ void MainWindow::loadSettings() {
         player->setAudioOutput(settings.value(paths.general.audioDevice, 0).toInt());
     }
     changeLanguage(settings.value(paths.general.lang, "ru_RU").toString());
+
+    QString theme = settings.value(paths.appearance.theme, "Light").toString();
+    if (theme == "Light")
+        ThemeManager::applyPreset(ThemeManager::PresetTheme::Light);
+    else if (theme == "Dark")
+        ThemeManager::applyPreset(ThemeManager::PresetTheme::Dark);
+    else
+        ThemeManager::loadFromXml(theme);
+
 }
 
 void MainWindow::on_actionSettings_triggered() {
