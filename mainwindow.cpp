@@ -14,6 +14,8 @@
 #include <QTextStream>
 #include "thememanager.h"
 
+#include <QDebug>
+
 static void copyAllFiles(const QString& sourcePath, const QString& destPath);
 static void moveAllFiles(const QString& sourcePath, const QString& destPath);
 static bool removeDirectoryRecursively(const QString &directoryPath, bool deleteSelf=true);
@@ -231,6 +233,7 @@ void MainWindow::loadSettings() {
     changeLanguage(settings.value(paths.general.lang, "ru_RU").toString());
 
     QString theme = settings.value(paths.appearance.theme, "Light").toString();
+    qDebug() << theme;
     if (theme == "Light")
         ThemeManager::applyPreset(ThemeManager::PresetTheme::Light);
     else if (theme == "Dark")
