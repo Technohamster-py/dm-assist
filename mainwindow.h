@@ -40,6 +40,8 @@ public slots:
     void stopAll();
     void stopOtherPlayers(int exeptId);
     void saveSettings();
+    void setVolumeDivider(int value);
+
     void loadSettings();
 
     void openHelp();

@@ -83,6 +83,14 @@ void QPlayer::setPlaylistName(const QString &name) {
     }
 }
 
+void QPlayer::setVolumeDivider(int value) {
+    volumeDivider = value;
+    if (volumeDivider > 100)
+        volumeDivider = 100;
+    if (volumeDivider < 0)
+        volumeDivider = 0;
+}
+
 void QPlayer::setPlayShortcut(QString key) {
     playKey->setKey(key);
 }
@@ -156,7 +164,7 @@ void QPlayer::playTrackAt(int index) {
 
     stop(); // на всякий случай
 
-    HSTREAM stream = streams[index];
+    stream = streams[index];
     BASS_ChannelPlay(stream, FALSE);
 
     // Установка синхронизации на окончание трека
@@ -241,6 +249,15 @@ QString QPlayer::currentDeviceName() const {
     if (BASS_GetDeviceInfo(m_deviceIndex, &info))
         return QString::fromLocal8Bit(info.name);
     return {};
+}
+
+void QPlayer::setVolume(float volume) {
+    if (volume > 1.0f)
+        volume = 1.0f;
+    if (volume < 0.0f)
+        volume = 0.0f;
+
+    BASS_ChannelSetAttribute(stream, BASS_ATTRIB_VOL, (volume * static_cast<float>(volumeDivider) / 100.0f));
 }
 
 void QPlayer::setAudioOutput(const QString &deviceName) {

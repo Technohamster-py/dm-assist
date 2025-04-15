@@ -41,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(loadConfigFile()));
     connect(ui->actionHelp, SIGNAL(triggered(bool)), this, SLOT(openHelp()));
     connect(ui->actionDonate, SIGNAL(triggered(bool)), this, SLOT(openDonate()));
+    connect(ui->volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(setVolumeDivider(int)));
 
 }
 
@@ -244,6 +245,12 @@ void MainWindow::openHelp() {
 void MainWindow::openDonate() {
     QUrl url("https://pay.cloudtips.ru/p/8f6d339a");
     QDesktopServices::openUrl(url);
+}
+
+void MainWindow::setVolumeDivider(int value) {
+    for (int i = 0; i < 9; ++i) {
+        players[i]->setVolumeDivider(value);
+    }
 }
 
 
