@@ -55,7 +55,7 @@ public slots:
     void play();
     void stop();
     void edit();
-    void setVolume(float volume);
+    void setVolume(int volume);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
@@ -68,7 +68,7 @@ private slots:
     void playShortcutTriggered();
 
     void playNextTrack();
-
+    void changeVolume(int volume);
 
 private:
     void freeStreams();
