@@ -67,6 +67,8 @@ include_directories(
 qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
 add_custom_target(translations DEPENDS ${QM_FILES})
 
+
+
 add_executable(${PROJECT_NAME}
         WIN32
         main.cpp
@@ -135,3 +137,12 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
 
         COMMENT "Stripping build directory for Release (only if config is Release)..."
 )
+
+foreach(qm ${QM_FILES})
+    get_filename_component(qm_filename "${qm}" NAME)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E rename "${qm}" "$<TARGET_FILE_DIR:${PROJECT_NAME}>/translations/${qm_filename}"
+            COMMAND ${CMAKE_COMMAND} -E echo "Moving ${qm_filename} into /translations"
+
+    )
+endforeach()
