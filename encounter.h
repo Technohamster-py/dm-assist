@@ -5,8 +5,7 @@
 #ifndef DM_ASSIST_ENCOUNTER_H
 #define DM_ASSIST_ENCOUNTER_H
 
-#include "dndcharacter.h"
-#include "dndmonster.h"
+#include "dndcreature.h"
 #include <QStandardItemModel>
 #include <QSharedPointer>
 

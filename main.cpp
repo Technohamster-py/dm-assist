@@ -4,6 +4,7 @@
 #include "mainwindow.h"
 #include "encounter.h"
 
+
 #include <QDebug>
 
 

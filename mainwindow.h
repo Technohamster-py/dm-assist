@@ -7,7 +7,6 @@
 
 #include <QMainWindow>
 #include "encounter.h"
-#include "qplayerinitiativeview.h"
 #include "qinitiativetrackerwidget.h"
 
 
