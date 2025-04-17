@@ -27,6 +27,9 @@ public:
     void setPlaylistName(const QString &name);
     int getPlaylistId() const {return id;}
 
+    void setVolumeDivider(int value);
+    int getVolumeDivider() const {return volumeDivider;};
+
     void addMedia(const QStringList &files);
     void setLocalDirPath(QString localDirPath);
     QString getLocalDirPath() const { return localDir; }
@@ -52,6 +55,7 @@ public slots:
     void play();
     void stop();
     void edit();
+    void setVolume(int volume);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
@@ -64,7 +68,7 @@ private slots:
     void playShortcutTriggered();
 
     void playNextTrack();
-
+    void changeVolume(int volume);
 
 private:
     void freeStreams();
@@ -83,7 +87,8 @@ private:
     int m_deviceIndex = -1;
 
     int currentTrackIndex = 0;
-
+    HSTREAM stream;
+    int volumeDivider = 100;
 };
 
 

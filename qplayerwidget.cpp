@@ -55,7 +55,7 @@ QPlayer::QPlayer(QWidget *parent, int id, QString title)
 
     connect(ui->playButton, &QPushButton::clicked, this, &QPlayer::on_playButton_clicked);
     connect(playKey, SIGNAL(activated()), this, SLOT(playShortcutTriggered()));
-
+    connect(ui->volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(changeVolume(int)));
 }
 
 QPlayer::~QPlayer() {
@@ -81,6 +81,15 @@ void QPlayer::setPlaylistName(const QString &name) {
         localDir = newPath;
         emit playlistNameChanged();
     }
+}
+
+void QPlayer::setVolumeDivider(int value) {
+    volumeDivider = value;
+    if (volumeDivider > 100)
+        volumeDivider = 100;
+    if (volumeDivider < 0)
+        volumeDivider = 0;
+    changeVolume(ui->volumeSlider->value());
 }
 
 void QPlayer::setPlayShortcut(QString key) {
@@ -156,7 +165,7 @@ void QPlayer::playTrackAt(int index) {
 
     stop(); // на всякий случай
 
-    HSTREAM stream = streams[index];
+    stream = streams[index];
     BASS_ChannelPlay(stream, FALSE);
 
     // Установка синхронизации на окончание трека
@@ -243,6 +252,22 @@ QString QPlayer::currentDeviceName() const {
     return {};
 }
 
+/**
+ * Усановить громкость плеера
+ * @param volume громкость в процентах (0% - 100%)
+ */
+void QPlayer::changeVolume(int volume) {
+
+    float trueVolume = volume / 100;
+
+    if (trueVolume > 1.0f)
+        trueVolume = 1.0f;
+    if (trueVolume < 0.0f)
+        trueVolume = 0.0f;
+
+    BASS_ChannelSetAttribute(stream, BASS_ATTRIB_VOL, (trueVolume * static_cast<float>(volumeDivider) / 100.0f));
+}
+
 void QPlayer::setAudioOutput(const QString &deviceName) {
     // Найдём индекс по имени
     BASS_DEVICEINFO info;
@@ -292,6 +317,21 @@ void QPlayer::setAudioOutput(int deviceIndex) {
     }
 
     m_deviceIndex = deviceIndex;
+}
+
+/**
+ * Установить громкость извне.
+ * @param volume громкость в процентах (0-100)
+ *
+ * @details Метод устанавливает слайдер громкости на нужную позицию. После этого уже вызывается слот changeVolume.
+ * Это сделано для избежания бесконечного цикла сигнал-слот
+ */
+void QPlayer::setVolume(int volume) {
+    if (volume > 100)
+        volume = 100;
+    if (volume < 0)
+        volume = 0;
+    ui->volumeSlider->setValue(volume);
 }
 
 ////////////////////////////////////////////////
