@@ -17,8 +17,9 @@ public:
     ~EncounterEntity();
 
     enum Type{
-        monster = 0,
-        character = 1
+        noType = 0,
+        monster,
+        character
     };
 
     [[nodiscard]] int getInitiativeValue() const {return m_initiativeValue;};
