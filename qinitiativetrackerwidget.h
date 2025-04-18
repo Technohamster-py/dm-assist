@@ -18,37 +18,85 @@ QT_END_NAMESPACE
 class QInitiativeTrackerWidget : public QWidget {
 Q_OBJECT
 
+
 public:
-    explicit QInitiativeTrackerWidget(QWidget *parent = nullptr, bool playerViewMode = false);
+    /**
+     * @brief Конструктор виджета.
+     * @param parent Родительский виджет.
+     */
+    explicit QInitiativeTrackerWidget(QWidget *parent = nullptr);
 
-    ~QInitiativeTrackerWidget() override;
-
-    void loadEncounter(Encounter *encounter);
-    Encounter *getEncounter() const {return m_encounter;};
-    void clear();
+//    ~QInitiativeTrackerWidget() override;
 
 signals:
     void encounterLoaded();
     void currentEntityChanged(int currentIndex);
     void share(Encounter* encounter);
 
+private slots:
+    /**
+     * @brief Добавляет новую строку в таблицу.
+     */
+    void addRow();
+
+    /**
+     * @brief Удаляет строку по нажатию кнопки.
+     */
+//    void deleteRow();
+
+    /**
+     * @brief Переходит к следующему активному персонажу.
+     */
+    void nextTurn();
+
+    /**
+     * @brief Сортирует таблицу по инициативе (по убыванию).
+     */
+    void sortTable();
+
+    /**
+     * @brief Вычисляет арифметическое выражение в ячейке HP.
+     * @param row Номер строки.
+     * @param column Номер колонки (должна быть колонка HP).
+     */
+    void evaluateHP(int row, int column);
+
+    /**
+     * @brief Обработчик изменения содержимого ячеек.
+     * @param row Номер строки.
+     * @param column Номер колонки.
+     */
+    void handleCellChanged(int row, int column);
+
+    /**
+     * @brief Подсвечивает текущего активного персонажа.
+     */
+    void highlightCurrentRow();
+
+//    void on_backButton_clicked();
+//    void on_nextButton_clicked();
+//    void on_shareButton_clicked();
+
 private:
     Ui::QInitiativeTrackerWidget *ui;
-    void selectRow(int row);
+    int currentRowIndex = 0;    ///< Индекс текущего активного персонажа.
 
-    int m_currentIndex;
-    int m_entityCount;
-    int m_currentEntityIndex;
+    /**
+     * @brief Вставляет новую строку с необязательными значениями по умолчанию.
+     * @param defaultValues Список значений по умолчанию.
+     */
+    void insertRow(const QStringList &defaultValues = QStringList());
 
-    Encounter *m_encounter;
-    //qPlayerInitiativeView m_playerView;
+    /**
+     * @brief Оценивает арифметическое выражение в строке.
+     * @param expression Строка с выражением (например, "100-35").
+     * @return Результат выражения или исходная строка, если ошибка.
+     */
+    QString evaluateExpression(const QString &expression);
 
-private slots:
-    void on_backButton_clicked();
-    void on_nextButton_clicked();
-    void on_shareButton_clicked();
-    void on_hpSpinBox_valueChanged(int value);
+    void setupUI();
 };
+
 
 
 class CustomSortFilterProxyModel : public QSortFilterProxyModel
@@ -65,19 +113,6 @@ public:
 
         return QSortFilterProxyModel::lessThan(left, right);
     }
-};
-
-
-class qDndInitiativeEntityEditWidget : public QWidget {
-Q_OBJECT
-
-public:
-    explicit qDndInitiativeEntityEditWidget(EncounterEntity *entity, QWidget *parent = nullptr);
-
-    ~qDndInitiativeEntityEditWidget() override;
-
-private:
-    Ui::qDndInitiativeEntityEditWidget *ui;
 };
 
 
