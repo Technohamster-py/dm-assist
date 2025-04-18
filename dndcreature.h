@@ -47,7 +47,7 @@ public:
 
     ~dndCreature();
 
-    static int getBonuseFromCharacteristic(int characteristicValue);
+    static int getBonusFromCharacteristic(int characteristicValue);
     int getCharacterSheetId() const {return id;};
     int getAc() const {return ac;};
     int getHp() const {return hp;};
@@ -86,6 +86,10 @@ protected:
     QString hpFormula = "";
 
     QMap<QString, int> speedValues;
+
+   lifeStatus m_status = lifeStatus::Alive;
+   QList<conditions> m_conditions;
+
 };
 
 
@@ -109,15 +113,15 @@ public:
 
     /// Races from PHB
     enum Races{
-        Gnome = 0,
-        Dwarf = 1,
-        Dragonborn = 2,
-        Halforc = 3,
-        Halfling = 4,
-        Halfelf = 5,
-        Tiefling = 6,
-        Human = 7,
-        Elf = 8
+        Gnome,
+        Dwarf,
+        Dragonborn,
+        Halforc,
+        Halfling,
+        Halfelf,
+        Tiefling,
+        Human,
+        Elf
     };
 
 private:

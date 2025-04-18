@@ -24,7 +24,7 @@ dndCreature::~dndCreature() {
 
 }
 
-int dndCreature::getBonuseFromCharacteristic(int characteristicValue) {
+int dndCreature::getBonusFromCharacteristic(int characteristicValue) {
     return (characteristicValue >= 0) ? (characteristicValue / 10) : (characteristicValue - 10 + 1) / 10;
 }
 
