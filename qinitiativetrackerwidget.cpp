@@ -12,16 +12,15 @@
 
 #include <qdebug.h>
 
-#include "qInitiativeTrackerWidget.h"
-#include <QDebug>
 #include <QJSEngine>
 
 /**
  * @brief Конструктор: инициализация интерфейса.
  */
-QInitiativeTrackerWidget::QInitiativeTrackerWidget(QWidget *parent)
+QInitiativeTrackerWidget::QInitiativeTrackerWidget(QWidget *parent, InitiativeModel *sharedModel)
         : QWidget(parent), ui(new Ui::QInitiativeTrackerWidget)
 {
+    model = sharedModel ? sharedModel : new InitiativeModel(this);
     ui->setupUi(this);
 
     setupUI();
@@ -31,110 +30,70 @@ QInitiativeTrackerWidget::QInitiativeTrackerWidget(QWidget *parent)
  * @brief и настраивает интерфейс виджета.
  */
 void QInitiativeTrackerWidget::setupUI() {
+    ui->table->setModel(model);
     ui->table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->table->setDropIndicatorShown(true);
-
-    connect(ui->table, &QTableWidget::cellChanged, this, &QInitiativeTrackerWidget::handleCellChanged);
-
 
     connect(ui->addRowButton, &QPushButton::clicked, this, &QInitiativeTrackerWidget::addRow);
     connect(ui->nextButton, &QPushButton::clicked, this, &QInitiativeTrackerWidget::nextTurn);
     connect(ui->sortButton, &QPushButton::clicked, this, &QInitiativeTrackerWidget::sortTable);
+    connect(ui->shareButton, &QPushButton::clicked, this, &QInitiativeTrackerWidget::openSharedWindow);
+
+    connect(ui->table, &QTableView::clicked, this, [=](const QModelIndex &index) {
+        if (index.column() == 5) {
+            model->removeCharacter(index.row());
+        }
+    });
 }
 
 /**
  * @brief Добавляет новую строку в таблицу.
  */
 void QInitiativeTrackerWidget::addRow() {
-    insertRow();
+    InitiativeCharacter emptyCharacter;
+    emptyCharacter.name = "New";
+    emptyCharacter.initiative = 0;
+    emptyCharacter.ac = 10;
+    emptyCharacter.hp = "0";
+    emptyCharacter.maxHp = 0;
+
+    model->addCharacter(emptyCharacter);
+
+    // Переводим фокус на новую строку для удобства
+    int lastRow = model->rowCount() - 1;
+    ui->table->selectRow(lastRow);
+    ui->table->edit(model->index(lastRow, 0)); // сразу начинаем редактирование первой ячейки
 }
 
-/**
- * @brief Вставляет строку и настраивает кнопки/ячейки.
- */
-void QInitiativeTrackerWidget::insertRow(const QStringList &defaults) {
-    int row = ui->table->rowCount();
-    ui->table->insertRow(row);
+void QInitiativeTrackerWidget::openSharedWindow() {
+    // Создаем новое окно
+    QWidget *sharedWindow = new QWidget;
+    sharedWindow->setAttribute(Qt::WA_DeleteOnClose);
+    sharedWindow->setWindowTitle("Shared Initiative Tracker");
+    sharedWindow->resize(800, 400);
 
-    for (int col = 0; col < 5; ++col) {
-        QTableWidgetItem *item = new QTableWidgetItem(defaults.value(col, ""));
-        item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsEnabled);
-        ui->table->setItem(row, col, item);
-    }
+    // Используем тот же экземпляр модели
+    QInitiativeTrackerWidget *sharedWidget = new QInitiativeTrackerWidget(nullptr, model);
 
-    QPushButton *delButton = new QPushButton("X");
-    connect(delButton, &QPushButton::clicked, this, [=]() {
-        ui->table->removeRow(row);
-        if (currentRowIndex >= ui->table->rowCount())
-            currentRowIndex = 0;
-        highlightCurrentRow();
-    });
-    ui->table->setCellWidget(row, 5, delButton);
-
-    highlightCurrentRow();
+    QVBoxLayout *layout = new QVBoxLayout(sharedWindow);
+    layout->addWidget(sharedWidget);
+    sharedWindow->setLayout(layout);
+    sharedWindow->show();
 }
 
 /**
  * @brief Переходит к следующему ходу.
  */
 void QInitiativeTrackerWidget::nextTurn() {
-    if (ui->table->rowCount() == 0) return;
-    currentRowIndex = (currentRowIndex + 1) % ui->table->rowCount();
-    highlightCurrentRow();
-}
-
-/**
- * @brief Подсвечивает активную строку.
- */
-void QInitiativeTrackerWidget::highlightCurrentRow() {
-    for (int i = 0; i < ui->table->rowCount(); ++i) {
-        for (int j = 0; j < ui->table->columnCount(); ++j) {
-            QTableWidgetItem *item = ui->table->item(i, j);
-            if (item)
-                item->setBackground(i == currentRowIndex ? QColor(200, 230, 255) : Qt::white);
-        }
-    }
+    int next = (model->getCurrentIndex() + 1) % model->rowCount();
+    model->setCurrentIndex(next);
 }
 
 /**
  * @brief Сортирует таблицу по инициативе.
  */
 void QInitiativeTrackerWidget::sortTable() {
-    ui->table->sortItems(1, Qt::DescendingOrder);
-    highlightCurrentRow();
-}
-
-/**
- * @brief Обрабатывает изменение содержимого ячейки.
- */
-void QInitiativeTrackerWidget::handleCellChanged(int row, int column) {
-    if (column == 3) { // HP
-        evaluateHP(row, column);
-    }
-}
-
-/**
- * @brief Вычисляет выражение в ячейке HP.
- */
-void QInitiativeTrackerWidget::evaluateHP(int row, int column) {
-    QString input = ui->table->item(row, column)->text();
-    QString evaluated = evaluateExpression(input);
-    ui->table->blockSignals(true);
-    ui->table->item(row, column)->setText(evaluated);
-    ui->table->blockSignals(false);
-}
-
-/**
- * @brief Пытается вычислить выражение через JS движок.
- * @param expression Строка с выражением.
- * @return Результат или исходная строка, если ошибка.
- */
-QString QInitiativeTrackerWidget::evaluateExpression(const QString &expression) {
-    QJSEngine engine;
-    QJSValue result = engine.evaluate(expression);
-    if (result.isNumber())
-        return QString::number(result.toInt());
-    return expression;
+    model->sortByInitiative();
 }
 
 

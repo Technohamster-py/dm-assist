@@ -10,6 +10,10 @@
 #include <QStyledItemDelegate>
 #include <QPainter>
 #include "encounter.h"
+#include "initiativemodel.h"
+
+
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class QInitiativeTrackerWidget; class qDndInitiativeEntityEditWidget; class qPlayerInitiativeView; }
@@ -24,14 +28,14 @@ public:
      * @brief Конструктор виджета.
      * @param parent Родительский виджет.
      */
-    explicit QInitiativeTrackerWidget(QWidget *parent = nullptr);
+    explicit QInitiativeTrackerWidget(QWidget *parent = nullptr, InitiativeModel *sharedModel = nullptr);
 
 //    ~QInitiativeTrackerWidget() override;
 
 signals:
     void encounterLoaded();
     void currentEntityChanged(int currentIndex);
-    void share(Encounter* encounter);
+//    void share(Encounter* encounter);
 
 private slots:
     /**
@@ -55,23 +59,9 @@ private slots:
     void sortTable();
 
     /**
-     * @brief Вычисляет арифметическое выражение в ячейке HP.
-     * @param row Номер строки.
-     * @param column Номер колонки (должна быть колонка HP).
+     * @brief Открывает расшареное окно
      */
-    void evaluateHP(int row, int column);
-
-    /**
-     * @brief Обработчик изменения содержимого ячеек.
-     * @param row Номер строки.
-     * @param column Номер колонки.
-     */
-    void handleCellChanged(int row, int column);
-
-    /**
-     * @brief Подсвечивает текущего активного персонажа.
-     */
-    void highlightCurrentRow();
+    void openSharedWindow();
 
 //    void on_backButton_clicked();
 //    void on_nextButton_clicked();
@@ -81,18 +71,7 @@ private:
     Ui::QInitiativeTrackerWidget *ui;
     int currentRowIndex = 0;    ///< Индекс текущего активного персонажа.
 
-    /**
-     * @brief Вставляет новую строку с необязательными значениями по умолчанию.
-     * @param defaultValues Список значений по умолчанию.
-     */
-    void insertRow(const QStringList &defaultValues = QStringList());
-
-    /**
-     * @brief Оценивает арифметическое выражение в строке.
-     * @param expression Строка с выражением (например, "100-35").
-     * @return Результат выражения или исходная строка, если ошибка.
-     */
-    QString evaluateExpression(const QString &expression);
+    InitiativeModel *model;
 
     void setupUI();
 };

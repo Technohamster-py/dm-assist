@@ -15,6 +15,7 @@ set(HEADER_FILES
         creature.h
         dndcreature.h
         encounter.h
+        initiativemodel.h
         mainwindow.h
         qinitiativetrackerwidget.h
         qplayer.h
@@ -25,6 +26,7 @@ set(SOURCE_FILES
         creature.cpp
         dndcreature.cpp
         encounter.cpp
+        initiativemodel.cpp
         mainwindow.cpp
         qinitiativetrackerwidget.cpp
         qplayer.cpp
