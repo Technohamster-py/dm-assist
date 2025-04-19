@@ -8,6 +8,8 @@
 #include <QAbstractTableModel>
 #include <QXmlStreamWriter>
 
+static int evaluateExpression(const QString &expression, bool *ok = nullptr);
+static QString calculateHpStatus(int hp, int maxHp);
 
 struct InitiativeCharacter {
     QString name;
@@ -55,6 +57,8 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
     bool setData(const QModelIndex &index, const QVariant &value, int role) override;
+    void setHpStatusMode(bool enabled);
+
 
     void addCharacter(const InitiativeCharacter &character);
     void removeCharacter(int row);
@@ -74,6 +78,8 @@ signals:
 private:
     QVector<InitiativeCharacter> characters;
     int currentIndex = 0;
+    bool hpModeStatusText = false; ///< Флаг: отображать состояние вместо чисел
+
 };
 
 

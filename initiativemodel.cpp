@@ -44,6 +44,20 @@ QVariant InitiativeModel::data(const QModelIndex &index, int role) const {
     if (role == Qt::DisplayRole || role == Qt::EditRole) {
         if (role == Qt::DisplayRole && index.column() == 5)
             return "❌";
+
+        if (role == Qt::DisplayRole && index.column() == 3) {
+            if (!hpModeStatusText) {
+                return characters.at(index.row()).hp;
+            } else {
+                const auto &c = characters.at(index.row());
+                bool ok;
+                int hpVal = evaluateExpression(c.hp, &ok);
+                if (!ok || c.maxHp <= 0)
+                    return "Unknown";
+                return calculateHpStatus(hpVal, c.maxHp);
+            }
+        }
+
         switch (index.column()) {
             case 0: return c.name;
             case 1: return c.initiative;
@@ -189,4 +203,35 @@ void InitiativeModel::loadFromFile(const QString &filePath) {
     endResetModel();
     file.close();
     emit dataChangedExternally();
+}
+
+void InitiativeModel::setHpStatusMode(bool enabled) {
+    if (hpModeStatusText == enabled) return;
+    hpModeStatusText = enabled;
+    emit dataChanged(index(0, 3), index(rowCount() - 1, 3)); // HP колонка
+}
+
+static QString calculateHpStatus(int hp, int maxHp)
+{
+    double ratio = (double)hp / maxHp;
+    if (hp <= 0)
+        return "Dead";
+    else if (ratio > 0.5)
+        return "Good";
+    else
+        return "Bad";
+}
+
+
+static int evaluateExpression(const QString &expression, bool *ok) {
+    QJSEngine engine;
+    QJSValue result = engine.evaluate(expression);
+
+    if (result.isError() || !result.isNumber()) {
+        if (ok) *ok = false;
+        return 0;
+    }
+
+    if (ok) *ok = true;
+    return result.toInt();
 }
