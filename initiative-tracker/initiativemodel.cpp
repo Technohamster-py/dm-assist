@@ -7,20 +7,42 @@
 #include <QTextStream>
 #include <QJSEngine> // Для вычисления арифметики
 
+/**
+ * @brief Конструктор модели инициативы.
+ * @details Инициализирует базовую модель, используется в качестве источника данных для таблицы.
+ * @param parent Родительский объект
+ */
 InitiativeModel::InitiativeModel(QObject *parent)
         : QAbstractTableModel(parent) {}
 
-// Кол-во строк
+/**
+ * @brief Возвращает количество строк в модели.
+ * @details Количество строк соответствует количеству персонажей.
+ * @param index Не используется
+ * @return Количество строк
+ */
 int InitiativeModel::rowCount(const QModelIndex &) const {
     return characters.size();
 }
 
-// Кол-во колонок
+/**
+ * @brief Возвращает количество колонок в таблице.
+ * @details Всегда возвращает 6: имя, инициатива, AC, HP, MaxHP и удаление.
+ * @param parent Не используется
+ * @return Количество колонок
+ */
 int InitiativeModel::columnCount(const QModelIndex &) const {
-    return 6; // name, initiative, ac, hp, maxHp, DELETE
+    return 6;
 }
 
-// Заголовки
+/**
+ * @brief Возвращает заголовок колонки.
+ * @details Используется для отображения заголовков в таблице.
+ * @param section Индекс колонки
+ * @param orientation Ориентация (только горизонтальная)
+ * @param role Роль (только DisplayRole)
+ * @return Название колонки или QVariant()
+ */
 QVariant InitiativeModel::headerData(int section, Qt::Orientation orientation, int role) const {
     if (role != Qt::DisplayRole || orientation != Qt::Horizontal)
         return QVariant();
@@ -37,10 +59,11 @@ QVariant InitiativeModel::headerData(int section, Qt::Orientation orientation, i
 }
 
 /**
- * @brief Возвращает данные для отображения в таблице.
+ * @brief Возвращает данные ячейки.
+ * @details Обрабатывает отображение, редактирование, фоновую подсветку и отображение выражений в HP.
  * @param index Индекс ячейки
- * @param role Роль данных (отображение, редактирование и т.д.)
- * @return QVariant с нужными данными
+ * @param role Роль (DisplayRole, EditRole, BackgroundRole, UserRole)
+ * @return QVariant с содержимым ячейки
  */
 QVariant InitiativeModel::data(const QModelIndex &index, int role) const {
     if (!index.isValid() || index.row() >= characters.size())
@@ -80,7 +103,12 @@ QVariant InitiativeModel::data(const QModelIndex &index, int role) const {
     return QVariant();
 }
 
-// Флаги редактирования
+/**
+ * @brief Возвращает флаги редактируемости ячейки.
+ * @details Разрешает редактирование всех ячеек кроме колонки Delete.
+ * @param index Индекс ячейки
+ * @return Флаги Qt::ItemFlags
+ */
 Qt::ItemFlags InitiativeModel::flags(const QModelIndex &index) const {
     if (!index.isValid())
         return Qt::NoItemFlags;
@@ -91,7 +119,14 @@ Qt::ItemFlags InitiativeModel::flags(const QModelIndex &index) const {
     return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
 }
 
-// Установка данных (и обработка выражений)
+/**
+ * @brief Устанавливает данные в модель.
+ * @details Обновляет содержимое модели и вызывает сигнал dataChanged.
+ * @param index Индекс редактируемой ячейки
+ * @param value Новое значение
+ * @param role Не используется (по умолчанию)
+ * @return true если установка прошла успешно
+ */
 bool InitiativeModel::setData(const QModelIndex &index, const QVariant &value, int) {
     if (!index.isValid() || index.row() >= characters.size())
         return false;
@@ -115,14 +150,22 @@ bool InitiativeModel::setData(const QModelIndex &index, const QVariant &value, i
     return true;
 }
 
-// Добавление персонажа
+/**
+ * @brief Добавляет персонажа в модель.
+ * @details Вставляет новую строку в конец модели и обновляет представление.
+ * @param character Новый персонаж
+ */
 void InitiativeModel::addCharacter(const InitiativeCharacter &character) {
     beginInsertRows(QModelIndex(), characters.size(), characters.size());
     characters.append(character);
     endInsertRows();
 }
 
-// Удаление персонажа
+/**
+ * @brief Удаляет персонажа из модели.
+ * @details Удаляет строку с указанным индексом, корректирует текущий индекс.
+ * @param row Индекс строки для удаления
+ */
 void InitiativeModel::removeCharacter(int row) {
     if (row < 0 || row >= characters.size()) return;
 
@@ -134,7 +177,10 @@ void InitiativeModel::removeCharacter(int row) {
         --currentIndex;
 }
 
-// Сортировка по инициативе
+/**
+ * @brief Сортирует модель по инициативе.
+ * @details Сортирует персонажей по убыванию инициативы и обновляет представление.
+ */
 void InitiativeModel::sortByInitiative() {
     std::sort(characters.begin(), characters.end(), [](const InitiativeCharacter &a, const InitiativeCharacter &b) {
         return a.initiative > b.initiative;
@@ -142,14 +188,23 @@ void InitiativeModel::sortByInitiative() {
     emit dataChanged(index(0,0), index(rowCount()-1, columnCount()-1));
 }
 
-// Возврат персонажа
+/**
+ * @brief Возвращает объект персонажа по строковому индексу.
+ * @details Используется для получения полной информации о персонаже.
+ * @param row Индекс строки
+ * @return Объект InitiativeCharacter или пустой, если индекс некорректен
+ */
 InitiativeCharacter InitiativeModel::getCharacter(int row) const {
     if (row >= 0 && row < characters.size())
         return characters[row];
     return {};
 }
 
-// Подсветка текущего активного
+/**
+ * @brief Устанавливает текущего активного персонажа.
+ * @details Обновляет индекс текущей строки и вызывает обновление отображения.
+ * @param index Индекс текущего персонажа
+ */
 void InitiativeModel::setCurrentIndex(int index) {
     if (index < 0 || index >= characters.size()) return;
 
@@ -160,11 +215,20 @@ void InitiativeModel::setCurrentIndex(int index) {
     emit dataChanged(this->index(currentIndex, 0), this->index(currentIndex, columnCount()-1));
 }
 
+/**
+ * @brief Получает индекс текущего персонажа.
+ * @details Возвращает индекс строки, которая считается активной.
+ * @return Индекс текущей строки
+ */
 int InitiativeModel::getCurrentIndex() const {
     return currentIndex;
 }
 
-// Вычисление выражения в HP
+/**
+ * @brief Вычисляет арифметическое выражение в HP.
+ * @details Использует движок JavaScript для вычисления выражений типа "100 - 25".
+ * @param row Индекс строки, в которой обновляется HP
+ */
 void InitiativeModel::evaluateHP(int row) {
     if (row < 0 || row >= characters.size()) return;
 
@@ -177,7 +241,12 @@ void InitiativeModel::evaluateHP(int row) {
     }
 }
 
-
+/**
+ * @brief Сохраняет модель в XML-файл.
+ * @details Сохраняет всех персонажей и их данные в структуру XML.
+ * @param filename Имя файла
+ * @return true, если сохранение прошло успешно
+ */
 bool InitiativeModel::saveToFile(const QString &filename) const {
     QDomDocument doc("InitiativeTracker");
     QDomElement root = doc.createElement("initiative");
@@ -202,6 +271,12 @@ bool InitiativeModel::saveToFile(const QString &filename) const {
     return true;
 }
 
+/**
+ * @brief Загружает модель из XML-файла.
+ * @details Считывает персонажей из структуры XML и заполняет модель.
+ * @param filename Имя файла
+ * @return true, если загрузка прошла успешно
+ */
 bool InitiativeModel::loadFromFile(const QString &filename) {
     QFile file(filename);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -236,6 +311,13 @@ bool InitiativeModel::loadFromFile(const QString &filename) {
     return true;
 }
 
+/**
+ * @brief Вычисляет строковое арифметическое выражение.
+ * @details Используется для парсинга HP, например "100-25" -> 75.
+ * @param expression Строка выражения
+ * @param ok Указатель для флага успеха
+ * @return Результат вычисления или 0, если ошибка
+ */
 static int evaluateExpression(const QString &expression, bool *ok) {
     QJSEngine engine;
     QJSValue result = engine.evaluate(expression);

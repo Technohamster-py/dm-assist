@@ -67,17 +67,7 @@ public:
     void setCurrentIndex(int index);
     int getCurrentIndex() const;
 
-    /**
-     * @brief Сохраняет текущее состояние модели в XML-файл.
-     * @param filename Путь к файлу
-     * @return true, если успешно сохранено
-     */
     bool saveToFile(const QString &filename) const;
-    /**
-     * @brief Загружает состояние модели из XML-файла.
-     * @param filename Путь к файлу
-     * @return true, если успешно загружено
-     */
     bool loadFromFile(const QString &filename);
 
 signals:
@@ -86,7 +76,6 @@ signals:
 private:
     QVector<InitiativeCharacter> characters;
     int currentIndex = 0;
-
 };
 
 
