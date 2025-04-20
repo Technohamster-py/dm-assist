@@ -4,10 +4,8 @@
 #include <QItemSelectionModel>
 
 #include "qinitiativetrackerwidget.h"
-
+#include "hpprogressbardelegate.h"
 #include "ui_qinitiativetrackerwidget.h"
-#include "ui_qdndinitiativeentityeditwidget.h"
-#include "ui_qplayerinitiativeview.h"
 
 
 #include <qdebug.h>
@@ -73,7 +71,18 @@ void QInitiativeTrackerWidget::openSharedWindow() {
     sharedWindow->resize(800, 400);
 
     // Используем тот же экземпляр модели
-    QInitiativeTrackerWidget *sharedWidget = new QInitiativeTrackerWidget(nullptr, model);
+    QTableView *sharedWidget = new QTableView(sharedWindow);
+    sharedWidget->setModel(model);
+    auto *view = sharedWidget;
+
+    // Делегат с начальным режимом отображения
+    auto *hpDelegate = new HpProgressBarDelegate(HpProgressBarDelegate::Numeric, view);
+    view->setItemDelegateForColumn(3, hpDelegate);
+
+    connect(ui->hpModeBox, QOverload<int>::of(&QComboBox::currentIndexChanged), hpDelegate, [hpDelegate, view](int index) {
+        hpDelegate->setDisplayMode(static_cast<HpProgressBarDelegate::DisplayMode>(index));
+        view->viewport()->update();
+    });
 
     QVBoxLayout *layout = new QVBoxLayout(sharedWindow);
     layout->addWidget(sharedWidget);
@@ -94,64 +103,4 @@ void QInitiativeTrackerWidget::nextTurn() {
  */
 void QInitiativeTrackerWidget::sortTable() {
     model->sortByInitiative();
-}
-
-
-////////////////////////////////////////////////////
-//           qPlayerInitiativeView                //
-////////////////////////////////////////////////////
-
-qPlayerInitiativeView::qPlayerInitiativeView(QInitiativeTrackerWidget *parentTracker, QWidget *parent) :
-        QWidget(parent), ui(new Ui::qPlayerInitiativeView) {
-    ui->setupUi(this);
-
-//    loadEncounter(parentTracker->getEncounter());
-
-    //connect(parentTracker, SIGNAL(currentEntityChanged), this, )
-}
-
-qPlayerInitiativeView::~qPlayerInitiativeView() {
-    delete ui;
-}
-
-void qPlayerInitiativeView::loadEncounter(Encounter *encounter) {
-    m_entityCount = encounter->getModel()->rowCount();
-    m_encounter = encounter;
-
-    CustomSortFilterProxyModel* initiativeProxyModel = new CustomSortFilterProxyModel();
-    initiativeProxyModel->setSourceModel(encounter->getModel());
-    initiativeProxyModel->setDynamicSortFilter(true);
-
-    ui->encounterView->setModel(initiativeProxyModel);
-    initiativeProxyModel->sort(0, Qt::AscendingOrder);
-
-    ui->encounterView->setColumnWidth(0, 20);
-    ui->encounterView->setColumnWidth(2, 20);
-    ui->encounterView->setColumnWidth(3, 60);
-
-    ui->encounterView->hideColumn(4);
-    ui->encounterView->hideColumn(5);
-    ui->encounterView->hideColumn(6);
-
-    selectRow(0);
-}
-
-void qPlayerInitiativeView::selectRow(int row) {
-    m_currentIndex = row;
-
-    QItemSelectionModel *selectionModel = ui->encounterView->selectionModel();
-    QItemSelection selection;
-    QModelIndex topLeft = ui->encounterView->model()->index(row, 0);
-    QModelIndex bottomRight = ui->encounterView->model()->index(row, 3);
-    selection.select(topLeft, bottomRight);
-    selectionModel->select(selection, QItemSelectionModel::ClearAndSelect);
-}
-
-void qPlayerInitiativeView::changeActiveEntity(int index) {
-    selectRow(index);
-}
-
-void qPlayerInitiativeView::setParentTracker(QInitiativeTrackerWidget *tracker) {
-    m_parentTracker = tracker;
-    connect(m_parentTracker, SIGNAL(currentEntityChanged(int)), SLOT(changeActiveEntity(int)));
 }

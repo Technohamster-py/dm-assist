@@ -27,7 +27,6 @@ protected slots:
     void slotShareTracker(Encounter *encounter);
 
 protected:
-    qPlayerInitiativeView* playerInitiativeView;
     QInitiativeTrackerWidget* initiativeWidget;
 
 private:

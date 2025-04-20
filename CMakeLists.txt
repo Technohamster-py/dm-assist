@@ -20,6 +20,7 @@ set(HEADER_FILES
         qinitiativetrackerwidget.h
         qplayer.h
         qplaylistedit.h
+        hpprogressbardelegate.h
 )
 
 set(SOURCE_FILES
@@ -31,16 +32,15 @@ set(SOURCE_FILES
         qinitiativetrackerwidget.cpp
         qplayer.cpp
         qplaylistedit.cpp
+        hpprogressbardelegate.cpp
 )
 
 set(UI_FILES
         mainwindow.ui
         qdndcharacterwidget.ui
-        qdndinitiativeentityeditwidget.ui
         qplayer.ui
         qplaylistedit.ui
         qinitiativetrackerwidget.ui
-        qplayerinitiativeview.ui
 )
 
 set(TS_FILES

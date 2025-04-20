@@ -34,7 +34,12 @@ QVariant InitiativeModel::headerData(int section, Qt::Orientation orientation, i
     }
 }
 
-// Данные для отображения и подсветки
+/**
+ * @brief Возвращает данные для отображения в таблице.
+ * @param index Индекс ячейки
+ * @param role Роль данных (отображение, редактирование и т.д.)
+ * @return QVariant с нужными данными
+ */
 QVariant InitiativeModel::data(const QModelIndex &index, int role) const {
     if (!index.isValid() || index.row() >= characters.size())
         return QVariant();
@@ -45,17 +50,16 @@ QVariant InitiativeModel::data(const QModelIndex &index, int role) const {
         if (role == Qt::DisplayRole && index.column() == 5)
             return "❌";
 
-        if (role == Qt::DisplayRole && index.column() == 3) {
-            if (!hpModeStatusText) {
-                return characters.at(index.row()).hp;
-            } else {
-                const auto &c = characters.at(index.row());
-                bool ok;
-                int hpVal = evaluateExpression(c.hp, &ok);
-                if (!ok || c.maxHp <= 0)
-                    return "Unknown";
-                return calculateHpStatus(hpVal, c.maxHp);
-            }
+        if (index.column() == 3) { // HP column
+            const auto &c = characters.at(index.row());
+            bool ok;
+            int hpVal = evaluateExpression(c.hp, &ok);
+            if (!ok) return "?";
+
+            if (role == Qt::DisplayRole)
+                return hpVal;
+            if (role == Qt::UserRole)
+                return c.maxHp;
         }
 
         switch (index.column()) {
@@ -204,24 +208,6 @@ void InitiativeModel::loadFromFile(const QString &filePath) {
     file.close();
     emit dataChangedExternally();
 }
-
-void InitiativeModel::setHpStatusMode(bool enabled) {
-    if (hpModeStatusText == enabled) return;
-    hpModeStatusText = enabled;
-    emit dataChanged(index(0, 3), index(rowCount() - 1, 3)); // HP колонка
-}
-
-static QString calculateHpStatus(int hp, int maxHp)
-{
-    double ratio = (double)hp / maxHp;
-    if (hp <= 0)
-        return "Dead";
-    else if (ratio > 0.5)
-        return "Good";
-    else
-        return "Bad";
-}
-
 
 static int evaluateExpression(const QString &expression, bool *ok) {
     QJSEngine engine;
