@@ -1,4 +1,4 @@
-#include "InitiativeModel.h"
+#include "initiativemodel.h"
 #include <QBrush>
 #include <QColor>
 #include <QFile>

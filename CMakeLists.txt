@@ -13,20 +13,20 @@ set(BASS_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass/bass.lib)
 #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc")
 
 set(HEADER_FILES
-        initiativemodel.h
+        initiative-tracker/initiativemodel.h
         mainwindow.h
-        qinitiativetrackerwidget.h
-        hpprogressbardelegate.h
+        initiative-tracker/qinitiativetrackerwidget.h
+        initiative-tracker/hpprogressbardelegate.h
         qplayerwidget.h
         qsaveconfigdialog.h
         settingsdialog.h
 )
 
 set(SOURCE_FILES
-        initiativemodel.cpp
+        initiative-tracker/initiativemodel.cpp
         mainwindow.cpp
-        qinitiativetrackerwidget.cpp
-        hpprogressbardelegate.cpp
+        initiative-tracker/qinitiativetrackerwidget.cpp
+        initiative-tracker/hpprogressbardelegate.cpp
         qplayerwidget.cpp
         qsaveconfigdialog.cpp
         settingsdialog.cpp
@@ -36,7 +36,7 @@ set(UI_FILES
         mainwindow.ui
         qplayer.ui
         qplaylistedit.ui
-        qinitiativetrackerwidget.ui
+        initiative-tracker/qinitiativetrackerwidget.ui
         settingsdialog.ui
 )
 
@@ -67,6 +67,7 @@ include_directories(
         ${Qt5PrintSupport_INCLUDE_DIRS}
         ${Qt5Sql_INCLUDE_DIRS}
         ${Qt5Multimedia_INCLUDE_DIRS}  #the directories
+        initiative-tracker
         translations
         static
         lib
@@ -143,6 +144,10 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E remove -f "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/build.ninja,ignore>"
 
         COMMENT "Stripping build directory for Release (only if config is Release)..."
+)
+
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${PROJECT_NAME}>/translations"
 )
 
 foreach(qm ${QM_FILES})
