@@ -24,53 +24,15 @@ Q_OBJECT
 
 
 public:
-    /**
-     * @brief Конструктор виджета.
-     * @param parent Родительский виджет.
-     */
     explicit QInitiativeTrackerWidget(QWidget *parent = nullptr, InitiativeModel *sharedModel = nullptr);
 
-//    ~QInitiativeTrackerWidget() override;
-
-signals:
-    void encounterLoaded();
-    void currentEntityChanged(int currentIndex);
-//    void share(Encounter* encounter);
 
 private slots:
-    /**
-     * @brief Добавляет новую строку в таблицу.
-     */
     void addRow();
-
-    /**
-     * @brief Удаляет строку по нажатию кнопки.
-     */
-//    void deleteRow();
-
-    /**
-     * @brief Переходит к следующему активному персонажу.
-     */
     void nextTurn();
-
-    /**
-     * @brief Переходит к предыдущему персонажу.
-     */
     void prevTurn();
-
-    /**
-     * @brief Сортирует таблицу по инициативе (по убыванию).
-     */
     void sortTable();
-
-    /**
-     * @brief Открывает расшареное окно
-     */
     void openSharedWindow();
-
-//    void on_backButton_clicked();
-//    void on_nextButton_clicked();
-//    void on_shareButton_clicked();
 
 private:
     Ui::QInitiativeTrackerWidget *ui;

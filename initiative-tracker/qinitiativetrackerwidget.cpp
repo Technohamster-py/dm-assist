@@ -1,6 +1,3 @@
-//
-// Created by arseniy on 27.03.2024.
-//
 #include <QItemSelectionModel>
 
 #include "qinitiativetrackerwidget.h"
@@ -10,10 +7,12 @@
 
 #include <qdebug.h>
 
-#include <QJSEngine>
 
 /**
  * @brief Конструктор: инициализация интерфейса.
+ * @details Создает виджет трекера инициативы и инициализирует таблицу,
+ * а также устанавливает связи сигналов и слотов.
+ * Если передана модель sharedModel, она используется, иначе создается новая.
  */
 QInitiativeTrackerWidget::QInitiativeTrackerWidget(QWidget *parent, InitiativeModel *sharedModel)
         : QWidget(parent), ui(new Ui::QInitiativeTrackerWidget)
@@ -25,7 +24,9 @@ QInitiativeTrackerWidget::QInitiativeTrackerWidget(QWidget *parent, InitiativeMo
 }
 
 /**
- * @brief и настраивает интерфейс виджета.
+ * @brief Настраивает элементы пользовательского интерфейса.
+ * @details Устанавливает модель таблицы, режимы отображения и подключает кнопки
+ * управления (добавление строки, переходы, сортировка, отображение общей таблицы).
  */
 void QInitiativeTrackerWidget::setupUI() {
     ui->table->setModel(model);
@@ -47,6 +48,9 @@ void QInitiativeTrackerWidget::setupUI() {
 
 /**
  * @brief Добавляет новую строку в таблицу.
+ * @details Создает нового пустого персонажа с начальными значениями
+ * и добавляет его в модель. После этого сразу переводит фокус
+ * на созданную строку и активирует режим редактирования имени.
  */
 void QInitiativeTrackerWidget::addRow() {
     InitiativeCharacter emptyCharacter;
@@ -64,6 +68,12 @@ void QInitiativeTrackerWidget::addRow() {
     ui->table->edit(model->index(lastRow, 0)); // сразу начинаем редактирование первой ячейки
 }
 
+/**
+ * @brief Открывает дополнительное окно с общей таблицей.
+ * @details Создает новое окно с той же моделью персонажей. В таблицу устанавливается
+ * делегат для отображения HP. Вариант отображения (числовой/графический) выбирается
+ * в зависимости от текущего значения комбобокса.
+ */
 void QInitiativeTrackerWidget::openSharedWindow() {
     // Создаем новое окно
     QWidget *sharedWindow = new QWidget;
@@ -93,6 +103,8 @@ void QInitiativeTrackerWidget::openSharedWindow() {
 
 /**
  * @brief Переходит к следующему ходу.
+ * @details Увеличивает текущий индекс активного персонажа. При достижении
+ * конца списка происходит переход к первому персонажу.
  */
 void QInitiativeTrackerWidget::nextTurn() {
     int next = (model->getCurrentIndex() + 1) % model->rowCount();
@@ -101,6 +113,8 @@ void QInitiativeTrackerWidget::nextTurn() {
 
 /**
  * @brief Переходит к предыдущему ходу.
+ * @details Уменьшает текущий индекс активного персонажа.
+ * Если индекс меньше нуля, происходит переход к последнему персонажу.
  */
 void QInitiativeTrackerWidget::prevTurn() {
     int rowCount = model->rowCount();
@@ -113,6 +127,8 @@ void QInitiativeTrackerWidget::prevTurn() {
 
 /**
  * @brief Сортирует таблицу по инициативе.
+ * @details Вызывает метод модели для сортировки списка персонажей
+ * в порядке убывания инициативы.
  */
 void QInitiativeTrackerWidget::sortTable() {
     model->sortByInitiative();

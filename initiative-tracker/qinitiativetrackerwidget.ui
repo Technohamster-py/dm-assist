@@ -128,7 +128,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="static/app_resources.qrc">
+        <iconset resource="../static/app_resources.qrc">
          <normaloff>:/initiative tracker/back.svg</normaloff>:/initiative tracker/back.svg</iconset>
        </property>
       </widget>
@@ -160,7 +160,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="static/app_resources.qrc">
+        <iconset resource="../static/app_resources.qrc">
          <normaloff>:/initiative tracker/forward.svg</normaloff>:/initiative tracker/forward.svg</iconset>
        </property>
       </widget>
@@ -192,7 +192,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="static/app_resources.qrc">
+        <iconset resource="../static/app_resources.qrc">
          <normaloff>:/initiative tracker/share.svg</normaloff>:/initiative tracker/share.svg</iconset>
        </property>
       </widget>
@@ -245,7 +245,7 @@
         <string>Add</string>
        </property>
        <property name="icon">
-        <iconset resource="static/app_resources.qrc">
+        <iconset resource="../static/app_resources.qrc">
          <normaloff>:/add.svg</normaloff>:/add.svg</iconset>
        </property>
       </widget>
@@ -262,7 +262,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="static/app_resources.qrc"/>
+  <include location="../static/app_resources.qrc"/>
  </resources>
  <connections/>
 </ui>
