@@ -6,130 +6,60 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1440</width>
-    <height>1024</height>
+    <width>416</width>
+    <height>531</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <property name="contextMenuPolicy">
-   <enum>Qt::NoContextMenu</enum>
-  </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>DM-assist music</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
+  <widget class="QWidget" name="mainwidget">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QWidget" name="leftAsideWidget" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>210</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>210</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2"/>
-     </widget>
+     <layout class="QGridLayout" name="centralwidget"/>
     </item>
     <item>
-     <widget class="QWidget" name="mainViewWidget" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_3"/>
-     </widget>
-    </item>
-    <item>
-     <widget class="Line" name="line">
-      <property name="frameShadow">
-       <enum>QFrame::Plain</enum>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QWidget" name="rightAsideWidget" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>330</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <layout class="QVBoxLayout" name="rightAsideLayout">
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QWidget" name="musicWidget" native="true">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>330</width>
-           <height>504</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>504</height>
-          </size>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_4"/>
-        </widget>
-       </item>
-       <item>
-        <widget class="Line" name="line_2">
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="static/app_resources.qrc">:/player/Volume-1.svg</pixmap>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="volumeSlider">
+        <property name="maximum">
+         <number>100</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="static/app_resources.qrc">:/player/Volume-2.svg</pixmap>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
@@ -138,190 +68,71 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1440</width>
-     <height>26</height>
+     <width>416</width>
+     <height>22</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuCampain">
+   <property name="cursor">
+    <cursorShape>ArrowCursor</cursorShape>
+   </property>
+   <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>Campain</string>
+     <string>File</string>
     </property>
-    <widget class="QMenu" name="menuAdd">
-     <property name="title">
-      <string>Add</string>
-     </property>
-     <addaction name="actionNPC"/>
-     <addaction name="actionMonster"/>
-     <addaction name="separator"/>
-     <addaction name="actionMap_2"/>
-    </widget>
     <addaction name="actionNew"/>
+    <addaction name="actionSave"/>
     <addaction name="actionOpen"/>
     <addaction name="separator"/>
-    <addaction name="menuAdd"/>
-    <addaction name="actionCampain_settings"/>
-    <addaction name="actionExport_campain"/>
+    <addaction name="actionSettings"/>
    </widget>
-   <widget class="QMenu" name="menuGlossary">
+   <widget class="QMenu" name="menuAbout">
     <property name="title">
-     <string>Glossary</string>
+     <string>About</string>
     </property>
-    <widget class="QMenu" name="menuClasses">
-     <property name="title">
-      <string>Classes</string>
-     </property>
-     <addaction name="actionNew_2"/>
-    </widget>
-    <widget class="QMenu" name="menuRaces">
-     <property name="title">
-      <string>Races</string>
-     </property>
-     <addaction name="actionNew_3"/>
-    </widget>
-    <addaction name="actionSpells"/>
-    <addaction name="actionMonsters"/>
-    <addaction name="actionMagic_items"/>
-    <addaction name="menuClasses"/>
-    <addaction name="menuRaces"/>
+    <addaction name="actionHelp"/>
+    <addaction name="actionDonate"/>
    </widget>
-   <widget class="QMenu" name="menuTools">
-    <property name="title">
-     <string>Tools</string>
-    </property>
-    <addaction name="actionEncounter_builder_2"/>
-    <addaction name="actionCharacter_creator_2"/>
-   </widget>
-   <widget class="QMenu" name="menuWindow">
-    <property name="title">
-     <string>Window</string>
-    </property>
-    <widget class="QMenu" name="menuTheme">
-     <property name="title">
-      <string>Theme</string>
-     </property>
-     <addaction name="actionLight"/>
-     <addaction name="actionDark"/>
-    </widget>
-    <addaction name="menuTheme"/>
-   </widget>
-   <addaction name="menuCampain"/>
-   <addaction name="menuGlossary"/>
-   <addaction name="menuTools"/>
-   <addaction name="menuWindow"/>
+   <addaction name="menuFile"/>
+   <addaction name="menuAbout"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <widget class="QToolBar" name="toolBar">
-   <property name="windowTitle">
-    <string>toolBar</string>
-   </property>
-   <property name="movable">
-    <bool>false</bool>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
-  <action name="actionNew">
+  <action name="actionSave">
    <property name="text">
-    <string>New</string>
+    <string>Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionOpen">
    <property name="text">
     <string>Open</string>
    </property>
-  </action>
-  <action name="actionSpells">
-   <property name="text">
-    <string>Spells</string>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
    </property>
   </action>
-  <action name="actionMonsters">
-   <property name="text">
-    <string>Monsters</string>
-   </property>
-  </action>
-  <action name="actionMagic_items">
-   <property name="text">
-    <string>Magic items</string>
-   </property>
-  </action>
-  <action name="actionEncounter_builder">
-   <property name="text">
-    <string>Encounter builder</string>
-   </property>
-  </action>
-  <action name="actionCharacter_creator">
-   <property name="text">
-    <string>Character creator</string>
-   </property>
-  </action>
-  <action name="actionNew_2">
+  <action name="actionNew">
    <property name="text">
     <string>New</string>
    </property>
-  </action>
-  <action name="actionNew_3">
-   <property name="text">
-    <string>New</string>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
    </property>
   </action>
-  <action name="actionEncounter_builder_2">
+  <action name="actionSettings">
    <property name="text">
-    <string>Encounter builder</string>
+    <string>Settings</string>
    </property>
   </action>
-  <action name="actionCharacter_creator_2">
+  <action name="actionHelp">
    <property name="text">
-    <string>Character creator</string>
+    <string>Help</string>
    </property>
   </action>
-  <action name="actionMap_manager">
+  <action name="actionDonate">
    <property name="text">
-    <string>Add map</string>
-   </property>
-  </action>
-  <action name="actionNPC">
-   <property name="text">
-    <string>Character</string>
-   </property>
-  </action>
-  <action name="actionMonster">
-   <property name="text">
-    <string>Monster</string>
-   </property>
-  </action>
-  <action name="actionMap">
-   <property name="text">
-    <string>Map</string>
-   </property>
-  </action>
-  <action name="actionMap_2">
-   <property name="text">
-    <string>Map</string>
-   </property>
-  </action>
-  <action name="actionCampain_settings">
-   <property name="text">
-    <string>Campain settings</string>
-   </property>
-  </action>
-  <action name="actionExport_campain">
-   <property name="text">
-    <string>Export campain</string>
-   </property>
-  </action>
-  <action name="actionLight">
-   <property name="text">
-    <string>Light</string>
-   </property>
-  </action>
-  <action name="actionDark">
-   <property name="text">
-    <string>Dark</string>
+    <string>Donate</string>
    </property>
   </action>
  </widget>

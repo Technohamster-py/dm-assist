@@ -2,73 +2,7 @@
 // Created by arsen on 01.04.2024.
 //
 
-#include "dndcreature.h"
-#include <utility>
-#include <QTextStream>
-
-#include "ui_qdndcharacterwidget.h"
-
-
-////////////////////////////////////////////////////
-//               QDndCreature                     //
-////////////////////////////////////////////////////
-
-dndCreature::dndCreature(QString creatureName) : Creature(creatureName){
-    title = std::move(creatureName);
-}
-
-dndCreature::dndCreature(QFile *xmlConfig) : Creature(xmlConfig){
-}
-
-dndCreature::~dndCreature() {
-
-}
-
-int dndCreature::getBonusFromCharacteristic(int characteristicValue) {
-    return (characteristicValue >= 0) ? (characteristicValue / 10) : (characteristicValue - 10 + 1) / 10;
-}
-
-void dndCreature::setMaxHp(int value) {
-    maxHP = value;
-    if (hp > maxHP)
-        hp = maxHP;
-    emit maxHpCahged();
-}
-
-bool dndCreature::setHp(int value) {
-    if(value <= maxHP){
-        hp = value;
-        emit hpChanged();
-        return true;
-    } else
-        return false;
-}
-
-void dndCreature::setFullHp() {
-    hp = maxHP;
-}
-
-void dndCreature::doDamage(int damageValue) {
-    int newHp = hp - damageValue;
-    if (newHp < 0)
-        newHp = 0;
-    setHp(newHp);
-}
-
-void dndCreature::setAc(int value) {
-    ac = value;
-    emit acChanged();
-}
-
-void dndCreature::setInitiativeBonus(int value) {
-    initiativeBonus = value;
-    emit initiativeBonusChanged();
-}
-
-
-////////////////////////////////////////////////////
-//               QDndCharacter                    //
-////////////////////////////////////////////////////
+#include "dndcharacter.h"
 
 DndCharacter::DndCharacter(QString characterName) : dndCreature(characterName) {
     title = characterName;
@@ -82,6 +16,11 @@ DndCharacter::~DndCharacter() {
 
 }
 
+/**
+ * \brief Loading character from .xml config file
+ * \details Load dnd character from .xml config file. By default - file in root folder
+ * @param xmlConfigFile .xml config file
+ */
 void DndCharacter::loadFromFile(QFile *xmlConfigFile) {
     int errCode = loadCreatureFromFile(xmlConfigFile);
     if (errCode != ErrorNone){
@@ -141,6 +80,10 @@ void DndCharacter::loadFromFile(QFile *xmlConfigFile) {
     image.load(imagePath);
 }
 
+/**
+ * Save character to .xml file
+ * @param pathToConfigFile string, contains path to .xml config file
+ */
 void DndCharacter::saveToFile(QString pathToConfigFile) {
     configDom.clear();
 
@@ -172,12 +115,12 @@ void DndCharacter::saveToFile(QString pathToConfigFile) {
     QDomElement acNode = configDom.createElement("ac");
     acNode.setNodeValue(QString::number(ac));
     characterNode.appendChild(acNode);
-
+    
     QDomElement hpNode = configDom.createElement("hp");
     hpNode.setAttribute("max", maxHP);
     hpNode.setAttribute("current", hp);
     characterNode.appendChild(hpNode);
-
+    
     QDomElement classesNode = configDom.createElement("classes");
     characterNode.appendChild(classesNode);
     for (int i = 0; i < m_classLevel.keys().count(); ++i) {
@@ -227,90 +170,3 @@ void DndCharacter::saveToFile(QString pathToConfigFile) {
     characterNode.appendChild(proficiencyNode);
 }
 
-
-////////////////////////////////////////////////////
-//         QDndCharacterWidget                    //
-////////////////////////////////////////////////////
-
-QDndCharacterWidget::QDndCharacterWidget(DndCharacter character, QWidget *parent) :
-        QWidget(parent), ui(new Ui::QDndCharacterWidget) {
-    ui->setupUi(this);
-}
-
-QDndCharacterWidget::~QDndCharacterWidget() {
-    delete ui;
-}
-
-
-////////////////////////////////////////////////////
-//               QDndMonster                      //
-////////////////////////////////////////////////////
-
-dndMonster::dndMonster(const QString& monsterTitle) : dndCreature(monsterTitle) {
-    title = monsterTitle;
-}
-
-dndMonster::dndMonster(QFile *xmlConfig) : dndCreature(xmlConfig) {
-
-}
-
-dndMonster::~dndMonster() {
-
-}
-
-void dndMonster::loadFromFile(QFile *xmlConfigFile) {
-    int errCode = loadCreatureFromFile(xmlConfigFile);
-    if (errCode != ErrorNone){
-        return;
-    }
-
-    QDomElement monsterNode = configDom.documentElement();
-    id = monsterNode.attribute("id").toInt();
-
-    title = monsterNode.firstChildElement("name").toText().data();
-
-    characteristics["STR"] = monsterNode.firstChildElement("stats").firstChildElement("STR").toText().data().toInt();
-    characteristics["CON"] = monsterNode.firstChildElement("stats").firstChildElement("CON").toText().data().toInt();
-    characteristics["DEX"] = monsterNode.firstChildElement("stats").firstChildElement("DEX").toText().data().toInt();
-    characteristics["WIS"] = monsterNode.firstChildElement("stats").firstChildElement("WIS").toText().data().toInt();
-    characteristics["INT"] = monsterNode.firstChildElement("stats").firstChildElement("INT").toText().data().toInt();
-    characteristics["CHA"] = monsterNode.firstChildElement("stats").firstChildElement("CHA").toText().data().toInt();
-
-    QDomNodeList skillsList = monsterNode.elementsByTagName("skill");
-    for (int i = 0; i < skillsList.count(); ++i) {
-        QDomElement skill = skillsList.at(i).toElement();
-        m_skillsProficiency[skill.attribute("name")] = skill.toText().data().toInt();
-    }
-
-    m_languages = monsterNode.firstChildElement("languages").toText().data();
-    m_proficiencyBonus = monsterNode.firstChildElement("proficiency-bonus").toText().data().toInt();
-
-    imagePath = monsterNode.firstChildElement("image").toText().data();
-    image.load(imagePath);
-
-    QDomNodeList abilityNodeList = monsterNode.elementsByTagName("ability");
-    for (int i = 0; i < abilityNodeList.count(); ++i) {
-        QDomElement monsterAbility = abilityNodeList.at(i).toElement();
-        QString abilityDescription = monsterAbility.toText().data();
-        QString abilityTitle = monsterAbility.attribute("title");
-        m_abilities[abilityTitle] = abilityDescription;
-    }
-
-    QDomNodeList actionNodeList = monsterNode.elementsByTagName("action");
-    for (int i = 0; i < actionNodeList.count(); ++i) {
-        QDomElement monsterAction = actionNodeList.at(i).toElement();
-        QString actionTitle = monsterAction.attribute("title");
-        QString actionDescription = monsterAction.toText().data();
-        m_actions[actionTitle] = actionDescription;
-    }
-}
-
-void dndMonster::setArea(QString area) {
-    m_area = std::move(area);
-    emit areaChanged();
-}
-
-void dndMonster::setDescription(QString description) {
-    m_description = std::move(description);
-    emit descriptionChanged();
-}

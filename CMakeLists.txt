@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 3.27)
 project(DM-assist)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -8,39 +8,36 @@ set(CMAKE_AUTOUIC ON)
 
 #set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin/Release)
 set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.12.12/5.12.12/mingw73_64/lib/cmake")
-#set(CMAKE_PREFIX_PATH "/usr/local/qt/Qt-5.12.12/5.12.12")
+set(BASS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass)
+set(BASS_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass/bass.lib)
 #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc")
 
 set(HEADER_FILES
-        creature.h
-        dndcreature.h
-        encounter.h
         initiativemodel.h
         mainwindow.h
         qinitiativetrackerwidget.h
-        qplayer.h
-        qplaylistedit.h
         hpprogressbardelegate.h
+        qplayerwidget.h
+        qsaveconfigdialog.h
+        settingsdialog.h
 )
 
 set(SOURCE_FILES
-        creature.cpp
-        dndcreature.cpp
-        encounter.cpp
         initiativemodel.cpp
         mainwindow.cpp
         qinitiativetrackerwidget.cpp
-        qplayer.cpp
-        qplaylistedit.cpp
         hpprogressbardelegate.cpp
+        qplayerwidget.cpp
+        qsaveconfigdialog.cpp
+        settingsdialog.cpp
 )
 
 set(UI_FILES
         mainwindow.ui
-        qdndcharacterwidget.ui
         qplayer.ui
         qplaylistedit.ui
         qinitiativetrackerwidget.ui
+        settingsdialog.ui
 )
 
 set(TS_FILES
@@ -58,7 +55,7 @@ find_package(Qt5 COMPONENTS
         Multimedia
         Xml
         Qml
-        #LinguistTools
+        LinguistTools
         REQUIRED)
 
 qt5_add_resources(RESOURCES_ADD ${RESOURCES})
@@ -72,12 +69,15 @@ include_directories(
         ${Qt5Multimedia_INCLUDE_DIRS}  #the directories
         translations
         static
+        lib
 )
 
-#qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
+qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
 add_custom_target(translations DEPENDS ${QM_FILES})
 
-add_executable(${PROJECT_NAME} main.cpp
+add_executable(${PROJECT_NAME}
+        WIN32
+        main.cpp
         ${HEADER_FILES}
         ${SOURCE_FILES}
         ${UI_FILES}
@@ -92,9 +92,9 @@ target_link_libraries(${PROJECT_NAME}
         Qt5::Widgets
         Qt5::Multimedia
         Qt5::Xml
+        ${BASS_LIBRARY}
         Qt5::Qml
 )
-
 
 if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     set(DEBUG_SUFFIX)
@@ -123,4 +123,33 @@ if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
                 "${QT_INSTALL_PATH}/bin/Qt5${QT_LIB}${DEBUG_SUFFIX}.dll"
                 "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
     endforeach (QT_LIB)
+
+    set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/static/win_resources.rc")
+    target_sources(${PROJECT_NAME} PRIVATE ${APP_ICON_RESOURCE_WINDOWS})
 endif ()
+
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E echo "Current config: $<CONFIG>"
+        COMMAND ${CMAKE_COMMAND} -E echo "Cleaning up unnecessary files if Release..."
+
+        COMMAND ${CMAKE_COMMAND} -E remove_directory "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/CMakeFiles,ignore>"
+        COMMAND ${CMAKE_COMMAND} -E remove_directory "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/DM-assist_autogen,ignore>"
+        COMMAND ${CMAKE_COMMAND} -E remove_directory "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/Testing,ignore>"
+        COMMAND ${CMAKE_COMMAND} -E remove_directory "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/.cmake,ignore>"
+
+        COMMAND ${CMAKE_COMMAND} -E remove -f "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/CMakeCache.txt,ignore>"
+        COMMAND ${CMAKE_COMMAND} -E remove -f "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/Makefile,ignore>"
+        COMMAND ${CMAKE_COMMAND} -E remove -f "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/cmake_install.cmake,ignore>"
+        COMMAND ${CMAKE_COMMAND} -E remove -f "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/build.ninja,ignore>"
+
+        COMMENT "Stripping build directory for Release (only if config is Release)..."
+)
+
+foreach(qm ${QM_FILES})
+    get_filename_component(qm_filename "${qm}" NAME)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E rename "${qm}" "$<TARGET_FILE_DIR:${PROJECT_NAME}>/translations/${qm_filename}"
+            COMMAND ${CMAKE_COMMAND} -E echo "Moving ${qm_filename} into /translations"
+
+    )
+endforeach()

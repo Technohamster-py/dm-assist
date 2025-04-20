@@ -10,13 +10,18 @@ Creature::Creature(QString creatureName) {
 }
 
 Creature::Creature(QFile *xmlConfig) {
-
+    loadCreatureFromFile();
 }
 
 Creature::~Creature() {
 
 }
 
+/**
+ * Load creature from config file
+ * @param xmlConfigFile config file
+ * @return error code; 0 if ok, -1 if openFileError
+ */
 int Creature::loadCreatureFromFile(QFile *xmlConfigFile) {
     if(!xmlConfigFile->open(QIODevice::ReadWrite)){
         emit xmlSaveError(xmlConfigFile->errorString());
@@ -27,6 +32,11 @@ int Creature::loadCreatureFromFile(QFile *xmlConfigFile) {
     return ErrorNone;
 }
 
+/**
+ * Save creature to xml file
+ * @param pathToXml path to configs based dir
+ * @return error code; 0 if ok, -1 if openFileError
+ */
 int Creature::saveCreatureToFile(QString pathToXml) {
     QString configFileNamePath;
     if(pathToXml == QCoreApplication::applicationDirPath()){

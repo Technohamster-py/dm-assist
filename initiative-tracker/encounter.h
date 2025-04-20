@@ -5,7 +5,8 @@
 #ifndef DM_ASSIST_ENCOUNTER_H
 #define DM_ASSIST_ENCOUNTER_H
 
-#include "dndcreature.h"
+#include "../dnd-glossary/dndcharacter.h"
+#include "../dnd-glossary/dndmonster.h"
 #include <QStandardItemModel>
 #include <QSharedPointer>
 
@@ -17,9 +18,8 @@ public:
     ~EncounterEntity();
 
     enum Type{
-        noType = 0,
-        monster,
-        character
+        monster = 0,
+        character = 1
     };
 
     [[nodiscard]] int getInitiativeValue() const {return m_initiativeValue;};

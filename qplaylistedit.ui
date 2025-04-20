@@ -83,7 +83,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QTableView" name="playlistView"/>
+    <widget class="QListWidget" name="playlistWidget"/>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">

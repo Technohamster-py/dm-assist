@@ -1,36 +1,69 @@
 //
-// Created by akhomchenko on 25.03.24.
+// Created by arseniy on 11.10.2024.
 //
 
 #ifndef DM_ASSIST_MAINWINDOW_H
 #define DM_ASSIST_MAINWINDOW_H
 
+#include "QAction"
 #include <QMainWindow>
-#include "encounter.h"
-#include "qinitiativetrackerwidget.h"
+#include <QSettings>
+#include <QShortcut>
+#include <QTranslator>
+#include "qplayerwidget.h"
+#include "settingsdialog.h"
 
 
+#define ORGANIZATION_NAME "Technohaster"
+#define ORGANIZATION_DOMAIN "github.com/Technohamster-py"
+#define APPLICATION_NAME "DM-assist"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow {
-    Q_OBJECT
+Q_OBJECT
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
+    QString workingDir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/dm_assist_files/";
 
     ~MainWindow() override;
 
-protected slots:
-    void slotShareTracker(Encounter *encounter);
+    void changeLanguage(const QString &languageCode);
 
-protected:
-    QInitiativeTrackerWidget* initiativeWidget;
+signals:
+    void languageChanged(const QString &languageCode);
+
+public slots:
+    void stopAll();
+    void stopOtherPlayers(int exeptId);
+    void saveSettings();
+    void setVolumeDivider(int value);
+
+    void loadSettings();
+
+    void openHelp();
+    void openDonate();
 
 private:
     Ui::MainWindow *ui;
+    QTranslator translator;
+    QString currentLanguage;
+
+    int deviceIndex = -1;
+    QVector<QPlayer*> players;
+
+    void setupPlayers();
+    void setupShortcuts();
+    SettingsDialog *settingsDialog = nullptr;
+    Settings paths;
+
+private slots:
+    void loadConfigFile();
+    void saveConfigFile();
+    void on_actionSettings_triggered();
 };
 
 

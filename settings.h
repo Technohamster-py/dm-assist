@@ -1,5 +1,4 @@
 //
-// Created by akhomchenko on 11.04.25.
 //
 
 #ifndef DM_ASSIST_SETTINGS_H
@@ -21,13 +20,19 @@ enum initiatiativeFields{
 
 struct Settings{
     struct General{
+        QString audioDevice = "general/audioDevice";    ///< int
+        QString dir = "general/dir";                    ///< String
+        QString lang = "general/lang";                  ///< String
+    };
+
+    General general;
+
         struct Inititiative {
             QString autoInitiative = "general/initiative/autoroll";        ///< uint8 (0:7) Автоматические броски инициативы для NPC/Монстров/Игроков
             QString hpBarMode = "general/initiative/hpBar";                ///< uint8 (0:2) Режим отображения здоровья
             QString fields = "general/initiative/fields";                  ///< uint8 Режим отображения полей в трекере инициативы
         };
         Inititiative inititiative;
-    };
 };
 
 #endif //DM_ASSIST_SETTINGS_H
