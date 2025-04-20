@@ -2,12 +2,159 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>
+    <name>InitiativeModel</name>
+    <message>
+        <location filename="../initiative-tracker/initiativemodel.cpp" line="29"/>
+        <source>Name</source>
+        <translation>Имя</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/initiativemodel.cpp" line="30"/>
+        <source>Initiative</source>
+        <translation>Инициатива</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/initiativemodel.cpp" line="31"/>
+        <source>AC</source>
+        <translation>КД</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/initiativemodel.cpp" line="32"/>
+        <source>HP</source>
+        <translation>Хиты</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/initiativemodel.cpp" line="33"/>
+        <source>Max HP</source>
+        <translation>Макс Хиты</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/initiativemodel.cpp" line="34"/>
+        <source>Delete</source>
+        <translation>Удалить</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
+        <location filename="../full_mainwindow.ui" line="23"/>
+        <source>MainWindow</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../full_mainwindow.ui" line="147"/>
+        <source>Campain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../full_mainwindow.ui" line="151"/>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../full_mainwindow.ui" line="167"/>
+        <source>Glossary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../full_mainwindow.ui" line="171"/>
+        <source>Classes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../full_mainwindow.ui" line="177"/>
+        <source>Races</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../full_mainwindow.ui" line="189"/>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../full_mainwindow.ui" line="196"/>
+        <source>Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../full_mainwindow.ui" line="215"/>
+        <source>toolBar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../full_mainwindow.ui" line="234"/>
         <location filename="../mainwindow.ui" line="109"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="141"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="141"/>
         <source>Open</source>
         <translation>Открыть</translation>
+    </message>
+    <message>
+        <location filename="../full_mainwindow.ui" line="239"/>
+        <source>Spells</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../full_mainwindow.ui" line="244"/>
+        <source>Monsters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../full_mainwindow.ui" line="249"/>
+        <source>Magic items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../full_mainwindow.ui" line="254"/>
+        <location filename="../full_mainwindow.ui" line="274"/>
+        <source>Encounter builder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../full_mainwindow.ui" line="259"/>
+        <location filename="../full_mainwindow.ui" line="279"/>
+        <source>Character creator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../full_mainwindow.ui" line="284"/>
+        <source>Add map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../full_mainwindow.ui" line="289"/>
+        <source>Character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../full_mainwindow.ui" line="294"/>
+        <source>Monster</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../full_mainwindow.ui" line="299"/>
+        <location filename="../full_mainwindow.ui" line="304"/>
+        <source>Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../full_mainwindow.ui" line="309"/>
+        <source>Campain settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../full_mainwindow.ui" line="314"/>
+        <source>Export campain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../full_mainwindow.ui" line="319"/>
+        <source>Light</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../full_mainwindow.ui" line="324"/>
+        <source>Dark</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Play</source>
@@ -15,13 +162,13 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="80"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="154"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="154"/>
         <source>File</source>
         <translation>Файл</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="125"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="149"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="149"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
@@ -31,43 +178,47 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="20"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="136"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="136"/>
         <source>DM-assist music</source>
         <translation>DM-assist музыка</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="101"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="137"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="137"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="104"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="139"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="139"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="112"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="143"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="143"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
+        <location filename="../full_mainwindow.ui" line="229"/>
+        <location filename="../full_mainwindow.ui" line="264"/>
+        <location filename="../full_mainwindow.ui" line="269"/>
         <location filename="../mainwindow.ui" line="117"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="145"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="145"/>
         <source>New</source>
         <translation>Новый</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="120"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="147"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="147"/>
         <source>Ctrl+N</source>
         <translation></translation>
     </message>
     <message>
+        <location filename="../full_mainwindow.ui" line="200"/>
         <source>Theme</source>
-        <translation type="vanished">Тема</translation>
+        <translation>Тема</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="54"/>
@@ -101,19 +252,19 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="90"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="155"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="155"/>
         <source>About</source>
         <translation>Справка</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="130"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="150"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="150"/>
         <source>Help</source>
         <translation>Помощь</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="135"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_mainwindow.h" line="151"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="151"/>
         <source>Donate</source>
         <translation>Поддержать</translation>
     </message>
@@ -121,16 +272,21 @@
 <context>
     <name>QDndCharacterWidget</name>
     <message>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="23"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="432"/>
         <source>QDndCharacterWidget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="34"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="433"/>
         <source>Character Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="57"/>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="70"/>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="284"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="434"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="435"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="447"/>
@@ -138,6 +294,9 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="114"/>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="383"/>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="395"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="437"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="452"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="453"/>
@@ -145,6 +304,9 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="121"/>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="233"/>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="291"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="438"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="444"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="448"/>
@@ -152,77 +314,97 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="200"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="441"/>
         <source>maxHP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="213"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="442"/>
         <source>/</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="226"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="443"/>
         <source>HP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="243"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="445"/>
         <source>Initiative:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="298"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="449"/>
         <source>initiative bonus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="348"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="450"/>
         <source>Class (subclass)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="360"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="451"/>
         <source>level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="506"/>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="640"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="458"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="476"/>
         <source>STR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="514"/>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="648"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="460"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="478"/>
         <source>CON</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="522"/>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="656"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="462"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="480"/>
         <source>DEX</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="530"/>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="664"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="464"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="482"/>
         <source>INT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="538"/>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="672"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="466"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="484"/>
         <source>WIS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="546"/>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="680"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="468"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="486"/>
         <source>CHA</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="577"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="471"/>
         <source>Save Throws</source>
         <translation type="unfinished"></translation>
@@ -231,68 +413,83 @@
 <context>
     <name>QInitiativeTrackerWidget</name>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="214"/>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="69"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="158"/>
         <source>QInitiativeTrackerWidget</source>
-        <translation type="unfinished"></translation>
+        <translation>Трекер инициативы</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="215"/>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="100"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="159"/>
         <source>Initiative tracker</source>
-        <translation type="unfinished"></translation>
+        <translation>Трекер инициативы</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="217"/>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="125"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="161"/>
         <source>Previous turn</source>
-        <translation type="unfinished"></translation>
+        <translation>Предыдущий ход</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="221"/>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="157"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="165"/>
         <source>NextTurn</source>
-        <translation type="unfinished"></translation>
+        <translation>Следующий ход</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="225"/>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="189"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="169"/>
         <source>Open player wiev</source>
-        <translation type="unfinished"></translation>
+        <translation>Поделиться</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="228"/>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="225"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="172"/>
+        <source>Numeric</source>
+        <translation>Цифры</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="229"/>
-        <source>AC:</source>
-        <translation type="unfinished"></translation>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="230"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="173"/>
+        <source>Text status</source>
+        <translation>Текстовый статус</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="230"/>
-        <source>HP:</source>
-        <translation type="unfinished"></translation>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="235"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="174"/>
+        <source>Progress bar</source>
+        <translation>Прогрессбар</translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="231"/>
-        <source>/</source>
-        <translation type="unfinished"></translation>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="245"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="176"/>
+        <source>Add</source>
+        <translation>Добавить</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="256"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="177"/>
+        <source>Sort</source>
+        <translation>Отсортировать</translation>
     </message>
 </context>
 <context>
     <name>QPlayer</name>
     <message>
         <location filename="../qplayer.ui" line="32"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="171"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_QPlayer.h" line="171"/>
         <source>QPlayer</source>
         <translation>QPlayer</translation>
     </message>
     <message>
         <location filename="../qplayer.ui" line="95"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="173"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_QPlayer.h" line="173"/>
         <source>num</source>
         <translation>num</translation>
     </message>
     <message>
         <location filename="../qplayer.ui" line="81"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="172"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_QPlayer.h" line="172"/>
         <source>Title</source>
         <translation>Название</translation>
     </message>
@@ -302,13 +499,13 @@
     </message>
     <message>
         <location filename="../qplayer.ui" line="115"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="175"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_QPlayer.h" line="175"/>
         <source>stop</source>
         <translation>Стоп</translation>
     </message>
     <message>
         <location filename="../qplayer.ui" line="195"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="185"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_QPlayer.h" line="185"/>
         <source>play</source>
         <translation>Пуск</translation>
     </message>
@@ -322,7 +519,7 @@
     </message>
     <message>
         <location filename="../qplayer.ui" line="129"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayer.h" line="179"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_QPlayer.h" line="179"/>
         <source>Edit playlist</source>
         <translation>Редактировать плейлист</translation>
     </message>
@@ -347,19 +544,19 @@
     <name>QPlaylistEdit</name>
     <message>
         <location filename="../qplaylistedit.ui" line="14"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplaylistedit.h" line="104"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_QPlaylistEdit.h" line="104"/>
         <source>QPlaylistEdit</source>
         <translation>QPlaylistEdit</translation>
     </message>
     <message>
         <location filename="../qplaylistedit.ui" line="57"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplaylistedit.h" line="106"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_QPlaylistEdit.h" line="106"/>
         <source>Add audio file</source>
         <translation>Добавить аудиофайл</translation>
     </message>
     <message>
         <location filename="../qplaylistedit.ui" line="71"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplaylistedit.h" line="110"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_QPlaylistEdit.h" line="110"/>
         <source>Remove file from playlist</source>
         <translation>Удалить файл из плейлиста</translation>
     </message>
@@ -525,32 +722,32 @@
 <context>
     <name>dndSpellWidget</name>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_dndspellwidget.h" line="216"/>
+        <location filename="../dnd-glossary/dndspellwidget.ui" line="14"/>
         <source>dndSpellWidget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_dndspellwidget.h" line="217"/>
+        <location filename="../dnd-glossary/dndspellwidget.ui" line="56"/>
         <source>title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_dndspellwidget.h" line="218"/>
+        <location filename="../dnd-glossary/dndspellwidget.ui" line="85"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_dndspellwidget.h" line="220"/>
+        <location filename="../dnd-glossary/dndspellwidget.ui" line="167"/>
         <source>Компоненты</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_dndspellwidget.h" line="221"/>
+        <location filename="../dnd-glossary/dndspellwidget.ui" line="186"/>
         <source>range</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_dndspellwidget.h" line="222"/>
+        <location filename="../dnd-glossary/dndspellwidget.ui" line="214"/>
         <source>class
 another class</source>
         <translation type="unfinished"></translation>
@@ -584,7 +781,7 @@ another class</source>
     <message>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qplayerinitiativeview.h" line="82"/>
         <source>qPlayerInitiativeView</source>
-        <translation type="unfinished"></translation>
+        <translation>shared initiative view</translation>
     </message>
 </context>
 </TS>
