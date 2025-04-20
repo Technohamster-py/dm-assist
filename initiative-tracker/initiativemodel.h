@@ -67,8 +67,18 @@ public:
     void setCurrentIndex(int index);
     int getCurrentIndex() const;
 
-    void saveToFile(const QString &filePath) const;
-    void loadFromFile(const QString &filePath);
+    /**
+     * @brief Сохраняет текущее состояние модели в XML-файл.
+     * @param filename Путь к файлу
+     * @return true, если успешно сохранено
+     */
+    bool saveToFile(const QString &filename) const;
+    /**
+     * @brief Загружает состояние модели из XML-файла.
+     * @param filename Путь к файлу
+     * @return true, если успешно загружено
+     */
+    bool loadFromFile(const QString &filename);
 
 signals:
     void dataChangedExternally();

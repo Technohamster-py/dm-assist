@@ -1,8 +1,10 @@
 #include "initiativemodel.h"
 #include <QBrush>
 #include <QColor>
+#include <QDomDocument>
 #include <QFile>
 #include <QRegularExpression>
+#include <QTextStream>
 #include <QJSEngine> // Для вычисления арифметики
 
 InitiativeModel::InitiativeModel(QObject *parent)
@@ -176,37 +178,62 @@ void InitiativeModel::evaluateHP(int row) {
 }
 
 
-void InitiativeModel::saveToFile(const QString &filePath) const {
-    QFile file(filePath);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) return;
-    QXmlStreamWriter writer(&file);
-    writer.setAutoFormatting(true);
-    writer.writeStartDocument();
-    writer.writeStartElement("InitiativeCharacters");
-    for (const auto &character : characters) {
-        character.writeToXml(writer);
+bool InitiativeModel::saveToFile(const QString &filename) const {
+    QDomDocument doc("InitiativeTracker");
+    QDomElement root = doc.createElement("initiative");
+    doc.appendChild(root);
+
+    for (const InitiativeCharacter &c : characters) {
+        QDomElement charElem = doc.createElement("character");
+        charElem.setAttribute("name", c.name);
+        charElem.setAttribute("initiative", c.initiative);
+        charElem.setAttribute("ac", c.ac);
+        charElem.setAttribute("hp", c.hp);
+        charElem.setAttribute("maxhp", c.maxHp);
+        root.appendChild(charElem);
     }
-    writer.writeEndElement();
-    writer.writeEndDocument();
-    file.close();
+
+    QFile file(filename);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        return false;
+
+    QTextStream out(&file);
+    doc.save(out, 4);
+    return true;
 }
 
-void InitiativeModel::loadFromFile(const QString &filePath) {
-    QFile file(filePath);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) return;
-    QXmlStreamReader reader(&file);
+bool InitiativeModel::loadFromFile(const QString &filename) {
+    QFile file(filename);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return false;
+
+    QDomDocument doc;
+    if (!doc.setContent(&file)) {
+        file.close();
+        return false;
+    }
+    file.close();
+
+    QDomElement root = doc.documentElement();
+    if (root.tagName() != "initiative")
+        return false;
 
     beginResetModel();
     characters.clear();
-    while (!reader.atEnd() && !reader.hasError()) {
-        reader.readNext();
-        if (reader.isStartElement() && reader.name() == "Character") {
-            characters.append(InitiativeCharacter::readFromXml(reader));
-        }
+
+    QDomNodeList charNodes = root.elementsByTagName("character");
+    for (int i = 0; i < charNodes.count(); ++i) {
+        QDomElement elem = charNodes.at(i).toElement();
+        InitiativeCharacter c;
+        c.name = elem.attribute("name");
+        c.initiative = elem.attribute("initiative").toInt();
+        c.ac = elem.attribute("ac").toInt();
+        c.hp = elem.attribute("hp");
+        c.maxHp = elem.attribute("maxhp").toInt();
+        characters.append(c);
     }
     endResetModel();
-    file.close();
-    emit dataChangedExternally();
+    return true;
 }
 
 static int evaluateExpression(const QString &expression, bool *ok) {
