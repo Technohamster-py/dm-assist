@@ -54,6 +54,11 @@ private slots:
     void nextTurn();
 
     /**
+     * @brief Переходит к предыдущему персонажу.
+     */
+    void prevTurn();
+
+    /**
      * @brief Сортирует таблицу по инициативе (по убыванию).
      */
     void sortTable();

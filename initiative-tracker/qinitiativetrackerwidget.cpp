@@ -34,6 +34,7 @@ void QInitiativeTrackerWidget::setupUI() {
 
     connect(ui->addRowButton, &QPushButton::clicked, this, &QInitiativeTrackerWidget::addRow);
     connect(ui->nextButton, &QPushButton::clicked, this, &QInitiativeTrackerWidget::nextTurn);
+    connect(ui->backButton, &QPushButton::clicked, this, &QInitiativeTrackerWidget::prevTurn);
     connect(ui->sortButton, &QPushButton::clicked, this, &QInitiativeTrackerWidget::sortTable);
     connect(ui->shareButton, &QPushButton::clicked, this, &QInitiativeTrackerWidget::openSharedWindow);
 
@@ -99,8 +100,22 @@ void QInitiativeTrackerWidget::nextTurn() {
 }
 
 /**
+ * @brief Переходит к предыдущему ходу.
+ */
+void QInitiativeTrackerWidget::prevTurn() {
+    int rowCount = model->rowCount();
+    if (rowCount == 0) return; // Безопасность от деления на 0
+
+    int current = model->getCurrentIndex();
+    int previous = (current - 1 + rowCount) % rowCount;
+    model->setCurrentIndex(previous);
+}
+
+/**
  * @brief Сортирует таблицу по инициативе.
  */
 void QInitiativeTrackerWidget::sortTable() {
     model->sortByInitiative();
 }
+
+
