@@ -55,6 +55,8 @@ private:
     int deviceIndex = -1;
     QVector<QPlayer*> players;
 
+    bool isActive = false;
+
     void setupPlayers();
     void setupShortcuts();
     SettingsDialog *settingsDialog = nullptr;

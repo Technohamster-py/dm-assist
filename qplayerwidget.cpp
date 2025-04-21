@@ -97,7 +97,7 @@ void QPlayer::setPlayShortcut(QString key) {
 }
 
 void QPlayer::playShortcutTriggered() {
-    play();
+    play()
 }
 
 void QPlayer::addMedia(const QStringList &files) {
@@ -117,11 +117,10 @@ void QPlayer::addMedia(const QStringList &files) {
 }
 
 void QPlayer::on_playButton_clicked() {
-    play();
-}
-
-void QPlayer::on_stopButton_clicked() {
-    stop();
+    if (isActive)
+        stop();
+    else
+        play();
 }
 
 void QPlayer::on_editButton_clicked() {
@@ -148,6 +147,7 @@ void QPlayer::edit() {
 void QPlayer::play() {
     emit playerStarted(id);
     freeStreams();  // очистить
+    isActive = true;
 
     if (filePaths.isEmpty()) return;
 
@@ -176,6 +176,7 @@ void QPlayer::playTrackAt(int index) {
 
     isActive = true;
     ui->playButton->setStyleSheet("background-color: #a5bfda;");
+    ui->playButton.setIcon(":/player/stop.svg");
 }
 
 void QPlayer::playNextTrack() {
@@ -195,6 +196,7 @@ void QPlayer::stop() {
     isActive = false;
     emit playerStopped();
     ui->playButton->setStyleSheet("background: transparent;");
+    ui->playButton.setIcon(":/player/play.svg");
 }
 
 void QPlayer::freeStreams() {
