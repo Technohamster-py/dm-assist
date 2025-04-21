@@ -26,6 +26,10 @@ Q_OBJECT
 public:
     explicit QInitiativeTrackerWidget(QWidget *parent = nullptr, InitiativeModel *sharedModel = nullptr);
 
+public slots:
+    void loadFromFile(QString filename);
+    void saveToFile(QString filename);
+
 
 private slots:
     void addRow();
@@ -33,6 +37,9 @@ private slots:
     void prevTurn();
     void sortTable();
     void openSharedWindow();
+
+    void on_saveButton_clicked();
+    void on_loadButton_clicked();
 
 private:
     Ui::QInitiativeTrackerWidget *ui;

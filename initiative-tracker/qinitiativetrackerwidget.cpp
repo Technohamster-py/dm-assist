@@ -1,4 +1,6 @@
 #include <QItemSelectionModel>
+#include <QFileDialog>
+#include <QStandardPaths>
 
 #include "qinitiativetrackerwidget.h"
 #include "hpprogressbardelegate.h"
@@ -134,4 +136,35 @@ void QInitiativeTrackerWidget::sortTable() {
     model->sortByInitiative();
 }
 
+/**
+ * @brief Загружает модель инициативы в файл
+ * @param filename путь до файла
+ */
+void QInitiativeTrackerWidget::loadFromFile(QString filename){
+    model->loadFromFile(filename);
+}
 
+/**
+ * @brief Сохраняет модель инициативы в файл
+ * @param filename путь до файла
+ */
+void QInitiativeTrackerWidget::saveToFile(QString filename){
+    model->saveToFile(filename);
+}
+
+
+void QInitiativeTrackerWidget::on_saveButton_clicked(){
+    QString filename = QFileDialog::getSaveFileName(this,
+                                                    tr("Save encounter to file"),
+                                                    QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
+                                                    "Xml file (*.xml)");
+    saveToFile(filename);
+}
+
+void QInitiativeTrackerWidget::on_loadButton_clicked(){
+    QString filename = QFileDialog::getOpenFileName(this,
+                                                    tr("Save encounter to file"),
+                                                    QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
+                                                    "Xml file (*.xml)");
+    loadFromFile(filename);
+}
