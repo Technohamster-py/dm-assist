@@ -277,6 +277,14 @@ bool InitiativeModel::saveToFile(const QString &filename) const {
  * @return true, если загрузка прошла успешно
  */
 bool InitiativeModel::loadFromFile(const QString &filename) {
+    beginResetModel();
+    characters.clear();
+    addFromFile(filename);
+    endResetModel();
+    return true;
+}
+
+bool InitiativeModel::addFromFile(const QString &filename) {
     QFile file(filename);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         return false;
@@ -291,10 +299,7 @@ bool InitiativeModel::loadFromFile(const QString &filename) {
     QDomElement root = doc.documentElement();
     if (root.tagName() != "initiative")
         return false;
-
     beginResetModel();
-    characters.clear();
-
     QDomNodeList charNodes = root.elementsByTagName("character");
     for (int i = 0; i < charNodes.count(); ++i) {
         QDomElement elem = charNodes.at(i).toElement();

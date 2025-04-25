@@ -35,6 +35,8 @@ public slots:
     void loadFromFile(QString filename);
     void saveToFile(QString filename);
 
+    void addFromFile(QString filename);
+
     void loadSettings();
     void saveSettings();
 
@@ -50,6 +52,7 @@ private slots:
 
     void on_saveButton_clicked();
     void on_loadButton_clicked();
+    void on_addFromFileButton_clicked();
 
 private:
     Ui::QInitiativeTrackerWidget *ui;

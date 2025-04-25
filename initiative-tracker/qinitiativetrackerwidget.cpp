@@ -224,3 +224,15 @@ void QInitiativeTrackerWidget::saveSettings() {
     settings.setValue(paths.inititiative.fields, fieldsVisible);
     settings.setValue(paths.inititiative.hpBarMode, ui->hpModeBox->currentIndex());
 }
+
+void QInitiativeTrackerWidget::addFromFile(QString filename) {
+    model->addFromFile(filename);
+}
+
+void QInitiativeTrackerWidget::on_addFromFileButton_clicked() {
+    QString filename = QFileDialog::getOpenFileName(this,
+                                                    tr("Save encounter to file"),
+                                                    QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
+                                                    "Xml file (*.xml)");
+    addFromFile(filename);
+}

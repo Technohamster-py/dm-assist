@@ -77,6 +77,7 @@ public:
 
     bool saveToFile(const QString &filename) const;
     bool loadFromFile(const QString &filename);
+    bool addFromFile(const QString &filename);
 
 signals:
     void dataChangedExternally();
