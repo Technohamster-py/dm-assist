@@ -83,6 +83,12 @@ void QInitiativeTrackerWidget::openSharedWindow() {
     sharedWindow->setWindowTitle("Shared Initiative Tracker");
     sharedWindow->resize(800, 400);
 
+    sharedWindows.append(sharedWindow);
+    connect(sharedWindow, &QObject::destroyed, this, [this, sharedWindow]()
+            {
+                sharedWindows.removeAll(sharedWindow);
+            });
+
     // Используем тот же экземпляр модели
     QTableView *sharedWidget = new QTableView(sharedWindow);
     sharedWidget->setModel(model);
@@ -167,4 +173,13 @@ void QInitiativeTrackerWidget::on_loadButton_clicked(){
                                                     QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
                                                     "Xml file (*.xml)");
     loadFromFile(filename);
+}
+
+
+void QInitiativeTrackerWidget::closeEvent(QCloseEvent *event){
+    for (QPointer<QWidget> w : sharedWindows) {
+        if (w) w->close();
+    }
+    sharedWindows.clear();
+    QWidget::closeEvent();
 }

@@ -30,6 +30,9 @@ public slots:
     void loadFromFile(QString filename);
     void saveToFile(QString filename);
 
+    void loadSettings();
+    void saveSettings();
+
 
 private slots:
     void addRow();
@@ -45,8 +48,12 @@ private:
     Ui::QInitiativeTrackerWidget *ui;
     int currentRowIndex = 0;    ///< Индекс текущего активного персонажа.
 
+    int visibleColumns = 0;
+    QList<QPointer<QWidget>> sharedWindows;
+
     InitiativeModel *model;
 
     void setupUI();
+    void closeEvent(QCloseEvent *event);
 };
 #endif //DM_ASSIST_QINITIATIVETRACKERWIDGET_H
