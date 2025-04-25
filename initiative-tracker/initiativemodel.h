@@ -53,7 +53,8 @@ public:
         initiative,
         Ac,
         hp,
-        maxHp
+        maxHp,
+        del
     };
     explicit InitiativeModel(QObject *parent = nullptr);
 
