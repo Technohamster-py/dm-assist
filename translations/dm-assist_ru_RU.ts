@@ -4,32 +4,32 @@
 <context>
     <name>InitiativeModel</name>
     <message>
-        <location filename="../initiative-tracker/initiativemodel.cpp" line="29"/>
+        <location filename="../initiative-tracker/initiativemodel.cpp" line="50"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativemodel.cpp" line="30"/>
+        <location filename="../initiative-tracker/initiativemodel.cpp" line="51"/>
         <source>Initiative</source>
         <translation>Инициатива</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativemodel.cpp" line="31"/>
+        <location filename="../initiative-tracker/initiativemodel.cpp" line="52"/>
         <source>AC</source>
         <translation>КД</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativemodel.cpp" line="32"/>
+        <location filename="../initiative-tracker/initiativemodel.cpp" line="53"/>
         <source>HP</source>
         <translation>Хиты</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativemodel.cpp" line="33"/>
+        <location filename="../initiative-tracker/initiativemodel.cpp" line="54"/>
         <source>Max HP</source>
         <translation>Макс Хиты</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativemodel.cpp" line="34"/>
+        <location filename="../initiative-tracker/initiativemodel.cpp" line="55"/>
         <source>Delete</source>
         <translation>Удалить</translation>
     </message>
@@ -49,7 +49,7 @@
     <message>
         <location filename="../full_mainwindow.ui" line="151"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Добавить</translation>
     </message>
     <message>
         <location filename="../full_mainwindow.ui" line="167"/>
@@ -84,7 +84,7 @@
     <message>
         <location filename="../full_mainwindow.ui" line="234"/>
         <location filename="../mainwindow.ui" line="109"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="141"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="103"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
@@ -162,13 +162,13 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="80"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="154"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="114"/>
         <source>File</source>
         <translation>Файл</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="125"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="149"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="111"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
@@ -178,25 +178,25 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="20"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="136"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="98"/>
         <source>DM-assist music</source>
         <translation>DM-assist музыка</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="101"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="137"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="99"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="104"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="139"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="101"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="112"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="143"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="105"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
@@ -205,13 +205,13 @@
         <location filename="../full_mainwindow.ui" line="264"/>
         <location filename="../full_mainwindow.ui" line="269"/>
         <location filename="../mainwindow.ui" line="117"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="145"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="107"/>
         <source>New</source>
         <translation>Новый</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="120"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="147"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="109"/>
         <source>Ctrl+N</source>
         <translation></translation>
     </message>
@@ -252,19 +252,19 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="90"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="155"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="115"/>
         <source>About</source>
         <translation>Справка</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="130"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="150"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="112"/>
         <source>Help</source>
         <translation>Помощь</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="135"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="151"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="113"/>
         <source>Donate</source>
         <translation>Поддержать</translation>
     </message>
@@ -329,7 +329,7 @@
         <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="226"/>
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qdndcharacterwidget.h" line="443"/>
         <source>HP</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Хиты</translation>
     </message>
     <message>
         <location filename="../dnd-glossary/qdndcharacterwidget.ui" line="243"/>
@@ -414,63 +414,69 @@
     <name>QInitiativeTrackerWidget</name>
     <message>
         <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="69"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="158"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="178"/>
         <source>QInitiativeTrackerWidget</source>
         <translation>Трекер инициативы</translation>
     </message>
     <message>
         <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="100"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="159"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="179"/>
         <source>Initiative tracker</source>
         <translation>Трекер инициативы</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="125"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="161"/>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="156"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="182"/>
         <source>Previous turn</source>
         <translation>Предыдущий ход</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="157"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="165"/>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="188"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="186"/>
         <source>NextTurn</source>
         <translation>Следующий ход</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="189"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="169"/>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="220"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="190"/>
         <source>Open player wiev</source>
         <translation>Поделиться</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="225"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="172"/>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="256"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="193"/>
         <source>Numeric</source>
         <translation>Цифры</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="230"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="173"/>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="261"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="194"/>
         <source>Text status</source>
         <translation>Текстовый статус</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="235"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="174"/>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="266"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="195"/>
         <source>Progress bar</source>
         <translation>Прогрессбар</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="245"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="176"/>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="276"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="197"/>
         <source>Add</source>
         <translation>Добавить</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="256"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="177"/>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.ui" line="287"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_qinitiativetrackerwidget.h" line="198"/>
         <source>Sort</source>
         <translation>Отсортировать</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.cpp" line="167"/>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.cpp" line="175"/>
+        <source>Save encounter to file</source>
+        <translation>Сохранить энкаунтер в файл</translation>
     </message>
 </context>
 <context>
