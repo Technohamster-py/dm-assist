@@ -4,6 +4,7 @@
 
 #include "qinitiativetrackerwidget.h"
 #include "hpprogressbardelegate.h"
+#include "../settings.h"
 #include "ui_qinitiativetrackerwidget.h"
 
 
@@ -103,6 +104,8 @@ void QInitiativeTrackerWidget::openSharedWindow() {
         view->viewport()->update();
     });
 
+    connect(this, &QInitiativeTrackerWidget::fieldVisibilityChanged, sharedWidget, &QTableView::hideColumn);
+
     QVBoxLayout *layout = new QVBoxLayout(sharedWindow);
     layout->addWidget(sharedWidget);
     sharedWindow->setLayout(layout);
@@ -181,5 +184,33 @@ void QInitiativeTrackerWidget::closeEvent(QCloseEvent *event){
         if (w) w->close();
     }
     sharedWindows.clear();
-    QWidget::closeEvent();
+    QWidget::closeEvent(event);
+}
+
+void QInitiativeTrackerWidget::setSharedFieldHidden(int index, bool hidden) {
+    emit fieldVisibilityChanged(index, hidden);
+}
+
+void QInitiativeTrackerWidget::loadSettings() {
+    QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
+    Settings paths;
+    int fieldsVisible = settings.value(paths.inititiative.fields, 1).toInt();
+    isSharedAcVisible = fieldsVisible & 1;
+    isSharedHpVisible = fieldsVisible & 2;
+    isSharedMaxHpVisible = fieldsVisible & 4;
+
+    emit fieldVisibilityChanged(InitiativeModel::fields::Ac, isSharedAcVisible);
+    emit fieldVisibilityChanged(InitiativeModel::fields::hp, isSharedHpVisible);
+    emit fieldVisibilityChanged(InitiativeModel::fields::maxHp, isSharedMaxHpVisible);
+
+    ui->hpModeBox->setCurrentIndex(settings.value(paths.inititiative.hpBarMode, 1).toInt());
+}
+
+void QInitiativeTrackerWidget::saveSettings() {
+    QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
+    Settings paths;
+
+    int fieldsVisible = isSharedAcVisible | isSharedHpVisible | isSharedMaxHpVisible;
+    settings.setValue(paths.inititiative.fields, fieldsVisible);
+    settings.setValue(paths.inititiative.hpBarMode, ui->hpModeBox->currentIndex());
 }

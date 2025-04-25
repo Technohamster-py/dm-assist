@@ -48,6 +48,13 @@ class InitiativeModel : public QAbstractTableModel {
 Q_OBJECT
 
 public:
+    enum fields{
+        name = 0,
+        initiative,
+        Ac,
+        hp,
+        maxHp
+    };
     explicit InitiativeModel(QObject *parent = nullptr);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;

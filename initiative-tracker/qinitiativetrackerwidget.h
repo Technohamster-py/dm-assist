@@ -9,6 +9,8 @@
 #include <QSortFilterProxyModel>
 #include <QStyledItemDelegate>
 #include <QPainter>
+#include <QList>
+#include <QPointer>
 #include "encounter.h"
 #include "initiativemodel.h"
 
@@ -26,12 +28,17 @@ Q_OBJECT
 public:
     explicit QInitiativeTrackerWidget(QWidget *parent = nullptr, InitiativeModel *sharedModel = nullptr);
 
+signals:
+    void fieldVisibilityChanged(int field, bool visible);
+
 public slots:
     void loadFromFile(QString filename);
     void saveToFile(QString filename);
 
     void loadSettings();
     void saveSettings();
+
+    void setSharedFieldHidden(int index, bool hidden);
 
 
 private slots:
@@ -55,5 +62,9 @@ private:
 
     void setupUI();
     void closeEvent(QCloseEvent *event);
+
+    bool isSharedHpVisible = false;
+    bool isSharedMaxHpVisible = false;
+    bool isSharedAcVisible = true;
 };
 #endif //DM_ASSIST_QINITIATIVETRACKERWIDGET_H

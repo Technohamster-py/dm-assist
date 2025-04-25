@@ -14,7 +14,6 @@
  */
 InitiativeModel::InitiativeModel(QObject *parent)
         : QAbstractTableModel(parent) {}
-
 /**
  * @brief Возвращает количество строк в модели.
  * @details Количество строк соответствует количеству персонажей.
