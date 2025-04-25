@@ -63,7 +63,6 @@ protected:
 
 private slots:
     void on_playButton_clicked();
-    void on_stopButton_clicked();
     void on_editButton_clicked();
     void playShortcutTriggered();
 

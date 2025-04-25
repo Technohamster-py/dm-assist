@@ -25,9 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setupPlayers();
 
     for (int i = 0; i < players.size(); ++i) {
-        int row = i / 3;
-        int col = i % 3;
-        ui->centralwidget->addWidget(players[i], row, col);
+        ui->centralwidget->addWidget(players[i]);
         connect(players[i], SIGNAL(playerStarted(int)), this, SLOT(stopOtherPlayers(int)));
     }
     adjustSize();

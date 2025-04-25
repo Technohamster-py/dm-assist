@@ -25,7 +25,7 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <layout class="QGridLayout" name="centralwidget"/>
+     <layout class="QVBoxLayout" name="centralwidget"/>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
