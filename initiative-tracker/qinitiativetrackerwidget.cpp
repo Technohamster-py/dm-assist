@@ -1,6 +1,7 @@
 #include <QItemSelectionModel>
 #include <QFileDialog>
 #include <QStandardPaths>
+#include <QMessageBox>
 
 #include "qinitiativetrackerwidget.h"
 #include "hpprogressbardelegate.h"
@@ -94,6 +95,7 @@ void QInitiativeTrackerWidget::openSharedWindow() {
     QTableView *sharedWidget = new QTableView(sharedWindow);
     sharedWidget->setModel(model);
     auto *view = sharedWidget;
+    sharedWidget->setColumnHidden(InitiativeModel::fields::del, true);
 
     // Делегат с начальным режимом отображения
     auto *hpDelegate = new HpProgressBarDelegate(HpProgressBarDelegate::Numeric, view);
@@ -105,6 +107,7 @@ void QInitiativeTrackerWidget::openSharedWindow() {
     });
 
     connect(this, &QInitiativeTrackerWidget::fieldVisibilityChanged, sharedWidget, &QTableView::hideColumn);
+
 
     QVBoxLayout *layout = new QVBoxLayout(sharedWindow);
     layout->addWidget(sharedWidget);
@@ -180,6 +183,13 @@ void QInitiativeTrackerWidget::on_loadButton_clicked(){
 
 
 void QInitiativeTrackerWidget::closeEvent(QCloseEvent *event){
+    QMessageBox::StandardButton reply = QMessageBox::question(this,
+                                                              tr("Сохранение конфигурации"),
+                                                              tr("Сохранить трекер?"),
+                                                              QMessageBox::Yes | QMessageBox::No);
+    if (reply == QMessageBox::Yes)
+        on_saveButton_clicked();
+
     for (QPointer<QWidget> w : sharedWindows) {
         if (w) w->close();
     }
