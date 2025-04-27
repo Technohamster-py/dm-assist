@@ -45,14 +45,14 @@ MainWindow::MainWindow(QWidget *parent) :
  * @details При закрытии окна производится сохранение конфигурационного файла
  */
 MainWindow::~MainWindow() {
-    QMessageBox::StandardButton reply = QMessageBox::question(this,
-                                                              tr("Сохранение конфигурации"),
-                                                              tr("Сохранить проект?"),
-                                                              QMessageBox::Yes | QMessageBox::No);
-
-    if(reply == QMessageBox::Yes)
-        saveConfigFile();
-    saveSettings();
+//    QMessageBox::StandardButton reply = QMessageBox::question(this,
+//                                                              tr("Сохранение конфигурации"),
+//                                                              tr("Сохранить проект?"),
+//                                                              QMessageBox::Yes | QMessageBox::No);
+//
+//    if(reply == QMessageBox::Yes)
+//        saveConfigFile();
+//    saveSettings();
     foreach(QPlayer* player, players){
         removeDirectoryRecursively(player->getLocalDirPath());
         delete player;
