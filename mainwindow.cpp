@@ -273,6 +273,39 @@ void MainWindow::setupTracker() {
     ui->trackerLayout->addWidget(initiativeTrackerWidget);
 }
 
+void MainWindow::addMapView() {
+
+}
+
+void MainWindow::createNewMapTab() {
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                                    tr("Open Map Image"),
+                                                    QStandardPaths::writableLocation(QStandardPaths::PicturesLocation),
+                                                    tr("Images (*.png *.jpg *.bmp)"));
+    if (!fileName.isEmpty()){
+        addMapView();
+    }
+}
+
+void MainWindow::setupMaps() {
+    QWidget *addTab = new QWidget();
+    ui->mapTabWidget->addTab(addTab, "+");
+    connect(ui->mapTabWidget, &QTabWidget::currentChanged, this, [=](int index) {
+        if (index == ui->mapTabWidget->count() - 1)
+            createNewMapTab();
+    });
+
+    connect(ui->mapTabWidget, &QTabWidget::tabCloseRequested, this, [=](int index){
+        if (index != ui->mapTabWidget->count() - 1){
+            QWidget *widget = ui->mapTabWidget->widget(index);
+            ui->mapTabWidget->removeTab(index);
+            delete widget;
+        }
+    });
+
+    ui->toolBar->setMovable(false);
+}
+
 
 /**
  * Копирование всех фалов из папки sourcePath в папку destPath

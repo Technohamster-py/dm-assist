@@ -58,8 +58,11 @@ private:
 
     QInitiativeTrackerWidget* initiativeTrackerWidget;
 
+    void addMapView();
+
     void setupPlayers();
     void setupTracker();
+    void setupMaps();
     void setupShortcuts();
     SettingsDialog *settingsDialog = nullptr;
     Settings paths;
@@ -68,6 +71,8 @@ private slots:
     void loadConfigFile();
     void saveConfigFile();
     void on_actionSettings_triggered();
+
+    void createNewMapTab();
 };
 
 

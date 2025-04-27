@@ -68,6 +68,24 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QTabWidget" name="mapTabWidget">
+         <property name="currentIndex">
+          <number>-1</number>
+         </property>
+         <property name="documentMode">
+          <bool>true</bool>
+         </property>
+         <property name="tabsClosable">
+          <bool>true</bool>
+         </property>
+         <property name="movable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
     <item>
@@ -191,11 +209,18 @@
     <property name="title">
      <string>Campaign</string>
     </property>
+    <widget class="QMenu" name="menuAdd">
+     <property name="title">
+      <string>Add</string>
+     </property>
+     <addaction name="actionAddMap"/>
+    </widget>
     <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
     <addaction name="separator"/>
     <addaction name="actionSettings"/>
+    <addaction name="menuAdd"/>
    </widget>
    <widget class="QMenu" name="menuGlossary">
     <property name="title">
@@ -319,6 +344,11 @@
   <action name="actionReport_bug">
    <property name="text">
     <string>Report bug</string>
+   </property>
+  </action>
+  <action name="actionAddMap">
+   <property name="text">
+    <string>Map</string>
    </property>
   </action>
  </widget>
