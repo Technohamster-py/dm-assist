@@ -29,7 +29,9 @@ public:
     explicit QInitiativeTrackerWidget(QWidget *parent = nullptr, InitiativeModel *sharedModel = nullptr);
 
 signals:
-    void fieldVisibilityChanged(int field, bool visible);
+    void fieldVisibilityChanged(int field, bool hidden);
+    void columnHidden(int  column);
+    void columnShown(int column);
 
 public slots:
     void loadFromFile(QString filename);
@@ -37,10 +39,9 @@ public slots:
 
     void addFromFile(QString filename);
 
-    void loadSettings();
-    void saveSettings();
-
-    void setSharedFieldHidden(int index, bool hidden);
+    void setSharedFieldVisible(int index, bool visible);
+    void setHpDisplayMode(int mode);
+    void setHpComboBoxVisible(int visible);
 
 
 private slots:

@@ -5,7 +5,6 @@
 
 #include "qinitiativetrackerwidget.h"
 #include "hpprogressbardelegate.h"
-#include "../settings.h"
 #include "ui_qinitiativetrackerwidget.h"
 
 
@@ -106,7 +105,8 @@ void QInitiativeTrackerWidget::openSharedWindow() {
         view->viewport()->update();
     });
 
-    connect(this, &QInitiativeTrackerWidget::fieldVisibilityChanged, sharedWidget, &QTableView::hideColumn);
+    connect(this, SIGNAL(columnHidden(int)), sharedWidget, SLOT(hideColumn(int)));
+    connect(this, SIGNAL(columnShown(int)), sharedWidget, SLOT(showColumn(int)));
 
 
     QVBoxLayout *layout = new QVBoxLayout(sharedWindow);
@@ -197,32 +197,13 @@ void QInitiativeTrackerWidget::closeEvent(QCloseEvent *event){
     QWidget::closeEvent(event);
 }
 
-void QInitiativeTrackerWidget::setSharedFieldHidden(int index, bool hidden) {
-    emit fieldVisibilityChanged(index, hidden);
-}
-
-void QInitiativeTrackerWidget::loadSettings() {
-    QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
-    Settings paths;
-    int fieldsVisible = settings.value(paths.inititiative.fields, 1).toInt();
-    isSharedAcVisible = fieldsVisible & 1;
-    isSharedHpVisible = fieldsVisible & 2;
-    isSharedMaxHpVisible = fieldsVisible & 4;
-
-    emit fieldVisibilityChanged(InitiativeModel::fields::Ac, isSharedAcVisible);
-    emit fieldVisibilityChanged(InitiativeModel::fields::hp, isSharedHpVisible);
-    emit fieldVisibilityChanged(InitiativeModel::fields::maxHp, isSharedMaxHpVisible);
-
-    ui->hpModeBox->setCurrentIndex(settings.value(paths.inititiative.hpBarMode, 1).toInt());
-}
-
-void QInitiativeTrackerWidget::saveSettings() {
-    QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
-    Settings paths;
-
-    int fieldsVisible = isSharedAcVisible | isSharedHpVisible | isSharedMaxHpVisible;
-    settings.setValue(paths.inititiative.fields, fieldsVisible);
-    settings.setValue(paths.inititiative.hpBarMode, ui->hpModeBox->currentIndex());
+void QInitiativeTrackerWidget::setSharedFieldVisible(int index, bool visible) {
+    if (visible){
+        emit columnShown(index);
+    } else{
+        emit columnHidden(index);
+    }
+    emit fieldVisibilityChanged(index, visible);
 }
 
 void QInitiativeTrackerWidget::addFromFile(QString filename) {
@@ -235,4 +216,12 @@ void QInitiativeTrackerWidget::on_addFromFileButton_clicked() {
                                                     QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
                                                     "Xml file (*.xml)");
     addFromFile(filename);
+}
+
+void QInitiativeTrackerWidget::setHpDisplayMode(int mode) {
+    ui->hpModeBox->setCurrentIndex(mode);
+}
+
+void QInitiativeTrackerWidget::setHpComboBoxVisible(int visible) {
+    ui->hpModeBox->setVisible(visible);
 }

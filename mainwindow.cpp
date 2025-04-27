@@ -201,14 +201,26 @@ void MainWindow::saveSettings() {
 
 void MainWindow::loadSettings() {
     QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
+    /// General
     workingDir = settings.value(paths.general.dir, workingDir).toString();
     QDir dir(workingDir);
     if (!dir.exists())
         dir.mkpath(".");
+    /// Music
     for (QPlayer *player : players) {
         player->setAudioOutput(settings.value(paths.general.audioDevice, 0).toInt());
     }
+    ///Language
     changeLanguage(settings.value(paths.general.lang, "ru_RU").toString());
+    /// Initiative tracker
+    initiativeTrackerWidget->setHpDisplayMode(settings.value(paths.inititiative.hpBarMode, 0).toInt());
+    int initiativeFields = settings.value(paths.inititiative.fields, 7).toInt();
+    initiativeTrackerWidget->setSharedFieldVisible(0, initiativeFields & iniFields::name);
+    initiativeTrackerWidget->setSharedFieldVisible(1, initiativeFields & iniFields::initiative);
+    initiativeTrackerWidget->setSharedFieldVisible(2, initiativeFields & iniFields::ac);
+    initiativeTrackerWidget->setSharedFieldVisible(3, initiativeFields & iniFields::hp);
+    initiativeTrackerWidget->setSharedFieldVisible(4, initiativeFields & iniFields::maxHp);
+    initiativeTrackerWidget->setSharedFieldVisible(5, initiativeFields & iniFields::del);
 }
 
 void MainWindow::on_actionSettings_triggered() {
