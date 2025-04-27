@@ -23,11 +23,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     setupPlayers();
+    setupTracker();
 
-    for (int i = 0; i < players.size(); ++i) {
-        ui->centralwidget->addWidget(players[i]);
-        connect(players[i], SIGNAL(playerStarted(int)), this, SLOT(stopOtherPlayers(int)));
-    }
     adjustSize();
 
     loadSettings();
@@ -75,6 +72,11 @@ void MainWindow::setupPlayers() {
          auto *player = new QPlayer(this, i, QString("Player %1").arg(i + 1));
          players.append(player);
      }
+
+    for (int i = 0; i < players.size(); ++i) {
+        ui->musicLayout->insertWidget(i, players[i]);
+        connect(players[i], SIGNAL(playerStarted(int)), this, SLOT(stopOtherPlayers(int)));
+    }
 }
 
 void MainWindow::setupShortcuts() {
@@ -249,6 +251,11 @@ void MainWindow::setVolumeDivider(int value) {
     for (int i = 0; i < 9; ++i) {
         players[i]->setVolumeDivider(value);
     }
+}
+
+void MainWindow::setupTracker() {
+    initiativeTrackerWidget = new QInitiativeTrackerWidget(this);
+    ui->trackerLayout->addWidget(initiativeTrackerWidget);
 }
 
 

@@ -10,6 +10,7 @@
 #include <QSettings>
 #include <QShortcut>
 #include <QTranslator>
+#include "qinitiativetrackerwidget.h"
 #include "qplayerwidget.h"
 #include "settingsdialog.h"
 
@@ -55,9 +56,10 @@ private:
     int deviceIndex = -1;
     QVector<QPlayer*> players;
 
-    bool isActive = false;
+    QInitiativeTrackerWidget* initiativeTrackerWidget;
 
     void setupPlayers();
+    void setupTracker();
     void setupShortcuts();
     SettingsDialog *settingsDialog = nullptr;
     Settings paths;

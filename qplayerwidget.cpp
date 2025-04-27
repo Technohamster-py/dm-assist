@@ -97,7 +97,7 @@ void QPlayer::setPlayShortcut(QString key) {
 }
 
 void QPlayer::playShortcutTriggered() {
-    play()
+    play();
 }
 
 void QPlayer::addMedia(const QStringList &files) {
@@ -176,7 +176,8 @@ void QPlayer::playTrackAt(int index) {
 
     isActive = true;
     ui->playButton->setStyleSheet("background-color: #a5bfda;");
-    ui->playButton.setIcon(":/player/stop.svg");
+    QIcon stopIcon(":/player/stop.svg");
+    ui->playButton->setIcon(stopIcon);
 }
 
 void QPlayer::playNextTrack() {
@@ -196,7 +197,8 @@ void QPlayer::stop() {
     isActive = false;
     emit playerStopped();
     ui->playButton->setStyleSheet("background: transparent;");
-    ui->playButton.setIcon(":/player/play.svg");
+    QIcon playIcon(":/player/play.svg");
+    ui->playButton->setIcon(playIcon);
 }
 
 void QPlayer::freeStreams() {

@@ -78,6 +78,14 @@
        <set>ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable</set>
       </property>
      </item>
+     <item>
+      <property name="text">
+       <string>Initiative tracker</string>
+      </property>
+      <property name="text">
+       <string>2</string>
+      </property>
+     </item>
     </widget>
    </item>
    <item>
@@ -85,7 +93,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="generalPage">
         <layout class="QFormLayout" name="formLayout">
@@ -157,6 +165,100 @@
          </item>
          <item row="0" column="1">
           <widget class="QComboBox" name="themeComboBox"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page">
+        <layout class="QFormLayout" name="formLayout_3">
+         <item row="0" column="0">
+          <widget class="QLabel" name="fieldsLabel">
+           <property name="text">
+            <string>Display fields in shared view</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="0" column="0">
+            <widget class="QCheckBox" name="nameCheckBox">
+             <property name="text">
+              <string>Name</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QCheckBox" name="initiativeCheckBox">
+             <property name="text">
+              <string>Iinitiative</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QCheckBox" name="acCheckBox">
+             <property name="text">
+              <string>Armor Class</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QCheckBox" name="hpCheckBox">
+             <property name="text">
+              <string>Hit Points</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QCheckBox" name="maxhpCheckBox">
+             <property name="text">
+              <string>max Hit Points</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QCheckBox" name="deleteCheckBox">
+             <property name="text">
+              <string>Delete</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Hp display mode</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QComboBox" name="hpModeComboBox">
+             <item>
+              <property name="text">
+               <string>Numeric</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Text status</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Progress bar</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="showControlCheckBox">
+             <property name="text">
+              <string>Show control in main widget</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </widget>

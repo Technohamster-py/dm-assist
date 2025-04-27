@@ -1,6 +1,6 @@
 #include <QApplication>
 
-#include "qinitiativetrackerwidget.h"
+#include "mainwindow.h"
 
 
 #include <QDebug>
@@ -9,9 +9,8 @@
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
-
-    QInitiativeTrackerWidget initiativeTrackerWidget;
-    initiativeTrackerWidget.show();
+    MainWindow w;
+    w.show();
 
     return a.exec();
 }
