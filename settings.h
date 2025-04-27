@@ -20,7 +20,7 @@ enum hpBarMode {
 
 enum iniFields{
     name = 1,
-    initiative = 2,
+    init = 2,
     ac = 4,
     hp = 8,
     maxHp = 16,
@@ -32,18 +32,18 @@ struct Settings{
         QString audioDevice = "general/audioDevice";    ///< int Выбранное аудиоустройство
         QString dir = "general/dir";                    ///< String рабочая папка
         QString lang = "general/lang";                  ///< String язык
+        QString volume = "general/volume";              ///< int основной ползунок громкости
     };
-
     General general;
 
-    struct Inititiative {
+    struct Initiative {
         QString autoInitiative = "initiative/autoroll";            ///< uint8 (0:7) Автоматические броски инициативы для NPC/Монстров/Игроков (UNUSED)
         QString fields = "initiative/fields";                      ///< uint8 Режим отображения полей в трекере инициативы
         QString hpBarMode = "initiative/hpBar";                    ///< uint8 (0:2) Режим отображения здоровья
         QString showHpComboBox = "initiative/showHpCombo";         ///< bool Показывать комбобокс с выбором режима в основном виджете
         QString sharedWindows = "initiative/sharedWindowsCount";   ///< uint8 - Количество открытых расшаренных окон (UNUSED)
     };
-    Inititiative inititiative;
+    Initiative initiative;
 };
 
 #endif //DM_ASSIST_SETTINGS_H

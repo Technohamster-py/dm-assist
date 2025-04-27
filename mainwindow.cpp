@@ -52,7 +52,7 @@ MainWindow::~MainWindow() {
 //
 //    if(reply == QMessageBox::Yes)
 //        saveConfigFile();
-//    saveSettings();
+    saveSettings();
     foreach(QPlayer* player, players){
         removeDirectoryRecursively(player->getLocalDirPath());
         delete player;
@@ -196,6 +196,7 @@ void MainWindow::saveConfigFile() {
 void MainWindow::saveSettings() {
     QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
     settings.setValue(paths.general.dir, workingDir);
+    settings.setValue(paths.general.volume, ui->volumeSlider->value());
     settings.sync();
 }
 
@@ -210,13 +211,14 @@ void MainWindow::loadSettings() {
     for (QPlayer *player : players) {
         player->setAudioOutput(settings.value(paths.general.audioDevice, 0).toInt());
     }
+    ui->volumeSlider->setValue(settings.value(paths.general.volume, 100).toInt());
     ///Language
     changeLanguage(settings.value(paths.general.lang, "ru_RU").toString());
     /// Initiative tracker
-    initiativeTrackerWidget->setHpDisplayMode(settings.value(paths.inititiative.hpBarMode, 0).toInt());
-    int initiativeFields = settings.value(paths.inititiative.fields, 7).toInt();
+    initiativeTrackerWidget->setHpDisplayMode(settings.value(paths.initiative.hpBarMode, 0).toInt());
+    int initiativeFields = settings.value(paths.initiative.fields, 7).toInt();
     initiativeTrackerWidget->setSharedFieldVisible(0, initiativeFields & iniFields::name);
-    initiativeTrackerWidget->setSharedFieldVisible(1, initiativeFields & iniFields::initiative);
+    initiativeTrackerWidget->setSharedFieldVisible(1, initiativeFields & iniFields::init);
     initiativeTrackerWidget->setSharedFieldVisible(2, initiativeFields & iniFields::ac);
     initiativeTrackerWidget->setSharedFieldVisible(3, initiativeFields & iniFields::hp);
     initiativeTrackerWidget->setSharedFieldVisible(4, initiativeFields & iniFields::maxHp);
@@ -224,6 +226,7 @@ void MainWindow::loadSettings() {
 }
 
 void MainWindow::on_actionSettings_triggered() {
+    saveSettings();
     if(!settingsDialog)
     {
         settingsDialog = new SettingsDialog(ORGANIZATION_NAME, APPLICATION_NAME, this);

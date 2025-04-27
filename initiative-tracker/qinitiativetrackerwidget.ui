@@ -172,7 +172,7 @@
        </property>
        <property name="icon">
         <iconset resource="../static/app_resources.qrc">
-         <normaloff>:/initiative tracker/back.svg</normaloff>:/initiative tracker/back.svg</iconset>
+         <normaloff>:/init tracker/back.svg</normaloff>:/init tracker/back.svg</iconset>
        </property>
       </widget>
      </item>
@@ -204,7 +204,7 @@
        </property>
        <property name="icon">
         <iconset resource="../static/app_resources.qrc">
-         <normaloff>:/initiative tracker/forward.svg</normaloff>:/initiative tracker/forward.svg</iconset>
+         <normaloff>:/init tracker/forward.svg</normaloff>:/init tracker/forward.svg</iconset>
        </property>
       </widget>
      </item>
@@ -236,7 +236,7 @@
        </property>
        <property name="icon">
         <iconset resource="../static/app_resources.qrc">
-         <normaloff>:/initiative tracker/share.svg</normaloff>:/initiative tracker/share.svg</iconset>
+         <normaloff>:/init tracker/share.svg</normaloff>:/init tracker/share.svg</iconset>
        </property>
       </widget>
      </item>
