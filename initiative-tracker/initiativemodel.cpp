@@ -3,6 +3,7 @@
 #include <QColor>
 #include <QDomDocument>
 #include <QFile>
+#include <QIcon>
 #include <QRegularExpression>
 #include <QTextStream>
 #include <QJSEngine> // Для вычисления арифметики
@@ -43,15 +44,15 @@ int InitiativeModel::columnCount(const QModelIndex &) const {
  * @return Название колонки или QVariant()
  */
 QVariant InitiativeModel::headerData(int section, Qt::Orientation orientation, int role) const {
-    if (role != Qt::DisplayRole || orientation != Qt::Horizontal)
+    if (role != Qt::DisplayRole && role != Qt::DecorationRole || orientation != Qt::Horizontal)
         return QVariant();
 
     switch (section) {
         case 0: return tr("Name");
-        case 1: return tr("Initiative");
-        case 2: return tr("AC");
-        case 3: return tr("HP");
-        case 4: return tr("Max HP");
+        case 1: return QIcon(":/d20.svg");
+        case 2: return QIcon(":/shield.svg");
+        case 3: return QIcon(":/heart.svg");
+        case 4: return tr("Max");
         case 5: return tr("Delete");
         default: return QVariant();
     }

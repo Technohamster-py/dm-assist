@@ -34,7 +34,7 @@ QInitiativeTrackerWidget::QInitiativeTrackerWidget(QWidget *parent, InitiativeMo
  */
 void QInitiativeTrackerWidget::setupUI() {
     ui->table->setModel(model);
-    ui->table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->table->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->table->setDropIndicatorShown(true);
 
     connect(ui->addRowButton, &QPushButton::clicked, this, &QInitiativeTrackerWidget::addRow);
