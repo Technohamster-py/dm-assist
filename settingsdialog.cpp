@@ -47,16 +47,25 @@ void SettingsDialog::onTreeItemSelected(QTreeWidgetItem *current, QTreeWidgetIte
 }
 
 void SettingsDialog::loadSettings() {
-
     QSettings settings(m_organisationName, m_applicationName);
 
+    /// General
     ui->folderEdit->setText(settings.value(paths.general.dir, "").toString());
     ui->deviceComboBox->setCurrentIndex(settings.value(paths.general.audioDevice, 0).toInt());
-
     QString currentLanguage = settings.value(paths.general.lang, "ru_RU").toString();
     int index = ui->languageComboBox->findData(currentLanguage);
     if (index != -1)
         ui->languageComboBox->setCurrentIndex(index);
+
+    /// Initiative
+    int initiativeFields = settings.value(paths.inititiative.fields, 7).toInt();
+    ui->nameCheckBox->setChecked(initiativeFields & 1);
+    ui->initiativeCheckBox->setChecked(initiativeFields & 2);
+    ui->acCheckBox->setChecked(initiativeFields & 4);
+    ui->hpCheckBox->setChecked(initiativeFields & 8);
+    ui->maxhpCheckBox->setChecked(initiativeFields & 16);
+    ui->deleteCheckBox->setChecked(initiativeFields & 32);
+    ui->hpModeComboBox->setCurrentIndex(settings.value(paths.inititiative.hpBarMode, 0).toInt());
 }
 
 void SettingsDialog::on_folderButton_clicked() {
@@ -69,9 +78,30 @@ void SettingsDialog::on_folderButton_clicked() {
 
 void SettingsDialog::saveSettings() {
     QSettings settings(m_organisationName, m_applicationName);
+    /// General
     settings.setValue(paths.general.audioDevice, deviceIndices[ui->deviceComboBox->currentIndex()]);
     settings.setValue(paths.general.dir, ui->folderEdit->text());
     settings.setValue(paths.general.lang, ui->languageComboBox->currentData().toString());
+
+    /// Initiative
+    int initiativeFields = 0;
+    if (ui->nameCheckBox->isChecked())
+        initiativeFields = initiativeFields + 1;
+    if (ui->initiativeCheckBox->isChecked())
+        initiativeFields = initiativeFields + 2;
+    if (ui->acCheckBox->isChecked())
+        initiativeFields = initiativeFields + 4;
+    if (ui->hpCheckBox->isChecked())
+        initiativeFields = initiativeFields + 8;
+    if (ui->maxhpCheckBox->isChecked())
+        initiativeFields = initiativeFields + 16;
+    if (ui->deleteCheckBox->isChecked())
+        initiativeFields = initiativeFields + 32;
+    settings.setValue(paths.inititiative.fields, initiativeFields);
+    settings.setValue(paths.inititiative.hpBarMode, ui->hpModeComboBox->currentIndex());
+
+
+
     settings.sync();
 }
 
