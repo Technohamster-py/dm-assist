@@ -18,9 +18,13 @@ enum hpBarMode {
 
 };
 
-enum initiatiativeFields{
-    hp = 1,
-    ac = 2,
+enum iniFields{
+    name = 1,
+    initiative = 2,
+    ac = 4,
+    hp = 8,
+    maxHp = 16,
+    del = 32
 };
 
 struct Settings{
@@ -36,6 +40,7 @@ struct Settings{
         QString autoInitiative = "initiative/autoroll";            ///< uint8 (0:7) Автоматические броски инициативы для NPC/Монстров/Игроков (UNUSED)
         QString fields = "initiative/fields";                      ///< uint8 Режим отображения полей в трекере инициативы
         QString hpBarMode = "initiative/hpBar";                    ///< uint8 (0:2) Режим отображения здоровья
+        QString showHpComboBox = "initiative/showHpCombo";         ///< bool Показывать комбобокс с выбором режима в основном виджете
         QString sharedWindows = "initiative/sharedWindowsCount";   ///< uint8 - Количество открытых расшаренных окон (UNUSED)
     };
     Inititiative inititiative;

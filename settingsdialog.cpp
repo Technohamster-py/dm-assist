@@ -59,13 +59,14 @@ void SettingsDialog::loadSettings() {
 
     /// Initiative
     int initiativeFields = settings.value(paths.inititiative.fields, 7).toInt();
-    ui->nameCheckBox->setChecked(initiativeFields & 1);
-    ui->initiativeCheckBox->setChecked(initiativeFields & 2);
-    ui->acCheckBox->setChecked(initiativeFields & 4);
-    ui->hpCheckBox->setChecked(initiativeFields & 8);
-    ui->maxhpCheckBox->setChecked(initiativeFields & 16);
-    ui->deleteCheckBox->setChecked(initiativeFields & 32);
+    ui->nameCheckBox->setChecked(initiativeFields & iniFields::name);
+    ui->initiativeCheckBox->setChecked(initiativeFields & iniFields::initiative);
+    ui->acCheckBox->setChecked(initiativeFields & iniFields::ac);
+    ui->hpCheckBox->setChecked(initiativeFields & iniFields::hp);
+    ui->maxhpCheckBox->setChecked(initiativeFields & iniFields::maxHp);
+    ui->deleteCheckBox->setChecked(initiativeFields & iniFields::del);
     ui->hpModeComboBox->setCurrentIndex(settings.value(paths.inititiative.hpBarMode, 0).toInt());
+    ui->showControlCheckBox->setChecked(settings.value(paths.inititiative.showHpComboBox, true).toBool());
 }
 
 void SettingsDialog::on_folderButton_clicked() {
@@ -99,8 +100,7 @@ void SettingsDialog::saveSettings() {
         initiativeFields = initiativeFields + 32;
     settings.setValue(paths.inititiative.fields, initiativeFields);
     settings.setValue(paths.inititiative.hpBarMode, ui->hpModeComboBox->currentIndex());
-
-
+    settings.setValue(paths.inititiative.showHpComboBox, ui->showControlCheckBox->isChecked());
 
     settings.sync();
 }
