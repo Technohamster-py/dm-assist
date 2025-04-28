@@ -36,7 +36,7 @@ void MapView::loadMapImage(const QString &filePath)
         }
         mapPixmapItem = scene->addPixmap(pixmap);
         mapPixmapItem->setZValue(-100); // ниже всех остальных элементов
-        scene->setSceneRect(pixmap.rect());
+        scene->setSceneRect(mapPixmapItem->boundingRect());
     }
 }
 

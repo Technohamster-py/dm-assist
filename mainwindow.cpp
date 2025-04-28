@@ -14,6 +14,8 @@
 #include "qsaveconfigdialog.h"
 #include <QTextStream>
 
+#include <QDebug>
+
 static void copyAllFiles(const QString& sourcePath, const QString& destPath);
 static void moveAllFiles(const QString& sourcePath, const QString& destPath);
 static bool removeDirectoryRecursively(const QString &directoryPath, bool deleteSelf=true);
@@ -25,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setupPlayers();
     setupTracker();
+    setupMaps();
 
     adjustSize();
 
@@ -274,10 +277,10 @@ void MainWindow::setupTracker() {
     ui->trackerLayout->addWidget(initiativeTrackerWidget);
 }
 
-void MainWindow::addMapView() {
+void MainWindow::addMapView(QString mapName) {
     MapView *view = new MapView(this);
     int insertIndex = ui->mapTabWidget->count() - 1;
-    ui->mapTabWidget->insertTab(insertIndex, view, tr("Map %1").arg(insertIndex + 1));
+    ui->mapTabWidget->insertTab(insertIndex, view, mapName);
     ui->mapTabWidget->setCurrentIndex(insertIndex);
 }
 
@@ -286,29 +289,26 @@ void MainWindow::createNewMapTab() {
                                                     tr("Open Map Image"),
                                                     QStandardPaths::writableLocation(QStandardPaths::PicturesLocation),
                                                     tr("Images (*.png *.jpg *.bmp)"));
+
     if (!fileName.isEmpty()){
-        addMapView();
-        MapView* mapView = qobject_cast<MapView*>(ui->mapTabWidget->widget(ui->mapTabWidget->count() - 2));
+        QFileInfo fileInfo(fileName);
+        addMapView(fileInfo.fileName());
+        MapView* mapView = qobject_cast<MapView*>(ui->mapTabWidget->widget(ui->mapTabWidget->count() - 1));
         if (mapView)
             mapView->loadMapImage(fileName);
     }
-    ui->mapTabWidget->setCurrentIndex(ui->mapTabWidget->count() - 2);
+    ui->mapTabWidget->setCurrentIndex(ui->mapTabWidget->count() - 1);
 }
 
 void MainWindow::setupMaps() {
-    QWidget *addTab = new QWidget();
-    ui->mapTabWidget->addTab(addTab, "+");
-    connect(ui->mapTabWidget, &QTabWidget::currentChanged, this, [=](int index) {
-        if (index == ui->mapTabWidget->count() - 1)
+    connect(ui->actionAddMap, &QAction::triggered, this, [=]() {
             createNewMapTab();
     });
 
     connect(ui->mapTabWidget, &QTabWidget::tabCloseRequested, this, [=](int index){
-        if (index != ui->mapTabWidget->count() - 1){
-            QWidget *widget = ui->mapTabWidget->widget(index);
-            ui->mapTabWidget->removeTab(index);
-            delete widget;
-        }
+        QWidget *widget = ui->mapTabWidget->widget(index);
+        ui->mapTabWidget->removeTab(index);
+        delete widget;
     });
 
     ui->toolBar->setMovable(false);
