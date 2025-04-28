@@ -15,6 +15,8 @@ set(BASS_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass/bass.lib)
 set(HEADER_FILES
         initiative-tracker/initiativemodel.h
         mainwindow.h
+        map-widget/mapview.h
+        map-widget/mapscene.h
         initiative-tracker/qinitiativetrackerwidget.h
         initiative-tracker/hpprogressbardelegate.h
         qplayerwidget.h
@@ -25,6 +27,8 @@ set(HEADER_FILES
 set(SOURCE_FILES
         initiative-tracker/initiativemodel.cpp
         mainwindow.cpp
+        map-widget/mapview.cpp
+        map-widget/mapscene.cpp
         initiative-tracker/qinitiativetrackerwidget.cpp
         initiative-tracker/hpprogressbardelegate.cpp
         qplayerwidget.cpp

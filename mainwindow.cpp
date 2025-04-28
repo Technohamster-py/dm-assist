@@ -3,6 +3,7 @@
 //
 #include "mainwindow.h"
 #include "ui_MainWindow.h"
+#include "map-widget/mapview.h"
 
 #include <QDesktopServices>
 #include "QDomDocument"
@@ -274,7 +275,10 @@ void MainWindow::setupTracker() {
 }
 
 void MainWindow::addMapView() {
-
+    MapView *view = new MapView(this);
+    int insertIndex = ui->mapTabWidget->count() - 1;
+    ui->mapTabWidget->insertTab(insertIndex, view, tr("Map %1").arg(insertIndex + 1));
+    ui->mapTabWidget->setCurrentIndex(insertIndex);
 }
 
 void MainWindow::createNewMapTab() {
@@ -284,7 +288,11 @@ void MainWindow::createNewMapTab() {
                                                     tr("Images (*.png *.jpg *.bmp)"));
     if (!fileName.isEmpty()){
         addMapView();
+        MapView* mapView = qobject_cast<MapView*>(ui->mapTabWidget->widget(ui->mapTabWidget->count() - 2));
+        if (mapView)
+            mapView->loadMapImage(fileName);
     }
+    ui->mapTabWidget->setCurrentIndex(ui->mapTabWidget->count() - 2);
 }
 
 void MainWindow::setupMaps() {
