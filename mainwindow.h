@@ -10,6 +10,7 @@
 #include <QSettings>
 #include <QShortcut>
 #include <QTranslator>
+#include "map-widget/maptabwidget.h"
 #include "qinitiativetrackerwidget.h"
 #include "qplayerwidget.h"
 #include "settingsdialog.h"
@@ -58,6 +59,7 @@ private:
 
     QInitiativeTrackerWidget* initiativeTrackerWidget;
 
+    TabWidget *mapTabWidget;
     void addMapView(QString mapName);
 
     void setupPlayers();

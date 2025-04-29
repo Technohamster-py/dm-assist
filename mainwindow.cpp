@@ -279,9 +279,9 @@ void MainWindow::setupTracker() {
 
 void MainWindow::addMapView(QString mapName) {
     MapView *view = new MapView(this);
-    int insertIndex = ui->mapTabWidget->count() - 1;
-    ui->mapTabWidget->insertTab(insertIndex, view, mapName);
-    ui->mapTabWidget->setCurrentIndex(insertIndex);
+    int insertIndex = mapTabWidget->count() - 1;
+    mapTabWidget->insertTab(insertIndex, view, mapName);
+    mapTabWidget->setCurrentIndex(insertIndex);
 }
 
 void MainWindow::createNewMapTab() {
@@ -293,21 +293,24 @@ void MainWindow::createNewMapTab() {
     if (!fileName.isEmpty()){
         QFileInfo fileInfo(fileName);
         addMapView(fileInfo.fileName());
-        MapView* mapView = qobject_cast<MapView*>(ui->mapTabWidget->widget(ui->mapTabWidget->count() - 1));
+        MapView* mapView = qobject_cast<MapView*>(mapTabWidget->widget(mapTabWidget->count() - 1));
         if (mapView)
             mapView->loadMapImage(fileName);
     }
-    ui->mapTabWidget->setCurrentIndex(ui->mapTabWidget->count() - 1);
+    mapTabWidget->setCurrentIndex(mapTabWidget->count() - 1);
 }
 
 void MainWindow::setupMaps() {
-    connect(ui->actionAddMap, &QAction::triggered, this, [=]() {
-            createNewMapTab();
-    });
+    mapTabWidget = new TabWidget(this);
+    ui->mainViewLayout->addWidget(mapTabWidget);
 
-    connect(ui->mapTabWidget, &QTabWidget::tabCloseRequested, this, [=](int index){
-        QWidget *widget = ui->mapTabWidget->widget(index);
-        ui->mapTabWidget->removeTab(index);
+    connect(mapTabWidget, &TabWidget::newTabRequested, this, &MainWindow::createNewMapTab);
+
+    connect(ui->actionAddMap, &QAction::triggered, this, &MainWindow::createNewMapTab);
+
+    connect(mapTabWidget, &QTabWidget::tabCloseRequested, this, [=](int index){
+        QWidget *widget = mapTabWidget->widget(index);
+        mapTabWidget->removeTab(index);
         delete widget;
     });
 

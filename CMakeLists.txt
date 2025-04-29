@@ -17,6 +17,7 @@ set(HEADER_FILES
         mainwindow.h
         map-widget/mapview.h
         map-widget/mapscene.h
+        map-widget/maptabwidget.h
         initiative-tracker/qinitiativetrackerwidget.h
         initiative-tracker/hpprogressbardelegate.h
         qplayerwidget.h
