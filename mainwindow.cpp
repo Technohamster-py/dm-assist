@@ -277,13 +277,6 @@ void MainWindow::setupTracker() {
     ui->trackerLayout->addWidget(initiativeTrackerWidget);
 }
 
-void MainWindow::addMapView(QString mapName) {
-    MapView *view = new MapView(this);
-    int insertIndex = mapTabWidget->count() - 1;
-    mapTabWidget->insertTab(insertIndex, view, mapName);
-    mapTabWidget->setCurrentIndex(insertIndex);
-}
-
 void MainWindow::createNewMapTab() {
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open Map Image"),
@@ -292,10 +285,10 @@ void MainWindow::createNewMapTab() {
 
     if (!fileName.isEmpty()){
         QFileInfo fileInfo(fileName);
-        addMapView(fileInfo.fileName());
-        MapView* mapView = qobject_cast<MapView*>(mapTabWidget->widget(mapTabWidget->count() - 1));
-        if (mapView)
-            mapView->loadMapImage(fileName);
+        MapView *view = new MapView(this);
+        view->loadMapImage(fileName);
+        mapTabWidget->addTab(view, fileInfo.fileName());
+        mapTabWidget->setCurrentIndex(mapTabWidget->count()-1);
     }
     mapTabWidget->setCurrentIndex(mapTabWidget->count() - 1);
 }
@@ -305,7 +298,6 @@ void MainWindow::setupMaps() {
     ui->mainViewLayout->addWidget(mapTabWidget);
 
     connect(mapTabWidget, &TabWidget::newTabRequested, this, &MainWindow::createNewMapTab);
-
     connect(ui->actionAddMap, &QAction::triggered, this, &MainWindow::createNewMapTab);
 
     connect(mapTabWidget, &QTabWidget::tabCloseRequested, this, [=](int index){

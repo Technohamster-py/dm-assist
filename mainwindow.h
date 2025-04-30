@@ -60,7 +60,6 @@ private:
     QInitiativeTrackerWidget* initiativeTrackerWidget;
 
     TabWidget *mapTabWidget;
-    void addMapView(QString mapName);
 
     void setupPlayers();
     void setupTracker();
