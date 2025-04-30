@@ -13,8 +13,11 @@ Q_OBJECT
 
 public:
     TabWidget(QWidget *parent = nullptr) : QTabWidget(parent) {
+        setTabsClosable(true);
+        setTabBarAutoHide(false);
+
         QToolButton *plusButton = new QToolButton(this);
-        plusButton->setText("+");
+        plusButton->setIcon(QIcon(":/add.svg"));
         plusButton->setAutoRaise(true); // без рамок, как иконка
         plusButton->setToolTip("Создать новую вкладку");
 

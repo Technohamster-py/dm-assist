@@ -74,6 +74,8 @@ private slots:
     void on_actionSettings_triggered();
 
     void createNewMapTab();
+    void deleteMapTab(int index);
+    void updateVisibility();
 };
 
 

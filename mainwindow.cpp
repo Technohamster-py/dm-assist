@@ -288,6 +288,7 @@ void MainWindow::createNewMapTab() {
         MapView *view = new MapView(this);
         view->loadMapImage(fileName);
         mapTabWidget->addTab(view, fileInfo.fileName());
+        updateVisibility();
         mapTabWidget->setCurrentIndex(mapTabWidget->count()-1);
     }
     mapTabWidget->setCurrentIndex(mapTabWidget->count() - 1);
@@ -296,17 +297,28 @@ void MainWindow::createNewMapTab() {
 void MainWindow::setupMaps() {
     mapTabWidget = new TabWidget(this);
     ui->mainViewLayout->addWidget(mapTabWidget);
-
+    ui->phLayout->setAlignment(Qt::AlignCenter);
+    connect(ui->openMapButton, &QPushButton::clicked, this, &MainWindow::createNewMapTab);
     connect(mapTabWidget, &TabWidget::newTabRequested, this, &MainWindow::createNewMapTab);
     connect(ui->actionAddMap, &QAction::triggered, this, &MainWindow::createNewMapTab);
 
-    connect(mapTabWidget, &QTabWidget::tabCloseRequested, this, [=](int index){
-        QWidget *widget = mapTabWidget->widget(index);
-        mapTabWidget->removeTab(index);
-        delete widget;
-    });
+    connect(mapTabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::deleteMapTab);
 
     ui->toolBar->setMovable(false);
+    updateVisibility();
+}
+
+void MainWindow::updateVisibility() {
+    bool hasTabs = mapTabWidget->count() > 0;
+    mapTabWidget->setVisible(hasTabs);
+    ui->placeHolderWidget->setVisible(!hasTabs);
+}
+
+void MainWindow::deleteMapTab(int index) {
+    QWidget *widget = mapTabWidget->widget(index);
+    mapTabWidget->removeTab(index);
+    delete widget;
+    updateVisibility();
 }
 
 
