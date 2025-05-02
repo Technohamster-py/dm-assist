@@ -17,7 +17,8 @@ MapView::MapView(QWidget *parent)
     scene = new MapScene(this);
     setScene(scene);
     setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
-    setDragMode(QGraphicsView::NoDrag);
+    setDragMode(QGraphicsView::ScrollHandDrag);
+    setRenderHint(QPainter::Antialiasing);
     setTransformationAnchor(AnchorUnderMouse);
     mapPixmapItem = nullptr;
 }
