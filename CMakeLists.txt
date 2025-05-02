@@ -12,29 +12,20 @@ set(BASS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass)
 set(BASS_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass/bass.lib)
 #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc")
 
-set(HEADER_FILES
-        initiative-tracker/initiativemodel.h
-        mainwindow.h
-        map-widget/mapview.h
-        map-widget/mapscene.h
-        map-widget/maptabwidget.h
-        initiative-tracker/qinitiativetrackerwidget.h
-        initiative-tracker/hpprogressbardelegate.h
-        qplayerwidget.h
-        qsaveconfigdialog.h
-        settingsdialog.h
-)
-
-set(SOURCE_FILES
-        initiative-tracker/initiativemodel.cpp
-        mainwindow.cpp
-        map-widget/mapview.cpp
-        map-widget/mapscene.cpp
-        initiative-tracker/qinitiativetrackerwidget.cpp
-        initiative-tracker/hpprogressbardelegate.cpp
-        qplayerwidget.cpp
-        qsaveconfigdialog.cpp
-        settingsdialog.cpp
+set(FILES
+        initiative-tracker/initiativemodel.h    initiative-tracker/initiativemodel.cpp
+        mainwindow.h    mainwindow.cpp
+        map-widget/abstractmaptool.h
+        map-widget/calibrationtool.h    map-widget/calibrationtool.cpp
+        map-widget/mapview.h    map-widget/mapview.cpp
+        map-widget/mapscene.h   map-widget/mapscene.cpp
+        map-widget/maptabwidget.h   map-widget/maptabwidget.h
+        map-widget/rulermaptool.h   map-widget/rulermaptool.cpp
+        initiative-tracker/qinitiativetrackerwidget.h   initiative-tracker/qinitiativetrackerwidget.cpp
+        initiative-tracker/hpprogressbardelegate.h  initiative-tracker/hpprogressbardelegate.cpp
+        qplayerwidget.h qplayerwidget.cpp
+        qsaveconfigdialog.h qsaveconfigdialog.cpp
+        settingsdialog.h    settingsdialog.cpp
 )
 
 set(UI_FILES
@@ -82,10 +73,9 @@ qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
 add_custom_target(translations DEPENDS ${QM_FILES})
 
 add_executable(${PROJECT_NAME}
-        WIN32
+#        WIN32
         main.cpp
-        ${HEADER_FILES}
-        ${SOURCE_FILES}
+        ${FILES}
         ${UI_FILES}
         ${RESOURCES_ADD}
 )
