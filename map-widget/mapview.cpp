@@ -84,3 +84,7 @@ void MapView::mouseReleaseEvent(QMouseEvent *event)
         QGraphicsView::mouseReleaseEvent(event);
     }
 }
+
+void MapView::setRullerMode(ToolMode mode) {
+    scene->setToolMode(mode);
+}

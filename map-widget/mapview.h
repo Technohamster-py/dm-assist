@@ -32,6 +32,9 @@ public:
      */
     void loadMapImage(const QString &filePath);
 
+public slots:
+    void setRullerMode(ToolMode mode);
+
 protected:
     /**
      * @brief Handles mouse wheel events for zooming.

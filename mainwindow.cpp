@@ -301,8 +301,9 @@ void MainWindow::setupMaps() {
     connect(ui->openMapButton, &QPushButton::clicked, this, &MainWindow::createNewMapTab);
     connect(mapTabWidget, &TabWidget::newTabRequested, this, &MainWindow::createNewMapTab);
     connect(ui->actionAddMap, &QAction::triggered, this, &MainWindow::createNewMapTab);
-
     connect(mapTabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::deleteMapTab);
+    connect(ui->actionCalibrate, &QAction::triggered, this, &MainWindow::setCalibrationMode);
+    connect(ui->RullerToolAction, &QAction::triggered, this, &MainWindow::setMeasureMode);
 
     ui->toolBar->setMovable(false);
     updateVisibility();
@@ -319,6 +320,18 @@ void MainWindow::deleteMapTab(int index) {
     mapTabWidget->removeTab(index);
     delete widget;
     updateVisibility();
+}
+
+void MainWindow::setCalibrationMode() {
+    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    if (currentView)
+        currentView->setRullerMode(ToolMode::Calibration);
+}
+
+void MainWindow::setMeasureMode() {
+    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    if (currentView)
+        currentView->setRullerMode(ToolMode::Measure);
 }
 
 

@@ -7,6 +7,14 @@
 #define MAPSCENE_H
 
 #include <QGraphicsScene>
+#include <QGraphicsSceneMouseEvent>
+#include <QGraphicsItem>
+
+enum ToolMode{
+    None,
+    Calibration,
+    Measure
+};
 
 /**
  * @class MapScene
@@ -22,8 +30,19 @@ public:
      * @param parent Optional parent QObject
      */
     explicit MapScene(QObject *parent = nullptr);
+    void setToolMode(ToolMode mode);
 
-    // Инструменты и логика будут добавлены позже
+private:
+    ToolMode m_toolMode = ToolMode::None;
+    QList<QPointF> toolPoints;
+    QGraphicsLineItem *tempMeasureLine = nullptr;
+    QGraphicsTextItem *tempMeasureLabel = nullptr;
+    QList<QGraphicsItem*> measurementItems; // Храним все линии и подписи
+    double scaleFactor = 1.0;           ///< Масштаб
+
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
 };
 
 #endif // MAPSCENE_H

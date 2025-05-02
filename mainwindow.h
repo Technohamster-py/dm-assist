@@ -76,6 +76,8 @@ private slots:
     void createNewMapTab();
     void deleteMapTab(int index);
     void updateVisibility();
+    void setCalibrationMode();
+    void setMeasureMode();
 };
 
 
