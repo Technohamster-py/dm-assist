@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
+    setupToolbar();
     setupPlayers();
     setupTracker();
     setupMaps();
@@ -302,8 +303,6 @@ void MainWindow::setupMaps() {
     connect(mapTabWidget, &TabWidget::newTabRequested, this, &MainWindow::createNewMapTab);
     connect(ui->actionAddMap, &QAction::triggered, this, &MainWindow::createNewMapTab);
     connect(mapTabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::deleteMapTab);
-    connect(ui->actionCalibrate, &QAction::triggered, this, &MainWindow::setCalibrationMode);
-    connect(ui->RullerToolAction, &QAction::triggered, this, &MainWindow::setMeasureMode);
 
     ui->toolBar->setMovable(false);
     updateVisibility();
@@ -324,14 +323,58 @@ void MainWindow::deleteMapTab(int index) {
 
 void MainWindow::setCalibrationMode() {
     MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
-    if (currentView)
-        currentView->setRullerMode(ToolMode::Calibration);
+    if (currentView){
+        currentView->setActiveTool(calibrationTool);
+    }
 }
 
-void MainWindow::setMeasureMode() {
+void MainWindow::setMeasureMode(bool checked) {
     MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
     if (currentView)
-        currentView->setRullerMode(ToolMode::Measure);
+        if (currentView){
+            if (checked)
+                currentView->setActiveTool(rulerMapTool);
+            else
+                currentView->setActiveTool(nullptr);
+        }
+}
+
+void MainWindow::setupToolbar() {
+    calibrationTool = new CalibrationTool(this);
+    rulerMapTool = new RulerMapTool(this);
+
+    QActionGroup *toolGroup = new QActionGroup(this);
+    toolGroup->setExclusive(true);
+
+    QToolButton *rulerButton = new QToolButton(this);
+    rulerButton->setCheckable(true);
+    rulerButton->setToolTip(tr("ruler"));
+
+    QAction *rulerAction = new QAction(this);
+    rulerAction->setCheckable(true);
+    rulerAction->setChecked(false);
+    toolGroup->addAction(rulerAction);
+    rulerAction->setIcon(QIcon(":/map/ruler.svg"));
+    rulerButton->setDefaultAction(rulerAction);
+
+    rulerButton->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(rulerButton, &QToolButton::customContextMenuRequested, this, [=](const QPoint &pos) {
+        QMenu contextMenu;
+        QAction *calibrateAct = contextMenu.addAction(tr("calibrate"));
+        QAction *chosen = contextMenu.exec(rulerButton->mapToGlobal(pos));
+        if (chosen == calibrateAct) {
+            // временно активируем CalibrationTool
+            setCalibrationMode();
+            // отключим кнопку линейки на время
+            rulerAction->setChecked(false);
+        }
+    });
+    connect(rulerAction, SIGNAL(triggered(bool)), this, SLOT(setMeasureMode(bool)));
+    connect(calibrationTool, &AbstractMapTool::finished, [=]() {
+        setMeasureMode(true);
+        rulerAction->setChecked(true);
+    });
+    ui->toolBar->addWidget(rulerButton);
 }
 
 

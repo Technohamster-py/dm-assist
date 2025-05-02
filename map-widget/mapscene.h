@@ -10,11 +10,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsItem>
 
-enum ToolMode{
-    None,
-    Calibration,
-    Measure
-};
+#include "abstractmaptool.h"
 
 /**
  * @class MapScene
@@ -30,15 +26,13 @@ public:
      * @param parent Optional parent QObject
      */
     explicit MapScene(QObject *parent = nullptr);
-    void setToolMode(ToolMode mode);
+    void setActiveTool(AbstractMapTool* tool);
 
+    void setScaleFactor(double factor);
+    [[nodiscard]] double getScaleFactor() const {return m_scaleFactor;};
 private:
-    ToolMode m_toolMode = ToolMode::None;
-    QList<QPointF> toolPoints;
-    QGraphicsLineItem *tempMeasureLine = nullptr;
-    QGraphicsTextItem *tempMeasureLabel = nullptr;
-    QList<QGraphicsItem*> measurementItems; // Храним все линии и подписи
-    double scaleFactor = 1.0;           ///< Масштаб
+    AbstractMapTool* m_activeTool = nullptr;
+    double m_scaleFactor = 1.0;           ///< Масштаб
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;

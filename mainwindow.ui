@@ -328,8 +328,6 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="RullerToolAction"/>
-   <addaction name="actionCalibrate"/>
   </widget>
   <action name="actionNew">
    <property name="text">
@@ -416,20 +414,6 @@
   <action name="actionAddMap">
    <property name="text">
     <string>Map</string>
-   </property>
-  </action>
-  <action name="RullerToolAction">
-   <property name="icon">
-    <iconset resource="static/app_resources.qrc">
-     <normaloff>:/map/ruler.svg</normaloff>:/map/ruler.svg</iconset>
-   </property>
-   <property name="text">
-    <string>ruller</string>
-   </property>
-  </action>
-  <action name="actionCalibrate">
-   <property name="text">
-    <string>calibrate</string>
    </property>
   </action>
  </widget>

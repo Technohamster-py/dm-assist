@@ -85,6 +85,6 @@ void MapView::mouseReleaseEvent(QMouseEvent *event)
     }
 }
 
-void MapView::setRullerMode(ToolMode mode) {
-    scene->setToolMode(mode);
+void MapView::setActiveTool(AbstractMapTool* tool) {
+    scene->setActiveTool(tool);
 }

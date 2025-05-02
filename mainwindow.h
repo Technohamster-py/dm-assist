@@ -11,6 +11,8 @@
 #include <QShortcut>
 #include <QTranslator>
 #include "map-widget/maptabwidget.h"
+#include "map-widget/calibrationtool.h"
+#include "map-widget/rulermaptool.h"
 #include "qinitiativetrackerwidget.h"
 #include "qplayerwidget.h"
 #include "settingsdialog.h"
@@ -60,9 +62,12 @@ private:
     QInitiativeTrackerWidget* initiativeTrackerWidget;
 
     TabWidget *mapTabWidget;
+    CalibrationTool* calibrationTool;
+    RulerMapTool* rulerMapTool;
 
     void setupPlayers();
     void setupTracker();
+    void setupToolbar();
     void setupMaps();
     void setupShortcuts();
     SettingsDialog *settingsDialog = nullptr;
@@ -77,7 +82,7 @@ private slots:
     void deleteMapTab(int index);
     void updateVisibility();
     void setCalibrationMode();
-    void setMeasureMode();
+    void setMeasureMode(bool checked);
 };
 
 

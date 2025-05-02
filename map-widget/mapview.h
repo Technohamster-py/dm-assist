@@ -10,6 +10,7 @@
 #include <QWheelEvent>
 #include <QGraphicsPixmapItem>
 #include "mapscene.h"
+#include "abstractmaptool.h"
 
 /**
  * @class MapView
@@ -33,7 +34,7 @@ public:
     void loadMapImage(const QString &filePath);
 
 public slots:
-    void setRullerMode(ToolMode mode);
+    void setActiveTool(AbstractMapTool* tool);
 
 protected:
     /**
