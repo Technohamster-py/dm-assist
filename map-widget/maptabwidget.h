@@ -18,8 +18,8 @@ public:
 
         QToolButton *plusButton = new QToolButton(this);
         plusButton->setIcon(QIcon(":/add.svg"));
-        plusButton->setAutoRaise(true); // без рамок, как иконка
-        plusButton->setToolTip("Создать новую вкладку");
+        plusButton->setAutoRaise(true);
+        plusButton->setToolTip(tr("Open new map"));
 
         connect(plusButton, &QToolButton::clicked, this, &TabWidget::addNewTab);
 
