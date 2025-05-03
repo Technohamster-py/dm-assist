@@ -38,6 +38,7 @@ public:
     QImage getFogImage() const {return fogImage;};
     QPixmap getMapPixmap() const;
     void setFogOpacity(qreal opacity); // 0.0–1.0
+    void updateFog();
 
     void wheelEvent(QGraphicsSceneWheelEvent *event) override;
 signals:

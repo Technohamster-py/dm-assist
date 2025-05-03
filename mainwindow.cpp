@@ -9,10 +9,12 @@
 #include "QDomDocument"
 #include "QFile"
 #include "QFileDialog"
+#include <QColorDialog>
 #include "QFileInfo"
 #include "QMessageBox"
 #include "qsaveconfigdialog.h"
 #include <QTextStream>
+#include <QSpinBox>
 
 #include <QDebug>
 
@@ -343,6 +345,7 @@ void MainWindow::setupToolbar() {
 
     calibrationTool = new CalibrationTool(this);
     fogTool = new FogTool(this);
+    lightTool = new LightTool(this);
     rulerMapTool = new RulerMapTool(this);
 
     QActionGroup *toolGroup = new QActionGroup(this);
@@ -430,11 +433,51 @@ void MainWindow::setupToolbar() {
         setFogTool(checked, FogTool::Reveal);
     });
 
+    ui->toolBar->addSeparator();
+
+    /// Light tool
+    QAction* lightAction = new QAction(this);
+    lightAction->setCheckable(true);
+    lightAction->setIcon(QIcon(":/map/torch.svg"));
+    toolGroup->addAction(lightAction);
+
+    QToolButton* lightButton = new QToolButton(this);
+    lightButton->setCheckable(true);
+    lightButton->setToolTip(tr("Edit light sources"));
+    lightButton->setDefaultAction(lightAction);
+    ui->toolBar->addWidget(lightButton);
+
+    QSpinBox *brightRadiusBox = new QSpinBox;
+    brightRadiusBox->setRange(1, 500);
+    brightRadiusBox->setValue(50);
+    ui->toolBar->addWidget(brightRadiusBox);
+
+    QSpinBox *dimRadiusBox = new QSpinBox;
+    dimRadiusBox->setRange(1, 1000);
+    dimRadiusBox->setValue(100);
+    ui->toolBar->addWidget(dimRadiusBox);
+
+    QPushButton *colorBtn = new QPushButton(tr("Color"));
+    ui->toolBar->addWidget(colorBtn);
+
+    connect(lightAction, &QAction::triggered, this, &MainWindow::setLightTool);
+
+    connect(brightRadiusBox, QOverload<int>::of(&QSpinBox::valueChanged),
+            lightTool, &LightTool::setBrightRadius);
+
+    connect(dimRadiusBox, QOverload<int>::of(&QSpinBox::valueChanged),
+            lightTool, &LightTool::setDimRadius);
+
+    connect(colorBtn, &QPushButton::clicked, this, [=]() {
+        QColor chosen = QColorDialog::getColor(lightTool->color(), this);
+        if (chosen.isValid()) {
+            lightTool->setColor(chosen);
+        }
+    });
 }
 
 void MainWindow::openSharedMapWindow(int index) {
     MapView* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
-    qDebug() << "MainWindow::openSharedMapWindow";
     if (!sharedMapWindow){
         sharedMapWindow = new SharedMapWindow(currentView->getScene());
         sharedMapWindow->show();
@@ -469,6 +512,14 @@ void MainWindow::coverMapWithFog(bool hide) {
         fogTool->hideAll(scene);
     else
         fogTool->revealAll(scene);
+}
+
+void MainWindow::setLightTool(bool checked) {
+    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    if (checked)
+        currentView->setActiveTool(lightTool);
+    else
+        currentView->setActiveTool(nullptr);
 }
 
 

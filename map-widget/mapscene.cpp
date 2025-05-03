@@ -116,19 +116,18 @@ void MapScene::drawFogPath(const QPainterPath &path, bool hide) {
     painter.drawPath(path);
     painter.end();
 
-    if (fogItem) {
-        fogItem->setPixmap(QPixmap::fromImage(fogImage));
-    }
-
-    emit fogUpdated(fogImage);
+    updateFog();
 }
 
 void MapScene::clearFog() {
     fogImage.fill(Qt::transparent);
 
+    updateFog();
+}
+
+void MapScene::updateFog() {
     if (fogItem) {
         fogItem->setPixmap(QPixmap::fromImage(fogImage));
     }
-
     emit fogUpdated(fogImage);
 }

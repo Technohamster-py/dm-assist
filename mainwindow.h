@@ -13,6 +13,7 @@
 #include "map-widget/maptabwidget.h"
 #include "map-widget/fogtool.h"
 #include "map-widget/calibrationtool.h"
+#include "map-widget/lighttool.h"
 #include "map-widget/rulermaptool.h"
 #include "map-widget/sharedmapwindow.h"
 #include "qinitiativetrackerwidget.h"
@@ -69,6 +70,7 @@ private:
     SharedMapWindow* sharedMapWindow = nullptr;
     CalibrationTool* calibrationTool;
     FogTool* fogTool;
+    LightTool* lightTool;
     RulerMapTool* rulerMapTool;
 
 
@@ -92,6 +94,7 @@ private slots:
     void setCalibrationMode();
     void setMeasureMode(bool checked);
     void setFogTool(bool checked, FogTool::Mode mode = FogTool::Hide);
+    void setLightTool(bool checked);
     void coverMapWithFog(bool hide);
 };
 
