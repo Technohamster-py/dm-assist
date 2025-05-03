@@ -17,6 +17,7 @@ set(FILES
         mainwindow.h    mainwindow.cpp
         map-widget/abstractmaptool.h
         map-widget/calibrationtool.h    map-widget/calibrationtool.cpp
+        map-widget/fogtool.h    map-widget/fogtool.cpp
         map-widget/mapview.h    map-widget/mapview.cpp
         map-widget/mapscene.h   map-widget/mapscene.cpp
         map-widget/maptabwidget.h   map-widget/maptabwidget.h

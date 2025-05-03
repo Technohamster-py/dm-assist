@@ -305,7 +305,6 @@ void MainWindow::setupMaps() {
     connect(mapTabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::deleteMapTab);
     connect(mapTabWidget, &TabWidget::share, this, &MainWindow::openSharedMapWindow);
 
-    ui->toolBar->setMovable(false);
     updateVisibility();
 }
 
@@ -331,22 +330,25 @@ void MainWindow::setCalibrationMode() {
 
 void MainWindow::setMeasureMode(bool checked) {
     MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
-    if (currentView)
-        if (currentView){
-            if (checked)
-                currentView->setActiveTool(rulerMapTool);
-            else
-                currentView->setActiveTool(nullptr);
-        }
+    if (currentView){
+        if (checked)
+            currentView->setActiveTool(rulerMapTool);
+        else
+            currentView->setActiveTool(nullptr);
+    }
 }
 
 void MainWindow::setupToolbar() {
+    ui->toolBar->setMovable(false);
+
     calibrationTool = new CalibrationTool(this);
+    fogTool = new FogTool(this);
     rulerMapTool = new RulerMapTool(this);
 
     QActionGroup *toolGroup = new QActionGroup(this);
     toolGroup->setExclusive(true);
 
+    /// Ruler too
     QToolButton *rulerButton = new QToolButton(this);
     rulerButton->setCheckable(true);
     rulerButton->setToolTip(tr("ruler"));
@@ -376,10 +378,44 @@ void MainWindow::setupToolbar() {
         rulerAction->setChecked(true);
     });
     ui->toolBar->addWidget(rulerButton);
+
+    /// Fog-hide tool
+    QAction* fogHideAction = new QAction(this);
+    fogHideAction->setCheckable(true);
+    fogHideAction->setIcon(QIcon(":/map/fog_hide.svg"));
+    toolGroup->addAction(fogHideAction);
+
+    QToolButton* fogHideButton = new QToolButton(this);
+    fogHideButton->setCheckable(true);
+    fogHideButton->setToolTip(tr("Add fog to map"));
+    fogHideButton->setDefaultAction(fogHideAction);
+    ui->toolBar->addWidget(fogHideButton);
+
+    connect(fogHideAction, &QAction::triggered, this, [=](bool checked){
+        setFogTool(checked, FogTool::Hide);
+    });
+
+    /// Fog-reveal tool
+    QAction* fogRevealAction = new QAction(this);
+    fogRevealAction->setCheckable(true);
+    fogRevealAction->setIcon(QIcon(":/map/fog_reveal.svg"));
+    toolGroup->addAction(fogRevealAction);
+
+    QToolButton* fogRevealButton = new QToolButton(this);
+    fogRevealButton->setCheckable(true);
+    fogRevealButton->setToolTip(tr("Remove fog from map"));
+    fogRevealButton->setDefaultAction(fogRevealAction);
+    ui->toolBar->addWidget(fogRevealButton);
+
+    connect(fogRevealAction, &QAction::triggered, this, [=](bool checked){
+        setFogTool(checked, FogTool::Reveal);
+    });
+
 }
 
 void MainWindow::openSharedMapWindow(int index) {
     MapView* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
+    qDebug() << "MainWindow::openSharedMapWindow";
     if (!sharedMapWindow){
         sharedMapWindow = new SharedMapWindow(currentView->getScene());
         sharedMapWindow->show();
@@ -391,6 +427,18 @@ void MainWindow::openSharedMapWindow(int index) {
     } else{
         sharedMapWindow->raise();
         sharedMapWindow->activateWindow();
+    }
+}
+
+void MainWindow::setFogTool(bool checked, FogTool::Mode mode) {
+    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    if (currentView){
+        if (!checked){
+            currentView->setActiveTool(nullptr);
+        } else{
+            fogTool->setMode(mode);
+            currentView->setActiveTool(fogTool);
+        }
     }
 }
 

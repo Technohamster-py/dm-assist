@@ -3,6 +3,7 @@
 //
 
 #include "sharedmapwindow.h"
+#include "mapscene.h"
 #include <QVBoxLayout>
 
 SharedMapWindow::SharedMapWindow(QGraphicsScene *scene, QWidget *parent)
@@ -17,6 +18,12 @@ SharedMapWindow::SharedMapWindow(QGraphicsScene *scene, QWidget *parent)
     layout->addWidget(view);
 
     setAttribute(Qt::WA_DeleteOnClose);
+
+    // Установим непрозрачность тумана
+    auto mapScene = dynamic_cast<MapScene*>(scene);
+    if (mapScene) {
+        mapScene->setFogOpacity(1.0); // полностью непрозрачно
+    }
 }
 
 void SharedMapWindow::resizeEvent(QResizeEvent *event) {

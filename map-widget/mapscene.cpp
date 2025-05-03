@@ -6,6 +6,7 @@
 #include "mapscene.h"
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QPainter>
 
 /**
  * @brief Constructs a new MapScene.
@@ -40,4 +41,44 @@ void MapScene::setActiveTool(AbstractMapTool *tool) {
     if (m_activeTool)
         m_activeTool->deactivate(this);
     m_activeTool = tool;
+}
+
+void MapScene::initializeFog(const QSize &size) {
+    fogImage = QImage(size, QImage::Format_ARGB32_Premultiplied);
+    fogImage.fill(Qt::transparent); // всё видно по умолчанию
+
+    if (fogItem) {
+        removeItem(fogItem);
+        delete fogItem;
+    }
+
+    fogItem = addPixmap(QPixmap::fromImage(fogImage));
+    fogItem->setZValue(10); // поверх карты
+    fogItem->setOpacity(0.5); // прозрачность по умолчанию (для мастера)
+}
+
+void MapScene::drawFogCircle(const QPointF &scenePos, int radius, bool hide) {
+    QPainter painter(&fogImage);
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    QPoint center = scenePos.toPoint();
+    QBrush brush(hide ? Qt::black : Qt::transparent);
+    QPen pen(Qt::NoPen);
+    painter.setCompositionMode(hide ? QPainter::CompositionMode_SourceOver
+                                    : QPainter::CompositionMode_Clear);
+    painter.setBrush(brush);
+    painter.setPen(pen);
+    painter.drawEllipse(center, radius, radius);
+    painter.end();
+
+    if (fogItem) {
+        fogItem->setPixmap(QPixmap::fromImage(fogImage));
+    }
+}
+
+void MapScene::setFogOpacity(qreal opacity) {
+    if (fogItem) {
+        fogItem->setOpacity(opacity);
+    } else {
+        qWarning("Fog item not initialized!");
+    }
 }

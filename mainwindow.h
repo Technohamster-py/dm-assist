@@ -11,6 +11,7 @@
 #include <QShortcut>
 #include <QTranslator>
 #include "map-widget/maptabwidget.h"
+#include "map-widget/fogtool.h"
 #include "map-widget/calibrationtool.h"
 #include "map-widget/rulermaptool.h"
 #include "map-widget/sharedmapwindow.h"
@@ -65,9 +66,11 @@ private:
     QInitiativeTrackerWidget* initiativeTrackerWidget;
 
     TabWidget *mapTabWidget;
-    SharedMapWindow* sharedMapWindow;
+    SharedMapWindow* sharedMapWindow = nullptr;
     CalibrationTool* calibrationTool;
+    FogTool* fogTool;
     RulerMapTool* rulerMapTool;
+
 
     void setupPlayers();
     void setupTracker();
@@ -87,6 +90,7 @@ private slots:
     void updateVisibility();
     void setCalibrationMode();
     void setMeasureMode(bool checked);
+    void setFogTool(bool checked, FogTool::Mode mode = FogTool::Hide);
 };
 
 

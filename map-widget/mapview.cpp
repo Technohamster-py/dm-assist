@@ -37,6 +37,7 @@ void MapView::loadMapImage(const QString &filePath)
         }
         mapPixmapItem = scene->addPixmap(pixmap);
         mapPixmapItem->setZValue(-100); // ниже всех остальных элементов
+        scene->initializeFog(pixmap.size());
         scene->setSceneRect(mapPixmapItem->boundingRect());
     }
 }
@@ -87,5 +88,9 @@ void MapView::mouseReleaseEvent(QMouseEvent *event)
 }
 
 void MapView::setActiveTool(AbstractMapTool* tool) {
+    if (tool)
+        setDragMode(QGraphicsView::NoDrag);
+    else
+        setDragMode(QGraphicsView::ScrollHandDrag);
     scene->setActiveTool(tool);
 }

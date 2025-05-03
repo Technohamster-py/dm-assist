@@ -30,9 +30,17 @@ public:
 
     void setScaleFactor(double factor);
     [[nodiscard]] double getScaleFactor() const {return m_scaleFactor;};
+
+    void initializeFog(const QSize &size);
+    void drawFogCircle(const QPointF &scenePos, int radius, bool hide);
+    QImage getFogImage() const {return fogImage;};
+    void setFogOpacity(qreal opacity); // 0.0–1.0
 private:
     AbstractMapTool* m_activeTool = nullptr;
     double m_scaleFactor = 1.0;           ///< Масштаб
+
+    QGraphicsPixmapItem *fogItem = nullptr;
+    QImage fogImage;
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;

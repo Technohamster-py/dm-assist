@@ -31,6 +31,8 @@
         <file>Volume-2.svg</file>
     </qresource>
     <qresource prefix="map">
+        <file>fog_hide.svg</file>
+        <file>fog_reveal.svg</file>
         <file>ruler.svg</file>
         <file>torch.svg</file>
     </qresource>
