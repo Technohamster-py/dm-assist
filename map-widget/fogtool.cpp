@@ -60,3 +60,10 @@ void FogTool::removeBrushPreview(QGraphicsScene *scene) {
 void FogTool::deactivate(QGraphicsScene *scene) {
     removeBrushPreview(scene);
 }
+
+void FogTool::wheelEvent(QGraphicsSceneWheelEvent *event, QGraphicsScene *scene) {
+    int delta = event->delta() > 0 ? 5 : -5;
+    brushRadius = std::clamp(brushRadius + delta, 5, 300);
+    updateBrushPreview(event->scenePos(), scene);
+    event->accept();
+}

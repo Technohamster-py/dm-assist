@@ -7,7 +7,6 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QPainter>
-
 /**
  * @brief Constructs a new MapScene.
  * @param parent Optional parent QObject
@@ -31,6 +30,17 @@ void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
         m_activeTool->mouseMoveEvent(event, this);
     else
         QGraphicsScene::mouseMoveEvent(event);
+}
+
+void MapScene::wheelEvent(QGraphicsSceneWheelEvent *event) {
+    if (!(event->modifiers() & Qt::ControlModifier)) {
+        QGraphicsScene::wheelEvent(event);
+        return;
+    }
+    if (m_activeTool)
+        m_activeTool->wheelEvent(event, this);
+    else
+        QGraphicsScene::wheelEvent(event);
 }
 
 void MapScene::setScaleFactor(double factor) {

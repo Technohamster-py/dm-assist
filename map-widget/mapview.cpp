@@ -44,6 +44,21 @@ void MapView::loadMapImage(const QString &filePath)
 
 void MapView::wheelEvent(QWheelEvent *event)
 {
+    if (event->modifiers() & Qt::ControlModifier) {
+        QPointF scenePos = mapToScene(event->posF().toPoint());
+
+        QGraphicsSceneWheelEvent sceneEvent(QEvent::GraphicsSceneWheel);
+        sceneEvent.setScenePos(scenePos);
+        sceneEvent.setDelta(event->angleDelta().y());
+        sceneEvent.setModifiers(event->modifiers());
+        sceneEvent.setButtons(event->buttons());
+
+        scene->wheelEvent(&sceneEvent);
+
+        event->accept();
+        return;
+    }
+
     const double scaleFactor = 1.15;
     if (event->angleDelta().y() > 0)
         scale(scaleFactor, scaleFactor);

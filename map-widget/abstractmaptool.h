@@ -17,6 +17,7 @@ public:
 
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) = 0;
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) = 0;
+    virtual void wheelEvent(QGraphicsSceneWheelEvent *event, QGraphicsScene *scene) = 0;
     virtual void deactivate(QGraphicsScene *scene) = 0;
 
 signals:
