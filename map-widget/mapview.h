@@ -33,6 +33,8 @@ public:
      */
     void loadMapImage(const QString &filePath);
 
+    [[nodiscard]] MapScene* getScene() const {return scene;};
+
 public slots:
     void setActiveTool(AbstractMapTool* tool);
 

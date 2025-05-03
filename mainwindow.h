@@ -13,6 +13,7 @@
 #include "map-widget/maptabwidget.h"
 #include "map-widget/calibrationtool.h"
 #include "map-widget/rulermaptool.h"
+#include "map-widget/sharedmapwindow.h"
 #include "qinitiativetrackerwidget.h"
 #include "qplayerwidget.h"
 #include "settingsdialog.h"
@@ -51,6 +52,8 @@ public slots:
     void openHelp();
     void openDonate();
 
+    void openSharedMapWindow(int index);
+
 private:
     Ui::MainWindow *ui;
     QTranslator translator;
@@ -62,6 +65,7 @@ private:
     QInitiativeTrackerWidget* initiativeTrackerWidget;
 
     TabWidget *mapTabWidget;
+    SharedMapWindow* sharedMapWindow;
     CalibrationTool* calibrationTool;
     RulerMapTool* rulerMapTool;
 

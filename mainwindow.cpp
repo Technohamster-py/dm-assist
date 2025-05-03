@@ -303,6 +303,7 @@ void MainWindow::setupMaps() {
     connect(mapTabWidget, &TabWidget::newTabRequested, this, &MainWindow::createNewMapTab);
     connect(ui->actionAddMap, &QAction::triggered, this, &MainWindow::createNewMapTab);
     connect(mapTabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::deleteMapTab);
+    connect(mapTabWidget, &TabWidget::share, this, &MainWindow::openSharedMapWindow);
 
     ui->toolBar->setMovable(false);
     updateVisibility();
@@ -375,6 +376,22 @@ void MainWindow::setupToolbar() {
         rulerAction->setChecked(true);
     });
     ui->toolBar->addWidget(rulerButton);
+}
+
+void MainWindow::openSharedMapWindow(int index) {
+    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
+    if (!sharedMapWindow){
+        sharedMapWindow = new SharedMapWindow(currentView->getScene());
+        sharedMapWindow->show();
+        sharedMapWindow->resize(800, 600);
+
+        connect(sharedMapWindow, &QWidget::destroyed, this, [=]() {
+            sharedMapWindow = nullptr;
+        });
+    } else{
+        sharedMapWindow->raise();
+        sharedMapWindow->activateWindow();
+    }
 }
 
 

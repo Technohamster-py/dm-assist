@@ -7,6 +7,7 @@
 #include <QToolButton>
 #include <QVBoxLayout>
 #include <QLabel>
+#include <QMenu>
 
 class TabWidget : public QTabWidget {
 Q_OBJECT
@@ -30,14 +31,32 @@ public:
         layout->addWidget(plusButton);
 
         setCornerWidget(cornerWidget, Qt::TopRightCorner);
+
+        tabBar()->setContextMenuPolicy(Qt::CustomContextMenu);
+        connect(tabBar(), &QTabBar::customContextMenuRequested, this, &TabWidget::showContextMenu);
     }
 
 signals:
     void newTabRequested();
+    void share(int tab);
 
 private slots:
     void addNewTab() {
         emit newTabRequested();
+    }
+
+    void showContextMenu(const QPoint &pos){
+        int index = tabBar()->tabAt(pos);
+        if (index < 0) return;
+
+        QMenu menu;
+        QAction *shareAction = menu.addAction("Share");
+
+        connect(shareAction, &QAction::triggered, this, [=]() {
+            emit share(index);
+        });
+
+        menu.exec(tabBar()->mapToGlobal(pos));
     }
 };
 

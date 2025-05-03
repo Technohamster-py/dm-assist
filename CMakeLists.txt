@@ -21,6 +21,7 @@ set(FILES
         map-widget/mapscene.h   map-widget/mapscene.cpp
         map-widget/maptabwidget.h   map-widget/maptabwidget.h
         map-widget/rulermaptool.h   map-widget/rulermaptool.cpp
+        map-widget/sharedmapwindow.h    map-widget/sharedmapwindow.cpp
         initiative-tracker/qinitiativetrackerwidget.h   initiative-tracker/qinitiativetrackerwidget.cpp
         initiative-tracker/hpprogressbardelegate.h  initiative-tracker/hpprogressbardelegate.cpp
         qplayerwidget.h qplayerwidget.cpp
