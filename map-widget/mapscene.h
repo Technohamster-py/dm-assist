@@ -34,7 +34,11 @@ public:
     void initializeFog(const QSize &size);
     void drawFogCircle(const QPointF &scenePos, int radius, bool hide);
     QImage getFogImage() const {return fogImage;};
+    QPixmap getMapPixmap() const;
     void setFogOpacity(qreal opacity); // 0.0–1.0
+
+signals:
+    void fogUpdated(const QImage &fogImage);
 private:
     AbstractMapTool* m_activeTool = nullptr;
     double m_scaleFactor = 1.0;           ///< Масштаб

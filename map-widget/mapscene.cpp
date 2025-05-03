@@ -73,6 +73,7 @@ void MapScene::drawFogCircle(const QPointF &scenePos, int radius, bool hide) {
     if (fogItem) {
         fogItem->setPixmap(QPixmap::fromImage(fogImage));
     }
+    emit fogUpdated(fogImage);
 }
 
 void MapScene::setFogOpacity(qreal opacity) {
@@ -81,4 +82,16 @@ void MapScene::setFogOpacity(qreal opacity) {
     } else {
         qWarning("Fog item not initialized!");
     }
+}
+
+QPixmap MapScene::getMapPixmap() const {
+    auto mapItems = items(Qt::AscendingOrder);
+    for (auto *item : mapItems) {
+        if (auto pixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem *>(item)) {
+            if (pixmapItem != fogItem) {
+                return pixmapItem->pixmap();
+            }
+        }
+    }
+    return QPixmap();
 }

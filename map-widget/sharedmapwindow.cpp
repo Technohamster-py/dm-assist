@@ -6,12 +6,26 @@
 #include "mapscene.h"
 #include <QVBoxLayout>
 
-SharedMapWindow::SharedMapWindow(QGraphicsScene *scene, QWidget *parent)
+SharedMapWindow::SharedMapWindow(MapScene *originalScene, QWidget *parent)
     : QWidget(parent){
+    scene = new MapScene(this);
+    scene->setSceneRect(originalScene->sceneRect());
+
+    scene->addPixmap(originalScene->getMapPixmap());
+
+    // Создаём fogItem
+    fogItem = new QGraphicsPixmapItem();
+    fogItem->setZValue(10);
+    fogItem->setOpacity(1.0); // полностью непрозрачно
+    scene->addItem(fogItem);
+
     view = new QGraphicsView(scene, this);
-    view->setDragMode(QGraphicsView::NoDrag);
+    view->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+    view->fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
+    view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setInteractive(false);
-    view->setTransformationAnchor(QGraphicsView::AnchorViewCenter);
+    view->setDragMode(QGraphicsView::NoDrag);
 
     QVBoxLayout* layout = new QVBoxLayout(this);
     setLayout(layout);
@@ -19,15 +33,15 @@ SharedMapWindow::SharedMapWindow(QGraphicsScene *scene, QWidget *parent)
 
     setAttribute(Qt::WA_DeleteOnClose);
 
-    // Установим непрозрачность тумана
-    auto mapScene = dynamic_cast<MapScene*>(scene);
-    if (mapScene) {
-        mapScene->setFogOpacity(1.0); // полностью непрозрачно
-    }
+    connect(originalScene, &MapScene::fogUpdated, this, &SharedMapWindow::updateFogImage);
 }
 
 void SharedMapWindow::resizeEvent(QResizeEvent *event) {
     QWidget::resizeEvent(event);
     if (view && view->scene())
         view->fitInView(view->scene()->sceneRect(), Qt::KeepAspectRatio);
+}
+
+void SharedMapWindow::updateFogImage(const QImage &fog) {
+    fogItem->setPixmap(QPixmap::fromImage(fog));
 }
