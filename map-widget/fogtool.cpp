@@ -67,3 +67,23 @@ void FogTool::wheelEvent(QGraphicsSceneWheelEvent *event, QGraphicsScene *scene)
     updateBrushPreview(event->scenePos(), scene);
     event->accept();
 }
+
+void FogTool::hideAll(QGraphicsScene *scene) {
+    if (!scene) return;
+
+    auto mapScene = dynamic_cast<MapScene*>(scene);
+    if (!mapScene) return;
+
+    QRectF bounds = scene->sceneRect();
+    QPainterPath path;
+    path.addRect(bounds);
+    mapScene->drawFogPath(path, true);
+}
+
+void FogTool::revealAll(QGraphicsScene *scene) {
+    if (!scene) return;
+    auto mapScene = dynamic_cast<MapScene*>(scene);
+    if (!mapScene) return;
+
+    mapScene->clearFog();
+}

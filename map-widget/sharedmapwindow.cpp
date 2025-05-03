@@ -34,6 +34,8 @@ SharedMapWindow::SharedMapWindow(MapScene *originalScene, QWidget *parent)
     setAttribute(Qt::WA_DeleteOnClose);
 
     connect(originalScene, &MapScene::fogUpdated, this, &SharedMapWindow::updateFogImage);
+
+    updateFogImage(originalScene->getFogImage());
 }
 
 void SharedMapWindow::resizeEvent(QResizeEvent *event) {

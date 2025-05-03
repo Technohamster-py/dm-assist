@@ -391,6 +391,16 @@ void MainWindow::setupToolbar() {
     fogHideButton->setDefaultAction(fogHideAction);
     ui->toolBar->addWidget(fogHideButton);
 
+    fogHideButton->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(fogHideButton, &QToolButton::customContextMenuRequested, this, [=](const QPoint pos){
+        QMenu contextMenu;
+        QAction* hideAllAction = contextMenu.addAction(tr("Hide all"));
+        QAction* chosen = contextMenu.exec(fogHideButton->mapToGlobal(pos));
+        if (chosen == hideAllAction)
+            coverMapWithFog(true);
+    });
+
+
     connect(fogHideAction, &QAction::triggered, this, [=](bool checked){
         setFogTool(checked, FogTool::Hide);
     });
@@ -406,6 +416,15 @@ void MainWindow::setupToolbar() {
     fogRevealButton->setToolTip(tr("Remove fog from map"));
     fogRevealButton->setDefaultAction(fogRevealAction);
     ui->toolBar->addWidget(fogRevealButton);
+
+    fogRevealButton->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(fogRevealButton, &QToolButton::customContextMenuRequested, this, [=](const QPoint pos){
+        QMenu contextMenu;
+        QAction* revealAllAction = contextMenu.addAction(tr("Reveal all"));
+        QAction* chosen = contextMenu.exec(fogHideButton->mapToGlobal(pos));
+        if (chosen == revealAllAction)
+            coverMapWithFog(false);
+    });
 
     connect(fogRevealAction, &QAction::triggered, this, [=](bool checked){
         setFogTool(checked, FogTool::Reveal);
@@ -440,6 +459,16 @@ void MainWindow::setFogTool(bool checked, FogTool::Mode mode) {
             currentView->setActiveTool(fogTool);
         }
     }
+}
+
+void MainWindow::coverMapWithFog(bool hide) {
+    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    MapScene* scene = currentView->getScene();
+
+    if (hide)
+        fogTool->hideAll(scene);
+    else
+        fogTool->revealAll(scene);
 }
 
 

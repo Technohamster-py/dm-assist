@@ -105,3 +105,30 @@ QPixmap MapScene::getMapPixmap() const {
     }
     return QPixmap();
 }
+
+void MapScene::drawFogPath(const QPainterPath &path, bool hide) {
+    QPainter painter(&fogImage);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(hide ? Qt::black : Qt::transparent);
+    painter.setCompositionMode(hide ? QPainter::CompositionMode_SourceOver
+                                    : QPainter::CompositionMode_Clear);
+    painter.drawPath(path);
+    painter.end();
+
+    if (fogItem) {
+        fogItem->setPixmap(QPixmap::fromImage(fogImage));
+    }
+
+    emit fogUpdated(fogImage);
+}
+
+void MapScene::clearFog() {
+    fogImage.fill(Qt::transparent);
+
+    if (fogItem) {
+        fogItem->setPixmap(QPixmap::fromImage(fogImage));
+    }
+
+    emit fogUpdated(fogImage);
+}

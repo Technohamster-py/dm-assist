@@ -33,6 +33,8 @@ public:
 
     void initializeFog(const QSize &size);
     void drawFogCircle(const QPointF &scenePos, int radius, bool hide);
+    void drawFogPath(const QPainterPath &path, bool hide);
+    void clearFog();
     QImage getFogImage() const {return fogImage;};
     QPixmap getMapPixmap() const;
     void setFogOpacity(qreal opacity); // 0.0–1.0
