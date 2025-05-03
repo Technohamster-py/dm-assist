@@ -6,6 +6,7 @@
 #define DM_ASSIST_FOGTOOL_H
 
 #include "abstractmaptool.h"
+#include <QGraphicsEllipseItem>
 
 class FogTool : public AbstractMapTool{
 Q_OBJECT
@@ -21,11 +22,16 @@ public:
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override;
-    void deactivate(QGraphicsScene *scene) override {};
+    void deactivate(QGraphicsScene *scene) override;
 
 private:
     Mode currentMode = Hide;
     int brushRadius = 30;
+
+    QGraphicsEllipseItem *brushPreview = nullptr;
+
+    void updateBrushPreview(const QPointF &scenePos, QGraphicsScene *scene);
+    void removeBrushPreview(QGraphicsScene *scene);
 };
 
 
