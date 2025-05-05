@@ -6,7 +6,14 @@
 LightSourceItem::LightSourceItem(qreal r1, qreal r2, QColor color, QPointF pos)
         : radiusBright(r1), radiusDim(r2), lightColor(color), center(pos) {
     setPos(center);
-    setZValue(9);
+    setZValue(11);
+
+    setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
+    setFlag(QGraphicsItem::ItemIsFocusable);
+    setFlag(QGraphicsItem::ItemIsSelectable); // если нужно
+    setFlag(QGraphicsItem::ItemIsMovable);    // даже если у тебя своё перемещение
+    setFlag(QGraphicsItem::ItemSendsScenePositionChanges);
+    setFlag(QGraphicsItem::ItemIsFocusable);       // если нужно получать фокус
 }
 
 QRectF LightSourceItem::boundingRect() const {
@@ -28,6 +35,51 @@ void LightSourceItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
     painter->drawEllipse(boundingRect());
 }
 
+void LightSourceItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+    if (event->button() == Qt::RightButton) {
+        scene()->removeItem(this);
+        delete this;
+        return;
+    }
+
+    if (event->button() == Qt::LeftButton && (event->modifiers() & Qt::ControlModifier)) {
+        dragging = true;
+        dragStart = event->scenePos();
+        event->accept();
+        return;
+    } else {
+        QGraphicsItem::mousePressEvent(event);
+    }
+}
+
+void LightSourceItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
+    if (dragging) {
+
+        QPointF delta = event->scenePos() - dragStart;
+        setPos(pos() + delta);
+        dragStart = event->scenePos();
+        event->accept();
+        return;
+    } else {
+        QGraphicsItem::mouseMoveEvent(event);
+    }
+}
+
+void LightSourceItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
+    if (dragging) {
+        dragging = false;
+        auto mapScene = dynamic_cast<MapScene*>(scene());
+        if (mapScene) {
+            mapScene->drawFogCircle(scenePos(), radiusDim, false);
+        }
+        event->accept();
+        return;
+    } else {
+        QGraphicsItem::mouseReleaseEvent(event);
+    }
+}
+
+
 
 LightTool::LightTool(QObject *parent) : AbstractMapTool(parent) {}
 
@@ -36,6 +88,11 @@ void LightTool::setDimRadius(int r2) { m_dimRadius = r2; }
 void LightTool::setColor(QColor c) { m_color = c; }
 
 void LightTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) {
+    QPointF point = event->scenePos();
+    LightSourceItem* lightSourceItem = dynamic_cast<LightSourceItem*>(scene->itemAt(point, QTransform()));
+    if (lightSourceItem) {
+        return;
+    }
     auto mapScene = dynamic_cast<MapScene*>(scene);
     if (!mapScene) return;
 
@@ -44,6 +101,5 @@ void LightTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene 
     auto item = new LightSourceItem(m_brightRadius, m_dimRadius, m_color, pos);
     scene->addItem(item);
 
-    // Удаляем туман в радиусе слабого света
     mapScene->drawFogCircle(pos, m_dimRadius, false);
 }

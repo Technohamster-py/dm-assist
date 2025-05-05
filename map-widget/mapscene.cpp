@@ -4,6 +4,7 @@
  */
 
 #include "mapscene.h"
+#include "lighttool.h"
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QPainter>
@@ -14,22 +15,26 @@
 MapScene::MapScene(QObject *parent)
         : QGraphicsScene(parent)
 {
-    // Подготовка сцены. Инструменты и слои будут добавлены позже.
     setBackgroundBrush(Qt::darkGray);
 }
 
 void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-    if (m_activeTool)
+    QGraphicsItem *item = itemAt(event->scenePos(), QTransform());
+    if (m_activeTool && !dynamic_cast<LightSourceItem*>(item)) {
         m_activeTool->mousePressEvent(event, this);
-    else
+    } else {
         QGraphicsScene::mousePressEvent(event);
+    }
 }
 
 void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
-    if (m_activeTool)
+    QGraphicsItem *item = itemAt(event->scenePos(), QTransform());
+    if (m_activeTool && !dynamic_cast<LightSourceItem*>(item)) {
         m_activeTool->mouseMoveEvent(event, this);
-    else
+    } else {
+        // Пропустить событие, чтобы оно пошло дальше — в item
         QGraphicsScene::mouseMoveEvent(event);
+    }
 }
 
 void MapScene::wheelEvent(QGraphicsSceneWheelEvent *event) {
