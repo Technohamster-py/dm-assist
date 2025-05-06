@@ -10,6 +10,7 @@
 #include "QFile"
 #include "QFileDialog"
 #include <QColorDialog>
+#include <QCheckBox>
 #include "QFileInfo"
 #include "QMessageBox"
 #include "qsaveconfigdialog.h"
@@ -457,13 +458,16 @@ void MainWindow::setupToolbar() {
     dimRadiusBox->setValue(100);
     ui->toolBar->addWidget(dimRadiusBox);
 
-    QPushButton *colorBtn = new QPushButton(tr("Color"));
+    QPushButton *colorBtn = new QPushButton();
+    colorBtn->setIcon(QIcon(":/map/palette.svg"));
     ui->toolBar->addWidget(colorBtn);
 
     connect(lightAction, &QAction::triggered, this, &MainWindow::setLightTool);
 
-    connect(brightRadiusBox, QOverload<int>::of(&QSpinBox::valueChanged),
-            lightTool, &LightTool::setBrightRadius);
+    connect(brightRadiusBox, QOverload<int>::of(&QSpinBox::valueChanged), this, [=](int value){
+        dimRadiusBox->setMinimum(value);
+        lightTool->setBrightRadius(value);
+    });
 
     connect(dimRadiusBox, QOverload<int>::of(&QSpinBox::valueChanged),
             lightTool, &LightTool::setDimRadius);
@@ -474,6 +478,12 @@ void MainWindow::setupToolbar() {
             lightTool->setColor(chosen);
         }
     });
+
+    QCheckBox *fogUpdateBox = new QCheckBox(tr("Update fog"));
+    fogUpdateBox->setChecked(false);
+    ui->toolBar->addWidget(fogUpdateBox);
+
+    connect(fogUpdateBox, &QCheckBox::toggled, lightTool, &LightTool::setAutoUpdateFog);
 }
 
 void MainWindow::openSharedMapWindow(int index) {

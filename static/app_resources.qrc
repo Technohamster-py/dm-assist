@@ -33,6 +33,7 @@
     <qresource prefix="map">
         <file>fog_hide.svg</file>
         <file>fog_reveal.svg</file>
+        <file>palette.svg</file>
         <file>ruler.svg</file>
         <file>torch.svg</file>
     </qresource>

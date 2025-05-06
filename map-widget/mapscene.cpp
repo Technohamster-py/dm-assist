@@ -136,3 +136,8 @@ void MapScene::updateFog() {
     }
     emit fogUpdated(fogImage);
 }
+
+void MapScene::drawScaledCircle(const QPointF &scenePos, int radius, bool hide) {
+    int realRadius = static_cast<int>(radius / m_scaleFactor);
+    drawFogCircle(scenePos, realRadius, hide);
+}

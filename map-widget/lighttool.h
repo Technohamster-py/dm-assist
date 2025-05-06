@@ -5,10 +5,11 @@
 #include <QColor>
 
 #include "abstractmaptool.h"
+class LightTool;
 
 class LightSourceItem : public QGraphicsItem {
 public:
-    LightSourceItem(qreal r1, qreal r2, QColor color, QPointF position);
+    LightSourceItem(qreal r1, qreal r2, QColor color, QPointF position, LightTool *tool);
 
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) override;
@@ -18,6 +19,9 @@ private:
     qreal radiusDim;
     QColor lightColor;
     QPointF center;
+
+    LightTool* m_tool;
+    QPointF lastScenePos;
 
     bool dragging = false;
     QPointF dragStart;
@@ -40,7 +44,10 @@ public:
 
     QColor color() const {return m_color;};
     int brightRadius() const {return m_brightRadius;};
-    int dinRadius() const {return m_dimRadius;};
+    int dimRadius() const {return m_dimRadius;};
+
+    bool autoUpdateFog() const {return m_autoUpdateFog;};
+    void setAutoUpdateFog(bool enabled);
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override {};
@@ -51,6 +58,8 @@ private:
     int m_brightRadius = 50;
     int m_dimRadius = 100;
     QColor m_color = QColor(255, 255, 180); // тёплый свет по умолчанию
+
+    bool m_autoUpdateFog = false;
 };
 
 

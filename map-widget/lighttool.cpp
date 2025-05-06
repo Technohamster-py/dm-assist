@@ -2,9 +2,11 @@
 #include "mapscene.h"
 #include <QPainter>
 #include <QRadialGradient>
+#include <QStyleOptionProgressBar>
 
-LightSourceItem::LightSourceItem(qreal r1, qreal r2, QColor color, QPointF pos)
-        : radiusBright(r1), radiusDim(r2), lightColor(color), center(pos) {
+
+LightSourceItem::LightSourceItem(qreal r1, qreal r2, QColor color, QPointF pos, LightTool *tool)
+        : radiusBright(r1), radiusDim(r2), lightColor(color), center(pos), m_tool(tool){
     setPos(center);
     setZValue(11);
 
@@ -44,6 +46,7 @@ void LightSourceItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 
     if (event->button() == Qt::LeftButton && (event->modifiers() & Qt::ControlModifier)) {
         dragging = true;
+        lastScenePos = scenePos();
         dragStart = event->scenePos();
         event->accept();
         return;
@@ -69,11 +72,12 @@ void LightSourceItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
     if (dragging) {
         dragging = false;
         auto mapScene = dynamic_cast<MapScene*>(scene());
-        if (mapScene) {
-            mapScene->drawFogCircle(scenePos(), radiusDim, false);
+        if (mapScene && m_tool && m_tool->autoUpdateFog()) {
+            mapScene->drawScaledCircle(lastScenePos, radiusDim + 2, true);
+            mapScene->drawScaledCircle(scenePos(), radiusDim, false);
+        } else if (mapScene) {
+            mapScene->drawScaledCircle(scenePos(), radiusDim, false);
         }
-        event->accept();
-        return;
     } else {
         QGraphicsItem::mouseReleaseEvent(event);
     }
@@ -98,8 +102,12 @@ void LightTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene 
 
     QPointF pos = event->scenePos();
 
-    auto item = new LightSourceItem(m_brightRadius, m_dimRadius, m_color, pos);
+    auto item = new LightSourceItem(m_brightRadius, m_dimRadius, m_color, pos, this);
     scene->addItem(item);
 
-    mapScene->drawFogCircle(pos, m_dimRadius, false);
+    mapScene->drawScaledCircle(pos, m_dimRadius, false);
+}
+
+void LightTool::setAutoUpdateFog(bool enabled) {
+    m_autoUpdateFog = enabled;
 }
