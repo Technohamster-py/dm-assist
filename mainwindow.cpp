@@ -46,6 +46,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionDonate, SIGNAL(triggered(bool)), this, SLOT(openDonate()));
     connect(ui->volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(setVolumeDivider(int)));
 
+    showMaximized();
 }
 
 /**
@@ -450,12 +451,12 @@ void MainWindow::setupToolbar() {
 
     QSpinBox *brightRadiusBox = new QSpinBox;
     brightRadiusBox->setRange(1, 500);
-    brightRadiusBox->setValue(50);
+    brightRadiusBox->setValue(20);
     ui->toolBar->addWidget(brightRadiusBox);
 
     QSpinBox *dimRadiusBox = new QSpinBox;
     dimRadiusBox->setRange(1, 1000);
-    dimRadiusBox->setValue(100);
+    dimRadiusBox->setValue(40);
     ui->toolBar->addWidget(dimRadiusBox);
 
     QPushButton *colorBtn = new QPushButton();

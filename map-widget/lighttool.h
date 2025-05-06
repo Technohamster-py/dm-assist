@@ -54,8 +54,8 @@ public:
     void wheelEvent(QGraphicsSceneWheelEvent *event, QGraphicsScene *scene) override {};
     void deactivate(QGraphicsScene *scene) override {};
 private:
-    int m_brightRadius = 50;
-    int m_dimRadius = 100;
+    int m_brightRadius = 20;
+    int m_dimRadius = 40;
     QColor m_color = QColor(255, 255, 180); // тёплый свет по умолчанию
 
     bool m_autoUpdateFog = false;
