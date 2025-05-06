@@ -10,10 +10,10 @@ LightSourceItem::LightSourceItem(qreal r1, qreal r2, QColor color, QPointF pos)
 
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
     setFlag(QGraphicsItem::ItemIsFocusable);
-    setFlag(QGraphicsItem::ItemIsSelectable);
-    setFlag(QGraphicsItem::ItemIsMovable);
+    setFlag(QGraphicsItem::ItemIsSelectable); // если нужно
+    setFlag(QGraphicsItem::ItemIsMovable);    // даже если у тебя своё перемещение
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges);
-    setFlag(QGraphicsItem::ItemIsFocusable);
+    setFlag(QGraphicsItem::ItemIsFocusable);       // если нужно получать фокус
 }
 
 QRectF LightSourceItem::boundingRect() const {
@@ -88,9 +88,10 @@ void LightTool::setDimRadius(int r2) { m_dimRadius = r2; }
 void LightTool::setColor(QColor c) { m_color = c; }
 
 void LightTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) {
-    LightSourceItem* lightSourceItem = dynamic_cast<LightSourceItem*>(scene->itemAt(event->scenePos(), QTransform()));
+    QPointF point = event->scenePos();
+    LightSourceItem* lightSourceItem = dynamic_cast<LightSourceItem*>(scene->itemAt(point, QTransform()));
     if (lightSourceItem) {
-        lightSourceItem->mousePressEvent(event);
+        return;
     }
     auto mapScene = dynamic_cast<MapScene*>(scene);
     if (!mapScene) return;
@@ -101,11 +102,4 @@ void LightTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene 
     scene->addItem(item);
 
     mapScene->drawFogCircle(pos, m_dimRadius, false);
-}
-
-void LightTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) {
-    LightSourceItem* lightSourceItem = dynamic_cast<LightSourceItem*>(scene->itemAt(event->scenePos(), QTransform()));
-    if (lightSourceItem) {
-        lightSourceItem->mouseMoveEvent(event);
-    }
 }
