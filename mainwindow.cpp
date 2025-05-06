@@ -452,11 +452,13 @@ void MainWindow::setupToolbar() {
     QSpinBox *brightRadiusBox = new QSpinBox;
     brightRadiusBox->setRange(1, 500);
     brightRadiusBox->setValue(20);
+    lightTool->setBrightRadius(brightRadiusBox->value());
     ui->toolBar->addWidget(brightRadiusBox);
 
     QSpinBox *dimRadiusBox = new QSpinBox;
     dimRadiusBox->setRange(1, 1000);
     dimRadiusBox->setValue(40);
+    lightTool->setDimRadius(dimRadiusBox->value());
     ui->toolBar->addWidget(dimRadiusBox);
 
     QPushButton *colorBtn = new QPushButton();
