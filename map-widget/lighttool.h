@@ -14,6 +14,10 @@ public:
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) override;
 
+    void handleMousePressEvent(QGraphicsSceneMouseEvent *event);
+    void handleMouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    void handleMouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+
 private:
     qreal radiusBright;
     qreal radiusDim;
@@ -25,11 +29,6 @@ private:
 
     bool dragging = false;
     QPointF dragStart;
-
-protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 };
 
 
@@ -50,8 +49,8 @@ public:
     void setAutoUpdateFog(bool enabled);
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override;
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override {};
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {};
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override;
     void wheelEvent(QGraphicsSceneWheelEvent *event, QGraphicsScene *scene) override {};
     void deactivate(QGraphicsScene *scene) override {};
 private:

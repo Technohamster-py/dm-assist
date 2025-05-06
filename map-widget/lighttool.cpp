@@ -4,6 +4,7 @@
 #include <QRadialGradient>
 #include <QStyleOptionProgressBar>
 
+#include <QDebug>
 
 LightSourceItem::LightSourceItem(qreal r1, qreal r2, QColor color, QPointF pos, LightTool *tool)
         : radiusBright(r1), radiusDim(r2), lightColor(color), center(pos), m_tool(tool){
@@ -12,10 +13,10 @@ LightSourceItem::LightSourceItem(qreal r1, qreal r2, QColor color, QPointF pos, 
 
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
     setFlag(QGraphicsItem::ItemIsFocusable);
-    setFlag(QGraphicsItem::ItemIsSelectable); // если нужно
-    setFlag(QGraphicsItem::ItemIsMovable);    // даже если у тебя своё перемещение
+    setFlag(QGraphicsItem::ItemIsSelectable);
+    setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges);
-    setFlag(QGraphicsItem::ItemIsFocusable);       // если нужно получать фокус
+    setFlag(QGraphicsItem::ItemIsFocusable);
 }
 
 QRectF LightSourceItem::boundingRect() const {
@@ -37,9 +38,13 @@ void LightSourceItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
     painter->drawEllipse(boundingRect());
 }
 
-void LightSourceItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+void LightSourceItem::handleMousePressEvent(QGraphicsSceneMouseEvent *event) {
     if (event->button() == Qt::RightButton) {
         scene()->removeItem(this);
+        auto mapScene = dynamic_cast<MapScene*>(scene());
+        if (mapScene && m_tool && m_tool->autoUpdateFog()) {
+            mapScene->drawFogCircle(lastScenePos, radiusDim + 2, true);
+        }
         delete this;
         return;
     }
@@ -55,28 +60,25 @@ void LightSourceItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     }
 }
 
-void LightSourceItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
+void LightSourceItem::handleMouseMoveEvent(QGraphicsSceneMouseEvent *event) {
     if (dragging) {
-
         QPointF delta = event->scenePos() - dragStart;
         setPos(pos() + delta);
         dragStart = event->scenePos();
         event->accept();
         return;
-    } else {
-        QGraphicsItem::mouseMoveEvent(event);
     }
 }
 
-void LightSourceItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
+void LightSourceItem::handleMouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
     if (dragging) {
         dragging = false;
         auto mapScene = dynamic_cast<MapScene*>(scene());
         if (mapScene && m_tool && m_tool->autoUpdateFog()) {
-            mapScene->drawScaledCircle(lastScenePos, radiusDim + 2, true);
-            mapScene->drawScaledCircle(scenePos(), radiusDim, false);
+            mapScene->drawFogCircle(lastScenePos, radiusDim + 2, true);
+            mapScene->drawFogCircle(scenePos(), radiusDim, false);
         } else if (mapScene) {
-            mapScene->drawScaledCircle(scenePos(), radiusDim, false);
+            mapScene->drawFogCircle(scenePos(), radiusDim, false);
         }
     } else {
         QGraphicsItem::mouseReleaseEvent(event);
@@ -92,11 +94,12 @@ void LightTool::setDimRadius(int r2) { m_dimRadius = r2; }
 void LightTool::setColor(QColor c) { m_color = c; }
 
 void LightTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) {
-    QPointF point = event->scenePos();
-    LightSourceItem* lightSourceItem = dynamic_cast<LightSourceItem*>(scene->itemAt(point, QTransform()));
+    LightSourceItem* lightSourceItem = dynamic_cast<LightSourceItem*>(scene->itemAt(event->scenePos(), QTransform()));
     if (lightSourceItem) {
+        lightSourceItem->handleMousePressEvent(event);
         return;
     }
+
     auto mapScene = dynamic_cast<MapScene*>(scene);
     if (!mapScene) return;
 
@@ -105,9 +108,25 @@ void LightTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene 
     auto item = new LightSourceItem(m_brightRadius, m_dimRadius, m_color, pos, this);
     scene->addItem(item);
 
-    mapScene->drawScaledCircle(pos, m_dimRadius, false);
+    mapScene->drawScaledCircle(event->scenePos(), m_dimRadius, false);
 }
 
 void LightTool::setAutoUpdateFog(bool enabled) {
     m_autoUpdateFog = enabled;
+}
+
+void LightTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) {
+    LightSourceItem* lightSourceItem = dynamic_cast<LightSourceItem*>(scene->itemAt(event->scenePos(), QTransform()));
+    if (lightSourceItem) {
+        lightSourceItem->handleMouseMoveEvent(event);
+        return;
+    }
+}
+
+void LightTool::mouseReleaseEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) {
+    LightSourceItem* lightSourceItem = dynamic_cast<LightSourceItem*>(scene->itemAt(event->scenePos(), QTransform()));
+    if (lightSourceItem) {
+        lightSourceItem->handleMouseReleaseEvent(event);
+        return;
+    }
 }

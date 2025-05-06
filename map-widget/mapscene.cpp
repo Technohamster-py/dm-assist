@@ -19,8 +19,7 @@ MapScene::MapScene(QObject *parent)
 }
 
 void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-    QGraphicsItem *item = itemAt(event->scenePos(), QTransform());
-    if (m_activeTool && !dynamic_cast<LightSourceItem*>(item)) {
+    if (m_activeTool) {
         m_activeTool->mousePressEvent(event, this);
     } else {
         QGraphicsScene::mousePressEvent(event);
@@ -28,13 +27,21 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 }
 
 void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
-    QGraphicsItem *item = itemAt(event->scenePos(), QTransform());
-    if (m_activeTool && !dynamic_cast<LightSourceItem*>(item)) {
+    if (m_activeTool) {
         m_activeTool->mouseMoveEvent(event, this);
     } else {
-        // Пропустить событие, чтобы оно пошло дальше — в item
         QGraphicsScene::mouseMoveEvent(event);
     }
+}
+
+
+void MapScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
+    if (m_activeTool){
+        m_activeTool->mouseReleaseEvent(event, this);
+    } else {
+        QGraphicsScene::mouseReleaseEvent(event);
+    }
+
 }
 
 void MapScene::wheelEvent(QGraphicsSceneWheelEvent *event) {
