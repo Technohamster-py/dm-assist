@@ -25,8 +25,9 @@ QRectF LightSourceItem::boundingRect() const {
 
 void LightSourceItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
     QRadialGradient gradient(QPointF(0, 0), radiusDim);
+    lightColor.setAlpha(220);
     QColor transparent = lightColor;
-    transparent.setAlpha(0);
+    transparent.setAlpha(10);
 
     gradient.setColorAt(0, lightColor);
     gradient.setColorAt(radiusBright / radiusDim, lightColor);
