@@ -52,7 +52,7 @@ public:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override;
 
 private:
-    QPointF mirrorPoint(const QPointF &center, const QPointF &p);
+    QPointF mirrorPoint(const QPointF &p);
 };
 
 class SquareShapeTool : public SpellShapeTool {

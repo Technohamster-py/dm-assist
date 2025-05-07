@@ -145,7 +145,7 @@ void TriangleShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphi
         }
 
         QPointF p2 = event->scenePos();
-        QPointF p3 = mirrorPoint(firstPoint, p2);
+        QPointF p3 = mirrorPoint(p2);
         QPolygonF triangle({firstPoint, p2, p3});
         scene->addPolygon(triangle, QPen(color, 2), color);
         hasFirstPoint = false;
@@ -157,7 +157,7 @@ void TriangleShapeTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphic
     if (!hasFirstPoint) return;
 
     QPointF p2 = event->scenePos();
-    QPointF p3 = mirrorPoint(firstPoint, p2);
+    QPointF p3 = mirrorPoint(p2);
     QPolygonF triangle({ firstPoint, p2, p3 });
 
     if (!previewShape) {
@@ -174,8 +174,8 @@ void TriangleShapeTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphic
     previewLabel->setPos(center + QPointF(10, -10));
 }
 
-QPointF TriangleShapeTool::mirrorPoint(const QPointF &center, const QPointF &p) {
-    return center * 2 - p;
+QPointF TriangleShapeTool::mirrorPoint(const QPointF &p) {
+    return firstPoint * 2 - p;
 }
 
 
