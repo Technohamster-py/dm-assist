@@ -349,10 +349,10 @@ void MainWindow::setupToolbar() {
     fogTool = new FogTool(this);
     lightTool = new LightTool(this);
     rulerMapTool = new RulerMapTool(this);
-    lineShapeTool = new LineShapeTool(this);
-    circleShapeTool = new CircleShapeTool(this);
-    squareShapeTool = new SquareShapeTool(this);
-    triangleShapeTool = new TriangleShapeTool(this);
+    lineShapeTool = new LineShapeTool();
+    circleShapeTool = new CircleShapeTool();
+    squareShapeTool = new SquareShapeTool();
+    triangleShapeTool = new TriangleShapeTool();
 
     QActionGroup *toolGroup = new QActionGroup(this);
     toolGroup->setExclusive(true);
