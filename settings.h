@@ -44,6 +44,12 @@ struct Settings{
         QString sharedWindows = "initiative/sharedWindowsCount";   ///< uint8 - Количество открытых расшаренных окон (UNUSED)
     };
     Initiative initiative;
+
+    struct Map {
+        QString brightRadius = "map/brightRadius";
+        QString dimRadius = "map/dimRadius";
+        QString color = "map/color";
+    };
 };
 
 #endif //DM_ASSIST_SETTINGS_H

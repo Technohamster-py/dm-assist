@@ -16,6 +16,7 @@
 #include "map-widget/lighttool.h"
 #include "map-widget/rulermaptool.h"
 #include "map-widget/sharedmapwindow.h"
+#include "map-widget/spellshapetool.h"
 #include "qinitiativetrackerwidget.h"
 #include "qplayerwidget.h"
 #include "settingsdialog.h"
@@ -72,6 +73,10 @@ private:
     FogTool* fogTool;
     LightTool* lightTool;
     RulerMapTool* rulerMapTool;
+    LineShapeTool* lineShapeTool;
+    CircleShapeTool* circleShapeTool;
+    SquareShapeTool* squareShapeTool;
+    TriangleShapeTool* triangleShapeTool;
 
 
     void setupPlayers();

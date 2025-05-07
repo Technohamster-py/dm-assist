@@ -31,10 +31,15 @@
         <file>Volume-2.svg</file>
     </qresource>
     <qresource prefix="map">
+        <file>cone.svg</file>
+        <file>cube.svg</file>
+        <file>cylinder.svg</file>
         <file>fog_hide.svg</file>
         <file>fog_reveal.svg</file>
+        <file>line.svg</file>
         <file>palette.svg</file>
         <file>ruler.svg</file>
+        <file>sphere.svg</file>
         <file>torch.svg</file>
     </qresource>
     <qresource prefix="initiative tracker">

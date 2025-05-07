@@ -349,6 +349,10 @@ void MainWindow::setupToolbar() {
     fogTool = new FogTool(this);
     lightTool = new LightTool(this);
     rulerMapTool = new RulerMapTool(this);
+    lineShapeTool = new LineShapeTool(this);
+    circleShapeTool = new CircleShapeTool(this);
+    squareShapeTool = new SquareShapeTool(this);
+    triangleShapeTool = new TriangleShapeTool(this);
 
     QActionGroup *toolGroup = new QActionGroup(this);
     toolGroup->setExclusive(true);
@@ -461,9 +465,9 @@ void MainWindow::setupToolbar() {
     lightTool->setDimRadius(dimRadiusBox->value());
     ui->toolBar->addWidget(dimRadiusBox);
 
-    QPushButton *colorBtn = new QPushButton();
-    colorBtn->setIcon(QIcon(":/map/palette.svg"));
-    ui->toolBar->addWidget(colorBtn);
+    QPushButton *lightColorBtn = new QPushButton();
+    lightColorBtn->setIcon(QIcon(":/map/palette.svg"));
+    ui->toolBar->addWidget(lightColorBtn);
 
     connect(lightAction, &QAction::triggered, this, &MainWindow::setLightTool);
 
@@ -475,7 +479,7 @@ void MainWindow::setupToolbar() {
     connect(dimRadiusBox, QOverload<int>::of(&QSpinBox::valueChanged),
             lightTool, &LightTool::setDimRadius);
 
-    connect(colorBtn, &QPushButton::clicked, this, [=]() {
+    connect(lightColorBtn, &QPushButton::clicked, this, [=]() {
         QColor chosen = QColorDialog::getColor(lightTool->color(), this);
         if (chosen.isValid()) {
             lightTool->setColor(chosen);
@@ -487,6 +491,89 @@ void MainWindow::setupToolbar() {
     ui->toolBar->addWidget(fogUpdateBox);
 
     connect(fogUpdateBox, &QCheckBox::toggled, lightTool, &LightTool::setAutoUpdateFog);
+
+    ui->toolBar->addSeparator();
+
+    /// Spells
+    /// LineShapeTool
+    QAction* lineAction = new QAction(this);
+    lineAction->setCheckable(true);
+    lineAction->setIcon(QIcon(":/map/line.svg"));
+    toolGroup->addAction(lineAction);
+
+    QToolButton* lineButton = new QToolButton(this);
+    lineButton->setCheckable(true);
+    lineButton->setToolTip(tr("Draw line"));
+    lineButton->setDefaultAction(lineAction);
+    ui->toolBar->addWidget(lineButton);
+
+    connect(lineAction, &QAction::triggered, this, [=](bool checked){
+        MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (checked)
+            currentView->setActiveTool(lineShapeTool);
+        else
+            currentView->setActiveTool(nullptr);
+    });
+
+    /// CircleShapeTool
+    QAction* circleAction = new QAction(this);
+    circleAction->setCheckable(true);
+    circleAction->setIcon(QIcon(":/map/sphere.svg"));
+    toolGroup->addAction(circleAction);
+
+    QToolButton* circleButton = new QToolButton(this);
+    circleButton->setCheckable(true);
+    circleButton->setToolTip(tr("Draw circle"));
+    circleButton->setDefaultAction(circleAction);
+    ui->toolBar->addWidget(circleButton);
+
+    connect(circleAction, &QAction::triggered, this, [=](bool checked){
+        MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (checked)
+            currentView->setActiveTool(circleShapeTool);
+        else
+            currentView->setActiveTool(nullptr);
+    });
+
+    /// SquareShapeTool
+    QAction* squareAction = new QAction(this);
+    squareAction->setCheckable(true);
+    squareAction->setIcon(QIcon(":/map/cube.svg"));
+    toolGroup->addAction(squareAction);
+
+    QToolButton* squareButton = new QToolButton(this);
+    squareButton->setCheckable(true);
+    squareButton->setToolTip(tr("Draw square"));
+    squareButton->setDefaultAction(squareAction);
+    ui->toolBar->addWidget(squareButton);
+
+    connect(squareAction, &QAction::triggered, this, [=](bool checked){
+        MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (checked)
+            currentView->setActiveTool(squareShapeTool);
+        else
+            currentView->setActiveTool(nullptr);
+    });
+
+    /// TriangleShapeTool
+    QAction* triangleAction = new QAction(this);
+    triangleAction->setCheckable(true);
+    triangleAction->setIcon(QIcon(":/map/cone.svg"));
+    toolGroup->addAction(triangleAction);
+
+    QToolButton* triangleButton = new QToolButton(this);
+    triangleButton->setCheckable(true);
+    triangleButton->setToolTip(tr("Draw triangle"));
+    triangleButton->setDefaultAction(triangleAction);
+    ui->toolBar->addWidget(triangleButton);
+
+    connect(triangleAction, &QAction::triggered, this, [=](bool checked){
+        MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (checked)
+            currentView->setActiveTool(triangleShapeTool);
+        else
+            currentView->setActiveTool(nullptr);
+    });
 }
 
 void MainWindow::openSharedMapWindow(int index) {
