@@ -2,6 +2,19 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US">
 <context>
+    <name>CalibrationTool</name>
+    <message>
+        <location filename="../map-widget/calibrationtool.cpp" line="24"/>
+        <source>Scale calibration</source>
+        <translation>Scale calibration</translation>
+    </message>
+    <message>
+        <location filename="../map-widget/calibrationtool.cpp" line="25"/>
+        <source>Enter distance in feet</source>
+        <translation>Enter distance in feet</translation>
+    </message>
+</context>
+<context>
     <name>InitiativeModel</name>
     <message>
         <location filename="../initiative-tracker/initiativemodel.cpp" line="51"/>
@@ -11,7 +24,7 @@
     <message>
         <location filename="../initiative-tracker/initiativemodel.cpp" line="55"/>
         <source>Max</source>
-        <translation type="unfinished"></translation>
+        <translation>Max</translation>
     </message>
     <message>
         <source>Initiative</source>
@@ -38,56 +51,64 @@
 <context>
     <name>MainWindow</name>
     <message>
+        <location filename="../mainwindow.ui" line="279"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="331"/>
         <source>Add</source>
-        <translation type="obsolete">Add</translation>
+        <translation>Add</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="202"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="274"/>
+        <location filename="../mainwindow.ui" line="292"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="332"/>
         <source>Glossary</source>
         <translation>Glossary</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="210"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="275"/>
+        <location filename="../mainwindow.ui" line="300"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="333"/>
         <source>Tools</source>
         <translation>Tools</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="230"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="277"/>
+        <location filename="../mainwindow.ui" line="320"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="335"/>
         <source>toolBar</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="252"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="249"/>
+        <location filename="../mainwindow.ui" line="342"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="303"/>
         <source>Open</source>
         <translation>Open</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="263"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="253"/>
+        <location filename="../mainwindow.ui" line="353"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="307"/>
         <source>Spells</source>
         <translation>Spells</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="271"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="254"/>
+        <location filename="../mainwindow.ui" line="361"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="308"/>
         <source>Monsters</source>
         <translation>Monsters</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="279"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="255"/>
+        <location filename="../mainwindow.ui" line="369"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="309"/>
         <source>Magic items</source>
         <translation>Magic items</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="321"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="270"/>
+        <location filename="../mainwindow.ui" line="411"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="324"/>
         <source>Report bug</source>
         <translation>Report bug</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="416"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="325"/>
+        <source>Map</source>
+        <translation>Map</translation>
     </message>
     <message>
         <source>Play</source>
@@ -98,8 +119,8 @@
         <translation type="vanished">File</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="284"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="256"/>
+        <location filename="../mainwindow.ui" line="374"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="310"/>
         <source>Settings</source>
         <translation>Settings</translation>
     </message>
@@ -112,38 +133,50 @@
         <translation type="vanished">DM-assist music</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="306"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="267"/>
+        <location filename="../mainwindow.ui" line="396"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="321"/>
         <source>Save</source>
         <translation>Save</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="255"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="251"/>
+        <location filename="../mainwindow.ui" line="345"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="305"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="244"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="245"/>
+        <location filename="../mainwindow.ui" line="334"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="299"/>
         <source>New</source>
         <translation>New</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="23"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="244"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="298"/>
         <source>DM-assist</source>
         <translation>DM-assist</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="192"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="273"/>
+        <location filename="../mainwindow.ui" line="83"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="326"/>
+        <source>No maps opened</source>
+        <translation>No maps opened</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="135"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="327"/>
+        <source>Open new map</source>
+        <translation>Open new map</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="275"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="330"/>
         <source>Campaign</source>
         <translation>Campaign</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="247"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="247"/>
+        <location filename="../mainwindow.ui" line="337"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="301"/>
         <source>Ctrl+N</source>
         <translation></translation>
     </message>
@@ -160,60 +193,130 @@
         <translation type="vanished">Save project?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="100"/>
+        <location filename="../mainwindow.cpp" line="109"/>
         <source>Open player config file</source>
         <translation>Open player config file</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="102"/>
+        <location filename="../mainwindow.cpp" line="111"/>
         <source>Xml file (*.xml)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="110"/>
+        <location filename="../mainwindow.cpp" line="119"/>
         <source>Open File error</source>
         <translation>Open file error</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="166"/>
+        <location filename="../mainwindow.cpp" line="175"/>
         <source>Open file error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="216"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="276"/>
+        <location filename="../mainwindow.cpp" line="287"/>
+        <source>Open Map Image</source>
+        <translation>Open map image</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="289"/>
+        <source>Images (*.png *.jpg *.bmp)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="363"/>
+        <source>ruler</source>
+        <translation>Ruler</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="375"/>
+        <source>calibrate</source>
+        <translation>Calibrate</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="399"/>
+        <source>Add fog to map</source>
+        <translation>Add fog to map</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="406"/>
+        <source>Hide all</source>
+        <translation>Hide all</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="425"/>
+        <source>Remove fog from map</source>
+        <translation>Remove fog from map</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="432"/>
+        <source>Reveal all</source>
+        <translation>Reveal all</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="452"/>
+        <source>Edit light sources</source>
+        <translation>Edit light sources</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="489"/>
+        <source>Update fog</source>
+        <translation>Update fog</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="506"/>
+        <source>Draw line</source>
+        <translation>Draw line</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="526"/>
+        <source>Draw circle</source>
+        <translation>Draw circle</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="546"/>
+        <source>Draw square</source>
+        <translation>Draw square</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="566"/>
+        <source>Draw triangle</source>
+        <translation>Draw triangle</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="306"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="334"/>
         <source>About</source>
         <translation>About</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="287"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="258"/>
+        <location filename="../mainwindow.ui" line="377"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="312"/>
         <source>Settings (ctrl+alt+s)</source>
         <translation>Settings (Ctrl + Alt + S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="290"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="261"/>
+        <location filename="../mainwindow.ui" line="380"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="315"/>
         <source>Ctrl+Alt+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="298"/>
-        <location filename="../mainwindow.ui" line="301"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="263"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="265"/>
+        <location filename="../mainwindow.ui" line="388"/>
+        <location filename="../mainwindow.ui" line="391"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="317"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="319"/>
         <source>Character builder</source>
         <translation>Character builder</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="311"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="268"/>
+        <location filename="../mainwindow.ui" line="401"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="322"/>
         <source>Help</source>
         <translation>Help</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="316"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="269"/>
+        <location filename="../mainwindow.ui" line="406"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_MainWindow.h" line="323"/>
         <source>Donate</source>
         <translation>Donate</translation>
     </message>
@@ -434,19 +537,19 @@
         <translation>Sort</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/qinitiativetrackerwidget.cpp" line="169"/>
-        <location filename="../initiative-tracker/qinitiativetrackerwidget.cpp" line="177"/>
-        <location filename="../initiative-tracker/qinitiativetrackerwidget.cpp" line="209"/>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.cpp" line="170"/>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.cpp" line="178"/>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.cpp" line="215"/>
         <source>Save encounter to file</source>
         <translation>Save encounter to file</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/qinitiativetrackerwidget.cpp" line="186"/>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.cpp" line="187"/>
         <source>Сохранение конфигурации</source>
         <translation>Save config</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/qinitiativetrackerwidget.cpp" line="187"/>
+        <location filename="../initiative-tracker/qinitiativetrackerwidget.cpp" line="188"/>
         <source>Сохранить трекер?</source>
         <translation>Save tracker?</translation>
     </message>
@@ -785,6 +888,14 @@
         <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="311"/>
         <source>Cancel</source>
         <translation>Cancel</translation>
+    </message>
+</context>
+<context>
+    <name>TabWidget</name>
+    <message>
+        <location filename="../map-widget/maptabwidget.h" line="23"/>
+        <source>Open new map</source>
+        <translation>Open new map</translation>
     </message>
 </context>
 <context>
