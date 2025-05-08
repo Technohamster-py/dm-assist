@@ -454,12 +454,14 @@ void MainWindow::setupToolbar() {
     ui->toolBar->addWidget(lightButton);
 
     QSpinBox *brightRadiusBox = new QSpinBox;
+    brightRadiusBox->setToolTip(tr("Bright radius"));
     brightRadiusBox->setRange(1, 500);
     brightRadiusBox->setValue(20);
     lightTool->setBrightRadius(brightRadiusBox->value());
     ui->toolBar->addWidget(brightRadiusBox);
 
     QSpinBox *dimRadiusBox = new QSpinBox;
+    dimRadiusBox->setToolTip(tr("Dim radius"));
     dimRadiusBox->setRange(1, 1000);
     dimRadiusBox->setValue(40);
     lightTool->setDimRadius(dimRadiusBox->value());
@@ -573,6 +575,21 @@ void MainWindow::setupToolbar() {
             currentView->setActiveTool(triangleShapeTool);
         else
             currentView->setActiveTool(nullptr);
+    });
+
+    /// Shape color button
+    QPushButton *ShapeToolColorButton = new QPushButton();
+    ShapeToolColorButton->setIcon(QIcon(":/map/palette.svg"));
+    ui->toolBar->addWidget(ShapeToolColorButton);
+
+    connect(ShapeToolColorButton, &QPushButton::clicked, this, [=]() {
+        QColor chosen = QColorDialog::getColor(lightTool->color(), this);
+        if (chosen.isValid()) {
+            lineShapeTool->setColor(chosen);
+            circleShapeTool->setColor(chosen);
+            squareShapeTool->setColor(chosen);
+            triangleShapeTool->setColor(chosen);
+        }
     });
 }
 
