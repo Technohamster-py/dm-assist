@@ -144,9 +144,7 @@ void TriangleShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphi
             return;
         }
 
-        QPointF p2 = event->scenePos();
-        QPointF p3 = mirrorPoint(p2);
-        QPolygonF triangle({firstPoint, p2, p3});
+        QPolygonF triangle = buildTriangle(event->scenePos());
         scene->addPolygon(triangle, QPen(color, 2), color);
         hasFirstPoint = false;
         clearPreview(scene);
@@ -157,8 +155,7 @@ void TriangleShapeTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphic
     if (!hasFirstPoint) return;
 
     QPointF p2 = event->scenePos();
-    QPointF p3 = mirrorPoint(p2);
-    QPolygonF triangle({ firstPoint, p2, p3 });
+    QPolygonF triangle = buildTriangle(p2);
 
     if (!previewShape) {
         previewShape = scene->addPolygon(triangle, QPen(Qt::DashLine));
@@ -166,16 +163,33 @@ void TriangleShapeTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphic
         dynamic_cast<QGraphicsPolygonItem*>(previewShape)->setPolygon(triangle);
     }
 
-    double baseLength = QLineF(p2, p3).length();
+    double baseLength = QLineF(firstPoint, p2).length();
     if (!previewLabel) {
         previewLabel = scene->addText(QString::number(baseLength, 'f', 1) + " ft");
     }
-    QPointF center = (p2 + p3) / 2;
+    QPointF center = (firstPoint + p2) / 2;
     previewLabel->setPos(center + QPointF(10, -10));
 }
 
-QPointF TriangleShapeTool::mirrorPoint(const QPointF &p) {
-    return firstPoint * 2 - p;
+QPolygonF TriangleShapeTool::buildTriangle(const QPointF &hPoint) {
+    QPointF a = firstPoint; // вершина
+    QPointF h = hPoint;     // основание высоты
+
+    // Вектор высоты
+    QLineF ah(h, a);
+    double height = ah.length();
+
+    // Перпендикулярный вектор основания
+    QLineF baseLine = ah.normalVector();
+    baseLine.setLength(height);
+    QPointF offset = (baseLine.p2() - baseLine.p1()) / 2;
+
+    // Точки B и C
+    QPointF b = h + offset;
+    QPointF c = h - offset;
+
+    QPolygonF triangle; triangle << a << b << c;
+    return triangle;
 }
 
 

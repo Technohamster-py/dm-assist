@@ -2,7 +2,6 @@
 #define DM_ASSIST_SPELLSHAPETOOL_H
 
 #include "abstractmaptool.h"
-#include "spellshapeitem.h"
 
 class SpellShapeTool : public AbstractMapTool {
 Q_OBJECT
@@ -52,7 +51,7 @@ public:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override;
 
 private:
-    QPointF mirrorPoint(const QPointF &p);
+    QPolygonF buildTriangle(const QPointF &hPoint);
 };
 
 class SquareShapeTool : public SpellShapeTool {
