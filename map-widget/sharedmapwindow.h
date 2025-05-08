@@ -13,7 +13,6 @@ public slots:
     void updateFogImage(const QImage &fog);
 private:
     QGraphicsView *view;
-    MapScene *scene;
     QGraphicsPixmapItem *fogItem;
 protected:
     void resizeEvent(QResizeEvent* event) override;
