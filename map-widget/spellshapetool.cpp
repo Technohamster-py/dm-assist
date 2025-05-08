@@ -25,9 +25,14 @@ void SpellShapeTool::setColor(QColor c) {
 }
 
 bool SpellShapeTool::clearShapeAt(QGraphicsScene *scene, QPointF point) {
-    return true;
+    QGraphicsItem *item = scene->itemAt(point, QTransform());
+    if (item) {
+        scene->removeItem(item);
+        delete item;
+        return true;
+    }
+    return false;
 }
-
 
 
 void LineShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) {
@@ -172,8 +177,8 @@ void TriangleShapeTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphic
 }
 
 QPolygonF TriangleShapeTool::buildTriangle(const QPointF &hPoint) {
-    QPointF a = firstPoint; // вершина
-    QPointF h = hPoint;     // основание высоты
+    QPointF a = firstPoint;
+    QPointF h = hPoint;
 
     // Вектор высоты
     QLineF ah(h, a);
