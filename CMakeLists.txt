@@ -25,6 +25,7 @@ set(FILES
         map-widget/rulermaptool.h   map-widget/rulermaptool.cpp
         map-widget/sharedmapwindow.h    map-widget/sharedmapwindow.cpp
         map-widget/spellshapetool.h     map-widget/spellshapetool.cpp
+        map-widget/undostack.h
         initiative-tracker/qinitiativetrackerwidget.h   initiative-tracker/qinitiativetrackerwidget.cpp
         initiative-tracker/hpprogressbardelegate.h  initiative-tracker/hpprogressbardelegate.cpp
         qplayerwidget.h qplayerwidget.cpp

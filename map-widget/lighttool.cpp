@@ -105,7 +105,7 @@ void LightTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene 
     if (!mapScene) return;
     double scaleFactor = mapScene->getScaleFactor();
     auto item = new LightSourceItem(m_brightRadius / scaleFactor, m_dimRadius / scaleFactor, m_color, event->scenePos(), this);
-    scene->addItem(item);
+    mapScene->addUndoableItem(item);
 
     mapScene->drawScaledCircle(event->scenePos(), m_dimRadius, false);
 }

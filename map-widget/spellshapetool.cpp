@@ -27,8 +27,7 @@ void SpellShapeTool::setColor(QColor c) {
 bool SpellShapeTool::clearShapeAt(QGraphicsScene *scene, QPointF point) {
     QGraphicsItem *item = scene->itemAt(point, QTransform());
     if (item) {
-        scene->removeItem(item);
-        delete item;
+        static_cast<MapScene*>(scene)->removeUndoableItem(item);
         return true;
     }
     return false;
@@ -52,7 +51,13 @@ void LineShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsSc
         }
 
         QLineF line(firstPoint, event->scenePos());
-        scene->addLine(line, QPen(color, 2));
+
+        auto item = new QGraphicsLineItem(line);
+        item->setPen(QPen(color, 2));
+        item->setZValue(5);
+
+        static_cast<MapScene*>(scene)->addUndoableItem(item);
+
         hasFirstPoint = false;
         clearPreview(scene);
     }
@@ -101,7 +106,14 @@ void CircleShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphics
         }
 
         QRectF rect = circleRect(event->scenePos());
-        scene->addEllipse(rect.normalized(), QPen(color, 2), color);
+
+        auto item = new QGraphicsEllipseItem(rect.normalized());
+        item->setPen(QPen(color));
+        item->setBrush(QBrush(color, Qt::Dense4Pattern));
+        item->setZValue(5);
+
+        static_cast<MapScene*>(scene)->addUndoableItem(item);
+
         hasFirstPoint = false;
         clearPreview(scene);
     }
@@ -150,7 +162,14 @@ void TriangleShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphi
         }
 
         QPolygonF triangle = buildTriangle(event->scenePos());
-        scene->addPolygon(triangle, QPen(color, 2), color);
+
+        auto item = new QGraphicsPolygonItem(triangle);
+        item->setPen(QPen(color));
+        item->setBrush(QBrush(color, Qt::Dense4Pattern));
+        item->setZValue(5);
+
+        static_cast<MapScene*>(scene)->addUndoableItem(item);
+
         hasFirstPoint = false;
         clearPreview(scene);
     }
@@ -214,7 +233,13 @@ void SquareShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphics
         }
 
         QPolygonF square = buildSquare(firstPoint, event->scenePos());
-        scene->addPolygon(square, QPen(color, 2), color);
+
+        auto item = new QGraphicsPolygonItem(square);
+        item->setPen(QPen(color));
+        item->setBrush(QBrush(color, Qt::Dense4Pattern));
+        item->setZValue(5);
+
+        static_cast<MapScene*>(scene)->addUndoableItem(item);
         hasFirstPoint = false;
         clearPreview(scene);
     }

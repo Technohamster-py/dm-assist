@@ -11,6 +11,7 @@
 #include <QGraphicsItem>
 
 #include "abstractmaptool.h"
+#include "undostack.h"
 
 /**
  * @class MapScene
@@ -42,6 +43,10 @@ public:
     void updateFog();
 
     void wheelEvent(QGraphicsSceneWheelEvent *event) override;
+
+    void addUndoableItem(QGraphicsItem* item);
+    void removeUndoableItem(QGraphicsItem* item);
+    void undoLastAction();
 signals:
     void fogUpdated(const QImage &fogImage);
 private:
@@ -51,10 +56,12 @@ private:
     QGraphicsPixmapItem *fogItem = nullptr;
     QImage fogImage;
 
+    UndoStack undoStack;
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
 };
 
 #endif // MAPSCENE_H

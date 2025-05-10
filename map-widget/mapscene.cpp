@@ -8,6 +8,7 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QPainter>
+#include <QKeyEvent>
 /**
  * @brief Constructs a new MapScene.
  * @param parent Optional parent QObject
@@ -147,4 +148,33 @@ void MapScene::updateFog() {
 void MapScene::drawScaledCircle(const QPointF &scenePos, int radius, bool hide) {
     int realRadius = static_cast<int>(radius / m_scaleFactor);
     drawFogCircle(scenePos, realRadius, hide);
+}
+
+void MapScene::keyPressEvent(QKeyEvent *event) {
+    if (event->key() == Qt::Key_Escape) {
+        if (m_activeTool) {
+            m_activeTool->cancel();  // каждый инструмент должен реализовать cancel()
+            return;
+        }
+    }
+
+    if (event->matches(QKeySequence::Undo)) {
+        undoLastAction();  // реализация ниже
+        return;
+    }
+    QGraphicsScene::keyPressEvent(event);
+}
+
+void MapScene::addUndoableItem(QGraphicsItem *item) {
+    addItem(item);
+    undoStack.push(std::make_unique<AddItemAction>(item));
+}
+
+void MapScene::removeUndoableItem(QGraphicsItem *item) {
+    undoStack.push(std::make_unique<RemoveItemAction>(item));
+    removeItem(item);
+}
+
+void MapScene::undoLastAction() {
+    undoStack.undo(this);
 }
