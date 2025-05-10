@@ -109,3 +109,10 @@ void MapView::setActiveTool(AbstractMapTool* tool) {
         setDragMode(QGraphicsView::ScrollHandDrag);
     scene->setActiveTool(tool);
 }
+
+void MapView::keyPressEvent(QKeyEvent *event) {
+    if (event->key() == Qt::Key_Escape){
+        setActiveTool(nullptr);
+    }
+    QGraphicsView::keyPressEvent(event);
+}

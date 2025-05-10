@@ -8,6 +8,7 @@
 
 #include <QGraphicsView>
 #include <QWheelEvent>
+#include <QKeyEvent>
 #include <QGraphicsPixmapItem>
 #include "mapscene.h"
 #include "abstractmaptool.h"
@@ -62,6 +63,8 @@ protected:
      * @param event Pointer to mouse event
      */
     void mouseReleaseEvent(QMouseEvent *event) override;
+
+    void keyPressEvent(QKeyEvent *event) override;
 
 private:
     MapScene *scene;                       /**< Scene containing map and tools */

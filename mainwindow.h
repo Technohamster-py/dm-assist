@@ -87,6 +87,8 @@ private:
     SettingsDialog *settingsDialog = nullptr;
     Settings paths;
 
+    QActionGroup *toolGroup;
+
 private slots:
     void loadConfigFile();
     void saveConfigFile();

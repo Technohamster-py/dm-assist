@@ -64,6 +64,7 @@ void MapScene::setActiveTool(AbstractMapTool *tool) {
     if (m_activeTool)
         m_activeTool->deactivate(this);
     m_activeTool = tool;
+    emit toolChanged(tool);
 }
 
 void MapScene::initializeFog(const QSize &size) {
@@ -151,13 +152,6 @@ void MapScene::drawScaledCircle(const QPointF &scenePos, int radius, bool hide) 
 }
 
 void MapScene::keyPressEvent(QKeyEvent *event) {
-    if (event->key() == Qt::Key_Escape) {
-        if (m_activeTool) {
-            m_activeTool->cancel();  // каждый инструмент должен реализовать cancel()
-            return;
-        }
-    }
-
     if (event->matches(QKeySequence::Undo)) {
         undoLastAction();  // реализация ниже
         return;

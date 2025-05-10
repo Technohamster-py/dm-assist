@@ -49,6 +49,8 @@ public:
     void undoLastAction();
 signals:
     void fogUpdated(const QImage &fogImage);
+    void toolChanged(const AbstractMapTool*);
+
 private:
     AbstractMapTool* m_activeTool = nullptr;
     double m_scaleFactor = 1.0;           ///< Масштаб

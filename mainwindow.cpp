@@ -295,6 +295,14 @@ void MainWindow::createNewMapTab() {
         mapTabWidget->addTab(view, fileInfo.fileName());
         updateVisibility();
         mapTabWidget->setCurrentIndex(mapTabWidget->count()-1);
+
+        connect(view->getScene(), &MapScene::toolChanged, this, [=](const AbstractMapTool* tool){
+            if (!tool){
+                for (QAction *action : toolGroup->actions()) {
+                    action->setChecked(false);
+                }
+            }
+        });
     }
     mapTabWidget->setCurrentIndex(mapTabWidget->count() - 1);
 }
@@ -354,7 +362,7 @@ void MainWindow::setupToolbar() {
     squareShapeTool = new SquareShapeTool();
     triangleShapeTool = new TriangleShapeTool();
 
-    QActionGroup *toolGroup = new QActionGroup(this);
+    toolGroup = new QActionGroup(this);
     toolGroup->setExclusive(true);
 
     /// Ruler too
