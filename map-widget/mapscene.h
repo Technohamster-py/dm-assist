@@ -9,6 +9,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsItem>
+#include <QJsonObject>
 
 #include "abstractmaptool.h"
 #include "undostack.h"
@@ -47,6 +48,11 @@ public:
     void addUndoableItem(QGraphicsItem* item);
     void removeUndoableItem(QGraphicsItem* item);
     void undoLastAction();
+
+    QJsonObject toJson() const;
+    void fromJson(const QJsonObject& obj);
+
+    bool saveToQmap(const QString& filePath, const QImage& mapImage);
 signals:
     void fogUpdated(const QImage &fogImage);
     void toolChanged(const AbstractMapTool*);
