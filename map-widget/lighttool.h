@@ -18,10 +18,6 @@ public:
     void handleMouseMoveEvent(QGraphicsSceneMouseEvent *event);
     void handleMouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
-    qreal brightRadius() const {return radiusBright;};
-    qreal dimRadius() const {return radiusDim;};
-    QColor color() const {return lightColor;};
-
 private:
     qreal radiusBright;
     qreal radiusDim;

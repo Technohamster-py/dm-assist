@@ -10,9 +10,6 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.12.12/5.12.12/mingw73_64/lib/cmake")
 set(BASS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass)
 set(BASS_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass/bass.lib)
-set(ZLIB_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/lib/zlib/include")
-set(ZLIB_LIBRARY "${CMAKE_SOURCE_DIR}/lib/zlib/lib/zlib.lib")
-
 #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc")
 
 set(FILES
@@ -62,15 +59,7 @@ find_package(Qt5 COMPONENTS
         LinguistTools
         REQUIRED)
 
-find_package(ZLIB REQUIRED)
-
 qt5_add_resources(RESOURCES_ADD ${RESOURCES})
-
-set(QUAZIP_BZIP2 OFF CACHE BOOL "Disable bzip2 support" FORCE)
-set(QUAZIP_ENABLE_BZIP2 OFF CACHE BOOL "Disable bzip2 support" FORCE)
-set(QUAZIP_FETCH_LIBS OFF CACHE BOOL "Disable fetching bzip2" FORCE)
-set(QUAZIP_FORCE_FETCH_LIBS OFF CACHE BOOL "Disable forced fetching" FORCE)
-add_subdirectory(lib/quazip)
 
 include_directories(
         ${Qt5Core_INCLUDE_DIRS}
@@ -105,9 +94,7 @@ target_link_libraries(${PROJECT_NAME}
         Qt5::Multimedia
         Qt5::Xml
         ${BASS_LIBRARY}
-        ${ZLIB_LIBRARY}
         Qt5::Qml
-        quazip5
 )
 
 if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
