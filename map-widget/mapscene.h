@@ -15,13 +15,21 @@
 #include "undostack.h"
 
 
+#pragma pack(push, 1)
 struct MapFileHeader {
-    quint32 magic = 0x444D414D; // 'DMAM' — сигнатура
+    quint32 magic = 0x444D414D; // 'DMAM'
     quint32 version = 1;
     quint32 jsonSize;
     quint32 imageSize;
 };
+#pragma pack(pop)
 
+enum qmapErrorCodes{
+    NoError,
+    FileOpenError,
+    FileSignatureError,
+    JsonParseError
+};
 
 /**
  * @class MapScene
@@ -54,6 +62,9 @@ public:
 
     QJsonObject toJson() const;
     void fromJson(const QJsonObject& obj);
+    bool saveToFile(const QString& path);
+    int loadFromFile(const QString& path);
+
 
     void wheelEvent(QGraphicsSceneWheelEvent *event) override;
 

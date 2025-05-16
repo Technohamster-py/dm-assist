@@ -8,9 +8,12 @@
 #include <QBuffer>
 #include <QInputDialog>
 #include <QJsonArray>
+#include <QJsonDocument>
 #include <QMessageBox>
 #include <QPainter>
 #include <QKeyEvent>
+
+#include <QDebug>
 /**
  * @brief Constructs a new MapScene.
  * @param parent Optional parent QObject
@@ -319,4 +322,83 @@ void MapScene::fromJson(const QJsonObject& obj) {
             updateFog(); // ваша функция для отображения тумана на сцене
         }
     }
+}
+
+bool MapScene::saveToFile(const QString& path) {
+    QFile file(path);
+    if (!file.open(QIODevice::WriteOnly)) {
+        return false;
+    }
+
+    QJsonObject mapJson = this->toJson();
+    QJsonDocument doc(mapJson);
+    QByteArray jsonData = doc.toJson(QJsonDocument::Compact);
+
+    QPixmap pixmap = getMapPixmap();
+    QByteArray imageData;
+    QBuffer buffer(&imageData);
+    buffer.open(QIODevice::WriteOnly);
+    pixmap.toImage().save(&buffer, "PNG");
+
+    MapFileHeader header;
+    header.jsonSize = jsonData.size();
+    header.imageSize = imageData.size();
+
+    QDataStream stream(&file);
+    stream.setByteOrder(QDataStream::LittleEndian);
+    stream.writeRawData(reinterpret_cast<char*>(&header), sizeof(header));
+    stream.writeRawData(jsonData.constData(), jsonData.size());
+    stream.writeRawData(imageData.constData(), imageData.size());
+
+    file.close();
+    return true;
+}
+
+int MapScene::loadFromFile(const QString& path) {
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly)) {
+        qWarning() << "Не удалось открыть файл для чтения:" << path;
+        return qmapErrorCodes::FileOpenError;
+    }
+
+    QDataStream stream(&file);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    MapFileHeader header;
+    if (stream.readRawData(reinterpret_cast<char*>(&header), sizeof(header)) != sizeof(header))
+        return qmapErrorCodes::FileOpenError;
+
+    if (header.magic != 0x444D414D) {
+        qWarning() << "Файл не является картой DM-Assist.";
+        return qmapErrorCodes::FileSignatureError;
+    }
+
+    QByteArray jsonData(header.jsonSize, 0);
+    QByteArray imageData(header.imageSize, 0);
+
+    if (stream.readRawData(jsonData.data(), header.jsonSize) != header.jsonSize ||
+        stream.readRawData(imageData.data(), header.imageSize) != header.imageSize) {
+        return false;
+    }
+
+    QJsonParseError error;
+    QJsonDocument doc = QJsonDocument::fromJson(jsonData, &error);
+    if (error.error != QJsonParseError::NoError) {
+        qWarning() << "Ошибка разбора JSON:" << error.errorString();
+        return qmapErrorCodes::JsonParseError;
+    }
+
+    fromJson(doc.object());
+
+    QImage mapImage;
+    mapImage.loadFromData(imageData, "PNG");
+
+    if (!mapImage.isNull()) {
+        clear(); // удаляем всё старое
+        QGraphicsPixmapItem* pixmapItem = addPixmap(QPixmap::fromImage(mapImage));
+        pixmapItem->setZValue(-1000); // за всеми объектами
+    }
+
+    file.close();
+    return qmapErrorCodes::NoError;
 }
