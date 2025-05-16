@@ -5,7 +5,9 @@
 
 #include "mapscene.h"
 #include "lighttool.h"
+#include <QBuffer>
 #include <QInputDialog>
+#include <QJsonArray>
 #include <QMessageBox>
 #include <QPainter>
 #include <QKeyEvent>
@@ -171,4 +173,150 @@ void MapScene::removeUndoableItem(QGraphicsItem *item) {
 
 void MapScene::undoLastAction() {
     undoStack.undo(this);
+}
+
+
+QJsonObject MapScene::toJson() const {
+    QJsonObject obj;
+    obj["scaleFactor"] = m_scaleFactor;
+
+
+    QJsonArray itemsArray;
+    for (auto item : items()) {
+        QJsonObject itemObj;
+
+        if (auto* polyItem = qgraphicsitem_cast<QGraphicsPolygonItem*>(item)) {
+            itemObj["type"] = "polygon";
+
+            QJsonArray points;
+            for (const QPointF& p : polyItem->polygon())
+                points.append(QJsonArray{ p.x(), p.y() });
+            itemObj["points"] = points;
+
+            itemObj["color"] = polyItem->pen().color().name();
+            itemObj["z"] = polyItem->zValue();
+        }
+        else if (auto* ellipse = qgraphicsitem_cast<QGraphicsEllipseItem*>(item)) {
+            itemObj["type"] = "ellipse";
+            QRectF r = ellipse->rect();
+            itemObj["center"] = QJsonArray{ r.center().x(), r.center().y() };
+            itemObj["radius"] = r.width() / 2; // предполагаем круг
+            itemObj["color"] = ellipse->pen().color().name();
+        }
+        else if (auto* line = qgraphicsitem_cast<QGraphicsLineItem*>(item)) {
+            itemObj["type"] = "line";
+            QLineF l = line->line();
+            itemObj["start"] = QJsonArray{ l.p1().x(), l.p1().y() };
+            itemObj["end"]   = QJsonArray{ l.p2().x(), l.p2().y() };
+            itemObj["color"] = line->pen().color().name();
+        }
+        else if (auto* pathItem = qgraphicsitem_cast<QGraphicsPathItem*>(item)) {
+            itemObj["type"] = "fog";
+            QPainterPath path = pathItem->path();
+            QJsonArray elements;
+            for (int i = 0; i < path.elementCount(); ++i) {
+                auto e = path.elementAt(i);
+                elements.append(QJsonArray{ e.x, e.y });
+            }
+            itemObj["path"] = elements;
+            itemObj["mode"] = pathItem->brush().color().alpha() < 128 ? "show" : "hide";
+        }
+        else if (auto* light = dynamic_cast<LightSourceItem*>(item)) {
+            itemObj["type"] = "light";
+            itemObj["center"] = QJsonArray{ light->pos().x(), light->pos().y() };
+            itemObj["r1"] = light->brightRadius();
+            itemObj["r2"] = light->dimRadius();
+            itemObj["color"] = light->color().name();
+        }
+
+        if (!itemObj.isEmpty())
+            itemsArray.append(itemObj);
+    }
+
+    obj["items"] = itemsArray;
+
+
+    if (!fogImage.isNull()) {
+        QByteArray byteArray;
+        QBuffer buffer(&byteArray);
+        buffer.open(QIODevice::WriteOnly);
+        fogImage.save(&buffer, "PNG");
+        obj["fog"] = QString::fromLatin1(byteArray.toBase64());
+    }
+
+    return obj;
+}
+
+
+void MapScene::fromJson(const QJsonObject& obj) {
+    clear();
+    m_scaleFactor = obj["scaleFactor"].toDouble(1.0);
+
+
+    QJsonArray itemsArray = obj["items"].toArray();
+    for (const auto& val : itemsArray) {
+        QJsonObject itemObj = val.toObject();
+        QString type = itemObj["type"].toString();
+
+        if (type == "polygon") {
+            QPolygonF polygon;
+            for (const auto& pt : itemObj["points"].toArray())
+                polygon << QPointF(pt.toArray()[0].toDouble(), pt.toArray()[1].toDouble());
+
+            auto* item = new QGraphicsPolygonItem(polygon);
+            item->setPen(QPen(QColor(itemObj["color"].toString())));
+            item->setBrush(QBrush(QColor(itemObj["color"].toString()), Qt::Dense4Pattern));
+            item->setZValue(itemObj["z"].toDouble(5));
+            addItem(item);
+        }
+        else if (type == "ellipse") {
+            QPointF center(itemObj["center"].toArray()[0].toDouble(),
+                           itemObj["center"].toArray()[1].toDouble());
+            double r = itemObj["radius"].toDouble();
+            auto* item = new QGraphicsEllipseItem(QRectF(center.x() - r, center.y() - r, 2 * r, 2 * r));
+            item->setPen(QPen(QColor(itemObj["color"].toString())));
+            item->setBrush(QBrush(Qt::transparent));
+            addItem(item);
+        }
+        else if (type == "line") {
+            QLineF line(
+                    QPointF(itemObj["start"].toArray()[0].toDouble(), itemObj["start"].toArray()[1].toDouble()),
+                    QPointF(itemObj["end"].toArray()[0].toDouble(), itemObj["end"].toArray()[1].toDouble()));
+            auto* item = new QGraphicsLineItem(line);
+            item->setPen(QPen(QColor(itemObj["color"].toString())));
+            addItem(item);
+        }
+        else if (type == "fog") {
+            QPainterPath path;
+            QJsonArray pts = itemObj["path"].toArray();
+            if (!pts.isEmpty()) {
+                path.moveTo(QPointF(pts[0].toArray()[0].toDouble(), pts[0].toArray()[1].toDouble()));
+                for (int i = 1; i < pts.size(); ++i)
+                    path.lineTo(QPointF(pts[i].toArray()[0].toDouble(), pts[i].toArray()[1].toDouble()));
+            }
+            QColor fogColor = (itemObj["mode"].toString() == "show")
+                              ? QColor(0, 0, 0, 64)
+                              : QColor(0, 0, 0, 255);
+            auto* item = new QGraphicsPathItem(path);
+            item->setBrush(fogColor);
+            item->setPen(Qt::NoPen);
+            addItem(item);
+        }
+        else if (type == "light") {
+            QPointF center(itemObj["center"].toArray()[0].toDouble(),
+                           itemObj["center"].toArray()[1].toDouble());
+            QColor color(itemObj["color"].toString());
+            auto* light = new LightSourceItem(itemObj["r1"].toDouble(), itemObj["r2"].toDouble(), color, center, nullptr);
+            addItem(light);
+        }
+    }
+
+    if (obj.contains("fog")) {
+        QByteArray byteArray = QByteArray::fromBase64(obj["fog"].toString().toLatin1());
+        QImage img;
+        if (img.loadFromData(byteArray, "PNG")) {
+            fogImage = img;
+            updateFog(); // ваша функция для отображения тумана на сцене
+        }
+    }
 }

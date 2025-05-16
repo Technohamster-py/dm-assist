@@ -9,9 +9,19 @@
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsItem>
+#include <QJsonObject>
 
 #include "abstractmaptool.h"
 #include "undostack.h"
+
+
+struct MapFileHeader {
+    quint32 magic = 0x444D414D; // 'DMAM' — сигнатура
+    quint32 version = 1;
+    quint32 jsonSize;
+    quint32 imageSize;
+};
+
 
 /**
  * @class MapScene
@@ -41,6 +51,9 @@ public:
     QPixmap getMapPixmap() const;
     void setFogOpacity(qreal opacity); // 0.0–1.0
     void updateFog();
+
+    QJsonObject toJson() const;
+    void fromJson(const QJsonObject& obj);
 
     void wheelEvent(QGraphicsSceneWheelEvent *event) override;
 
