@@ -39,6 +39,7 @@ public:
 signals:
     void newTabRequested();
     void share(int tab);
+    void save(int tab);
 
 private slots:
     void addNewTab() {
@@ -50,11 +51,12 @@ private slots:
         if (index < 0) return;
 
         QMenu menu;
-        QAction *shareAction = menu.addAction("Share");
 
-        connect(shareAction, &QAction::triggered, this, [=]() {
-            emit share(index);
-        });
+        QAction *shareAction = menu.addAction(tr("Share"));
+        connect(shareAction, &QAction::triggered, this, [=]() {emit share(index);});
+
+        QAction *saveAction = menu.addAction(tr("Save"));
+        connect(saveAction, &QAction::triggered, this, [=]() {emit save(index);});
 
         menu.exec(tabBar()->mapToGlobal(pos));
     }

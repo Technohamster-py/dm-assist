@@ -9,7 +9,6 @@
 #include <QInputDialog>
 #include <QJsonArray>
 #include <QJsonDocument>
-#include <QMessageBox>
 #include <QPainter>
 #include <QKeyEvent>
 

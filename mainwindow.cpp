@@ -286,15 +286,26 @@ void MainWindow::createNewMapTab() {
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open Map Image"),
                                                     QStandardPaths::writableLocation(QStandardPaths::PicturesLocation),
-                                                    tr("Images (*.png *.jpg *.bmp)"));
+                                                    tr("Map Files (*.dam);;Images (*.png *.jpg *.bmp)"));
 
-    if (!fileName.isEmpty()){
-        QFileInfo fileInfo(fileName);
-        MapView *view = new MapView(this);
-        view->loadMapImage(fileName);
+    if (fileName.isEmpty()) return;
+
+    QFileInfo fileInfo(fileName);
+    QString ext = fileInfo.suffix().toLower();
+
+    MapView *view = new MapView(this);
+    bool success = false;
+
+    if (ext == "dam") {
+        success = view->getScene()->loadFromFile(fileName);
+    } else {
+        success = view->loadSceneFromFile(fileName);
+    }
+
+    if (success) {
         mapTabWidget->addTab(view, fileInfo.fileName());
         updateVisibility();
-        mapTabWidget->setCurrentIndex(mapTabWidget->count()-1);
+        mapTabWidget->setCurrentIndex(mapTabWidget->count() - 1);
 
         connect(view->getScene(), &MapScene::toolChanged, this, [=](const AbstractMapTool* tool){
             if (!tool){
@@ -303,8 +314,10 @@ void MainWindow::createNewMapTab() {
                 }
             }
         });
+    } else {
+        delete view; // удалить если не загрузилось
+        QMessageBox::warning(this, tr("Error"), tr("Failed to open map file."));
     }
-    mapTabWidget->setCurrentIndex(mapTabWidget->count() - 1);
 }
 
 void MainWindow::setupMaps() {
@@ -645,6 +658,17 @@ void MainWindow::setLightTool(bool checked) {
         currentView->setActiveTool(lightTool);
     else
         currentView->setActiveTool(nullptr);
+}
+
+void MainWindow::exportMap(int index) {
+    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
+    if (currentView){
+        QString filename = QFileDialog::getSaveFileName(this,
+                                                        tr("Save map to file"),
+                                                        QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
+                                                        "DM assist map file (*.dam)");
+        currentView->getScene()->saveToFile(filename);
+    }
 }
 
 

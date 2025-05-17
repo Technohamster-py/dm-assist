@@ -7,6 +7,7 @@
 #include <QMouseEvent>
 #include <QGraphicsPixmapItem>
 #include <QScrollBar>
+#include <QMessageBox>
 
 /**
  * @brief Constructs a new MapView and initializes the scene.
@@ -115,4 +116,25 @@ void MapView::keyPressEvent(QKeyEvent *event) {
         setActiveTool(nullptr);
     }
     QGraphicsView::keyPressEvent(event);
+}
+
+void MapView::loadSceneFromFile(const QString &path) {
+    int errorCode = scene->loadFromFile(path);
+
+    switch (errorCode) {
+        case qmapErrorCodes::NoError:
+            break;
+        case qmapErrorCodes::FileOpenError:
+            QMessageBox::critical(this, "Open file error", QString("Can't open file %1").arg(path));
+            break;
+        case qmapErrorCodes::FileSignatureError:
+            QMessageBox::critical(this, "Open file error", "File is not DM-assist map");
+            break;
+        case qmapErrorCodes::JsonParseError:
+            QMessageBox::critical(this, "Open file error", "Json parse error");
+            break;
+        default:
+            QMessageBox::critical(this, "Open file error", "Unknown error");
+            break;
+    }
 }

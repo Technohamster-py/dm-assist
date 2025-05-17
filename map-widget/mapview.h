@@ -35,6 +35,8 @@ public:
     void loadMapImage(const QString &filePath);
 
     [[nodiscard]] MapScene* getScene() const {return scene;};
+    void loadSceneFromFile(const QString& path);
+
 
 public slots:
     void setActiveTool(AbstractMapTool* tool);
@@ -65,6 +67,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
 
     void keyPressEvent(QKeyEvent *event) override;
+
 
 private:
     MapScene *scene;                       /**< Scene containing map and tools */
