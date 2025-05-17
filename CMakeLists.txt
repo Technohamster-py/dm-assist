@@ -9,6 +9,7 @@ set(CMAKE_AUTOUIC ON)
 #set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin/Release)
 set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.12.12/5.12.12/mingw73_64/lib/cmake")
 set(BASS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass)
+set(BASS_DLL "${CMAKE_SOURCE_DIR}/lib/bass/bass.dll")
 set(BASS_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass/bass.lib)
 #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc")
 
@@ -148,6 +149,13 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${PROJECT_NAME}>/translations"
+)
+
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${BASS_DLL}"
+        "${CMAKE_BINARY_DIR}"
+        COMMENT "Копирование bass.dll в папку сборки..."
 )
 
 foreach(qm ${QM_FILES})

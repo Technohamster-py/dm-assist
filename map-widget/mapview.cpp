@@ -118,12 +118,12 @@ void MapView::keyPressEvent(QKeyEvent *event) {
     QGraphicsView::keyPressEvent(event);
 }
 
-void MapView::loadSceneFromFile(const QString &path) {
+bool MapView::loadSceneFromFile(const QString &path) {
     int errorCode = scene->loadFromFile(path);
 
     switch (errorCode) {
         case qmapErrorCodes::NoError:
-            break;
+            return true;
         case qmapErrorCodes::FileOpenError:
             QMessageBox::critical(this, "Open file error", QString("Can't open file %1").arg(path));
             break;
@@ -137,4 +137,5 @@ void MapView::loadSceneFromFile(const QString &path) {
             QMessageBox::critical(this, "Open file error", "Unknown error");
             break;
     }
+    return false;
 }

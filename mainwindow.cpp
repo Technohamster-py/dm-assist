@@ -297,9 +297,10 @@ void MainWindow::createNewMapTab() {
     bool success = false;
 
     if (ext == "dam") {
-        success = view->getScene()->loadFromFile(fileName);
-    } else {
         success = view->loadSceneFromFile(fileName);
+    } else {
+        view->loadMapImage(fileName);
+        success = true;
     }
 
     if (success) {
@@ -329,6 +330,7 @@ void MainWindow::setupMaps() {
     connect(ui->actionAddMap, &QAction::triggered, this, &MainWindow::createNewMapTab);
     connect(mapTabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::deleteMapTab);
     connect(mapTabWidget, &TabWidget::share, this, &MainWindow::openSharedMapWindow);
+    connect(mapTabWidget, &TabWidget::save, this, &MainWindow::exportMap);
 
     updateVisibility();
 }

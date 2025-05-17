@@ -35,7 +35,7 @@ public:
     void loadMapImage(const QString &filePath);
 
     [[nodiscard]] MapScene* getScene() const {return scene;};
-    void loadSceneFromFile(const QString& path);
+    bool loadSceneFromFile(const QString& path);
 
 
 public slots:

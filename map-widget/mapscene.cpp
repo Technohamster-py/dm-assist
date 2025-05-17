@@ -212,17 +212,6 @@ QJsonObject MapScene::toJson() const {
             itemObj["end"]   = QJsonArray{ l.p2().x(), l.p2().y() };
             itemObj["color"] = line->pen().color().name();
         }
-        else if (auto* pathItem = qgraphicsitem_cast<QGraphicsPathItem*>(item)) {
-            itemObj["type"] = "fog";
-            QPainterPath path = pathItem->path();
-            QJsonArray elements;
-            for (int i = 0; i < path.elementCount(); ++i) {
-                auto e = path.elementAt(i);
-                elements.append(QJsonArray{ e.x, e.y });
-            }
-            itemObj["path"] = elements;
-            itemObj["mode"] = pathItem->brush().color().alpha() < 128 ? "show" : "hide";
-        }
         else if (auto* light = dynamic_cast<LightSourceItem*>(item)) {
             itemObj["type"] = "light";
             itemObj["center"] = QJsonArray{ light->pos().x(), light->pos().y() };
@@ -245,13 +234,11 @@ QJsonObject MapScene::toJson() const {
         fogImage.save(&buffer, "PNG");
         obj["fog"] = QString::fromLatin1(byteArray.toBase64());
     }
-
     return obj;
 }
 
 
 void MapScene::fromJson(const QJsonObject& obj) {
-    clear();
     m_scaleFactor = obj["scaleFactor"].toDouble(1.0);
 
 
@@ -277,7 +264,7 @@ void MapScene::fromJson(const QJsonObject& obj) {
             double r = itemObj["radius"].toDouble();
             auto* item = new QGraphicsEllipseItem(QRectF(center.x() - r, center.y() - r, 2 * r, 2 * r));
             item->setPen(QPen(QColor(itemObj["color"].toString())));
-            item->setBrush(QBrush(Qt::transparent));
+            item->setBrush(QBrush(QColor(itemObj["color"].toString()), Qt::Dense4Pattern));
             addItem(item);
         }
         else if (type == "line") {
@@ -286,22 +273,6 @@ void MapScene::fromJson(const QJsonObject& obj) {
                     QPointF(itemObj["end"].toArray()[0].toDouble(), itemObj["end"].toArray()[1].toDouble()));
             auto* item = new QGraphicsLineItem(line);
             item->setPen(QPen(QColor(itemObj["color"].toString())));
-            addItem(item);
-        }
-        else if (type == "fog") {
-            QPainterPath path;
-            QJsonArray pts = itemObj["path"].toArray();
-            if (!pts.isEmpty()) {
-                path.moveTo(QPointF(pts[0].toArray()[0].toDouble(), pts[0].toArray()[1].toDouble()));
-                for (int i = 1; i < pts.size(); ++i)
-                    path.lineTo(QPointF(pts[i].toArray()[0].toDouble(), pts[i].toArray()[1].toDouble()));
-            }
-            QColor fogColor = (itemObj["mode"].toString() == "show")
-                              ? QColor(0, 0, 0, 64)
-                              : QColor(0, 0, 0, 255);
-            auto* item = new QGraphicsPathItem(path);
-            item->setBrush(fogColor);
-            item->setPen(Qt::NoPen);
             addItem(item);
         }
         else if (type == "light") {
@@ -318,7 +289,15 @@ void MapScene::fromJson(const QJsonObject& obj) {
         QImage img;
         if (img.loadFromData(byteArray, "PNG")) {
             fogImage = img;
-            updateFog(); // ваша функция для отображения тумана на сцене
+            if (fogItem) {
+                removeItem(fogItem);
+                delete fogItem;
+            }
+
+            fogItem = addPixmap(QPixmap::fromImage(fogImage));
+            fogItem->setZValue(10); // поверх карты
+            fogItem->setOpacity(0.5);
+            updateFog();
         }
     }
 }
@@ -387,16 +366,17 @@ int MapScene::loadFromFile(const QString& path) {
         return qmapErrorCodes::JsonParseError;
     }
 
-    fromJson(doc.object());
-
     QImage mapImage;
     mapImage.loadFromData(imageData, "PNG");
 
     if (!mapImage.isNull()) {
-        clear(); // удаляем всё старое
+        clear();
         QGraphicsPixmapItem* pixmapItem = addPixmap(QPixmap::fromImage(mapImage));
         pixmapItem->setZValue(-1000); // за всеми объектами
+        initializeFog(mapImage.size());
     }
+
+    fromJson(doc.object());
 
     file.close();
     return qmapErrorCodes::NoError;
