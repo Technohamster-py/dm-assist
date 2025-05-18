@@ -25,12 +25,29 @@ void SpellShapeTool::setColor(QColor c) {
 }
 
 bool SpellShapeTool::clearShapeAt(QGraphicsScene *scene, QPointF point) {
-    QGraphicsItem *item = scene->itemAt(point, QTransform());
-    if (item) {
-        static_cast<MapScene*>(scene)->removeUndoableItem(item);
+    QList<QGraphicsItem*> items = scene->items(point);
+
+    for (QGraphicsItem* item : items) {
+        if (!item) return false;
+
+        if (item->zValue() < -99 || item->zValue() > 99) continue;
+
+
+        static_cast<MapScene *>(scene)->removeUndoableItem(item);
         return true;
     }
     return false;
+}
+
+void SpellShapeTool::rightClickEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) {
+    if (hasFirstPoint){
+        if (event->button() == Qt::RightButton) {
+            clearShapeAt(scene, event->scenePos());
+            hasFirstPoint = false;
+            clearPreview(scene);
+            return;
+        }
+    }
 }
 
 

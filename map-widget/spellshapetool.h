@@ -9,6 +9,7 @@ public:
     explicit SpellShapeTool(QObject *parent = nullptr);
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) = 0;
+    void rightClickEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) = 0;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override {};
     void wheelEvent(QGraphicsSceneWheelEvent *event, QGraphicsScene *scene) override {};

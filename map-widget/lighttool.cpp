@@ -9,7 +9,7 @@
 LightSourceItem::LightSourceItem(qreal r1, qreal r2, QColor color, QPointF pos, LightTool *tool)
         : radiusBright(r1), radiusDim(r2), lightColor(color), center(pos), m_tool(tool){
     setPos(center);
-    setZValue(11);
+    setZValue(110);
 
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
     setFlag(QGraphicsItem::ItemIsFocusable);
