@@ -385,3 +385,8 @@ int MapScene::loadFromFile(const QString& path) {
     file.close();
     return qmapErrorCodes::NoError;
 }
+
+QRectF MapScene::mapRect() const {
+    QPixmap pixmap = getMapPixmap();
+    return pixmap.rect();;
+}

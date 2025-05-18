@@ -57,6 +57,7 @@ public:
     void clearFog();
     QImage getFogImage() const {return fogImage;};
     QPixmap getMapPixmap() const;
+    QRectF mapRect() const;
     void setFogOpacity(qreal opacity); // 0.0–1.0
     void updateFog();
 

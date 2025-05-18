@@ -14,7 +14,7 @@ SharedMapWindow::SharedMapWindow(MapScene *originalScene, QWidget *parent)
     view->setTransformationAnchor(QGraphicsView::AnchorViewCenter);
 
     view->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
-    view->fitInView(originalScene->sceneRect(), Qt::KeepAspectRatio);
+    view->fitInView(originalScene->mapRect(), Qt::KeepAspectRatio);
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
