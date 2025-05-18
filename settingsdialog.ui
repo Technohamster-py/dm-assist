@@ -3,7 +3,7 @@
  <class>SettingsDialog</class>
  <widget class="QDialog" name="SettingsDialog">
   <property name="windowModality">
-   <enum>Qt::NonModal</enum>
+   <enum>Qt::WindowModality::NonModal</enum>
   </property>
   <property name="geometry">
    <rect>
@@ -74,9 +74,6 @@
       <property name="text">
        <string>1</string>
       </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable</set>
-      </property>
      </item>
      <item>
       <property name="text">
@@ -93,7 +90,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>2</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="generalPage">
         <layout class="QFormLayout" name="formLayout">
@@ -164,7 +161,28 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QComboBox" name="themeComboBox"/>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QComboBox" name="themeComboBox"/>
+           </item>
+           <item>
+            <widget class="QPushButton" name="themeButton">
+             <property name="maximumSize">
+              <size>
+               <width>150</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Browse</string>
+             </property>
+             <property name="icon">
+              <iconset resource="static/app_resources.qrc">
+               <normaloff>:/folder.svg</normaloff>:/folder.svg</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </widget>
@@ -269,7 +287,7 @@
        <item>
         <spacer name="buttonSpacer">
          <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+          <enum>Qt::Orientation::Horizontal</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>

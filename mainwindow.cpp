@@ -258,7 +258,6 @@ void MainWindow::loadSettings() {
     initiativeTrackerWidget->setSharedFieldVisible(5, initiativeFields & iniFields::del);
 
     QString theme = settings.value(paths.appearance.theme, "Light").toString();
-    qDebug() << theme;
     if (theme == "Light")
         ThemeManager::applyPreset(ThemeManager::PresetTheme::Light);
     else if (theme == "Dark")
