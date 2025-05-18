@@ -13,9 +13,14 @@
 #include <QKeyEvent>
 
 #include <QDebug>
+
 /**
- * @brief Constructs a new MapScene.
- * @param parent Optional parent QObject
+ * @brief Constructs a MapScene object with the specified parent and initializes its background.
+ *
+ * This constructor initializes the MapScene by calling the QGraphicsScene constructor
+ * with the parent QObject. It also sets a dark gray background brush.
+ *
+ * @param parent The parent QObject of the scene, which can be nullptr if no parent is specified.
  */
 MapScene::MapScene(QObject *parent)
         : QGraphicsScene(parent)
@@ -23,6 +28,16 @@ MapScene::MapScene(QObject *parent)
     setBackgroundBrush(Qt::darkGray);
 }
 
+/**
+ * @brief Handles mouse press events within the scene, delegating to the active tool if available.
+ *
+ * This method intercepts and processes mouse press events in the QGraphicsScene.
+ * When an active tool is set, the event is forwarded to the tool's implementation
+ * of mousePressEvent, along with a reference to the MapScene. If no active tool
+ * is specified, the default QGraphicsScene behavior is executed.
+ *
+ * @param event The mouse press event to be handled.
+ */
 void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     if (m_activeTool) {
         m_activeTool->mousePressEvent(event, this);
@@ -31,6 +46,17 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     }
 }
 
+/**
+ * @brief Handles mouse move events for the MapScene.
+ *
+ * This function intercepts mouse move events occurring within the MapScene.
+ * If an active tool is set via m_activeTool, it delegates the handling of the
+ * event to the tool by calling its mouseMoveEvent. Otherwise, it falls back
+ * to the default behavior of QGraphicsScene's mouseMoveEvent.
+ *
+ * @param event Pointer to the QGraphicsSceneMouseEvent that provides details
+ *        of the mouse move event.
+ */
 void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
     if (m_activeTool) {
         m_activeTool->mouseMoveEvent(event, this);
@@ -40,6 +66,15 @@ void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 }
 
 
+/**
+ * @brief Handles mouse release events within the MapScene.
+ *
+ * This method determines how the scene responds to a mouse release event based on the active tool.
+ * If a tool is active, the mouse release event is delegated to the tool for handling specific behavior.
+ * Otherwise, the default QGraphicsScene implementation processes the event.
+ *
+ * @param event Pointer to the QGraphicsSceneMouseEvent containing event data.
+ */
 void MapScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
     if (m_activeTool){
         m_activeTool->mouseReleaseEvent(event, this);
@@ -49,6 +84,17 @@ void MapScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 
 }
 
+/**
+ * @brief Handles the wheel event for the map scene.
+ *
+ * This function processes wheel events to provide zooming functionality
+ * when the Ctrl key is held. If a tool is currently active, the tool's
+ * wheelEvent handler is called. Otherwise, the default QGraphicsScene's
+ * wheelEvent handler is executed. If the Ctrl modifier is not held, the
+ * event is passed directly to the base class implementation.
+ *
+ * @param event The QGraphicsSceneWheelEvent to be processed.
+ */
 void MapScene::wheelEvent(QGraphicsSceneWheelEvent *event) {
     if (!(event->modifiers() & Qt::ControlModifier)) {
         QGraphicsScene::wheelEvent(event);
@@ -64,6 +110,22 @@ void MapScene::setScaleFactor(double factor) {
     m_scaleFactor = factor;
 }
 
+/**
+ * @brief Sets the active map tool, deactivating the current tool if present.
+ *
+ * This method changes the currently active tool for the MapScene. If a tool is
+ * already active, it calls its `deactivate` method with the current scene before
+ * switching to the new tool. Once the new tool is set as active, the
+ * `toolChanged` signal is emitted.
+ *
+ * @param tool A pointer to the new map tool to be set as active. Can be nullptr
+ *             if no tool is to be activated.
+ *
+ * @note The `deactivate` method of the previously active tool is called, if any,
+ *       before switching to the new tool.
+ * @note The `toolChanged` signal is emitted after successfully updating the
+ *       active tool.
+ */
 void MapScene::setActiveTool(AbstractMapTool *tool) {
     if (m_activeTool)
         m_activeTool->deactivate(this);
@@ -71,9 +133,23 @@ void MapScene::setActiveTool(AbstractMapTool *tool) {
     emit toolChanged(tool);
 }
 
+/**
+ * @brief Initializes the fog of war in the map scene with the specified size.
+ *
+ * This function creates a new QImage filled with a transparent color to represent
+ * the initial state of the fog (completely visible). If a fog item already exists,
+ * it is removed from the scene and deleted. A new QGraphicsPixmapItem is then created
+ * to display the fog image, added to the scene, and configured with the appropriate
+ * layering and default opacity.
+ *
+ * @param size The dimensions of the fog image to be initialized.
+ *
+ * The fog item's z-value is set to 100 to ensure it is rendered above the map.
+ * The default opacity of the fog is set to 0.5.
+ */
 void MapScene::initializeFog(const QSize &size) {
     fogImage = QImage(size, QImage::Format_ARGB32_Premultiplied);
-    fogImage.fill(Qt::transparent); // всё видно по умолчанию
+    fogImage.fill(Qt::transparent);
 
     if (fogItem) {
         removeItem(fogItem);
@@ -81,10 +157,27 @@ void MapScene::initializeFog(const QSize &size) {
     }
 
     fogItem = addPixmap(QPixmap::fromImage(fogImage));
-    fogItem->setZValue(100); // поверх карты
-    fogItem->setOpacity(0.5); // прозрачность по умолчанию (для мастера)
+    fogItem->setZValue(100);
+    fogItem->setOpacity(0.5);
 }
 
+/**
+ * @brief Modifies the fog of war by drawing a circular area based on the given parameters.
+ *
+ * This function manipulates the fog of war image (`fogImage`) to create or remove fog
+ * within a circular region defined by a center point, radius, and visibility flag. It
+ * uses a QPainter to render the changes on the `fogImage`. If the `hide` parameter is
+ * true, the circle will be drawn with black (indicating fog). If false, the circle will
+ * be made transparent (indicating visibility).
+ *
+ * After modifying the fog image, the function updates the fog display by setting the
+ * modified `fogImage` on the `fogItem`, if it exists, and emits the `fogUpdated` signal
+ * to notify other components of the change.
+ *
+ * @param scenePos The center point of the circle, in scene coordinates.
+ * @param radius The radius of the circle to be drawn, in pixels.
+ * @param hide A boolean indicating whether the fog should be hidden (black) or revealed (transparent).
+ */
 void MapScene::drawFogCircle(const QPointF &scenePos, int radius, bool hide) {
     QPainter painter(&fogImage);
     painter.setRenderHint(QPainter::Antialiasing, true);
@@ -104,6 +197,18 @@ void MapScene::drawFogCircle(const QPointF &scenePos, int radius, bool hide) {
     emit fogUpdated(fogImage);
 }
 
+/**
+ * @brief Sets the opacity level of the fog overlay in the map scene.
+ *
+ * This function adjusts the transparency of the fog of war item if it has been
+ * initialized. The fog's opacity determines how see-through the fog appears on
+ * the map.
+ *
+ * @param opacity The desired opacity for the fog item. Should be a value
+ *                between 0.0 (completely transparent) and 1.0 (completely opaque).
+ *
+ * @warning If the fog item has not been initialized, a warning message is logged.
+ */
 void MapScene::setFogOpacity(qreal opacity) {
     if (fogItem) {
         fogItem->setOpacity(opacity);
@@ -112,6 +217,15 @@ void MapScene::setFogOpacity(qreal opacity) {
     }
 }
 
+/**
+ * @brief Retrieves the pixmap of the first QGraphicsPixmapItem in the scene, excluding the fog item.
+ *
+ * This function iterates over all items in the scene in ascending Z-order to find the first
+ * QGraphicsPixmapItem that is not the fog item. If such an item is found, its pixmap is returned.
+ * If no suitable QGraphicsPixmapItem is found, an empty QPixmap is returned.
+ *
+ * @return The QPixmap of the matching QGraphicsPixmapItem, or an empty QPixmap if no match is found.
+ */
 QPixmap MapScene::getMapPixmap() const {
     auto mapItems = items(Qt::AscendingOrder);
     for (auto *item : mapItems) {
@@ -124,6 +238,20 @@ QPixmap MapScene::getMapPixmap() const {
     return QPixmap();
 }
 
+/**
+ * @brief Draws a path on the fog layer.
+ *
+ * This method is responsible for modifying the fog of war by either hiding or revealing parts of it.
+ * The drawing is performed using a given QPainterPath and the hide parameter determines whether the
+ * path is filled with black (to hide) or cleared (to reveal).
+ *
+ * The method takes advantage of QPainter's rendering capabilities and adjusts the fogImage
+ * accordingly. Once the drawing operation is complete, it triggers an update to the fog by calling
+ * the updateFog method, which synchronizes the visual representation of the fog.
+ *
+ * @param path The QPainterPath defining the shape to be drawn on the fog.
+ * @param hide Boolean flag indicating whether to hide (true) or reveal (false) the fog along the specified path.
+ */
 void MapScene::drawFogPath(const QPainterPath &path, bool hide) {
     QPainter painter(&fogImage);
     painter.setRenderHint(QPainter::Antialiasing);
@@ -137,12 +265,37 @@ void MapScene::drawFogPath(const QPainterPath &path, bool hide) {
     updateFog();
 }
 
+/**
+ * @brief Clears the fog of war by resetting the fog image and updating the scene.
+ *
+ * This method sets the fog image to completely transparent using `Qt::transparent`,
+ * effectively clearing all fog from the map. After modifying the fog image,
+ * it invokes the `updateFog()` method to refresh the visual representation
+ * of the fog and notify any listeners about the update.
+ *
+ * @note This operation modifies the internal `fogImage` and emits
+ * a `fogUpdated()` signal to reflect the changes.
+ */
 void MapScene::clearFog() {
     fogImage.fill(Qt::transparent);
 
     updateFog();
 }
 
+/**
+ * @brief Updates the fog of war display in the scene.
+ *
+ * This method refreshes the QGraphicsPixmapItem associated with the fog of war (fogItem)
+ * using the updated QImage (fogImage). If fogItem is not null, it sets its pixmap to
+ * the current fogImage. After updating the fog display, the method emits the `fogUpdated`
+ * signal, providing the updated fog image.
+ *
+ * @note This method assumes that fogItem has been initialized and that fogImage is the
+ * current representation of the fog of war.
+ *
+ * @signal fogUpdated(const QImage &fogImage)
+ *        Emitted after the fog of war has been updated, providing the new fog image.
+ */
 void MapScene::updateFog() {
     if (fogItem) {
         fogItem->setPixmap(QPixmap::fromImage(fogImage));
@@ -150,24 +303,66 @@ void MapScene::updateFog() {
     emit fogUpdated(fogImage);
 }
 
+/**
+ * @brief Draws a scaled circular region on the scene to manipulate the fog of war.
+ *
+ * This method calculates the actual radius of the circle based on the current scaling factor
+ * and delegates the task of drawing the circle to the drawFogCircle method. The circle's effect
+ * can either reveal or conceal parts of the scene depending on the `hide` parameter.
+ *
+ * @param scenePos A QPointF representing the center position of the circle in scene coordinates.
+ * @param radius An integer value specifying the radius of the circle in unscaled units.
+ * @param hide A boolean indicating whether to conceal (true) or reveal (false) within the circle.
+ */
 void MapScene::drawScaledCircle(const QPointF &scenePos, int radius, bool hide) {
     int realRadius = static_cast<int>(radius / m_scaleFactor);
     drawFogCircle(scenePos, realRadius, hide);
 }
 
+/**
+ * @brief Handles key press events in the MapScene.
+ *
+ * This function intercepts key presses and checks if the user input matches a predefined
+ * key sequence for undoing the last action (QKeySequence::Undo). If so, it invokes the
+ * undoLastAction() method, performing an undo operation for the last scene change. If the
+ * input does not match the undo sequence, the event is passed to the base QGraphicsScene's
+ * keyPressEvent for default handling.
+ *
+ * @param event Pointer to the QKeyEvent object representing the key press event.
+ */
 void MapScene::keyPressEvent(QKeyEvent *event) {
     if (event->matches(QKeySequence::Undo)) {
-        undoLastAction();  // реализация ниже
+        undoLastAction();
         return;
     }
     QGraphicsScene::keyPressEvent(event);
 }
 
+/**
+ * @brief Adds a QGraphicsItem to the scene and registers the operation in the undo stack.
+ *
+ * This method adds the provided QGraphicsItem to the MapScene and simultaneously
+ * creates an AddItemAction, which is pushed onto the undo stack. This enables the
+ * addition of the item to be undone later via the undo mechanism of the scene.
+ *
+ * @param item The QGraphicsItem to be added to the scene.
+ */
 void MapScene::addUndoableItem(QGraphicsItem *item) {
     addItem(item);
     undoStack.push(std::make_unique<AddItemAction>(item));
 }
 
+/**
+ * @brief Removes a QGraphicsItem from the scene with undo/redo capability.
+ *
+ * This function removes the specified QGraphicsItem from the MapScene while
+ * enabling the operation to be reversible by pushing a corresponding
+ * RemoveItemAction onto the undo stack. The RemoveItemAction is created to
+ * manage the undo functionality, ensuring that the item can be re-added
+ * to the scene if undone.
+ *
+ * @param item A pointer to the QGraphicsItem to remove from the scene.
+ */
 void MapScene::removeUndoableItem(QGraphicsItem *item) {
     undoStack.push(std::make_unique<RemoveItemAction>(item));
     removeItem(item);
@@ -178,6 +373,27 @@ void MapScene::undoLastAction() {
 }
 
 
+/**
+ * @brief Serializes the MapScene instance into a QJsonObject representation.
+ *
+ * This function creates a QJsonObject containing the current state of the MapScene, including:
+ * - The scale factor used in the scene.
+ * - Tools and their deactivation state.
+ * - A list of all items present in the scene with their properties, types, and geometries.
+ * - Fog of war data encoded as a PNG in Base64 format, if one exists.
+ *
+ * The following types of items are handled during serialization:
+ * - Polygons: The points, color, and z-value are saved.
+ * - Ellipses: The center, radius, and color are saved (assumes ellipses are circles).
+ * - Lines: The start and end coordinates, as well as their color, are saved.
+ * - Light sources: The center position, inner and outer radii, and light color are saved.
+ *
+ * If an item does not match any of these types, it is ignored.
+ *
+ * If the fogImage is available and not null, it is encoded and added to the JSON representation.
+ *
+ * @return A QJsonObject containing the serialized state of the MapScene.
+ */
 QJsonObject MapScene::toJson() {
     QJsonObject obj;
     obj["scaleFactor"] = m_scaleFactor;
@@ -241,6 +457,45 @@ QJsonObject MapScene::toJson() {
 }
 
 
+/**
+ * @brief Populates the MapScene from a JSON object.
+ *
+ * This method parses a QJsonObject to populate the MapScene with various graphical items
+ * (e.g., polygons, ellipses, lines, light sources) and updates settings like the scale factor.
+ * It also supports loading a fog of war image from the JSON object if present.
+ *
+ * The method expects the following structure in the JSON object:
+ * - "scaleFactor" (optional, double): The scale factor for the scene. Defaults to 1.0 if not provided.
+ * - "items" (array): A list of graphical items to be added to the scene. Each item is an object containing:
+ *   - "type" (string): The type of the item (e.g., "polygon", "ellipse", "line", "light").
+ *   - Additional properties specific to the type of item, such as coordinates, size, or color.
+ * - "fog" (optional, string): A Base64-encoded PNG image representing the fog of war for the scene.
+ *
+ * Supported item types:
+ * - **polygon**: Represents a filled polygon.
+ *   - "points" (array): An array of 2D points (arrays of 2 doubles) defining the polygon vertices.
+ *   - "color" (string): The color of the polygon.
+ *   - "z" (optional, double): The z-index of the polygon. Defaults to 5.
+ * - **ellipse**: Represents a filled ellipse.
+ *   - "center" (array): An array of 2 doubles representing the center of the ellipse.
+ *   - "radius" (double): The radius of the ellipse.
+ *   - "color" (string): The color of the ellipse.
+ * - **line**: Represents a line.
+ *   - "start" (array): An array of 2 doubles representing the start point of the line.
+ *   - "end" (array): An array of 2 doubles representing the end point of the line.
+ *   - "color" (string): The color of the line.
+ * - **light**: Represents a custom light source.
+ *   - "center" (array): An array of 2 doubles representing the center of the light.
+ *   - "color" (string): The color of the light.
+ *   - "r1" (double): The inner radius of the light source.
+ *   - "r2" (double): The outer radius of the light source.
+ *
+ * If the "fog" key is present in the JSON object, the fog image will be decoded from the Base64 string
+ * and applied. The fog of war display will then be updated, with a default opacity of 0.5 and a z-index of 100.
+ * Any existing fog of war is removed and replaced with the new one.
+ *
+ * @param obj The QJsonObject containing the scene data to be parsed and applied.
+ */
 void MapScene::fromJson(const QJsonObject& obj) {
     m_scaleFactor = obj["scaleFactor"].toDouble(1.0);
 
@@ -306,6 +561,25 @@ void MapScene::fromJson(const QJsonObject& obj) {
     }
 }
 
+/**
+ * @brief Saves the current state of the map scene to a file at the specified path.
+ *
+ * This function serializes the scene's data (including both map and image information) into a custom
+ * binary format and writes it to the provided file path. The saved file includes a header with metadata,
+ * followed by JSON data representing the map state, and finally the image data of the map.
+ *
+ * @param path The file path where the scene data should be saved.
+ * @return Returns true if the file was successfully saved; otherwise, returns false.
+ *
+ * The file-saving process involves:
+ * - Creating a file at the provided path.
+ * - Serializing the current map state into a JSON object using toJson().
+ * - Retrieving the map's visual representation as a pixmap using getMapPixmap() and converting it to PNG format.
+ * - Preparing a custom file header (MapFileHeader) that records the sizes of the JSON and image data.
+ * - Writing the header, JSON data, and image data to the file using QDataStream.
+ *
+ * If the file cannot be opened in write mode, the function returns false.
+ */
 bool MapScene::saveToFile(const QString& path) {
     QFile file(path);
     if (!file.open(QIODevice::WriteOnly)) {
@@ -336,6 +610,33 @@ bool MapScene::saveToFile(const QString& path) {
     return true;
 }
 
+/**
+ * @brief Loads and initializes the map information from a file.
+ *
+ * This function reads a map file specified by the input path and processes its contents,
+ * which include metadata, JSON-encoded scene data, and an embedded map image. The function
+ * performs several validation checks during the file reading process, such as verifying
+ * the file signature and size integrity of read data.
+ *
+ * @param path The path to the map file to be loaded.
+ * @return Returns an integer status code indicating the result of the operation, which may be:
+ * - qmapErrorCodes::NoError (0): If the file is successfully loaded and processed.
+ * - qmapErrorCodes::FileOpenError: If there is an error opening the file or insufficient data is read.
+ * - qmapErrorCodes::FileSignatureError: If the file does not contain the expected map signature.
+ * - qmapErrorCodes::JsonParseError: If the JSON block cannot be parsed successfully.
+ *
+ * The function performs the following steps:
+ * 1. Attempts to open the file for reading. If unsuccessful, returns qmapErrorCodes::FileOpenError.
+ * 2. Reads the file header and verifies its signature to ensure it matches the expected magic number.
+ * 3. Extracts the JSON data and image data of the specified sizes from the file. If data sizes
+ *    are incorrect, returns qmapErrorCodes::FileOpenError.
+ * 4. Parses the JSON data using QJsonDocument. If JSON is invalid, returns qmapErrorCodes::JsonParseError.
+ * 5. Loads the extracted image data into a QImage object. If successful, the scene is cleared,
+ *    and the new map image is added as a QGraphicsPixmapItem with appropriate layer settings.
+ * 6. Calls the fromJson function to initialize scene items from the JSON object.
+ * 7. Initializes the fog of war based on the dimensions of the map image, if applicable.
+ * 8. Closes the file and returns qmapErrorCodes::NoError upon successful completion.
+ */
 int MapScene::loadFromFile(const QString& path) {
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly)) {
@@ -386,6 +687,16 @@ int MapScene::loadFromFile(const QString& path) {
     return qmapErrorCodes::NoError;
 }
 
+/**
+ * @brief Returns the rectangular bounds of the map as a QRectF object.
+ *
+ * This method retrieves the pixmap of the first QGraphicsPixmapItem in the scene
+ * (excluding the fog item) by calling getMapPixmap() and fetches its rectangular bounds.
+ * If no QPixmap is found, the returned rectangle will correspond to the default bounds
+ * of an empty QPixmap.
+ *
+ * @return A QRectF representing the bounds of the map pixmap.
+ */
 QRectF MapScene::mapRect() const {
     QPixmap pixmap = getMapPixmap();
     return pixmap.rect();;

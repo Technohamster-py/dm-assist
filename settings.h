@@ -24,6 +24,7 @@ enum iniFields{
     del = 32
 };
 
+
 struct Settings{
     struct General{
         QString audioDevice = "general/audioDevice";    ///< int Выбранное аудиоустройство

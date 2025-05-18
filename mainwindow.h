@@ -30,6 +30,18 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+/**
+ * @class MainWindow
+ * @brief The MainWindow class serves as the main application window, managing user interface components and core functionality.
+ *
+ * MainWindow is the central component of the application, responsible for managing various tools, widgets, and map-related features.
+ * It provides functionality for switching languages, saving and loading settings, and interacting with other application modules.
+ *
+ * The class includes handling of tools such as calibration, fog management, and lighting, along with features to work with map tabs
+ * and a shared map window.
+ *
+ * Signals and slots are used extensively to enable communication between components, making the application dynamic and interactive.
+ */
 class MainWindow : public QMainWindow {
 Q_OBJECT
 

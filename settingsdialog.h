@@ -13,6 +13,17 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class SettingsDialog; }
 QT_END_NAMESPACE
 
+/**
+ * @class SettingsDialog
+ * @brief A dialog interface for configuring application settings.
+ *
+ * The SettingsDialog class provides a graphical interface for managing various
+ * application settings including audio devices, language preferences, themes,
+ * and general configurations.
+ *
+ * The class integrates with QSettings for loading and saving user preferences
+ * and utilizes a navigation tree for presenting configuration categories to the user.
+ */
 class SettingsDialog : public QDialog {
 Q_OBJECT
 

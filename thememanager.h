@@ -11,6 +11,13 @@
 #include <QColor>
 #include <QApplication>
 
+/**
+ * @class ThemeManager
+ * @brief Manages application themes through preset options or custom XML-based themes.
+ *
+ * The ThemeManager class allows users to apply predefined "Light" or "Dark" themes
+ * and also enables dynamic theme loading from custom XML files to customize the application's appearance.
+ */
 class ThemeManager{
 public:
     enum class PresetTheme{

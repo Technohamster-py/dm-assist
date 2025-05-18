@@ -31,19 +31,20 @@ enum qmapErrorCodes{
     JsonParseError
 };
 
+
 /**
  * @class MapScene
- * @brief A scene for displaying and interacting with RPG map elements.
+ * @brief Represents a custom scene for displaying and interacting with a map, supporting tools, fog of war, and undoable actions.
+ *
+ * The MapScene class extends QGraphicsScene to provide functionalities like tool management,
+ * fog of war manipulation, and undo/redo capabilities for certain scene modifications. It emits
+ * relevant signals when tools are changed or the fog of war is updated.
  */
 class MapScene : public QGraphicsScene
 {
 Q_OBJECT
 
 public:
-    /**
-     * @brief Constructs a new MapScene.
-     * @param parent Optional parent QObject
-     */
     explicit MapScene(QObject *parent = nullptr);
     void setActiveTool(AbstractMapTool* tool);
 

@@ -7,6 +7,19 @@
 #include <QXmlStreamReader>
 #include <QDebug>
 
+/**
+ * @brief Applies the selected preset theme to the application.
+ *
+ * This function updates the application palette based on the specified
+ * theme preset. It modifies various palette roles (like Window, WindowText,
+ * Base, Text, Button, ButtonText, Highlight, and HighlightedText) to
+ * correspond to the selected visual style. The new palette is then applied to
+ * the application instance.
+ *
+ * @param theme The preset theme to apply. It can be either PresetTheme::Light
+ * or PresetTheme::Dark. If an unknown value is provided, the default Light
+ * theme is applied.
+ */
 void ThemeManager::applyPreset(ThemeManager::PresetTheme theme) {
     QPalette palette;
     switch (theme) {
@@ -43,6 +56,27 @@ void ThemeManager::applyPreset(ThemeManager::PresetTheme theme) {
     qApp->setPalette(palette);
 }
 
+/**
+ * Loads a theme configuration from an XML file and applies it to the application palette.
+ *
+ * The method parses an XML file containing theme configuration data,
+ * including color roles and groups, and sets the corresponding colors
+ * in the application palette. The XML structure is expected to contain
+ * color groups (e.g., active, inactive, disabled) and color roles for
+ * these groups (e.g., Window, Button, Text). The colors are defined
+ * within the corresponding groups and roles.
+ *
+ * The method supports an extended color role "PlaceholderText" if the
+ * application is built with Qt version 5.12 or higher.
+ *
+ * If the XML file cannot be loaded or parsed, a warning message is
+ * logged, and the method returns false. Otherwise, the application's
+ * palette is updated with the loaded theme, and the method returns true.
+ *
+ * @param path The file path to the XML theme configuration file.
+ * @return Returns true if the theme is successfully loaded and applied,
+ *         false if there is an error in loading or parsing the XML file.
+ */
 bool ThemeManager::loadFromXml(const QString& path) {
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {

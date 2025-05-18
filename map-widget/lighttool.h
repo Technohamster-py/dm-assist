@@ -7,6 +7,14 @@
 #include "abstractmaptool.h"
 class LightTool;
 
+/**
+ * @class LightSourceItem
+ * @brief A graphical representation of a light source on a QGraphicsScene.
+ *
+ * The LightSourceItem class represents a light source with adjustable radii and color.
+ * It supports mouse interaction for movement and removal, and integrates with
+ * a LightTool to manage fog effects.
+ */
 class LightSourceItem : public QGraphicsItem {
 public:
     LightSourceItem(qreal r1, qreal r2, QColor color, QPointF position, LightTool *tool);
@@ -36,6 +44,14 @@ private:
 };
 
 
+/**
+ * @class LightTool
+ * @brief A tool for manipulating light sources on a map scene.
+ *
+ * LightTool provides functionality to add and manipulate light sources
+ * with configurable properties such as brightness radius, dim radius, and color.
+ * It also handles interactions with light source objects using mouse events.
+ */
 class LightTool : public AbstractMapTool {
 Q_OBJECT
 public:

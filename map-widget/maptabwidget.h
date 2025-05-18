@@ -9,6 +9,16 @@
 #include <QLabel>
 #include <QMenu>
 
+/**
+ * @class TabWidget
+ * @brief A custom widget derived from QTabWidget with added functionality such as "new tab"
+ *        button and a context menu for tab management.
+ *
+ * The TabWidget class provides a specialized QTabWidget that includes:
+ * - A corner "+" button to add new tabs.
+ * - A context menu appearing on right-clicking a tab for performing actions like "share" and "save".
+ * - Integration with signals for handling tab-related actions externally.
+ */
 class TabWidget : public QTabWidget {
 Q_OBJECT
 

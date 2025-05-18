@@ -15,7 +15,13 @@
 
 /**
  * @class MapView
- * @brief A view for displaying and interacting with a map image.
+ * @brief Extends QGraphicsView to provide a customized map display and interaction system.
+ *
+ * The MapView class serves as a graphical interface for loading, displaying,
+ * and interacting with maps using various tools and functionalities such as
+ * panning, zooming, and integrating with a custom MapScene.
+ * It allows setting active tools to manipulate the map and supports middle mouse
+ * drag, custom zoom handling, and customizable scene integration.
  */
 class MapView : public QGraphicsView
 {

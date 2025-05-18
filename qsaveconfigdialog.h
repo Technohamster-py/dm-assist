@@ -15,6 +15,16 @@
 #include <QDir>
 #include <QFile>
 
+/**
+ * @class SaveConfigDialog
+ * @brief A dialog for configuring and saving a project file.
+ *
+ * This class provides a graphical user interface for users to specify
+ * the project name and root folder where the project configuration
+ * will be saved. The dialog allows browsing directories, displays warnings
+ * for validation errors, and ensures the specified folder is suitable
+ * for saving the project.
+ */
 class SaveConfigDialog : public QDialog {
 Q_OBJECT
 

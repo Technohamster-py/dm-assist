@@ -6,8 +6,14 @@
 
 static QString calculateHpStatus(int hp, int maxHp);
 
+
 /**
- * @brief Делегат для отрисовки HP в виде прогресс-бара
+ * @class HpProgressBarDelegate
+ * @brief A custom delegate for rendering numeric values, status text, or progress bars in item views.
+ *
+ * HpProgressBarDelegate inherits from QStyledItemDelegate and provides functionality
+ * to display health point (HP) or progress-related data in three different visual modes:
+ * Numeric, StatusText, and ProgressBar.
  */
 class HpProgressBarDelegate : public QStyledItemDelegate
 {

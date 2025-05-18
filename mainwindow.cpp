@@ -27,6 +27,15 @@ static void moveAllFiles(const QString& sourcePath, const QString& destPath);
 static bool removeDirectoryRecursively(const QString &directoryPath, bool deleteSelf=true);
 
 
+/**
+ * @brief Constructor for the MainWindow class.
+ *
+ * Initializes a new instance of the MainWindow class, setting up the
+ * UI and establishing the parent-child relationship with the provided parent widget.
+ *
+ * @param parent Pointer to the parent QWidget. Defaults to nullptr if not provided,
+ * which means the MainWindow has no parent and will be a top-level window.
+ */
 MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
@@ -73,15 +82,23 @@ MainWindow::~MainWindow() {
 }
 
 
+
 /**
- * Конфигурирование плееров
+ * Initializes and configures player widgets in the MainWindow.
  *
- * @details подключение всех плееров к их виджетам.
- * Подключение сигналов о начале проигрывания, изменения и остановке к плеерам.
+ * This function dynamically creates nine QPlayer objects with unique identifiers
+ * and titles. These QPlayer instances are added to the `players` QVector and displayed
+ * in the UI layout defined as `ui->musicLayout`. Additionally, signal-slot connections
+ * are established to ensure that when a player starts, all other players stop.
+ *
+ * The `QPlayer` instances are assigned sequential IDs from 1 to 9 and titled
+ * "Player 1" through "Player 9". Each player is inserted into the layout at
+ * the appropriate position and connected to the `stopOtherPlayers` slot to
+ * handle stopping other players when one starts.
  */
 void MainWindow::setupPlayers() {
      for (int i = 0; i < 9; ++i) {
-         auto *player = new QPlayer(this, i, QString("Player %1").arg(i + 1));
+         auto *player = new QPlayer(this, i+1, QString("Player %1").arg(i + 1));
          players.append(player);
      }
 
@@ -92,10 +109,19 @@ void MainWindow::setupPlayers() {
 }
 
 
+
 /**
- * Задать шорткаты всем плеерам
+ * @brief Sets up keyboard shortcuts for player controls.
  *
- * Подключение комбинаций клавиш на основе id плеера
+ * This function iterates through a collection of players and assigns
+ * a unique keyboard shortcut to each player. The shortcuts are
+ * generated in the form "Ctrl+<index>", where `<index>` corresponds
+ * to the player's index in the `players` vector. These shortcuts
+ * enable quick access to the play functionality of each player.
+ *
+ * Preconditions:
+ * - The `players` vector must be initialized and contain valid player objects.
+ * - Each player in the `players` vector must support the `setPlayShortcut` method.
  */
 void MainWindow::setupShortcuts() {
     for (int i = 0; i < players.size(); ++i) {
@@ -104,8 +130,13 @@ void MainWindow::setupShortcuts() {
     }
 }
 
+
 /**
- * Остановка всех плееров
+ * @brief Stops all player instances in the application.
+ *
+ * Iterates through all QPlayer objects in the `players` vector and invokes
+ * the `stop` method on each. This is typically used to halt any ongoing playback
+ * or activities managed by the players.
  */
 void MainWindow::stopAll() {
     for (int i = 0; i < 9; ++i) {
@@ -113,10 +144,22 @@ void MainWindow::stopAll() {
     }
 }
 
+
 /**
- * Загрузка конфига плейлиста
+ * @brief Loads and parses a configuration XML file for players' playlists.
  *
- * Парсинг из xml файла. Считывается список файлов и они добавляются в конкретный плеер
+ * This function displays a file open dialog to the user, allowing them to select a configuration XML file.
+ * If a valid file is selected, the file is opened and read. The XML structure is parsed to extract playlist data
+ * for the players. Each player node in the XML specifies the ID of the player and the associated folder containing
+ * playlist files. The function handles the following:
+ *
+ * - Extracting the absolute path to the playlist folder from the file.
+ * - Validating that the specified folder exists.
+ * - Setting the name of the playlist for each player based on the folder name.
+ * - Adding media files from the folder to the respective player's playlist.
+ *
+ * Error dialogs are shown if the file fails to open or if the folder specified does not exist.
+ * The function ensures players are updated with appropriate data or left empty if no valid data is found.
  */
 void MainWindow::loadConfigFile() {
     QString fileName = QFileDialog::getOpenFileName(this,
@@ -141,11 +184,10 @@ void MainWindow::loadConfigFile() {
 
         for (int i=0; i < playersNodeList.count(); i++){
             QDomElement playerNode = playersNodeList.at(i).toElement();
-            QString absolutePath = playerNode.firstChild().toText().data();     // Получаем абсолютный путь к папке с плейлистом
+            QString absolutePath = playerNode.firstChild().toText().data();
 
-            int playerId = playerNode.attribute("id").toInt();                  ///< Получаем Id плейлиста
+            int playerId = playerNode.attribute("id").toInt();
 
-            /// Получаем имя папки плейлиста (имя самого плейлиста)
             QFileInfo dirInfo(absolutePath);
             if (dirInfo.isDir()){
                 players[playerId]->setPlaylistName(dirInfo.fileName());
@@ -168,10 +210,40 @@ void MainWindow::loadConfigFile() {
     }
 }
 
+
 /**
- * Сохранение конфигурационного файла
- * @details У пользователя запрашивается название проекта и корневая папка сохранения.
- * После этого все файлы из рабочей папки копируются в папку сохранения и создается .xml конфиг
+ * Saves the current configuration of the application to an XML file.
+ * This function allows the user to specify a filename using a dialog,
+ * and then writes the configuration of playlists and their associated paths
+ * for all players into an XML structure in the specified file.
+ *
+ * - If the user cancels or does not specify a filename, the function will exit early.
+ * - If the file cannot be opened for read/write operations, a critical error message
+ *   is displayed and the function returns.
+ * - Each player's playlist and associated local data are moved to a directory
+ *   corresponding to the new configuration base directory.
+ *
+ * XML Structure Example:
+ * The resulting XML structure for playlists will look like:
+ * <music-player>
+ *     <playlist id="0">path/to/playlist0</playlist>
+ *     <playlist id="1">path/to/playlist1</playlist>
+ *     ...
+ *     <playlist id="8">path/to/playlist8</playlist>
+ * </music-player>
+ *
+ * Internally, it uses:
+ * - QDomDocument to create the XML document.
+ * - @ref moveAllFiles to move the files from the local directory of each playlist
+ *   to the path corresponding to the new configuration.
+ *
+ * Preconditions:
+ * - The QVector<QPlayer*> `players` should be initialized and populated with
+ *   all player instances before invoking this function.
+ *
+ * Postconditions:
+ * - A new XML configuration file is created at the specified location.
+ * - Local directories of all playlists are moved to the base directory.
  */
 void MainWindow::saveConfigFile() {
     SaveConfigDialog dialog(this);
@@ -216,10 +288,17 @@ void MainWindow::saveConfigFile() {
     configFile.close();
 }
 
+
 /**
- * Сохранение настроек
+ * @brief Saves application settings to persistent storage.
  *
- * Из виджета сохраняется только значение рабочей папки, остальные настройки сохраняются при закрытии диалога настроек
+ * This function stores the current working directory and the volume slider's
+ * value in QSettings under the keys defined by the `paths.general.dir` and
+ * `paths.general.volume` respectively. After setting the values, it synchronizes
+ * the settings to ensure the data is saved properly.
+ *
+ * The organization name and application name used for QSettings are defined by
+ * the constants `ORGANIZATION_NAME` and `APPLICATION_NAME`.
  */
 void MainWindow::saveSettings() {
     QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
@@ -228,10 +307,38 @@ void MainWindow::saveSettings() {
     settings.sync();
 }
 
+
 /**
- * Загрузка настроек
+ * @brief Loads the application settings from persistent storage and applies these settings.
  *
- * Установка рабочей папки, языка и аудиовыхода
+ * This function retrieves and sets various application-wide settings using `QSettings` and ensures
+ * that the working directory, audio configurations, language, initiative tracker options, and
+ * appearance themes are properly initialized.
+ *
+ * The settings are loaded as follows:
+ *
+ * - **General Settings**:
+ *   - Loads the working directory path. If the directory does not exist, it is created.
+ *
+ * - **Music Settings**:
+ *   - Sets the audio output device for all QPlayer instances.
+ *   - Configures the volume slider to the saved volume level.
+ *
+ * - **Language Settings**:
+ *   - Sets the application language by calling `changeLanguage`.
+ *
+ * - **Initiative Tracker Settings**:
+ *   - Sets the health bar display mode.
+ *   - Configures the visibility of specific fields in the initiative tracker widget.
+ *
+ * - **Appearance Settings**:
+ *   - Loads the theme (Light, Dark, or a custom theme from XML) and applies it using `ThemeManager`.
+ *
+ * @details
+ * If a setting is not found in persistent storage, a default value is used.
+ *
+ * @note The function assumes that all required objects (e.g., `players`, `ui`, `initiativeTrackerWidget`)
+ * are properly initialized before this function is called.
  */
 void MainWindow::loadSettings() {
     QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
@@ -269,9 +376,24 @@ void MainWindow::loadSettings() {
 
 
 /**
- * Открытие диалога настроек
+ * @brief Handles the "Settings" action when triggered.
  *
- * После закрытия диалога настройки перезагружаются
+ * This function is invoked when the user selects the "Settings" option from the UI.
+ * It performs the following operations:
+ *
+ * 1. Saves the current application settings by calling `saveSettings`.
+ * 2. Checks if the settings dialog (`settingsDialog`) exists. If not, it initializes
+ *    the dialog by creating a new `SettingsDialog` object with the organization name,
+ *    application name, and parent as parameters.
+ * 3. Displays the settings dialog in a modal state by calling `exec` on it.
+ * 4. After the dialog is closed, it reloads application settings by calling `loadSettings`.
+ *
+ * @note
+ * - The `settingsDialog` is initialized only once and reused afterward.
+ * - The `saveSettings` function is called before showing the dialog to ensure
+ *   the latest settings are preserved.
+ * - The `loadSettings` function is called after the dialog is closed, allowing
+ *   the application to reflect any changes made in the settings dialog.
  */
 void MainWindow::on_actionSettings_triggered() {
     saveSettings();
@@ -283,9 +405,14 @@ void MainWindow::on_actionSettings_triggered() {
     loadSettings();
 }
 
+
 /**
- * Остановить все плееры кроме одного
- * @param exeptId исключенный плеер, который останется включенным
+ * Stops all players in the `players` vector except the one specified by the given `exeptId`.
+ *
+ * Iterates over the list of players and checks the playlist ID of each player.
+ * If the player's playlist ID does not match the provided `exeptId`, the player is stopped.
+ *
+ * @param exeptId The playlist ID of the player that should not be stopped.
  */
 void MainWindow::stopOtherPlayers(int exeptId) {
     for (int i = 0; i < 9; ++i) {
@@ -294,9 +421,20 @@ void MainWindow::stopOtherPlayers(int exeptId) {
     }
 }
 
+
 /**
- * Установить язык
- * @param languageCode код языка
+ * @brief Changes the application's language to the specified language code.
+ *
+ * This function updates the application's current language by removing the existing
+ * translator, loading the translation file for the specified language code, and
+ * installing the new translator. If the translation file is successfully loaded,
+ * the UI will be retranslated to reflect the language change.
+ *
+ * @param languageCode The language code (e.g., "en", "fr") for the desired language.
+ *
+ * The language file is expected to be located in the "translations" directory
+ * relative to the application's directory and should follow the naming convention
+ * "dm-assist_<languageCode>.qm".
  */
 void MainWindow::changeLanguage(const QString &languageCode) {
     qApp->removeTranslator(&translator);
@@ -308,33 +446,80 @@ void MainWindow::changeLanguage(const QString &languageCode) {
     }
 }
 
+
 /**
- * Перейти в браузер на страницу wiki репозитория
+ * @brief Opens the help documentation in the default web browser.
+ *
+ * This function launches a specific URL pointing to the user guide or
+ * documentation for the application using `QDesktopServices::openUrl`.
+ * It is intended to provide quick access to resources that assist
+ * users in understanding or troubleshooting the application.
  */
 void MainWindow::openHelp() {
     QUrl url("https://github.com/Technohamster-py/dm-assist/wiki/%D0%9D%D0%B0%D1%87%D0%B0%D0%BB%D0%BE");
     QDesktopServices::openUrl(url);
 }
 
+
 /**
- * Перейти в браузер на страницу с чаевыми
+ * @brief Opens the donation page using the system's default web browser.
+ *
+ * This function creates a URL pointing to the donation page and uses the
+ * QDesktopServices class to open the specified URL in the default web
+ * browser. It provides a convenient way for users to navigate to the
+ * donation platform directly from the application.
  */
 void MainWindow::openDonate() {
     QUrl url("https://pay.cloudtips.ru/p/8f6d339a");
     QDesktopServices::openUrl(url);
 }
 
+/**
+ * @brief Sets the volume divider for all QPlayer instances managed by MainWindow.
+ *
+ * This function iterates through the `players` vector and sets the volume divider
+ * for each QPlayer object to the specified value. The operation assumes that the
+ * `players` vector contains exactly 9 QPlayer instances.
+ *
+ * @param value The volume divider value to be applied to each QPlayer instance.
+ */
 void MainWindow::setVolumeDivider(int value) {
     for (int i = 0; i < 9; ++i) {
         players[i]->setVolumeDivider(value);
     }
 }
 
+/**
+ * @brief Sets up the initiative tracker widget in the main window.
+ *
+ * This function initializes a new instance of QInitiativeTrackerWidget
+ * and adds it to the tracker layout of the main window's UI. The
+ * widget is created with the main window as its parent.
+ */
 void MainWindow::setupTracker() {
     initiativeTrackerWidget = new QInitiativeTrackerWidget(this);
     ui->trackerLayout->addWidget(initiativeTrackerWidget);
 }
 
+/**
+ * @brief Creates a new map tab in the application.
+ *
+ * This function opens a file dialog to allow the user to select a map file. The file can either be
+ * a ".dam" file (map scene file) or an image file (e.g., ".png", ".jpg", ".bmp"). If the user selects
+ * a valid file, it creates a new MapView instance, attempts to load the file into the view, and adds
+ * it as a new tab in the mapTabWidget if successful.
+ *
+ * If the file is a ".dam" file, it loads the scene data using MapView::loadSceneFromFile().
+ * If the file is an image, it loads the image into the map using MapView::loadMapImage().
+ *
+ * If the file loading fails, an error dialog is displayed, and the MapView instance is deleted.
+ * Otherwise, the tab is added, visibility of the mapTabWidget is updated, the new tab is selected,
+ * and tool change handling is connected for the new MapView instance.
+ *
+ * The toolChanged signal from the MapScene associated with the MapView is connected to a lambda
+ * function that ensures appropriate QAction items in the toolGroup are checked or unchecked based
+ * on the active tool.
+ */
 void MainWindow::createNewMapTab() {
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open Map Image"),
@@ -374,6 +559,26 @@ void MainWindow::createNewMapTab() {
     }
 }
 
+/**
+ * @brief Configures and initializes the map-related components within the main window.
+ *
+ * This method sets up the `mapTabWidget` for managing multiple map tabs, configures the layout and alignment of map-related
+ * widgets, and establishes connections between UI elements and their respective actions. It also ensures the visibility of
+ * the map widgets is updated based on their state.
+ *
+ * The following actions and connections are initialized:
+ * - Creates the `mapTabWidget` and adds it to the main layout.
+ * - Aligns placeholder layout to the center.
+ * - Connects the `openMapButton` to trigger the creation of a new map tab.
+ * - Connects the `newTabRequested` signal of `mapTabWidget` to invoke the creation of a new map tab.
+ * - Connects the `AddMap` QAction to trigger new map tab creation.
+ * - Links the `tabCloseRequested` signal of `mapTabWidget` to handle closing and deleting tabs.
+ * - Connects the `share` signal of `mapTabWidget` to open the shared map window.
+ * - Connects the `save` signal of `mapTabWidget` to perform map export.
+ *
+ * After setting up these connections and components, it ensures the visibility
+ * of the placeholder and the map tabs is updated accordingly.
+ */
 void MainWindow::setupMaps() {
     mapTabWidget = new TabWidget(this);
     ui->mainViewLayout->addWidget(mapTabWidget);
@@ -388,12 +593,33 @@ void MainWindow::setupMaps() {
     updateVisibility();
 }
 
+/**
+ * @brief Updates the visibility of specific UI elements based on the presence of tabs.
+ *
+ * This method checks whether the `mapTabWidget` contains any tabs. If tabs are present,
+ * the `mapTabWidget` is made visible, and the placeholder widget (`ui->placeHolderWidget`)
+ * is hidden. Otherwise, the `mapTabWidget` is hidden, and the placeholder widget is shown.
+ *
+ * The method ensures that appropriate UI elements are shown depending on whether there are
+ * tabs to display in the `mapTabWidget`.
+ */
 void MainWindow::updateVisibility() {
     bool hasTabs = mapTabWidget->count() > 0;
     mapTabWidget->setVisible(hasTabs);
     ui->placeHolderWidget->setVisible(!hasTabs);
 }
 
+/**
+ * @brief Deletes a specific map tab from the application's tab widget.
+ *
+ * This function removes a tab from the `mapTabWidget` based on the given index,
+ * deletes the associated `QWidget` to free up resources, and then updates the visibility
+ * of certain UI elements based on the remaining tabs.
+ *
+ * @param index The index of the tab to be deleted. It should be a valid index within the range of existing tabs.
+ *
+ * @note Calling this function on an invalid index (e.g., out of range) can result in undefined behavior.
+ */
 void MainWindow::deleteMapTab(int index) {
     QWidget *widget = mapTabWidget->widget(index);
     mapTabWidget->removeTab(index);
@@ -401,6 +627,16 @@ void MainWindow::deleteMapTab(int index) {
     updateVisibility();
 }
 
+/**
+ * @brief Activates the calibration mode in the currently selected map view.
+ *
+ * This method retrieves the currently active widget from the mapTabWidget and
+ * attempts to cast it to a MapView instance. If the cast is successful, it sets
+ * the active tool in the MapView to the calibrationTool, enabling the calibration mode.
+ *
+ * @note This function assumes that calibrationTool has already been initialized and that
+ * the current widget in mapTabWidget is a compatible MapView instance.
+ */
 void MainWindow::setCalibrationMode() {
     MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
     if (currentView){
@@ -408,6 +644,16 @@ void MainWindow::setCalibrationMode() {
     }
 }
 
+/**
+ * @brief Sets the measure mode by activating or deactivating the ruler tool.
+ *
+ * This method sets the current map view's active tool to the ruler map tool
+ * if measure mode is enabled (checked is true) or null if measure mode is
+ * disabled (checked is false). This allows the user to enable or disable
+ * the measuring functionality on the currently active map tab.
+ *
+ * @param checked A boolean indicating whether to enable (true) or disable (false) the measure mode.
+ */
 void MainWindow::setMeasureMode(bool checked) {
     MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
     if (currentView){
@@ -418,6 +664,30 @@ void MainWindow::setMeasureMode(bool checked) {
     }
 }
 
+/**
+ * @brief Configures the toolbar of the main window.
+ *
+ * This function initializes tool widgets and action groups, adds tools for various
+ * functionalities, and connects the respective signals and slots for interaction.
+ * Tools include rulers, fog tools, light tools, and shape drawing tools such as lines,
+ * circles, and squares. Context menus are also set for specific tools, along with
+ * tooltips and icon configurations.
+ *
+ * Key functionalities implemented in the toolbar setup:
+ *   - Ruler Tool: Allows calibration and measurement mode toggling. Context menu provides
+ *     calibration options.
+ *   - Fog Tools: Includes fog coverage tools (hide/reveal) with context menu actions for
+ *     bulk fog manipulation (e.g., hiding or revealing all fog).
+ *   - Light Tool: Provides controls for adding light sources to the map. Includes options
+ *     for modifying light radius and color and an additional "update fog" checkbox for
+ *     automatic fog updates.
+ *   - Shape Drawing Tools: Enables drawing of line, circle, and square shapes on the map,
+ *     with each shape having its own tool button and connectivity to the current map view.
+ *
+ * Actions and widgets added to the toolbar are connected dynamically to their underlying
+ * tools and modes, ensuring that the toolbar functions are seamlessly integrated with
+ * user interactions.
+ */
 void MainWindow::setupToolbar() {
     ui->toolBar->setMovable(false);
 
@@ -433,7 +703,7 @@ void MainWindow::setupToolbar() {
     toolGroup = new QActionGroup(this);
     toolGroup->setExclusive(true);
 
-    /// Ruler too
+    /// Ruler tool
     QToolButton *rulerButton = new QToolButton(this);
     rulerButton->setCheckable(true);
     rulerButton->setToolTip(tr("ruler"));
@@ -669,6 +939,17 @@ void MainWindow::setupToolbar() {
     });
 }
 
+/**
+ * @brief Opens or activates a shared map window for the specified tab index.
+ *
+ * This method manages a `SharedMapWindow` instance to display the map from
+ * a specific tab in a separate window. If a shared map window does not already
+ * exist, it initializes a new `SharedMapWindow` instance with the map scene
+ * from the specified tab, displays it, and manages its lifecycle. If a shared
+ * map window already exists, it brings the existing window to the foreground.
+ *
+ * @param index Index of the current map tab to get the corresponding map scene.
+ */
 void MainWindow::openSharedMapWindow(int index) {
     MapView* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
     if (!sharedMapWindow){
@@ -685,6 +966,25 @@ void MainWindow::openSharedMapWindow(int index) {
     }
 }
 
+/**
+ * @brief Sets the current fog tool state and mode for the active map view.
+ *
+ * This method toggles the fog tool for the currently active map view within the
+ * MainWindow. If the `checked` parameter is set to false, the fog tool is disabled
+ * for the current view by setting the active tool to `nullptr`. If `checked` is true,
+ * the specified fog mode is applied to the fog tool, and the fog tool is activated
+ * for the current map view.
+ *
+ * @param checked A boolean value indicating whether the fog tool should be activated.
+ *        If false, the fog tool is deactivated for the current map view.
+ * @param mode The fog mode to be applied to the fog tool. This determines whether
+ *        the fog tool is used to hide or reveal areas of the map.
+ *
+ * @details The method checks the currently active tab in the `mapTabWidget`, casts
+ *          it to `MapView`, and applies the specified fog tool settings if the
+ *          active tab is valid. The `FogTool::Mode` enum can be either `Hide` or
+ *          `Reveal` and is used to configure the tool's behavior.
+ */
 void MainWindow::setFogTool(bool checked, FogTool::Mode mode) {
     MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
     if (currentView){
@@ -697,6 +997,16 @@ void MainWindow::setFogTool(bool checked, FogTool::Mode mode) {
     }
 }
 
+/**
+ * @brief Toggles the visibility of a fog layer on the currently active map scene.
+ *
+ * This function retrieves the currently active map view from the `mapTabWidget`
+ * and accesses its associated `MapScene`. Depending on the value of the `hide`
+ * parameter, it either hides or reveals all fog elements on the map scene using
+ * the `fogTool`.
+ *
+ * @param hide If true, hides the fog layer completely; if false, reveals it.
+ */
 void MainWindow::coverMapWithFog(bool hide) {
     MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
     MapScene* scene = currentView->getScene();
@@ -707,6 +1017,16 @@ void MainWindow::coverMapWithFog(bool hide) {
         fogTool->revealAll(scene);
 }
 
+/**
+ * @brief Activates or deactivates the light tool in the current map view.
+ *
+ * This method sets the light tool as the active tool for the currently visible
+ * MapView in the mapTabWidget. If `checked` is true, the light tool is activated,
+ * allowing the user to interact with light-related functionality in the map.
+ * If `checked` is false, no tool is active.
+ *
+ * @param checked Determines whether to activate or deactivate the light tool.
+ */
 void MainWindow::setLightTool(bool checked) {
     MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
     if (checked)
@@ -715,6 +1035,19 @@ void MainWindow::setLightTool(bool checked) {
         currentView->setActiveTool(nullptr);
 }
 
+/**
+ * @brief Exports the map from the specified tab index to a file.
+ *
+ * This function allows the user to export the current map displayed in the specified
+ * tab of the mapTabWidget to a file. A file save dialog is presented to the user to
+ * select the location and name of the output file. The map data is saved in a proprietary
+ * file format (*.dam).
+ *
+ * @param index The index of the tab in mapTabWidget containing the map to be exported.
+ *
+ * @note If the specified tab does not contain a valid MapView object, the operation is skipped.
+ *       The exported file format is DM assist map file (*.dam).
+ */
 void MainWindow::exportMap(int index) {
     MapView* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
     if (currentView){
@@ -727,10 +1060,15 @@ void MainWindow::exportMap(int index) {
 }
 
 
+
 /**
- * Копирование всех фалов из папки sourcePath в папку destPath
- * @param sourcePath изначальное расположение
- * @param destPath целевое расположение
+ * Copies all files from a source directory to a destination directory.
+ * If the destination directory does not exist, it is created.
+ * Existing files in the destination directory with the same name
+ * as the source files are overwritten.
+ *
+ * @param sourcePath The path of the source directory containing the files to be copied.
+ * @param destPath The path of the destination directory where the files will be copied to.
  */
 static void copyAllFiles(const QString& sourcePath, const QString& destPath){
     QDir sourceDir(sourcePath);
@@ -755,10 +1093,17 @@ static void copyAllFiles(const QString& sourcePath, const QString& destPath){
 }
 
 
+
 /**
- * Перемещение всех файлов из папки sourcePath в папку destPath
- * @param sourcePath начальное расположение
- * @param destPath целевое расположение
+ * Moves all files from a source directory to a destination directory.
+ * This function first copies all files from the source directory to the
+ * destination directory and then removes the original files from the
+ * source directory. If the destination directory does not exist, it is
+ * created. Existing files in the destination directory with the same name
+ * as the source files are overwritten.
+ *
+ * @param sourcePath The path of the source directory containing the files to be moved.
+ * @param destPath The path of the destination directory where the files will be moved to.
  */
 static void moveAllFiles(const QString& sourcePath, const QString& destPath){
     copyAllFiles(sourcePath, destPath);
@@ -771,39 +1116,41 @@ static void moveAllFiles(const QString& sourcePath, const QString& destPath){
     }
 }
 
+
 /**
- * Удалить папку со всеми вложенными паками и подпапками
- * @param directoryPath путь к папке
- * @param deleteSelf удалять корневую папку
- * @return
+ * @brief Recursively removes a directory and its contents.
+ *
+ * This function deletes all files and subdirectories within the specified directory.
+ * Optionally, it can also remove the directory itself.
+ *
+ * @param directoryPath The path of the directory to be removed.
+ * @param deleteSelf Indicates whether the directory itself should be removed.
+ *                   If true, the directory is deleted after its contents are removed.
+ *                   If false, only the contents of the directory are deleted.
+ * @return Returns true if the operation is successful. Returns false if the directory does not exist,
+ *         or if any file or subdirectory cannot be removed.
  */
 static bool removeDirectoryRecursively(const QString &directoryPath, bool deleteSelf) {
     QDir dir(directoryPath);
 
-    // Проверяем, существует ли директория
     if (!dir.exists()) {
-     return false; // Если директория не существует, возвращаем false
+     return false;
     }
 
-    // Получаем список всех файлов и поддиректорий
          foreach (QString file, dir.entryList(QDir::NoDotAndDotDot | QDir::AllEntries)) {
          QString fullPath = dir.absoluteFilePath(file);
          if (QFileInfo(fullPath).isDir()) {
-             // Если это поддиректория, рекурсивно вызываем функцию
              if (!removeDirectoryRecursively(fullPath)) {
-                 return false; // Если не удалось удалить поддиректорию, возвращаем false
+                 return false;
              }
          } else {
-             // Удаляем файл
              if (!QFile::remove(fullPath)) {
-                 return false; // Если файл не удалось удалить, возвращаем false
+                 return false;
              }
          }
      }
-
-    // После удаления всех файлов и поддиректорий удаляем саму директорию
     if(deleteSelf)
-        return dir.rmdir("."); // dir.rmdir(".") удаляет саму папку
+        return dir.rmdir(".");
     else
         return true;
 }

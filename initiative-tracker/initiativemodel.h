@@ -10,6 +10,15 @@
 
 static int evaluateExpression(const QString &expression, bool *ok = nullptr);
 
+/**
+ * @struct InitiativeCharacter
+ * @brief Represents a character with initiative, armor class, and health information.
+ *
+ * The InitiativeCharacter struct is used to store information about a character,
+ * including its name, initiative value, armor class (AC), current health points (HP),
+ * and maximum health points (MaxHP). This struct provides methods to serialize and
+ * deserialize the character data using XML.
+ */
 struct InitiativeCharacter {
     QString name;
     int initiative;
@@ -44,6 +53,15 @@ struct InitiativeCharacter {
     }
 };
 
+/**
+ * @class InitiativeModel
+ * @brief A model for managing and displaying character initiatives in a table format.
+ *
+ * This model inherits from QAbstractTableModel and provides functionality for managing a list of characters,
+ * each represented by fields such as name, initiative, armor class (AC), hit points (HP), and max hit points.
+ * It supports functionalities like sorting by initiative, saving/loading data from files, and changing
+ * hit points dynamically.
+ */
 class InitiativeModel : public QAbstractTableModel {
 Q_OBJECT
 

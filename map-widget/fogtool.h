@@ -1,13 +1,17 @@
-//
-// Created by arseniy on 03.05.2025.
-//
-
 #ifndef DM_ASSIST_FOGTOOL_H
 #define DM_ASSIST_FOGTOOL_H
 
 #include "abstractmaptool.h"
 #include <QGraphicsEllipseItem>
 
+/**
+ * @class FogTool
+ * @brief A tool for managing fog of war on a map, enabling functionality to hide or reveal specific areas.
+ *
+ * The FogTool class provides methods to interact with a map scene to manipulate the fog of war.
+ * It can hide or reveal specific regions, set the brush size, and update the brush preview
+ * in real-time as the mouse interacts with the map.
+ */
 class FogTool : public AbstractMapTool{
 Q_OBJECT
 public:

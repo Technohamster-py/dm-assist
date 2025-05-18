@@ -1,7 +1,3 @@
-//
-// Created by arseniy on 27.03.2024.
-//
-
 #ifndef DM_ASSIST_QINITIATIVETRACKERWIDGET_H
 #define DM_ASSIST_QINITIATIVETRACKERWIDGET_H
 
@@ -21,6 +17,14 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class QInitiativeTrackerWidget; class qDndInitiativeEntityEditWidget; class qPlayerInitiativeView; }
 QT_END_NAMESPACE
 
+/**
+ * @brief A widget for managing and displaying an initiative tracker.
+ *
+ * This widget allows users to manage a list of characters in an initiative tracker
+ * by adding, removing, sorting, and navigating through characters' turns. It provides
+ * functionality to save, load, and append characters' data from files, as well as
+ * control the visibility of specific columns and fields.
+ */
 class QInitiativeTrackerWidget : public QWidget {
 Q_OBJECT
 

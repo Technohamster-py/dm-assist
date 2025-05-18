@@ -16,6 +16,14 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class QPlayer; class QPlaylistEdit;}
 QT_END_NAMESPACE
 
+/**
+ * @class QPlayer
+ * @brief A widget-based audio player supporting playlist management and audio output configuration.
+ *
+ * The QPlayer class provides a user-friendly interface to manage and play audio playlists.
+ * It supports functionalities such as adding media files, modifying volume, changing audio
+ * output devices, and handling drag-and-drop operations for media files.
+ */
 class QPlayer : public QWidget {
 Q_OBJECT
 
