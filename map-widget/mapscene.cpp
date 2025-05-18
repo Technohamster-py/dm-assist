@@ -81,7 +81,7 @@ void MapScene::initializeFog(const QSize &size) {
     }
 
     fogItem = addPixmap(QPixmap::fromImage(fogImage));
-    fogItem->setZValue(10); // поверх карты
+    fogItem->setZValue(100); // поверх карты
     fogItem->setOpacity(0.5); // прозрачность по умолчанию (для мастера)
 }
 
@@ -178,9 +178,12 @@ void MapScene::undoLastAction() {
 }
 
 
-QJsonObject MapScene::toJson() const {
+QJsonObject MapScene::toJson() {
     QJsonObject obj;
     obj["scaleFactor"] = m_scaleFactor;
+
+    if (m_activeTool)
+        m_activeTool->deactivate(this);
 
 
     QJsonArray itemsArray;
@@ -263,8 +266,9 @@ void MapScene::fromJson(const QJsonObject& obj) {
                            itemObj["center"].toArray()[1].toDouble());
             double r = itemObj["radius"].toDouble();
             auto* item = new QGraphicsEllipseItem(QRectF(center.x() - r, center.y() - r, 2 * r, 2 * r));
-            item->setPen(QPen(QColor(itemObj["color"].toString())));
-            item->setBrush(QBrush(QColor(itemObj["color"].toString()), Qt::Dense4Pattern));
+            QColor color(itemObj["color"].toString());
+            item->setPen(QPen(color));
+            item->setBrush(QBrush(color, Qt::Dense4Pattern));
             addItem(item);
         }
         else if (type == "line") {
@@ -295,7 +299,7 @@ void MapScene::fromJson(const QJsonObject& obj) {
             }
 
             fogItem = addPixmap(QPixmap::fromImage(fogImage));
-            fogItem->setZValue(10); // поверх карты
+            fogItem->setZValue(100); // поверх карты
             fogItem->setOpacity(0.5);
             updateFog();
         }

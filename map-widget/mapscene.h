@@ -60,7 +60,7 @@ public:
     void setFogOpacity(qreal opacity); // 0.0–1.0
     void updateFog();
 
-    QJsonObject toJson() const;
+    QJsonObject toJson();
     void fromJson(const QJsonObject& obj);
     bool saveToFile(const QString& path);
     int loadFromFile(const QString& path);
