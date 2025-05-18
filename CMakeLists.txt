@@ -32,6 +32,8 @@ set(FILES
         qplayerwidget.h qplayerwidget.cpp
         qsaveconfigdialog.h qsaveconfigdialog.cpp
         settingsdialog.h    settingsdialog.cpp
+        settings.h
+        thememanager.h  thememanager.cpp
 )
 
 set(UI_FILES

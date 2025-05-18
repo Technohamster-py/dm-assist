@@ -1,6 +1,3 @@
-//
-//
-
 #ifndef DM_ASSIST_SETTINGS_H
 #define DM_ASSIST_SETTINGS_H
 
@@ -34,7 +31,13 @@ struct Settings{
         QString lang = "general/lang";                  ///< String язык
         QString volume = "general/volume";              ///< int основной ползунок громкости
     };
+
+    struct Appearance{
+        QString theme = "appearance/theme";
+    };
+
     General general;
+    Appearance appearance;
 
     struct Initiative {
         QString autoInitiative = "initiative/autoroll";            ///< uint8 (0:7) Автоматические броски инициативы для NPC/Монстров/Игроков (UNUSED)

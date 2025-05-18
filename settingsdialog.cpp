@@ -6,6 +6,7 @@
 #include "ui_SettingsDialog.h"
 
 #include <QSettings>
+#include <QStandardPaths>
 #include <QFileDialog>
 #include <utility>
 #include <QDebug>
@@ -24,6 +25,7 @@ SettingsDialog::SettingsDialog(QString organisationName, QString applicationName
 
     populateAudioDevices();
     populateLanguages();
+    populateThemes();
 
     loadSettings();
 
@@ -67,14 +69,37 @@ void SettingsDialog::loadSettings() {
     ui->deleteCheckBox->setChecked(initiativeFields & iniFields::del);
     ui->hpModeComboBox->setCurrentIndex(settings.value(paths.initiative.hpBarMode, 0).toInt());
     ui->showControlCheckBox->setChecked(settings.value(paths.initiative.showHpComboBox, true).toBool());
+
+    QString currentTheme = settings.value(paths.appearance.theme, "Light").toString();
+    index = ui->themeComboBox->findData(currentTheme);
+    if (index != -1)
+        ui->themeComboBox->setCurrentIndex(index);
 }
 
 void SettingsDialog::on_folderButton_clicked() {
     QString folderName = QFileDialog::getExistingDirectory(this,
-                                                           "Выберите папку",
+                                                           tr("Select folder"),
                                                            ui->folderEdit->text().trimmed());
     if (!folderName.isEmpty())
         ui->folderEdit->setText(folderName);
+}
+
+void SettingsDialog::on_themeButton_clicked() {
+    QString themeFileName = QFileDialog::getOpenFileName(this,
+                                                         tr("Select theme file"),
+                                                         QStandardPaths::writableLocation(QStandardPaths::HomeLocation),
+                                                         "Xml file (*.xml)");
+    QFileInfo info(themeFileName);
+    QString dest = QCoreApplication::applicationDirPath() + "/themes/" + info.fileName();
+
+    QDir destDir(QCoreApplication::applicationDirPath() + "/themes");
+    if (!destDir.exists())
+        destDir.mkpath(".");
+    QFile::copy(themeFileName, dest);
+
+    QString themeName = dest.mid(0, dest.length() - 4);
+    ui->themeComboBox->addItem(themeName, dest);
+
 }
 
 void SettingsDialog::saveSettings() {
@@ -102,6 +127,7 @@ void SettingsDialog::saveSettings() {
     settings.setValue(paths.initiative.hpBarMode, ui->hpModeComboBox->currentIndex());
     settings.setValue(paths.initiative.showHpComboBox, ui->showControlCheckBox->isChecked());
 
+    settings.setValue(paths.appearance.theme, ui->themeComboBox->currentData().toString());
     settings.sync();
 }
 
@@ -138,12 +164,25 @@ void SettingsDialog::populateLanguages() {
 
     for (const QString &file : qmFiles)
     {
-        QString locale = file.mid(10, file.length() - 13); // "dm-assist" (9 chars) + ".qm" (3 chars)
+        QString locale = file.mid(10, file.length() - 13); // "dm-assist_" (10 chars) + ".qm" (3 chars)
         QLocale ql(locale.mid(0, 2));
         QString langName = ql.nativeLanguageName();
         ui->languageComboBox->addItem(langName, locale);
     }
     ui->languageComboBox->model()->sort(0);
+}
+
+void SettingsDialog::populateThemes() {
+    QDir themesDir(QCoreApplication::applicationDirPath() + "/themes");
+    QStringList themeFiles = themesDir.entryList(QStringList() << "*.xml", QDir::Files);
+
+    ui->themeComboBox->addItem("Light", "Light");
+    ui->themeComboBox->addItem("Dark", "Dark");
+
+    for (const QString &file: themeFiles) {
+        QString themeName = file.mid(0, file.length() - 4);
+        ui->themeComboBox->addItem(themeName, file);
+    }
 }
 
 

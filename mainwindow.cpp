@@ -18,6 +18,9 @@
 #include <QSpinBox>
 
 #include <QDebug>
+#include "thememanager.h"
+
+#include <QDebug>
 
 static void copyAllFiles(const QString& sourcePath, const QString& destPath);
 static void moveAllFiles(const QString& sourcePath, const QString& destPath);
@@ -88,6 +91,12 @@ void MainWindow::setupPlayers() {
     }
 }
 
+
+/**
+ * Задать шорткаты всем плеерам
+ *
+ * Подключение комбинаций клавиш на основе id плеера
+ */
 void MainWindow::setupShortcuts() {
     for (int i = 0; i < players.size(); ++i) {
         QString key = QString("Ctrl+%1").arg(i);
@@ -104,6 +113,11 @@ void MainWindow::stopAll() {
     }
 }
 
+/**
+ * Загрузка конфига плейлиста
+ *
+ * Парсинг из xml файла. Считывается список файлов и они добавляются в конкретный плеер
+ */
 void MainWindow::loadConfigFile() {
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open player config file"),
@@ -202,6 +216,11 @@ void MainWindow::saveConfigFile() {
     configFile.close();
 }
 
+/**
+ * Сохранение настроек
+ *
+ * Из виджета сохраняется только значение рабочей папки, остальные настройки сохраняются при закрытии диалога настроек
+ */
 void MainWindow::saveSettings() {
     QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
     settings.setValue(paths.general.dir, workingDir);
@@ -209,6 +228,11 @@ void MainWindow::saveSettings() {
     settings.sync();
 }
 
+/**
+ * Загрузка настроек
+ *
+ * Установка рабочей папки, языка и аудиовыхода
+ */
 void MainWindow::loadSettings() {
     QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
     /// General
@@ -232,8 +256,24 @@ void MainWindow::loadSettings() {
     initiativeTrackerWidget->setSharedFieldVisible(3, initiativeFields & iniFields::hp);
     initiativeTrackerWidget->setSharedFieldVisible(4, initiativeFields & iniFields::maxHp);
     initiativeTrackerWidget->setSharedFieldVisible(5, initiativeFields & iniFields::del);
+
+    QString theme = settings.value(paths.appearance.theme, "Light").toString();
+    qDebug() << theme;
+    if (theme == "Light")
+        ThemeManager::applyPreset(ThemeManager::PresetTheme::Light);
+    else if (theme == "Dark")
+        ThemeManager::applyPreset(ThemeManager::PresetTheme::Dark);
+    else
+        ThemeManager::loadFromXml(theme);
+
 }
 
+
+/**
+ * Открытие диалога настроек
+ *
+ * После закрытия диалога настройки перезагружаются
+ */
 void MainWindow::on_actionSettings_triggered() {
     saveSettings();
     if(!settingsDialog)
@@ -244,6 +284,10 @@ void MainWindow::on_actionSettings_triggered() {
     loadSettings();
 }
 
+/**
+ * Остановить все плееры кроме одного
+ * @param exeptId исключенный плеер, который останется включенным
+ */
 void MainWindow::stopOtherPlayers(int exeptId) {
     for (int i = 0; i < 9; ++i) {
         if (players[i]->getPlaylistId() != exeptId)
@@ -251,6 +295,10 @@ void MainWindow::stopOtherPlayers(int exeptId) {
     }
 }
 
+/**
+ * Установить язык
+ * @param languageCode код языка
+ */
 void MainWindow::changeLanguage(const QString &languageCode) {
     qApp->removeTranslator(&translator);
     if (translator.load(QCoreApplication::applicationDirPath() + "/translations/dm-assist_" + languageCode + ".qm"))
@@ -261,11 +309,17 @@ void MainWindow::changeLanguage(const QString &languageCode) {
     }
 }
 
+/**
+ * Перейти в браузер на страницу wiki репозитория
+ */
 void MainWindow::openHelp() {
     QUrl url("https://github.com/Technohamster-py/dm-assist/wiki/%D0%9D%D0%B0%D1%87%D0%B0%D0%BB%D0%BE");
     QDesktopServices::openUrl(url);
 }
 
+/**
+ * Перейти в браузер на страницу с чаевыми
+ */
 void MainWindow::openDonate() {
     QUrl url("https://pay.cloudtips.ru/p/8f6d339a");
     QDesktopServices::openUrl(url);
@@ -718,7 +772,12 @@ static void moveAllFiles(const QString& sourcePath, const QString& destPath){
     }
 }
 
-
+/**
+ * Удалить папку со всеми вложенными паками и подпапками
+ * @param directoryPath путь к папке
+ * @param deleteSelf удалять корневую папку
+ * @return
+ */
 static bool removeDirectoryRecursively(const QString &directoryPath, bool deleteSelf) {
     QDir dir(directoryPath);
 
