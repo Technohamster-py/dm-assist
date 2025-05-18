@@ -81,7 +81,7 @@ void MapView::loadMapImage(const QString &filePath)
 void MapView::wheelEvent(QWheelEvent *event)
 {
     if (event->modifiers() & Qt::ControlModifier) {
-        QPointF scenePos = mapToScene(event->posF().toPoint());
+        QPointF scenePos = mapToScene(event->position().toPoint());
 
         QGraphicsSceneWheelEvent sceneEvent(QEvent::GraphicsSceneWheel);
         sceneEvent.setScenePos(scenePos);

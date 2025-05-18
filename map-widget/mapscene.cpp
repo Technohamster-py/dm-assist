@@ -6,6 +6,7 @@
 #include "mapscene.h"
 #include "lighttool.h"
 #include <QBuffer>
+#include <QFile>
 #include <QInputDialog>
 #include <QJsonArray>
 #include <QJsonDocument>

@@ -2,6 +2,7 @@
 #define DM_ASSIST_BRUSHTOOL_H
 
 #include "abstractmaptool.h"
+#include <QPainterPath>
 
 class BrushTool : public AbstractMapTool{
 Q_OBJECT

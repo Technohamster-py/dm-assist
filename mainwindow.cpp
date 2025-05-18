@@ -683,6 +683,7 @@ void MainWindow::setMeasureMode(bool checked) {
  *     automatic fog updates.
  *   - Shape Drawing Tools: Enables drawing of line, circle, and square shapes on the map,
  *     with each shape having its own tool button and connectivity to the current map view.
+ *   - Brush tool: Provides controls for drawing brush strokes on the map.
  *
  * Actions and widgets added to the toolbar are connected dynamically to their underlying
  * tools and modes, ensuring that the toolbar functions are seamlessly integrated with

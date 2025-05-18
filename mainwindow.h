@@ -7,6 +7,7 @@
 
 #include "QAction"
 #include <QMainWindow>
+#include <QActionGroup>
 #include <QSettings>
 #include <QShortcut>
 #include <QTranslator>

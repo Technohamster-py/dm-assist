@@ -7,7 +7,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 #set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin/Release)
-set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.12.12/5.12.12/mingw73_64/lib/cmake")
+#set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.12.12/5.12.12/mingw73_64/lib/cmake")
+set(CMAKE_PREFIX_PATH "C:/Qt/Qt6/6.9.0/mingw_64/lib/cmake")
 set(BASS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass)
 set(BASS_DLL "${CMAKE_SOURCE_DIR}/lib/bass/bass.dll")
 set(BASS_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass/bass.lib)
@@ -54,7 +55,7 @@ set(TS_FILES
 
 set(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/static/app_resources.qrc)
 
-find_package(Qt5 COMPONENTS
+find_package(Qt6 COMPONENTS
         Core
         Gui
         Widgets
@@ -64,22 +65,22 @@ find_package(Qt5 COMPONENTS
         LinguistTools
         REQUIRED)
 
-qt5_add_resources(RESOURCES_ADD ${RESOURCES})
+qt6_add_resources(RESOURCES_ADD ${RESOURCES})
 
 include_directories(
-        ${Qt5Core_INCLUDE_DIRS}
-        ${Qt5Gui_INCLUDE_DIRS}
-        ${Qt5Widgets_INCLUDE_DIRS}
-        ${Qt5PrintSupport_INCLUDE_DIRS}
-        ${Qt5Sql_INCLUDE_DIRS}
-        ${Qt5Multimedia_INCLUDE_DIRS}  #the directories
+        ${Qt6Core_INCLUDE_DIRS}
+        ${Qt6Gui_INCLUDE_DIRS}
+        ${Qt6Widgets_INCLUDE_DIRS}
+        ${Qt6PrintSupport_INCLUDE_DIRS}
+        ${Qt6Sql_INCLUDE_DIRS}
+        ${Qt6Multimedia_INCLUDE_DIRS}  #the directories
         initiative-tracker
         translations
         static
         lib
 )
 
-qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
+qt_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
 add_custom_target(translations DEPENDS ${QM_FILES})
 
 add_executable(${PROJECT_NAME}
@@ -90,16 +91,16 @@ add_executable(${PROJECT_NAME}
         ${RESOURCES_ADD}
 )
 
-add_dependencies(${PROJECT_NAME} translations)
+#add_dependencies(${PROJECT_NAME} translations)
 
 target_link_libraries(${PROJECT_NAME}
-        Qt5::Core
-        Qt5::Gui
-        Qt5::Widgets
-        Qt5::Multimedia
-        Qt5::Xml
+        Qt6::Core
+        Qt6::Gui
+        Qt6::Widgets
+        Qt6::Multimedia
+        Qt6::Xml
         ${BASS_LIBRARY}
-        Qt5::Qml
+        Qt6::Qml
 )
 
 if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
@@ -126,9 +127,10 @@ if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     foreach (QT_LIB Core Gui Widgets)
         add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
                 COMMAND ${CMAKE_COMMAND} -E copy
-                "${QT_INSTALL_PATH}/bin/Qt5${QT_LIB}${DEBUG_SUFFIX}.dll"
+                "${QT_INSTALL_PATH}/bin/Qt6${QT_LIB}${DEBUG_SUFFIX}.dll"
                 "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
     endforeach (QT_LIB)
+
 
     set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/static/win_resources.rc")
     target_sources(${PROJECT_NAME} PRIVATE ${APP_ICON_RESOURCE_WINDOWS})
@@ -162,11 +164,17 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMENT "Копирование bass.dll в папку сборки..."
 )
 
-foreach(qm ${QM_FILES})
-    get_filename_component(qm_filename "${qm}" NAME)
-    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E rename "${qm}" "$<TARGET_FILE_DIR:${PROJECT_NAME}>/translations/${qm_filename}"
-            COMMAND ${CMAKE_COMMAND} -E echo "Moving ${qm_filename} into /translations"
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND "${QT_INSTALL_PATH}/bin/windeployqt.exe"
+        "$<TARGET_FILE:${PROJECT_NAME}>"
+        COMMENT "Running windeployqt to copy Qt6 runtime dependencies..."
+)
 
-    )
-endforeach()
+#foreach(qm ${QM_FILES})
+#    get_filename_component(qm_filename "${qm}" NAME)
+#    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+#            COMMAND ${CMAKE_COMMAND} -E rename "${qm}" "$<TARGET_FILE_DIR:${PROJECT_NAME}>/translations/${qm_filename}"
+#            COMMAND ${CMAKE_COMMAND} -E echo "Moving ${qm_filename} into /translations"
+#
+#    )
+#endforeach()

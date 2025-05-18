@@ -15,8 +15,8 @@
 #include <QStandardPaths>
 #include <QPushButton>
 
-#include <QRegExp>
-#include <QRegExpValidator>
+#include <QRegularExpression>
+#include <QRegularExpressionValidator>
 
 #include "bass/bass.h"
 
@@ -614,8 +614,8 @@ QPlaylistEdit::QPlaylistEdit(QWidget *parent, const QStringList &tracks, QString
     ui->setupUi(this);
     resize(400, 300);
 
-    QRegExp regex("[A-Za-z0-9\\-_ ]+");
-    QRegExpValidator *validator = new QRegExpValidator(regex, ui->titleEdit);
+    QRegularExpression regex("[A-Za-z0-9\\-_ ]+");
+    QRegularExpressionValidator *validator = new QRegularExpressionValidator(regex, ui->titleEdit);
     ui->titleEdit->setValidator(validator);
 
     ui->titleEdit->setText(title);
