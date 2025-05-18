@@ -691,6 +691,7 @@ void MainWindow::setMeasureMode(bool checked) {
 void MainWindow::setupToolbar() {
     ui->toolBar->setMovable(false);
 
+    brushTool = new BrushTool(this);
     calibrationTool = new CalibrationTool(this);
     fogTool = new FogTool(this);
     lightTool = new LightTool(this);
@@ -923,6 +924,51 @@ void MainWindow::setupToolbar() {
             currentView->setActiveTool(nullptr);
     });
 
+
+    /// Brush tool
+    QAction* brushAction = new QAction(this);
+    brushAction->setCheckable(true);
+    brushAction->setIcon(QIcon(":/map/brush.svg"));
+    toolGroup->addAction(brushAction);
+
+    QToolButton* brushButton = new QToolButton(this);
+    brushButton->setCheckable(true);
+    brushButton->setToolTip(tr("Brush"));
+    brushButton->setDefaultAction(brushAction);
+    ui->toolBar->addWidget(brushButton);
+
+    brushButton->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(brushButton, &QToolButton::customContextMenuRequested, this, [=](const QPoint pos) {
+        QMenu contextMenu;
+        QAction* clearAllAction = contextMenu.addAction(tr("Clear all"));
+        QAction* chosen = contextMenu.exec(brushButton->mapToGlobal(pos));
+        if (chosen == clearAllAction){
+            MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+            brushTool->clearAll(currentView->getScene());
+        }
+    });
+
+    connect(brushAction, &QAction::triggered, this, [=](bool checked){
+        MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (checked)
+            currentView->setActiveTool(brushTool);
+        else
+            currentView->setActiveTool(nullptr);
+    });
+
+
+    /// Brush opacity
+    QSlider* opacitySlider = new QSlider(Qt::Horizontal);
+    opacitySlider->setRange(0, 100);
+    opacitySlider->setValue(50);
+    opacitySlider->setToolTip(tr("Brush opacity"));
+    opacitySlider->setMaximumWidth(80);
+    ui->toolBar->addWidget(opacitySlider);
+
+    connect(opacitySlider, &QSlider::valueChanged, this, [=](int v) {
+        brushTool->setOpacity(v / 100.0);
+    });
+
     /// Shape color button
     QPushButton *ShapeToolColorButton = new QPushButton();
     ShapeToolColorButton->setIcon(QIcon(":/map/palette.svg"));
@@ -935,6 +981,7 @@ void MainWindow::setupToolbar() {
             circleShapeTool->setColor(chosen);
             squareShapeTool->setColor(chosen);
             triangleShapeTool->setColor(chosen);
+            brushTool->setColor(chosen);
         }
     });
 }
@@ -1058,7 +1105,6 @@ void MainWindow::exportMap(int index) {
         currentView->getScene()->saveToFile(filename);
     }
 }
-
 
 
 /**

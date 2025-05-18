@@ -31,6 +31,7 @@
         <file>Volume-2.svg</file>
     </qresource>
     <qresource prefix="map">
+        <file>brush.svg</file>
         <file>cone.svg</file>
         <file>cube.svg</file>
         <file>cylinder.svg</file>

@@ -12,6 +12,7 @@
 #include <QTranslator>
 #include "map-widget/maptabwidget.h"
 #include "map-widget/fogtool.h"
+#include "map-widget/brushtool.h"
 #include "map-widget/calibrationtool.h"
 #include "map-widget/lighttool.h"
 #include "map-widget/rulermaptool.h"
@@ -82,6 +83,7 @@ private:
 
     TabWidget *mapTabWidget;
     SharedMapWindow* sharedMapWindow = nullptr;
+    BrushTool* brushTool;
     CalibrationTool* calibrationTool;
     FogTool* fogTool;
     LightTool* lightTool;

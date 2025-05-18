@@ -17,6 +17,7 @@ set(FILES
         initiative-tracker/initiativemodel.h    initiative-tracker/initiativemodel.cpp
         mainwindow.h    mainwindow.cpp
         map-widget/abstractmaptool.h
+        map-widget/brushtool.h  map-widget/brushtool.cpp
         map-widget/calibrationtool.h    map-widget/calibrationtool.cpp
         map-widget/fogtool.h    map-widget/fogtool.cpp
         map-widget/lighttool.h  map-widget/lighttool.cpp
@@ -34,6 +35,7 @@ set(FILES
         settingsdialog.h    settingsdialog.cpp
         settings.h
         thememanager.h  thememanager.cpp
+
 )
 
 set(UI_FILES
