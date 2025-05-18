@@ -4,12 +4,12 @@
 <context>
     <name>CalibrationTool</name>
     <message>
-        <location filename="../map-widget/calibrationtool.cpp" line="24"/>
+        <location filename="../map-widget/calibrationtool.cpp" line="43"/>
         <source>Scale calibration</source>
         <translation>Калиброква масштаба</translation>
     </message>
     <message>
-        <location filename="../map-widget/calibrationtool.cpp" line="25"/>
+        <location filename="../map-widget/calibrationtool.cpp" line="44"/>
         <source>Enter distance in feet</source>
         <translation>Введите расстояние в футах</translation>
     </message>
@@ -193,117 +193,117 @@
         <translation type="vanished">Сохраниеть проект?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="109"/>
+        <location filename="../mainwindow.cpp" line="166"/>
         <source>Open player config file</source>
         <translation>Открыть конфигурационный файл проекта</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="111"/>
+        <location filename="../mainwindow.cpp" line="168"/>
         <source>Xml file (*.xml)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="119"/>
+        <location filename="../mainwindow.cpp" line="176"/>
         <source>Open File error</source>
         <translation>Open file error</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="175"/>
+        <location filename="../mainwindow.cpp" line="261"/>
         <source>Open file error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="287"/>
+        <location filename="../mainwindow.cpp" line="525"/>
         <source>Open Map Image</source>
         <translation>Открыть изображение карты</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="289"/>
+        <location filename="../mainwindow.cpp" line="527"/>
         <source>Map Files (*.dam);;Images (*.png *.jpg *.bmp)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="320"/>
+        <location filename="../mainwindow.cpp" line="558"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="320"/>
+        <location filename="../mainwindow.cpp" line="558"/>
         <source>Failed to open map file.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="386"/>
+        <location filename="../mainwindow.cpp" line="709"/>
         <source>ruler</source>
         <translation>Линейка</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="398"/>
+        <location filename="../mainwindow.cpp" line="721"/>
         <source>calibrate</source>
         <translation>Калибровать</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="422"/>
+        <location filename="../mainwindow.cpp" line="745"/>
         <source>Add fog to map</source>
         <translation>Добавить туман на карту</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="429"/>
+        <location filename="../mainwindow.cpp" line="752"/>
         <source>Hide all</source>
         <translation>Скрыть все</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="448"/>
+        <location filename="../mainwindow.cpp" line="771"/>
         <source>Remove fog from map</source>
         <translation>Убрать туман с карты</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="455"/>
+        <location filename="../mainwindow.cpp" line="778"/>
         <source>Reveal all</source>
         <translation>Проявить все</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="475"/>
+        <location filename="../mainwindow.cpp" line="798"/>
         <source>Edit light sources</source>
         <translation>Изменение источников света</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="480"/>
+        <location filename="../mainwindow.cpp" line="803"/>
         <source>Bright radius</source>
         <translation>Радиус яркого света</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="487"/>
+        <location filename="../mainwindow.cpp" line="810"/>
         <source>Dim radius</source>
         <translation>Радиус туслого света</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="514"/>
+        <location filename="../mainwindow.cpp" line="837"/>
         <source>Update fog</source>
         <translation>Обновлять туман</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="531"/>
+        <location filename="../mainwindow.cpp" line="854"/>
         <source>Draw line</source>
         <translation>Нарисовать линию</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="551"/>
+        <location filename="../mainwindow.cpp" line="874"/>
         <source>Draw circle</source>
         <translation>Нарисовать круг</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="571"/>
+        <location filename="../mainwindow.cpp" line="894"/>
         <source>Draw square</source>
         <translation>Нарисовать квадрат</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="591"/>
+        <location filename="../mainwindow.cpp" line="914"/>
         <source>Draw triangle</source>
         <translation>Нарисовать треугольник</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="669"/>
+        <location filename="../mainwindow.cpp" line="1055"/>
         <source>Save map to file</source>
         <translation>Сохранить карту</translation>
     </message>
@@ -661,62 +661,62 @@
 <context>
     <name>SaveConfigDialog</name>
     <message>
-        <location filename="../qsaveconfigdialog.cpp" line="5"/>
+        <location filename="../qsaveconfigdialog.cpp" line="15"/>
         <source>Сохранение проекта</source>
         <translation>Сохранение проекта</translation>
     </message>
     <message>
-        <location filename="../qsaveconfigdialog.cpp" line="9"/>
+        <location filename="../qsaveconfigdialog.cpp" line="18"/>
         <source>Имя проекта:</source>
         <translation>Имя проекта:</translation>
     </message>
     <message>
-        <location filename="../qsaveconfigdialog.cpp" line="10"/>
+        <location filename="../qsaveconfigdialog.cpp" line="19"/>
         <source>Корневая папка:</source>
         <translation>Корневая папка:</translation>
     </message>
     <message>
-        <location filename="../qsaveconfigdialog.cpp" line="17"/>
+        <location filename="../qsaveconfigdialog.cpp" line="24"/>
         <source>Выбрать папку...</source>
         <translation>Выбрать папку...</translation>
     </message>
     <message>
-        <location filename="../qsaveconfigdialog.cpp" line="21"/>
+        <location filename="../qsaveconfigdialog.cpp" line="27"/>
         <source>Сохранить</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../qsaveconfigdialog.cpp" line="23"/>
+        <location filename="../qsaveconfigdialog.cpp" line="29"/>
         <source>Отмена</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../qsaveconfigdialog.cpp" line="59"/>
+        <location filename="../qsaveconfigdialog.cpp" line="73"/>
         <source>Выберите папку</source>
         <translation>Выбрать папку</translation>
     </message>
     <message>
-        <location filename="../qsaveconfigdialog.cpp" line="62"/>
+        <location filename="../qsaveconfigdialog.cpp" line="76"/>
         <source>Проект будет сохранен в папку %1/%2</source>
         <translation>Проект будет сохранен в папку %1/%2</translation>
     </message>
     <message>
-        <location filename="../qsaveconfigdialog.cpp" line="73"/>
+        <location filename="../qsaveconfigdialog.cpp" line="107"/>
         <source>Введите имя проекта.</source>
         <translation>Введите имя проекта.</translation>
     </message>
     <message>
-        <location filename="../qsaveconfigdialog.cpp" line="77"/>
+        <location filename="../qsaveconfigdialog.cpp" line="111"/>
         <source>Укажите корневую папку.</source>
         <translation>Укажите корневую папку.</translation>
     </message>
     <message>
-        <location filename="../qsaveconfigdialog.cpp" line="87"/>
+        <location filename="../qsaveconfigdialog.cpp" line="120"/>
         <source>Указанная папка не пуста.</source>
         <translation>Указанная папка не пуста.</translation>
     </message>
     <message>
-        <location filename="../qsaveconfigdialog.cpp" line="95"/>
+        <location filename="../qsaveconfigdialog.cpp" line="127"/>
         <source>Не удалось создать файл.</source>
         <translation>Не удалось создать файл.</translation>
     </message>
@@ -726,178 +726,190 @@
     <message>
         <location filename="../settingsdialog.ui" line="29"/>
         <location filename="../settingsdialog.ui" line="54"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="272"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="274"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="285"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="287"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="64"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="280"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="293"/>
         <source>General</source>
         <translation>Общее</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="67"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="279"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="292"/>
         <source>0</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="72"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="283"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="296"/>
         <source>Apperance</source>
         <translation>Внешний вид</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="75"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="282"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="295"/>
         <source>1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="83"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="286"/>
+        <location filename="../settingsdialog.ui" line="80"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="299"/>
         <source>Initiative tracker</source>
         <translation>Трекер инициативы</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="86"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="285"/>
+        <location filename="../settingsdialog.ui" line="83"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="298"/>
         <source>2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="103"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="289"/>
+        <location filename="../settingsdialog.ui" line="100"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="302"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="113"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="290"/>
+        <location filename="../settingsdialog.ui" line="110"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="303"/>
         <source>Audio output</source>
         <translation>Аудио выход</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="127"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="291"/>
+        <location filename="../settingsdialog.ui" line="124"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="304"/>
         <source>Working folder</source>
         <translation>Рабочая папка</translation>
     </message>
     <message>
+        <location filename="../settingsdialog.ui" line="136"/>
         <location filename="../settingsdialog.ui" line="139"/>
-        <location filename="../settingsdialog.ui" line="142"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="293"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="295"/>
+        <location filename="../settingsdialog.ui" line="177"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="306"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="308"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="310"/>
         <source>Browse</source>
         <translation>Обзор</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="162"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="296"/>
+        <location filename="../settingsdialog.ui" line="159"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="309"/>
         <source>Theme</source>
         <translation>Тема</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="176"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="297"/>
+        <location filename="../settingsdialog.ui" line="194"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="311"/>
         <source>Display fields in shared view</source>
         <translation>Показывать поля в совместном просмотре</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="185"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="298"/>
+        <location filename="../settingsdialog.ui" line="203"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="312"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="192"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="299"/>
+        <location filename="../settingsdialog.ui" line="210"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="313"/>
         <source>Iinitiative</source>
         <translation>Инициатива</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="199"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="300"/>
+        <location filename="../settingsdialog.ui" line="217"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="314"/>
         <source>Armor Class</source>
         <translation>Класс доспеха</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="206"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="301"/>
+        <location filename="../settingsdialog.ui" line="224"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="315"/>
         <source>Hit Points</source>
         <translation>Пункты здоровья</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="213"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="302"/>
+        <location filename="../settingsdialog.ui" line="231"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="316"/>
         <source>max Hit Points</source>
         <translation>максимум пунктов здоровья</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="220"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="303"/>
+        <location filename="../settingsdialog.ui" line="238"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="317"/>
         <source>Delete</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="229"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="304"/>
+        <location filename="../settingsdialog.ui" line="247"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="318"/>
         <source>Hp display mode</source>
         <translation>Режим отображения хитов</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="239"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="305"/>
+        <location filename="../settingsdialog.ui" line="257"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="319"/>
         <source>Numeric</source>
         <translation>Цифры</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="244"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="306"/>
+        <location filename="../settingsdialog.ui" line="262"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="320"/>
         <source>Text status</source>
         <translation>Текстовый статус</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="249"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="307"/>
+        <location filename="../settingsdialog.ui" line="267"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="321"/>
         <source>Progress bar</source>
         <translation>Прогрессбар</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="257"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="309"/>
+        <location filename="../settingsdialog.ui" line="275"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="323"/>
         <source>Show control in main widget</source>
         <translation>Показывать контроллер в основном виджете</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="285"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="310"/>
+        <location filename="../settingsdialog.ui" line="303"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="324"/>
         <source>Apply</source>
         <translation>Применить</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="292"/>
-        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="311"/>
+        <location filename="../settingsdialog.ui" line="310"/>
+        <location filename="../cmake-build-debug/DM-assist_autogen/include/ui_SettingsDialog.h" line="325"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.cpp" line="133"/>
+        <source>Select folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.cpp" line="157"/>
+        <source>Select theme file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>TabWidget</name>
     <message>
-        <location filename="../map-widget/maptabwidget.h" line="23"/>
+        <location filename="../map-widget/maptabwidget.h" line="33"/>
         <source>Open new map</source>
         <translation>Открыть новую карту</translation>
     </message>
     <message>
-        <location filename="../map-widget/maptabwidget.h" line="55"/>
+        <location filename="../map-widget/maptabwidget.h" line="65"/>
         <source>Share</source>
         <translation>Поделиться</translation>
     </message>
     <message>
-        <location filename="../map-widget/maptabwidget.h" line="58"/>
+        <location filename="../map-widget/maptabwidget.h" line="68"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
