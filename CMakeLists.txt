@@ -20,6 +20,7 @@ endif ()
 
 
 set(FILES
+        campaign-view/campaigntreeview.h    campaign-view/campaigntreeview.cpp
         initiative-tracker/initiativemodel.h    initiative-tracker/initiativemodel.cpp
         mainwindow.h    mainwindow.cpp
         map-widget/abstractmaptool.h

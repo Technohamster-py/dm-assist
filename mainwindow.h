@@ -1,7 +1,3 @@
-//
-// Created by arseniy on 11.10.2024.
-//
-
 #ifndef DM_ASSIST_MAINWINDOW_H
 #define DM_ASSIST_MAINWINDOW_H
 
@@ -11,6 +7,7 @@
 #include <QSettings>
 #include <QShortcut>
 #include <QTranslator>
+#include "campaign-view/campaigntreeview.h"
 #include "map-widget/maptabwidget.h"
 #include "map-widget/fogtool.h"
 #include "map-widget/brushtool.h"
@@ -77,6 +74,8 @@ private:
     QTranslator translator;
     QString currentLanguage;
 
+    CampaignTreeView* campaignTreeView;
+
     int deviceIndex = -1;
     QVector<QPlayer*> players;
 
@@ -94,7 +93,7 @@ private:
     SquareShapeTool* squareShapeTool;
     TriangleShapeTool* triangleShapeTool;
 
-
+    void setupCampaign();
     void setupPlayers();
     void setupTracker();
     void setupToolbar();
