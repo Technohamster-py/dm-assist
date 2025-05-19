@@ -53,4 +53,7 @@
         <file>wing.svg</file>
         <file>swim.svg</file>
     </qresource>
+    <qresource prefix="splash">
+        <file>splash.png</file>
+    </qresource>
 </RCC>
