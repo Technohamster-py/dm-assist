@@ -10,7 +10,7 @@
 #include <QShortcut>
 #include <QStandardPaths>
 #include <QWidget>
-#include "lib/bass/bass.h"
+#include "lib/bass/include/bass.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class QPlayer; class QPlaylistEdit;}

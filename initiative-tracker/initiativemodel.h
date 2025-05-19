@@ -39,13 +39,13 @@ struct InitiativeCharacter {
 
     static InitiativeCharacter readFromXml(QXmlStreamReader &reader) {
         InitiativeCharacter character;
-        while (!(reader.tokenType() == QXmlStreamReader::EndElement && reader.name() == "Character")) {
+        while (!(reader.tokenType() == QXmlStreamReader::EndElement && reader.name() == QString("Character"))) {
             if (reader.readNextStartElement()) {
-                if (reader.name() == "Name") character.name = reader.readElementText();
-                else if (reader.name() == "Initiative") character.initiative = reader.readElementText().toInt();
-                else if (reader.name() == "AC") character.ac = reader.readElementText().toInt();
-                else if (reader.name() == "HP") character.hp = reader.readElementText();
-                else if (reader.name() == "MaxHP") character.maxHp = reader.readElementText().toInt();
+                if (reader.name() == QString("Name")) character.name = reader.readElementText();
+                else if (reader.name() == QString("Initiative")) character.initiative = reader.readElementText().toInt();
+                else if (reader.name() == QString("AC")) character.ac = reader.readElementText().toInt();
+                else if (reader.name() == QString("HP")) character.hp = reader.readElementText();
+                else if (reader.name() == QString("MaxHP")) character.maxHp = reader.readElementText().toInt();
                 else reader.skipCurrentElement();
             }
         }

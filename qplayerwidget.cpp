@@ -3,8 +3,8 @@
 //
 
 #include "qplayerwidget.h"
-#include "ui_QPlayer.h"
-#include "ui_QPlaylistEdit.h"
+#include "ui_qplayer.h"
+#include "ui_qplaylistedit.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -18,7 +18,7 @@
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
 
-#include "bass/bass.h"
+#include "bass.h"
 
 #define BASS_DEVICE_INDEX 1 // Можно сделать параметром, если нужно
 

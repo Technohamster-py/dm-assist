@@ -3,14 +3,14 @@
 //
 
 #include "settingsdialog.h"
-#include "ui_SettingsDialog.h"
+#include "ui_settingsdialog.h"
 
 #include <QSettings>
 #include <QStandardPaths>
 #include <QFileDialog>
 #include <utility>
 #include <QDebug>
-#include "lib/bass/bass.h"
+#include "lib/bass/include/bass.h"
 
 
 /**

@@ -122,7 +122,7 @@ bool ThemeManager::loadFromXml(const QString& path) {
             while (!(xml.isEndElement() && xml.name().toString().toLower() == groupMap.key(group)) && !xml.atEnd()) {
                 xml.readNext();
 
-                if (xml.isStartElement() && xml.name() == "colorrole") {
+                if (xml.isStartElement() && xml.name() == QString("colorrole")) {
                     QString roleStr = xml.attributes().value("role").toString();
 
                     if (!roleMap.contains(roleStr))
@@ -131,10 +131,10 @@ bool ThemeManager::loadFromXml(const QString& path) {
                     QPalette::ColorRole role = roleMap[roleStr];
 
                     // Перейти к <color>
-                    while (!(xml.isStartElement() && xml.name() == "color") && !xml.atEnd())
+                    while (!(xml.isStartElement() && xml.name() == QString("color")) && !xml.atEnd())
                         xml.readNext();
 
-                    if (xml.isStartElement() && xml.name() == "color") {
+                    if (xml.isStartElement() && xml.name() == QString("color")) {
                         auto a = xml.attributes();
                         QColor color(
                                 a.value("red").toInt(),

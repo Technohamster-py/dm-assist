@@ -2,7 +2,7 @@
 // Created by arseniy on 11.10.2024.
 //
 #include "mainwindow.h"
-#include "ui_MainWindow.h"
+#include "ui_mainwindow.h"
 #include "map-widget/mapview.h"
 
 #include <QDesktopServices>

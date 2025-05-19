@@ -6,14 +6,20 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-#set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin/Release)
-#set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.12.12/5.12.12/mingw73_64/lib/cmake")
-set(CMAKE_PREFIX_PATH "C:/Qt/Qt6/6.9.0/mingw_64/lib/cmake")
-set(BASS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass)
-set(BASS_DLL "${CMAKE_SOURCE_DIR}/lib/bass/bass.dll")
-set(BASS_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass/bass.lib)
-#SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc")
 
+set(BASS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass/include)
+if (WIN32)
+    set(CMAKE_PREFIX_PATH "C:/Qt/Qt6/6.9.0/mingw_64/lib/cmake")
+    set(BASS_DLL "${CMAKE_SOURCE_DIR}/lib/bass/win/bass.dll")
+    set(BASS_LIBRARY lib/bass/win/bass.lib)
+elseif (UNIX AND NOT APPLE)
+    set(CMAKE_PREFIX_PATH "/usr/local/qt/Qt-6.6.1")
+    set(BASS_LIBRARY ${CMAKE_SOURCE_DIR}/lib/bass/linux/libbass.so)
+    set(BASS_DLL "${CMAKE_SOURCE_DIR}/lib/bass/linux/libbass.so")
+endif ()
+
+
+#SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc")
 set(FILES
         initiative-tracker/initiativemodel.h    initiative-tracker/initiativemodel.cpp
         mainwindow.h    mainwindow.cpp
@@ -73,11 +79,11 @@ include_directories(
         ${Qt6Widgets_INCLUDE_DIRS}
         ${Qt6PrintSupport_INCLUDE_DIRS}
         ${Qt6Sql_INCLUDE_DIRS}
-        ${Qt6Multimedia_INCLUDE_DIRS}  #the directories
+        ${Qt6Multimedia_INCLUDE_DIRS}
+        ${BASS_INCLUDE_DIR}
         initiative-tracker
         translations
         static
-        lib
 )
 
 qt_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
@@ -90,8 +96,6 @@ add_executable(${PROJECT_NAME}
         ${UI_FILES}
         ${RESOURCES_ADD}
 )
-
-#add_dependencies(${PROJECT_NAME} translations)
 
 target_link_libraries(${PROJECT_NAME}
         Qt6::Core
@@ -161,14 +165,18 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${BASS_DLL}"
         "${CMAKE_BINARY_DIR}"
-        COMMENT "Копирование bass.dll в папку сборки..."
+        COMMENT "Копирование bass в папку сборки..."
 )
 
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND "${QT_INSTALL_PATH}/bin/windeployqt.exe"
-        "$<TARGET_FILE:${PROJECT_NAME}>"
-        COMMENT "Running windeployqt to copy Qt6 runtime dependencies..."
-)
+
+if (WIN32)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+            COMMAND "${QT_INSTALL_PATH}/bin/windeployqt.exe"
+            "$<TARGET_FILE:${PROJECT_NAME}>"
+            COMMENT "Running windeployqt to copy Qt6 runtime dependencies..."
+    )
+endif ()
+
 
 #foreach(qm ${QM_FILES})
 #    get_filename_component(qm_filename "${qm}" NAME)
