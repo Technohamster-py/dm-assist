@@ -370,6 +370,8 @@ void MainWindow::loadSettings() {
         ThemeManager::applyPreset(ThemeManager::PresetTheme::Light);
     else if (theme == "Dark")
         ThemeManager::applyPreset(ThemeManager::PresetTheme::Dark);
+    else if (theme == "System")
+        ThemeManager::resetToSystemTheme();
     else
         ThemeManager::loadFromXml(theme);
 

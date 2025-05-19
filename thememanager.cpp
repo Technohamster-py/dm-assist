@@ -44,14 +44,8 @@ void ThemeManager::applyPreset(ThemeManager::PresetTheme theme) {
             palette.setColor(QPalette::HighlightedText, Qt::white);
             break;
         default:
-            palette.setColor(QPalette::Window, QColor("#f5f5f5"));
-            palette.setColor(QPalette::WindowText, Qt::black);
-            palette.setColor(QPalette::Base, Qt::white);
-            palette.setColor(QPalette::Text, Qt::black);
-            palette.setColor(QPalette::Button, QColor("#e0e0e0"));
-            palette.setColor(QPalette::ButtonText, Qt::black);
-            palette.setColor(QPalette::Highlight, QColor("#2196f3"));
-            palette.setColor(QPalette::HighlightedText, Qt::white);
+            resetToSystemTheme();
+            return;
     }
     qApp->setPalette(palette);
 }
@@ -156,4 +150,8 @@ bool ThemeManager::loadFromXml(const QString& path) {
 
     qApp->setPalette(palette);
     return true;
+}
+
+void ThemeManager::resetToSystemTheme() {
+    qApp->setPalette(QPalette());
 }

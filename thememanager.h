@@ -21,12 +21,14 @@
 class ThemeManager{
 public:
     enum class PresetTheme{
+        System,
         Light,
         Dark
     };
 
     static void applyPreset(PresetTheme theme);
     static bool loadFromXml(const QString& path);
+    static void resetToSystemTheme();
 };
 
 
