@@ -38,7 +38,7 @@ void BrushTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene 
     pen.setCosmetic(true);
     previewItem->setPen(pen);
     previewItem->setOpacity(opacity);
-    previewItem->setZValue(6);
+    previewItem->setZValue(mapLayers::Brush);
     previewItem->setPath(path);
 
     mapScene->addItem(previewItem);

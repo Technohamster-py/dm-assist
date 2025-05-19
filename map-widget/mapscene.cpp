@@ -158,7 +158,7 @@ void MapScene::initializeFog(const QSize &size) {
     }
 
     fogItem = addPixmap(QPixmap::fromImage(fogImage));
-    fogItem->setZValue(100);
+    fogItem->setZValue(mapLayers::Fog);
     fogItem->setOpacity(0.5);
 }
 
@@ -424,6 +424,8 @@ QJsonObject MapScene::toJson() {
             itemObj["center"] = QJsonArray{ r.center().x(), r.center().y() };
             itemObj["radius"] = r.width() / 2; // предполагаем круг
             itemObj["color"] = ellipse->pen().color().name();
+            itemObj["z"] = ellipse->zValue();
+
         }
         else if (auto* line = qgraphicsitem_cast<QGraphicsLineItem*>(item)) {
             itemObj["type"] = "line";
@@ -431,6 +433,8 @@ QJsonObject MapScene::toJson() {
             itemObj["start"] = QJsonArray{ l.p1().x(), l.p1().y() };
             itemObj["end"]   = QJsonArray{ l.p2().x(), l.p2().y() };
             itemObj["color"] = line->pen().color().name();
+            itemObj["z"] = line->zValue();
+
         }
         else if (auto* light = dynamic_cast<LightSourceItem*>(item)) {
             itemObj["type"] = "light";
@@ -514,7 +518,7 @@ void MapScene::fromJson(const QJsonObject& obj) {
             auto* item = new QGraphicsPolygonItem(polygon);
             item->setPen(QPen(QColor(itemObj["color"].toString())));
             item->setBrush(QBrush(QColor(itemObj["color"].toString()), Qt::Dense4Pattern));
-            item->setZValue(itemObj["z"].toDouble(5));
+            item->setZValue(itemObj["z"].toDouble(mapLayers::Shapes));
             addItem(item);
         }
         else if (type == "ellipse") {
@@ -525,6 +529,7 @@ void MapScene::fromJson(const QJsonObject& obj) {
             QColor color(itemObj["color"].toString());
             item->setPen(QPen(color));
             item->setBrush(QBrush(color, Qt::Dense4Pattern));
+            item->setZValue(itemObj["z"].toDouble(mapLayers::Shapes));
             addItem(item);
         }
         else if (type == "line") {
@@ -533,6 +538,7 @@ void MapScene::fromJson(const QJsonObject& obj) {
                     QPointF(itemObj["end"].toArray()[0].toDouble(), itemObj["end"].toArray()[1].toDouble()));
             auto* item = new QGraphicsLineItem(line);
             item->setPen(QPen(QColor(itemObj["color"].toString())));
+            item->setZValue(itemObj["z"].toDouble(mapLayers::Shapes));
             addItem(item);
         }
         else if (type == "light") {
@@ -555,7 +561,7 @@ void MapScene::fromJson(const QJsonObject& obj) {
             }
 
             fogItem = addPixmap(QPixmap::fromImage(fogImage));
-            fogItem->setZValue(100); // поверх карты
+            fogItem->setZValue(mapLayers::Fog); // поверх карты
             fogItem->setOpacity(0.5);
             updateFog();
         }
@@ -678,7 +684,7 @@ int MapScene::loadFromFile(const QString& path) {
     if (!mapImage.isNull()) {
         clear();
         QGraphicsPixmapItem* pixmapItem = addPixmap(QPixmap::fromImage(mapImage));
-        pixmapItem->setZValue(-1000); // за всеми объектами
+        pixmapItem->setZValue(mapLayers::Background);
         initializeFog(mapImage.size());
     }
 

@@ -76,7 +76,7 @@ void FogTool::updateBrushPreview(const QPointF &scenePos, QGraphicsScene *scene)
         brushPreview = scene->addEllipse(QRectF(topLeft, size),
                                          QPen(QBrush(Qt::DashLine), 1.5, Qt::DashLine),
                                          Qt::NoBrush);
-        brushPreview->setZValue(100); // выше всего
+        brushPreview->setZValue(mapLayers::Fog); // выше всего
     } else {
         brushPreview->setRect(QRectF(topLeft, size));
     }

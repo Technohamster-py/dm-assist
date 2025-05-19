@@ -140,7 +140,7 @@ void LineShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsSc
 
         auto item = new QGraphicsLineItem(line);
         item->setPen(QPen(color, 2));
-        item->setZValue(5);
+        item->setZValue(mapLayers::Shapes);
 
         static_cast<MapScene*>(scene)->addUndoableItem(item);
 
@@ -229,7 +229,7 @@ void CircleShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphics
         auto item = new QGraphicsEllipseItem(rect.normalized());
         item->setPen(QPen(color));
         item->setBrush(QBrush(color, Qt::Dense4Pattern));
-        item->setZValue(5);
+        item->setZValue(mapLayers::Shapes);
 
         static_cast<MapScene*>(scene)->addUndoableItem(item);
 
@@ -332,7 +332,7 @@ void TriangleShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphi
         auto item = new QGraphicsPolygonItem(triangle);
         item->setPen(QPen(color));
         item->setBrush(QBrush(color, Qt::Dense4Pattern));
-        item->setZValue(5);
+        item->setZValue(mapLayers::Shapes);
 
         static_cast<MapScene*>(scene)->addUndoableItem(item);
 
@@ -460,7 +460,7 @@ void SquareShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphics
         auto item = new QGraphicsPolygonItem(square);
         item->setPen(QPen(color));
         item->setBrush(QBrush(color, Qt::Dense4Pattern));
-        item->setZValue(5);
+        item->setZValue(mapLayers::Shapes);
 
         static_cast<MapScene*>(scene)->addUndoableItem(item);
         hasFirstPoint = false;

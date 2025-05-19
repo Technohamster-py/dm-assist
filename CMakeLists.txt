@@ -19,7 +19,6 @@ elseif (UNIX AND NOT APPLE)
 endif ()
 
 
-#SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc")
 set(FILES
         initiative-tracker/initiativemodel.h    initiative-tracker/initiativemodel.cpp
         mainwindow.h    mainwindow.cpp

@@ -32,6 +32,16 @@ enum qmapErrorCodes{
 };
 
 
+enum mapLayers{
+    Background = -100,
+    Shapes = 5,
+    Brush = 6,
+    Ruler = 10,
+    Fog = 100,
+    Light = 110
+};
+
+
 /**
  * @class MapScene
  * @brief Represents a custom scene for displaying and interacting with a map, supporting tools, fog of war, and undoable actions.

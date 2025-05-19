@@ -52,8 +52,8 @@ void RulerMapTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsSce
             label->setDefaultTextColor(Qt::red);
             label->setPos((line.p1() + line.p2()) / 2);
 
-            lineItem->setZValue(10);
-            label->setZValue(11);
+            lineItem->setZValue(mapLayers::Ruler);
+            label->setZValue(mapLayers::Ruler);
 
             permanentItems.append(lineItem);
             permanentItems.append(label);
