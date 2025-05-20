@@ -41,6 +41,14 @@ void CampaignTreeWidget::populateTree(const QString &path, QTreeWidgetItem *pare
             parentItem->addChild(item);
             auto *widget = new HoverWidget(entry.fileName());
             setItemWidget(item, 0, widget);
+
+            connect(widget, &HoverWidget::editClicked, this, [this, entry](){
+                emit editRequested(entry.absoluteFilePath());
+            });
+
+            connect(widget, &HoverWidget::activateClicked, this, [this, entry](){
+                emit activateRequested(entry.absoluteFilePath());
+            });
         }
     }
 }
