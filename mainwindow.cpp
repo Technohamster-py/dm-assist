@@ -40,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
+    setupCampaign();
     setupToolbar();
     setupPlayers();
     setupTracker();
@@ -1107,6 +1108,12 @@ void MainWindow::exportMap(int index) {
                                                         "DM assist map file (*.dam)");
         currentView->getScene()->saveToFile(filename);
     }
+}
+
+void MainWindow::setupCampaign() {
+    campaignTreeWidget = new CampaignTreeWidget(this);
+    campaignTreeWidget->setRootDir("D:/documents/dm_assist_campains/cam1");
+    ui->campaignLayout->addWidget(campaignTreeWidget);
 }
 
 

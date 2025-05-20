@@ -11,6 +11,7 @@
 #include <QSettings>
 #include <QShortcut>
 #include <QTranslator>
+#include "campaign-tree-widget/campaigntreewidget.h"
 #include "map-widget/maptabwidget.h"
 #include "map-widget/fogtool.h"
 #include "map-widget/brushtool.h"
@@ -80,6 +81,8 @@ private:
     int deviceIndex = -1;
     QVector<QPlayer*> players;
 
+    CampaignTreeWidget* campaignTreeWidget;
+
     QInitiativeTrackerWidget* initiativeTrackerWidget;
 
     TabWidget *mapTabWidget;
@@ -94,7 +97,7 @@ private:
     SquareShapeTool* squareShapeTool;
     TriangleShapeTool* triangleShapeTool;
 
-
+    void setupCampaign();
     void setupPlayers();
     void setupTracker();
     void setupToolbar();
