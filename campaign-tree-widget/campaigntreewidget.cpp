@@ -8,6 +8,12 @@
 CampaignTreeWidget::CampaignTreeWidget(QWidget *parent) : QTreeWidget(parent) {
     setColumnCount(1);
     setHeaderLabel(tr("Campaign Structure"));
+
+    setStyleSheet("QTreeWidget { background: transparent; }");
+
+    setAttribute(Qt::WA_TranslucentBackground);
+    setFrameStyle(QFrame::NoFrame);
+    setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
 void CampaignTreeWidget::setRootDir(const QString &rootPath) {
@@ -30,14 +36,14 @@ void CampaignTreeWidget::populateTree(const QString &path, QTreeWidgetItem *pare
             QString testPath = entry.absoluteFilePath() + ".xml";
             if (QFile::exists(testPath)) continue;
 
-            auto *item = new QTreeWidgetItem();
+            auto *item = new QTreeWidgetItem(parentItem);
             parentItem->addChild(item);
             auto *widget = new QLabel(entry.fileName());
             setItemWidget(item, 0, widget);
 
             populateTree(entry.absoluteFilePath(), item);
         } else {
-            auto *item = new QTreeWidgetItem();
+            auto *item = new QTreeWidgetItem(parentItem);
             parentItem->addChild(item);
             auto *widget = new HoverWidget(entry.fileName());
             setItemWidget(item, 0, widget);
