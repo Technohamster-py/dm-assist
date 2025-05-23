@@ -97,7 +97,7 @@ private:
     SquareShapeTool* squareShapeTool;
     TriangleShapeTool* triangleShapeTool;
 
-    void setupCampaign();
+    void setupCampaign(QString campaignRoot);
     void setupPlayers();
     void setupTracker();
     void setupToolbar();
@@ -114,6 +114,7 @@ private slots:
     void on_actionSettings_triggered();
 
     void createNewMapTab();
+    void openMapFromFile(QString fileName);
     void deleteMapTab(int index);
     void updateVisibility();
 

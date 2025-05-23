@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
-    setupCampaign();
+    setupCampaign(QString());
     setupToolbar();
     setupPlayers();
     setupTracker();
@@ -531,6 +531,11 @@ void MainWindow::createNewMapTab() {
 
     if (fileName.isEmpty()) return;
 
+    openMapFromFile(fileName);
+}
+
+
+void MainWindow::openMapFromFile(QString fileName) {
     QFileInfo fileInfo(fileName);
     QString ext = fileInfo.suffix().toLower();
 
@@ -1110,11 +1115,21 @@ void MainWindow::exportMap(int index) {
     }
 }
 
-void MainWindow::setupCampaign() {
+void MainWindow::setupCampaign(QString campaignRoot) {
+    if (campaignRoot.isEmpty())
+        return;
     campaignTreeWidget = new CampaignTreeWidget(this);
-    campaignTreeWidget->setRootDir("D:/documents/dm_assist_campains/cam1");
+    campaignTreeWidget->setRootDir(campaignRoot);
+
+    connect(campaignTreeWidget, &CampaignTreeWidget::encounterAddRequested, initiativeTrackerWidget, &QInitiativeTrackerWidget::addFromFile);
+    connect(campaignTreeWidget, &CampaignTreeWidget::encounterReplaceRequested, initiativeTrackerWidget, &QInitiativeTrackerWidget::loadFromFile);
+
+    connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);
+
     ui->campaignLayout->addWidget(campaignTreeWidget);
 }
+
+
 
 
 /**
