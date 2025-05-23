@@ -7,15 +7,30 @@ CampaignTreeWidget::CampaignTreeWidget(QWidget *parent) : QTreeWidget(parent)
     setHeaderLabel(tr("Campaign Structure"));
 }
 
-void CampaignTreeWidget::setRootDir(const QString &rootPath)
+NodeType CampaignTreeWidget::determieNodeType(const QString &path)
 {
-    clear();
-    m_rootPath = QDir(rootPath).absolutePath();
-    auto *rootItem = new QTreeWidgetItem(this);
-    auto *widget = new HoverWidget(QFileInfo(rootPath).fileName(), NodeType::Unknown);
-    setItemWidget(rootItem, 0, widget);
-    populateTree(rootPath, rootItem);
-    expandAll();
+    if (path.contains("/Characters"))
+        return NodeType::Character;
+    if (path.contains("/Encounters"))
+        return NodeType::Encounter;
+    if (path.contains("/Maps"))
+        return NodeType::Map;
+    if (path.contains("/Music"))
+        return NodeType::Music;
+    return NodeType::Unknown;
+}
+
+
+bool CampaignTreeWidget::ignore(const QFileInfo &info)
+{
+    QString relativePath = QDir(m_rootPath).relativeFilePath(info.absoluteFilePath());
+    QString normalized = QDir::cleanPath(relativePath).toLower();
+
+    if (normalized.startsWith("music/") || normalized == "music")
+        return true;
+    if (normalized == "playerConfig.xml" || normalized == "root")
+        return true;
+    return false;
 }
 
 void CampaignTreeWidget::populateTree(const QString &path, QTreeWidgetItem *parentItem)
@@ -58,27 +73,13 @@ void CampaignTreeWidget::populateTree(const QString &path, QTreeWidgetItem *pare
     }
 }
 
-NodeType CampaignTreeWidget::determieNodeType(const QString &path)
+void CampaignTreeWidget::setRootDir(const QString &rootPath)
 {
-    if (path.contains("/Characters"))
-        return NodeType::Character;
-    if (path.contains("/Encounters"))
-        return NodeType::Encounter;
-    if (path.contains("/Maps"))
-        return NodeType::Map;
-    if (path.contains("/Music"))
-        return NodeType::Music;
-    return NodeType::Unknown;
-}
-
-bool CampaignTreeWidget::ignore(const QFileInfo &info)
-{
-    QString relativePath = QDir(m_rootPath).relativeFilePath(info.absoluteFilePath());
-    QString normalized = QDir::cleanPath(relativePath).toLower();
-
-    if (normalized.startsWith("music/") || normalized == "music")
-        return true;
-    if (normalized == "playerConfig.xml" || normalized == "root")
-        return true;
-    return false;
+    clear();
+    m_rootPath = QDir(rootPath).absolutePath();
+    auto *rootItem = new QTreeWidgetItem(this);
+    auto *widget = new HoverWidget(QFileInfo(rootPath).fileName(), NodeType::Unknown);
+    setItemWidget(rootItem, 0, widget);
+    populateTree(rootPath, rootItem);
+    expandAll();
 }

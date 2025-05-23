@@ -119,8 +119,8 @@ private slots:
     void deleteMapTab(int index);
     void updateVisibility();
 
-    void setCalibrationMode();
-    void setMeasureMode(bool checked);
+    void setCalibrationTool();
+    void setMeasureTool(bool checked);
     void setFogTool(bool checked, FogTool::Mode mode = FogTool::Hide);
     void setLightTool(bool checked);
     void coverMapWithFog(bool hide);

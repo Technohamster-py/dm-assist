@@ -82,69 +82,121 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-
-
 /**
- * Initializes and configures player widgets in the MainWindow.
+ * @brief Changes the application's language to the specified language code.
  *
- * This function dynamically creates nine QPlayer objects with unique identifiers
- * and titles. These QPlayer instances are added to the `players` QVector and displayed
- * in the UI layout defined as `ui->musicLayout`. Additionally, signal-slot connections
- * are established to ensure that when a player starts, all other players stop.
+ * This function updates the application's current language by removing the existing
+ * translator, loading the translation file for the specified language code, and
+ * installing the new translator. If the translation file is successfully loaded,
+ * the UI will be retranslated to reflect the language change.
  *
- * The `QPlayer` instances are assigned sequential IDs from 1 to 9 and titled
- * "Player 1" through "Player 9". Each player is inserted into the layout at
- * the appropriate position and connected to the `stopOtherPlayers` slot to
- * handle stopping other players when one starts.
+ * @param languageCode The language code (e.g., "en", "fr") for the desired language.
+ *
+ * The language file is expected to be located in the "translations" directory
+ * relative to the application's directory and should follow the naming convention
+ * "dm-assist_<languageCode>.qm".
  */
-void MainWindow::setupPlayers() {
-     for (int i = 0; i < 9; ++i) {
-         auto *player = new QPlayer(this, i+1, QString("Player %1").arg(i + 1));
-         players.append(player);
-     }
-
-    for (int i = 0; i < players.size(); ++i) {
-        ui->musicLayout->insertWidget(i, players[i]);
-        connect(players[i], SIGNAL(playerStarted(int)), this, SLOT(stopOtherPlayers(int)));
+void MainWindow::changeLanguage(const QString &languageCode) {
+    qApp->removeTranslator(&translator);
+    if (translator.load(QCoreApplication::applicationDirPath() + "/translations/dm-assist_" + languageCode + ".qm"))
+    {
+        qApp->installTranslator(&translator);
+        currentLanguage = languageCode;
+        ui->retranslateUi(this);
     }
 }
 
-
-
 /**
- * @brief Sets up keyboard shortcuts for player controls.
+ * @brief Toggles the visibility of a fog layer on the currently active map scene.
  *
- * This function iterates through a collection of players and assigns
- * a unique keyboard shortcut to each player. The shortcuts are
- * generated in the form "Ctrl+<index>", where `<index>` corresponds
- * to the player's index in the `players` vector. These shortcuts
- * enable quick access to the play functionality of each player.
+ * This function retrieves the currently active map view from the `mapTabWidget`
+ * and accesses its associated `MapScene`. Depending on the value of the `hide`
+ * parameter, it either hides or reveals all fog elements on the map scene using
+ * the `fogTool`.
  *
- * Preconditions:
- * - The `players` vector must be initialized and contain valid player objects.
- * - Each player in the `players` vector must support the `setPlayShortcut` method.
+ * @param hide If true, hides the fog layer completely; if false, reveals it.
  */
-void MainWindow::setupShortcuts() {
-    for (int i = 0; i < players.size(); ++i) {
-        QString key = QString("Ctrl+%1").arg(i);
-        players[i]->setPlayShortcut(key);
-    }
+void MainWindow::coverMapWithFog(bool hide) {
+    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    MapScene* scene = currentView->getScene();
+
+    if (hide)
+        fogTool->hideAll(scene);
+    else
+        fogTool->revealAll(scene);
 }
 
-
 /**
- * @brief Stops all player instances in the application.
+ * @brief Creates a new map tab in the application.
  *
- * Iterates through all QPlayer objects in the `players` vector and invokes
- * the `stop` method on each. This is typically used to halt any ongoing playback
- * or activities managed by the players.
+ * This function opens a file dialog to allow the user to select a map file. The file can either be
+ * a ".dam" file (map scene file) or an image file (e.g., ".png", ".jpg", ".bmp"). If the user selects
+ * a valid file, it creates a new MapView instance, attempts to load the file into the view, and adds
+ * it as a new tab in the mapTabWidget if successful.
+ *
+ * If the file is a ".dam" file, it loads the scene data using MapView::loadSceneFromFile().
+ * If the file is an image, it loads the image into the map using MapView::loadMapImage().
+ *
+ * If the file loading fails, an error dialog is displayed, and the MapView instance is deleted.
+ * Otherwise, the tab is added, visibility of the mapTabWidget is updated, the new tab is selected,
+ * and tool change handling is connected for the new MapView instance.
+ *
+ * The toolChanged signal from the MapScene associated with the MapView is connected to a lambda
+ * function that ensures appropriate QAction items in the toolGroup are checked or unchecked based
+ * on the active tool.
  */
-void MainWindow::stopAll() {
-    for (int i = 0; i < 9; ++i) {
-        players[i]->stop();
-    }
+void MainWindow::createNewMapTab() {
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                                    tr("Open Map Image"),
+                                                    QStandardPaths::writableLocation(QStandardPaths::PicturesLocation),
+                                                    tr("Map Files (*.dam);;Images (*.png *.jpg *.bmp)"));
+
+    if (fileName.isEmpty()) return;
+
+    openMapFromFile(fileName);
 }
 
+/**
+ * @brief Deletes a specific map tab from the application's tab widget.
+ *
+ * This function removes a tab from the `mapTabWidget` based on the given index,
+ * deletes the associated `QWidget` to free up resources, and then updates the visibility
+ * of certain UI elements based on the remaining tabs.
+ *
+ * @param index The index of the tab to be deleted. It should be a valid index within the range of existing tabs.
+ *
+ * @note Calling this function on an invalid index (e.g., out of range) can result in undefined behavior.
+ */
+void MainWindow::deleteMapTab(int index) {
+    QWidget *widget = mapTabWidget->widget(index);
+    mapTabWidget->removeTab(index);
+    delete widget;
+    updateVisibility();
+}
+
+/**
+ * @brief Exports the map from the specified tab index to a file.
+ *
+ * This function allows the user to export the current map displayed in the specified
+ * tab of the mapTabWidget to a file. A file save dialog is presented to the user to
+ * select the location and name of the output file. The map data is saved in a proprietary
+ * file format (*.dam).
+ *
+ * @param index The index of the tab in mapTabWidget containing the map to be exported.
+ *
+ * @note If the specified tab does not contain a valid MapView object, the operation is skipped.
+ *       The exported file format is DM assist map file (*.dam).
+ */
+void MainWindow::exportMap(int index) {
+    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
+    if (currentView){
+        QString filename = QFileDialog::getSaveFileName(this,
+                                                        tr("Save map to file"),
+                                                        QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
+                                                        "DM assist map file (*.dam)");
+        currentView->getScene()->saveToFile(filename);
+    }
+}
 
 /**
  * @brief Loads and parses a configuration XML file for players' playlists.
@@ -211,6 +263,190 @@ void MainWindow::loadConfigFile() {
     }
 }
 
+/**
+ * @brief Loads the application settings from persistent storage and applies these settings.
+ *
+ * This function retrieves and sets various application-wide settings using `QSettings` and ensures
+ * that the working directory, audio configurations, language, initiative tracker options, and
+ * appearance themes are properly initialized.
+ *
+ * The settings are loaded as follows:
+ *
+ * - **General Settings**:
+ *   - Loads the working directory path. If the directory does not exist, it is created.
+ *
+ * - **Music Settings**:
+ *   - Sets the audio output device for all QPlayer instances.
+ *   - Configures the volume slider to the saved volume level.
+ *
+ * - **Language Settings**:
+ *   - Sets the application language by calling `changeLanguage`.
+ *
+ * - **Initiative Tracker Settings**:
+ *   - Sets the health bar display mode.
+ *   - Configures the visibility of specific fields in the initiative tracker widget.
+ *
+ * - **Appearance Settings**:
+ *   - Loads the theme (Light, Dark, or a custom theme from XML) and applies it using `ThemeManager`.
+ *
+ * @details
+ * If a setting is not found in persistent storage, a default value is used.
+ *
+ * @note The function assumes that all required objects (e.g., `players`, `ui`, `initiativeTrackerWidget`)
+ * are properly initialized before this function is called.
+ */
+void MainWindow::loadSettings() {
+    QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
+    /// General
+    workingDir = settings.value(paths.general.dir, workingDir).toString();
+    QDir dir(workingDir);
+    if (!dir.exists())
+        dir.mkpath(".");
+    /// Music
+    for (QPlayer *player : players) {
+        player->setAudioOutput(settings.value(paths.general.audioDevice, 0).toInt());
+    }
+    ui->volumeSlider->setValue(settings.value(paths.general.volume, 100).toInt());
+    ///Language
+    changeLanguage(settings.value(paths.general.lang, "ru_RU").toString());
+    /// Initiative tracker
+    initiativeTrackerWidget->setHpDisplayMode(settings.value(paths.initiative.hpBarMode, 0).toInt());
+    int initiativeFields = settings.value(paths.initiative.fields, 7).toInt();
+    initiativeTrackerWidget->setSharedFieldVisible(0, initiativeFields & iniFields::name);
+    initiativeTrackerWidget->setSharedFieldVisible(1, initiativeFields & iniFields::init);
+    initiativeTrackerWidget->setSharedFieldVisible(2, initiativeFields & iniFields::ac);
+    initiativeTrackerWidget->setSharedFieldVisible(3, initiativeFields & iniFields::hp);
+    initiativeTrackerWidget->setSharedFieldVisible(4, initiativeFields & iniFields::maxHp);
+    initiativeTrackerWidget->setSharedFieldVisible(5, initiativeFields & iniFields::del);
+
+    QString theme = settings.value(paths.appearance.theme, "Light").toString();
+    if (theme == "Light")
+        ThemeManager::applyPreset(ThemeManager::PresetTheme::Light);
+    else if (theme == "Dark")
+        ThemeManager::applyPreset(ThemeManager::PresetTheme::Dark);
+    else if (theme == "System")
+        ThemeManager::resetToSystemTheme();
+    else
+        ThemeManager::loadFromXml(theme);
+
+    /// Session
+    currentCampaignDir = settings.value(paths.session.campaign, "").toString();
+}
+
+/**
+ * @brief Handles the "Settings" action when triggered.
+ *
+ * This function is invoked when the user selects the "Settings" option from the UI.
+ * It performs the following operations:
+ *
+ * 1. Saves the current application settings by calling `saveSettings`.
+ * 2. Checks if the settings dialog (`settingsDialog`) exists. If not, it initializes
+ *    the dialog by creating a new `SettingsDialog` object with the organization name,
+ *    application name, and parent as parameters.
+ * 3. Displays the settings dialog in a modal state by calling `exec` on it.
+ * 4. After the dialog is closed, it reloads application settings by calling `loadSettings`.
+ *
+ * @note
+ * - The `settingsDialog` is initialized only once and reused afterward.
+ * - The `saveSettings` function is called before showing the dialog to ensure
+ *   the latest settings are preserved.
+ * - The `loadSettings` function is called after the dialog is closed, allowing
+ *   the application to reflect any changes made in the settings dialog.
+ */
+void MainWindow::on_actionSettings_triggered() {
+    saveSettings();
+    if(!settingsDialog)
+    {
+        settingsDialog = new SettingsDialog(ORGANIZATION_NAME, APPLICATION_NAME, this);
+    }
+    settingsDialog->exec();
+    loadSettings();
+}
+
+/**
+ * @brief Opens the donation page using the system's default web browser.
+ *
+ * This function creates a URL pointing to the donation page and uses the
+ * QDesktopServices class to open the specified URL in the default web
+ * browser. It provides a convenient way for users to navigate to the
+ * donation platform directly from the application.
+ */
+void MainWindow::openDonate() {
+    QUrl url("https://pay.cloudtips.ru/p/8f6d339a");
+    QDesktopServices::openUrl(url);
+}
+
+/**
+ * @brief Opens the help documentation in the default web browser.
+ *
+ * This function launches a specific URL pointing to the user guide or
+ * documentation for the application using `QDesktopServices::openUrl`.
+ * It is intended to provide quick access to resources that assist
+ * users in understanding or troubleshooting the application.
+ */
+void MainWindow::openHelp() {
+    QUrl url("https://github.com/Technohamster-py/dm-assist/wiki/%D0%9D%D0%B0%D1%87%D0%B0%D0%BB%D0%BE");
+    QDesktopServices::openUrl(url);
+}
+
+void MainWindow::openMapFromFile(QString fileName) {
+    QFileInfo fileInfo(fileName);
+    QString ext = fileInfo.suffix().toLower();
+
+    MapView *view = new MapView(this);
+    bool success = false;
+
+    if (ext == "dam") {
+        success = view->loadSceneFromFile(fileName);
+    } else {
+        view->loadMapImage(fileName);
+        success = true;
+    }
+
+    if (success) {
+        mapTabWidget->addTab(view, fileInfo.fileName());
+        updateVisibility();
+        mapTabWidget->setCurrentIndex(mapTabWidget->count() - 1);
+
+        connect(view->getScene(), &MapScene::toolChanged, this, [=](const AbstractMapTool* tool){
+            if (!tool){
+                for (QAction *action : toolGroup->actions()) {
+                    action->setChecked(false);
+                }
+            }
+        });
+    } else {
+        delete view; // удалить если не загрузилось
+        QMessageBox::warning(this, tr("Error"), tr("Failed to open map file."));
+    }
+}
+
+/**
+ * @brief Opens or activates a shared map window for the specified tab index.
+ *
+ * This method manages a `SharedMapWindow` instance to display the map from
+ * a specific tab in a separate window. If a shared map window does not already
+ * exist, it initializes a new `SharedMapWindow` instance with the map scene
+ * from the specified tab, displays it, and manages its lifecycle. If a shared
+ * map window already exists, it brings the existing window to the foreground.
+ *
+ * @param index Index of the current map tab to get the corresponding map scene.
+ */
+void MainWindow::openSharedMapWindow(int index) {
+    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
+    if (!sharedMapWindow){
+        sharedMapWindow = new SharedMapWindow(currentView->getScene());
+        sharedMapWindow->show();
+        sharedMapWindow->resize(800, 600);
+
+        connect(sharedMapWindow, &QWidget::destroyed, this, [=]() {
+            sharedMapWindow = nullptr;
+        });
+    } else{
+        sharedMapWindow->raise();
+        sharedMapWindow->activateWindow();
+    }
+}
 
 /**
  * Saves the current configuration of the application to an XML file.
@@ -289,7 +525,6 @@ void MainWindow::saveConfigFile() {
     configFile.close();
 }
 
-
 /**
  * @brief Saves application settings to persistent storage.
  *
@@ -309,265 +544,129 @@ void MainWindow::saveSettings() {
     settings.sync();
 }
 
+/**
+ * @brief Activates the calibration mode in the currently selected map view.
+ *
+ * This method retrieves the currently active widget from the mapTabWidget and
+ * attempts to cast it to a MapView instance. If the cast is successful, it sets
+ * the active tool in the MapView to the calibrationTool, enabling the calibration mode.
+ *
+ * @note This function assumes that calibrationTool has already been initialized and that
+ * the current widget in mapTabWidget is a compatible MapView instance.
+ */
+void MainWindow::setCalibrationTool() {
+    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    if (currentView){
+        currentView->setActiveTool(calibrationTool);
+    }
+}
 
 /**
- * @brief Loads the application settings from persistent storage and applies these settings.
+ * @brief Sets the current fog tool state and mode for the active map view.
  *
- * This function retrieves and sets various application-wide settings using `QSettings` and ensures
- * that the working directory, audio configurations, language, initiative tracker options, and
- * appearance themes are properly initialized.
+ * This method toggles the fog tool for the currently active map view within the
+ * MainWindow. If the `checked` parameter is set to false, the fog tool is disabled
+ * for the current view by setting the active tool to `nullptr`. If `checked` is true,
+ * the specified fog mode is applied to the fog tool, and the fog tool is activated
+ * for the current map view.
  *
- * The settings are loaded as follows:
+ * @param checked A boolean value indicating whether the fog tool should be activated.
+ *        If false, the fog tool is deactivated for the current map view.
+ * @param mode The fog mode to be applied to the fog tool. This determines whether
+ *        the fog tool is used to hide or reveal areas of the map.
  *
- * - **General Settings**:
- *   - Loads the working directory path. If the directory does not exist, it is created.
- *
- * - **Music Settings**:
- *   - Sets the audio output device for all QPlayer instances.
- *   - Configures the volume slider to the saved volume level.
- *
- * - **Language Settings**:
- *   - Sets the application language by calling `changeLanguage`.
- *
- * - **Initiative Tracker Settings**:
- *   - Sets the health bar display mode.
- *   - Configures the visibility of specific fields in the initiative tracker widget.
- *
- * - **Appearance Settings**:
- *   - Loads the theme (Light, Dark, or a custom theme from XML) and applies it using `ThemeManager`.
- *
- * @details
- * If a setting is not found in persistent storage, a default value is used.
- *
- * @note The function assumes that all required objects (e.g., `players`, `ui`, `initiativeTrackerWidget`)
- * are properly initialized before this function is called.
+ * @details The method checks the currently active tab in the `mapTabWidget`, casts
+ *          it to `MapView`, and applies the specified fog tool settings if the
+ *          active tab is valid. The `FogTool::Mode` enum can be either `Hide` or
+ *          `Reveal` and is used to configure the tool's behavior.
  */
-void MainWindow::loadSettings() {
-    QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
-    /// General
-    workingDir = settings.value(paths.general.dir, workingDir).toString();
-    QDir dir(workingDir);
-    if (!dir.exists())
-        dir.mkpath(".");
-    /// Music
-    for (QPlayer *player : players) {
-        player->setAudioOutput(settings.value(paths.general.audioDevice, 0).toInt());
+void MainWindow::setFogTool(bool checked, FogTool::Mode mode) {
+    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    if (currentView){
+        if (!checked){
+            currentView->setActiveTool(nullptr);
+        } else{
+            fogTool->setMode(mode);
+            currentView->setActiveTool(fogTool);
+        }
     }
-    ui->volumeSlider->setValue(settings.value(paths.general.volume, 100).toInt());
-    ///Language
-    changeLanguage(settings.value(paths.general.lang, "ru_RU").toString());
-    /// Initiative tracker
-    initiativeTrackerWidget->setHpDisplayMode(settings.value(paths.initiative.hpBarMode, 0).toInt());
-    int initiativeFields = settings.value(paths.initiative.fields, 7).toInt();
-    initiativeTrackerWidget->setSharedFieldVisible(0, initiativeFields & iniFields::name);
-    initiativeTrackerWidget->setSharedFieldVisible(1, initiativeFields & iniFields::init);
-    initiativeTrackerWidget->setSharedFieldVisible(2, initiativeFields & iniFields::ac);
-    initiativeTrackerWidget->setSharedFieldVisible(3, initiativeFields & iniFields::hp);
-    initiativeTrackerWidget->setSharedFieldVisible(4, initiativeFields & iniFields::maxHp);
-    initiativeTrackerWidget->setSharedFieldVisible(5, initiativeFields & iniFields::del);
+}
 
-    QString theme = settings.value(paths.appearance.theme, "Light").toString();
-    if (theme == "Light")
-        ThemeManager::applyPreset(ThemeManager::PresetTheme::Light);
-    else if (theme == "Dark")
-        ThemeManager::applyPreset(ThemeManager::PresetTheme::Dark);
-    else if (theme == "System")
-        ThemeManager::resetToSystemTheme();
+/**
+ * @brief Activates or deactivates the light tool in the current map view.
+ *
+ * This method sets the light tool as the active tool for the currently visible
+ * MapView in the mapTabWidget. If `checked` is true, the light tool is activated,
+ * allowing the user to interact with light-related functionality in the map.
+ * If `checked` is false, no tool is active.
+ *
+ * @param checked Determines whether to activate or deactivate the light tool.
+ */
+void MainWindow::setLightTool(bool checked) {
+    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    if (checked)
+        currentView->setActiveTool(lightTool);
     else
-        ThemeManager::loadFromXml(theme);
-
-    /// Session
-    currentCampaignDir = settings.value(paths.session.campaign, "").toString();
+        currentView->setActiveTool(nullptr);
 }
 
-
 /**
- * @brief Handles the "Settings" action when triggered.
+ * @brief Sets the measure mode by activating or deactivating the ruler tool.
  *
- * This function is invoked when the user selects the "Settings" option from the UI.
- * It performs the following operations:
+ * This method sets the current map view's active tool to the ruler map tool
+ * if measure mode is enabled (checked is true) or null if measure mode is
+ * disabled (checked is false). This allows the user to enable or disable
+ * the measuring functionality on the currently active map tab.
  *
- * 1. Saves the current application settings by calling `saveSettings`.
- * 2. Checks if the settings dialog (`settingsDialog`) exists. If not, it initializes
- *    the dialog by creating a new `SettingsDialog` object with the organization name,
- *    application name, and parent as parameters.
- * 3. Displays the settings dialog in a modal state by calling `exec` on it.
- * 4. After the dialog is closed, it reloads application settings by calling `loadSettings`.
- *
- * @note
- * - The `settingsDialog` is initialized only once and reused afterward.
- * - The `saveSettings` function is called before showing the dialog to ensure
- *   the latest settings are preserved.
- * - The `loadSettings` function is called after the dialog is closed, allowing
- *   the application to reflect any changes made in the settings dialog.
+ * @param checked A boolean indicating whether to enable (true) or disable (false) the measure mode.
  */
-void MainWindow::on_actionSettings_triggered() {
-    saveSettings();
-    if(!settingsDialog)
-    {
-        settingsDialog = new SettingsDialog(ORGANIZATION_NAME, APPLICATION_NAME, this);
+void MainWindow::setMeasureTool(bool checked) {
+    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    if (currentView){
+        if (checked)
+            currentView->setActiveTool(rulerMapTool);
+        else
+            currentView->setActiveTool(nullptr);
     }
-    settingsDialog->exec();
-    loadSettings();
 }
 
-
 /**
- * Stops all players in the `players` vector except the one specified by the given `exeptId`.
+ * Initializes and configures player widgets in the MainWindow.
  *
- * Iterates over the list of players and checks the playlist ID of each player.
- * If the player's playlist ID does not match the provided `exeptId`, the player is stopped.
+ * This function dynamically creates nine QPlayer objects with unique identifiers
+ * and titles. These QPlayer instances are added to the `players` QVector and displayed
+ * in the UI layout defined as `ui->musicLayout`. Additionally, signal-slot connections
+ * are established to ensure that when a player starts, all other players stop.
  *
- * @param exeptId The playlist ID of the player that should not be stopped.
+ * The `QPlayer` instances are assigned sequential IDs from 1 to 9 and titled
+ * "Player 1" through "Player 9". Each player is inserted into the layout at
+ * the appropriate position and connected to the `stopOtherPlayers` slot to
+ * handle stopping other players when one starts.
  */
-void MainWindow::stopOtherPlayers(int exeptId) {
+void MainWindow::setupPlayers() {
     for (int i = 0; i < 9; ++i) {
-        if (players[i]->getPlaylistId() != exeptId)
-            players[i]->stop();
+        auto *player = new QPlayer(this, i+1, QString("Player %1").arg(i + 1));
+        players.append(player);
+    }
+
+    for (int i = 0; i < players.size(); ++i) {
+        ui->musicLayout->insertWidget(i, players[i]);
+        connect(players[i], SIGNAL(playerStarted(int)), this, SLOT(stopOtherPlayers(int)));
     }
 }
 
+void MainWindow::setupCampaign(QString campaignRoot) {
+    if (campaignRoot.isEmpty())
+        return;
+    campaignTreeWidget = new CampaignTreeWidget(this);
+    campaignTreeWidget->setRootDir(campaignRoot);
 
-/**
- * @brief Changes the application's language to the specified language code.
- *
- * This function updates the application's current language by removing the existing
- * translator, loading the translation file for the specified language code, and
- * installing the new translator. If the translation file is successfully loaded,
- * the UI will be retranslated to reflect the language change.
- *
- * @param languageCode The language code (e.g., "en", "fr") for the desired language.
- *
- * The language file is expected to be located in the "translations" directory
- * relative to the application's directory and should follow the naming convention
- * "dm-assist_<languageCode>.qm".
- */
-void MainWindow::changeLanguage(const QString &languageCode) {
-    qApp->removeTranslator(&translator);
-    if (translator.load(QCoreApplication::applicationDirPath() + "/translations/dm-assist_" + languageCode + ".qm"))
-    {
-        qApp->installTranslator(&translator);
-        currentLanguage = languageCode;
-        ui->retranslateUi(this);
-    }
-}
+    connect(campaignTreeWidget, &CampaignTreeWidget::encounterAddRequested, initiativeTrackerWidget, &QInitiativeTrackerWidget::addFromFile);
+    connect(campaignTreeWidget, &CampaignTreeWidget::encounterReplaceRequested, initiativeTrackerWidget, &QInitiativeTrackerWidget::loadFromFile);
 
+    connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);
 
-/**
- * @brief Opens the help documentation in the default web browser.
- *
- * This function launches a specific URL pointing to the user guide or
- * documentation for the application using `QDesktopServices::openUrl`.
- * It is intended to provide quick access to resources that assist
- * users in understanding or troubleshooting the application.
- */
-void MainWindow::openHelp() {
-    QUrl url("https://github.com/Technohamster-py/dm-assist/wiki/%D0%9D%D0%B0%D1%87%D0%B0%D0%BB%D0%BE");
-    QDesktopServices::openUrl(url);
-}
-
-
-/**
- * @brief Opens the donation page using the system's default web browser.
- *
- * This function creates a URL pointing to the donation page and uses the
- * QDesktopServices class to open the specified URL in the default web
- * browser. It provides a convenient way for users to navigate to the
- * donation platform directly from the application.
- */
-void MainWindow::openDonate() {
-    QUrl url("https://pay.cloudtips.ru/p/8f6d339a");
-    QDesktopServices::openUrl(url);
-}
-
-/**
- * @brief Sets the volume divider for all QPlayer instances managed by MainWindow.
- *
- * This function iterates through the `players` vector and sets the volume divider
- * for each QPlayer object to the specified value. The operation assumes that the
- * `players` vector contains exactly 9 QPlayer instances.
- *
- * @param value The volume divider value to be applied to each QPlayer instance.
- */
-void MainWindow::setVolumeDivider(int value) {
-    for (int i = 0; i < 9; ++i) {
-        players[i]->setVolumeDivider(value);
-    }
-}
-
-/**
- * @brief Sets up the initiative tracker widget in the main window.
- *
- * This function initializes a new instance of QInitiativeTrackerWidget
- * and adds it to the tracker layout of the main window's UI. The
- * widget is created with the main window as its parent.
- */
-void MainWindow::setupTracker() {
-    initiativeTrackerWidget = new QInitiativeTrackerWidget(this);
-    ui->trackerLayout->addWidget(initiativeTrackerWidget);
-}
-
-/**
- * @brief Creates a new map tab in the application.
- *
- * This function opens a file dialog to allow the user to select a map file. The file can either be
- * a ".dam" file (map scene file) or an image file (e.g., ".png", ".jpg", ".bmp"). If the user selects
- * a valid file, it creates a new MapView instance, attempts to load the file into the view, and adds
- * it as a new tab in the mapTabWidget if successful.
- *
- * If the file is a ".dam" file, it loads the scene data using MapView::loadSceneFromFile().
- * If the file is an image, it loads the image into the map using MapView::loadMapImage().
- *
- * If the file loading fails, an error dialog is displayed, and the MapView instance is deleted.
- * Otherwise, the tab is added, visibility of the mapTabWidget is updated, the new tab is selected,
- * and tool change handling is connected for the new MapView instance.
- *
- * The toolChanged signal from the MapScene associated with the MapView is connected to a lambda
- * function that ensures appropriate QAction items in the toolGroup are checked or unchecked based
- * on the active tool.
- */
-void MainWindow::createNewMapTab() {
-    QString fileName = QFileDialog::getOpenFileName(this,
-                                                    tr("Open Map Image"),
-                                                    QStandardPaths::writableLocation(QStandardPaths::PicturesLocation),
-                                                    tr("Map Files (*.dam);;Images (*.png *.jpg *.bmp)"));
-
-    if (fileName.isEmpty()) return;
-
-    openMapFromFile(fileName);
-}
-
-
-void MainWindow::openMapFromFile(QString fileName) {
-    QFileInfo fileInfo(fileName);
-    QString ext = fileInfo.suffix().toLower();
-
-    MapView *view = new MapView(this);
-    bool success = false;
-
-    if (ext == "dam") {
-        success = view->loadSceneFromFile(fileName);
-    } else {
-        view->loadMapImage(fileName);
-        success = true;
-    }
-
-    if (success) {
-        mapTabWidget->addTab(view, fileInfo.fileName());
-        updateVisibility();
-        mapTabWidget->setCurrentIndex(mapTabWidget->count() - 1);
-
-        connect(view->getScene(), &MapScene::toolChanged, this, [=](const AbstractMapTool* tool){
-            if (!tool){
-                for (QAction *action : toolGroup->actions()) {
-                    action->setChecked(false);
-                }
-            }
-        });
-    } else {
-        delete view; // удалить если не загрузилось
-        QMessageBox::warning(this, tr("Error"), tr("Failed to open map file."));
-    }
+    ui->campaignLayout->addWidget(campaignTreeWidget);
 }
 
 /**
@@ -604,76 +703,28 @@ void MainWindow::setupMaps() {
     updateVisibility();
 }
 
-/**
- * @brief Updates the visibility of specific UI elements based on the presence of tabs.
- *
- * This method checks whether the `mapTabWidget` contains any tabs. If tabs are present,
- * the `mapTabWidget` is made visible, and the placeholder widget (`ui->placeHolderWidget`)
- * is hidden. Otherwise, the `mapTabWidget` is hidden, and the placeholder widget is shown.
- *
- * The method ensures that appropriate UI elements are shown depending on whether there are
- * tabs to display in the `mapTabWidget`.
- */
-void MainWindow::updateVisibility() {
-    bool hasTabs = mapTabWidget->count() > 0;
-    mapTabWidget->setVisible(hasTabs);
-    ui->placeHolderWidget->setVisible(!hasTabs);
-}
 
 /**
- * @brief Deletes a specific map tab from the application's tab widget.
+ * @brief Sets up keyboard shortcuts for player controls.
  *
- * This function removes a tab from the `mapTabWidget` based on the given index,
- * deletes the associated `QWidget` to free up resources, and then updates the visibility
- * of certain UI elements based on the remaining tabs.
+ * This function iterates through a collection of players and assigns
+ * a unique keyboard shortcut to each player. The shortcuts are
+ * generated in the form "Ctrl+<index>", where `<index>` corresponds
+ * to the player's index in the `players` vector. These shortcuts
+ * enable quick access to the play functionality of each player.
  *
- * @param index The index of the tab to be deleted. It should be a valid index within the range of existing tabs.
- *
- * @note Calling this function on an invalid index (e.g., out of range) can result in undefined behavior.
+ * Preconditions:
+ * - The `players` vector must be initialized and contain valid player objects.
+ * - Each player in the `players` vector must support the `setPlayShortcut` method.
  */
-void MainWindow::deleteMapTab(int index) {
-    QWidget *widget = mapTabWidget->widget(index);
-    mapTabWidget->removeTab(index);
-    delete widget;
-    updateVisibility();
-}
-
-/**
- * @brief Activates the calibration mode in the currently selected map view.
- *
- * This method retrieves the currently active widget from the mapTabWidget and
- * attempts to cast it to a MapView instance. If the cast is successful, it sets
- * the active tool in the MapView to the calibrationTool, enabling the calibration mode.
- *
- * @note This function assumes that calibrationTool has already been initialized and that
- * the current widget in mapTabWidget is a compatible MapView instance.
- */
-void MainWindow::setCalibrationMode() {
-    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
-    if (currentView){
-        currentView->setActiveTool(calibrationTool);
+void MainWindow::setupShortcuts() {
+    for (int i = 0; i < players.size(); ++i) {
+        QString key = QString("Ctrl+%1").arg(i);
+        players[i]->setPlayShortcut(key);
     }
 }
 
-/**
- * @brief Sets the measure mode by activating or deactivating the ruler tool.
- *
- * This method sets the current map view's active tool to the ruler map tool
- * if measure mode is enabled (checked is true) or null if measure mode is
- * disabled (checked is false). This allows the user to enable or disable
- * the measuring functionality on the currently active map tab.
- *
- * @param checked A boolean indicating whether to enable (true) or disable (false) the measure mode.
- */
-void MainWindow::setMeasureMode(bool checked) {
-    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
-    if (currentView){
-        if (checked)
-            currentView->setActiveTool(rulerMapTool);
-        else
-            currentView->setActiveTool(nullptr);
-    }
-}
+
 
 /**
  * @brief Configures the toolbar of the main window.
@@ -735,14 +786,14 @@ void MainWindow::setupToolbar() {
         QAction *chosen = contextMenu.exec(rulerButton->mapToGlobal(pos));
         if (chosen == calibrateAct) {
             // временно активируем CalibrationTool
-            setCalibrationMode();
+            setCalibrationTool();
             // отключим кнопку линейки на время
             rulerAction->setChecked(false);
         }
     });
-    connect(rulerAction, SIGNAL(triggered(bool)), this, SLOT(setMeasureMode(bool)));
+    connect(rulerAction, SIGNAL(triggered(bool)), this, SLOT(setMeasureTool(bool)));
     connect(calibrationTool, &AbstractMapTool::finished, [=]() {
-        setMeasureMode(true);
+        setMeasureTool(true);
         rulerAction->setChecked(true);
     });
     ui->toolBar->addWidget(rulerButton);
@@ -999,140 +1050,83 @@ void MainWindow::setupToolbar() {
 }
 
 /**
- * @brief Opens or activates a shared map window for the specified tab index.
+ * @brief Sets up the initiative tracker widget in the main window.
  *
- * This method manages a `SharedMapWindow` instance to display the map from
- * a specific tab in a separate window. If a shared map window does not already
- * exist, it initializes a new `SharedMapWindow` instance with the map scene
- * from the specified tab, displays it, and manages its lifecycle. If a shared
- * map window already exists, it brings the existing window to the foreground.
- *
- * @param index Index of the current map tab to get the corresponding map scene.
+ * This function initializes a new instance of QInitiativeTrackerWidget
+ * and adds it to the tracker layout of the main window's UI. The
+ * widget is created with the main window as its parent.
  */
-void MainWindow::openSharedMapWindow(int index) {
-    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
-    if (!sharedMapWindow){
-        sharedMapWindow = new SharedMapWindow(currentView->getScene());
-        sharedMapWindow->show();
-        sharedMapWindow->resize(800, 600);
+void MainWindow::setupTracker() {
+    initiativeTrackerWidget = new QInitiativeTrackerWidget(this);
+    ui->trackerLayout->addWidget(initiativeTrackerWidget);
+}
 
-        connect(sharedMapWindow, &QWidget::destroyed, this, [=]() {
-            sharedMapWindow = nullptr;
-        });
-    } else{
-        sharedMapWindow->raise();
-        sharedMapWindow->activateWindow();
+/**
+ * @brief Sets the volume divider for all QPlayer instances managed by MainWindow.
+ *
+ * This function iterates through the `players` vector and sets the volume divider
+ * for each QPlayer object to the specified value. The operation assumes that the
+ * `players` vector contains exactly 9 QPlayer instances.
+ *
+ * @param value The volume divider value to be applied to each QPlayer instance.
+ */
+void MainWindow::setVolumeDivider(int value) {
+    for (int i = 0; i < 9; ++i) {
+        players[i]->setVolumeDivider(value);
     }
 }
 
+
 /**
- * @brief Sets the current fog tool state and mode for the active map view.
+ * @brief Stops all player instances in the application.
  *
- * This method toggles the fog tool for the currently active map view within the
- * MainWindow. If the `checked` parameter is set to false, the fog tool is disabled
- * for the current view by setting the active tool to `nullptr`. If `checked` is true,
- * the specified fog mode is applied to the fog tool, and the fog tool is activated
- * for the current map view.
- *
- * @param checked A boolean value indicating whether the fog tool should be activated.
- *        If false, the fog tool is deactivated for the current map view.
- * @param mode The fog mode to be applied to the fog tool. This determines whether
- *        the fog tool is used to hide or reveal areas of the map.
- *
- * @details The method checks the currently active tab in the `mapTabWidget`, casts
- *          it to `MapView`, and applies the specified fog tool settings if the
- *          active tab is valid. The `FogTool::Mode` enum can be either `Hide` or
- *          `Reveal` and is used to configure the tool's behavior.
+ * Iterates through all QPlayer objects in the `players` vector and invokes
+ * the `stop` method on each. This is typically used to halt any ongoing playback
+ * or activities managed by the players.
  */
-void MainWindow::setFogTool(bool checked, FogTool::Mode mode) {
-    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
-    if (currentView){
-        if (!checked){
-            currentView->setActiveTool(nullptr);
-        } else{
-            fogTool->setMode(mode);
-            currentView->setActiveTool(fogTool);
-        }
+void MainWindow::stopAll() {
+    for (int i = 0; i < 9; ++i) {
+        players[i]->stop();
     }
 }
 
-/**
- * @brief Toggles the visibility of a fog layer on the currently active map scene.
- *
- * This function retrieves the currently active map view from the `mapTabWidget`
- * and accesses its associated `MapScene`. Depending on the value of the `hide`
- * parameter, it either hides or reveals all fog elements on the map scene using
- * the `fogTool`.
- *
- * @param hide If true, hides the fog layer completely; if false, reveals it.
- */
-void MainWindow::coverMapWithFog(bool hide) {
-    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
-    MapScene* scene = currentView->getScene();
-
-    if (hide)
-        fogTool->hideAll(scene);
-    else
-        fogTool->revealAll(scene);
-}
 
 /**
- * @brief Activates or deactivates the light tool in the current map view.
+ * Stops all players in the `players` vector except the one specified by the given `exeptId`.
  *
- * This method sets the light tool as the active tool for the currently visible
- * MapView in the mapTabWidget. If `checked` is true, the light tool is activated,
- * allowing the user to interact with light-related functionality in the map.
- * If `checked` is false, no tool is active.
+ * Iterates over the list of players and checks the playlist ID of each player.
+ * If the player's playlist ID does not match the provided `exeptId`, the player is stopped.
  *
- * @param checked Determines whether to activate or deactivate the light tool.
+ * @param exeptId The playlist ID of the player that should not be stopped.
  */
-void MainWindow::setLightTool(bool checked) {
-    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
-    if (checked)
-        currentView->setActiveTool(lightTool);
-    else
-        currentView->setActiveTool(nullptr);
-}
-
-/**
- * @brief Exports the map from the specified tab index to a file.
- *
- * This function allows the user to export the current map displayed in the specified
- * tab of the mapTabWidget to a file. A file save dialog is presented to the user to
- * select the location and name of the output file. The map data is saved in a proprietary
- * file format (*.dam).
- *
- * @param index The index of the tab in mapTabWidget containing the map to be exported.
- *
- * @note If the specified tab does not contain a valid MapView object, the operation is skipped.
- *       The exported file format is DM assist map file (*.dam).
- */
-void MainWindow::exportMap(int index) {
-    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
-    if (currentView){
-        QString filename = QFileDialog::getSaveFileName(this,
-                                                        tr("Save map to file"),
-                                                        QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
-                                                        "DM assist map file (*.dam)");
-        currentView->getScene()->saveToFile(filename);
+void MainWindow::stopOtherPlayers(int exeptId) {
+    for (int i = 0; i < 9; ++i) {
+        if (players[i]->getPlaylistId() != exeptId)
+            players[i]->stop();
     }
 }
 
-void MainWindow::setupCampaign(QString campaignRoot) {
-    if (campaignRoot.isEmpty())
-        return;
-    campaignTreeWidget = new CampaignTreeWidget(this);
-    campaignTreeWidget->setRootDir(campaignRoot);
 
-    connect(campaignTreeWidget, &CampaignTreeWidget::encounterAddRequested, initiativeTrackerWidget, &QInitiativeTrackerWidget::addFromFile);
-    connect(campaignTreeWidget, &CampaignTreeWidget::encounterReplaceRequested, initiativeTrackerWidget, &QInitiativeTrackerWidget::loadFromFile);
 
-    connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);
 
-    ui->campaignLayout->addWidget(campaignTreeWidget);
+
+
+
+/**
+ * @brief Updates the visibility of specific UI elements based on the presence of tabs.
+ *
+ * This method checks whether the `mapTabWidget` contains any tabs. If tabs are present,
+ * the `mapTabWidget` is made visible, and the placeholder widget (`ui->placeHolderWidget`)
+ * is hidden. Otherwise, the `mapTabWidget` is hidden, and the placeholder widget is shown.
+ *
+ * The method ensures that appropriate UI elements are shown depending on whether there are
+ * tabs to display in the `mapTabWidget`.
+ */
+void MainWindow::updateVisibility() {
+    bool hasTabs = mapTabWidget->count() > 0;
+    mapTabWidget->setVisible(hasTabs);
+    ui->placeHolderWidget->setVisible(!hasTabs);
 }
-
-
 
 
 /**
