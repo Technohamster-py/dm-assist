@@ -10,6 +10,7 @@ public:
     explicit CampaignTreeWidget(QWidget* parent = nullptr);
 
     void setRootDir(const QString &rootPath);
+    QString root() const {return m_rootPath;};
 
 signals:
     void characterOpenRequested(const QString& path);

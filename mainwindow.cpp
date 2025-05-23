@@ -305,6 +305,7 @@ void MainWindow::saveSettings() {
     QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
     settings.setValue(paths.general.dir, workingDir);
     settings.setValue(paths.general.volume, ui->volumeSlider->value());
+    settings.setValue(paths.session.campaign, campaignTreeWidget->root());
     settings.sync();
 }
 
@@ -375,6 +376,8 @@ void MainWindow::loadSettings() {
     else
         ThemeManager::loadFromXml(theme);
 
+    /// Session
+    currentCampaignDir = settings.value(paths.session.campaign, "").toString();
 }
 
 

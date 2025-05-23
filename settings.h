@@ -32,12 +32,11 @@ struct Settings{
         QString lang = "general/lang";                  ///< String язык
         QString volume = "general/volume";              ///< int основной ползунок громкости
     };
+    General general;
 
     struct Appearance{
         QString theme = "appearance/theme";
     };
-
-    General general;
     Appearance appearance;
 
     struct Initiative {
@@ -50,10 +49,17 @@ struct Settings{
     Initiative initiative;
 
     struct Map {
-        QString brightRadius = "map/brightRadius";
-        QString dimRadius = "map/dimRadius";
-        QString color = "map/color";
+        QString brightRadius = "map/light/brightRadius";    ///< int Радиус яркий
+        QString dimRadius = "map/light/dimRadius";          ///< int Радиус тусклый
+        QString lightColor = "map/light/color";             ///< string цвет света
+        QString color = "map/color";                    ///< string цвет инструментов
     };
+    Map map;
+
+    struct LastSession {
+        QString campaign = "session/campaign";
+    };
+    LastSession session;
 };
 
 #endif //DM_ASSIST_SETTINGS_H

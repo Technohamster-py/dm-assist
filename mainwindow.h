@@ -77,6 +77,7 @@ private:
     Ui::MainWindow *ui;
     QTranslator translator;
     QString currentLanguage;
+    QString currentCampaignDir;
 
     int deviceIndex = -1;
     QVector<QPlayer*> players;
