@@ -110,7 +110,8 @@ private:
     QActionGroup *toolGroup;
 
 private slots:
-    void loadConfigFile();
+    void loadMusicConfigFile();
+    void loadCampaignConfigFile();
     void saveConfigFile();
     void on_actionSettings_triggered();
 

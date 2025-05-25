@@ -40,6 +40,8 @@ MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
+    campaignTreeWidget = new CampaignTreeWidget(this);
+    campaignTreeWidget->setVisible(false);
     setupCampaign(QString());
     setupToolbar();
     setupPlayers();
@@ -54,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setupShortcuts();
 
     connect(ui->actionSave, SIGNAL(triggered(bool)), this, SLOT(saveConfigFile()));
-    connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(loadConfigFile()));
+    connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(loadMusicConfigFile()));
     connect(ui->actionHelp, SIGNAL(triggered(bool)), this, SLOT(openHelp()));
     connect(ui->actionDonate, SIGNAL(triggered(bool)), this, SLOT(openDonate()));
     connect(ui->volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(setVolumeDivider(int)));
@@ -214,7 +216,7 @@ void MainWindow::exportMap(int index) {
  * Error dialogs are shown if the file fails to open or if the folder specified does not exist.
  * The function ensures players are updated with appropriate data or left empty if no valid data is found.
  */
-void MainWindow::loadConfigFile() {
+void MainWindow::loadMusicConfigFile() {
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open player config file"),
                                                     QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/dm_assist_files/saves",
@@ -331,6 +333,7 @@ void MainWindow::loadSettings() {
 
     /// Session
     currentCampaignDir = settings.value(paths.session.campaign, "").toString();
+//    setupCampaign(currentCampaignDir);
 }
 
 /**
@@ -658,7 +661,6 @@ void MainWindow::setupPlayers() {
 void MainWindow::setupCampaign(QString campaignRoot) {
     if (campaignRoot.isEmpty())
         return;
-    campaignTreeWidget = new CampaignTreeWidget(this);
     campaignTreeWidget->setRootDir(campaignRoot);
 
     connect(campaignTreeWidget, &CampaignTreeWidget::encounterAddRequested, initiativeTrackerWidget, &QInitiativeTrackerWidget::addFromFile);
@@ -667,6 +669,7 @@ void MainWindow::setupCampaign(QString campaignRoot) {
     connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);
 
     ui->campaignLayout->addWidget(campaignTreeWidget);
+    campaignTreeWidget->setVisible(true)
 }
 
 /**
@@ -1126,6 +1129,10 @@ void MainWindow::updateVisibility() {
     bool hasTabs = mapTabWidget->count() > 0;
     mapTabWidget->setVisible(hasTabs);
     ui->placeHolderWidget->setVisible(!hasTabs);
+}
+
+void MainWindow::loadCampaignConfigFile() {
+
 }
 
 
