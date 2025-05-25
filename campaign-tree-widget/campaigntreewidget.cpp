@@ -1,10 +1,14 @@
 #include "campaigntreewidget.h"
 #include <QFileInfo>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QMessageBox>
 
 CampaignTreeWidget::CampaignTreeWidget(QWidget *parent) : QTreeWidget(parent)
 {
     setColumnCount(1);
     setHeaderLabel(tr("Campaign Structure"));
+    m_rootPath = QString();
 }
 
 NodeType CampaignTreeWidget::determieNodeType(const QString &path)
@@ -75,11 +79,40 @@ void CampaignTreeWidget::populateTree(const QString &path, QTreeWidgetItem *pare
 
 void CampaignTreeWidget::setRootDir(const QString &rootPath)
 {
+    if (!isValidCampaignRoot(rootPath)) {
+        QMessageBox::warning(this, "Error", tr("The selected folder does not contain campaign.json is not a campaign"));
+        return;
+    }
+
     clear();
     m_rootPath = QDir(rootPath).absolutePath();
+    m_campaignName = loadCampaignName(m_rootPath);
+
     auto *rootItem = new QTreeWidgetItem(this);
-    auto *widget = new HoverWidget(QFileInfo(rootPath).fileName(), NodeType::Unknown);
+    auto *widget = new HoverWidget(m_campaignName, NodeType::Unknown);
     setItemWidget(rootItem, 0, widget);
+
     populateTree(rootPath, rootItem);
     expandAll();
+
+    emit campaignLoaded(m_campaignName);
+}
+
+bool CampaignTreeWidget::isValidCampaignRoot(const QString &rootPath) {
+    QFile markerFile(rootPath + "/campaign.json");
+    return markerFile.exists();
+}
+
+QString CampaignTreeWidget::loadCampaignName(const QString &rootPath) {
+    QFile file(rootPath + "/campaign.json");
+    if (!file.open(QIODevice::ReadOnly))
+        return "Unnamed Campaign";
+
+    QByteArray data = file.readAll();
+    QJsonDocument doc = QJsonDocument::fromJson(data);
+    if (!doc.isObject())
+        return "Unnamed Campaign";
+
+    QJsonObject obj = doc.object();
+    return obj.value("name").toString("Unnamed Campaign");
 }

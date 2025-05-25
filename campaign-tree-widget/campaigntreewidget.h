@@ -21,10 +21,16 @@ signals:
 
     void mapOpenRequested(const QString& path);
 
+    void campaignLoaded(const QString &name);
+
 private:
     void populateTree(const QString &path, QTreeWidgetItem *parentItem);
     NodeType determieNodeType(const QString& path);
     bool ignore(const QFileInfo& info);
 
     QString m_rootPath;
+    QString m_campaignName;
+
+    bool isValidCampaignRoot(const QString &rootPath);
+    QString loadCampaignName(const QString &rootPath);
 };
