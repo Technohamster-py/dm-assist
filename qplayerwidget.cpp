@@ -20,6 +20,8 @@
 
 #include "bass/bass.h"
 
+#include <QDebug>
+
 #define BASS_DEVICE_INDEX 1 // Можно сделать параметром, если нужно
 
 
@@ -53,7 +55,6 @@ QPlayer::QPlayer(QWidget *parent, int id, QString title)
 
     playKey = new QShortcut(this);
 
-    connect(ui->playButton, &QPushButton::clicked, this, &QPlayer::on_playButton_clicked);
     connect(playKey, SIGNAL(activated()), this, SLOT(playShortcutTriggered()));
     connect(ui->volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(changeVolume(int)));
 }
@@ -97,7 +98,7 @@ void QPlayer::setPlayShortcut(QString key) {
 }
 
 void QPlayer::playShortcutTriggered() {
-    play()
+    play();
 }
 
 void QPlayer::addMedia(const QStringList &files) {
@@ -176,7 +177,7 @@ void QPlayer::playTrackAt(int index) {
 
     isActive = true;
     ui->playButton->setStyleSheet("background-color: #a5bfda;");
-    ui->playButton.setIcon(":/player/stop.svg");
+    ui->playButton->setIcon(QIcon(":/player/stop.svg"));
 }
 
 void QPlayer::playNextTrack() {
@@ -196,7 +197,7 @@ void QPlayer::stop() {
     isActive = false;
     emit playerStopped();
     ui->playButton->setStyleSheet("background: transparent;");
-    ui->playButton.setIcon(":/player/play.svg");
+    ui->playButton->setIcon(QIcon(":/player/play.svg"));
 }
 
 void QPlayer::freeStreams() {
