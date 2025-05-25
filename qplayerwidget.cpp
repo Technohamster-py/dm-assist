@@ -20,8 +20,6 @@
 
 #include "bass/bass.h"
 
-#include <QDebug>
-
 #define BASS_DEVICE_INDEX 1 // Можно сделать параметром, если нужно
 
 
@@ -261,7 +259,7 @@ QString QPlayer::currentDeviceName() const {
  */
 void QPlayer::changeVolume(int volume) {
 
-    float trueVolume = volume / 100;
+    float trueVolume = volume / 100.0f;
 
     if (trueVolume > 1.0f)
         trueVolume = 1.0f;
