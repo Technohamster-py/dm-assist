@@ -69,7 +69,6 @@ QPlayer::QPlayer(QWidget *parent, int id, QString title)
 
     playKey = new QShortcut(this);
 
-    connect(ui->playButton, &QPushButton::clicked, this, &QPlayer::on_playButton_clicked);
     connect(playKey, SIGNAL(activated()), this, SLOT(playShortcutTriggered()));
     connect(ui->volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(changeVolume(int)));
 }
@@ -306,8 +305,7 @@ void QPlayer::playTrackAt(int index) {
 
     isActive = true;
     ui->playButton->setStyleSheet("background-color: #a5bfda;");
-    QIcon stopIcon(":/player/stop.svg");
-    ui->playButton->setIcon(stopIcon);
+    ui->playButton->setIcon(QIcon(":/player/stop.svg"));
 }
 
 /**
@@ -346,8 +344,7 @@ void QPlayer::stop() {
     isActive = false;
     emit playerStopped();
     ui->playButton->setStyleSheet("background: transparent;");
-    QIcon playIcon(":/player/play.svg");
-    ui->playButton->setIcon(playIcon);
+    ui->playButton->setIcon(QIcon(":/player/play.svg"));
 }
 
 /**
@@ -418,7 +415,6 @@ void QPlayer::dropEvent(QDropEvent *event) {
     }
 }
 
-
 /**
  * @brief Sets the local directory path for the player and updates the local directory.
  *
@@ -475,7 +471,6 @@ QString QPlayer::currentDeviceName() const {
     return {};
 }
 
-
 /**
  * @brief Adjusts the volume level of the audio stream.
  *
@@ -488,7 +483,7 @@ QString QPlayer::currentDeviceName() const {
  */
 void QPlayer::changeVolume(int volume) {
 
-    float trueVolume = volume / 100;
+    float trueVolume = volume / 100.0f;
 
     if (trueVolume > 1.0f)
         trueVolume = 1.0f;
