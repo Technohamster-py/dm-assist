@@ -9,8 +9,9 @@ class CampaignTreeWidget : public QTreeWidget{
 public:
     explicit CampaignTreeWidget(QWidget* parent = nullptr);
 
-    void setRootDir(const QString &rootPath);
+    bool setRootDir(const QString &rootPath);
     QString root() const {return m_rootPath;};
+    QString campaignName() const {return m_campaignName;};
 
 signals:
     void characterOpenRequested(const QString& path);

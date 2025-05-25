@@ -77,11 +77,11 @@ void CampaignTreeWidget::populateTree(const QString &path, QTreeWidgetItem *pare
     }
 }
 
-void CampaignTreeWidget::setRootDir(const QString &rootPath)
+bool CampaignTreeWidget::setRootDir(const QString &rootPath)
 {
     if (!isValidCampaignRoot(rootPath)) {
         QMessageBox::warning(this, "Error", tr("The selected folder does not contain campaign.json is not a campaign"));
-        return;
+        return false;
     }
 
     clear();
@@ -89,13 +89,14 @@ void CampaignTreeWidget::setRootDir(const QString &rootPath)
     m_campaignName = loadCampaignName(m_rootPath);
 
     auto *rootItem = new QTreeWidgetItem(this);
-    auto *widget = new HoverWidget(m_campaignName, NodeType::Unknown);
+    auto *widget = new HoverWidget(m_campaignName, NodeType::Unknown, this);
     setItemWidget(rootItem, 0, widget);
 
     populateTree(rootPath, rootItem);
     expandAll();
 
     emit campaignLoaded(m_campaignName);
+    return true;
 }
 
 bool CampaignTreeWidget::isValidCampaignRoot(const QString &rootPath) {

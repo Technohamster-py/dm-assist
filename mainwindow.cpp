@@ -1,6 +1,3 @@
-//
-// Created by arseniy on 11.10.2024.
-//
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "map-widget/mapview.h"
@@ -56,7 +53,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setupShortcuts();
 
     connect(ui->actionSave, SIGNAL(triggered(bool)), this, SLOT(saveConfigFile()));
-    connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(loadMusicConfigFile()));
+    connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(loadCampaign()));
     connect(ui->actionHelp, SIGNAL(triggered(bool)), this, SLOT(openHelp()));
     connect(ui->actionDonate, SIGNAL(triggered(bool)), this, SLOT(openDonate()));
     connect(ui->volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(setVolumeDivider(int)));
@@ -200,6 +197,13 @@ void MainWindow::exportMap(int index) {
     }
 }
 
+void MainWindow::loadCampaign() {
+    QString campaignDir = QFileDialog::getExistingDirectory(this,
+                                                            tr("Open campaign directory"),
+                                                            QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+    setupCampaign(campaignDir);
+}
+
 /**
  * @brief Loads and parses a configuration XML file for players' playlists.
  *
@@ -216,8 +220,9 @@ void MainWindow::exportMap(int index) {
  * Error dialogs are shown if the file fails to open or if the folder specified does not exist.
  * The function ensures players are updated with appropriate data or left empty if no valid data is found.
  */
-void MainWindow::loadMusicConfigFile() {
-    QString fileName = QFileDialog::getOpenFileName(this,
+void MainWindow::loadMusicConfigFile(QString fileName) {
+    if (fileName.isEmpty())
+        fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open player config file"),
                                                     QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/dm_assist_files/saves",
                                                     tr("Xml file (*.xml)"));
@@ -658,10 +663,11 @@ void MainWindow::setupPlayers() {
     }
 }
 
-void MainWindow::setupCampaign(QString campaignRoot) {
+void MainWindow::setupCampaign(const QString& campaignRoot) {
     if (campaignRoot.isEmpty())
         return;
-    campaignTreeWidget->setRootDir(campaignRoot);
+    if (!campaignTreeWidget->setRootDir(campaignRoot))
+        return;
 
     connect(campaignTreeWidget, &CampaignTreeWidget::encounterAddRequested, initiativeTrackerWidget, &QInitiativeTrackerWidget::addFromFile);
     connect(campaignTreeWidget, &CampaignTreeWidget::encounterReplaceRequested, initiativeTrackerWidget, &QInitiativeTrackerWidget::loadFromFile);
@@ -669,7 +675,10 @@ void MainWindow::setupCampaign(QString campaignRoot) {
     connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);
 
     ui->campaignLayout->addWidget(campaignTreeWidget);
-    campaignTreeWidget->setVisible(true)
+    campaignTreeWidget->setVisible(true);
+
+    QString musicConfigFile = campaignRoot + "/music/music.xml";
+    loadMusicConfigFile(musicConfigFile);
 }
 
 /**
@@ -726,8 +735,6 @@ void MainWindow::setupShortcuts() {
         players[i]->setPlayShortcut(key);
     }
 }
-
-
 
 /**
  * @brief Configures the toolbar of the main window.
@@ -1109,12 +1116,6 @@ void MainWindow::stopOtherPlayers(int exeptId) {
     }
 }
 
-
-
-
-
-
-
 /**
  * @brief Updates the visibility of specific UI elements based on the presence of tabs.
  *
@@ -1131,10 +1132,9 @@ void MainWindow::updateVisibility() {
     ui->placeHolderWidget->setVisible(!hasTabs);
 }
 
-void MainWindow::loadCampaignConfigFile() {
+void MainWindow::newCampaign() {
 
 }
-
 
 /**
  * Copies all files from a source directory to a destination directory.

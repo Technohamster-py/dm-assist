@@ -98,7 +98,7 @@ private:
     SquareShapeTool* squareShapeTool;
     TriangleShapeTool* triangleShapeTool;
 
-    void setupCampaign(QString campaignRoot);
+    void setupCampaign(const QString& campaignRoot);
     void setupPlayers();
     void setupTracker();
     void setupToolbar();
@@ -110,8 +110,9 @@ private:
     QActionGroup *toolGroup;
 
 private slots:
-    void loadMusicConfigFile();
-    void loadCampaignConfigFile();
+    void loadMusicConfigFile(QString fileName);
+    void newCampaign();
+    void loadCampaign();
     void saveConfigFile();
     void on_actionSettings_triggered();
 
