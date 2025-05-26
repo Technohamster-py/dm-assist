@@ -55,7 +55,12 @@ SaveConfigDialog::SaveConfigDialog(QWidget *parent)  : QDialog(parent), warningL
 
     setLayout(layout);
 
+    connect(projectNameEdit, &QLineEdit::textChanged, this, [=](){
+        showWarning(QString(tr("Проект будет сохранен в папку %1/%2")).arg(rootFolderEdit->text().trimmed(), projectNameEdit->text().trimmed()));
+    });
+
     rootFolderEdit->setText(QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/dm_assis_files/saves");
+    projectNameEdit->setText("Untitled project");
 }
 
 /**

@@ -32,6 +32,7 @@ public:
     explicit SaveConfigDialog(QWidget *parent = nullptr);
 
     QString filename;
+    QString directoryPath;
 
 private slots:
     void onBrowseClicked();
