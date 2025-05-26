@@ -33,6 +33,7 @@ public:
 
     QString filename;
     QString directoryPath;
+    QString projectName;
 
 private slots:
     void onBrowseClicked();

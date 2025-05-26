@@ -57,10 +57,11 @@ SaveConfigDialog::SaveConfigDialog(QWidget *parent)  : QDialog(parent), warningL
 
     connect(projectNameEdit, &QLineEdit::textChanged, this, [=](){
         showWarning(QString(tr("Проект будет сохранен в папку %1/%2")).arg(rootFolderEdit->text().trimmed(), projectNameEdit->text().trimmed()));
+        projectName = projectNameEdit->text().trimmed();
     });
 
-    rootFolderEdit->setText(QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/dm_assis_files/saves");
-    projectNameEdit->setText("Untitled project");
+    rootFolderEdit->setText(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/dm_assist_campaigns");
+    projectNameEdit->setText("Untitled campaign");
 }
 
 /**
@@ -80,6 +81,7 @@ void SaveConfigDialog::onBrowseClicked() {
     if (!directory.isEmpty()) {
         showWarning(QString(tr("Проект будет сохранен в папку %1/%2")).arg(directory, projectNameEdit->text().trimmed()));
         rootFolderEdit->setText(directory);
+        directoryPath = directory;
     }
 }
 
@@ -126,7 +128,7 @@ void SaveConfigDialog::onSaveClicked() {
         return;
     }
 
-    filename = dir.filePath(projectName + ".xml");
+    filename = dir.filePath(projectName + ".json");
     QFile configFile(filename);
     if (!configFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
         showWarning(tr("Не удалось создать файл."));

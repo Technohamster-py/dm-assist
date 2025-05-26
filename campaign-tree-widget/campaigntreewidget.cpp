@@ -32,7 +32,7 @@ bool CampaignTreeWidget::ignore(const QFileInfo &info)
 
     if (normalized.startsWith("music/") || normalized == "music")
         return true;
-    if (normalized == "playerConfig.xml" || normalized == "root")
+    if (normalized == "playerconfig.xml" || normalized == "root")
         return true;
     return false;
 }

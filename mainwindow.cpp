@@ -4,15 +4,16 @@
 
 #include <QDesktopServices>
 #include "QDomDocument"
-#include "QFile"
-#include "QFileDialog"
+#include <QFile>
+#include <QFileDialog>
 #include <QColorDialog>
 #include <QCheckBox>
-#include "QFileInfo"
-#include "QMessageBox"
+#include <QFileInfo>
+#include <QMessageBox>
 #include "qsaveconfigdialog.h"
 #include <QTextStream>
 #include <QSpinBox>
+#include <QJsonDocument>
 
 #include <QDebug>
 #include "thememanager.h"
@@ -52,11 +53,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setupShortcuts();
 
-    connect(ui->actionSave, SIGNAL(triggered(bool)), this, SLOT(saveConfigFile()));
+    connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newCampaign);
+//    connect(ui->actionSave, SIGNAL(triggered(bool)), this, SLOT(saveMusicConfigFile()));
     connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(loadCampaign()));
     connect(ui->actionHelp, SIGNAL(triggered(bool)), this, SLOT(openHelp()));
     connect(ui->actionDonate, SIGNAL(triggered(bool)), this, SLOT(openDonate()));
     connect(ui->volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(setVolumeDivider(int)));
+
+
 
     showMaximized();
 }
@@ -341,6 +345,43 @@ void MainWindow::loadSettings() {
 //    setupCampaign(currentCampaignDir);
 }
 
+
+void MainWindow::newCampaign() {
+    SaveConfigDialog dialog(this);
+    QString fileName = "";
+
+    if (dialog.exec() == QDialog::Accepted)
+        fileName = dialog.filename;
+
+    if (fileName.isEmpty()) return;
+
+    QDir dir(dialog.directoryPath);
+
+    QStringList subdirs = {"Characters", "Maps", "Encounters", "Music"};
+    for (const QString& sub : subdirs){
+        if (!dir.mkpath(sub)){
+            QMessageBox::warning(this, "Error", tr("Can't create subdirectory: ") + sub);
+            return;
+        }
+    }
+
+    QFile configFile(fileName);
+    if (!configFile.open(QIODevice::ReadWrite))
+    {
+        QMessageBox::critical(this, tr("Open file error"), configFile.errorString());
+        return;
+    }
+
+    QJsonObject obj;
+    obj["name"] = dialog.projectName;
+
+    QJsonDocument doc(obj);
+    configFile.write(doc.toJson(QJsonDocument::Indented));
+    configFile.close();
+
+    setupCampaign(dialog.directoryPath);
+}
+
 /**
  * @brief Handles the "Settings" action when triggered.
  *
@@ -490,13 +531,7 @@ void MainWindow::openSharedMapWindow(int index) {
  * - A new XML configuration file is created at the specified location.
  * - Local directories of all playlists are moved to the base directory.
  */
-void MainWindow::saveConfigFile() {
-    SaveConfigDialog dialog(this);
-    QString fileName = "";
-
-    if (dialog.exec() == QDialog::Accepted)
-        fileName = dialog.filename;
-
+void MainWindow::saveMusicConfigFile(QString fileName) {
     if(fileName.isEmpty())
         return;
 
@@ -638,6 +673,25 @@ void MainWindow::setMeasureTool(bool checked) {
     }
 }
 
+void MainWindow::setupCampaign(const QString& campaignRoot) {
+    if (campaignRoot.isEmpty())
+        return;
+    if (!campaignTreeWidget->setRootDir(campaignRoot))
+        return;
+
+    connect(campaignTreeWidget, &CampaignTreeWidget::encounterAddRequested, initiativeTrackerWidget, &QInitiativeTrackerWidget::addFromFile);
+    connect(campaignTreeWidget, &CampaignTreeWidget::encounterReplaceRequested, initiativeTrackerWidget, &QInitiativeTrackerWidget::loadFromFile);
+
+    connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);
+
+    ui->campaignLayout->addWidget(campaignTreeWidget);
+    campaignTreeWidget->setVisible(true);
+
+    QString musicConfigFile = campaignRoot + "/music/playerConfig.xml";
+    if (QFile(musicConfigFile).exists())
+        loadMusicConfigFile(musicConfigFile);
+}
+
 /**
  * Initializes and configures player widgets in the MainWindow.
  *
@@ -661,24 +715,6 @@ void MainWindow::setupPlayers() {
         ui->musicLayout->insertWidget(i, players[i]);
         connect(players[i], SIGNAL(playerStarted(int)), this, SLOT(stopOtherPlayers(int)));
     }
-}
-
-void MainWindow::setupCampaign(const QString& campaignRoot) {
-    if (campaignRoot.isEmpty())
-        return;
-    if (!campaignTreeWidget->setRootDir(campaignRoot))
-        return;
-
-    connect(campaignTreeWidget, &CampaignTreeWidget::encounterAddRequested, initiativeTrackerWidget, &QInitiativeTrackerWidget::addFromFile);
-    connect(campaignTreeWidget, &CampaignTreeWidget::encounterReplaceRequested, initiativeTrackerWidget, &QInitiativeTrackerWidget::loadFromFile);
-
-    connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);
-
-    ui->campaignLayout->addWidget(campaignTreeWidget);
-    campaignTreeWidget->setVisible(true);
-
-    QString musicConfigFile = campaignRoot + "/music/music.xml";
-    loadMusicConfigFile(musicConfigFile);
 }
 
 /**
@@ -1132,9 +1168,7 @@ void MainWindow::updateVisibility() {
     ui->placeHolderWidget->setVisible(!hasTabs);
 }
 
-void MainWindow::newCampaign() {
 
-}
 
 /**
  * Copies all files from a source directory to a destination directory.

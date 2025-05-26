@@ -113,7 +113,7 @@ private slots:
     void loadMusicConfigFile(QString fileName);
     void newCampaign();
     void loadCampaign();
-    void saveConfigFile();
+    void saveMusicConfigFile(QString fileName);
     void on_actionSettings_triggered();
 
     void createNewMapTab();
