@@ -748,6 +748,7 @@ void MainWindow::setupMaps() {
     connect(mapTabWidget, &TabWidget::share, this, &MainWindow::openSharedMapWindow);
     connect(mapTabWidget, &TabWidget::save, this, &MainWindow::exportMap);
 
+    connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);
     updateVisibility();
 }
 
@@ -1105,6 +1106,9 @@ void MainWindow::setupToolbar() {
 void MainWindow::setupTracker() {
     initiativeTrackerWidget = new QInitiativeTrackerWidget(this);
     ui->trackerLayout->addWidget(initiativeTrackerWidget);
+
+    connect(campaignTreeWidget, &CampaignTreeWidget::encounterReplaceRequested, initiativeTrackerWidget, &QInitiativeTrackerWidget::loadFromFile);
+    connect(campaignTreeWidget, &CampaignTreeWidget::encounterAddRequested, initiativeTrackerWidget, &QInitiativeTrackerWidget::addFromFile);
 }
 
 /**
