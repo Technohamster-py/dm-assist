@@ -172,6 +172,11 @@ void MainWindow::createNewMapTab() {
  */
 void MainWindow::deleteMapTab(int index) {
     QWidget *widget = mapTabWidget->widget(index);
+
+    if (!currentCampaignDir.isEmpty()){
+        exportMap(currentCampaignDir + "/Maps/" + widget->objectName(), index);
+    }
+
     mapTabWidget->removeTab(index);
     delete widget;
     updateVisibility();
@@ -462,7 +467,7 @@ void MainWindow::openMapFromFile(QString fileName) {
     }
 
     if (success) {
-        mapTabWidget->addTab(view, fileInfo.fileName());
+        mapTabWidget->addTab(view, fileInfo.baseName());
         updateVisibility();
         mapTabWidget->setCurrentIndex(mapTabWidget->count() - 1);
 
