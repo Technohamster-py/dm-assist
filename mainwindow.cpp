@@ -54,11 +54,11 @@ MainWindow::MainWindow(QWidget *parent) :
     setupShortcuts();
 
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newCampaign);
-//    connect(ui->actionSave, SIGNAL(triggered(bool)), this, SLOT(saveMusicConfigFile()));
-    connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(loadCampaign()));
-    connect(ui->actionHelp, SIGNAL(triggered(bool)), this, SLOT(openHelp()));
-    connect(ui->actionDonate, SIGNAL(triggered(bool)), this, SLOT(openDonate()));
-    connect(ui->volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(setVolumeDivider(int)));
+    connect(ui->actionSave, &QAction::triggered, this, &MainWindow::saveCampaign);
+    connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::loadCampaign);
+    connect(ui->actionHelp, &QAction::triggered, this, &MainWindow::openHelp);
+    connect(ui->actionDonate, &QAction::triggered, this, &MainWindow::openDonate);
+    connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::setVolumeDivider);
 
 
 
@@ -198,6 +198,15 @@ void MainWindow::exportMap(int index) {
                                                         QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
                                                         "DM assist map file (*.dam)");
         currentView->getScene()->saveToFile(filename);
+    }
+}
+
+void MainWindow::exportMap(QString path, int index) {
+    if (!path.endsWith(".dam")) return;
+    
+    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
+    if (currentView){
+        currentView->getScene()->saveToFile(path);
     }
 }
 
@@ -497,6 +506,20 @@ void MainWindow::openSharedMapWindow(int index) {
     }
 }
 
+void MainWindow::saveCampaign() {
+    QString rootPath = campaignTreeWidget->root();
+    QDir rootDir(rootPath);
+    if (rootPath.isEmpty() || !rootDir.exists())
+        return;
+
+    removeDirectoryRecursively(rootPath + "/Music", false);
+    saveMusicConfigFile(rootPath + "/Music/playerConfig.xml");
+
+    for (int i = 0; i < mapTabWidget->count(); ++i) {
+        exportMap(rootPath + "/Maps/" + mapTabWidget->widget(i)->objectName(), i);
+    }
+}
+
 /**
  * Saves the current configuration of the application to an XML file.
  * This function allows the user to specify a filename using a dialog,
@@ -687,7 +710,7 @@ void MainWindow::setupCampaign(const QString& campaignRoot) {
     ui->campaignLayout->addWidget(campaignTreeWidget);
     campaignTreeWidget->setVisible(true);
 
-    QString musicConfigFile = campaignRoot + "/music/playerConfig.xml";
+    QString musicConfigFile = campaignRoot + "/Music/playerConfig.xml";
     if (QFile(musicConfigFile).exists())
         loadMusicConfigFile(musicConfigFile);
 }
@@ -1171,6 +1194,7 @@ void MainWindow::updateVisibility() {
     mapTabWidget->setVisible(hasTabs);
     ui->placeHolderWidget->setVisible(!hasTabs);
 }
+
 
 
 

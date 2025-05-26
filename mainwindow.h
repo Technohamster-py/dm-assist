@@ -109,10 +109,14 @@ private:
 
     QActionGroup *toolGroup;
 
+    void exportMap(QString path, int index);
+
 private slots:
-    void loadMusicConfigFile(QString fileName);
     void newCampaign();
     void loadCampaign();
+    void saveCampaign();
+
+    void loadMusicConfigFile(QString fileName);
     void saveMusicConfigFile(QString fileName);
     void on_actionSettings_triggered();
 
