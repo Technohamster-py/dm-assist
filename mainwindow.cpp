@@ -79,6 +79,7 @@ MainWindow::~MainWindow() {
 //
 //    if(reply == QMessageBox::Yes)
 //        saveConfigFile();
+    saveCampaign();
     saveSettings();
     foreach(QPlayer* player, players){
         removeDirectoryRecursively(player->getLocalDirPath());
@@ -176,7 +177,7 @@ void MainWindow::deleteMapTab(int index) {
     QWidget *widget = mapTabWidget->widget(index);
 
     if (!currentCampaignDir.isEmpty()){
-        exportMap(currentCampaignDir + "/Maps/" + widget->objectName(), index);
+        exportMap(currentCampaignDir + "/Maps/" + mapTabWidget->tabText(index) + ".dam", index);
     }
 
     mapTabWidget->removeTab(index);
@@ -381,9 +382,10 @@ void MainWindow::newCampaign() {
         }
     }
 
+    fileName = dir.filePath("campaign.json");
+
     QFile configFile(fileName);
-    if (!configFile.open(QIODevice::ReadWrite))
-    {
+    if (!configFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QMessageBox::critical(this, tr("Open file error"), configFile.errorString());
         return;
     }
@@ -481,7 +483,7 @@ void MainWindow::openMapFromFile(QString fileName) {
             }
         });
     } else {
-        delete view; // удалить если не загрузилось
+        delete view;
         QMessageBox::warning(this, tr("Error"), tr("Failed to open map file."));
     }
 }
@@ -703,9 +705,35 @@ void MainWindow::setMeasureTool(bool checked) {
     }
 }
 
+/**
+ * @brief Configures and sets up the campaign interface and related components.
+ *
+ * This function initializes the campaign environment based on the provided campaign directory.
+ * It configures the campaign tree widget, connects its signals to appropriate slots for handling
+ * encounters and maps, and updates the user interface by adding the campaign widget to the layout.
+ * Additionally, it handles the loading or creation of the music configuration file for player playlists.
+ *
+ * Behavior:
+ * - Checks if the provided campaign directory path is valid and non-empty before proceeding.
+ * - Attempts to set the root directory of the CampaignTreeWidget. If unsuccessful, the function exits.
+ * - Connects CampaignTreeWidget signals to relevant slots for handling encounter addition, encounter
+ *   replacement, and map opening requests.
+ * - Adds the CampaignTreeWidget to the campaign layout in the user interface and makes it visible.
+ * - Constructs the path to the music configuration file within the campaign directory. If the file exists,
+ *   it loads the configuration using `loadMusicConfigFile`. Otherwise, a new configuration file is saved
+ *   using `saveMusicConfigFile`.
+ * - Updates the current active campaign directory (`currentCampaignDir`) to the provided path.
+ *
+ * @param campaignRoot The root directory of the campaign to be set up.
+ *                     It should be a valid and accessible directory path.
+ */
 void MainWindow::setupCampaign(const QString& campaignRoot) {
     if (campaignRoot.isEmpty())
         return;
+
+    if (!currentCampaignDir.isEmpty()){
+        saveCampaign();
+    }
     if (!campaignTreeWidget->setRootDir(campaignRoot))
         return;
 
@@ -720,6 +748,10 @@ void MainWindow::setupCampaign(const QString& campaignRoot) {
     QString musicConfigFile = campaignRoot + "/Music/playerConfig.xml";
     if (QFile(musicConfigFile).exists())
         loadMusicConfigFile(musicConfigFile);
+    else
+        saveMusicConfigFile(musicConfigFile);
+
+    currentCampaignDir = campaignRoot;
 }
 
 /**
@@ -778,7 +810,6 @@ void MainWindow::setupMaps() {
     connect(mapTabWidget, &TabWidget::share, this, &MainWindow::openSharedMapWindow);
     connect(mapTabWidget, &TabWidget::save, this, &MainWindow::slotExportMap);
 
-    connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);
     updateVisibility();
 }
 

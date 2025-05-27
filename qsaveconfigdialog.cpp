@@ -58,6 +58,12 @@ SaveConfigDialog::SaveConfigDialog(QWidget *parent)  : QDialog(parent), warningL
     connect(projectNameEdit, &QLineEdit::textChanged, this, [=](){
         showWarning(QString(tr("Проект будет сохранен в папку %1/%2")).arg(rootFolderEdit->text().trimmed(), projectNameEdit->text().trimmed()));
         projectName = projectNameEdit->text().trimmed();
+        directoryPath = rootFolderEdit->text().trimmed() + "/" + projectNameEdit->text().trimmed();
+    });
+
+    connect(rootFolderEdit, &QLineEdit::textChanged, this, [=](){
+        showWarning(QString(tr("Проект будет сохранен в папку %1/%2")).arg(rootFolderEdit->text().trimmed(), projectNameEdit->text().trimmed()));
+        directoryPath = rootFolderEdit->text().trimmed() + "/" + projectNameEdit->text().trimmed();
     });
 
     rootFolderEdit->setText(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/dm_assist_campaigns");
@@ -79,9 +85,8 @@ void SaveConfigDialog::onBrowseClicked() {
                                                           tr("Выберите папку"),
                                                           rootFolderEdit->text().trimmed());
     if (!directory.isEmpty()) {
-        showWarning(QString(tr("Проект будет сохранен в папку %1/%2")).arg(directory, projectNameEdit->text().trimmed()));
         rootFolderEdit->setText(directory);
-        directoryPath = directory;
+        directoryPath = directory + "/" + projectNameEdit->text().trimmed();
     }
 }
 
@@ -129,13 +134,6 @@ void SaveConfigDialog::onSaveClicked() {
     }
 
     filename = dir.filePath(projectName + ".json");
-    QFile configFile(filename);
-    if (!configFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        showWarning(tr("Не удалось создать файл."));
-        return;
-    }
-
-    configFile.close();
     accept();
 }
 
