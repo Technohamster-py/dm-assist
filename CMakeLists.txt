@@ -192,3 +192,21 @@ foreach(qm ${QM_FILES})
 
     )
 endforeach()
+
+
+
+
+# Команда для обновления .ts файлов (переводов) с помощью lupdate
+find_program(LUPDATE_EXECUTABLE lupdate HINTS "${QT_INSTALL_PATH}/bin")
+
+if (LUPDATE_EXECUTABLE)
+    add_custom_target(update_translations
+            COMMAND ${LUPDATE_EXECUTABLE}
+            ${FILES} ${UI_FILES}
+            -ts ${TS_FILES}
+            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+            COMMENT "Updating translation files with lupdate..."
+    )
+else()
+    message(WARNING "lupdate not found! Translation update target will not work.")
+endif()

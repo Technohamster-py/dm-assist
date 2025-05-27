@@ -13,7 +13,7 @@
  * computes and sets the appropriate scale factor for the map.
  */
 class CalibrationTool : public AbstractMapTool{
-
+Q_OBJECT
 public:
     explicit CalibrationTool(QObject *parent = nullptr);
 
