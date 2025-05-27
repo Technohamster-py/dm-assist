@@ -209,6 +209,25 @@ void MainWindow::slotExportMap(int index) {
     }
 }
 
+/**
+ * @brief Exports the map from a specified tab to a file.
+ *
+ * This function is responsible for exporting the map data from a given tab
+ * of the map tab widget to a file. The file format is expected to be ".dam".
+ * If the provided file path does not have the ".dam" extension, the function
+ * exits without performing any operation.
+ *
+ * The target tab is identified by its index in the map tab widget. If the
+ * widget at the specified index is not a valid `MapView`, the function will
+ * not perform any actions.
+ *
+ * If the widget is a valid `MapView`, the function retrieves the associated
+ * `MapScene` object and invokes its `saveToFile` method to save the map
+ * data to the specified file path.
+ *
+ * @param path The file path where the map data should be exported. It must end with ".dam".
+ * @param index The index of the tab in the map tab widget containing the map to export.
+ */
 void MainWindow::exportMap(QString path, int index) {
     if (!path.endsWith(".dam")) return;
     
@@ -218,6 +237,19 @@ void MainWindow::exportMap(QString path, int index) {
     }
 }
 
+/**
+ * @brief Loads a campaign by allowing the user to select a campaign directory and initializing it.
+ *
+ * This function opens a file dialog to let the user select a campaign directory.
+ * Once a valid directory is selected, it calls the `setupCampaign` function to configure and
+ * initialize the campaign environment. The selected directory is set as the currently active campaign directory.
+ *
+ * Behavior:
+ * - Displays a file dialog for the user to choose a directory.
+ * - Utilizes `QStandardPaths::DocumentsLocation` as the default starting location for the dialog.
+ * - If a directory is selected, it passes the directory path to `setupCampaign` for initializing
+ *   the campaign environment.
+ */
 void MainWindow::loadCampaign() {
     QString campaignDir = QFileDialog::getExistingDirectory(this,
                                                             tr("Open campaign directory"),
@@ -362,7 +394,39 @@ void MainWindow::loadSettings() {
 //    setupCampaign(currentCampaignDir);
 }
 
-
+/**
+ * @brief Creates a new campaign project and initializes its directory structure and configuration.
+ *
+ * This function is responsible for setting up a new campaign by:
+ * 1. Displaying a dialog (SaveConfigDialog) for the user to input the project name and directory.
+ * 2. Validating the user's input and creating necessary subdirectories within the specified root.
+ * 3. Generating a configuration file named "campaign.json" with the project details.
+ * 4. Setting up the campaign environment using the specified directory.
+ *
+ * Behavior:
+ * - Prompts the user with a SaveConfigDialog to specify the directory and project name.
+ * - If the user cancels the dialog or provides invalid input, the function returns without making changes.
+ * - Validates the directory path and attempts to create the following subdirectories: "Characters", "Maps", "Encounters", and "Music".
+ *   If any subdirectory creation fails, the function displays a warning message and terminates the operation.
+ * - Writes the initial project configuration in JSON format to the "campaign.json" file. If the file
+ *   cannot be created or written to, a critical error message is displayed, and the operation is halted.
+ * - Calls `setupCampaign` with the specified root directory to initialize the campaign environment and UI.
+ *
+ * Error Handling:
+ * - Displays a warning message if it fails to create any subdirectory.
+ * - Displays a critical error message if it cannot open or write to the configuration file.
+ *
+ * Requirements:
+ * - The `SaveConfigDialog` object must be properly instantiated to collect user input.
+ * - The directory path provided by the user must be valid and allow write operations.
+ *
+ * Dependencies:
+ * - Requires `setupCampaign` to be implemented for initializing the campaign environment.
+ *
+ * Side Effects:
+ * - Modifies the filesystem by creating new directories and files under the specified path.
+ * - Updates the application's state to reflect the new campaign configuration.
+ */
 void MainWindow::newCampaign() {
     SaveConfigDialog dialog(this);
     QString fileName = "";
@@ -456,6 +520,22 @@ void MainWindow::openHelp() {
     QDesktopServices::openUrl(url);
 }
 
+/**
+ * @brief Opens and loads a map file into the application.
+ *
+ * This method is responsible for loading a map file into a new tab in the `mapTabWidget`.
+ * Based on the file extension, it either loads a scene (for "dam" files) or displays a map
+ * image directly. If the operation is successful, a new `MapView` instance is created and
+ * added as a tab with the file's base name as the tab title. The visibility of the user
+ * interface is updated accordingly, and the new tab becomes the active tab.
+ * Additionally, this method connects the `toolChanged` signal of the `MapScene` to the
+ * `toolGroup` actions to manage their state appropriately.
+ *
+ * If the file fails to load, the method displays an error dialog and ensures that the
+ * `MapView` instance created earlier is properly deleted to avoid memory leaks.
+ *
+ * @param fileName The path to the map file to load.
+ */
 void MainWindow::openMapFromFile(QString fileName) {
     QFileInfo fileInfo(fileName);
     QString ext = fileInfo.suffix().toLower();
@@ -515,6 +595,25 @@ void MainWindow::openSharedMapWindow(int index) {
     }
 }
 
+/**
+ * @brief Saves the current campaign data, including music configuration and maps.
+ *
+ * This function performs the following actions in sequence:
+ * 1. Retrieves the root path from the campaign tree widget.
+ * 2. If the root path is invalid or the directory does not exist, the function returns without making any changes.
+ * 3. Removes the "Music" directory (without deleting the base directory itself) and regenerates the music configuration file
+ *    at the path `rootPath + "/Music/playerConfig.xml"`.
+ * 4. Iterates over all map tabs in `mapTabWidget` and saves each map as a .dam file in the `Maps` subdirectory
+ *    within the root campaign directory.
+ *
+ * Preconditions:
+ * - The `campaignTreeWidget` should be initialized and its `root()` method must return a valid path for the campaign root directory.
+ * - The `mapTabWidget` should contain child widgets for each map to be exported.
+ *
+ * Postconditions:
+ * - The "Music" directory within the campaign root may be emptied and its configuration file regenerated.
+ * - Each map is exported into the appropriate directory based on its tab index and object name.
+ */
 void MainWindow::saveCampaign() {
     QString rootPath = campaignTreeWidget->root();
     QDir rootDir(rootPath);
@@ -812,7 +911,6 @@ void MainWindow::setupMaps() {
 
     updateVisibility();
 }
-
 
 /**
  * @brief Sets up keyboard shortcuts for player controls.
@@ -1187,7 +1285,6 @@ void MainWindow::setVolumeDivider(int value) {
     }
 }
 
-
 /**
  * @brief Stops all player instances in the application.
  *
@@ -1200,7 +1297,6 @@ void MainWindow::stopAll() {
         players[i]->stop();
     }
 }
-
 
 /**
  * Stops all players in the `players` vector except the one specified by the given `exeptId`.
@@ -1267,8 +1363,6 @@ static void copyAllFiles(const QString& sourcePath, const QString& destPath){
     }
 }
 
-
-
 /**
  * Moves all files from a source directory to a destination directory.
  * This function first copies all files from the source directory to the
@@ -1290,7 +1384,6 @@ static void moveAllFiles(const QString& sourcePath, const QString& destPath){
         QFile::remove(srcFilePath);
     }
 }
-
 
 /**
  * @brief Recursively removes a directory and its contents.
