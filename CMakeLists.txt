@@ -41,6 +41,10 @@ set(FILES
         settingsdialog.h    settingsdialog.cpp
         settings.h
         thememanager.h  thememanager.cpp
+        campaign-tree-widget/hoverwidget.cpp
+        campaign-tree-widget/hoverwidget.h
+        campaign-tree-widget/campaigntreewidget.cpp
+        campaign-tree-widget/campaigntreewidget.h
 
 )
 

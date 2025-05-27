@@ -47,7 +47,20 @@
         <height>16777215</height>
        </size>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2"/>
+      <layout class="QVBoxLayout" name="campaignLayout">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
      </widget>
     </item>
     <item>
@@ -147,6 +160,9 @@
     </item>
     <item>
      <widget class="Line" name="line_3">
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
@@ -194,8 +210,14 @@
        </item>
        <item>
         <layout class="QVBoxLayout" name="musicLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
          <item>
           <layout class="QHBoxLayout" name="volumeLayout">
+           <property name="spacing">
+            <number>3</number>
+           </property>
            <item>
             <widget class="QLabel" name="volMinLabel">
              <property name="maximumSize">
@@ -283,6 +305,7 @@
     <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
+    <addaction name="actionReload"/>
     <addaction name="separator"/>
     <addaction name="actionSettings"/>
     <addaction name="menuAdd"/>
@@ -414,6 +437,18 @@
   <action name="actionAddMap">
    <property name="text">
     <string>Map</string>
+   </property>
+  </action>
+  <action name="actionReload">
+   <property name="icon">
+    <iconset resource="static/app_resources.qrc">
+     <normaloff>:/reload.svg</normaloff>:/reload.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Reload from disk</string>
+   </property>
+   <property name="toolTip">
+    <string>Reload campaign from disk</string>
    </property>
   </action>
  </widget>

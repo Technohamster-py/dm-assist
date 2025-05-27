@@ -1,7 +1,7 @@
 <RCC version="1.0">
     <qresource prefix="/">
         <file>add.svg</file>
-        <file>app-icon.png</file>
+        <file>app-icon.svg</file>
         <file>book.svg</file>
         <file>close.svg</file>
         <file>compass.svg</file>
@@ -14,6 +14,7 @@
         <file>human.svg</file>
         <file>heart.svg</file>
         <file>remove.svg</file>
+        <file>reload.svg</file>
         <file>save.svg</file>
         <file>search.svg</file>
         <file>settings.svg</file>

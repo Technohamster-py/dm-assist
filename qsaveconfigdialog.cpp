@@ -55,7 +55,19 @@ SaveConfigDialog::SaveConfigDialog(QWidget *parent)  : QDialog(parent), warningL
 
     setLayout(layout);
 
-    rootFolderEdit->setText(QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/dm_assis_files/saves");
+    connect(projectNameEdit, &QLineEdit::textChanged, this, [=](){
+        showWarning(QString(tr("Проект будет сохранен в папку %1/%2")).arg(rootFolderEdit->text().trimmed(), projectNameEdit->text().trimmed()));
+        projectName = projectNameEdit->text().trimmed();
+        directoryPath = rootFolderEdit->text().trimmed() + "/" + projectNameEdit->text().trimmed();
+    });
+
+    connect(rootFolderEdit, &QLineEdit::textChanged, this, [=](){
+        showWarning(QString(tr("Проект будет сохранен в папку %1/%2")).arg(rootFolderEdit->text().trimmed(), projectNameEdit->text().trimmed()));
+        directoryPath = rootFolderEdit->text().trimmed() + "/" + projectNameEdit->text().trimmed();
+    });
+
+    rootFolderEdit->setText(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/dm_assist_campaigns");
+    projectNameEdit->setText("Untitled campaign");
 }
 
 /**
@@ -73,8 +85,8 @@ void SaveConfigDialog::onBrowseClicked() {
                                                           tr("Выберите папку"),
                                                           rootFolderEdit->text().trimmed());
     if (!directory.isEmpty()) {
-        showWarning(QString(tr("Проект будет сохранен в папку %1/%2")).arg(directory, projectNameEdit->text().trimmed()));
         rootFolderEdit->setText(directory);
+        directoryPath = directory + "/" + projectNameEdit->text().trimmed();
     }
 }
 
@@ -121,14 +133,7 @@ void SaveConfigDialog::onSaveClicked() {
         return;
     }
 
-    filename = dir.filePath(projectName + ".xml");
-    QFile configFile(filename);
-    if (!configFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        showWarning(tr("Не удалось создать файл."));
-        return;
-    }
-
-    configFile.close();
+    filename = dir.filePath(projectName + ".json");
     accept();
 }
 

@@ -324,6 +324,7 @@ void SettingsDialog::populateThemes() {
     QDir themesDir(QCoreApplication::applicationDirPath() + "/themes");
     QStringList themeFiles = themesDir.entryList(QStringList() << "*.xml", QDir::Files);
 
+    ui->themeComboBox->addItem("System", "System");
     ui->themeComboBox->addItem("Light", "Light");
     ui->themeComboBox->addItem("Dark", "Dark");
 

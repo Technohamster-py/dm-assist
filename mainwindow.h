@@ -11,6 +11,7 @@
 #include <QSettings>
 #include <QShortcut>
 #include <QTranslator>
+#include "campaign-tree-widget/campaigntreewidget.h"
 #include "map-widget/maptabwidget.h"
 #include "map-widget/fogtool.h"
 #include "map-widget/brushtool.h"
@@ -70,15 +71,18 @@ public slots:
     void openDonate();
 
     void openSharedMapWindow(int index);
-    void exportMap(int index);
+    void slotExportMap(int index);
 
 private:
     Ui::MainWindow *ui;
     QTranslator translator;
     QString currentLanguage;
+    QString currentCampaignDir;
 
     int deviceIndex = -1;
     QVector<QPlayer*> players;
+
+    CampaignTreeWidget* campaignTreeWidget;
 
     QInitiativeTrackerWidget* initiativeTrackerWidget;
 
@@ -94,7 +98,7 @@ private:
     SquareShapeTool* squareShapeTool;
     TriangleShapeTool* triangleShapeTool;
 
-
+    void setupCampaign(const QString& campaignRoot);
     void setupPlayers();
     void setupTracker();
     void setupToolbar();
@@ -105,17 +109,24 @@ private:
 
     QActionGroup *toolGroup;
 
+    void exportMap(QString path, int index);
+
 private slots:
-    void loadConfigFile();
-    void saveConfigFile();
+    void newCampaign();
+    void loadCampaign();
+    void saveCampaign();
+
+    void loadMusicConfigFile(QString fileName);
+    void saveMusicConfigFile(QString fileName);
     void on_actionSettings_triggered();
 
     void createNewMapTab();
+    void openMapFromFile(QString fileName);
     void deleteMapTab(int index);
     void updateVisibility();
 
-    void setCalibrationMode();
-    void setMeasureMode(bool checked);
+    void setCalibrationTool();
+    void setMeasureTool(bool checked);
     void setFogTool(bool checked, FogTool::Mode mode = FogTool::Hide);
     void setLightTool(bool checked);
     void coverMapWithFog(bool hide);

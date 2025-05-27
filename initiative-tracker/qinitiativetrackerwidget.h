@@ -48,6 +48,7 @@ public slots:
     void setHpComboBoxVisible(int visible);
 
 
+
 private slots:
     void addRow();
     void nextTurn();
