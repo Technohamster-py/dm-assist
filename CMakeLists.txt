@@ -89,7 +89,7 @@ include_directories(
         static
 )
 
-qt_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
+qt_add_translation(QM_FILES ${TS_FILES})
 add_custom_target(translations DEPENDS ${QM_FILES})
 
 add_executable(${PROJECT_NAME}
@@ -99,6 +99,9 @@ add_executable(${PROJECT_NAME}
         ${UI_FILES}
         ${RESOURCES_ADD}
 )
+
+target_sources(${PROJECT_NAME} PRIVATE ${QM_FILES})
+add_dependencies(${PROJECT_NAME} translations)
 
 target_link_libraries(${PROJECT_NAME}
         Qt6::Core
@@ -181,11 +184,11 @@ if (WIN32)
 endif ()
 
 
-#foreach(qm ${QM_FILES})
-#    get_filename_component(qm_filename "${qm}" NAME)
-#    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-#            COMMAND ${CMAKE_COMMAND} -E rename "${qm}" "$<TARGET_FILE_DIR:${PROJECT_NAME}>/translations/${qm_filename}"
-#            COMMAND ${CMAKE_COMMAND} -E echo "Moving ${qm_filename} into /translations"
-#
-#    )
-#endforeach()
+foreach(qm ${QM_FILES})
+    get_filename_component(qm_filename "${qm}" NAME)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E rename "${qm}" "$<TARGET_FILE_DIR:${PROJECT_NAME}>/translations/${qm_filename}"
+            COMMAND ${CMAKE_COMMAND} -E echo "Moving ${qm_filename} into /translations"
+
+    )
+endforeach()
