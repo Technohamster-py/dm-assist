@@ -15,15 +15,14 @@
 CampaignTreeWidget::CampaignTreeWidget(QWidget *parent) : QTreeWidget(parent)
 {
     setColumnCount(1);
-    setHeaderLabel(tr("Campaign Structure"));
+    setHeaderHidden(true);
     m_rootPath = QString();
 
     setStyleSheet("QTreeWidget { background: transparent; }"
                   "QTreeWidget::item { background: transparent; }");
-//
-//    setAttribute(Qt::WA_TranslucentBackground);
+
+    setAttribute(Qt::WA_TranslucentBackground);
     setFrameStyle(QFrame::NoFrame);
-//    setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
 /**
