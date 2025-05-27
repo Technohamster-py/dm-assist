@@ -17,6 +17,13 @@ CampaignTreeWidget::CampaignTreeWidget(QWidget *parent) : QTreeWidget(parent)
     setColumnCount(1);
     setHeaderLabel(tr("Campaign Structure"));
     m_rootPath = QString();
+
+    setStyleSheet("QTreeWidget { background: transparent; }"
+                  "QTreeWidget::item { background: transparent; }");
+//
+//    setAttribute(Qt::WA_TranslucentBackground);
+    setFrameStyle(QFrame::NoFrame);
+//    setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
 /**
@@ -38,11 +45,11 @@ CampaignTreeWidget::CampaignTreeWidget(QWidget *parent) : QTreeWidget(parent)
  */
 NodeType CampaignTreeWidget::determieNodeType(const QString &path)
 {
-    if (path.contains("/Characters"))
+    if (path.contains("/Characters/"))
         return NodeType::Character;
-    if (path.contains("/Encounters"))
+    if (path.contains("/Encounters/"))
         return NodeType::Encounter;
-    if (path.contains("/Maps"))
+    if (path.contains("/Maps/"))
         return NodeType::Map;
     if (path.contains("/Music"))
         return NodeType::Music;
@@ -77,7 +84,7 @@ bool CampaignTreeWidget::ignore(const QFileInfo &info)
 
     if (normalized.startsWith("music/") || normalized == "music")
         return true;
-    if (normalized == "playerconfig.xml" || normalized == "root")
+    if (normalized == "playerconfig.xml" || normalized == "root" || normalized == "campaign.json")
         return true;
     return false;
 }
