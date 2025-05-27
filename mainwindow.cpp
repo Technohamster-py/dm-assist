@@ -59,7 +59,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionHelp, &QAction::triggered, this, &MainWindow::openHelp);
     connect(ui->actionDonate, &QAction::triggered, this, &MainWindow::openDonate);
     connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::setVolumeDivider);
-
+    connect(ui->actionReload, &QAction::triggered, this, [=](){
+        setupCampaign(campaignTreeWidget->root());
+    });
 
 
     showMaximized();
@@ -195,7 +197,7 @@ void MainWindow::deleteMapTab(int index) {
  * @note If the specified tab does not contain a valid MapView object, the operation is skipped.
  *       The exported file format is DM assist map file (*.dam).
  */
-void MainWindow::exportMap(int index) {
+void MainWindow::slotExportMap(int index) {
     MapView* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
     if (currentView){
         QString filename = QFileDialog::getSaveFileName(this,
@@ -774,7 +776,7 @@ void MainWindow::setupMaps() {
     connect(ui->actionAddMap, &QAction::triggered, this, &MainWindow::createNewMapTab);
     connect(mapTabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::deleteMapTab);
     connect(mapTabWidget, &TabWidget::share, this, &MainWindow::openSharedMapWindow);
-    connect(mapTabWidget, &TabWidget::save, this, &MainWindow::exportMap);
+    connect(mapTabWidget, &TabWidget::save, this, &MainWindow::slotExportMap);
 
     connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);
     updateVisibility();

@@ -71,7 +71,7 @@ public slots:
     void openDonate();
 
     void openSharedMapWindow(int index);
-    void exportMap(int index);
+    void slotExportMap(int index);
 
 private:
     Ui::MainWindow *ui;

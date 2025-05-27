@@ -281,7 +281,7 @@
      <x>0</x>
      <y>0</y>
      <width>1440</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="font">
@@ -305,6 +305,7 @@
     <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
+    <addaction name="actionReload"/>
     <addaction name="separator"/>
     <addaction name="actionSettings"/>
     <addaction name="menuAdd"/>
@@ -436,6 +437,18 @@
   <action name="actionAddMap">
    <property name="text">
     <string>Map</string>
+   </property>
+  </action>
+  <action name="actionReload">
+   <property name="icon">
+    <iconset resource="static/app_resources.qrc">
+     <normaloff>:/reload.svg</normaloff>:/reload.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Reload from disk</string>
+   </property>
+   <property name="toolTip">
+    <string>Reload campaign from disk</string>
    </property>
   </action>
  </widget>
