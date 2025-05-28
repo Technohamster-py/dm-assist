@@ -836,6 +836,10 @@ void MainWindow::setupCampaign(const QString& campaignRoot) {
     if (!campaignTreeWidget->setRootDir(campaignRoot))
         return;
 
+    foreach(QPlayer* player, players){
+        removeDirectoryRecursively(player->getLocalDirPath());
+    }
+
     connect(campaignTreeWidget, &CampaignTreeWidget::encounterAddRequested, initiativeTrackerWidget, &QInitiativeTrackerWidget::addFromFile);
     connect(campaignTreeWidget, &CampaignTreeWidget::encounterReplaceRequested, initiativeTrackerWidget, &QInitiativeTrackerWidget::loadFromFile);
 

@@ -5,12 +5,13 @@
 #include <QMessageBox>
 
 /**
- * @brief Constructs a CampaignTreeWidget instance.
+ * Constructs a CampaignTreeWidget object.
  *
- * The constructor initializes the CampaignTreeWidget with a single column and sets the header label to
- * "Campaign Structure". It also initializes the root path to an empty string.
+ * This constructor initializes a tree widget with a single column, hides the header,
+ * and applies a transparent background style. It also ensures that the widget's frame
+ * is hidden and its background is translucent.
  *
- * @param parent The parent widget of the CampaignTreeWidget. Defaults to nullptr if not provided.
+ * @param parent The parent widget for the tree widget.
  */
 CampaignTreeWidget::CampaignTreeWidget(QWidget *parent) : QTreeWidget(parent)
 {
