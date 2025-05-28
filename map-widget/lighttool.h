@@ -76,7 +76,7 @@ public:
 private:
     int m_brightRadius = 20;
     int m_dimRadius = 40;
-    QColor m_color = QColor(255, 255, 180); // тёплый свет по умолчанию
+    QColor m_color = QColor(255, 255, 180);
 
     bool m_autoUpdateFog = false;
 };

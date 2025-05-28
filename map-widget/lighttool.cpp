@@ -28,7 +28,6 @@ LightSourceItem::LightSourceItem(qreal r1, qreal r2, QColor color, QPointF pos, 
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
     setFlag(QGraphicsItem::ItemIsFocusable);
     setFlag(QGraphicsItem::ItemIsSelectable);
-    setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges);
     setFlag(QGraphicsItem::ItemIsFocusable);
 }
