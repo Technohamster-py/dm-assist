@@ -71,6 +71,8 @@ QPlayer::QPlayer(QWidget *parent, int id, QString title)
 
     connect(playKey, SIGNAL(activated()), this, SLOT(playShortcutTriggered()));
     connect(ui->volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(changeVolume(int)));
+
+    ui->volumeSlider->setValue(100);
 }
 
 /**
