@@ -42,7 +42,7 @@ set(FILES
         qsaveconfigdialog.h qsaveconfigdialog.cpp
         settingsdialog.h    settingsdialog.cpp
         settings.h
-        thememanager.h  thememanager.cpp
+        theme-manager/thememanager.h theme-manager/thememanager.cpp
 )
 
 set(UI_FILES

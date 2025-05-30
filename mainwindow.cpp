@@ -16,7 +16,7 @@
 #include <QJsonDocument>
 
 #include <QDebug>
-#include "thememanager.h"
+#include "theme-manager/thememanager.h"
 
 #include <QDebug>
 
