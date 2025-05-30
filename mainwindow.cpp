@@ -301,6 +301,8 @@ void MainWindow::loadMusicConfigFile(QString fileName) {
 
             int playerId = playerNode.attribute("id").toInt();
 
+            players[playerId]->setVolume(playerNode.attribute("volume", "100").toInt());
+
             QFileInfo dirInfo(absolutePath);
             if (dirInfo.isDir()){
                 players[playerId]->setPlaylistName(dirInfo.fileName());
@@ -685,6 +687,7 @@ void MainWindow::saveMusicConfigFile(QString fileName) {
     for (int i = 0; i < 9; ++i) {
         QDomElement playlist_node = configDocument.createElement("playlist");
         playlist_node.setAttribute("id", i);
+        playlist_node.setAttribute("volume", players[i]->volumeSliderPosition());
 
         QString playlistPath = baseDir + players[i]->getPlaylistName();
         moveAllFiles(players[i]->getLocalDirPath(), playlistPath);

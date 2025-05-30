@@ -585,6 +585,10 @@ void MusicPlayerWidget::setVolume(int volume) {
     ui->volumeSlider->setValue(volume);
 }
 
+int MusicPlayerWidget::volumeSliderPosition() {
+    return ui->volumeSlider->value();
+}
+
 ////////////////////////////////////////////////
 /////////       PlaylistEditDialog            ///////
 ////////////////////////////////////////////////

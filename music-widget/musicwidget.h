@@ -37,6 +37,7 @@ public:
 
     void setVolumeDivider(int value);
     int getVolumeDivider() const {return volumeDivider;};
+    int volumeSliderPosition();
 
     void addMedia(const QStringList &files);
     void setLocalDirPath(QString localDirPath);
