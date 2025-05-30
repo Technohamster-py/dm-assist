@@ -72,26 +72,6 @@ void HpProgressBarDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
     }
 }
 
-
-/**
- * @brief Provides size hint for the progress bar delegate.
- *
- * This method calculates and returns the size hint for rendering
- * a custom progress bar delegate within a view. The returned size
- * specifies the recommended width and height of the delegate.
- *
- * @param option The style options for the item, containing details
- *               about the item's geometry and state.
- * @param index The model index that identifies the item in the model.
- * @return QSize The recommended size for the delegate. The width
- *               matches the width of the item's rectangle, and the
- *               height is set to a fixed value of 20 pixels.
- */
-QSize HpProgressBarDelegate::sizeHint(const QStyleOptionViewItem &option,
-                                      const QModelIndex &index) const {
-    return QSize(option.rect.width(), 20);
-}
-
 /**
  * @brief Evaluates the health point (HP) status based on current and maximum HP.
  *
