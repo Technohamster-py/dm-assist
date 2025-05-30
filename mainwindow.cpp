@@ -81,7 +81,7 @@ MainWindow::~MainWindow() {
 //        saveConfigFile();
     saveCampaign();
     saveSettings();
-    foreach(QPlayer* player, players){
+    foreach(MusicPlayerWidget* player, players){
         removeDirectoryRecursively(player->getLocalDirPath());
         delete player;
     }
@@ -363,7 +363,7 @@ void MainWindow::loadSettings() {
     if (!dir.exists())
         dir.mkpath(".");
     /// Music
-    for (QPlayer *player : players) {
+    for (MusicPlayerWidget *player : players) {
         player->setAudioOutput(settings.value(paths.general.audioDevice, 0).toInt());
     }
     ui->volumeSlider->setValue(settings.value(paths.general.volume, 100).toInt());
@@ -836,7 +836,7 @@ void MainWindow::setupCampaign(const QString& campaignRoot) {
     if (!campaignTreeWidget->setRootDir(campaignRoot))
         return;
 
-    foreach(QPlayer* player, players){
+    foreach(MusicPlayerWidget* player, players){
         removeDirectoryRecursively(player->getLocalDirPath());
     }
 
@@ -872,7 +872,7 @@ void MainWindow::setupCampaign(const QString& campaignRoot) {
  */
 void MainWindow::setupPlayers() {
     for (int i = 0; i < 9; ++i) {
-        auto *player = new QPlayer(this, i+1, QString("Player %1").arg(i + 1));
+        auto *player = new MusicPlayerWidget(this, i + 1, QString("Player %1").arg(i + 1));
         players.append(player);
     }
 

@@ -20,6 +20,8 @@ endif ()
 
 
 set(FILES
+        campaign-tree-widget/campaigntreewidget.cpp campaign-tree-widget/campaigntreewidget.h
+        campaign-tree-widget/hoverwidget.cpp    campaign-tree-widget/hoverwidget.h
         initiative-tracker/initiativemodel.h    initiative-tracker/initiativemodel.cpp
         mainwindow.h    mainwindow.cpp
         map-widget/abstractmaptool.h
@@ -34,24 +36,19 @@ set(FILES
         map-widget/sharedmapwindow.h    map-widget/sharedmapwindow.cpp
         map-widget/spellshapetool.h     map-widget/spellshapetool.cpp
         map-widget/undostack.h
+        music-widget/musicwidget.h music-widget/musicwidget.cpp
         initiative-tracker/qinitiativetrackerwidget.h   initiative-tracker/qinitiativetrackerwidget.cpp
         initiative-tracker/hpprogressbardelegate.h  initiative-tracker/hpprogressbardelegate.cpp
-        qplayerwidget.h qplayerwidget.cpp
         qsaveconfigdialog.h qsaveconfigdialog.cpp
         settingsdialog.h    settingsdialog.cpp
         settings.h
         thememanager.h  thememanager.cpp
-        campaign-tree-widget/hoverwidget.cpp
-        campaign-tree-widget/hoverwidget.h
-        campaign-tree-widget/campaigntreewidget.cpp
-        campaign-tree-widget/campaigntreewidget.h
-
 )
 
 set(UI_FILES
         mainwindow.ui
-        qplayer.ui
-        qplaylistedit.ui
+        music-widget/musicplayer.ui
+        music-widget/playlisteditdialog.ui
         initiative-tracker/qinitiativetrackerwidget.ui
         settingsdialog.ui
 )
@@ -84,7 +81,6 @@ include_directories(
         ${Qt6Sql_INCLUDE_DIRS}
         ${Qt6Multimedia_INCLUDE_DIRS}
         ${BASS_INCLUDE_DIR}
-        initiative-tracker
         translations
         static
 )

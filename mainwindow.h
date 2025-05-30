@@ -20,8 +20,8 @@
 #include "map-widget/rulermaptool.h"
 #include "map-widget/sharedmapwindow.h"
 #include "map-widget/spellshapetool.h"
-#include "qinitiativetrackerwidget.h"
-#include "qplayerwidget.h"
+#include "initiative-tracker/qinitiativetrackerwidget.h"
+#include "music-widget/musicwidget.h"
 #include "settingsdialog.h"
 
 
@@ -80,7 +80,7 @@ private:
     QString currentCampaignDir;
 
     int deviceIndex = -1;
-    QVector<QPlayer*> players;
+    QVector<MusicPlayerWidget*> players;
 
     CampaignTreeWidget* campaignTreeWidget;
 

@@ -1,5 +1,5 @@
-#ifndef DM_ASSIST_QPLAYERWIDGET_H
-#define DM_ASSIST_QPLAYERWIDGET_H
+#ifndef DM_ASSIST_MUSICWIDGET_H
+#define DM_ASSIST_MUSICWIDGET_H
 
 #include <QCoreApplication>
 #include <QDialog>
@@ -10,10 +10,10 @@
 #include <QShortcut>
 #include <QStandardPaths>
 #include <QWidget>
-#include "lib/bass/include/bass.h"
+#include "bass.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class QPlayer; class QPlaylistEdit;}
+namespace Ui { class MusicPlayerWidget; class PlaylistEditDialog;}
 QT_END_NAMESPACE
 
 /**
@@ -24,12 +24,12 @@ QT_END_NAMESPACE
  * It supports functionalities such as adding media files, modifying volume, changing audio
  * output devices, and handling drag-and-drop operations for media files.
  */
-class QPlayer : public QWidget {
+class MusicPlayerWidget : public QWidget {
 Q_OBJECT
 
 public:
-    explicit QPlayer(QWidget *parent = nullptr, int id = 0, QString title = "Playlist");
-    ~QPlayer() override;
+    explicit MusicPlayerWidget(QWidget *parent = nullptr, int id = 0, QString title = "Playlist");
+    ~MusicPlayerWidget() override;
 
     QString getPlaylistName() const { return playlistName; }
     void setPlaylistName(const QString &name);
@@ -80,7 +80,7 @@ private slots:
 private:
     void freeStreams();
 
-    Ui::QPlayer *ui;
+    Ui::MusicPlayerWidget *ui;
     QShortcut *playKey;
 
     QString playlistName;
@@ -100,12 +100,12 @@ private:
 
 
 
-class QPlaylistEdit : public QDialog {
+class PlaylistEditDialog : public QDialog {
 Q_OBJECT
 
 public:
-    explicit QPlaylistEdit(QWidget *parent = nullptr, const QStringList &tracks = {}, QString title = "title");
-    ~QPlaylistEdit();
+    explicit PlaylistEditDialog(QWidget *parent = nullptr, const QStringList &tracks = {}, QString title = "title");
+    ~PlaylistEditDialog();
 
     QStringList getUpdatedPlaylist() const;
     QString getPlaylistName() const;
@@ -115,7 +115,7 @@ private slots:
     void om_removeButton_clicked();
 
 private:
-    Ui::QPlaylistEdit *ui;
+    Ui::PlaylistEditDialog *ui;
 };
 
-#endif // DM_ASSIST_QPLAYERWIDGET_H
+#endif // DM_ASSIST_MUSICWIDGET_H

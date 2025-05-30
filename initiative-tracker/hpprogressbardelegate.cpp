@@ -5,6 +5,8 @@
 #include <QApplication>
 #include <QPainter>
 
+#include <QDebug>
+
 
 HpProgressBarDelegate::HpProgressBarDelegate(DisplayMode mode, QObject *parent)
         : QStyledItemDelegate(parent), displayMode(mode) {}
@@ -59,13 +61,16 @@ void HpProgressBarDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
         case ProgressBar: {
             QStyleOptionProgressBar progressBarOption;
             progressBarOption.rect = option.rect;
+            progressBarOption.direction = QApplication::layoutDirection();
             progressBarOption.minimum = 0;
             progressBarOption.maximum = max;
             progressBarOption.progress = value;
+            qDebug() << value;
             progressBarOption.text = QString("%1/%2").arg(value).arg(max);
             progressBarOption.textVisible = false;
             progressBarOption.textAlignment = Qt::AlignCenter;
             progressBarOption.state = QStyle::State_Enabled;
+            QStyledItemDelegate::paint(painter, option, QModelIndex());
             QApplication::style()->drawControl(QStyle::CE_ProgressBar, &progressBarOption, painter);
             return;
         }

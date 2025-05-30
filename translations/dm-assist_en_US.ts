@@ -483,17 +483,17 @@
 <context>
     <name>QPlayer</name>
     <message>
-        <location filename="../qplayer.ui" line="32"/>
+        <location filename="../musicplayer.ui" line="32"/>
         <source>QPlayer</source>
         <translation>QPlayer</translation>
     </message>
     <message>
-        <location filename="../qplayer.ui" line="81"/>
+        <location filename="../musicplayer.ui" line="81"/>
         <source>1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qplayer.ui" line="109"/>
+        <location filename="../musicplayer.ui" line="109"/>
         <source>Titile</source>
         <translation></translation>
     </message>
@@ -514,7 +514,7 @@
         <translation type="vanished">Stop</translation>
     </message>
     <message>
-        <location filename="../qplayer.ui" line="141"/>
+        <location filename="../musicplayer.ui" line="141"/>
         <source>play</source>
         <translation>Play</translation>
     </message>
@@ -527,7 +527,7 @@
         <translation type="vanished">next track</translation>
     </message>
     <message>
-        <location filename="../qplayer.ui" line="161"/>
+        <location filename="../musicplayer.ui" line="161"/>
         <source>Edit playlist</source>
         <translation>Edit playlist</translation>
     </message>
@@ -551,17 +551,17 @@
 <context>
     <name>QPlaylistEdit</name>
     <message>
-        <location filename="../qplaylistedit.ui" line="14"/>
+        <location filename="../playlisteditdialog.ui" line="14"/>
         <source>QPlaylistEdit</source>
         <translation>QPlaylistEdit</translation>
     </message>
     <message>
-        <location filename="../qplaylistedit.ui" line="57"/>
+        <location filename="../playlisteditdialog.ui" line="57"/>
         <source>Add audio file</source>
         <translation>Add audio file</translation>
     </message>
     <message>
-        <location filename="../qplaylistedit.ui" line="71"/>
+        <location filename="../playlisteditdialog.ui" line="71"/>
         <source>Remove file from playlist</source>
         <translation>Remove file from playlist</translation>
     </message>

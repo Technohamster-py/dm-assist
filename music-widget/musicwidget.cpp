@@ -1,10 +1,6 @@
-//
-// Created by arsen on 06.03.2024.
-//
-
-#include "qplayerwidget.h"
-#include "ui_qplayer.h"
-#include "ui_qplaylistedit.h"
+#include "musicwidget.h"
+#include "ui_musicplayer.h"
+#include "ui_playlisteditdialog.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -20,7 +16,7 @@
 
 #include "bass.h"
 
-#define BASS_DEVICE_INDEX 1 // Можно сделать параметром, если нужно
+#define BASS_DEVICE_INDEX 1
 
 
 ////////////////////////////////////////////////
@@ -43,9 +39,9 @@
  *
  * @note The constructor also sets up drag-and-drop functionality for the player widget.
  */
-QPlayer::QPlayer(QWidget *parent, int id, QString title)
+MusicPlayerWidget::MusicPlayerWidget(QWidget *parent, int id, QString title)
         : QWidget(parent),
-          ui(new Ui::QPlayer),
+          ui(new Ui::MusicPlayerWidget),
           id(id),
           playlistName(std::move(title))
 {
@@ -87,7 +83,7 @@ QPlayer::QPlayer(QWidget *parent, int id, QString title)
  * Ensures the proper cleanup of objects and resources to prevent memory leaks or undefined behavior
  * when the QPlayer instance is destroyed.
  */
-QPlayer::~QPlayer() {
+MusicPlayerWidget::~MusicPlayerWidget() {
     stop();
     freeStreams();
     BASS_Free();
@@ -119,7 +115,7 @@ QPlayer::~QPlayer() {
  * Signals:
  * - Emits `playlistNameChanged()` if the playlist name is successfully updated.
  */
-void QPlayer::setPlaylistName(const QString &name) {
+void MusicPlayerWidget::setPlaylistName(const QString &name) {
     if(name != playlistName){
         playlistName = name;
         ui->titleLabel->setText(name);
@@ -147,7 +143,7 @@ void QPlayer::setPlaylistName(const QString &name) {
  *
  * @param value The desired volume divider value.
  */
-void QPlayer::setVolumeDivider(int value) {
+void MusicPlayerWidget::setVolumeDivider(int value) {
     volumeDivider = value;
     if (volumeDivider > 100)
         volumeDivider = 100;
@@ -165,11 +161,11 @@ void QPlayer::setVolumeDivider(int value) {
  * @param key The keyboard shortcut to be assigned. It should be a string representing
  *            the desired key sequence.
  */
-void QPlayer::setPlayShortcut(QString key) {
+void MusicPlayerWidget::setPlayShortcut(QString key) {
     playKey->setKey(key);
 }
 
-void QPlayer::playShortcutTriggered() {
+void MusicPlayerWidget::playShortcutTriggered() {
     play();
 }
 
@@ -192,7 +188,7 @@ void QPlayer::playShortcutTriggered() {
  * - After completing the operation, the `localDirPathChanged` signal is emitted to notify
  *   listeners about the update.
  */
-void QPlayer::addMedia(const QStringList &files) {
+void MusicPlayerWidget::addMedia(const QStringList &files) {
     for (const QString &file : files) {
         QFileInfo info(file);
         QString dest = localDir + "/" + info.fileName();
@@ -208,14 +204,14 @@ void QPlayer::addMedia(const QStringList &files) {
     emit localDirPathChanged();
 }
 
-void QPlayer::on_playButton_clicked() {
+void MusicPlayerWidget::on_playButton_clicked() {
     if (isActive)
         stop();
     else
         play();
 }
 
-void QPlayer::on_editButton_clicked() {
+void MusicPlayerWidget::on_editButton_clicked() {
     edit();
 }
 
@@ -223,7 +219,7 @@ void QPlayer::on_editButton_clicked() {
  * @brief Opens the playlist editor, applies user modifications, and updates the playlist files.
  *
  * The `edit` function provides functionality to edit the current playlist. This involves:
- * - Opening a `QPlaylistEdit` dialog to allow the user to modify the playlist name and content.
+ * - Opening a `PlaylistEditDialog` dialog to allow the user to modify the playlist name and content.
  * - If the dialog is accepted (user confirms changes):
  *   - Retrieving the updated playlist content and new playlist name from the editor.
  *   - Removing all existing files in the local directory (`localDir`) to prepare for the updated playlist.
@@ -231,10 +227,10 @@ void QPlayer::on_editButton_clicked() {
  *   - Setting the new playlist name via the `setPlaylistName` method.
  *   - Adding the updated list of media files using the `addMedia` method. This step ensures the updated media is stored in the local directory and properly integrated into the application.
  *
- * If the user cancels the `QPlaylistEdit` dialog, no changes are made to the playlist.
+ * If the user cancels the `PlaylistEditDialog` dialog, no changes are made to the playlist.
  */
-void QPlayer::edit() {
-    QPlaylistEdit editor(this, filePaths, playlistName);
+void MusicPlayerWidget::edit() {
+    PlaylistEditDialog editor(this, filePaths, playlistName);
     if (editor.exec() == QDialog::Accepted) {
         QStringList newList = editor.getUpdatedPlaylist();
         QDir dir(localDir);
@@ -264,7 +260,7 @@ void QPlayer::edit() {
  * @note If the playlist is empty, no playback will be initiated.
  * @note The function emits the playerStarted signal with the player ID at the start of execution.
  */
-void QPlayer::play() {
+void MusicPlayerWidget::play() {
     emit playerStarted(id);
     freeStreams();  // очистить
     isActive = true;
@@ -291,7 +287,7 @@ void QPlayer::play() {
  * @param index The index of the track in the playlist to be played.
  *              Must be within the valid range of the playlist indices.
  */
-void QPlayer::playTrackAt(int index) {
+void MusicPlayerWidget::playTrackAt(int index) {
     if (index < 0 || index >= streams.size()) return;
 
     stop(); // на всякий случай
@@ -301,7 +297,7 @@ void QPlayer::playTrackAt(int index) {
 
     // Установка синхронизации на окончание трека
     BASS_ChannelSetSync(stream, BASS_SYNC_END, 0, [](HSYNC, DWORD handle, DWORD, void *user) {
-        QPlayer *self = static_cast<QPlayer*>(user);
+        MusicPlayerWidget *self = static_cast<MusicPlayerWidget*>(user);
         QMetaObject::invokeMethod(self, "playNextTrack", Qt::QueuedConnection);
     }, this);
 
@@ -322,7 +318,7 @@ void QPlayer::playTrackAt(int index) {
  *   to the beginning of the playlist.
  * - The playback control ensures seamless transition between tracks in the playlist.
  */
-void QPlayer::playNextTrack() {
+void MusicPlayerWidget::playNextTrack() {
     ++currentTrackIndex;
 
     if (currentTrackIndex >= streams.size()) {
@@ -339,7 +335,7 @@ void QPlayer::playNextTrack() {
  * It then updates the player's state to inactive, emits a signal indicating playback has stopped,
  * and modifies the UI to reflect the stopped state (e.g., changing the play button's style and icon).
  */
-void QPlayer::stop() {
+void MusicPlayerWidget::stop() {
     for (HSTREAM stream : streams) {
         BASS_ChannelStop(stream);
     }
@@ -360,7 +356,7 @@ void QPlayer::stop() {
  * streams are no longer needed, ensuring proper resource management and avoiding
  * leaks.
  */
-void QPlayer::freeStreams() {
+void MusicPlayerWidget::freeStreams() {
     for (HSTREAM stream : streams) {
         BASS_StreamFree(stream);
     }
@@ -377,7 +373,7 @@ void QPlayer::freeStreams() {
  * @param event A pointer to the QDragEnterEvent object that contains details about
  * the drag action.
  */
-void QPlayer::dragEnterEvent(QDragEnterEvent *event) {
+void MusicPlayerWidget::dragEnterEvent(QDragEnterEvent *event) {
     if (event->mimeData()->hasUrls()) {
         event->acceptProposedAction();
     }
@@ -402,7 +398,7 @@ void QPlayer::dragEnterEvent(QDragEnterEvent *event) {
  *   them to the playlist and update the internal file paths.
  * - No actions are taken if no valid files are found.
  */
-void QPlayer::dropEvent(QDropEvent *event) {
+void MusicPlayerWidget::dropEvent(QDropEvent *event) {
     QStringList files;
     for (const QUrl &url : event->mimeData()->urls()) {
         QString path = url.toLocalFile();
@@ -426,7 +422,7 @@ void QPlayer::dropEvent(QDropEvent *event) {
  *
  * @param localDirPath The base path to be set as the local directory.
  */
-void QPlayer::setLocalDirPath(QString localDirPath) {
+void MusicPlayerWidget::setLocalDirPath(QString localDirPath) {
     localDir = localDirPath + playlistName;
     emit localDirPathChanged();
 }
@@ -445,7 +441,7 @@ void QPlayer::setLocalDirPath(QString localDirPath) {
  * enabled (denoted by the `BASS_DEVICE_ENABLED` flag in the device info), its
  * name is included in the list.
  */
-QStringList QPlayer::availableAudioDevices() const {
+QStringList MusicPlayerWidget::availableAudioDevices() const {
     QStringList list;
     BASS_DEVICEINFO info;
     for (int i = 1; BASS_GetDeviceInfo(i, &info); i++) {
@@ -465,7 +461,7 @@ QStringList QPlayer::availableAudioDevices() const {
  * @return The name of the current audio output device as a QString, or an empty
  *         QString if no device is selected or an error occurs.
  */
-QString QPlayer::currentDeviceName() const {
+QString MusicPlayerWidget::currentDeviceName() const {
     if (m_deviceIndex < 0) return {};
     BASS_DEVICEINFO info;
     if (BASS_GetDeviceInfo(m_deviceIndex, &info))
@@ -483,7 +479,7 @@ QString QPlayer::currentDeviceName() const {
  *
  * @param volume An integer value representing the target volume level, typically in the range of 0 to 100.
  */
-void QPlayer::changeVolume(int volume) {
+void MusicPlayerWidget::changeVolume(int volume) {
 
     float trueVolume = volume / 100.0f;
 
@@ -519,7 +515,7 @@ void QPlayer::changeVolume(int volume) {
  * @note The function does not activate a device if its corresponding `m_deviceIndex` is already set to the target.
  * @note The audio output is configured with a fixed sample rate of 44.1 kHz.
  */
-void QPlayer::setAudioOutput(const QString &deviceName) {
+void MusicPlayerWidget::setAudioOutput(const QString &deviceName) {
     BASS_DEVICEINFO info;
     int found = -1;
 
@@ -556,7 +552,7 @@ void QPlayer::setAudioOutput(const QString &deviceName) {
  *
  * @param deviceIndex The index of the audio output device to set. If -1, no changes are made.
  */
-void QPlayer::setAudioOutput(int deviceIndex) {
+void MusicPlayerWidget::setAudioOutput(int deviceIndex) {
     if (deviceIndex == -1) {
         return;
     }
@@ -581,7 +577,7 @@ void QPlayer::setAudioOutput(int deviceIndex) {
  * @details Метод устанавливает слайдер громкости на нужную позицию. После этого уже вызывается слот changeVolume.
  * Это сделано для избежания бесконечного цикла сигнал-слот
  */
-void QPlayer::setVolume(int volume) {
+void MusicPlayerWidget::setVolume(int volume) {
     if (volume > 100)
         volume = 100;
     if (volume < 0)
@@ -590,14 +586,14 @@ void QPlayer::setVolume(int volume) {
 }
 
 ////////////////////////////////////////////////
-/////////       QPlaylistEdit            ///////
+/////////       PlaylistEditDialog            ///////
 ////////////////////////////////////////////////
 
 /**
- * @class QPlaylistEdit
+ * @class PlaylistEditDialog
  * @brief A dialog for editing a playlist with features for reordering, adding, and removing tracks.
  *
- * QPlaylistEdit is a QDialog subclass that provides a user interface to configure and modify
+ * PlaylistEditDialog is a QDialog subclass that provides a user interface to configure and modify
  * details of a playlist, such as its title and track order. It supports drag-and-drop for
  * reordering tracks and validates the playlist title.
  *
@@ -605,8 +601,8 @@ void QPlayer::setVolume(int volume) {
  * @param tracks A QStringList containing the initial list of tracks to be displayed in the dialog.
  * @param title The initial title of the playlist.
  */
-QPlaylistEdit::QPlaylistEdit(QWidget *parent, const QStringList &tracks, QString title)
-        : QDialog(parent), ui(new Ui::QPlaylistEdit)
+PlaylistEditDialog::PlaylistEditDialog(QWidget *parent, const QStringList &tracks, QString title)
+        : QDialog(parent), ui(new Ui::PlaylistEditDialog)
 {
     ui->setupUi(this);
     resize(400, 300);
@@ -619,11 +615,11 @@ QPlaylistEdit::QPlaylistEdit(QWidget *parent, const QStringList &tracks, QString
     ui->playlistWidget->addItems(tracks);
     ui->playlistWidget->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->playlistWidget->setDragDropMode(QAbstractItemView::InternalMove);
-    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &QPlaylistEdit::accept);
-    connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &QPlaylistEdit::reject);
+    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &PlaylistEditDialog::accept);
+    connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &PlaylistEditDialog::reject);
 }
 
-QPlaylistEdit::~QPlaylistEdit() = default;
+PlaylistEditDialog::~PlaylistEditDialog() = default;
 
 /**
  * @brief Slot triggered when the "Add" button is clicked.
@@ -634,7 +630,7 @@ QPlaylistEdit::~QPlaylistEdit() = default;
  * The file dialog filters for specific audio file formats, such as MP3 and WAV.
  * Files selected by the user from the dialog are appended to the playlist widget.
  */
-void QPlaylistEdit::on_addButton_clicked() {
+void PlaylistEditDialog::on_addButton_clicked() {
     QStringList files = QFileDialog::getOpenFileNames(this, "Add audio files", QStandardPaths::writableLocation(QStandardPaths::MusicLocation), "Audio Files (*.mp3 *.wav)");
     for (const QString &file : files) {
         ui->playlistWidget->addItem(file);
@@ -649,7 +645,7 @@ void QPlaylistEdit::on_addButton_clicked() {
  *
  * @return A QStringList containing the text of all items in the playlist widget.
  */
-QStringList QPlaylistEdit::getUpdatedPlaylist() const {
+QStringList PlaylistEditDialog::getUpdatedPlaylist() const {
     QStringList result;
     for (int i = 0; i < ui->playlistWidget->count(); ++i) {
         result << ui->playlistWidget->item(i)->text();
@@ -665,7 +661,7 @@ QStringList QPlaylistEdit::getUpdatedPlaylist() const {
  *
  * @return The name of the playlist as a QString.
  */
-QString QPlaylistEdit::getPlaylistName() const {
+QString PlaylistEditDialog::getPlaylistName() const {
     return ui->titleEdit->text();
 }
 
@@ -679,7 +675,7 @@ QString QPlaylistEdit::getPlaylistName() const {
  *
  * @note The memory associated with the removed items is cleaned up using `delete`.
  */
-void QPlaylistEdit::om_removeButton_clicked() {
+void PlaylistEditDialog::om_removeButton_clicked() {
     auto selectedTracks = ui->playlistWidget->selectedItems();
     for (QListWidgetItem *track : selectedTracks) {
         delete ui->playlistWidget->takeItem(ui->playlistWidget->row(track));

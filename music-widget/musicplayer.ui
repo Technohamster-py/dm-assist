@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QPlayer</class>
- <widget class="QWidget" name="QPlayer">
+ <class>MusicPlayerWidget</class>
+ <widget class="QWidget" name="MusicPlayerWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>QPlayer</string>
+   <string>MusicPlayerWidget</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QPushButton {
