@@ -102,7 +102,7 @@ QVariant InitiativeModel::data(const QModelIndex &index, int role) const {
 
     const InitiativeCharacter &c = characters.at(index.row());
 
-    if (role == Qt::DisplayRole || role == Qt::EditRole) {
+    if (role == Qt::DisplayRole || role == Qt::EditRole || role == Qt::UserRole) {
         if (role == Qt::DisplayRole && index.column() == 5)
             return "❌";
 
@@ -125,10 +125,6 @@ QVariant InitiativeModel::data(const QModelIndex &index, int role) const {
             case 3: return c.hp;
             case 4: return c.maxHp;
         }
-    }
-
-    if (role == Qt::BackgroundRole && index.row() == currentIndex) {
-        return QBrush(QColor("#cceeff")); // Подсветка текущего
     }
 
     return QVariant();
