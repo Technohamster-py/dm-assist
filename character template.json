@@ -1,0 +1,1242 @@
+{
+  "tags": [],
+  "disabledBlocks": {
+    "info-left": [],
+    "info-right": [
+      "items"
+    ],
+    "subinfo-left": [],
+    "subinfo-right": [],
+    "notes-left": [
+      "notes-2",
+      "notes-3"
+    ],
+    "notes-right": [
+      "notes-5",
+      "notes-6"
+    ],
+    "_id": "67b6c5ddc2525d1235711a6a"
+  },
+  "edition": "2024",
+  "spells": {
+    "mode": "cards",
+    "prepared": [
+      "65d3c16bf3d820fa1add4442",
+      "67bc0c483b37938b02ce75fa",
+      "65d3c16bf3d820fa1add4418"
+    ],
+    "book": [
+      "65d3c174f3d820fa1add4951",
+      "67bc05ec3b37938b02ce4219"
+    ]
+  },
+  "data": {
+    "isDefault": true,
+    "jsonType": "character",
+    "template": "en",
+    "name": {
+      "value": "Кейлет"
+    },
+    "info": {
+      "charClass": {
+        "name": "charClass",
+        "value": "Монах (откр лад)"
+      },
+      "charSubclass": {
+        "name": "charSubclass",
+        "value": ""
+      },
+      "level": {
+        "name": "level",
+        "value": 2
+      },
+      "background": {
+        "name": "background",
+        "value": "Чужеземец"
+      },
+      "playerName": {
+        "name": "playerName",
+        "value": "Technohamster"
+      },
+      "race": {
+        "name": "race",
+        "value": "Эльф (лесной)"
+      },
+      "alignment": {
+        "name": "alignment",
+        "value": "Хаотично-доброе"
+      },
+      "experience": {
+        "name": "experience",
+        "value": ""
+      }
+    },
+    "subInfo": {
+      "age": {
+        "name": "age",
+        "value": 20
+      },
+      "height": {
+        "name": "height",
+        "value": "6 футов"
+      },
+      "weight": {
+        "name": "weight",
+        "value": "65"
+      },
+      "eyes": {
+        "name": "eyes",
+        "value": "Зеленые"
+      },
+      "skin": {
+        "name": "skin",
+        "value": "Светлая, почти белая"
+      },
+      "hair": {
+        "name": "hair",
+        "value": "Черные"
+      }
+    },
+    "spellsInfo": {
+      "base": {
+        "name": "base",
+        "value": "",
+        "code": "wis"
+      },
+      "save": {
+        "name": "save",
+        "value": ""
+      },
+      "mod": {
+        "name": "mod",
+        "value": ""
+      },
+      "available": {
+        "classes": [
+          "druid"
+        ]
+      }
+    },
+    "spells": {
+      "slots-1": {
+        "value": 1
+      },
+      "level-1-slot-0": {
+        "isChecked": false
+      }
+    },
+    "spellsPact": {},
+    "proficiency": 2,
+    "stats": {
+      "str": {
+        "name": "str",
+        "score": 12,
+        "modifier": -5,
+        "label": "Сила"
+      },
+      "dex": {
+        "name": "dex",
+        "score": 18,
+        "modifier": -5,
+        "label": "Ловкость"
+      },
+      "con": {
+        "name": "con",
+        "score": 12,
+        "modifier": -5,
+        "label": "Телосложение"
+      },
+      "int": {
+        "name": "int",
+        "score": 12,
+        "modifier": -5,
+        "label": "Интеллект"
+      },
+      "wis": {
+        "name": "wis",
+        "score": 14,
+        "modifier": -5,
+        "label": "Мудрость"
+      },
+      "cha": {
+        "name": "cha",
+        "score": 11,
+        "modifier": -5,
+        "label": "Харизма"
+      }
+    },
+    "saves": {
+      "str": {
+        "name": "str",
+        "isProf": true
+      },
+      "dex": {
+        "name": "dex",
+        "isProf": true
+      },
+      "con": {
+        "name": "con",
+        "isProf": false
+      },
+      "int": {
+        "name": "int",
+        "isProf": false
+      },
+      "wis": {
+        "name": "wis",
+        "isProf": false
+      },
+      "cha": {
+        "name": "cha",
+        "isProf": false
+      }
+    },
+    "skills": {
+      "acrobatics": {
+        "baseStat": "dex",
+        "name": "acrobatics",
+        "isProf": 1
+      },
+      "investigation": {
+        "baseStat": "int",
+        "name": "investigation"
+      },
+      "athletics": {
+        "baseStat": "str",
+        "name": "athletics",
+        "isProf": 1
+      },
+      "perception": {
+        "baseStat": "wis",
+        "name": "perception",
+        "isProf": 1
+      },
+      "survival": {
+        "baseStat": "wis",
+        "name": "survival",
+        "isProf": 1
+      },
+      "performance": {
+        "baseStat": "cha",
+        "name": "performance"
+      },
+      "intimidation": {
+        "baseStat": "cha",
+        "name": "intimidation"
+      },
+      "history": {
+        "baseStat": "int",
+        "name": "history"
+      },
+      "sleight of hand": {
+        "baseStat": "dex",
+        "name": "sleight of hand"
+      },
+      "arcana": {
+        "baseStat": "int",
+        "name": "arcana"
+      },
+      "medicine": {
+        "baseStat": "wis",
+        "name": "medicine"
+      },
+      "deception": {
+        "baseStat": "cha",
+        "name": "deception"
+      },
+      "nature": {
+        "baseStat": "int",
+        "name": "nature"
+      },
+      "insight": {
+        "baseStat": "wis",
+        "name": "insight",
+        "isProf": 1
+      },
+      "religion": {
+        "baseStat": "int",
+        "name": "religion"
+      },
+      "stealth": {
+        "baseStat": "dex",
+        "name": "stealth"
+      },
+      "persuasion": {
+        "baseStat": "cha",
+        "name": "persuasion"
+      },
+      "animal handling": {
+        "baseStat": "wis",
+        "name": "animal handling"
+      }
+    },
+    "vitality": {
+      "hp-dice-current": {
+        "value": 2
+      },
+      "hp-dice-multi": {},
+      "speed": {
+        "value": "35"
+      },
+      "ac": {
+        "value": 16
+      },
+      "hp-max": {
+        "value": 9
+      },
+      "hit-die": {
+        "value": "1к8"
+      },
+      "hp-current": {
+        "value": 0
+      },
+      "isDying": true,
+      "deathFails": 0,
+      "deathSuccesses": 0
+    },
+    "attunementsList": [
+      {
+        "id": "attunement-1740031452621",
+        "checked": false,
+        "value": ""
+      }
+    ],
+    "weaponsList": [
+      {
+        "id": "weapon-1740031452621",
+        "name": {
+          "value": "Боевой посох"
+        },
+        "mod": {
+          "value": "+0"
+        },
+        "dmg": {
+          "value": "1к6 + 4 дроб"
+        },
+        "ability": "dex",
+        "isProf": true,
+        "notes": {
+          "value": "Урон у посоха больше поэтому не используем кость БИ"
+        },
+        "modBonus": {
+          "value": 0
+        }
+      },
+      {
+        "id": "weapon-1740037384112",
+        "name": {
+          "value": "Безоружный удар"
+        },
+        "mod": {
+          "value": "+0"
+        },
+        "dmg": {
+          "value": "1к6 + 4 дроб"
+        },
+        "ability": "dex",
+        "isProf": true
+      },
+      {
+        "id": "weapon-1741716445786",
+        "name": {
+          "value": "Кинжал"
+        },
+        "mod": {
+          "value": "+0"
+        },
+        "dmg": {
+          "value": "1к4 + 4 кол"
+        },
+        "ability": "dex",
+        "isProf": true,
+        "modBonus": {
+          "value": 0
+        }
+      }
+    ],
+    "weapons": {},
+    "text": {
+      "prof": {
+        "value": {
+          "data": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Инструменты алхимика"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Оружие: "
+                  },
+                  {
+                    "type": "text",
+                    "text": "Простое оружие, короткие мечи, длинные мечи, длинные и короткие луки, легкое воинское ближнего боя"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Языки: "
+                  },
+                  {
+                    "type": "text",
+                    "text": "Общий, Эльфийский"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph"
+              },
+              {
+                "type": "paragraph"
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Алхимия (инт)"
+                  },
+                  {
+                    "type": "text",
+                    "text": " "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "+1"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Кутеж (тел) +1"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Ремесло (лвк) +4 "
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "traits": {
+        "value": {
+          "data": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "resource",
+                "attrs": {
+                  "id": "resource-1740033270135",
+                  "textName": "traits"
+                }
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Защита без доспехов - "
+                  },
+                  {
+                    "type": "text",
+                    "text": "КД = 10 + МДР + ЛВК"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Боевые искусства"
+                  },
+                  {
+                    "type": "text",
+                    "text": " - (ЛВК вместо СИЛ) на атаку"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "КБИ: "
+                  },
+                  {
+                    "type": "text",
+                    "text": "1к6"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Посвященный в магию"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Темное зрение: "
+                  },
+                  {
+                    "type": "text",
+                    "text": "60 фт"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph"
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Наследие фей"
+                  },
+                  {
+                    "type": "text",
+                    "text": ": Вы совершаете с преимуществом спасброски от "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "underline"
+                      }
+                    ],
+                    "text": "очарования"
+                  },
+                  {
+                    "type": "text",
+                    "text": ", и вас невозможно магически усыпить."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph"
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Транс: "
+                  },
+                  {
+                    "type": "text",
+                    "text": "длинный отдых требует медитации в течение 4 часов"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph"
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Сложность спасброска равна 8 + ваш модификатор Мудрости + ваш бонус мастерства. "
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "- "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Шквал ударов"
+                  },
+                  {
+                    "type": "text",
+                    "text": ". Бонусным действием вы мо-жете потратить 1 очко духа для нанесение двух безоружных ударов."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "-"
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": " Терпеливая оборона"
+                  },
+                  {
+                    "type": "text",
+                    "text": ". Вы можете использовать действие отход бонусным действием. Альтернативно вы можете использовать 1 очко духа, чтобы использовать отход и уклонение бонусным дей-ствием. "
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "- "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Поступь ветра"
+                  },
+                  {
+                    "type": "text",
+                    "text": ". Вы можете использовать действие рывок бонусными действием. Альтернативно вы можете потратить 1 очко духа, чтобы использовать действия отход и рывок бонусным действием, а расстояние прыжка удваивается на этот ход."
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "size": 8
+      },
+      "equipment": {
+        "value": {
+          "data": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Боевой посох"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "5 кинжалов"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Волос единорога (трофей из музея академии)"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Кольцо"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Одежда путешественника"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Инстнуенты алхимика"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "features": {
+        "value": {
+          "data": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Выросшая в Академии. "
+                  },
+                  {
+                    "type": "text",
+                    "text": "Облазила в детстве всю академию и окрестности. Знает многие потайные ходы и короткие маршруты, особенно когда надо сбежать от преподавателей. "
+                  }
+                ]
+              },
+              {
+                "type": "paragraph"
+              },
+              {
+                "type": "paragraph"
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Боевые искусства"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Если вы безоружны или используете только монашеское оружие, и не носите ни доспехов, ни щита, вы получаете следующие преимущества:"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "- Вы можете использовать "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Ловкость"
+                  },
+                  {
+                    "type": "text",
+                    "text": " вместо "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Силы"
+                  },
+                  {
+                    "type": "text",
+                    "text": " для бросков атак и урона ваших безоружных ударов и атак монашеским оружием."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "- Вы можете использовать кость к6 (увеличивается с уровнем) вместо обычной кости урона ваших безоружных ударов или атак монашеским оружием. "
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "- Если в свой ход вы используете действие "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      },
+                      {
+                        "type": "italic"
+                      }
+                    ],
+                    "text": "Атака"
+                  },
+                  {
+                    "type": "text",
+                    "text": " для безоружной атаки, или атаки монашеским оружием, вы можете совершить ещё одну безоружную атаку "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      },
+                      {
+                        "type": "italic"
+                      }
+                    ],
+                    "text": "бонусным действием"
+                  },
+                  {
+                    "type": "text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph"
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Движение без доспехов"
+                  },
+                  {
+                    "type": "text",
+                    "text": " Ваша скорость увеличивается на 10 футов, пока вы без доспехов или щита."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph"
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Необычный метаболизм"
+                  },
+                  {
+                    "type": "text",
+                    "text": " Когда вы совершаете бросок на инициативу, вы можете восстановить все потраченные очки духа. Когда вы делаете это, бросьте свою Кость боевых искусств и восстановите количество хитов рав-ное вашему уровню монаха + выпавшее число.  После того, как вы воспользуетесь этим умением, вы не сможете использовать его снова, пока не закончите продолжительный отдых."
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "allies": {
+        "value": {
+          "data": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Груг - "
+                  },
+                  {
+                    "type": "text",
+                    "text": "друг из Академии, учится на факультете варваров. Изредка тренируются вместе, обучают друг друга. "
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Мариша"
+                  },
+                  {
+                    "type": "text",
+                    "text": " - табакси, с которой Кейлет переспала один раз. Теперь никак не отвяжется"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Сурая Немея"
+                  },
+                  {
+                    "type": "text",
+                    "text": " "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Тариль-кизи"
+                  },
+                  {
+                    "type": "text",
+                    "text": " – тифлинг, соседка Тельмы по комнате. Подруга, иногда любовница"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "size": 8
+      },
+      "personality": {
+        "value": {
+          "data": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Открытая, общительная. Немного (много) horny, би"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Боится глубины из-за того, что в детстве полезла за Тельмой купаться и чуть не утонула."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Иногда уходит медитировать к Лазурному озеру"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "appearance": {
+        "value": {
+          "data": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph"
+              }
+            ]
+          }
+        }
+      },
+      "background": {
+        "value": {
+          "data": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Кейлет и Тельма - незаконорожденные дочери эльфийского аристкрата Эласа Гентаны и джина воды Азуры Светловодной. Элас, для сокрытия своих дочерей, тайно отправляет их еще младенцами в монастырь при Магической Академии Искусств. Там девочки оказываются на воспитании у гувернантки Саиль Кроун."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph"
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Уже в детском возрасте Кейлет начала проявлять способности к боевым искусствам, вследствие чего и осталась в монастыре для тренировок тела и духа."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph"
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "С 14 лет, как и другие воспитанники, Тельма и Кейлет переезжают из интерната в общежитие. На данный момент Кейлет живет без соседки."
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "quests": {
+        "value": {
+          "data": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Для начала - доучиться и достигнуть совершенства во владении своим телом. Во всех смыслах."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph"
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": " Потом - выяснить, кто родители и как она попала в институт."
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "ideals": {
+        "value": {
+          "data": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "За Тельму и двор - шквал ударов в упор."
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "size": 8
+      },
+      "bonds": {
+        "value": {
+          "data": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Тельма - сестра, о которой не знает. Влюблена в нее, но подавляет это чувство, считая его дружеской привязанностью"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "flaws": {
+        "value": {
+          "data": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Кто слабый - тот лох"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    "coins": {
+      "gp": {
+        "value": 11
+      }
+    },
+    "resources": {
+      "resource-1740033270135": {
+        "id": "resource-1740033270135",
+        "name": "Ци",
+        "current": 0,
+        "max": 0,
+        "location": "traits",
+        "isShortRest": true,
+        "icon": "short-rest",
+        "isLongRest": true
+      }
+    },
+    "bonusesSkills": {},
+    "bonusesStats": {},
+    "conditions": [],
+    "createdAt": "2025-02-20T06:04:13.837Z",
+    "avatar": {
+      "jpeg": "https://lss-s3-files.s3.eu-north-1.amazonaws.com/avatar/67b6c5ddc2525d1235711a69.jpeg?mod=1740470796897",
+      "webp": "https://lss-s3-files.s3.eu-north-1.amazonaws.com/avatar/67b6c5ddc2525d1235711a69.webp?mod=1740470796894"
+    },
+    "casterClass": {
+      "value": "Друид"
+    },
+    "inspiration": false,
+    "conditionsEdition": 2014
+  },
+  "jsonType": "character",
+  "version": "2"
+}
