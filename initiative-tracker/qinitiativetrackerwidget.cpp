@@ -358,3 +358,19 @@ void QInitiativeTrackerWidget::setHpDisplayMode(int mode) {
 void QInitiativeTrackerWidget::setHpComboBoxVisible(int visible) {
     ui->hpModeBox->setVisible(visible);
 }
+
+void QInitiativeTrackerWidget::addCharacterFromJson(const QJsonDocument& characterDocument) {
+    QJsonObject object = characterDocument.object();
+
+
+    InitiativeCharacter emptyCharacter;
+    emptyCharacter.name = object["name"].toObject()["value"].toString();
+    emptyCharacter.initiative = 0;
+    emptyCharacter.ac = object["vitality"].toObject()["ac"].toObject()["value"].toInt();
+    emptyCharacter.hp = object["vitality"].toObject()["hp-current"].toObject()["value"].toString();
+    emptyCharacter.maxHp = object["vitality"].toObject()["hp-max"].toObject()["value"].toInt();
+
+    model->addCharacter(emptyCharacter);
+
+    sortTable();
+}

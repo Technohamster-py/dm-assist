@@ -846,6 +846,22 @@ void MainWindow::setupCampaign(const QString& campaignRoot) {
     connect(campaignTreeWidget, &CampaignTreeWidget::encounterAddRequested, initiativeTrackerWidget, &QInitiativeTrackerWidget::addFromFile);
     connect(campaignTreeWidget, &CampaignTreeWidget::encounterReplaceRequested, initiativeTrackerWidget, &QInitiativeTrackerWidget::loadFromFile);
 
+    connect(campaignTreeWidget, &CampaignTreeWidget::characterAddRequested, this, [=](const QString& path) {
+        /// TODO move loader to character class
+        QFile characterFile(path);
+        if (!characterFile.open(QIODevice::ReadOnly)){
+            QMessageBox::warning(this, "error", "Can't open character file");
+            return;
+        }
+        QJsonDocument doc = QJsonDocument::fromJson(characterFile.readAll());
+        QJsonObject rootObj = doc.object();
+
+        QString dataString = rootObj.value("data").toString();
+
+        QJsonDocument innerDoc = QJsonDocument::fromJson(dataString.toUtf8());
+        initiativeTrackerWidget->addCharacterFromJson(innerDoc);
+    });
+
     connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);
 
     ui->campaignLayout->addWidget(campaignTreeWidget);

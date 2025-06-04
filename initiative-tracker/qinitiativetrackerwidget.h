@@ -7,9 +7,9 @@
 #include <QPainter>
 #include <QList>
 #include <QPointer>
-#include "encounter.h"
 #include "initiativemodel.h"
-
+#include <QJsonDocument>
+#include <QJsonObject>
 
 
 
@@ -46,6 +46,8 @@ public slots:
     void setSharedFieldVisible(int index, bool visible);
     void setHpDisplayMode(int mode);
     void setHpComboBoxVisible(int visible);
+
+    void addCharacterFromJson(const QJsonDocument& characterDocument);
 
 
 
