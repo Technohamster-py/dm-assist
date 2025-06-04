@@ -859,6 +859,7 @@ void MainWindow::setupCampaign(const QString& campaignRoot) {
         QString dataString = rootObj.value("data").toString();
 
         QJsonDocument innerDoc = QJsonDocument::fromJson(dataString.toUtf8());
+        characterFile.close();
         initiativeTrackerWidget->addCharacterFromJson(innerDoc);
     });
 
