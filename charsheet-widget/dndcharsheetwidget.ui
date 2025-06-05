@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QDndCharacterWidget</class>
- <widget class="QWidget" name="QDndCharacterWidget">
+ <class>DndCharsheetWidget</class>
+ <widget class="QWidget" name="DndCharsheetWidget">
   <property name="enabled">
    <bool>true</bool>
   </property>
@@ -20,11 +20,11 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>QDndCharacterWidget</string>
+   <string>DndCharsheetWidget</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="nameLabel">
      <property name="font">
       <font>
        <pointsize>15</pointsize>
@@ -358,7 +358,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-117</y>
+        <y>0</y>
         <width>920</width>
         <height>1139</height>
        </rect>
@@ -434,7 +434,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="lineEdit">
+                 <widget class="QLineEdit" name="strValueEdit">
                   <property name="maximumSize">
                    <size>
                     <width>40</width>
@@ -829,7 +829,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="lineEdit_4">
+                 <widget class="QLineEdit" name="intValueEdit">
                   <property name="maximumSize">
                    <size>
                     <width>40</width>
@@ -901,7 +901,7 @@
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_10">
                 <item>
-                 <widget class="QCheckBox" name="checkBox_4">
+                 <widget class="QCheckBox" name="arcana">
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
@@ -913,7 +913,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QCheckBox" name="checkBox_3">
+                 <widget class="QCheckBox" name="history">
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
@@ -925,7 +925,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QCheckBox" name="checkBox_8">
+                 <widget class="QCheckBox" name="investigation">
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
@@ -937,7 +937,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QCheckBox" name="checkBox_9">
+                 <widget class="QCheckBox" name="nature">
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
@@ -949,7 +949,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QCheckBox" name="checkBox_10">
+                 <widget class="QCheckBox" name="religion">
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
@@ -1006,12 +1006,15 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="lineEdit_5">
+                 <widget class="QLineEdit" name="wisValueEdit">
                   <property name="maximumSize">
                    <size>
                     <width>40</width>
                     <height>16777215</height>
                    </size>
+                  </property>
+                  <property name="text">
+                   <string/>
                   </property>
                  </widget>
                 </item>

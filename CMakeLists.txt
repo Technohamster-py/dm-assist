@@ -22,6 +22,8 @@ endif ()
 set(FILES
         campaign-tree-widget/campaigntreewidget.cpp campaign-tree-widget/campaigntreewidget.h
         campaign-tree-widget/hoverwidget.cpp    campaign-tree-widget/hoverwidget.h
+        charsheet-widget/abstractcharsheetwidget.h          charsheet-widget/abstractcharsheetwidget.cpp
+        charsheet-widget/dndcharsheetwidget.h charsheet-widget/dndcharsheetwidget.cpp
         initiative-tracker/initiativemodel.h    initiative-tracker/initiativemodel.cpp
         mainwindow.h    mainwindow.cpp
         map-widget/abstractmaptool.h
@@ -46,6 +48,7 @@ set(FILES
 )
 
 set(UI_FILES
+        charsheet-widget/dndcharsheetwidget.ui
         mainwindow.ui
         music-widget/musicplayer.ui
         music-widget/playlisteditdialog.ui
