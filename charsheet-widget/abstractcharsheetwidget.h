@@ -8,6 +8,7 @@ class AbstractCharsheetWidget : public QWidget{
 Q_OBJECT
 public:
     AbstractCharsheetWidget(QWidget* parent = nullptr) : QWidget(parent) {};
+    AbstractCharsheetWidget(const QString& filePath, QWidget* parent = nullptr) : QWidget(parent) {};
     ~AbstractCharsheetWidget() = default;
 
     virtual void loadFromFile(QString path) = 0;

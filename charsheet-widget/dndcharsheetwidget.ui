@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>961</width>
-    <height>1259</height>
+    <width>938</width>
+    <height>1071</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -57,186 +57,72 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="levelLabel">
-        <property name="font">
-         <font>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>level</string>
+       <widget class="QSpinBox" name="levelBox">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
         </property>
        </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line_7">
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Proficiency bonus:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="proficiencyLabel">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
      </layout>
     </widget>
    </item>
    <item>
+    <widget class="Line" name="line_3">
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="Line" name="line">
      <property name="orientation">
-      <enum>Qt::Orientation::Horizontal</enum>
+      <enum>Qt::Vertical</enum>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QWidget" name="widget" native="true">
      <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="5">
-       <widget class="QLabel" name="runSpeedLabel">
-        <property name="maximumSize">
-         <size>
-          <width>40</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>speed</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="5">
-       <widget class="QLabel" name="swimSpeedLabel">
-        <property name="maximumSize">
-         <size>
-          <width>40</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>speed</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="4">
-       <widget class="QLabel" name="runIcon">
-        <property name="minimumSize">
-         <size>
-          <width>20</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>20</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap resource="../static/app_resources.qrc">:/charSheet/run.svg</pixmap>
-        </property>
-        <property name="scaledContents">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1" colspan="2">
-       <widget class="QLabel" name="acLabel">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="6">
-       <widget class="QLabel" name="label_8">
-        <property name="text">
-         <string>ft</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="shieldIcon">
-        <property name="minimumSize">
-         <size>
-          <width>20</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>20</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap resource="../static/app_resources.qrc">:/shield.svg</pixmap>
-        </property>
-        <property name="scaledContents">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QSpinBox" name="hpSpinBox">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>70</width>
-          <height>16777215</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="4">
-       <widget class="QLabel" name="swimIcon">
-        <property name="minimumSize">
-         <size>
-          <width>20</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>20</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap resource="../static/app_resources.qrc">:/charSheet/swim.svg</pixmap>
-        </property>
-        <property name="scaledContents">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="3">
-       <widget class="QLabel" name="maxHpLabel">
-        <property name="maximumSize">
-         <size>
-          <width>70</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>maxHP</string>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="2">
        <widget class="QLabel" name="label_4">
         <property name="maximumSize">
@@ -247,39 +133,6 @@
         </property>
         <property name="text">
          <string>/</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="hpLabelHeader">
-        <property name="minimumSize">
-         <size>
-          <width>20</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>HP</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="6">
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>ft</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0" colspan="2">
-       <widget class="QLabel" name="label_9">
-        <property name="layoutDirection">
-         <enum>Qt::LayoutDirection::LeftToRight</enum>
-        </property>
-        <property name="text">
-         <string>Initiative:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
         </property>
        </widget>
       </item>
@@ -308,6 +161,75 @@
         </property>
        </widget>
       </item>
+      <item row="1" column="1">
+       <widget class="QSpinBox" name="hpSpinBox">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>70</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="shieldIcon">
+        <property name="minimumSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="../static/app_resources.qrc">:/shield.svg</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <widget class="QLabel" name="swimIcon">
+        <property name="minimumSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="../static/app_resources.qrc">:/charSheet/swim.svg</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
       <item row="2" column="5">
        <widget class="QLabel" name="flySpeedLabel">
         <property name="maximumSize">
@@ -321,10 +243,88 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="6">
-       <widget class="QLabel" name="label_13">
+      <item row="1" column="5">
+       <widget class="QLabel" name="swimSpeedLabel">
+        <property name="maximumSize">
+         <size>
+          <width>40</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>speed</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="hpLabelHeader">
+        <property name="minimumSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>HP</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="6">
+       <widget class="QLabel" name="label_3">
         <property name="text">
          <string>ft</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QLabel" name="runSpeedLabel">
+        <property name="maximumSize">
+         <size>
+          <width>40</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>speed</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="6">
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>ft</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" colspan="2">
+       <widget class="QLabel" name="acLabel">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QLabel" name="maxHpLabel">
+        <property name="maximumSize">
+         <size>
+          <width>70</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>maxHP</string>
         </property>
        </widget>
       </item>
@@ -332,6 +332,48 @@
        <widget class="QLabel" name="initiativeLabel">
         <property name="text">
          <string>initiative bonus</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="2">
+       <widget class="QLabel" name="label_9">
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="text">
+         <string>Initiative:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QLabel" name="runIcon">
+        <property name="minimumSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="../static/app_resources.qrc">:/charSheet/run.svg</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="6">
+       <widget class="QLabel" name="label_13">
+        <property name="text">
+         <string>ft</string>
         </property>
        </widget>
       </item>
@@ -345,11 +387,17 @@
        <pointsize>1</pointsize>
       </font>
      </property>
+     <property name="frameShape">
+      <enum>QFrame::Panel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
      <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOn</enum>
+      <enum>Qt::ScrollBarAsNeeded</enum>
      </property>
      <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+      <enum>Qt::ScrollBarAsNeeded</enum>
      </property>
      <property name="widgetResizable">
       <bool>true</bool>
@@ -358,9 +406,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
-        <width>920</width>
-        <height>1139</height>
+        <y>-120</y>
+        <width>904</width>
+        <height>970</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
@@ -397,10 +445,7 @@
           <item>
            <widget class="QFrame" name="strFrame">
             <property name="frameShape">
-             <enum>QFrame::Shape::Panel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Shadow::Plain</enum>
+             <enum>QFrame::NoFrame</enum>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <property name="spacing">
@@ -423,6 +468,12 @@
                <layout class="QHBoxLayout" name="horizontalLayout_2">
                 <item>
                  <widget class="QLabel" name="label_2">
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="font">
                    <font>
                     <pointsize>12</pointsize>
@@ -434,12 +485,26 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="strValueEdit">
+                 <widget class="QSpinBox" name="strValueEdit">
+                  <property name="minimumSize">
+                   <size>
+                    <width>50</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="maximumSize">
                    <size>
-                    <width>40</width>
+                    <width>50</width>
                     <height>16777215</height>
                    </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
                   </property>
                  </widget>
                 </item>
@@ -457,11 +522,8 @@
                 </item>
                 <item>
                  <widget class="Line" name="line_2">
-                  <property name="frameShadow">
-                   <enum>QFrame::Shadow::Plain</enum>
-                  </property>
                   <property name="orientation">
-                   <enum>Qt::Orientation::Vertical</enum>
+                   <enum>Qt::Vertical</enum>
                   </property>
                  </widget>
                 </item>
@@ -484,16 +546,6 @@
                  </widget>
                 </item>
                </layout>
-              </widget>
-             </item>
-             <item>
-              <widget class="Line" name="line_3">
-               <property name="frameShadow">
-                <enum>QFrame::Shadow::Plain</enum>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Orientation::Horizontal</enum>
-               </property>
               </widget>
              </item>
              <item>
@@ -526,10 +578,7 @@
           <item>
            <widget class="QFrame" name="dexFrame">
             <property name="frameShape">
-             <enum>QFrame::Shape::Panel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Shadow::Plain</enum>
+             <enum>QFrame::NoFrame</enum>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_5">
              <property name="spacing">
@@ -552,6 +601,12 @@
                <layout class="QHBoxLayout" name="horizontalLayout_3">
                 <item>
                  <widget class="QLabel" name="label_7">
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="font">
                    <font>
                     <pointsize>12</pointsize>
@@ -563,12 +618,26 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="dexValueEdit">
+                 <widget class="QSpinBox" name="dexValueEdit">
+                  <property name="minimumSize">
+                   <size>
+                    <width>50</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="maximumSize">
                    <size>
-                    <width>40</width>
+                    <width>50</width>
                     <height>16777215</height>
                    </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::ClickFocus</enum>
                   </property>
                  </widget>
                 </item>
@@ -586,11 +655,8 @@
                 </item>
                 <item>
                  <widget class="Line" name="line_4">
-                  <property name="frameShadow">
-                   <enum>QFrame::Shadow::Plain</enum>
-                  </property>
                   <property name="orientation">
-                   <enum>Qt::Orientation::Vertical</enum>
+                   <enum>Qt::Vertical</enum>
                   </property>
                  </widget>
                 </item>
@@ -617,11 +683,8 @@
              </item>
              <item>
               <widget class="Line" name="line_5">
-               <property name="frameShadow">
-                <enum>QFrame::Shadow::Plain</enum>
-               </property>
                <property name="orientation">
-                <enum>Qt::Orientation::Horizontal</enum>
+                <enum>Qt::Vertical</enum>
                </property>
               </widget>
              </item>
@@ -671,7 +734,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QCheckBox" name="stelth">
+                 <widget class="QCheckBox" name="stealth">
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
@@ -697,10 +760,7 @@
           <item>
            <widget class="QFrame" name="conFrame">
             <property name="frameShape">
-             <enum>QFrame::Shape::Panel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Shadow::Plain</enum>
+             <enum>QFrame::NoFrame</enum>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_7">
              <property name="spacing">
@@ -723,6 +783,12 @@
                <layout class="QHBoxLayout" name="horizontalLayout_4">
                 <item>
                  <widget class="QLabel" name="label_10">
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="font">
                    <font>
                     <pointsize>12</pointsize>
@@ -734,12 +800,26 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="conValueEdit">
+                 <widget class="QSpinBox" name="conValueEdit">
+                  <property name="minimumSize">
+                   <size>
+                    <width>50</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="maximumSize">
                    <size>
-                    <width>40</width>
+                    <width>50</width>
                     <height>16777215</height>
                    </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
                   </property>
                  </widget>
                 </item>
@@ -757,11 +837,8 @@
                 </item>
                 <item>
                  <widget class="Line" name="line_6">
-                  <property name="frameShadow">
-                   <enum>QFrame::Shadow::Plain</enum>
-                  </property>
                   <property name="orientation">
-                   <enum>Qt::Orientation::Vertical</enum>
+                   <enum>Qt::Vertical</enum>
                   </property>
                  </widget>
                 </item>
@@ -792,10 +869,7 @@
           <item>
            <widget class="QFrame" name="intFrame">
             <property name="frameShape">
-             <enum>QFrame::Shape::Panel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Shadow::Plain</enum>
+             <enum>QFrame::NoFrame</enum>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_9">
              <property name="spacing">
@@ -818,6 +892,12 @@
                <layout class="QHBoxLayout" name="horizontalLayout_5">
                 <item>
                  <widget class="QLabel" name="label_11">
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="font">
                    <font>
                     <pointsize>12</pointsize>
@@ -829,17 +909,25 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="intValueEdit">
+                 <widget class="QSpinBox" name="intValueEdit">
                   <property name="maximumSize">
                    <size>
-                    <width>40</width>
+                    <width>50</width>
                     <height>16777215</height>
                    </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="strBonusLabel_4">
+                 <widget class="QLabel" name="intBonusLabel">
                   <property name="font">
                    <font>
                     <pointsize>12</pointsize>
@@ -852,16 +940,13 @@
                 </item>
                 <item>
                  <widget class="Line" name="line_8">
-                  <property name="frameShadow">
-                   <enum>QFrame::Shadow::Plain</enum>
-                  </property>
                   <property name="orientation">
-                   <enum>Qt::Orientation::Vertical</enum>
+                   <enum>Qt::Vertical</enum>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QCheckBox" name="strSaveCheckBox_4">
+                 <widget class="QCheckBox" name="intSaveCheckBox">
                   <property name="maximumSize">
                    <size>
                     <width>200</width>
@@ -883,11 +968,8 @@
              </item>
              <item>
               <widget class="Line" name="line_9">
-               <property name="frameShadow">
-                <enum>QFrame::Shadow::Plain</enum>
-               </property>
                <property name="orientation">
-                <enum>Qt::Orientation::Horizontal</enum>
+                <enum>Qt::Vertical</enum>
                </property>
               </widget>
              </item>
@@ -969,10 +1051,7 @@
           <item>
            <widget class="QFrame" name="wisFrame">
             <property name="frameShape">
-             <enum>QFrame::Shape::Panel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Shadow::Plain</enum>
+             <enum>QFrame::NoFrame</enum>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_11">
              <property name="spacing">
@@ -995,6 +1074,12 @@
                <layout class="QHBoxLayout" name="horizontalLayout_6">
                 <item>
                  <widget class="QLabel" name="label_12">
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="font">
                    <font>
                     <pointsize>12</pointsize>
@@ -1006,20 +1091,31 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="wisValueEdit">
+                 <widget class="QSpinBox" name="wisValueEdit">
+                  <property name="minimumSize">
+                   <size>
+                    <width>50</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="maximumSize">
                    <size>
-                    <width>40</width>
+                    <width>50</width>
                     <height>16777215</height>
                    </size>
                   </property>
-                  <property name="text">
-                   <string/>
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="strBonusLabel_5">
+                 <widget class="QLabel" name="wisBonusLabel">
                   <property name="font">
                    <font>
                     <pointsize>12</pointsize>
@@ -1032,16 +1128,13 @@
                 </item>
                 <item>
                  <widget class="Line" name="line_10">
-                  <property name="frameShadow">
-                   <enum>QFrame::Shadow::Plain</enum>
-                  </property>
                   <property name="orientation">
-                   <enum>Qt::Orientation::Vertical</enum>
+                   <enum>Qt::Vertical</enum>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QCheckBox" name="strSaveCheckBox_5">
+                 <widget class="QCheckBox" name="wisSaveCheckBox">
                   <property name="maximumSize">
                    <size>
                     <width>200</width>
@@ -1063,11 +1156,8 @@
              </item>
              <item>
               <widget class="Line" name="line_11">
-               <property name="frameShadow">
-                <enum>QFrame::Shadow::Plain</enum>
-               </property>
                <property name="orientation">
-                <enum>Qt::Orientation::Horizontal</enum>
+                <enum>Qt::Vertical</enum>
                </property>
               </widget>
              </item>
@@ -1081,7 +1171,7 @@
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_12">
                 <item>
-                 <widget class="QCheckBox" name="checkBox_5">
+                 <widget class="QCheckBox" name="handling">
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
@@ -1093,7 +1183,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QCheckBox" name="checkBox_11">
+                 <widget class="QCheckBox" name="insight">
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
@@ -1105,7 +1195,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QCheckBox" name="checkBox_12">
+                 <widget class="QCheckBox" name="medicine">
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
@@ -1117,7 +1207,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QCheckBox" name="checkBox_13">
+                 <widget class="QCheckBox" name="perception">
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
@@ -1129,7 +1219,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QCheckBox" name="checkBox_14">
+                 <widget class="QCheckBox" name="survival">
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
@@ -1149,10 +1239,7 @@
           <item>
            <widget class="QFrame" name="chaFrame">
             <property name="frameShape">
-             <enum>QFrame::Shape::Panel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Shadow::Plain</enum>
+             <enum>QFrame::NoFrame</enum>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_13">
              <property name="spacing">
@@ -1175,6 +1262,12 @@
                <layout class="QHBoxLayout" name="horizontalLayout_7">
                 <item>
                  <widget class="QLabel" name="label_14">
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="font">
                    <font>
                     <pointsize>12</pointsize>
@@ -1186,12 +1279,26 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="chaValueEdit">
+                 <widget class="QSpinBox" name="chaValueEdit">
+                  <property name="minimumSize">
+                   <size>
+                    <width>50</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="maximumSize">
                    <size>
-                    <width>40</width>
+                    <width>50</width>
                     <height>16777215</height>
                    </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
                   </property>
                  </widget>
                 </item>
@@ -1209,11 +1316,8 @@
                 </item>
                 <item>
                  <widget class="Line" name="line_12">
-                  <property name="frameShadow">
-                   <enum>QFrame::Shadow::Plain</enum>
-                  </property>
                   <property name="orientation">
-                   <enum>Qt::Orientation::Vertical</enum>
+                   <enum>Qt::Vertical</enum>
                   </property>
                  </widget>
                 </item>
@@ -1240,11 +1344,8 @@
              </item>
              <item>
               <widget class="Line" name="line_13">
-               <property name="frameShadow">
-                <enum>QFrame::Shadow::Plain</enum>
-               </property>
                <property name="orientation">
-                <enum>Qt::Orientation::Horizontal</enum>
+                <enum>Qt::Vertical</enum>
                </property>
               </widget>
              </item>
@@ -1294,14 +1395,14 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QCheckBox" name="presuasion">
+                 <widget class="QCheckBox" name="persuasion">
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
                    </font>
                   </property>
                   <property name="text">
-                   <string>Presuasion</string>
+                   <string>Persuasion</string>
                   </property>
                  </widget>
                 </item>
@@ -1316,6 +1417,9 @@
        </item>
        <item row="2" column="1">
         <widget class="QTextEdit" name="notesTextEdit">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -1326,6 +1430,9 @@
           <font>
            <pointsize>10</pointsize>
           </font>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
          </property>
         </widget>
        </item>

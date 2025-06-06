@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "map-widget/mapview.h"
+#include "charsheet-widget/dndcharsheetwidget.h"
 
 #include <QDesktopServices>
 #include "QDomDocument"
@@ -861,6 +862,10 @@ void MainWindow::setupCampaign(const QString& campaignRoot) {
         QJsonDocument innerDoc = QJsonDocument::fromJson(dataString.toUtf8());
         characterFile.close();
         initiativeTrackerWidget->addCharacterFromJson(innerDoc);
+    });
+    connect(campaignTreeWidget, &CampaignTreeWidget::characterOpenRequested, this, [=](const QString& path){
+        DndCharsheetWidget* charsheetWidget = new DndCharsheetWidget(path);
+        charsheetWidget->show();
     });
 
     connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);

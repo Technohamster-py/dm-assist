@@ -3,6 +3,8 @@
 
 #include "abstractcharsheetwidget.h"
 #include <QJsonDocument>
+#include <QCheckBox>
+#include <QSpinBox>
 #include <QFile>
 
 QT_BEGIN_NAMESPACE
@@ -14,6 +16,7 @@ Q_OBJECT
 
 public:
     explicit DndCharsheetWidget(QWidget* parent = nullptr);
+    DndCharsheetWidget(const QString& filePath, QWidget* parent = nullptr);
     ~DndCharsheetWidget() override;
 
     void loadFromFile(QString path) override;
@@ -21,6 +24,8 @@ public:
 
     void addToInitiative(QInitiativeTrackerWidget* initiativeTrackerWidget) override;
 
+    static int bonusFromStat(int statValue) {return (statValue - 10) / 2;};
+    static int proficiencyByLevel(int level) {return level / 5 + 2;};
 
 private:
     Ui::DndCharsheetWidget *ui;
@@ -29,6 +34,9 @@ private:
     QJsonObject m_dataObject;
 
     void populateWidget();
+    void connectSignals();
+    void updateCheckBox(QCheckBox* checkBox, QSpinBox* baseSpinBox);
+    void updateCheckBoxes();
 };
 
 
