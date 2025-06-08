@@ -39,7 +39,7 @@ set(FILES
         map-widget/spellshapetool.h     map-widget/spellshapetool.cpp
         map-widget/undostack.h
         music-widget/musicwidget.h music-widget/musicwidget.cpp
-        initiative-tracker/qinitiativetrackerwidget.h   initiative-tracker/qinitiativetrackerwidget.cpp
+        initiative-tracker/initiativetrackerwidget.h initiative-tracker/initiativetrackerwidget.cpp
         initiative-tracker/hpprogressbardelegate.h  initiative-tracker/hpprogressbardelegate.cpp
         qsaveconfigdialog.h qsaveconfigdialog.cpp
         settingsdialog.h    settingsdialog.cpp
@@ -52,7 +52,7 @@ set(UI_FILES
         mainwindow.ui
         music-widget/musicplayer.ui
         music-widget/playlisteditdialog.ui
-        initiative-tracker/qinitiativetrackerwidget.ui
+        initiative-tracker/initiativetrackerwidget.ui
         settingsdialog.ui
 )
 

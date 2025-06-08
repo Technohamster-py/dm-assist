@@ -148,10 +148,6 @@ void DndCharsheetWidget::saveToFile(QString filePath) {
 
 }
 
-void DndCharsheetWidget::addToInitiative(QInitiativeTrackerWidget *initiativeTrackerWidget) {
-
-}
-
 void DndCharsheetWidget::connectSignals() {
     connect(ui->levelBox, &QSpinBox::valueChanged, this, [=](){
         ui->proficiencyLabel->setText(QString::number(proficiencyByLevel(ui->levelBox->value())));
@@ -233,4 +229,8 @@ void DndCharsheetWidget::updateCheckBoxes() {
     updateCheckBox(ui->intimidation, ui->chaValueEdit);
     updateCheckBox(ui->performance, ui->chaValueEdit);
     updateCheckBox(ui->persuasion, ui->chaValueEdit);
+}
+
+void DndCharsheetWidget::addToInitiative(InitiativeTrackerWidget *initiativeTrackerWidget) {
+    initiativeTrackerWidget->addCharacter(ui->nameLabel->text(), ui->maxHpLabel->text().toInt(), ui->acLabel->text().toInt(), ui->hpSpinBox->value());
 }

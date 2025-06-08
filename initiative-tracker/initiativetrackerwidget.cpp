@@ -3,9 +3,9 @@
 #include <QStandardPaths>
 #include <QMessageBox>
 
-#include "qinitiativetrackerwidget.h"
+#include "initiativetrackerwidget.h"
 #include "hpprogressbardelegate.h"
-#include "ui_qinitiativetrackerwidget.h"
+#include "ui_initiativetrackerwidget.h"
 
 
 #include <qdebug.h>
@@ -13,7 +13,7 @@
 
 
 /**
- * @brief Constructs the QInitiativeTrackerWidget widget.
+ * @brief Constructs the InitiativeTrackerWidget widget.
  * @param parent Pointer to the parent widget. Defaults to nullptr if no parent is provided.
  * @param sharedModel Pointer to the shared InitiativeModel instance. If nullptr, a new
  * InitiativeModel instance is created and assigned to the widget.
@@ -21,8 +21,8 @@
  * The provided sharedModel is used if available; otherwise, a new InitiativeModel is created.
  * Calls setupUI() to configure additional UI elements.
  */
-QInitiativeTrackerWidget::QInitiativeTrackerWidget(QWidget *parent, InitiativeModel *sharedModel)
-        : QWidget(parent), ui(new Ui::QInitiativeTrackerWidget)
+InitiativeTrackerWidget::InitiativeTrackerWidget(QWidget *parent, InitiativeModel *sharedModel)
+        : QWidget(parent), ui(new Ui::InitiativeTrackerWidget)
 {
     model = sharedModel ? sharedModel : new InitiativeModel(this);
     ui->setupUi(this);
@@ -39,16 +39,16 @@ QInitiativeTrackerWidget::QInitiativeTrackerWidget(QWidget *parent, InitiativeMo
  *          table sorting, and managing shared windows. Also, enables removal of a character
  *          when the appropriate cell is clicked in the table's designated column (column 5).
  */
-void QInitiativeTrackerWidget::setupUI() {
+void InitiativeTrackerWidget::setupUI() {
     ui->table->setModel(model);
     ui->table->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->table->setDropIndicatorShown(true);
 
-    connect(ui->addRowButton, &QPushButton::clicked, this, &QInitiativeTrackerWidget::addRow);
-    connect(ui->nextButton, &QPushButton::clicked, this, &QInitiativeTrackerWidget::nextTurn);
-    connect(ui->backButton, &QPushButton::clicked, this, &QInitiativeTrackerWidget::prevTurn);
-    connect(ui->sortButton, &QPushButton::clicked, this, &QInitiativeTrackerWidget::sortTable);
-    connect(ui->shareButton, &QPushButton::clicked, this, &QInitiativeTrackerWidget::openSharedWindow);
+    connect(ui->addRowButton, &QPushButton::clicked, this, &InitiativeTrackerWidget::addRow);
+    connect(ui->nextButton, &QPushButton::clicked, this, &InitiativeTrackerWidget::nextTurn);
+    connect(ui->backButton, &QPushButton::clicked, this, &InitiativeTrackerWidget::prevTurn);
+    connect(ui->sortButton, &QPushButton::clicked, this, &InitiativeTrackerWidget::sortTable);
+    connect(ui->shareButton, &QPushButton::clicked, this, &InitiativeTrackerWidget::openSharedWindow);
 
     connect(ui->table, &QTableView::clicked, this, [=](const QModelIndex &index) {
         if (index.column() == 5) {
@@ -68,7 +68,7 @@ void QInitiativeTrackerWidget::setupUI() {
  * the table view for ease of editing. Editing of the first cell in the new row
  * is initiated automatically.
  */
-void QInitiativeTrackerWidget::addRow() {
+void InitiativeTrackerWidget::addRow() {
     InitiativeCharacter emptyCharacter;
     emptyCharacter.name = "New";
     emptyCharacter.initiative = 0;
@@ -106,7 +106,7 @@ void QInitiativeTrackerWidget::addRow() {
  * - The window is configured to automatically delete upon closing (`Qt::WA_DeleteOnClose`), and its removal is tracked.
  * - The window has a preset size (800x400) and a custom title ("Shared Initiative Tracker").
  */
-void QInitiativeTrackerWidget::openSharedWindow() {
+void InitiativeTrackerWidget::openSharedWindow() {
     QWidget *sharedWindow = new QWidget;
     sharedWindow->setAttribute(Qt::WA_DeleteOnClose);
     sharedWindow->setWindowTitle("Shared Initiative Tracker");
@@ -150,7 +150,7 @@ void QInitiativeTrackerWidget::openSharedWindow() {
  * the index wraps around to the beginning when it reaches the end of the list.
  * It then updates the current index in the associated model.
  */
-void QInitiativeTrackerWidget::nextTurn() {
+void InitiativeTrackerWidget::nextTurn() {
     int next = (model->getCurrentIndex() + 1) % model->rowCount();
     model->setCurrentIndex(next);
 }
@@ -168,7 +168,7 @@ void QInitiativeTrackerWidget::nextTurn() {
  * - The turn is moved backward by decrementing the current index and cycling through
  *   the list using modulo arithmetic.
  */
-void QInitiativeTrackerWidget::prevTurn() {
+void InitiativeTrackerWidget::prevTurn() {
     int rowCount = model->rowCount();
     if (rowCount == 0) return; // Безопасность от деления на 0
 
@@ -185,7 +185,7 @@ void QInitiativeTrackerWidget::prevTurn() {
  * associated with the widget. It ensures that the entries in the table are
  * ordered based on their initiative values.
  */
-void QInitiativeTrackerWidget::sortTable() {
+void InitiativeTrackerWidget::sortTable() {
     model->sortByInitiative();
 }
 
@@ -199,7 +199,7 @@ void QInitiativeTrackerWidget::sortTable() {
  *
  * @param filename The path of the file to load the initiative data from.
  */
-void QInitiativeTrackerWidget::loadFromFile(QString filename){
+void InitiativeTrackerWidget::loadFromFile(QString filename){
     model->loadFromFile(filename);
 }
 
@@ -213,7 +213,7 @@ void QInitiativeTrackerWidget::loadFromFile(QString filename){
  *
  * @param filename The name of the file to save the data to.
  */
-void QInitiativeTrackerWidget::saveToFile(QString filename){
+void InitiativeTrackerWidget::saveToFile(QString filename){
     model->saveToFile(filename);
 }
 
@@ -227,7 +227,7 @@ void QInitiativeTrackerWidget::saveToFile(QString filename){
  * The default file path points to the user's documents directory, as determined by the system configuration.
  * The dialog filters for `.xml` files as the saving format.
  */
-void QInitiativeTrackerWidget::on_saveButton_clicked(){
+void InitiativeTrackerWidget::on_saveButton_clicked(){
     QString filename = QFileDialog::getSaveFileName(this,
                                                     tr("Save encounter to file"),
                                                     QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
@@ -242,7 +242,7 @@ void QInitiativeTrackerWidget::on_saveButton_clicked(){
  * to allow the user to select an XML file representing an encounter. Once a file is selected,
  * its filename is passed to the loadFromFile method to load the encounter data into the initiative tracker.
  */
-void QInitiativeTrackerWidget::on_loadButton_clicked(){
+void InitiativeTrackerWidget::on_loadButton_clicked(){
     QString filename = QFileDialog::getOpenFileName(this,
                                                     tr("Open encounter from file"),
                                                     QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
@@ -252,7 +252,7 @@ void QInitiativeTrackerWidget::on_loadButton_clicked(){
 
 
 /**
- * Handles the close event for the QInitiativeTrackerWidget.
+ * Handles the close event for the InitiativeTrackerWidget.
  *
  * This function is invoked when the widget is about to close. It prompts
  * the user to save the tracker configuration through a confirmation dialog.
@@ -263,7 +263,7 @@ void QInitiativeTrackerWidget::on_loadButton_clicked(){
  *
  * @param event A pointer to the QCloseEvent object containing details of the close event.
  */
-void QInitiativeTrackerWidget::closeEvent(QCloseEvent *event){
+void InitiativeTrackerWidget::closeEvent(QCloseEvent *event){
     QMessageBox::StandardButton reply = QMessageBox::question(this,
                                                               tr("Сохранение конфигурации"),
                                                               tr("Сохранить трекер?"),
@@ -298,7 +298,7 @@ void QInitiativeTrackerWidget::closeEvent(QCloseEvent *event){
  * - fieldVisibilityChanged(int, bool): Indicates that the visibility of
  *   the field at the given index has changed to the new visibility state.
  */
-void QInitiativeTrackerWidget::setSharedFieldVisible(int index, bool visible) {
+void InitiativeTrackerWidget::setSharedFieldVisible(int index, bool visible) {
     if (visible){
         emit columnShown(index);
     } else{
@@ -316,7 +316,7 @@ void QInitiativeTrackerWidget::setSharedFieldVisible(int index, bool visible) {
  *
  * @param filename The file path from which to load initiative tracking data.
  */
-void QInitiativeTrackerWidget::addFromFile(QString filename) {
+void InitiativeTrackerWidget::addFromFile(QString filename) {
     model->addFromFile(filename);
 }
 
@@ -327,7 +327,7 @@ void QInitiativeTrackerWidget::addFromFile(QString filename) {
  * and then calls the addFromFile function with the selected file's path.
  * If no file is selected, no further action is taken.
  */
-void QInitiativeTrackerWidget::on_addFromFileButton_clicked() {
+void InitiativeTrackerWidget::on_addFromFileButton_clicked() {
     QString filename = QFileDialog::getOpenFileName(this,
                                                     tr("Save encounter to file"),
                                                     QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
@@ -343,7 +343,7 @@ void QInitiativeTrackerWidget::on_addFromFileButton_clicked() {
  *
  * @param mode The index representing the desired HP display mode.
  */
-void QInitiativeTrackerWidget::setHpDisplayMode(int mode) {
+void InitiativeTrackerWidget::setHpDisplayMode(int mode) {
     ui->hpModeBox->setCurrentIndex(mode);
 }
 
@@ -355,11 +355,11 @@ void QInitiativeTrackerWidget::setHpDisplayMode(int mode) {
  *
  * @param visible An integer indicating whether the HP combo box should be visible (true/non-zero) or hidden (false/zero).
  */
-void QInitiativeTrackerWidget::setHpComboBoxVisible(int visible) {
+void InitiativeTrackerWidget::setHpComboBoxVisible(int visible) {
     ui->hpModeBox->setVisible(visible);
 }
 
-void QInitiativeTrackerWidget::addCharacterFromJson(const QJsonDocument& characterDocument) {
+void InitiativeTrackerWidget::addCharacter(const QJsonDocument& characterDocument) {
     QJsonObject object = characterDocument.object();
 
 
@@ -369,6 +369,19 @@ void QInitiativeTrackerWidget::addCharacterFromJson(const QJsonDocument& charact
     emptyCharacter.ac = object["vitality"].toObject()["ac"].toObject()["value"].toInt();
     emptyCharacter.hp = object["vitality"].toObject()["hp-current"].toObject()["value"].toString();
     emptyCharacter.maxHp = object["vitality"].toObject()["hp-max"].toObject()["value"].toInt();
+
+    model->addCharacter(emptyCharacter);
+
+    sortTable();
+}
+
+void InitiativeTrackerWidget::addCharacter(QString name, int maxHp, int ac, int hp, int initiative) {
+    InitiativeCharacter emptyCharacter;
+    emptyCharacter.name = name;
+    emptyCharacter.maxHp = maxHp;
+    emptyCharacter.ac = ac,
+    emptyCharacter.hp = QString::number(hp),
+    emptyCharacter.initiative = initiative;
 
     model->addCharacter(emptyCharacter);
 

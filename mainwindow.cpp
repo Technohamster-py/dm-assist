@@ -64,6 +64,18 @@ MainWindow::MainWindow(QWidget *parent) :
         setupCampaign(campaignTreeWidget->root());
     });
 
+    connect(campaignTreeWidget, &CampaignTreeWidget::encounterAddRequested, initiativeTrackerWidget, &InitiativeTrackerWidget::addFromFile);
+    connect(campaignTreeWidget, &CampaignTreeWidget::encounterReplaceRequested, initiativeTrackerWidget, &InitiativeTrackerWidget::loadFromFile);
+    connect(campaignTreeWidget, &CampaignTreeWidget::characterAddRequested, this, [=](const QString& path) {
+        DndCharsheetWidget character(path);
+        character.addToInitiative(initiativeTrackerWidget);
+    });
+    connect(campaignTreeWidget, &CampaignTreeWidget::characterOpenRequested, this, [=](const QString& path){
+        DndCharsheetWidget* charsheetWidget = new DndCharsheetWidget(path);
+        charsheetWidget->show();
+    });
+    connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);
+    ui->campaignLayout->addWidget(campaignTreeWidget);
 
     showMaximized();
 }
@@ -844,35 +856,6 @@ void MainWindow::setupCampaign(const QString& campaignRoot) {
         removeDirectoryRecursively(player->getLocalDirPath());
     }
 
-    connect(campaignTreeWidget, &CampaignTreeWidget::encounterAddRequested, initiativeTrackerWidget, &QInitiativeTrackerWidget::addFromFile);
-    connect(campaignTreeWidget, &CampaignTreeWidget::encounterReplaceRequested, initiativeTrackerWidget, &QInitiativeTrackerWidget::loadFromFile);
-
-    connect(campaignTreeWidget, &CampaignTreeWidget::characterAddRequested, this, [=](const QString& path) {
-        /// TODO move loader to character class
-        QFile characterFile(path);
-        if (!characterFile.open(QIODevice::ReadOnly)){
-            QMessageBox::warning(this, "error", "Can't open character file");
-            return;
-        }
-        QJsonDocument doc = QJsonDocument::fromJson(characterFile.readAll());
-        QJsonObject rootObj = doc.object();
-
-        QString dataString = rootObj.value("data").toString();
-
-        QJsonDocument innerDoc = QJsonDocument::fromJson(dataString.toUtf8());
-        characterFile.close();
-        initiativeTrackerWidget->addCharacterFromJson(innerDoc);
-    });
-    connect(campaignTreeWidget, &CampaignTreeWidget::characterOpenRequested, this, [=](const QString& path){
-        DndCharsheetWidget* charsheetWidget = new DndCharsheetWidget(path);
-        charsheetWidget->show();
-    });
-
-    connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);
-
-    ui->campaignLayout->addWidget(campaignTreeWidget);
-    campaignTreeWidget->setVisible(true);
-
     QString musicConfigFile = campaignRoot + "/Music/playerConfig.xml";
     if (QFile(musicConfigFile).exists())
         loadMusicConfigFile(musicConfigFile);
@@ -880,6 +863,7 @@ void MainWindow::setupCampaign(const QString& campaignRoot) {
         saveMusicConfigFile(musicConfigFile);
 
     currentCampaignDir = campaignRoot;
+    campaignTreeWidget->setVisible(true);
 }
 
 /**
@@ -1287,16 +1271,16 @@ void MainWindow::setupToolbar() {
 /**
  * @brief Sets up the initiative tracker widget in the main window.
  *
- * This function initializes a new instance of QInitiativeTrackerWidget
+ * This function initializes a new instance of InitiativeTrackerWidget
  * and adds it to the tracker layout of the main window's UI. The
  * widget is created with the main window as its parent.
  */
 void MainWindow::setupTracker() {
-    initiativeTrackerWidget = new QInitiativeTrackerWidget(this);
+    initiativeTrackerWidget = new InitiativeTrackerWidget(this);
     ui->trackerLayout->addWidget(initiativeTrackerWidget);
 
-    connect(campaignTreeWidget, &CampaignTreeWidget::encounterReplaceRequested, initiativeTrackerWidget, &QInitiativeTrackerWidget::loadFromFile);
-    connect(campaignTreeWidget, &CampaignTreeWidget::encounterAddRequested, initiativeTrackerWidget, &QInitiativeTrackerWidget::addFromFile);
+    connect(campaignTreeWidget, &CampaignTreeWidget::encounterReplaceRequested, initiativeTrackerWidget, &InitiativeTrackerWidget::loadFromFile);
+    connect(campaignTreeWidget, &CampaignTreeWidget::encounterAddRequested, initiativeTrackerWidget, &InitiativeTrackerWidget::addFromFile);
 }
 
 /**

@@ -20,7 +20,7 @@
 #include "map-widget/rulermaptool.h"
 #include "map-widget/sharedmapwindow.h"
 #include "map-widget/spellshapetool.h"
-#include "initiative-tracker/qinitiativetrackerwidget.h"
+#include "initiative-tracker/initiativetrackerwidget.h"
 #include "music-widget/musicwidget.h"
 #include "settingsdialog.h"
 
@@ -84,7 +84,7 @@ private:
 
     CampaignTreeWidget* campaignTreeWidget;
 
-    QInitiativeTrackerWidget* initiativeTrackerWidget;
+    InitiativeTrackerWidget* initiativeTrackerWidget;
 
     TabWidget *mapTabWidget;
     SharedMapWindow* sharedMapWindow = nullptr;

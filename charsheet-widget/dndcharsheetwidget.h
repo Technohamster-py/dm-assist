@@ -22,7 +22,7 @@ public:
     void loadFromFile(QString path) override;
     void saveToFile(QString filePath = nullptr) override;
 
-    void addToInitiative(QInitiativeTrackerWidget* initiativeTrackerWidget) override;
+    void addToInitiative(InitiativeTrackerWidget* initiativeTrackerWidget) override;
 
     static int bonusFromStat(int statValue) {return (statValue - 10) / 2;};
     static int proficiencyByLevel(int level) {return level / 5 + 2;};

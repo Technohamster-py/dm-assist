@@ -1,5 +1,5 @@
-#ifndef DM_ASSIST_QINITIATIVETRACKERWIDGET_H
-#define DM_ASSIST_QINITIATIVETRACKERWIDGET_H
+#ifndef DM_ASSIST_INITIATIVETRACKERWIDGET_H
+#define DM_ASSIST_INITIATIVETRACKERWIDGET_H
 
 #include <QWidget>
 #include <QSortFilterProxyModel>
@@ -14,7 +14,7 @@
 
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class QInitiativeTrackerWidget; class qDndInitiativeEntityEditWidget; class qPlayerInitiativeView; }
+namespace Ui { class InitiativeTrackerWidget; class qDndInitiativeEntityEditWidget; class qPlayerInitiativeView; }
 QT_END_NAMESPACE
 
 /**
@@ -25,12 +25,12 @@ QT_END_NAMESPACE
  * functionality to save, load, and append characters' data from files, as well as
  * control the visibility of specific columns and fields.
  */
-class QInitiativeTrackerWidget : public QWidget {
+class InitiativeTrackerWidget : public QWidget {
 Q_OBJECT
 
 
 public:
-    explicit QInitiativeTrackerWidget(QWidget *parent = nullptr, InitiativeModel *sharedModel = nullptr);
+    explicit InitiativeTrackerWidget(QWidget *parent = nullptr, InitiativeModel *sharedModel = nullptr);
 
 signals:
     void fieldVisibilityChanged(int field, bool hidden);
@@ -47,7 +47,8 @@ public slots:
     void setHpDisplayMode(int mode);
     void setHpComboBoxVisible(int visible);
 
-    void addCharacterFromJson(const QJsonDocument& characterDocument);
+    void addCharacter(const QJsonDocument& characterDocument);
+    void addCharacter(QString name, int maxHp, int ac = 10, int hp = 0, int initiative = 0);
 
 
 
@@ -63,7 +64,7 @@ private slots:
     void on_addFromFileButton_clicked();
 
 private:
-    Ui::QInitiativeTrackerWidget *ui;
+    Ui::InitiativeTrackerWidget *ui;
     int currentRowIndex = 0;    ///< Индекс текущего активного персонажа.
 
     int visibleColumns = 0;
@@ -78,4 +79,4 @@ private:
     bool isSharedMaxHpVisible = false;
     bool isSharedAcVisible = true;
 };
-#endif //DM_ASSIST_QINITIATIVETRACKERWIDGET_H
+#endif //DM_ASSIST_INITIATIVETRACKERWIDGET_H
