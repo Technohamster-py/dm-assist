@@ -19,6 +19,25 @@ DndCharsheetWidget::~DndCharsheetWidget() {
     delete ui;
 }
 
+/**
+ * @brief Loads a character sheet from a JSON file.
+ *
+ * This method reads the specified file, parses its content as JSON,
+ * and initializes the character widget with the data. If the file
+ * cannot be opened, a warning message is displayed.
+ *
+ * @param path A QString representing the path to the character file.
+ *
+ * The method performs the following:
+ * - Sets the internal `m_originalFilePath` to the provided file path.
+ * - Attempts to open the specified file for reading. Displays an error
+ *   dialog if the file cannot be opened.
+ * - Reads the file content as JSON and stores it as a QJsonDocument in
+ *   `m_originalDocument`.
+ * - Extracts the "data" field from the JSON object, which is stored as
+ *   a QJsonObject in `m_dataObject`.
+ * - Calls `populateWidget()` to update the widget with the extracted data.
+ */
 void DndCharsheetWidget::loadFromFile(QString path) {
     m_originalFilePath = path;
     QFile characterFile(path);
@@ -37,6 +56,45 @@ void DndCharsheetWidget::loadFromFile(QString path) {
     populateWidget();
 }
 
+/**
+ * Populates the user interface of the character sheet widget with data extracted from m_dataObject.
+ *
+ * This method updates various UI components to reflect the data represented in m_dataObject,
+ * including character information, abilities, proficiencies, skills, and other parameters.
+ *
+ * The data is parsed from multiple sections of the JSON object:
+ * - Character details (e.g., name, class, level, proficiency bonus) are retrieved from the "info" field.
+ * - Vitality attributes (e.g., speed, armor class, current and maximum hit points) are extracted from the "vitality" field.
+ * - Ability scores and saving throw proficiencies are retrieved from the "stats" and "saves" fields.
+ * - Skill proficiency states are extracted from the "skills" field.
+ *
+ * The method also calculates derived values such as ability score bonuses and proficiency bonuses
+ * from the provided raw ability scores and level.
+ *
+ * Internal Functions Used:
+ * - bonusFromStat(): Computes derived bonuses based on raw ability scores.
+ * - proficiencyByLevel(): Calculates the proficiency bonus for a given level.
+ *
+ * UI Components Updated:
+ * - Character Details:
+ *   - Name, class, subclass, level, and proficiency bonus labels.
+ * - Vitality:
+ *   - Speed, armor class, current hit points, and maximum hit points fields.
+ * - Abilities:
+ *   - Strength, Dexterity, Constitution, Intelligence, Wisdom, and Charisma values and bonuses.
+ *   - Associated saving throw proficiency checkboxes for each ability.
+ * - Skills:
+ *   - Updates the proficiency status of various skills such as athletics, stealth, arcana, and other character skills.
+ *
+ * Preconditions:
+ * - m_dataObject must be a valid and properly structured QJsonObject.
+ * - The UI components in the widget (e.g., nameLabel, levelBox, etc.) are initialized and accessible.
+ * - The internal JSON structure must adhere to the expected schema for parsing (keys such as "name", "info",
+ *   "vitality", "stats", "saves", and "skills" must be present and correctly formatted).
+ *
+ * This ensures that the widget displays up-to-date character data and can be used for dynamic visualization
+ * or modification of character details within the application.
+ */
 void DndCharsheetWidget::populateWidget() {
     ui->nameLabel->setText(m_dataObject["name"].toObject()["value"].toString());
 
@@ -148,6 +206,20 @@ void DndCharsheetWidget::saveToFile(QString filePath) {
 
 }
 
+/**
+ * @brief Establishes connections between UI elements and corresponding functionalities.
+ *
+ * This function links the value changes and toggles of various UI elements, such as QSpinBox and QCheckBox,
+ * to appropriate methods or lambdas. It ensures that changes in character attributes, skills, and proficiency
+ * are dynamically reflected on the interface.
+ *
+ * Connections include:
+ * - Update of proficiency bonus and dependent checkboxes when the level is adjusted.
+ * - Handling updates to skill checkboxes and saving throws based on the corresponding ability scores.
+ * - Synchronizing the display of related character data when associated widgets are toggled or modified.
+ *
+ * The function plays a key role in maintaining the responsiveness and accuracy of the character sheet widget.
+ */
 void DndCharsheetWidget::connectSignals() {
     connect(ui->levelBox, &QSpinBox::valueChanged, this, [=](){
         ui->proficiencyLabel->setText(QString::number(proficiencyByLevel(ui->levelBox->value())));
@@ -193,12 +265,46 @@ void DndCharsheetWidget::connectSignals() {
     connect(ui->persuasion, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->persuasion, ui->chaValueEdit);});
 }
 
+/**
+ * @brief Updates the text of a QCheckBox to display a calculated bonus.
+ *
+ * This function recalculates and updates the text of a given QCheckBox based on the value of
+ * a corresponding QSpinBox and whether the checkbox is checked. If the checkbox is checked,
+ * the proficiency bonus is included in the calculation. The updated text will display the
+ * original text of the checkbox, followed by the calculated bonus.
+ *
+ * @param checkBox The QCheckBox whose text is to be updated. The text should already include
+ *        a label, with a numerical bonus appended using ":".
+ * @param baseSpinBox The QSpinBox containing the base value used to calculate the bonus.
+ *        The base value is processed using the `bonusFromStat` function.
+ */
 void DndCharsheetWidget::updateCheckBox(QCheckBox *checkBox, QSpinBox *baseSpinBox) {
     int profBonus = 0;
     if (checkBox->isChecked()) profBonus = ui->proficiencyLabel->text().toInt();
     checkBox->setText(QString("%1: %2").arg(checkBox->text().split(":").value(0), QString::number(bonusFromStat(baseSpinBox->value()) + profBonus)));
 }
 
+/**
+ * Updates the text and state of multiple QCheckBox widgets based on corresponding QSpinBox values
+ * from the user interface. This function delegates the update logic to the updateCheckBox method
+ * for each relevant checkbox-spinbox pair.
+ *
+ * The function is intended to synchronize ability modifiers, proficiency bonuses, and skill checkboxes
+ * in the character sheet interface based on the current user inputs or data.
+ *
+ * List of updates performed:
+ * - Updates saving throw checkboxes for all abilities (Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma).
+ * - Updates all listed skills' checkboxes for respective abilities such as Strength (Athletics), Dexterity (Acrobatics, Sleight of Hand, Stealth),
+ *   Intelligence (Arcana, History, Investigation, Nature, Religion), Wisdom (Animal Handling, Insight, Medicine, Perception, Survival),
+ *   and Charisma (Deception, Intimidation, Performance, Persuasion).
+ *
+ * This function ensures that the displayed text for each checkbox reflects the correct ability modifier
+ * and includes the proficiency bonus if the checkbox is checked.
+ *
+ * Relies on:
+ * - The updateCheckBox method for performing individual checkbox updates.
+ * - UI elements (checkboxes and spinboxes) being correctly initialized and accessible via the `ui` member.
+ */
 void DndCharsheetWidget::updateCheckBoxes() {
     updateCheckBox(ui->strSaveCheckBox, ui->strValueEdit);
     updateCheckBox(ui->dexSaveCheckBox, ui->dexValueEdit);
@@ -231,6 +337,16 @@ void DndCharsheetWidget::updateCheckBoxes() {
     updateCheckBox(ui->persuasion, ui->chaValueEdit);
 }
 
+/**
+ * @brief Adds the character associated with this widget to an initiative tracker.
+ *
+ * This method retrieves character details such as name, maximum hit points (HP),
+ * armor class (AC), and current hit points (HP) from the user interface (UI) of the
+ * DndCharsheetWidget instance and passes them to the provided InitiativeTrackerWidget
+ * for inclusion in the initiative tracker.
+ *
+ * @param initiativeTrackerWidget A pointer to an instance of InitiativeTrackerWidget where the character will be added.
+ */
 void DndCharsheetWidget::addToInitiative(InitiativeTrackerWidget *initiativeTrackerWidget) {
     initiativeTrackerWidget->addCharacter(ui->nameLabel->text(), ui->maxHpLabel->text().toInt(), ui->acLabel->text().toInt(), ui->hpSpinBox->value());
 }
