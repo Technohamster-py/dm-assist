@@ -1,9 +1,5 @@
-//
-// Created by akhomchenko on 13.03.25.
-//
-
-#ifndef DM_ASSIST_QSAVECONFIGDIALOG_H
-#define DM_ASSIST_QSAVECONFIGDIALOG_H
+#ifndef DM_ASSIST_SAVECONFIGDIALOG_H
+#define DM_ASSIST_SAVECONFIGDIALOG_H
 
 #include <QFileDialog>
 #include <QDialog>
@@ -46,4 +42,4 @@ private:
     void showWarning(const QString& message);
 };
 
-#endif //DM_ASSIST_QSAVECONFIGDIALOG_H
+#endif //DM_ASSIST_SAVECONFIGDIALOG_H

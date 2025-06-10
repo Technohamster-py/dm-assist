@@ -1,4 +1,4 @@
-#include "qsaveconfigdialog.h"
+#include "saveconfigdialog.h"
 #include "QStandardPaths"
 
 /**

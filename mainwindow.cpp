@@ -11,7 +11,7 @@
 #include <QCheckBox>
 #include <QFileInfo>
 #include <QMessageBox>
-#include "qsaveconfigdialog.h"
+#include "saveconfigdialog.h"
 #include <QTextStream>
 #include <QSpinBox>
 #include <QJsonDocument>
