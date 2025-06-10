@@ -47,6 +47,7 @@ private:
     void updateCheckBoxes();
 
     static QString parseParagraphs(const QJsonArray& content);
+    void parseNotes();
 };
 
 

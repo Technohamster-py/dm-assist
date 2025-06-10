@@ -214,6 +214,8 @@ void DndCharsheetWidget::populateWidget() {
     ui->idealsEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["ideals"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
     ui->bondsEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["bonds"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
     ui->flawsEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["flaws"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
+
+    parseNotes();
 }
 
 void DndCharsheetWidget::saveToFile(QString filePath) {
@@ -397,4 +399,17 @@ QString DndCharsheetWidget::parseParagraphs(const QJsonArray &content) {
             result += "<p>" + line + "</p>";
     }
     return result.trimmed();
+}
+
+void DndCharsheetWidget::parseNotes() {
+    QString result;
+
+    result += parseParagraphs(m_dataObject["text"].toObject()["notes-1"].toObject()["value"].toObject()["data"].toObject()["content"].toArray());
+    result += parseParagraphs(m_dataObject["text"].toObject()["notes-2"].toObject()["value"].toObject()["data"].toObject()["content"].toArray());
+    result += parseParagraphs(m_dataObject["text"].toObject()["notes-3"].toObject()["value"].toObject()["data"].toObject()["content"].toArray());
+    result += parseParagraphs(m_dataObject["text"].toObject()["notes-4"].toObject()["value"].toObject()["data"].toObject()["content"].toArray());
+    result += parseParagraphs(m_dataObject["text"].toObject()["notes-5"].toObject()["value"].toObject()["data"].toObject()["content"].toArray());
+    result += parseParagraphs(m_dataObject["text"].toObject()["notes-6"].toObject()["value"].toObject()["data"].toObject()["content"].toArray());
+
+    ui->notesEdit->setHtml(result);
 }
