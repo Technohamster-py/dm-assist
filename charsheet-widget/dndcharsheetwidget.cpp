@@ -200,6 +200,20 @@ void DndCharsheetWidget::populateWidget() {
 
     ui->persuasion->setChecked(true);
     ui->persuasion->setChecked(skillsObject["persuasion"].toObject()["isProf"].toInt());
+
+
+
+    ui->proficienciesEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["prof"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
+    ui->traitsEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["traits"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
+    ui->equipmentEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["equipment"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
+    ui->featuresEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["features"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
+    ui->alliesEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["allies"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
+    ui->personalityEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["personality"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
+    ui->backgroundEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["background"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
+    ui->questsEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["quests"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
+    ui->idealsEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["ideals"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
+    ui->bondsEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["bonds"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
+    ui->flawsEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["flaws"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
 }
 
 void DndCharsheetWidget::saveToFile(QString filePath) {
@@ -349,4 +363,38 @@ void DndCharsheetWidget::updateCheckBoxes() {
  */
 void DndCharsheetWidget::addToInitiative(InitiativeTrackerWidget *initiativeTrackerWidget) {
     initiativeTrackerWidget->addCharacter(ui->nameLabel->text(), ui->maxHpLabel->text().toInt(), ui->acLabel->text().toInt(), ui->hpSpinBox->value());
+}
+
+QString DndCharsheetWidget::parseParagraphs(const QJsonArray &content) {
+    QString result;
+    for (const auto& paragraphVal : content) {
+        QJsonObject paragraph = paragraphVal.toObject();
+        if (!(paragraph["type"].toString() == "paragraph"))
+            continue;
+        QJsonArray parts = paragraph["content"].toArray();
+        QString line;
+        for (const auto& partVal: parts) {
+            QJsonObject part = partVal.toObject();
+            QString text = part["text"].toString();
+            if (text.isEmpty()) continue;
+
+            if (part.contains("marks")){
+                QJsonArray marks = part["marks"].toArray();
+                for (const auto& markVal : marks) {
+                    QString markType = markVal.toObject()["type"].toString();
+
+                    if (markType == "bold")
+                        text = "<b>" + text + "</b>";
+                    else if (markType == "italic")
+                        text = "<i>" + text + "</i>";
+                    else if (markType == "underline")
+                        text = "<u>" + text + "</u>";
+                }
+            }
+            line += text;
+        }
+        if (!line.isEmpty())
+            result += "<p>" + line + "</p>";
+    }
+    return result.trimmed();
 }

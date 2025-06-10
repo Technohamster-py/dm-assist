@@ -2,6 +2,7 @@
 #define DM_ASSIST_DNDCHARSHEETWIDGET_H
 
 #include "abstractcharsheetwidget.h"
+#include <QJsonArray>
 #include <QJsonDocument>
 #include <QCheckBox>
 #include <QSpinBox>
@@ -44,6 +45,8 @@ private:
     void connectSignals();
     void updateCheckBox(QCheckBox* checkBox, QSpinBox* baseSpinBox);
     void updateCheckBoxes();
+
+    static QString parseParagraphs(const QJsonArray& content);
 };
 
 
