@@ -8,6 +8,7 @@ DndCharsheetWidget::DndCharsheetWidget(QWidget* parent) :
         AbstractCharsheetWidget(parent), ui(new Ui::DndCharsheetWidget) {
     ui->setupUi(this);
 
+    setupShortcuts();
     connectSignals();
 }
 
@@ -419,4 +420,49 @@ void DndCharsheetWidget::parseNotes() {
     result += parseParagraphs(m_dataObject["text"].toObject()["notes-6"].toObject()["value"].toObject()["data"].toObject()["content"].toArray());
 
     ui->notesEdit->setHtml(result);
+}
+
+void DndCharsheetWidget::setupShortcuts() {
+    m_boldShortcut = new QShortcut(QKeySequence("Ctrl+B"), this);
+    connect(m_boldShortcut, &QShortcut::activated, [=](){
+        QTextEdit *edit = getFocusedEdit();
+        QTextCursor cursor = edit->textCursor();
+        if (cursor.hasSelection()) {
+            QTextCharFormat format;
+            int weight = cursor.charFormat().fontWeight();
+            format.setFontWeight(weight == QFont::Bold ? QFont::Normal : QFont::Bold);
+            cursor.mergeCharFormat(format);
+        }
+    });
+
+    m_italicShortcut = new QShortcut(QKeySequence("Ctrl+I"), this);
+    connect(m_italicShortcut, &QShortcut::activated, [=](){
+        QTextEdit *edit = getFocusedEdit();
+        if (edit) {
+            QTextCursor cursor = edit->textCursor();
+            if (cursor.hasSelection()) {
+                QTextCharFormat format;
+                format.setFontItalic(!cursor.charFormat().fontItalic());
+                cursor.mergeCharFormat(format);
+            }
+        }
+    });
+
+    m_underlineShortcut = new QShortcut(QKeySequence("Ctrl+U"), this);
+    connect(m_underlineShortcut, &QShortcut::activated, [=](){
+        QTextEdit *edit = getFocusedEdit();
+        if (edit) {
+            QTextCursor cursor = edit->textCursor();
+            if (cursor.hasSelection()) {
+                QTextCharFormat format;
+                format.setFontUnderline(!cursor.charFormat().fontUnderline());
+                cursor.mergeCharFormat(format);
+            }
+        }
+    });
+}
+
+QTextEdit *DndCharsheetWidget::getFocusedEdit() {
+    QWidget *focusWidget = QApplication::focusWidget();
+    return qobject_cast<QTextEdit*>(focusWidget);
 }

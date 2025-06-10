@@ -5,8 +5,10 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QCheckBox>
+#include <QShortcut>
 #include <QSpinBox>
 #include <QFile>
+#include <QTextEdit>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class DndCharsheetWidget; }
@@ -43,11 +45,17 @@ private:
 
     void populateWidget();
     void connectSignals();
+    void setupShortcuts();
     void updateCheckBox(QCheckBox* checkBox, QSpinBox* baseSpinBox);
     void updateCheckBoxes();
 
     static QString parseParagraphs(const QJsonArray& content);
     void parseNotes();
+    QTextEdit* getFocusedEdit();
+
+    QShortcut* m_boldShortcut;
+    QShortcut* m_italicShortcut;
+    QShortcut* m_underlineShortcut;
 };
 
 
