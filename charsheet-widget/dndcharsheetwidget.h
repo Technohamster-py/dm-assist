@@ -13,7 +13,7 @@ namespace Ui { class DndCharsheetWidget; }
 QT_END_NAMESPACE
 
 /**
- * @brief Represents a widget for managing and displaying Dungeons & Dragons character sheets.
+ * @brief Represents a widget for managing and displaying Dungeons & Dragons character sheet.
  *
  * This widget provides functionality to load, save, and manipulate character sheets
  * for Dungeons & Dragons gameplay. It offers derived features such as interaction

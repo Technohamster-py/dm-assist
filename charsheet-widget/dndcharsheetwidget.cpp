@@ -322,6 +322,13 @@ void DndCharsheetWidget::updateCheckBox(QCheckBox *checkBox, QSpinBox *baseSpinB
  * - UI elements (checkboxes and spinboxes) being correctly initialized and accessible via the `ui` member.
  */
 void DndCharsheetWidget::updateCheckBoxes() {
+    ui->strBonusLabel->setText(QString::number(bonusFromStat(ui->strValueEdit->value())));
+    ui->dexBonusLabel->setText(QString::number(bonusFromStat(ui->dexValueEdit->value())));
+    ui->conBonusLabel->setText(QString::number(bonusFromStat(ui->conValueEdit->value())));
+    ui->intBonusLabel->setText(QString::number(bonusFromStat(ui->intValueEdit->value())));
+    ui->wisBonusLabel->setText(QString::number(bonusFromStat(ui->wisValueEdit->value())));
+    ui->chaBonusLabel->setText(QString::number(bonusFromStat(ui->chaValueEdit->value())));
+
     updateCheckBox(ui->strSaveCheckBox, ui->strValueEdit);
     updateCheckBox(ui->dexSaveCheckBox, ui->dexValueEdit);
     updateCheckBox(ui->conSaveCheckBox, ui->conValueEdit);
