@@ -25,18 +25,11 @@ class DndAttackModel : public QAbstractTableModel{
 Q_OBJECT
 
 public:
-    enum fields{
-        title,
-        bonus,
-        damage,
-        del
-    };
-
     explicit DndAttackModel(QObject* parent = nullptr);
     DndAttackModel(const QJsonArray& attackList, QObject *parent = nullptr);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override {return m_weaponList.size();};
-    int columnCount(const QModelIndex &parent = QModelIndex()) const override {return 4;};
+    int columnCount(const QModelIndex &parent = QModelIndex()) const override {return 5;};
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
@@ -71,5 +64,33 @@ private:
     };
 };
 
+
+struct Resource{
+    QString title;
+    int current;
+    int max;
+    bool refillOnShortRest;
+    bool refillOnLongRest;
+};
+
+class DndResourceModel : public QAbstractTableModel{
+    explicit DndResourceModel(QObject* parent = nullptr);
+
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override {return m_resourcesList.size();};
+    int columnCount(const QModelIndex &parent = QModelIndex()) const override {return 5;};
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+    Qt::ItemFlags flags(const QModelIndex &index) const override;
+    bool setData(const QModelIndex &index, const QVariant &value, int role) override;
+
+    void addResource(const Resource& resource);
+    void deleteResource(int row);
+
+    void doLongRest();
+    void doShortRest();
+
+private:
+    QVector<Resource> m_resourcesList;
+};
 
 #endif //DM_ASSIST_DNDMODELS_H
