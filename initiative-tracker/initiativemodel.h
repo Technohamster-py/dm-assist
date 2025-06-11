@@ -1,7 +1,3 @@
-//
-// Created by arseniy on 19.04.2025.
-//
-
 #ifndef DM_ASSIST_INITIATIVEMODEL_H
 #define DM_ASSIST_INITIATIVEMODEL_H
 

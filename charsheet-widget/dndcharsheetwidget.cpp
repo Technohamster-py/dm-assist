@@ -2,6 +2,7 @@
 #include "ui_dndcharsheetwidget.h"
 
 #include <QMessageBox>
+#include <QStandardItemModel>
 
 
 DndCharsheetWidget::DndCharsheetWidget(QWidget* parent) :
@@ -10,6 +11,17 @@ DndCharsheetWidget::DndCharsheetWidget(QWidget* parent) :
 
     setupShortcuts();
     connectSignals();
+
+    attackModel = new DndAttackModel(this);
+    ui->attacsView->setModel(attackModel);
+    ui->attacsView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    ui->attacsView->setDropIndicatorShown(true);
+
+    connect(ui->attacsView, &QTableView::clicked, this, [=](const QModelIndex &index) {
+        if (index.column() == 5) {
+            attackModel->deleteWeapon(index.row());
+        }
+    });
 }
 
 DndCharsheetWidget::DndCharsheetWidget(const QString& filePath, QWidget *parent): DndCharsheetWidget(parent){
@@ -217,6 +229,7 @@ void DndCharsheetWidget::populateWidget() {
     ui->flawsEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["flaws"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
 
     parseNotes();
+    attackModel->fromJson(m_dataObject["weaponsList"].toArray());
 }
 
 void DndCharsheetWidget::saveToFile(QString filePath) {
@@ -329,6 +342,14 @@ void DndCharsheetWidget::updateCheckBoxes() {
     ui->intBonusLabel->setText(QString::number(bonusFromStat(ui->intValueEdit->value())));
     ui->wisBonusLabel->setText(QString::number(bonusFromStat(ui->wisValueEdit->value())));
     ui->chaBonusLabel->setText(QString::number(bonusFromStat(ui->chaValueEdit->value())));
+
+    attackModel->setStrBonus(bonusFromStat(ui->strValueEdit->value()));
+    attackModel->setDexBonus(bonusFromStat(ui->dexValueEdit->value()));
+    attackModel->setConBonus(bonusFromStat(ui->conValueEdit->value()));
+    attackModel->setIntBonus(bonusFromStat(ui->intValueEdit->value()));
+    attackModel->setWisBonus(bonusFromStat(ui->wisValueEdit->value()));
+    attackModel->setChaBonus(bonusFromStat(ui->chaValueEdit->value()));
+    attackModel->setProfBonus(ui->proficiencyLabel->text().toInt());
 
     updateCheckBox(ui->strSaveCheckBox, ui->strValueEdit);
     updateCheckBox(ui->dexSaveCheckBox, ui->dexValueEdit);

@@ -2,6 +2,7 @@
 #define DM_ASSIST_DNDCHARSHEETWIDGET_H
 
 #include "abstractcharsheetwidget.h"
+#include "dndmodels.h"
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QCheckBox>
@@ -56,6 +57,8 @@ private:
     QShortcut* m_boldShortcut;
     QShortcut* m_italicShortcut;
     QShortcut* m_underlineShortcut;
+
+    DndAttackModel* attackModel;
 };
 
 
