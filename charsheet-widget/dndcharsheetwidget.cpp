@@ -3,6 +3,7 @@
 
 #include <QMessageBox>
 #include <QStandardItemModel>
+#include "dndcharsheetdialogs.h"
 
 
 DndCharsheetWidget::DndCharsheetWidget(QWidget* parent) :
@@ -25,7 +26,7 @@ DndCharsheetWidget::DndCharsheetWidget(QWidget* parent) :
 
     connect(ui->attacsView, &QTableView::clicked, this, [=](const QModelIndex &index) {
         if (index.column() == 5) {
-            attackModel->deleteWeapon(index.row());
+            attackModel->deleteAttack(index.row());
         }
     });
 }
@@ -300,6 +301,23 @@ void DndCharsheetWidget::connectSignals() {
     connect(ui->intimidation, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->intimidation, ui->chaValueEdit);});
     connect(ui->performance, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->performance, ui->chaValueEdit);});
     connect(ui->persuasion, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->persuasion, ui->chaValueEdit);});
+
+
+    connect(ui->addAttackButton, &QPushButton::clicked, [=](){
+        ResourceDialog resourceDialog(this);
+        if (resourceDialog.exec() == QDialog::Accepted){
+            Resource newResource = resourceDialog.getCreatedResource();
+            resourceModel->addResource(newResource);
+        }
+    });
+
+    connect(ui->addAttackButton, &QPushButton::clicked, [=](){
+        AttackDialog attackDialog(this);
+        if (attackDialog.exec()== QDialog::Accepted){
+            Attack attack = attackDialog.getCreatedAttack();
+            attackModel->addAttack(attack);
+        }
+    })
 }
 
 /**

@@ -25,7 +25,7 @@ QVariant DndAttackModel::data(const QModelIndex &index, int role) const {
     if (!index.isValid() || index.row() >= m_weaponList.size())
         return QVariant();
 
-    const Weapon &w = m_weaponList.at(index.row());
+    const Attack &w = m_weaponList.at(index.row());
 
     if (role == Qt::DisplayRole || role == Qt::EditRole || role == Qt::UserRole) {
         if (role == Qt::DisplayRole && index.column() == 4)
@@ -55,7 +55,7 @@ bool DndAttackModel::setData(const QModelIndex &index, const QVariant &value, in
     if (!index.isValid() || index.row() >= m_weaponList.size())
         return false;
 
-    Weapon &w = m_weaponList[index.row()];
+    Attack &w = m_weaponList[index.row()];
     QString strVal = value.toString();
 
     switch (index.column()) {
@@ -70,13 +70,13 @@ bool DndAttackModel::setData(const QModelIndex &index, const QVariant &value, in
     return true;
 }
 
-void DndAttackModel::addWeapon(const Weapon &weapon) {
+void DndAttackModel::addAttack(const Attack &weapon) {
     beginInsertRows(QModelIndex(), m_weaponList.size(), m_weaponList.size());
     m_weaponList.append(weapon);
     endInsertRows();
 }
 
-void DndAttackModel::deleteWeapon(int row) {
+void DndAttackModel::deleteAttack(int row) {
     if (row < 0 || row >= m_weaponList.size()) return;
 
     beginRemoveRows(QModelIndex(), row, row);
@@ -84,7 +84,7 @@ void DndAttackModel::deleteWeapon(int row) {
     endRemoveRows();
 }
 
-Weapon DndAttackModel::getWeapon(int row) const {
+Attack DndAttackModel::getAttack(int row) const {
     if (row >= 0 && row < m_weaponList.size())
         return m_weaponList[row];
     return {};
@@ -93,7 +93,7 @@ Weapon DndAttackModel::getWeapon(int row) const {
 bool DndAttackModel::fromJson(const QJsonArray& attackList) {
     for (const auto& attackVal: attackList) {
         QJsonObject attack = attackVal.toObject();
-        Weapon weapon;
+        Attack weapon;
 
         weapon.title = attack["name"].toObject()["value"].toString();
         weapon.damage = attack["dmg"].toObject()["value"].toString();
@@ -102,7 +102,7 @@ bool DndAttackModel::fromJson(const QJsonArray& attackList) {
         weapon.bonus = attack["modBonus"].toObject()["value"].toInt();
         weapon.notes = attack["notes"].toObject()["value"].toString();
 
-        addWeapon(weapon);
+        addAttack(weapon);
     }
     return true;
 }

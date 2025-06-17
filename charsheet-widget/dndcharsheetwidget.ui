@@ -412,7 +412,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-2022</y>
+        <y>0</y>
         <width>1035</width>
         <height>3131</height>
        </rect>
@@ -1218,19 +1218,58 @@
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="label_18">
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Attacs</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <widget class="QLabel" name="label_18">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Attacks</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="addAttackButton">
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Add</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../static/app_resources.qrc">
+                 <normaloff>:/add.svg</normaloff>:/add.svg</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item>
             <widget class="Line" name="line_11">
@@ -1258,19 +1297,88 @@
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="label_19">
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Resources</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <item>
+              <widget class="QLabel" name="label_19">
+               <property name="font">
+                <font>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Resources</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="addResourceButton">
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Add</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../static/app_resources.qrc">
+                 <normaloff>:/add.svg</normaloff>:/add.svg</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <item>
+              <widget class="QPushButton" name="longRestButton">
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Long Rest</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../static/app_resources.qrc">
+                 <normaloff>:/charSheet/longrest.svg</normaloff>:/charSheet/longrest.svg</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="shortRestButton">
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Short Rest</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../static/app_resources.qrc">
+                 <normaloff>:/charSheet/shortrest.svg</normaloff>:/charSheet/shortrest.svg</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item>
             <widget class="Line" name="line_12">
@@ -1985,7 +2093,6 @@
   </layout>
  </widget>
  <resources>
-  <include location="../static/app_resources.qrc"/>
   <include location="../static/app_resources.qrc"/>
  </resources>
  <connections/>

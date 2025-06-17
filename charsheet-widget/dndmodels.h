@@ -6,13 +6,13 @@
 #include <QJsonArray>
 #include <QJsonObject>
 
-struct Weapon {
-    QString title;
-    QString ability;
-    QString damage;
-    bool prof;
-    int bonus;
-    QString notes;
+struct Attack {
+    QString title = "Attack";
+    QString ability = "str";
+    QString damage = "1d4";
+    bool prof = true;
+    int bonus = +0;
+    QString notes = "";
 
 public:
     int attackBonus(QMap<QString, int> bonusMap) const{
@@ -35,9 +35,9 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const override;
     bool setData(const QModelIndex &index, const QVariant &value, int role) override;
 
-    void addWeapon(const Weapon& weapon);
-    void deleteWeapon(int row);
-    Weapon getWeapon(int row) const;
+    void addAttack(const Attack& weapon);
+    void deleteAttack(int row);
+    Attack getAttack(int row) const;
 
     bool fromJson(const QJsonArray& attackData);
 
@@ -51,7 +51,7 @@ public slots:
     void setProfBonus(int bonus) { m_bonusMap["prof"] = bonus; emit dataChanged(index(0, 1), index(rowCount()-1, 2));};
 
 private:
-    QVector<Weapon> m_weaponList;
+    QVector<Attack> m_weaponList;
 
     QMap<QString, int> m_bonusMap = {
             {"prof", 0},

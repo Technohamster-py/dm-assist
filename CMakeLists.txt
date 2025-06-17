@@ -24,6 +24,7 @@ set(FILES
         campaign-tree-widget/hoverwidget.cpp    campaign-tree-widget/hoverwidget.h
         charsheet-widget/abstractcharsheetwidget.h          charsheet-widget/abstractcharsheetwidget.cpp
         charsheet-widget/dndcharsheetwidget.h charsheet-widget/dndcharsheetwidget.cpp
+        charsheet-widget/dndcharsheetdialogs.h charsheet-widget/dndcharsheetdialogs.cpp
         charsheet-widget/dndmodels.h charsheet-widget/dndmodels.cpp
         initiative-tracker/initiativemodel.h    initiative-tracker/initiativemodel.cpp
         mainwindow.h    mainwindow.cpp
@@ -46,10 +47,13 @@ set(FILES
         settingsdialog.h    settingsdialog.cpp
         settings.h
         theme-manager/thememanager.h theme-manager/thememanager.cpp
+
 )
 
 set(UI_FILES
         charsheet-widget/dndcharsheetwidget.ui
+        charsheet-widget/attackdialog.ui
+        charsheet-widget/resourcedialog.ui
         mainwindow.ui
         music-widget/musicplayer.ui
         music-widget/playlisteditdialog.ui
