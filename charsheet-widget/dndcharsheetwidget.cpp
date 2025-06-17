@@ -17,6 +17,12 @@ DndCharsheetWidget::DndCharsheetWidget(QWidget* parent) :
     ui->attacsView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->attacsView->setDropIndicatorShown(true);
 
+
+    resourceModel = new DndResourceModel(this);
+    ui->resourcesView->setModel(resourceModel);
+    ui->resourcesView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    ui->resourcesView->setDropIndicatorShown(true);
+
     connect(ui->attacsView, &QTableView::clicked, this, [=](const QModelIndex &index) {
         if (index.column() == 5) {
             attackModel->deleteWeapon(index.row());
@@ -230,6 +236,7 @@ void DndCharsheetWidget::populateWidget() {
 
     parseNotes();
     attackModel->fromJson(m_dataObject["weaponsList"].toArray());
+    resourceModel->fromJson(m_dataObject["resources"].toObject());
 }
 
 void DndCharsheetWidget::saveToFile(QString filePath) {

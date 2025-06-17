@@ -1,6 +1,5 @@
 #include "dndmodels.h"
 #include <QIcon>
-#include <d2d1_1helper.h>
 
 DndAttackModel::DndAttackModel(QObject *parent) : QAbstractTableModel(parent) {}
 
@@ -116,16 +115,18 @@ QVariant DndResourceModel::data(const QModelIndex &index, int role) const {
         return QVariant();
     const Resource &r = m_resourcesList.at(index.row());
 
+    if (role == Qt::DecorationRole && index.column() == 0){
+        if (r.refillOnShortRest) return QIcon(":/charSheet/shortrest.svg");
+        if (r.refillOnLongRest) return QIcon(":/charSheet/longrest.svg");
+        return QVariant();
+    }
+
     if (role == Qt::DisplayRole || role == Qt::EditRole || role == Qt::UserRole) {
         if (role == Qt::DisplayRole && index.column() == 4)
             return "❌";
-        if (role == Qt::DisplayRole && index.column() == 0){
-            if (r.refillOnShortRest) return QIcon(":/charsheet/shortrest.png");
-            if (r.refillOnLongRest) return QIcon(":/charsheet/longrest.png");
-            return QVariant();
-        }
+
         switch (index.column()) {
-            case 0: return r.title;
+            case 1: return r.title;
             case 2: return r.current;
             case 3: return r.max;
         }
@@ -203,3 +204,18 @@ void DndResourceModel::doShortRest() {
     emit dataChanged(index(0, 3), index(m_resourcesList.size()-1, 3));
 }
 
+bool DndResourceModel::fromJson(const QJsonObject &resourcesData) {
+    for (const auto &key: resourcesData.keys()) {
+        QJsonObject resourceObj = resourcesData[key].toObject();
+        Resource resource;
+
+        resource.title = resourceObj["name"].toString();
+        resource.current = resourceObj["current"].toInt();
+        resource.max = resourceObj["max"].toInt();
+        resource.refillOnShortRest = resourceObj["isShortRest"].toBool();
+        resource.refillOnLongRest = resourceObj["isLongRest"].toBool();
+
+        addResource(resource);
+    }
+    return false;
+}

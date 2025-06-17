@@ -74,6 +74,8 @@ struct Resource{
 };
 
 class DndResourceModel : public QAbstractTableModel{
+    Q_OBJECT
+public:
     explicit DndResourceModel(QObject* parent = nullptr);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override {return m_resourcesList.size();};
@@ -88,6 +90,8 @@ class DndResourceModel : public QAbstractTableModel{
 
     void doLongRest();
     void doShortRest();
+
+    bool fromJson(const QJsonObject &resourcesData);
 
 private:
     QVector<Resource> m_resourcesList;

@@ -59,6 +59,7 @@ private:
     QShortcut* m_underlineShortcut;
 
     DndAttackModel* attackModel;
+    DndResourceModel* resourceModel;
 };
 
 
