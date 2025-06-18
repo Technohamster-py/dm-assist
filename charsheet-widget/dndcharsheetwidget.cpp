@@ -29,6 +29,18 @@ DndCharsheetWidget::DndCharsheetWidget(QWidget* parent) :
             attackModel->deleteAttack(index.row());
         }
     });
+
+    connect(ui->resourcesView, &QTableView::clicked, this, [=](const QModelIndex &index) {
+        if (index.column() == 5) {
+            resourceModel->deleteResource(index.row());
+        }
+    });
+
+    connect(ui->resourcesView, &QTableView::clicked, this, [=](const QModelIndex &index) {
+        if (index.column() == 0) {
+            resourceModel->changeRefillMode(index.row());
+        }
+    });
 }
 
 DndCharsheetWidget::DndCharsheetWidget(const QString& filePath, QWidget *parent): DndCharsheetWidget(parent){
