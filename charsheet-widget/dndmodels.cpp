@@ -22,10 +22,10 @@ QVariant DndAttackModel::headerData(int section, Qt::Orientation orientation, in
 }
 
 QVariant DndAttackModel::data(const QModelIndex &index, int role) const {
-    if (!index.isValid() || index.row() >= m_weaponList.size())
+    if (!index.isValid() || index.row() >= m_attackList.size())
         return QVariant();
 
-    const Attack &w = m_weaponList.at(index.row());
+    const Attack &w = m_attackList.at(index.row());
 
     if (role == Qt::DisplayRole || role == Qt::EditRole || role == Qt::UserRole) {
         if (role == Qt::DisplayRole && index.column() == 4)
@@ -52,10 +52,10 @@ Qt::ItemFlags DndAttackModel::flags(const QModelIndex &index) const {
 }
 
 bool DndAttackModel::setData(const QModelIndex &index, const QVariant &value, int role) {
-    if (!index.isValid() || index.row() >= m_weaponList.size())
+    if (!index.isValid() || index.row() >= m_attackList.size())
         return false;
 
-    Attack &w = m_weaponList[index.row()];
+    Attack &w = m_attackList[index.row()];
     QString strVal = value.toString();
 
     switch (index.column()) {
@@ -71,30 +71,32 @@ bool DndAttackModel::setData(const QModelIndex &index, const QVariant &value, in
 }
 
 void DndAttackModel::addAttack(const Attack &weapon) {
-    beginInsertRows(QModelIndex(), m_weaponList.size(), m_weaponList.size());
-    m_weaponList.append(weapon);
+    beginInsertRows(QModelIndex(), m_attackList.size(), m_attackList.size());
+    m_attackList.append(weapon);
     endInsertRows();
 }
 
 void DndAttackModel::deleteAttack(int row) {
-    if (row < 0 || row >= m_weaponList.size()) return;
+    if (row < 0 || row >= m_attackList.size()) return;
 
     beginRemoveRows(QModelIndex(), row, row);
-    m_weaponList.removeAt(row);
+    m_attackList.removeAt(row);
     endRemoveRows();
 }
 
 Attack DndAttackModel::getAttack(int row) const {
-    if (row >= 0 && row < m_weaponList.size())
-        return m_weaponList[row];
+    if (row >= 0 && row < m_attackList.size())
+        return m_attackList[row];
     return {};
 }
 
 bool DndAttackModel::fromJson(const QJsonArray& attackList) {
+    m_attackArray = attackList;
     for (const auto& attackVal: attackList) {
         QJsonObject attack = attackVal.toObject();
         Attack weapon;
 
+        weapon.id = attack["id"].toString();
         weapon.title = attack["name"].toObject()["value"].toString();
         weapon.damage = attack["dmg"].toObject()["value"].toString();
         weapon.ability = attack["ability"].toString();
@@ -105,6 +107,36 @@ bool DndAttackModel::fromJson(const QJsonArray& attackList) {
         addAttack(weapon);
     }
     return true;
+}
+
+QJsonArray DndAttackModel::toJson() {
+    int i = 0;
+    for (auto & attack : m_attackList) {
+        if (attack.id.isEmpty()){
+            attack.id = QString("weapon-%1").arg(i);
+            QJsonObject attackObj;
+            attackObj["id"] = attack.id;
+            attackObj["name"] = QJsonObject();
+            attackObj["mod"] = QJsonObject();
+            attackObj["dmg"] = QJsonObject();
+            attackObj["modBonus"] = QJsonObject();
+            attackObj["notes"] = QJsonObject();
+            m_attackArray.append(attackObj);
+        }
+        for (const auto & attackVal : m_attackArray){
+            QJsonObject attackObj = attackVal.toObject();
+            if (attackObj["id"].toString() == attack.id){
+                attackObj["name"].toObject()["value"] = attack.title;
+                attackObj["dmg"].toObject()["value"] = attack.damage;
+                attackObj["ability"] = attack.ability;
+                attackObj["isProf"] = attack.prof;
+                attackObj["modBonus"].toObject()["value"] = attack.bonus;
+                attackObj["notes"].toObject()["value"] = attack.notes;
+            }
+        }
+        ++i;
+    }
+    return m_attackArray;
 }
 
 
@@ -205,10 +237,12 @@ void DndResourceModel::doShortRest() {
 }
 
 bool DndResourceModel::fromJson(const QJsonObject &resourcesData) {
+    m_resourceObject = resourcesData;
     for (const auto &key: resourcesData.keys()) {
         QJsonObject resourceObj = resourcesData[key].toObject();
         Resource resource;
 
+        resource.key = key;
         resource.title = resourceObj["name"].toString();
         resource.current = resourceObj["current"].toInt();
         resource.max = resourceObj["max"].toInt();
@@ -218,4 +252,37 @@ bool DndResourceModel::fromJson(const QJsonObject &resourcesData) {
         addResource(resource);
     }
     return false;
+}
+
+bool DndResourceModel::changeRefillMode(int row) {
+    if (row >= m_resourcesList.size() || row < 0)
+        return false;
+    Resource &r = m_resourcesList[row];
+
+    r.refillOnShortRest = false;
+    r.refillOnLongRest = !(r.refillOnLongRest);
+    emit dataChanged(index(row, 0), index(row, 1));
+    return true;
+}
+
+QJsonObject DndResourceModel::toJson() {
+    int i = 0;
+    for (auto& resource : m_resourcesList){
+        if (resource.key.isEmpty()){
+            resource.key = QString("resource-%1").arg(i);
+            QJsonObject newResourceObj;
+            newResourceObj["id"] = resource.key;
+            newResourceObj["location"] = "traits";
+        }
+
+        QJsonObject resourceObj = m_resourceObject[resource.key].toObject();
+        resourceObj["name"] = resource.title;
+        resourceObj["current"] = resource.current;
+        resourceObj["max"] = resource.max;
+        resourceObj["isShortRest"] = resource.refillOnShortRest;
+        resourceObj["isLongRest"] = resource.refillOnLongRest;
+        resourceObj["icon"] = resource.refillOnLongRest ? "short-rest" : "long-rest";
+        ++i;
+    }
+    return m_resourceObject;
 }

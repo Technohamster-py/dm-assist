@@ -7,6 +7,7 @@
 #include <QJsonObject>
 
 struct Attack {
+    QString id = "";
     QString title = "Attack";
     QString ability = "str";
     QString damage = "1d4";
@@ -28,7 +29,7 @@ public:
     explicit DndAttackModel(QObject* parent = nullptr);
     DndAttackModel(const QJsonArray& attackList, QObject *parent = nullptr);
 
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override {return m_weaponList.size();};
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override {return m_attackList.size();};
     int columnCount(const QModelIndex &parent = QModelIndex()) const override {return 5;};
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
@@ -40,6 +41,7 @@ public:
     Attack getAttack(int row) const;
 
     bool fromJson(const QJsonArray& attackData);
+    QJsonArray toJson();
 
 public slots:
     void setStrBonus(int bonus) { m_bonusMap["str"] = bonus; emit dataChanged(index(0, 1), index(rowCount()-1, 2));};
@@ -51,7 +53,7 @@ public slots:
     void setProfBonus(int bonus) { m_bonusMap["prof"] = bonus; emit dataChanged(index(0, 1), index(rowCount()-1, 2));};
 
 private:
-    QVector<Attack> m_weaponList;
+    QVector<Attack> m_attackList;
 
     QMap<QString, int> m_bonusMap = {
             {"prof", 0},
@@ -62,10 +64,13 @@ private:
             {"wis", 0},
             {"cha", 0},
     };
+
+    QJsonArray m_attackArray;
 };
 
 
 struct Resource{
+    QString key = "";
     QString title;
     int current;
     int max;
@@ -87,16 +92,18 @@ public:
 
     void addResource(const Resource& resource);
     void deleteResource(int row);
+    bool changeRefillMode(int row);
 
     bool fromJson(const QJsonObject &resourcesData);
+    QJsonObject toJson();
 
 public slots:
     void doLongRest();
     void doShortRest();
-    void slot() {qDebug() << "whfwi";};
 
 private:
     QVector<Resource> m_resourcesList;
+    QJsonObject m_resourceObject;
 };
 
 #endif //DM_ASSIST_DNDMODELS_H
