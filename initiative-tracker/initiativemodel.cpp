@@ -127,6 +127,10 @@ QVariant InitiativeModel::data(const QModelIndex &index, int role) const {
         }
     }
 
+    if (role == Qt::BackgroundRole && index.row() == currentIndex) {
+        return QBrush(QColor("#cceeff")); // Подсветка текущего
+    }
+
     return QVariant();
 }
 
