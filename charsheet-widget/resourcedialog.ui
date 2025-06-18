@@ -89,7 +89,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QCheckBox" name="longRestCheckBox">
+       <widget class="QRadioButton" name="longRestRadioButton">
         <property name="text">
          <string>Long rest</string>
         </property>
@@ -100,7 +100,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="shortRestCheckBox">
+       <widget class="QRadioButton" name="shortRestRadioButton">
         <property name="text">
          <string>Short rest</string>
         </property>

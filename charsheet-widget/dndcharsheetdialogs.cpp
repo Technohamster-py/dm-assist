@@ -25,7 +25,8 @@ Resource ResourceDialog::getCreatedResource() {
     resource.current = ui->amountBox->value();
     resource.max = ui->maximumBox->value();
     resource.refillOnLongRest = ui->longRestCheckBox->isChecked();
-    resource.refillOnShortRest = ui->shortRestCheckBox->isChecked();
+    resource.refillOnLongRest = ui->longRestRadioButton->isChecked();
+    resource.refillOnShortRest = ui->shortRestRadioButton->isChecked();
 
     return resource;
 }
