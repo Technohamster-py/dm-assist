@@ -65,7 +65,6 @@ void HpProgressBarDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
             progressBarOption.minimum = 0;
             progressBarOption.maximum = max;
             progressBarOption.progress = value;
-            qDebug() << value;
             progressBarOption.text = QString("%1/%2").arg(value).arg(max);
             progressBarOption.textVisible = false;
             progressBarOption.textAlignment = Qt::AlignCenter;
