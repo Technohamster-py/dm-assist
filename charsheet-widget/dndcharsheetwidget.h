@@ -31,12 +31,13 @@ public:
     ~DndCharsheetWidget() override;
 
     void loadFromFile(QString path) override;
-    void saveToFile(QString filePath = nullptr) override;
+    void saveToFile(QString path) override;
 
     void addToInitiative(InitiativeTrackerWidget* initiativeTrackerWidget) override;
 
     static int bonusFromStat(int statValue) {return (statValue - 10) / 2;};
     static int proficiencyByLevel(int level) {return level / 5 + 2;};
+    static QJsonArray serializeHtmlToJson(const QString &html);
 
 private:
     Ui::DndCharsheetWidget *ui;
@@ -60,6 +61,10 @@ private:
 
     DndAttackModel* attackModel;
     DndResourceModel* resourceModel;
+
+    QJsonObject collectData(QString filePath = nullptr);
+
+    void closeEvent(QCloseEvent *event) override;
 };
 
 

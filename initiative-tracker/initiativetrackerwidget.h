@@ -73,7 +73,7 @@ private:
     InitiativeModel *model;
 
     void setupUI();
-    void closeEvent(QCloseEvent *event);
+    void closeEvent(QCloseEvent *event) override;
 
     bool isSharedHpVisible = false;
     bool isSharedMaxHpVisible = false;

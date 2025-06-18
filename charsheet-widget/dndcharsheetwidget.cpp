@@ -3,6 +3,9 @@
 
 #include <QMessageBox>
 #include <QStandardItemModel>
+#include <QTextDocument>
+#include <QTextBlock>
+#include <QTextList>
 #include "dndcharsheetdialogs.h"
 
 
@@ -252,8 +255,118 @@ void DndCharsheetWidget::populateWidget() {
     resourceModel->fromJson(m_dataObject["resources"].toObject());
 }
 
-void DndCharsheetWidget::saveToFile(QString filePath) {
+QJsonObject DndCharsheetWidget::collectData(QString filePath) {
+    QJsonObject result = m_dataObject;
 
+    // name
+    result["name"] = QJsonObject{
+            {"value", ui->nameLabel->text()}
+    };
+
+    // info
+    QJsonObject info;
+    info["charClass"] = QJsonObject{{"value", ui->classLabel->text().split(" (").first()}};
+    info["charSubclass"] = QJsonObject{{"value", ui->classLabel->text().split(" (").value(1).chopped(1)}};
+    info["level"] = QJsonObject{{"value", ui->levelBox->value()}};
+    info["playerName"] = QJsonObject{{"value", "Technohamster"}};  // при необходимости
+    info["background"] = QJsonObject{{"value", result["info"].toObject().value("background").toObject().value("value")}};
+    info["race"] = QJsonObject{{"value", result["info"].toObject().value("race").toObject().value("value")}};
+    info["alignment"] = QJsonObject{{"value", result["info"].toObject().value("alignment").toObject().value("value")}};
+    info["experience"] = QJsonObject{{"value", ""}};
+    result["info"] = info;
+
+    // vitality
+    QJsonObject vitality;
+    vitality["speed"] = QJsonObject{{"value", ui->runSpeedLabel->text()}};
+    vitality["ac"] = QJsonObject{{"value", ui->acLabel->text().toInt()}};
+    vitality["hp-current"] = QJsonObject{{"value", ui->hpSpinBox->value()}};
+    vitality["hp-max"] = QJsonObject{{"value", ui->maxHpLabel->text().toInt()}};
+    result["vitality"] = vitality;
+
+    // stats
+    auto statObject = [&](QString statName, int score) {
+        return QJsonObject{{"score", score}, {"modifier", bonusFromStat(score)}};
+    };
+
+    QJsonObject stats;
+    stats["str"] = statObject("str", ui->strValueEdit->value());
+    stats["dex"] = statObject("dex", ui->dexValueEdit->value());
+    stats["con"] = statObject("con", ui->conValueEdit->value());
+    stats["int"] = statObject("int", ui->intValueEdit->value());
+    stats["wis"] = statObject("wis", ui->wisValueEdit->value());
+    stats["cha"] = statObject("cha", ui->chaValueEdit->value());
+    result["stats"] = stats;
+
+    // saves
+    QJsonObject saves;
+    saves["str"] = QJsonObject{{"isProf", ui->strSaveCheckBox->isChecked()}};
+    saves["dex"] = QJsonObject{{"isProf", ui->dexSaveCheckBox->isChecked()}};
+    saves["con"] = QJsonObject{{"isProf", ui->conSaveCheckBox->isChecked()}};
+    saves["int"] = QJsonObject{{"isProf", ui->intSaveCheckBox->isChecked()}};
+    saves["wis"] = QJsonObject{{"isProf", ui->wisSaveCheckBox->isChecked()}};
+    saves["cha"] = QJsonObject{{"isProf", ui->chaSaveCheckBox->isChecked()}};
+    result["saves"] = saves;
+
+    // skills
+    auto skill = [&](QString name, QCheckBox *checkBox, QString stat = "") {
+        QJsonObject obj;
+        obj["name"] = name;
+        if (!stat.isEmpty()) obj["baseStat"] = stat;
+        if (checkBox->isChecked()) obj["isProf"] = 1;
+        return obj;
+    };
+
+    QJsonObject skills;
+    skills["acrobatics"] = skill("acrobatics", ui->acrobatics, "dex");
+    skills["athletics"] = skill("athletics", ui->athlecicsCheckBox, "str");
+    skills["sleight of hand"] = skill("sleight of hand", ui->sleight, "dex");
+    skills["stealth"] = skill("stealth", ui->stealth, "dex");
+    skills["arcana"] = skill("arcana", ui->arcana, "int");
+    skills["history"] = skill("history", ui->history, "int");
+    skills["investigation"] = skill("investigation", ui->investigation, "int");
+    skills["nature"] = skill("nature", ui->nature, "int");
+    skills["religion"] = skill("religion", ui->religion, "int");
+    skills["animal handling"] = skill("animal handling", ui->handling, "wis");
+    skills["insight"] = skill("insight", ui->insight, "wis");
+    skills["medicine"] = skill("medicine", ui->medicine, "wis");
+    skills["perception"] = skill("perception", ui->perception, "wis");
+    skills["survival"] = skill("survival", ui->survival, "wis");
+    skills["deception"] = skill("deception", ui->deception, "cha");
+    skills["intimidation"] = skill("intimidation", ui->intimidation, "cha");
+    skills["performance"] = skill("performance", ui->performance, "cha");
+    skills["persuasion"] = skill("persuasion", ui->persuasion, "cha");
+    result["skills"] = skills;
+
+    // текстовые блоки
+    auto toDoc = [&](const QString &html) {
+        return QJsonObject{
+                {"value", QJsonObject{
+                        {"data", QJsonObject{
+                                {"type", "doc"},
+                                {"content", serializeHtmlToJson(html)}  // сериализация HTML в JSON
+                        }}
+                }}
+        };
+    };
+    QJsonObject text;
+    text["prof"] = toDoc(ui->proficienciesEdit->toHtml());
+    text["traits"] = toDoc(ui->traitsEdit->toHtml());
+    text["equipment"] = toDoc(ui->equipmentEdit->toHtml());
+    text["features"] = toDoc(ui->featuresEdit->toHtml());
+    text["allies"] = toDoc(ui->alliesEdit->toHtml());
+    text["personality"] = toDoc(ui->personalityEdit->toHtml());
+    text["background"] = toDoc(ui->backgroundEdit->toHtml());
+    text["quests"] = toDoc(ui->questsEdit->toHtml());
+    text["ideals"] = toDoc(ui->idealsEdit->toHtml());
+    text["bonds"] = toDoc(ui->bondsEdit->toHtml());
+    text["flaws"] = toDoc(ui->flawsEdit->toHtml());
+    result["text"] = text;
+
+    // оружие и ресурсы
+    result["weaponsList"] = attackModel->toJson();
+    result["resources"] = resourceModel->toJson();
+
+    return result;
 }
 
 /**
@@ -526,4 +639,131 @@ void DndCharsheetWidget::setupShortcuts() {
 QTextEdit *DndCharsheetWidget::getFocusedEdit() {
     QWidget *focusWidget = QApplication::focusWidget();
     return qobject_cast<QTextEdit*>(focusWidget);
+}
+
+
+QJsonArray DndCharsheetWidget::serializeHtmlToJson(const QString &html) {
+    QJsonArray contentArray;
+
+    QTextDocument doc;
+    doc.setHtml(html);
+
+    for (QTextBlock block = doc.begin(); block.isValid(); block = block.next()) {
+        QJsonObject paragraph;
+        QJsonArray paragraphContent;
+
+        // Обработка списка
+        if (block.textList()) {
+            QTextList *list = block.textList();
+            QString marker = list->format().style() == QTextListFormat::ListDecimal ? "ordered" : "bullet";
+
+            QString text = block.text();
+            QJsonObject item;
+            item["type"] = "paragraph";
+
+            QJsonArray innerContent;
+            for (QTextBlock::iterator it = block.begin(); !it.atEnd(); ++it) {
+                QTextFragment frag = it.fragment();
+                if (!frag.isValid()) continue;
+
+                QString fragText = frag.text();
+                if (fragText.trimmed().isEmpty()) continue;
+
+                QJsonObject textObject;
+                textObject["type"] = "text";
+                textObject["text"] = fragText;
+
+                QJsonArray marks;
+                QTextCharFormat fmt = frag.charFormat();
+                if (fmt.fontWeight() == QFont::Bold)
+                    marks.append(QJsonObject{{"type", "bold"}});
+                if (fmt.fontItalic())
+                    marks.append(QJsonObject{{"type", "italic"}});
+                if (fmt.fontUnderline())
+                    marks.append(QJsonObject{{"type", "underline"}});
+
+                if (!marks.isEmpty())
+                    textObject["marks"] = marks;
+
+                innerContent.append(textObject);
+            }
+
+            item["content"] = innerContent;
+            contentArray.append(item);
+            continue;
+        }
+
+        // Обычные параграфы
+        paragraph["type"] = "paragraph";
+        for (QTextBlock::iterator it = block.begin(); !it.atEnd(); ++it) {
+            QTextFragment frag = it.fragment();
+            if (!frag.isValid()) continue;
+
+            QString fragText = frag.text();
+            if (fragText.trimmed().isEmpty()) continue;
+
+            QJsonObject textObject;
+            textObject["type"] = "text";
+            textObject["text"] = fragText;
+
+            QJsonArray marks;
+            QTextCharFormat fmt = frag.charFormat();
+            if (fmt.fontWeight() == QFont::Bold)
+                marks.append(QJsonObject{{"type", "bold"}});
+            if (fmt.fontItalic())
+                marks.append(QJsonObject{{"type", "italic"}});
+            if (fmt.fontUnderline())
+                marks.append(QJsonObject{{"type", "underline"}});
+
+            if (!marks.isEmpty())
+                textObject["marks"] = marks;
+
+            paragraphContent.append(textObject);
+        }
+
+        if (!paragraphContent.isEmpty()) {
+            paragraph["content"] = paragraphContent;
+            contentArray.append(paragraph);
+        } else {
+            // Добавим пустой параграф, если строка была пустой
+            contentArray.append(QJsonObject{{"type", "paragraph"}});
+        }
+    }
+
+    return contentArray;
+}
+
+void DndCharsheetWidget::saveToFile(QString path) {
+    QJsonObject updatedData = collectData();
+
+    QJsonDocument innerDoc(updatedData);
+    QString jsonString = QString::fromUtf8(innerDoc.toJson(QJsonDocument::Compact));
+
+    QJsonObject root = m_originalDocument.object();
+    root["data"] = jsonString;
+
+    QJsonDocument finalDoc(root);
+    QFile fileOut(path);
+    if (!fileOut.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        return;
+    }
+
+    fileOut.write(finalDoc.toJson(QJsonDocument::Indented));
+    fileOut.close();
+}
+
+void DndCharsheetWidget::closeEvent(QCloseEvent *event) {
+    QMessageBox::StandardButton reply = QMessageBox::question(this,
+                                                              tr("Save changes"),
+                                                              tr("Save changes?"),
+                                                              QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+    if (reply == QMessageBox::Cancel){
+        event->ignore();
+        return;
+    }
+
+    if (reply == QMessageBox::Yes)
+        saveToFile(m_originalFilePath);
+
+    QWidget::closeEvent(event);
 }
