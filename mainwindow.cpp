@@ -940,7 +940,7 @@ void MainWindow::setupMaps() {
  */
 void MainWindow::setupShortcuts() {
     for (int i = 0; i < players.size(); ++i) {
-        QString key = QString("Ctrl+%1").arg(i);
+        QString key = QString("Ctrl+%1").arg(i + 1);
         players[i]->setPlayShortcut(key);
     }
 }
