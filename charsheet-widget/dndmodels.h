@@ -88,10 +88,12 @@ public:
     void addResource(const Resource& resource);
     void deleteResource(int row);
 
+    bool fromJson(const QJsonObject &resourcesData);
+
+public slots:
     void doLongRest();
     void doShortRest();
-
-    bool fromJson(const QJsonObject &resourcesData);
+    void slot() {qDebug() << "whfwi";};
 
 private:
     QVector<Resource> m_resourcesList;

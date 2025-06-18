@@ -10,9 +10,6 @@ DndCharsheetWidget::DndCharsheetWidget(QWidget* parent) :
         AbstractCharsheetWidget(parent), ui(new Ui::DndCharsheetWidget) {
     ui->setupUi(this);
 
-    setupShortcuts();
-    connectSignals();
-
     attackModel = new DndAttackModel(this);
     ui->attacsView->setModel(attackModel);
     ui->attacsView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
@@ -23,6 +20,9 @@ DndCharsheetWidget::DndCharsheetWidget(QWidget* parent) :
     ui->resourcesView->setModel(resourceModel);
     ui->resourcesView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->resourcesView->setDropIndicatorShown(true);
+
+    setupShortcuts();
+    connectSignals();
 
     connect(ui->attacsView, &QTableView::clicked, this, [=](const QModelIndex &index) {
         if (index.column() == 5) {
@@ -303,7 +303,7 @@ void DndCharsheetWidget::connectSignals() {
     connect(ui->persuasion, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->persuasion, ui->chaValueEdit);});
 
 
-    connect(ui->addAttackButton, &QPushButton::clicked, [=](){
+    connect(ui->addResourceButton, &QPushButton::clicked, [=](){
         ResourceDialog resourceDialog(this);
         if (resourceDialog.exec() == QDialog::Accepted){
             Resource newResource = resourceDialog.getCreatedResource();
@@ -317,7 +317,10 @@ void DndCharsheetWidget::connectSignals() {
             Attack attack = attackDialog.getCreatedAttack();
             attackModel->addAttack(attack);
         }
-    })
+    });
+
+    connect(ui->longRestButton, &QPushButton::clicked, resourceModel, &DndResourceModel::doLongRest);
+    connect(ui->shortRestButton, &QPushButton::clicked, resourceModel, &DndResourceModel::doShortRest);
 }
 
 /**

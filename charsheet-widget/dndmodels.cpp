@@ -194,7 +194,7 @@ void DndResourceModel::doLongRest() {
     for (auto& r: m_resourcesList) {
         if (r.refillOnLongRest || r.refillOnShortRest) r.current = r.max;
     }
-    emit dataChanged(index(0, 3), index(m_resourcesList.size()-1, 3));
+    emit dataChanged(index(0, 2), index(m_resourcesList.size()-1, 3));
 }
 
 void DndResourceModel::doShortRest() {
