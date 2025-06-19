@@ -59,6 +59,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::loadCampaign);
     connect(ui->actionHelp, &QAction::triggered, this, &MainWindow::openHelp);
     connect(ui->actionDonate, &QAction::triggered, this, &MainWindow::openDonate);
+    connect(ui->actionReport_bug, &QAction::triggered, [](){
+        QUrl url("https://github.com/Technohamster-py/dm-assist/issues/new");
+        QDesktopServices::openUrl(url);
+    });
     connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::setVolumeDivider);
     connect(ui->actionReload, &QAction::triggered, this, [=](){
         setupCampaign(campaignTreeWidget->root());
