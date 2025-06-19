@@ -57,12 +57,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newCampaign);
     connect(ui->actionSave, &QAction::triggered, this, &MainWindow::saveCampaign);
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::loadCampaign);
-    connect(ui->actionHelp, &QAction::triggered, this, &MainWindow::openHelp);
-    connect(ui->actionDonate, &QAction::triggered, this, &MainWindow::openDonate);
-    connect(ui->actionReport_bug, &QAction::triggered, [](){
-        QUrl url("https://github.com/Technohamster-py/dm-assist/issues/new");
-        QDesktopServices::openUrl(url);
-    });
+    connect(ui->actionHelp, &QAction::triggered, [](){QDesktopServices::openUrl(QUrl("https://github.com/Technohamster-py/dm-assist/wiki/%D0%9D%D0%B0%D1%87%D0%B0%D0%BB%D0%BE"));});
+    connect(ui->actionDonate, &QAction::triggered, [](){QDesktopServices::openUrl(QUrl("https://pay.cloudtips.ru/p/8f6d339a"));});
+    connect(ui->actionReport_bug, &QAction::triggered, [](){QDesktopServices::openUrl(QUrl("https://github.com/Technohamster-py/dm-assist/issues/new"));});
     connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::setVolumeDivider);
     connect(ui->actionReload, &QAction::triggered, this, [=](){
         setupCampaign(campaignTreeWidget->root());
@@ -511,32 +508,6 @@ void MainWindow::on_actionSettings_triggered() {
     }
     settingsDialog->exec();
     loadSettings();
-}
-
-/**
- * @brief Opens the donation page using the system's default web browser.
- *
- * This function creates a URL pointing to the donation page and uses the
- * QDesktopServices class to open the specified URL in the default web
- * browser. It provides a convenient way for users to navigate to the
- * donation platform directly from the application.
- */
-void MainWindow::openDonate() {
-    QUrl url("https://pay.cloudtips.ru/p/8f6d339a");
-    QDesktopServices::openUrl(url);
-}
-
-/**
- * @brief Opens the help documentation in the default web browser.
- *
- * This function launches a specific URL pointing to the user guide or
- * documentation for the application using `QDesktopServices::openUrl`.
- * It is intended to provide quick access to resources that assist
- * users in understanding or troubleshooting the application.
- */
-void MainWindow::openHelp() {
-    QUrl url("https://github.com/Technohamster-py/dm-assist/wiki/%D0%9D%D0%B0%D1%87%D0%B0%D0%BB%D0%BE");
-    QDesktopServices::openUrl(url);
 }
 
 /**

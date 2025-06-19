@@ -67,9 +67,6 @@ public slots:
 
     void loadSettings();
 
-    void openHelp();
-    void openDonate();
-
     void openSharedMapWindow(int index);
     void slotExportMap(int index);
 
