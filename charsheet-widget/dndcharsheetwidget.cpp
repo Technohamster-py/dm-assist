@@ -29,7 +29,7 @@ DndCharsheetWidget::DndCharsheetWidget(QWidget* parent) :
 
     connect(ui->attacsView, &QTableView::clicked, this, [=](const QModelIndex &index) {
         switch (index.column()) {
-            case 5:
+            case 4:
                 attackModel->deleteAttack(index.row());
                 break;
             default:
@@ -44,7 +44,7 @@ DndCharsheetWidget::DndCharsheetWidget(QWidget* parent) :
 
     connect(ui->resourcesView, &QTableView::clicked, this, [=](const QModelIndex &index) {
         switch (index.column()) {
-            case 5:
+            case 4:
                 resourceModel->deleteResource(index.row());
                 break;
             case 0:
