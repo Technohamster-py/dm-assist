@@ -37,7 +37,7 @@ protected:
     bool hasFirstPoint = false;
 
     void clearPreview(QGraphicsScene *scene);
-    bool clearShapeAt(QGraphicsScene *scene, QPointF point);
+    static bool clearShapeAt(QGraphicsScene *scene, QPointF point);
 };
 
 
@@ -105,7 +105,7 @@ public:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override;
 
 private:
-    QPolygonF buildSquare(const QPointF &p1, const QPointF &p2);
+    static QPolygonF buildSquare(const QPointF &p1, const QPointF &p2);
 };
 
 

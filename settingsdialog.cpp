@@ -1,7 +1,3 @@
-//
-// Created by arseniy on 02.04.2025.
-//
-
 #include "settingsdialog.h"
 #include "ui_settingsdialog.h"
 
@@ -9,7 +5,6 @@
 #include <QStandardPaths>
 #include <QFileDialog>
 #include <utility>
-#include <QDebug>
 #include "lib/bass/include/bass.h"
 
 

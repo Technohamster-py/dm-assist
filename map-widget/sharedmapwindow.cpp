@@ -33,7 +33,7 @@ SharedMapWindow::SharedMapWindow(MapScene *originalScene, QWidget *parent)
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    auto* layout = new QVBoxLayout(this);
     setLayout(layout);
     layout->addWidget(view);
 

@@ -72,7 +72,7 @@ MainWindow::MainWindow(QWidget *parent) :
         character.addToInitiative(initiativeTrackerWidget);
     });
     connect(campaignTreeWidget, &CampaignTreeWidget::characterOpenRequested, this, [=](const QString& path){
-        DndCharsheetWidget* charsheetWidget = new DndCharsheetWidget(path);
+        auto* charsheetWidget = new DndCharsheetWidget(path);
         charsheetWidget->show();
     });
     connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);
@@ -130,7 +130,7 @@ void MainWindow::changeLanguage(const QString &languageCode) {
  * @param hide If true, hides the fog layer completely; if false, reveals it.
  */
 void MainWindow::coverMapWithFog(bool hide) {
-    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
     MapScene* scene = currentView->getScene();
 
     if (hide)
@@ -206,7 +206,7 @@ void MainWindow::deleteMapTab(int index) {
  *       The exported file format is DM assist map file (*.dam).
  */
 void MainWindow::slotExportMap(int index) {
-    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
+    auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
     if (currentView){
         QString filename = QFileDialog::getSaveFileName(this,
                                                         tr("Save map to file"),
@@ -235,10 +235,10 @@ void MainWindow::slotExportMap(int index) {
  * @param path The file path where the map data should be exported. It must end with ".dam".
  * @param index The index of the tab in the map tab widget containing the map to export.
  */
-void MainWindow::exportMap(QString path, int index) {
+void MainWindow::exportMap(const QString& path, int index) {
     if (!path.endsWith(".dam")) return;
     
-    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
+    auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
     if (currentView){
         currentView->getScene()->saveToFile(path);
     }
@@ -322,8 +322,8 @@ void MainWindow::loadMusicConfigFile(QString fileName) {
             else{
                 QStringList fileNames = playerDir.entryList(QDir::Files);
                 QStringList fullPaths;
-                for (const QString &fileName : fileNames) {
-                    fullPaths.append(playerDir.absoluteFilePath(fileName));
+                for (const QString &musicFileName : fileNames) {
+                    fullPaths.append(playerDir.absoluteFilePath(musicFileName));
                 }
                 players[playerId]->addMedia(fullPaths);
             }
@@ -474,36 +474,6 @@ void MainWindow::newCampaign() {
 }
 
 /**
- * @brief Handles the "Settings" action when triggered.
- *
- * This function is invoked when the user selects the "Settings" option from the UI.
- * It performs the following operations:
- *
- * 1. Saves the current application settings by calling `saveSettings`.
- * 2. Checks if the settings dialog (`settingsDialog`) exists. If not, it initializes
- *    the dialog by creating a new `SettingsDialog` object with the organization name,
- *    application name, and parent as parameters.
- * 3. Displays the settings dialog in a modal state by calling `exec` on it.
- * 4. After the dialog is closed, it reloads application settings by calling `loadSettings`.
- *
- * @note
- * - The `settingsDialog` is initialized only once and reused afterward.
- * - The `saveSettings` function is called before showing the dialog to ensure
- *   the latest settings are preserved.
- * - The `loadSettings` function is called after the dialog is closed, allowing
- *   the application to reflect any changes made in the settings dialog.
- */
-void MainWindow::on_actionSettings_triggered() {
-    saveSettings();
-    if(!settingsDialog)
-    {
-        settingsDialog = new SettingsDialog(ORGANIZATION_NAME, APPLICATION_NAME, this);
-    }
-    settingsDialog->exec();
-    loadSettings();
-}
-
-/**
  * @brief Opens and loads a map file into the application.
  *
  * This method is responsible for loading a map file into a new tab in the `mapTabWidget`.
@@ -519,12 +489,12 @@ void MainWindow::on_actionSettings_triggered() {
  *
  * @param fileName The path to the map file to load.
  */
-void MainWindow::openMapFromFile(QString fileName) {
+void MainWindow::openMapFromFile(const QString& fileName) {
     QFileInfo fileInfo(fileName);
     QString ext = fileInfo.suffix().toLower();
 
-    MapView *view = new MapView(this);
-    bool success = false;
+    auto *view = new MapView(this);
+    bool success;
 
     if (ext == "dam") {
         success = view->loadSceneFromFile(fileName);
@@ -563,7 +533,7 @@ void MainWindow::openMapFromFile(QString fileName) {
  * @param index Index of the current map tab to get the corresponding map scene.
  */
 void MainWindow::openSharedMapWindow(int index) {
-    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
+    auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
     if (!sharedMapWindow){
         sharedMapWindow = new SharedMapWindow(currentView->getScene());
         sharedMapWindow->show();
@@ -648,7 +618,7 @@ void MainWindow::closeCampaign() {
  * - A new XML configuration file is created at the specified location.
  * - Local directories of all playlists are moved to the base directory.
  */
-void MainWindow::saveMusicConfigFile(QString fileName) {
+void MainWindow::saveMusicConfigFile(const QString& fileName) {
     if(fileName.isEmpty())
         return;
 
@@ -716,7 +686,7 @@ void MainWindow::saveSettings() {
  * the current widget in mapTabWidget is a compatible MapView instance.
  */
 void MainWindow::setCalibrationTool() {
-    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
     if (currentView){
         currentView->setActiveTool(calibrationTool);
     }
@@ -742,7 +712,7 @@ void MainWindow::setCalibrationTool() {
  *          `Reveal` and is used to configure the tool's behavior.
  */
 void MainWindow::setFogTool(bool checked, FogTool::Mode mode) {
-    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
     if (currentView){
         if (!checked){
             currentView->setActiveTool(nullptr);
@@ -764,7 +734,7 @@ void MainWindow::setFogTool(bool checked, FogTool::Mode mode) {
  * @param checked Determines whether to activate or deactivate the light tool.
  */
 void MainWindow::setLightTool(bool checked) {
-    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
     if (checked)
         currentView->setActiveTool(lightTool);
     else
@@ -782,7 +752,7 @@ void MainWindow::setLightTool(bool checked) {
  * @param checked A boolean indicating whether to enable (true) or disable (false) the measure mode.
  */
 void MainWindow::setMeasureTool(bool checked) {
-    MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
     if (currentView){
         if (checked)
             currentView->setActiveTool(rulerMapTool);
@@ -958,11 +928,11 @@ void MainWindow::setupToolbar() {
     toolGroup->setExclusive(true);
 
     /// Ruler tool
-    QToolButton *rulerButton = new QToolButton(this);
+    auto *rulerButton = new QToolButton(this);
     rulerButton->setCheckable(true);
     rulerButton->setToolTip(tr("ruler"));
 
-    QAction *rulerAction = new QAction(this);
+    auto *rulerAction = new QAction(this);
     rulerAction->setCheckable(true);
     rulerAction->setChecked(false);
     toolGroup->addAction(rulerAction);
@@ -989,12 +959,12 @@ void MainWindow::setupToolbar() {
     ui->toolBar->addWidget(rulerButton);
 
     /// Fog-hide tool
-    QAction* fogHideAction = new QAction(this);
+    auto* fogHideAction = new QAction(this);
     fogHideAction->setCheckable(true);
     fogHideAction->setIcon(QIcon(":/map/fog_hide.svg"));
     toolGroup->addAction(fogHideAction);
 
-    QToolButton* fogHideButton = new QToolButton(this);
+    auto* fogHideButton = new QToolButton(this);
     fogHideButton->setCheckable(true);
     fogHideButton->setToolTip(tr("Add fog to map"));
     fogHideButton->setDefaultAction(fogHideAction);
@@ -1015,12 +985,12 @@ void MainWindow::setupToolbar() {
     });
 
     /// Fog-reveal tool
-    QAction* fogRevealAction = new QAction(this);
+    auto* fogRevealAction = new QAction(this);
     fogRevealAction->setCheckable(true);
     fogRevealAction->setIcon(QIcon(":/map/fog_reveal.svg"));
     toolGroup->addAction(fogRevealAction);
 
-    QToolButton* fogRevealButton = new QToolButton(this);
+    auto* fogRevealButton = new QToolButton(this);
     fogRevealButton->setCheckable(true);
     fogRevealButton->setToolTip(tr("Remove fog from map"));
     fogRevealButton->setDefaultAction(fogRevealAction);
@@ -1042,32 +1012,32 @@ void MainWindow::setupToolbar() {
     ui->toolBar->addSeparator();
 
     /// Light tool
-    QAction* lightAction = new QAction(this);
+    auto* lightAction = new QAction(this);
     lightAction->setCheckable(true);
     lightAction->setIcon(QIcon(":/map/torch.svg"));
     toolGroup->addAction(lightAction);
 
-    QToolButton* lightButton = new QToolButton(this);
+    auto* lightButton = new QToolButton(this);
     lightButton->setCheckable(true);
     lightButton->setToolTip(tr("Edit light sources"));
     lightButton->setDefaultAction(lightAction);
     ui->toolBar->addWidget(lightButton);
 
-    QSpinBox *brightRadiusBox = new QSpinBox;
+    auto *brightRadiusBox = new QSpinBox;
     brightRadiusBox->setToolTip(tr("Bright radius"));
     brightRadiusBox->setRange(1, 500);
     brightRadiusBox->setValue(20);
     lightTool->setBrightRadius(brightRadiusBox->value());
     ui->toolBar->addWidget(brightRadiusBox);
 
-    QSpinBox *dimRadiusBox = new QSpinBox;
+    auto *dimRadiusBox = new QSpinBox;
     dimRadiusBox->setToolTip(tr("Dim radius"));
     dimRadiusBox->setRange(1, 1000);
     dimRadiusBox->setValue(40);
     lightTool->setDimRadius(dimRadiusBox->value());
     ui->toolBar->addWidget(dimRadiusBox);
 
-    QPushButton *lightColorBtn = new QPushButton();
+    auto *lightColorBtn = new QPushButton();
     lightColorBtn->setIcon(QIcon(":/map/palette.svg"));
     ui->toolBar->addWidget(lightColorBtn);
 
@@ -1088,7 +1058,7 @@ void MainWindow::setupToolbar() {
         }
     });
 
-    QCheckBox *fogUpdateBox = new QCheckBox(tr("Update fog"));
+    auto *fogUpdateBox = new QCheckBox(tr("Update fog"));
     fogUpdateBox->setChecked(false);
     ui->toolBar->addWidget(fogUpdateBox);
 
@@ -1098,19 +1068,19 @@ void MainWindow::setupToolbar() {
 
     /// Spells
     /// LineShapeTool
-    QAction* lineAction = new QAction(this);
+    auto* lineAction = new QAction(this);
     lineAction->setCheckable(true);
     lineAction->setIcon(QIcon(":/map/line.svg"));
     toolGroup->addAction(lineAction);
 
-    QToolButton* lineButton = new QToolButton(this);
+    auto* lineButton = new QToolButton(this);
     lineButton->setCheckable(true);
     lineButton->setToolTip(tr("Draw line"));
     lineButton->setDefaultAction(lineAction);
     ui->toolBar->addWidget(lineButton);
 
     connect(lineAction, &QAction::triggered, this, [=](bool checked){
-        MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
         if (checked)
             currentView->setActiveTool(lineShapeTool);
         else
@@ -1118,19 +1088,19 @@ void MainWindow::setupToolbar() {
     });
 
     /// CircleShapeTool
-    QAction* circleAction = new QAction(this);
+    auto* circleAction = new QAction(this);
     circleAction->setCheckable(true);
     circleAction->setIcon(QIcon(":/map/sphere.svg"));
     toolGroup->addAction(circleAction);
 
-    QToolButton* circleButton = new QToolButton(this);
+    auto* circleButton = new QToolButton(this);
     circleButton->setCheckable(true);
     circleButton->setToolTip(tr("Draw circle"));
     circleButton->setDefaultAction(circleAction);
     ui->toolBar->addWidget(circleButton);
 
     connect(circleAction, &QAction::triggered, this, [=](bool checked){
-        MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
         if (checked)
             currentView->setActiveTool(circleShapeTool);
         else
@@ -1138,19 +1108,19 @@ void MainWindow::setupToolbar() {
     });
 
     /// SquareShapeTool
-    QAction* squareAction = new QAction(this);
+    auto* squareAction = new QAction(this);
     squareAction->setCheckable(true);
     squareAction->setIcon(QIcon(":/map/cube.svg"));
     toolGroup->addAction(squareAction);
 
-    QToolButton* squareButton = new QToolButton(this);
+    auto* squareButton = new QToolButton(this);
     squareButton->setCheckable(true);
     squareButton->setToolTip(tr("Draw square"));
     squareButton->setDefaultAction(squareAction);
     ui->toolBar->addWidget(squareButton);
 
     connect(squareAction, &QAction::triggered, this, [=](bool checked){
-        MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
         if (checked)
             currentView->setActiveTool(squareShapeTool);
         else
@@ -1158,19 +1128,19 @@ void MainWindow::setupToolbar() {
     });
 
     /// TriangleShapeTool
-    QAction* triangleAction = new QAction(this);
+    auto* triangleAction = new QAction(this);
     triangleAction->setCheckable(true);
     triangleAction->setIcon(QIcon(":/map/cone.svg"));
     toolGroup->addAction(triangleAction);
 
-    QToolButton* triangleButton = new QToolButton(this);
+    auto* triangleButton = new QToolButton(this);
     triangleButton->setCheckable(true);
     triangleButton->setToolTip(tr("Draw triangle"));
     triangleButton->setDefaultAction(triangleAction);
     ui->toolBar->addWidget(triangleButton);
 
     connect(triangleAction, &QAction::triggered, this, [=](bool checked){
-        MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
         if (checked)
             currentView->setActiveTool(triangleShapeTool);
         else
@@ -1179,12 +1149,12 @@ void MainWindow::setupToolbar() {
 
 
     /// Brush tool
-    QAction* brushAction = new QAction(this);
+    auto* brushAction = new QAction(this);
     brushAction->setCheckable(true);
     brushAction->setIcon(QIcon(":/map/brush.svg"));
     toolGroup->addAction(brushAction);
 
-    QToolButton* brushButton = new QToolButton(this);
+    auto* brushButton = new QToolButton(this);
     brushButton->setCheckable(true);
     brushButton->setToolTip(tr("Brush"));
     brushButton->setDefaultAction(brushAction);
@@ -1196,13 +1166,13 @@ void MainWindow::setupToolbar() {
         QAction* clearAllAction = contextMenu.addAction(tr("Clear all"));
         QAction* chosen = contextMenu.exec(brushButton->mapToGlobal(pos));
         if (chosen == clearAllAction){
-            MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+            auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
             brushTool->clearAll(currentView->getScene());
         }
     });
 
     connect(brushAction, &QAction::triggered, this, [=](bool checked){
-        MapView* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
         if (checked)
             currentView->setActiveTool(brushTool);
         else
@@ -1211,7 +1181,7 @@ void MainWindow::setupToolbar() {
 
 
     /// Brush opacity
-    QSlider* opacitySlider = new QSlider(Qt::Horizontal);
+    auto* opacitySlider = new QSlider(Qt::Horizontal);
     opacitySlider->setRange(0, 100);
     opacitySlider->setValue(50);
     opacitySlider->setToolTip(tr("Brush opacity"));
@@ -1223,7 +1193,7 @@ void MainWindow::setupToolbar() {
     });
 
     /// Shape color button
-    QPushButton *ShapeToolColorButton = new QPushButton();
+    auto *ShapeToolColorButton = new QPushButton();
     ShapeToolColorButton->setIcon(QIcon(":/map/palette.svg"));
     ui->toolBar->addWidget(ShapeToolColorButton);
 

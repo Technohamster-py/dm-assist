@@ -1,7 +1,3 @@
-//
-// Created by arsen on 13.04.2025.
-//
-
 #include "thememanager.h"
 #include <QFile>
 #include <QXmlStreamReader>

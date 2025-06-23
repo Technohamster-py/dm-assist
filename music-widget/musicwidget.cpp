@@ -9,7 +9,6 @@
 #include <QDir>
 #include <QFile>
 #include <QStandardPaths>
-#include <QPushButton>
 
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
@@ -161,7 +160,7 @@ void MusicPlayerWidget::setVolumeDivider(int value) {
  * @param key The keyboard shortcut to be assigned. It should be a string representing
  *            the desired key sequence.
  */
-void MusicPlayerWidget::setPlayShortcut(QString key) {
+void MusicPlayerWidget::setPlayShortcut(const QString& key) {
     playKey->setKey(key);
 }
 
@@ -242,7 +241,7 @@ void MusicPlayerWidget::edit() {
 
         setPlaylistName(editor.getPlaylistName());
 
-        addMedia(newList); // это скопирует в локальную папку и обновит filePaths
+        addMedia(newList);
     }
 }
 
@@ -268,7 +267,7 @@ void MusicPlayerWidget::play() {
     if (filePaths.isEmpty()) return;
 
     for (const QString &file: filePaths) {
-        HSTREAM stream = BASS_StreamCreateFile(FALSE, file.toStdString().c_str(), 0, 0, 0);
+        stream = BASS_StreamCreateFile(FALSE, file.toStdString().c_str(), 0, 0, 0);
         streams.append(stream);
     }
 
@@ -297,7 +296,7 @@ void MusicPlayerWidget::playTrackAt(int index) {
 
     // Установка синхронизации на окончание трека
     BASS_ChannelSetSync(stream, BASS_SYNC_END, 0, [](HSYNC, DWORD handle, DWORD, void *user) {
-        MusicPlayerWidget *self = static_cast<MusicPlayerWidget*>(user);
+        auto *self = static_cast<MusicPlayerWidget*>(user);
         QMetaObject::invokeMethod(self, "playNextTrack", Qt::QueuedConnection);
     }, this);
 
@@ -336,8 +335,8 @@ void MusicPlayerWidget::playNextTrack() {
  * and modifies the UI to reflect the stopped state (e.g., changing the play button's style and icon).
  */
 void MusicPlayerWidget::stop() {
-    for (HSTREAM stream : streams) {
-        BASS_ChannelStop(stream);
+    for (HSTREAM musicStream : streams) {
+        BASS_ChannelStop(musicStream);
     }
     isActive = false;
     emit playerStopped();
@@ -357,8 +356,8 @@ void MusicPlayerWidget::stop() {
  * leaks.
  */
 void MusicPlayerWidget::freeStreams() {
-    for (HSTREAM stream : streams) {
-        BASS_StreamFree(stream);
+    for (HSTREAM musicStream : streams) {
+        BASS_StreamFree(musicStream);
     }
     streams.clear();
 }
@@ -422,7 +421,7 @@ void MusicPlayerWidget::dropEvent(QDropEvent *event) {
  *
  * @param localDirPath The base path to be set as the local directory.
  */
-void MusicPlayerWidget::setLocalDirPath(QString localDirPath) {
+void MusicPlayerWidget::setLocalDirPath(const QString& localDirPath) {
     localDir = localDirPath + playlistName;
     emit localDirPathChanged();
 }
@@ -441,7 +440,7 @@ void MusicPlayerWidget::setLocalDirPath(QString localDirPath) {
  * enabled (denoted by the `BASS_DEVICE_ENABLED` flag in the device info), its
  * name is included in the list.
  */
-QStringList MusicPlayerWidget::availableAudioDevices() const {
+QStringList MusicPlayerWidget::availableAudioDevices() {
     QStringList list;
     BASS_DEVICEINFO info;
     for (int i = 1; BASS_GetDeviceInfo(i, &info); i++) {
@@ -479,7 +478,7 @@ QString MusicPlayerWidget::currentDeviceName() const {
  *
  * @param volume An integer value representing the target volume level, typically in the range of 0 to 100.
  */
-void MusicPlayerWidget::changeVolume(int volume) {
+void MusicPlayerWidget::changeVolume(int volume) const {
 
     float trueVolume = volume / 100.0f;
 
@@ -605,14 +604,14 @@ int MusicPlayerWidget::volumeSliderPosition() {
  * @param tracks A QStringList containing the initial list of tracks to be displayed in the dialog.
  * @param title The initial title of the playlist.
  */
-PlaylistEditDialog::PlaylistEditDialog(QWidget *parent, const QStringList &tracks, QString title)
+PlaylistEditDialog::PlaylistEditDialog(QWidget *parent, const QStringList &tracks, const QString& title)
         : QDialog(parent), ui(new Ui::PlaylistEditDialog)
 {
     ui->setupUi(this);
     resize(400, 300);
 
     QRegularExpression regex("[A-Za-z0-9\\-_ ]+");
-    QRegularExpressionValidator *validator = new QRegularExpressionValidator(regex, ui->titleEdit);
+    auto *validator = new QRegularExpressionValidator(regex, ui->titleEdit);
     ui->titleEdit->setValidator(validator);
 
     ui->titleEdit->setText(title);

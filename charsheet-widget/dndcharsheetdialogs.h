@@ -47,7 +47,7 @@ class AttackDialog : public QDialog {
 Q_OBJECT
 
 public:
-    explicit AttackDialog(QWidget *parent = nullptr, Attack ref = {});
+    explicit AttackDialog(QWidget *parent = nullptr, const Attack& ref = {});
 
     ~AttackDialog() override;
 

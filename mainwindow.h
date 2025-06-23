@@ -106,7 +106,7 @@ private:
 
     QActionGroup *toolGroup;
 
-    void exportMap(QString path, int index);
+    void exportMap(const QString& path, int index);
 
 private slots:
     void newCampaign();
@@ -114,11 +114,11 @@ private slots:
     void closeCampaign();
 
     void loadMusicConfigFile(QString fileName);
-    void saveMusicConfigFile(QString fileName);
+    void saveMusicConfigFile(const QString& fileName);
     void on_actionSettings_triggered();
 
     void createNewMapTab();
-    void openMapFromFile(QString fileName);
+    void openMapFromFile(const QString& fileName);
     void deleteMapTab(int index);
     void updateVisibility();
 

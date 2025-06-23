@@ -38,10 +38,10 @@ signals:
     void columnShown(int column);
 
 public slots:
-    void loadFromFile(QString filename);
-    void saveToFile(QString filename);
+    void loadFromFile(const QString& filename);
+    void saveToFile(const QString& filename);
 
-    void addFromFile(QString filename);
+    void addFromFile(const QString& filename);
 
     void setSharedFieldVisible(int index, bool visible);
     void setHpDisplayMode(int mode);

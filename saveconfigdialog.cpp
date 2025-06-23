@@ -15,32 +15,32 @@ SaveConfigDialog::SaveConfigDialog(QWidget *parent)  : QDialog(parent), warningL
     setWindowTitle(tr("Сохранение проекта"));
     resize(400, 200);
 
-    QLabel* projectNameLabel = new QLabel(tr("Имя проекта:"), this);
-    QLabel* rootFolderLabel = new QLabel(tr("Корневая папка:"), this);
+    auto* projectNameLabel = new QLabel(tr("Имя проекта:"), this);
+    auto* rootFolderLabel = new QLabel(tr("Корневая папка:"), this);
 
     projectNameEdit = new QLineEdit(this);
     rootFolderEdit = new QLineEdit(this);
 
-    QPushButton* browseButton = new QPushButton(tr("Выбрать папку..."), this);
+    auto* browseButton = new QPushButton(tr("Выбрать папку..."), this);
     connect(browseButton, &QPushButton::clicked, this, &SaveConfigDialog::onBrowseClicked);
 
-    QPushButton* saveButton = new QPushButton(tr("Сохранить"), this);
+    auto* saveButton = new QPushButton(tr("Сохранить"), this);
     connect(saveButton, &QPushButton::clicked, this, &SaveConfigDialog::onSaveClicked);
-    QPushButton* cancelButton = new QPushButton(tr("Отмена"), this);
+    auto* cancelButton = new QPushButton(tr("Отмена"), this);
     connect(cancelButton, &QPushButton::clicked, this, &QDialog::reject);
 
     warningLabel = new QLabel(this);
     warningLabel->setStyleSheet("color: red;");
     warningLabel->hide();
 
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    auto* layout = new QVBoxLayout(this);
 
-    QHBoxLayout* projectNameLayout = new QHBoxLayout();
+    auto* projectNameLayout = new QHBoxLayout();
     projectNameLayout->addWidget(projectNameLabel);
     projectNameLayout->addWidget(projectNameEdit);
     layout->addLayout(projectNameLayout);
 
-    QHBoxLayout* rootFolderLayout = new QHBoxLayout();
+    auto* rootFolderLayout = new QHBoxLayout();
     rootFolderLayout->addWidget(rootFolderLabel);
     rootFolderLayout->addWidget(rootFolderEdit);
     rootFolderLayout->addWidget(browseButton);
@@ -48,7 +48,7 @@ SaveConfigDialog::SaveConfigDialog(QWidget *parent)  : QDialog(parent), warningL
 
     layout->addWidget(warningLabel);
 
-    QHBoxLayout* buttonLayout = new QHBoxLayout();
+    auto* buttonLayout = new QHBoxLayout();
     buttonLayout->addWidget(saveButton);
     buttonLayout->addWidget(cancelButton);
     layout->addLayout(buttonLayout);

@@ -1,7 +1,3 @@
-//
-// Created by arseniy on 02.05.2025.
-//
-
 #include "rulermaptool.h"
 #include "mapscene.h"
 

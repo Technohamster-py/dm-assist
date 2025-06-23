@@ -1,7 +1,3 @@
-//
-// Created by arsen on 13.04.2025.
-//
-
 #ifndef DM_ASSIST_THEMEMANAGER_H
 #define DM_ASSIST_THEMEMANAGER_H
 

@@ -24,8 +24,8 @@ public:
     void setMode(Mode mode);
     void setRadius(int radius);
 
-    void hideAll(QGraphicsScene *scene);
-    void revealAll(QGraphicsScene *scene);
+    static void hideAll(QGraphicsScene *scene);
+    static void revealAll(QGraphicsScene *scene);
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override;

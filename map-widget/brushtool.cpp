@@ -18,12 +18,12 @@ void BrushTool::setBrushSize(int px) {
 }
 
 void BrushTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) {
-    MapScene* mapScene = dynamic_cast<MapScene*>(scene);
+    auto* mapScene = dynamic_cast<MapScene*>(scene);
     if (event->button() == Qt::RightButton) {
         QGraphicsItem* clicked = mapScene->itemAt(event->scenePos(), QTransform());
-        if (auto* path = qgraphicsitem_cast<QGraphicsPathItem*>(clicked)) {
-            if (path->zValue() == 6) {
-                mapScene->removeUndoableItem(path);
+        if (auto* graphicsPath = qgraphicsitem_cast<QGraphicsPathItem*>(clicked)) {
+            if (graphicsPath->zValue() == 6) {
+                mapScene->removeUndoableItem(graphicsPath);
                 return;
             }
         }
@@ -57,7 +57,7 @@ void BrushTool::mouseReleaseEvent(QGraphicsSceneMouseEvent *event, QGraphicsScen
         previewItem->setPath(path);
 
         previewItem->setParentItem(nullptr);
-        static_cast<MapScene*>(scene)->addUndoableItem(previewItem);
+        dynamic_cast<MapScene*>(scene)->addUndoableItem(previewItem);
         previewItem = nullptr;
     }
 }

@@ -2,6 +2,7 @@
 #include <QFileDialog>
 #include <QStandardPaths>
 #include <QMessageBox>
+#include <utility>
 
 #include "initiativetrackerwidget.h"
 #include "hpprogressbardelegate.h"
@@ -107,7 +108,7 @@ void InitiativeTrackerWidget::addRow() {
  * - The window has a preset size (800x400) and a custom title ("Shared Initiative Tracker").
  */
 void InitiativeTrackerWidget::openSharedWindow() {
-    QWidget *sharedWindow = new QWidget;
+    auto *sharedWindow = new QWidget;
     sharedWindow->setAttribute(Qt::WA_DeleteOnClose);
     sharedWindow->setWindowTitle("Shared Initiative Tracker");
     sharedWindow->resize(800, 400);
@@ -118,7 +119,7 @@ void InitiativeTrackerWidget::openSharedWindow() {
                 sharedWindows.removeAll(sharedWindow);
             });
 
-    QTableView *sharedWidget = new QTableView(sharedWindow);
+    auto *sharedWidget = new QTableView(sharedWindow);
     sharedWidget->setModel(model);
     auto *view = sharedWidget;
     sharedWidget->setColumnHidden(InitiativeModel::fields::del, true);
@@ -135,7 +136,7 @@ void InitiativeTrackerWidget::openSharedWindow() {
     connect(this, SIGNAL(columnShown(int)), sharedWidget, SLOT(showColumn(int)));
 
 
-    QVBoxLayout *layout = new QVBoxLayout(sharedWindow);
+    auto *layout = new QVBoxLayout(sharedWindow);
     layout->addWidget(sharedWidget);
     sharedWindow->setLayout(layout);
     sharedWindow->show();
@@ -199,7 +200,7 @@ void InitiativeTrackerWidget::sortTable() {
  *
  * @param filename The path of the file to load the initiative data from.
  */
-void InitiativeTrackerWidget::loadFromFile(QString filename){
+void InitiativeTrackerWidget::loadFromFile(const QString& filename){
     model->loadFromFile(filename);
 }
 
@@ -213,7 +214,7 @@ void InitiativeTrackerWidget::loadFromFile(QString filename){
  *
  * @param filename The name of the file to save the data to.
  */
-void InitiativeTrackerWidget::saveToFile(QString filename){
+void InitiativeTrackerWidget::saveToFile(const QString& filename){
     model->saveToFile(filename);
 }
 
@@ -271,7 +272,7 @@ void InitiativeTrackerWidget::closeEvent(QCloseEvent *event){
     if (reply == QMessageBox::Yes)
         on_saveButton_clicked();
 
-    for (QPointer<QWidget> w : sharedWindows) {
+    for (const QPointer<QWidget>& w : sharedWindows) {
         if (w) w->close();
     }
     sharedWindows.clear();
@@ -316,7 +317,7 @@ void InitiativeTrackerWidget::setSharedFieldVisible(int index, bool visible) {
  *
  * @param filename The file path from which to load initiative tracking data.
  */
-void InitiativeTrackerWidget::addFromFile(QString filename) {
+void InitiativeTrackerWidget::addFromFile(const QString& filename) {
     model->addFromFile(filename);
 }
 
@@ -377,7 +378,7 @@ void InitiativeTrackerWidget::addCharacter(const QJsonDocument& characterDocumen
 
 void InitiativeTrackerWidget::addCharacter(QString name, int maxHp, int ac, int hp, int initiative) {
     InitiativeCharacter emptyCharacter;
-    emptyCharacter.name = name;
+    emptyCharacter.name = std::move(name);
     emptyCharacter.maxHp = maxHp;
     emptyCharacter.ac = ac,
     emptyCharacter.hp = QString::number(hp),

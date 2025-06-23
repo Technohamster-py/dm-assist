@@ -66,7 +66,7 @@ bool SpellShapeTool::clearShapeAt(QGraphicsScene *scene, QPointF point) {
         if (item->zValue() < -99 || item->zValue() > 99) continue;
 
 
-        static_cast<MapScene *>(scene)->removeUndoableItem(item);
+        dynamic_cast<MapScene *>(scene)->removeUndoableItem(item);
         return true;
     }
     return false;
@@ -142,7 +142,7 @@ void LineShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsSc
         item->setPen(QPen(color, 2));
         item->setZValue(mapLayers::Shapes);
 
-        static_cast<MapScene*>(scene)->addUndoableItem(item);
+        dynamic_cast<MapScene*>(scene)->addUndoableItem(item);
 
         hasFirstPoint = false;
         clearPreview(scene);
@@ -231,7 +231,7 @@ void CircleShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphics
         item->setBrush(QBrush(color, Qt::Dense4Pattern));
         item->setZValue(mapLayers::Shapes);
 
-        static_cast<MapScene*>(scene)->addUndoableItem(item);
+        dynamic_cast<MapScene*>(scene)->addUndoableItem(item);
 
         hasFirstPoint = false;
         clearPreview(scene);
@@ -291,7 +291,7 @@ QRectF CircleShapeTool::circleRect(QPointF point) {
     QPointF topLeft(firstPoint.x()-radius, firstPoint.y()-radius);
     QPointF bottomRight(firstPoint.x()+radius, firstPoint.y()+radius);
 
-    return QRectF(topLeft, bottomRight);
+    return {topLeft, bottomRight};
 }
 
 /**
@@ -334,7 +334,7 @@ void TriangleShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphi
         item->setBrush(QBrush(color, Qt::Dense4Pattern));
         item->setZValue(mapLayers::Shapes);
 
-        static_cast<MapScene*>(scene)->addUndoableItem(item);
+        dynamic_cast<MapScene*>(scene)->addUndoableItem(item);
 
         hasFirstPoint = false;
         clearPreview(scene);
@@ -462,7 +462,7 @@ void SquareShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphics
         item->setBrush(QBrush(color, Qt::Dense4Pattern));
         item->setZValue(mapLayers::Shapes);
 
-        static_cast<MapScene*>(scene)->addUndoableItem(item);
+        dynamic_cast<MapScene*>(scene)->addUndoableItem(item);
         hasFirstPoint = false;
         clearPreview(scene);
     }
@@ -498,7 +498,7 @@ void SquareShapeTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsS
     if (!previewShape) {
         previewShape = scene->addPolygon(square, QPen(Qt::DashLine));
     } else {
-        static_cast<QGraphicsPolygonItem*>(previewShape)->setPolygon(square);
+        dynamic_cast<QGraphicsPolygonItem*>(previewShape)->setPolygon(square);
     }
 
     double diagLength = QLineF(firstPoint, event->scenePos()).length();

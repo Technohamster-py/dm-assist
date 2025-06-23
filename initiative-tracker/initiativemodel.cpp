@@ -60,7 +60,7 @@ int InitiativeModel::columnCount(const QModelIndex &) const {
  */
 QVariant InitiativeModel::headerData(int section, Qt::Orientation orientation, int role) const {
     if (role != Qt::DisplayRole && role != Qt::DecorationRole || orientation != Qt::Horizontal)
-        return QVariant();
+        return {};
 
     switch (section) {
         case 0: return tr("Name");
@@ -69,7 +69,7 @@ QVariant InitiativeModel::headerData(int section, Qt::Orientation orientation, i
         case 3: return QIcon(":/heart.svg");
         case 4: return tr("Max");
         case 5: return tr("Delete");
-        default: return QVariant();
+        default: return {};
     }
 }
 
@@ -98,7 +98,7 @@ QVariant InitiativeModel::headerData(int section, Qt::Orientation orientation, i
  */
 QVariant InitiativeModel::data(const QModelIndex &index, int role) const {
     if (!index.isValid() || index.row() >= characters.size())
-        return QVariant();
+        return {};
 
     const InitiativeCharacter &c = characters.at(index.row());
 
@@ -131,7 +131,7 @@ QVariant InitiativeModel::data(const QModelIndex &index, int role) const {
         return QBrush(QColor("#cceeff")); // Подсветка текущего
     }
 
-    return QVariant();
+    return {};
 }
 
 

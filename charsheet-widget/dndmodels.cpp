@@ -9,7 +9,7 @@ DndAttackModel::DndAttackModel(const QJsonArray &attackList, QObject *parent) : 
 
 QVariant DndAttackModel::headerData(int section, Qt::Orientation orientation, int role) const {
     if (role != Qt::DisplayRole && role != Qt::DecorationRole || orientation != Qt::Horizontal)
-        return QVariant();
+        return {};
 
     switch (section) {
         case 0: return tr("Title");
@@ -17,13 +17,13 @@ QVariant DndAttackModel::headerData(int section, Qt::Orientation orientation, in
         case 2: return tr("Damage");
         case 3: return tr("Notes");
         case 4: return tr("Delete");
-        default: return QVariant();
+        default: return {};
     }
 }
 
 QVariant DndAttackModel::data(const QModelIndex &index, int role) const {
     if (!index.isValid() || index.row() >= m_attackList.size())
-        return QVariant();
+        return {};
 
     const Attack &w = m_attackList.at(index.row());
 
@@ -38,7 +38,7 @@ QVariant DndAttackModel::data(const QModelIndex &index, int role) const {
             case 3: return w.notes;
         }
     }
-    return QVariant();
+    return {};
 }
 
 Qt::ItemFlags DndAttackModel::flags(const QModelIndex &index) const {
@@ -151,13 +151,13 @@ DndResourceModel::DndResourceModel(QObject *parent) : QAbstractTableModel(parent
 
 QVariant DndResourceModel::data(const QModelIndex &index, int role) const {
     if (!index.isValid() || index.row() >= m_resourcesList.size())
-        return QVariant();
+        return {};
     const Resource &r = m_resourcesList.at(index.row());
 
     if (role == Qt::DecorationRole && index.column() == 0){
         if (r.refillOnShortRest) return QIcon(":/charSheet/shortrest.svg");
         if (r.refillOnLongRest) return QIcon(":/charSheet/longrest.svg");
-        return QVariant();
+        return {};
     }
 
     if (role == Qt::DisplayRole || role == Qt::EditRole || role == Qt::UserRole) {
@@ -170,12 +170,12 @@ QVariant DndResourceModel::data(const QModelIndex &index, int role) const {
             case 3: return r.max;
         }
     }
-    return QVariant();
+    return {};
 }
 
 QVariant DndResourceModel::headerData(int section, Qt::Orientation orientation, int role) const {
     if (role != Qt::DisplayRole && role != Qt::DecorationRole || orientation != Qt::Horizontal)
-        return QVariant();
+        return {};
 
     switch (section) {
         case 0: return tr("Refill");
@@ -183,7 +183,7 @@ QVariant DndResourceModel::headerData(int section, Qt::Orientation orientation, 
         case 2: return tr("Current");
         case 3: return tr("Max");
         case 4: return tr("Delete");
-        default: return QVariant();
+        default: return {};
     }
 }
 

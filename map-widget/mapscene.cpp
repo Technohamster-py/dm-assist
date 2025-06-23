@@ -236,7 +236,7 @@ QPixmap MapScene::getMapPixmap() const {
             }
         }
     }
-    return QPixmap();
+    return {};
 }
 
 /**

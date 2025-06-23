@@ -19,7 +19,7 @@ public:
     void wheelEvent(QGraphicsSceneWheelEvent *event, QGraphicsScene *scene) override;
     void deactivate(QGraphicsScene *scene) override;
 
-    void clearAll(QGraphicsScene *scene);
+    static void clearAll(QGraphicsScene *scene);
 
 private:
     QPainterPath path;

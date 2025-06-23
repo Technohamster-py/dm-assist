@@ -40,15 +40,15 @@ public:
     int volumeSliderPosition();
 
     void addMedia(const QStringList &files);
-    void setLocalDirPath(QString localDirPath);
+    void setLocalDirPath(const QString& localDirPath);
     QString getLocalDirPath() const { return localDir; }
 
-    void setPlayShortcut(QString key);
+    void setPlayShortcut(const QString& key);
 
     void setAudioOutput(const QString &deviceName);
     void setAudioOutput(int deviceIndex);
     QString currentDeviceName() const;
-    QStringList availableAudioDevices() const;
+    static QStringList availableAudioDevices() ;
 
 
     void playTrackAt(int index);
@@ -76,7 +76,7 @@ private slots:
     void playShortcutTriggered();
 
     void playNextTrack();
-    void changeVolume(int volume);
+    void changeVolume(int volume) const;
 
 private:
     void freeStreams();
@@ -105,7 +105,7 @@ class PlaylistEditDialog : public QDialog {
 Q_OBJECT
 
 public:
-    explicit PlaylistEditDialog(QWidget *parent = nullptr, const QStringList &tracks = {}, QString title = "title");
+    explicit PlaylistEditDialog(QWidget *parent = nullptr, const QStringList &tracks = {}, const QString& title = "title");
     ~PlaylistEditDialog();
 
     QStringList getUpdatedPlaylist() const;

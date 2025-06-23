@@ -31,7 +31,7 @@ Resource ResourceDialog::getCreatedResource() {
 }
 
 
-AttackDialog::AttackDialog(QWidget *parent, Attack ref) :
+AttackDialog::AttackDialog(QWidget *parent, const Attack& ref) :
         QDialog(parent), ui(new Ui::AttackDialog) {
     ui->setupUi(this);
 

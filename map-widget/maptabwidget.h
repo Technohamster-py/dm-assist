@@ -23,19 +23,19 @@ class TabWidget : public QTabWidget {
 Q_OBJECT
 
 public:
-    TabWidget(QWidget *parent = nullptr) : QTabWidget(parent) {
+    explicit TabWidget(QWidget *parent = nullptr) : QTabWidget(parent) {
         setTabsClosable(true);
         setTabBarAutoHide(false);
 
-        QToolButton *plusButton = new QToolButton(this);
+        auto *plusButton = new QToolButton(this);
         plusButton->setIcon(QIcon(":/add.svg"));
         plusButton->setAutoRaise(true);
         plusButton->setToolTip(tr("Open new map"));
 
         connect(plusButton, &QToolButton::clicked, this, &TabWidget::addNewTab);
 
-        QWidget *cornerWidget = new QWidget(this);
-        QHBoxLayout *layout = new QHBoxLayout(cornerWidget);
+        auto *cornerWidget = new QWidget(this);
+        auto *layout = new QHBoxLayout(cornerWidget);
         layout->setContentsMargins(0, 0, 0, 0);
         layout->addStretch();
         layout->addWidget(plusButton);

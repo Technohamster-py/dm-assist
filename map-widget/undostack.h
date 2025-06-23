@@ -14,14 +14,14 @@
  */
 class UndoAction {
 public:
-    virtual ~UndoAction() {}
+    virtual ~UndoAction() = default;
     virtual void undo(QGraphicsScene* scene) = 0;
 };
 
 class AddItemAction : public UndoAction {
     QGraphicsItem* item;
 public:
-    AddItemAction(QGraphicsItem* item) : item(item) {}
+    explicit AddItemAction(QGraphicsItem* item) : item(item) {}
     void undo(QGraphicsScene* scene) override {
         scene->removeItem(item);
         delete item;
@@ -42,7 +42,7 @@ public:
 class RemoveItemAction : public UndoAction {
     QGraphicsItem* item;
 public:
-    RemoveItemAction(QGraphicsItem* item) : item(item) {}
+    explicit RemoveItemAction(QGraphicsItem* item) : item(item) {}
     void undo(QGraphicsScene* scene) override {
         scene->addItem(item);
     }

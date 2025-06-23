@@ -43,7 +43,7 @@ LightSourceItem::LightSourceItem(qreal r1, qreal r2, QColor color, QPointF pos, 
  * @return QRectF that represents the bounding rectangle of the item.
  */
 QRectF LightSourceItem::boundingRect() const {
-    return QRectF(-radiusDim, -radiusDim, 2 * radiusDim, 2 * radiusDim);
+    return {-radiusDim, -radiusDim, 2 * radiusDim, 2 * radiusDim};
 }
 
 void LightSourceItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
