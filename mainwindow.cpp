@@ -55,7 +55,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setupShortcuts();
 
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newCampaign);
-    connect(ui->actionSave, &QAction::triggered, this, &MainWindow::saveCampaign);
+    connect(ui->actionClose, &QAction::triggered, this, &MainWindow::closeCampaign);
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::loadCampaign);
     connect(ui->actionHelp, &QAction::triggered, [](){QDesktopServices::openUrl(QUrl("https://github.com/Technohamster-py/dm-assist/wiki/%D0%9D%D0%B0%D1%87%D0%B0%D0%BB%D0%BE"));});
     connect(ui->actionDonate, &QAction::triggered, [](){QDesktopServices::openUrl(QUrl("https://pay.cloudtips.ru/p/8f6d339a"));});
@@ -86,7 +86,7 @@ MainWindow::MainWindow(QWidget *parent) :
  * @details При закрытии окна производится сохранение конфигурационного файла
  */
 MainWindow::~MainWindow() {
-    saveCampaign();
+    closeCampaign();
     saveSettings();
     foreach(MusicPlayerWidget* player, players){
         removeDirectoryRecursively(player->getLocalDirPath());
@@ -597,7 +597,7 @@ void MainWindow::openSharedMapWindow(int index) {
  * - The "Music" directory within the campaign root may be emptied and its configuration file regenerated.
  * - Each map is exported into the appropriate directory based on its tab index and object name.
  */
-void MainWindow::saveCampaign() {
+void MainWindow::closeCampaign() {
     QString rootPath = campaignTreeWidget->root();
     QDir rootDir(rootPath);
     if (rootPath.isEmpty() || !rootDir.exists())
@@ -609,6 +609,9 @@ void MainWindow::saveCampaign() {
     for (int i = 0; i < mapTabWidget->count(); ++i) {
         exportMap(rootPath + "/Maps/" + mapTabWidget->widget(i)->objectName(), i);
     }
+
+    currentCampaignDir = "";
+    campaignTreeWidget->clear();
 }
 
 /**
@@ -815,7 +818,7 @@ void MainWindow::setupCampaign(const QString& campaignRoot) {
         return;
 
     if (!currentCampaignDir.isEmpty()){
-        saveCampaign();
+        closeCampaign();
     }
     if (!campaignTreeWidget->setRootDir(campaignRoot))
         return;

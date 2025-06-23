@@ -281,7 +281,7 @@
      <x>0</x>
      <y>0</y>
      <width>1440</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
    <property name="font">
@@ -304,7 +304,7 @@
     </widget>
     <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
-    <addaction name="actionSave"/>
+    <addaction name="actionClose"/>
     <addaction name="actionReload"/>
     <addaction name="separator"/>
     <addaction name="actionSettings"/>
@@ -414,9 +414,9 @@
     <string>Character builder</string>
    </property>
   </action>
-  <action name="actionSave">
+  <action name="actionClose">
    <property name="text">
-    <string>Save</string>
+    <string>Close</string>
    </property>
   </action>
   <action name="actionHelp">

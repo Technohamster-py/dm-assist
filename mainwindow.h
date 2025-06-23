@@ -111,7 +111,7 @@ private:
 private slots:
     void newCampaign();
     void loadCampaign();
-    void saveCampaign();
+    void closeCampaign();
 
     void loadMusicConfigFile(QString fileName);
     void saveMusicConfigFile(QString fileName);
