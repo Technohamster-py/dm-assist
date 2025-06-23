@@ -400,7 +400,7 @@ void MainWindow::loadSettings() {
 
     /// Session
     currentCampaignDir = settings.value(paths.session.campaign, "").toString();
-//    setupCampaign(currentCampaignDir);
+    setupCampaign(currentCampaignDir);
 }
 
 /**
