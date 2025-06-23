@@ -265,7 +265,7 @@ void DndCharsheetWidget::populateWidget() {
     resourceModel->fromJson(m_dataObject["resources"].toObject());
 }
 
-QJsonObject DndCharsheetWidget::collectData(QString filePath) {
+QJsonObject DndCharsheetWidget::collectData(const QString& filePath) {
     QJsonObject result = m_dataObject;
 
     // name
@@ -294,7 +294,7 @@ QJsonObject DndCharsheetWidget::collectData(QString filePath) {
     result["vitality"] = vitality;
 
     // stats
-    auto statObject = [&](QString statName, int score) {
+    auto statObject = [&](const QString& statName, int score) {
         return QJsonObject{{"score", score}, {"modifier", bonusFromStat(score)}};
     };
 
@@ -318,7 +318,7 @@ QJsonObject DndCharsheetWidget::collectData(QString filePath) {
     result["saves"] = saves;
 
     // skills
-    auto skill = [&](QString name, QCheckBox *checkBox, QString stat = "") {
+    auto skill = [&](const QString& name, QCheckBox *checkBox, const QString& stat = "") {
         QJsonObject obj;
         obj["name"] = name;
         if (!stat.isEmpty()) obj["baseStat"] = stat;
@@ -662,12 +662,9 @@ QJsonArray DndCharsheetWidget::serializeHtmlToJson(const QString &html) {
         QJsonObject paragraph;
         QJsonArray paragraphContent;
 
-        // Обработка списка
         if (block.textList()) {
             QTextList *list = block.textList();
-            QString marker = list->format().style() == QTextListFormat::ListDecimal ? "ordered" : "bullet";
 
-            QString text = block.text();
             QJsonObject item;
             item["type"] = "paragraph";
 
@@ -703,7 +700,6 @@ QJsonArray DndCharsheetWidget::serializeHtmlToJson(const QString &html) {
             continue;
         }
 
-        // Обычные параграфы
         paragraph["type"] = "paragraph";
         for (QTextBlock::iterator it = block.begin(); !it.atEnd(); ++it) {
             QTextFragment frag = it.fragment();

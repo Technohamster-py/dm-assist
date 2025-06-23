@@ -53,7 +53,7 @@ private:
 
     static QString parseParagraphs(const QJsonArray& content);
     void parseNotes();
-    QTextEdit* getFocusedEdit();
+    static QTextEdit* getFocusedEdit();
 
     QShortcut* m_boldShortcut;
     QShortcut* m_italicShortcut;
@@ -62,7 +62,7 @@ private:
     DndAttackModel* attackModel;
     DndResourceModel* resourceModel;
 
-    QJsonObject collectData(QString filePath = nullptr);
+    QJsonObject collectData(const QString& filePath = nullptr);
 
     void closeEvent(QCloseEvent *event) override;
 };
