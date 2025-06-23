@@ -38,6 +38,7 @@ public:
 
     void addAttack(const Attack& weapon);
     void deleteAttack(int row);
+    void editAttack(int row, const Attack& attack);
     Attack getAttack(int row) const;
 
     bool fromJson(const QJsonArray& attackData);

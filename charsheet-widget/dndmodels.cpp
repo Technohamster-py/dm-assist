@@ -139,6 +139,13 @@ QJsonArray DndAttackModel::toJson() {
     return m_attackArray;
 }
 
+void DndAttackModel::editAttack(int row, const Attack& attack) {
+    if (row < 0 || row >= m_attackList.size())
+        return;
+    m_attackList[row] = attack;
+    emit dataChanged(index(row, 0), index(row, 5));
+}
+
 
 DndResourceModel::DndResourceModel(QObject *parent) : QAbstractTableModel(parent) {}
 

@@ -86,13 +86,6 @@ MainWindow::MainWindow(QWidget *parent) :
  * @details При закрытии окна производится сохранение конфигурационного файла
  */
 MainWindow::~MainWindow() {
-//    QMessageBox::StandardButton reply = QMessageBox::question(this,
-//                                                              tr("Сохранение конфигурации"),
-//                                                              tr("Сохранить проект?"),
-//                                                              QMessageBox::Yes | QMessageBox::No);
-//
-//    if(reply == QMessageBox::Yes)
-//        saveConfigFile();
     saveCampaign();
     saveSettings();
     foreach(MusicPlayerWidget* player, players){

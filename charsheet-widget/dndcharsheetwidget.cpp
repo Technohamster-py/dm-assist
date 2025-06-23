@@ -28,20 +28,30 @@ DndCharsheetWidget::DndCharsheetWidget(QWidget* parent) :
     connectSignals();
 
     connect(ui->attacsView, &QTableView::clicked, this, [=](const QModelIndex &index) {
-        if (index.column() == 5) {
-            attackModel->deleteAttack(index.row());
+        switch (index.column()) {
+            case 5:
+                attackModel->deleteAttack(index.row());
+                break;
+            default:
+                AttackDialog attackDialog(this, attackModel->getAttack(index.row()));
+                if (attackDialog.exec()== QDialog::Accepted){
+                    Attack attack = attackDialog.getCreatedAttack();
+                    attackModel->editAttack(index.row(), attack);
+                }
+                break;
         }
     });
 
     connect(ui->resourcesView, &QTableView::clicked, this, [=](const QModelIndex &index) {
-        if (index.column() == 5) {
-            resourceModel->deleteResource(index.row());
-        }
-    });
-
-    connect(ui->resourcesView, &QTableView::clicked, this, [=](const QModelIndex &index) {
-        if (index.column() == 0) {
-            resourceModel->changeRefillMode(index.row());
+        switch (index.column()) {
+            case 5:
+                resourceModel->deleteResource(index.row());
+                break;
+            case 0:
+                resourceModel->changeRefillMode(index.row());
+                break;
+            default:
+                break;
         }
     });
 }

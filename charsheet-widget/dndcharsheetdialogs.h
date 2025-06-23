@@ -5,13 +5,22 @@
 #include <QMap>
 #include "dndmodels.h"
 
-static QMap<int, QString> statsMap = {
+static QMap<int, QString> indexToStat = {
         {0, "str"},
         {1, "dex"},
         {2, "con"},
         {3, "int"},
         {4, "wis"},
         {5, "cha"}
+};
+
+static QMap<QString, int> statToIndex = {
+        {"str", 0},
+        {"dex", 1},
+        {"con", 2},
+        {"int", 3},
+        {"wis", 4},
+        {"cha", 5}
 };
 
 QT_BEGIN_NAMESPACE
@@ -38,7 +47,7 @@ class AttackDialog : public QDialog {
 Q_OBJECT
 
 public:
-    explicit AttackDialog(QWidget *parent = nullptr);
+    explicit AttackDialog(QWidget *parent = nullptr, Attack ref = {});
 
     ~AttackDialog() override;
 

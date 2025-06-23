@@ -31,9 +31,17 @@ Resource ResourceDialog::getCreatedResource() {
 }
 
 
-AttackDialog::AttackDialog(QWidget *parent) :
+AttackDialog::AttackDialog(QWidget *parent, Attack ref) :
         QDialog(parent), ui(new Ui::AttackDialog) {
     ui->setupUi(this);
+
+    if (!ref.title.isEmpty()){
+        ui->titleEdit->setText(ref.title);
+        ui->bonusSpinBox->setValue(ref.bonus);
+        ui->damageEdit->setText(ref.damage);
+        ui->notesEdit->setText(ref.damage);
+        ui->statComboBox->setCurrentIndex(statToIndex[ref.ability]);
+    }
 
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &ResourceDialog::accept);
     connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &ResourceDialog::reject);
@@ -47,7 +55,7 @@ Attack AttackDialog::getCreatedAttack() {
     Attack attack;
 
     attack.title = ui->titleEdit->text();
-    attack.ability = statsMap[ui->statComboBox->currentIndex()];
+    attack.ability = indexToStat[ui->statComboBox->currentIndex()];
     attack.bonus = ui->bonusSpinBox->value();
     attack.damage = ui->damageEdit->text();
     attack.notes = ui->notesEdit->text();
