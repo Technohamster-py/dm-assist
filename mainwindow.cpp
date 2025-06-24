@@ -396,7 +396,7 @@ void MainWindow::loadSettings() {
     else
         ThemeManager::loadFromXml(theme);
 
-    /// Session
+    /// Campaign
     currentCampaignDir = settings.value(paths.session.campaign, "").toString();
     setupCampaign(currentCampaignDir);
 }
@@ -813,13 +813,14 @@ void MainWindow::setMeasureTool(bool checked) {
  * @param campaignRoot The root directory of the campaign to be set up.
  *                     It should be a valid and accessible directory path.
  */
-void MainWindow::setupCampaign(const QString& campaignRoot) {
+void MainWindow::setupCampaign(const QString campaignRoot) {
     if (campaignRoot.isEmpty())
         return;
 
     if (!currentCampaignDir.isEmpty()){
         closeCampaign();
     }
+
     if (!campaignTreeWidget->setRootDir(campaignRoot))
         return;
 

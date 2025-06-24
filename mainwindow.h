@@ -95,7 +95,7 @@ private:
     SquareShapeTool* squareShapeTool;
     TriangleShapeTool* triangleShapeTool;
 
-    void setupCampaign(const QString& campaignRoot);
+    void setupCampaign(const QString campaignRoot);
     void setupPlayers();
     void setupTracker();
     void setupToolbar();
