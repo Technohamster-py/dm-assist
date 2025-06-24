@@ -70,7 +70,7 @@ DM helper.
 После закрытия диалога выбранные файлы скопируются в рабочую папку программы. После закрытия программы данная папка
 очищается. 
 
-![img.png](playlist-edit.png)
+![img.png](illustrations/playlist-edit.png)
 
 ## Трекер инициативы
 <img src="illustrations/tracker.png" width="400">
