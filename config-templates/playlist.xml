@@ -1,7 +1,0 @@
-<?xml version="1.0" encodiong="UTF-8"?>
-<!DOCTYPE PLAYLIST>
-<PLAYLIST name="Ambient">
-    <file>path/to/file.mp3</file>
-    <file>path/to/file.mp3</file>
-    <file>path/to/file.mp3</file>
-</PLAYLIST>

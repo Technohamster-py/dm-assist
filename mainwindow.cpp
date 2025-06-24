@@ -10,6 +10,7 @@
 #include <QColorDialog>
 #include <QCheckBox>
 #include <QFileInfo>
+#include <QInputDialog>
 #include <QMessageBox>
 #include "saveconfigdialog.h"
 #include <QTextStream>
@@ -61,9 +62,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionDonate, &QAction::triggered, [](){QDesktopServices::openUrl(QUrl("https://pay.cloudtips.ru/p/8f6d339a"));});
     connect(ui->actionReport_bug, &QAction::triggered, [](){QDesktopServices::openUrl(QUrl("https://github.com/Technohamster-py/dm-assist/issues/new"));});
     connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::setVolumeDivider);
-    connect(ui->actionReload, &QAction::triggered, this, [=](){
-        setupCampaign(campaignTreeWidget->root());
-    });
+    connect(ui->actionReload, &QAction::triggered, [=](){setupCampaign(campaignTreeWidget->root());});
+    connect(ui->actionAddCharacter, &QAction::triggered, this, &MainWindow::addCharacter);
 
     connect(campaignTreeWidget, &CampaignTreeWidget::encounterAddRequested, initiativeTrackerWidget, &InitiativeTrackerWidget::addFromFile);
     connect(campaignTreeWidget, &CampaignTreeWidget::encounterReplaceRequested, initiativeTrackerWidget, &InitiativeTrackerWidget::loadFromFile);
@@ -472,6 +472,38 @@ void MainWindow::newCampaign() {
 
     setupCampaign(dialog.directoryPath);
 }
+
+
+/**
+ * @brief Handles the "Settings" action when triggered.
+ *
+ * This function is invoked when the user selects the "Settings" option from the UI.
+ * It performs the following operations:
+ *
+ * 1. Saves the current application settings by calling `saveSettings`.
+ * 2. Checks if the settings dialog (`settingsDialog`) exists. If not, it initializes
+ *    the dialog by creating a new `SettingsDialog` object with the organization name,
+ *    application name, and parent as parameters.
+ * 3. Displays the settings dialog in a modal state by calling `exec` on it.
+ * 4. After the dialog is closed, it reloads application settings by calling `loadSettings`.
+ *
+ * @note
+ * - The `settingsDialog` is initialized only once and reused afterward.
+ * - The `saveSettings` function is called before showing the dialog to ensure
+ *   the latest settings are preserved.
+ * - The `loadSettings` function is called after the dialog is closed, allowing
+ *   the application to reflect any changes made in the settings dialog.
+ */
+void MainWindow::on_actionSettings_triggered() {
+    saveSettings();
+    if(!settingsDialog)
+    {
+        settingsDialog = new SettingsDialog(ORGANIZATION_NAME, APPLICATION_NAME, this);
+    }
+    settingsDialog->exec();
+    loadSettings();
+}
+
 
 /**
  * @brief Opens and loads a map file into the application.
@@ -1283,7 +1315,47 @@ void MainWindow::updateVisibility() {
     ui->placeHolderWidget->setVisible(!hasTabs);
 }
 
+void MainWindow::addCharacter() {
+    bool ok;
+    QString characterName = QInputDialog::getText(this,
+                                                  tr("Chose character name"),
+                                                  tr("Character name:"),
+                                                  QLineEdit::Normal,
+                                                  "Nameless character",
+                                                  &ok);
+    if (!ok || characterName.isEmpty())
+        return;
 
+    if (currentCampaignDir.isEmpty()){
+        QMessageBox::warning(this, tr("Can't add character"), tr("Open campaign first!"));
+        return;
+    }
+
+    QDir dstDir(currentCampaignDir + "/Characters");
+    QDir srcDir(qApp->applicationDirPath() + "/file-templates");
+
+    QString srcFilePath = srcDir.filePath("dnd-character-template.json");
+    QString dstFilePath = dstDir.filePath(characterName + ".json");
+
+    if (QFile::exists(dstFilePath))
+    {
+        int ans = QMessageBox::warning(this, tr("Can't add character"), tr("Character already exists \n Override?"), QMessageBox::Yes | QMessageBox::Cancel);
+        if (ans == QMessageBox::Cancel)
+            return;
+        else
+            QFile::remove(dstFilePath);
+    }
+
+    QFile src(srcFilePath);
+
+    if (!QFile::copy(srcFilePath, dstFilePath)){
+        QMessageBox::warning(this, tr("Can't add character"), tr("Unknown error"));
+        return;
+    }
+
+    setupCampaign(campaignTreeWidget->root());
+    campaignTreeWidget->characterOpenRequested(dstFilePath);
+}
 
 
 /**

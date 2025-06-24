@@ -1,0 +1,21 @@
+{
+  "tags": [],
+  "disabledBlocks": {
+    "info-left": [],
+    "info-right": [],
+    "subinfo-left": [],
+    "subinfo-right": [],
+    "notes-left": [],
+    "notes-right": [],
+    "_id": "685a317e9c2bed48712e2871"
+  },
+  "edition": "2024",
+  "spells": {
+    "mode": "cards",
+    "prepared": [],
+    "book": []
+  },
+  "data": "{\"isDefault\":true,\"jsonType\":\"character\",\"template\":\"default\",\"name\":{\"value\":\"\"},\"info\":{\"charClass\":{\"name\":\"charClass\",\"value\":\"\"},\"charSubclass\":{\"name\":\"charSubclass\",\"value\":\"\"},\"level\":{\"name\":\"level\",\"value\":1},\"background\":{\"name\":\"background\",\"value\":\"\"},\"playerName\":{\"name\":\"playerName\",\"value\":\"\"},\"race\":{\"name\":\"race\",\"value\":\"\"},\"alignment\":{\"name\":\"alignment\",\"value\":\"\"},\"experience\":{\"name\":\"experience\",\"value\":\"\"}},\"subInfo\":{\"age\":{\"name\":\"age\",\"value\":\"\"},\"height\":{\"name\":\"height\",\"value\":\"\"},\"weight\":{\"name\":\"weight\",\"value\":\"\"},\"eyes\":{\"name\":\"eyes\",\"value\":\"\"},\"skin\":{\"name\":\"skin\",\"value\":\"\"},\"hair\":{\"name\":\"hair\",\"value\":\"\"}},\"spellsInfo\":{\"base\":{\"name\":\"base\",\"value\":\"\"},\"save\":{\"name\":\"save\",\"value\":\"\"},\"mod\":{\"name\":\"mod\",\"value\":\"\"}},\"spells\":{},\"spellsPact\":{},\"proficiency\":2,\"stats\":{\"str\":{\"name\":\"str\",\"score\":10,\"modifier\":0},\"dex\":{\"name\":\"dex\",\"score\":10,\"modifier\":0},\"con\":{\"name\":\"con\",\"score\":10,\"modifier\":0},\"int\":{\"name\":\"int\",\"score\":10,\"modifier\":0},\"wis\":{\"name\":\"wis\",\"score\":10,\"modifier\":0},\"cha\":{\"name\":\"cha\",\"score\":10,\"modifier\":0}},\"saves\":{\"str\":{\"name\":\"str\",\"isProf\":false},\"dex\":{\"name\":\"dex\",\"isProf\":false},\"con\":{\"name\":\"con\",\"isProf\":false},\"int\":{\"name\":\"int\",\"isProf\":false},\"wis\":{\"name\":\"wis\",\"isProf\":false},\"cha\":{\"name\":\"cha\",\"isProf\":false}},\"skills\":{\"acrobatics\":{\"baseStat\":\"dex\",\"name\":\"acrobatics\"},\"investigation\":{\"baseStat\":\"int\",\"name\":\"investigation\"},\"athletics\":{\"baseStat\":\"str\",\"name\":\"athletics\"},\"perception\":{\"baseStat\":\"wis\",\"name\":\"perception\"},\"survival\":{\"baseStat\":\"wis\",\"name\":\"survival\"},\"performance\":{\"baseStat\":\"cha\",\"name\":\"performance\"},\"intimidation\":{\"baseStat\":\"cha\",\"name\":\"intimidation\"},\"history\":{\"baseStat\":\"int\",\"name\":\"history\"},\"sleight of hand\":{\"baseStat\":\"dex\",\"name\":\"sleight of hand\"},\"arcana\":{\"baseStat\":\"int\",\"name\":\"arcana\"},\"medicine\":{\"baseStat\":\"wis\",\"name\":\"medicine\"},\"deception\":{\"baseStat\":\"cha\",\"name\":\"deception\"},\"nature\":{\"baseStat\":\"int\",\"name\":\"nature\"},\"insight\":{\"baseStat\":\"wis\",\"name\":\"insight\"},\"religion\":{\"baseStat\":\"int\",\"name\":\"religion\"},\"stealth\":{\"baseStat\":\"dex\",\"name\":\"stealth\"},\"persuasion\":{\"baseStat\":\"cha\",\"name\":\"persuasion\"},\"animal handling\":{\"baseStat\":\"wis\",\"name\":\"animal handling\"}},\"vitality\":{\"hp-dice-current\":{\"value\":1},\"hp-dice-multi\":{}},\"attunementsList\":[{\"id\":\"attunement-1750741328722\",\"checked\":false,\"value\":\"\"}],\"weaponsList\":[{\"id\":\"weapon-1750741328722\",\"name\":{\"value\":\"\"},\"mod\":{\"value\":\"+0\"},\"dmg\":{\"value\":\"\"}}],\"weapons\":{},\"text\":{},\"coins\":{},\"resources\":{},\"bonusesSkills\":{},\"bonusesStats\":{},\"conditions\":[]}",
+  "jsonType": "character",
+  "version": "2"
+}

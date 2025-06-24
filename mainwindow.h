@@ -113,6 +113,8 @@ private slots:
     void loadCampaign();
     void closeCampaign();
 
+    void addCharacter();
+
     void loadMusicConfigFile(QString fileName);
     void saveMusicConfigFile(const QString& fileName);
     void on_actionSettings_triggered();

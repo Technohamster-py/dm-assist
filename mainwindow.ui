@@ -301,6 +301,7 @@
       <string>Add</string>
      </property>
      <addaction name="actionAddMap"/>
+     <addaction name="actionAddCharacter"/>
     </widget>
     <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
@@ -449,6 +450,11 @@
    </property>
    <property name="toolTip">
     <string>Reload campaign from disk</string>
+   </property>
+  </action>
+  <action name="actionAddCharacter">
+   <property name="text">
+    <string>Character</string>
    </property>
   </action>
  </widget>

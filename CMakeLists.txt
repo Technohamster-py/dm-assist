@@ -8,6 +8,7 @@ set(CMAKE_AUTOUIC ON)
 
 
 set(BASS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass/include)
+set(TEMPLATE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/file-templates)
 if (WIN32)
     set(CMAKE_PREFIX_PATH "C:/Qt/Qt6/6.9.0/mingw_64/lib/cmake")
     set(BASS_DLL "${CMAKE_SOURCE_DIR}/lib/bass/win/bass.dll")
@@ -168,14 +169,18 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
 )
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${PROJECT_NAME}>/translations"
-)
-
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${BASS_DLL}"
         "${CMAKE_BINARY_DIR}"
         COMMENT "Копирование bass в папку сборки..."
+)
+
+
+
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${TEMPLATE_DIR}"
+        "${CMAKE_BINARY_DIR}/file-templates"
 )
 
 
@@ -187,6 +192,9 @@ if (WIN32)
     )
 endif ()
 
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${PROJECT_NAME}>/translations"
+)
 
 foreach(qm ${QM_FILES})
     get_filename_component(qm_filename "${qm}" NAME)
