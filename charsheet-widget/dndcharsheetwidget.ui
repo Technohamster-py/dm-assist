@@ -30,16 +30,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="nameLabel">
-     <property name="font">
-      <font>
-       <pointsize>15</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Character Name</string>
-     </property>
-    </widget>
+    <widget class="QLineEdit" name="nameEdit"/>
    </item>
    <item>
     <widget class="QWidget" name="classWidget" native="true">
@@ -51,14 +42,18 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QLabel" name="classLabel">
-        <property name="font">
-         <font>
-          <pointsize>10</pointsize>
-         </font>
+       <widget class="QLineEdit" name="classEdit">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-        <property name="text">
-         <string>Class (subclass)</string>
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -142,158 +137,6 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="4">
-       <widget class="QLabel" name="swimIcon">
-        <property name="minimumSize">
-         <size>
-          <width>20</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>20</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap resource="../static/app_resources.qrc">:/charSheet/swim.svg</pixmap>
-        </property>
-        <property name="scaledContents">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="6">
-       <widget class="QLabel" name="label_8">
-        <property name="text">
-         <string>ft</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="6">
-       <widget class="QLabel" name="label_13">
-        <property name="text">
-         <string>ft</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="4">
-       <widget class="QLabel" name="wingIcon">
-        <property name="minimumSize">
-         <size>
-          <width>20</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>20</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap resource="../static/app_resources.qrc">:/charSheet/wing.svg</pixmap>
-        </property>
-        <property name="scaledContents">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="3">
-       <widget class="QLabel" name="maxHpLabel">
-        <property name="maximumSize">
-         <size>
-          <width>70</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>maxHP</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="6">
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>ft</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0" colspan="2">
-       <widget class="QLabel" name="label_9">
-        <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
-        </property>
-        <property name="text">
-         <string>Initiative:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="5">
-       <widget class="QLabel" name="swimSpeedLabel">
-        <property name="maximumSize">
-         <size>
-          <width>40</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>speed</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QLabel" name="label_4">
-        <property name="maximumSize">
-         <size>
-          <width>10</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>/</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="2" colspan="2">
-       <widget class="QLabel" name="initiativeLabel">
-        <property name="text">
-         <string>initiative bonus</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="4">
-       <widget class="QLabel" name="runIcon">
-        <property name="minimumSize">
-         <size>
-          <width>20</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>20</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap resource="../static/app_resources.qrc">:/charSheet/run.svg</pixmap>
-        </property>
-        <property name="scaledContents">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="1">
        <widget class="QSpinBox" name="hpSpinBox">
         <property name="minimumSize">
@@ -338,48 +181,94 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="5">
-       <widget class="QLabel" name="runSpeedLabel">
+      <item row="1" column="3">
+       <widget class="QSpinBox" name="maxHpBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="maximumSize">
          <size>
-          <width>40</width>
+          <width>70</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2" colspan="2">
+       <widget class="QLabel" name="initiativeLabel">
+        <property name="text">
+         <string>initiative bonus</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="6">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>ft</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLabel" name="label_4">
+        <property name="maximumSize">
+         <size>
+          <width>10</width>
           <height>16777215</height>
          </size>
         </property>
         <property name="text">
-         <string>speed</string>
+         <string>/</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="5">
-       <widget class="QLabel" name="flySpeedLabel">
-        <property name="maximumSize">
-         <size>
-          <width>40</width>
-          <height>16777215</height>
-         </size>
+      <item row="2" column="0" colspan="2">
+       <widget class="QLabel" name="label_9">
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
         </property>
         <property name="text">
-         <string>speed</string>
+         <string>Initiative:</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="1" colspan="2">
-       <widget class="QLabel" name="acLabel">
+      <item row="0" column="1">
+       <widget class="QSpinBox" name="acBox"/>
+      </item>
+      <item row="0" column="4">
+       <widget class="QLabel" name="runIcon">
         <property name="minimumSize">
          <size>
-          <width>0</width>
+          <width>20</width>
           <height>20</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
+          <width>20</width>
           <height>20</height>
          </size>
         </property>
         <property name="text">
-         <string>TextLabel</string>
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="../static/app_resources.qrc">:/charSheet/run.svg</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QSpinBox" name="speedBox">
+        <property name="maximumSize">
+         <size>
+          <width>40</width>
+          <height>16777215</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -412,7 +301,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
+        <y>-2073</y>
         <width>1035</width>
         <height>3131</height>
        </rect>

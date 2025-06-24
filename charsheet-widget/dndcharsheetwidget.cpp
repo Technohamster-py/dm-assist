@@ -141,21 +141,21 @@ void DndCharsheetWidget::loadFromFile(QString path) {
  * or modification of character details within the application.
  */
 void DndCharsheetWidget::populateWidget() {
-    ui->nameLabel->setText(m_dataObject["name"].toObject()["value"].toString());
+    ui->nameEdit->setText(m_dataObject["name"].toObject()["value"].toString());
 
 
     QJsonObject infoObject = m_dataObject["info"].toObject();
     QString classString = QString("%1 (%2)").arg(infoObject["charClass"].toObject()["value"].toString(), infoObject["charSubclass"].toObject()["value"].toString());
-    ui->classLabel->setText(classString);
+    ui->classEdit->setText(classString);
     ui->levelBox->setValue(infoObject["level"].toObject()["value"].toInt());
     ui->proficiencyLabel->setText(QString::number(proficiencyByLevel(ui->levelBox->value())));
 
 
     QJsonObject vitalityObject = m_dataObject["vitality"].toObject();
-    ui->runSpeedLabel->setText(vitalityObject["speed"].toObject()["value"].toString());
-    ui->acLabel->setText(QString::number(vitalityObject["ac"].toObject()["value"].toInt()));
+    ui->speedBox->setValue(vitalityObject["speed"].toObject()["value"].toString().toInt());
+    ui->acBox->setValue(vitalityObject["ac"].toObject()["value"].toInt());
     ui->hpSpinBox->setValue(vitalityObject["hp-current"].toObject()["value"].toInt());
-    ui->maxHpLabel->setText(QString::number(vitalityObject["hp-max"].toObject()["value"].toInt()));
+    ui->maxHpBox->setValue(vitalityObject["hp-max"].toObject()["value"].toInt());
 
 
     QJsonObject statsObject = m_dataObject["stats"].toObject();
@@ -270,13 +270,13 @@ QJsonObject DndCharsheetWidget::collectData(const QString& filePath) {
 
     // name
     result["name"] = QJsonObject{
-            {"value", ui->nameLabel->text()}
+            {"value", ui->nameEdit->text()}
     };
 
     // info
     QJsonObject info;
-    info["charClass"] = QJsonObject{{"value", ui->classLabel->text().split(" (").first()}};
-    info["charSubclass"] = QJsonObject{{"value", ui->classLabel->text().split(" (").value(1).chopped(1)}};
+    info["charClass"] = QJsonObject{{"value", ui->classEdit->text().split(" (").first()}};
+    info["charSubclass"] = QJsonObject{{"value", ui->classEdit->text().split(" (").value(1).chopped(1)}};
     info["level"] = QJsonObject{{"value", ui->levelBox->value()}};
     info["playerName"] = QJsonObject{{"value", "Technohamster"}};  // при необходимости
     info["background"] = QJsonObject{{"value", result["info"].toObject().value("background").toObject().value("value")}};
@@ -287,10 +287,10 @@ QJsonObject DndCharsheetWidget::collectData(const QString& filePath) {
 
     // vitality
     QJsonObject vitality;
-    vitality["speed"] = QJsonObject{{"value", ui->runSpeedLabel->text()}};
-    vitality["ac"] = QJsonObject{{"value", ui->acLabel->text().toInt()}};
+    vitality["speed"] = QJsonObject{{"value", ui->speedBox->text()}};
+    vitality["ac"] = QJsonObject{{"value", ui->acBox->value()}};
     vitality["hp-current"] = QJsonObject{{"value", ui->hpSpinBox->value()}};
-    vitality["hp-max"] = QJsonObject{{"value", ui->maxHpLabel->text().toInt()}};
+    vitality["hp-max"] = QJsonObject{{"value", ui->maxHpBox->value()}};
     result["vitality"] = vitality;
 
     // stats
@@ -506,6 +506,8 @@ void DndCharsheetWidget::updateCheckBoxes() {
     ui->wisBonusLabel->setText(QString::number(bonusFromStat(ui->wisValueEdit->value())));
     ui->chaBonusLabel->setText(QString::number(bonusFromStat(ui->chaValueEdit->value())));
 
+    ui->initiativeLabel->setText(ui->dexBonusLabel->text());
+
     attackModel->setStrBonus(bonusFromStat(ui->strValueEdit->value()));
     attackModel->setDexBonus(bonusFromStat(ui->dexValueEdit->value()));
     attackModel->setConBonus(bonusFromStat(ui->conValueEdit->value()));
@@ -556,7 +558,7 @@ void DndCharsheetWidget::updateCheckBoxes() {
  * @param initiativeTrackerWidget A pointer to an instance of InitiativeTrackerWidget where the character will be added.
  */
 void DndCharsheetWidget::addToInitiative(InitiativeTrackerWidget *initiativeTrackerWidget) {
-    initiativeTrackerWidget->addCharacter(ui->nameLabel->text(), ui->maxHpLabel->text().toInt(), ui->acLabel->text().toInt(), ui->hpSpinBox->value());
+    initiativeTrackerWidget->addCharacter(ui->nameEdit->text(), ui->maxHpBox->value(), ui->acBox->value(), ui->hpSpinBox->value());
 }
 
 QString DndCharsheetWidget::parseParagraphs(const QJsonArray &content) {
