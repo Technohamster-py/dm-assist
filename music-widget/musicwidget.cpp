@@ -301,7 +301,7 @@ void MusicPlayerWidget::playTrackAt(int index) {
     }, this);
 
     isActive = true;
-    ui->playButton->setStyleSheet("background-color: #a5bfda;");
+    ui->playButton->setStyleSheet("background-color: palette(accent);");
     ui->playButton->setIcon(QIcon(":/player/stop.svg"));
 }
 
