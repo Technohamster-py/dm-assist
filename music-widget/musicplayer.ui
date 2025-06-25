@@ -105,7 +105,7 @@
      </property>
      <property name="styleSheet">
       <string notr="true">QPushButton:hover {
-border: 1px solid black;
+border: 1px solid palette(window-text);
 background: palette(button);
 }</string>
      </property>
@@ -131,7 +131,7 @@ background: palette(button);
      </property>
      <property name="styleSheet">
       <string notr="true">QPushButton:hover {
-border: 1px solid black;
+border: 1px solid palette(window-text);
 background: palette(button);
 }</string>
      </property>
