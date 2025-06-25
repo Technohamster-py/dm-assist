@@ -104,9 +104,9 @@
       <string>play</string>
      </property>
      <property name="styleSheet">
-      <string notr="true">QPushButton:hover {
+      <string notr="true">QPushButton:hover#playButton {
 border: 1px solid palette(window-text);
-background: palette(button);
+background-color: palette(button);
 }</string>
      </property>
      <property name="text">
