@@ -127,7 +127,7 @@ void InitiativeTrackerWidget::openSharedWindow() {
     auto *hpDelegate = new HpProgressBarDelegate(HpProgressBarDelegate::Numeric, view);
     view->setItemDelegateForColumn(3, hpDelegate);
 
-    connect(ui->hpModeBox, QOverload<int>::of(&QComboBox::currentIndexChanged), hpDelegate, [hpDelegate, view](int index) {
+    connect(ui->hpModeBox, QOverload<int>::of(&QComboBox::currentIndexChanged), [hpDelegate, view](int index) {
         hpDelegate->setDisplayMode(static_cast<HpProgressBarDelegate::DisplayMode>(index));
         view->viewport()->update();
     });
