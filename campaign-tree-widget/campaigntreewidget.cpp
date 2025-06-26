@@ -20,9 +20,13 @@ CampaignTreeWidget::CampaignTreeWidget(QWidget *parent) : QTreeWidget(parent)
     m_rootPath = QString();
 
     setStyleSheet("QTreeWidget { background: transparent; }"
-                  "QTreeWidget::item { background: transparent; }");
+                  "QTreeWidget::item { background: transparent; }"
+                  "QTreeWidget::item::hover { background: palette(Highlight); }");
 
     setAttribute(Qt::WA_TranslucentBackground);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     setFrameStyle(QFrame::NoFrame);
 }
 

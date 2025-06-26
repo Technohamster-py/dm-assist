@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
-    campaignTreeWidget = new CampaignTreeWidget(this);
+    campaignTreeWidget = new CampaignTreeWidget(ui->leftAsideWidget);
     campaignTreeWidget->setVisible(false);
     setupCampaign(QString());
     setupToolbar();
