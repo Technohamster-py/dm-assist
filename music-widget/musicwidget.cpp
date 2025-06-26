@@ -301,7 +301,8 @@ void MusicPlayerWidget::playTrackAt(int index) {
     }, this);
 
     isActive = true;
-    ui->playButton->setStyleSheet("background-color: palette(accent);");
+    ui->playButton->setStyleSheet("QPushButton {border: none; background: palette(highlight);}"
+                                  "QPushButton:hover {border: 1px solid black; border-radius: 25%;}");
     ui->playButton->setIcon(QIcon(":/player/stop.svg"));
 }
 
@@ -340,7 +341,8 @@ void MusicPlayerWidget::stop() {
     }
     isActive = false;
     emit playerStopped();
-    ui->playButton->setStyleSheet("background: transparent;");
+    ui->playButton->setStyleSheet("QPushButton { border: none; background: transparent;}"
+                                  "QPushButton:hover {border: 1px solid black; border-radius: 25%; background: palette(button);}");
     ui->playButton->setIcon(QIcon(":/player/play.svg"));
 }
 

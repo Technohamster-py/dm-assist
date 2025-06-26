@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="contextMenuPolicy">
-   <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
+   <enum>Qt::NoContextMenu</enum>
   </property>
   <property name="windowTitle">
    <string>DM-assist</string>
@@ -27,10 +27,22 @@
     <property name="spacing">
      <number>0</number>
     </property>
+    <property name="leftMargin">
+     <number>3</number>
+    </property>
+    <property name="topMargin">
+     <number>3</number>
+    </property>
+    <property name="rightMargin">
+     <number>3</number>
+    </property>
+    <property name="bottomMargin">
+     <number>3</number>
+    </property>
     <item>
      <widget class="QWidget" name="leftAsideWidget" native="true">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -43,7 +55,7 @@
       </property>
       <property name="maximumSize">
        <size>
-        <width>1000</width>
+        <width>210</width>
         <height>16777215</height>
        </size>
       </property>
@@ -65,11 +77,8 @@
     </item>
     <item>
      <widget class="Line" name="line">
-      <property name="frameShadow">
-       <enum>QFrame::Shadow::Plain</enum>
-      </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
     </item>
@@ -96,7 +105,7 @@
              <string>No maps opened</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -160,11 +169,8 @@
     </item>
     <item>
      <widget class="Line" name="line_3">
-      <property name="frameShadow">
-       <enum>QFrame::Shadow::Plain</enum>
-      </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
     </item>
@@ -200,11 +206,8 @@
        </item>
        <item>
         <widget class="Line" name="line_2">
-         <property name="frameShadow">
-          <enum>QFrame::Shadow::Plain</enum>
-         </property>
          <property name="orientation">
-          <enum>Qt::Orientation::Horizontal</enum>
+          <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
@@ -246,7 +249,7 @@
               <number>100</number>
              </property>
              <property name="orientation">
-              <enum>Qt::Orientation::Horizontal</enum>
+              <enum>Qt::Horizontal</enum>
              </property>
             </widget>
            </item>
@@ -281,7 +284,7 @@
      <x>0</x>
      <y>0</y>
      <width>1440</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
    <property name="font">
