@@ -9,6 +9,8 @@
 #include <QLabel>
 #include <QMenu>
 
+#include <themediconmanager.h>
+
 /**
  * @class TabWidget
  * @brief A custom widget derived from QTabWidget with added functionality such as "new tab"
@@ -28,7 +30,7 @@ public:
         setTabBarAutoHide(false);
 
         auto *plusButton = new QToolButton(this);
-        plusButton->setIcon(QIcon(":/add.svg"));
+        ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/add.svg", plusButton, &QAbstractButton::setIcon);
         plusButton->setAutoRaise(true);
         plusButton->setToolTip(tr("Open new map"));
 

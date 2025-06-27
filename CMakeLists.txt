@@ -94,6 +94,7 @@ include_directories(
         ${BASS_INCLUDE_DIR}
         translations
         static
+        theme-manager
 )
 
 qt_add_translation(QM_FILES ${TS_FILES})

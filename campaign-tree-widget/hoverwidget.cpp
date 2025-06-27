@@ -1,4 +1,5 @@
 #include "hoverwidget.h"
+#include <themediconmanager.h>
 
 /**
  * @brief Constructor for the HoverWidget class.
@@ -88,19 +89,19 @@ void HoverWidget::setupButtons(NodeType type) {
     action2->setMaximumWidth(20);
     switch (type) {
         case NodeType::Character:
-            action1->setIcon(QIcon(":/edit.svg"));
+            ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/edit.svg", action1, &QAbstractButton::setIcon);
             action1->setToolTip(tr("Edit"));
-            action2->setIcon(QIcon(":/add.svg"));
+            ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/add.svg", action2, &QAbstractButton::setIcon);
             action2->setToolTip(tr("Add to current encounter"));
             break;
         case NodeType::Encounter:
-            action1->setIcon(QIcon(":/add.svg"));
+            ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/add.svg", action1, &QAbstractButton::setIcon);
             action1->setToolTip(tr("Add to current encounter"));
-            action2->setIcon(QIcon(":/upload.svg"));
+            ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/upload.svg", action2, &QAbstractButton::setIcon);
             action2->setToolTip(tr("Replace current encounter"));
             break;
         case NodeType::Map:
-            action1->setIcon(QIcon(":/edit.svg"));
+            ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/edit.svg", action1, &QAbstractButton::setIcon);
             action1->setToolTip(tr("Edit"));
             action2->hide();
         default:
