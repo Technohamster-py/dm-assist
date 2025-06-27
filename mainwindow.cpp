@@ -19,6 +19,7 @@
 
 #include <QDebug>
 #include "theme-manager/thememanager.h"
+#include "theme-manager/themediconmanager.h"
 
 #include <QDebug>
 
@@ -967,7 +968,7 @@ void MainWindow::setupToolbar() {
     rulerAction->setCheckable(true);
     rulerAction->setChecked(false);
     toolGroup->addAction(rulerAction);
-    rulerAction->setIcon(QIcon(":/map/ruler.svg"));
+    ThemedIconManager::instance().addIconTarget(":/map/ruler.svg", rulerAction, &QAction::setIcon);
     rulerButton->setDefaultAction(rulerAction);
 
     rulerButton->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -992,7 +993,7 @@ void MainWindow::setupToolbar() {
     /// Fog-hide tool
     auto* fogHideAction = new QAction(this);
     fogHideAction->setCheckable(true);
-    fogHideAction->setIcon(QIcon(":/map/fog_hide.svg"));
+    ThemedIconManager::instance().addIconTarget(":/map/fog_hide.svg", fogHideAction, &QAction::setIcon);
     toolGroup->addAction(fogHideAction);
 
     auto* fogHideButton = new QToolButton(this);
@@ -1018,7 +1019,7 @@ void MainWindow::setupToolbar() {
     /// Fog-reveal tool
     auto* fogRevealAction = new QAction(this);
     fogRevealAction->setCheckable(true);
-    fogRevealAction->setIcon(QIcon(":/map/fog_reveal.svg"));
+    ThemedIconManager::instance().addIconTarget(":/map/fog_reveal.svg", fogRevealAction, &QAction::setIcon);
     toolGroup->addAction(fogRevealAction);
 
     auto* fogRevealButton = new QToolButton(this);
@@ -1045,7 +1046,7 @@ void MainWindow::setupToolbar() {
     /// Light tool
     auto* lightAction = new QAction(this);
     lightAction->setCheckable(true);
-    lightAction->setIcon(QIcon(":/map/torch.svg"));
+    ThemedIconManager::instance().addIconTarget(":/map/torch.svg", lightAction, &QAction::setIcon);
     toolGroup->addAction(lightAction);
 
     auto* lightButton = new QToolButton(this);
@@ -1069,7 +1070,7 @@ void MainWindow::setupToolbar() {
     ui->toolBar->addWidget(dimRadiusBox);
 
     auto *lightColorBtn = new QPushButton();
-    lightColorBtn->setIcon(QIcon(":/map/palette.svg"));
+    ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/map/palette.svg", lightColorBtn, &QAbstractButton::setIcon);
     ui->toolBar->addWidget(lightColorBtn);
 
     connect(lightAction, &QAction::triggered, this, &MainWindow::setLightTool);
@@ -1101,7 +1102,7 @@ void MainWindow::setupToolbar() {
     /// LineShapeTool
     auto* lineAction = new QAction(this);
     lineAction->setCheckable(true);
-    lineAction->setIcon(QIcon(":/map/line.svg"));
+    ThemedIconManager::instance().addIconTarget(":/map/line.svg", lineAction, &QAction::setIcon);
     toolGroup->addAction(lineAction);
 
     auto* lineButton = new QToolButton(this);
@@ -1121,7 +1122,7 @@ void MainWindow::setupToolbar() {
     /// CircleShapeTool
     auto* circleAction = new QAction(this);
     circleAction->setCheckable(true);
-    circleAction->setIcon(QIcon(":/map/sphere.svg"));
+    ThemedIconManager::instance().addIconTarget(":/map/sphere.svg", circleAction, &QAction::setIcon);
     toolGroup->addAction(circleAction);
 
     auto* circleButton = new QToolButton(this);
@@ -1141,7 +1142,7 @@ void MainWindow::setupToolbar() {
     /// SquareShapeTool
     auto* squareAction = new QAction(this);
     squareAction->setCheckable(true);
-    squareAction->setIcon(QIcon(":/map/cube.svg"));
+    ThemedIconManager::instance().addIconTarget(":/map/cube.svg", squareAction, &QAction::setIcon);
     toolGroup->addAction(squareAction);
 
     auto* squareButton = new QToolButton(this);
@@ -1161,7 +1162,7 @@ void MainWindow::setupToolbar() {
     /// TriangleShapeTool
     auto* triangleAction = new QAction(this);
     triangleAction->setCheckable(true);
-    triangleAction->setIcon(QIcon(":/map/cone.svg"));
+    ThemedIconManager::instance().addIconTarget(":/map/cone.svg", triangleAction, &QAction::setIcon);
     toolGroup->addAction(triangleAction);
 
     auto* triangleButton = new QToolButton(this);
@@ -1182,7 +1183,7 @@ void MainWindow::setupToolbar() {
     /// Brush tool
     auto* brushAction = new QAction(this);
     brushAction->setCheckable(true);
-    brushAction->setIcon(QIcon(":/map/brush.svg"));
+    ThemedIconManager::instance().addIconTarget(":/map/brush.svg", brushAction, &QAction::setIcon);
     toolGroup->addAction(brushAction);
 
     auto* brushButton = new QToolButton(this);
@@ -1225,7 +1226,7 @@ void MainWindow::setupToolbar() {
 
     /// Shape color button
     auto *ShapeToolColorButton = new QPushButton();
-    ShapeToolColorButton->setIcon(QIcon(":/map/palette.svg"));
+    ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/map/palette.svg", ShapeToolColorButton, &QAbstractButton::setIcon);
     ui->toolBar->addWidget(ShapeToolColorButton);
 
     connect(ShapeToolColorButton, &QPushButton::clicked, this, [=]() {
