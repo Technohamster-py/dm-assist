@@ -14,7 +14,14 @@ public:
 
     template <typename T>
     void addIconTarget(const QString& svgPath, T* object, void (T::*setIconMethod)(const QIcon&), QSize size = QSize(24, 24)) {
-        if (!object || svgPath.isEmpty()) return;
+        if (!object || svgPath.isEmpty())
+            return;
+
+        m_targets.erase(std::remove_if(m_targets.begin(), m_targets.end(),
+                                       [object](const IconTarget& target) {
+                                           return target.receiver == object;
+                                       }),
+                        m_targets.end());
 
         IconTarget target;
         target.path = svgPath;
@@ -28,6 +35,7 @@ public:
         m_targets.append(target);
         regenerateAndApplyIcon(m_targets.last());
     }
+
 
 protected:
     bool eventFilter(QObject* obj, QEvent* event) override;

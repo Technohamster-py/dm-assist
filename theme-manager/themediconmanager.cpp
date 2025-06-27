@@ -21,11 +21,21 @@ bool ThemedIconManager::eventFilter(QObject*, QEvent* event) {
 }
 
 void ThemedIconManager::updateAllIcons() {
-    for (const IconTarget& target : m_targets)
+    m_targets.erase(std::remove_if(m_targets.begin(), m_targets.end(),
+                                   [](const IconTarget& target) {
+                                       return target.receiver.isNull();
+                                   }),
+                    m_targets.end());
+
+    for (const auto& target : m_targets) {
         regenerateAndApplyIcon(target);
+    }
 }
 
+
 void ThemedIconManager::regenerateAndApplyIcon(const IconTarget& target) {
+    if (!target.receiver) return;
+
     QFile file(target.path);
     if (!file.open(QIODevice::ReadOnly)) {
         qWarning() << "Cannot open SVG:" << target.path;
@@ -46,10 +56,12 @@ void ThemedIconManager::regenerateAndApplyIcon(const IconTarget& target) {
     painter.end();
 
     QIcon icon(pixmap);
-    if (target.apply) {
+
+    if (target.receiver && target.apply) {
         target.apply(icon);
     }
 }
+
 
 QColor ThemedIconManager::themeColor() const {
     return qApp->palette().color(QPalette::WindowText);
