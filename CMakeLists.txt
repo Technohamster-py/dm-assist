@@ -48,6 +48,7 @@ set(FILES
         settingsdialog.h    settingsdialog.cpp
         settings.h
         theme-manager/thememanager.h theme-manager/thememanager.cpp
+        theme-manager/themediconmanager.h theme-manager/themediconmanager.cpp
 
 )
 
@@ -75,6 +76,7 @@ find_package(Qt6 COMPONENTS
         Gui
         Widgets
         Multimedia
+        Svg
         Xml
         Qml
         LinguistTools
@@ -113,6 +115,7 @@ target_link_libraries(${PROJECT_NAME}
         Qt6::Gui
         Qt6::Widgets
         Qt6::Multimedia
+        Qt6::Svg
         Qt6::Xml
         ${BASS_LIBRARY}
         Qt6::Qml
