@@ -1,18 +1,33 @@
 #pragma once
 
 #include <QObject>
-#include <QAbstractButton>
-#include <QAction>
-#include <QList>
 #include <QSize>
+#include <QIcon>
+#include <QList>
+#include <QPointer>
+#include <functional>
 
 class ThemedIconManager : public QObject {
 Q_OBJECT
 public:
     static ThemedIconManager& instance();
 
-    void addControlledButton(const QString& svgPath, QAbstractButton* button, QSize size = QSize(24, 24));
-    void addControlledAction(const QString& svgPath, QAction* action, QSize size = QSize(24, 24));
+    template <typename T>
+    void addIconTarget(const QString& svgPath, T* object, void (T::*setIconMethod)(const QIcon&), QSize size = QSize(24, 24)) {
+        if (!object || svgPath.isEmpty()) return;
+
+        IconTarget target;
+        target.path = svgPath;
+        target.size = size;
+        target.receiver = object;
+        target.apply = [object, setIconMethod](const QIcon& icon) {
+            if (object)
+                (object->*setIconMethod)(icon);
+        };
+
+        m_targets.append(target);
+        regenerateAndApplyIcon(m_targets.last());
+    }
 
 protected:
     bool eventFilter(QObject* obj, QEvent* event) override;
@@ -22,9 +37,9 @@ private:
 
     struct IconTarget {
         QString path;
-        QAbstractButton* button;
-        QAction* action;
         QSize size;
+        QPointer<QObject> receiver;
+        std::function<void(const QIcon&)> apply;
     };
 
     QList<IconTarget> m_targets;
