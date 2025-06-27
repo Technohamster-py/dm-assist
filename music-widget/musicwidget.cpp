@@ -14,6 +14,7 @@
 #include <QRegularExpressionValidator>
 
 #include "bass.h"
+#include <themediconmanager.h>
 
 #define BASS_DEVICE_INDEX 1
 
@@ -68,6 +69,9 @@ MusicPlayerWidget::MusicPlayerWidget(QWidget *parent, int id, QString title)
     connect(ui->volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(changeVolume(int)));
 
     ui->volumeSlider->setValue(100);
+
+    ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/player/play.svg", ui->playButton, &QAbstractButton::setIcon);
+    ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/edit.svg", ui->editButton, &QAbstractButton::setIcon);
 }
 
 /**
@@ -303,7 +307,7 @@ void MusicPlayerWidget::playTrackAt(int index) {
     isActive = true;
     ui->playButton->setStyleSheet("QPushButton {border: none; background: palette(highlight);}"
                                   "QPushButton:hover {border: 1px solid black; border-radius: 25%;}");
-    ui->playButton->setIcon(QIcon(":/player/stop.svg"));
+    ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/player/stop.svg", ui->playButton, &QAbstractButton::setIcon);
 }
 
 /**
@@ -343,7 +347,7 @@ void MusicPlayerWidget::stop() {
     emit playerStopped();
     ui->playButton->setStyleSheet("QPushButton { border: none; background: transparent;}"
                                   "QPushButton:hover {border: 1px solid black; border-radius: 25%; background: palette(button);}");
-    ui->playButton->setIcon(QIcon(":/player/play.svg"));
+    ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/player/play.svg", ui->playButton, &QAbstractButton::setIcon);
 }
 
 /**
