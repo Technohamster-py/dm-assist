@@ -34,7 +34,8 @@ void ThemedIconManager::updateAllIcons() {
 
 
 void ThemedIconManager::regenerateAndApplyIcon(const IconTarget& target) {
-    if (!target.receiver) return;
+    if (!target.receiver)
+        return;
 
     QFile file(target.path);
     if (!file.open(QIODevice::ReadOnly)) {
@@ -57,10 +58,13 @@ void ThemedIconManager::regenerateAndApplyIcon(const IconTarget& target) {
 
     QIcon icon(pixmap);
 
-    if (target.receiver && target.apply) {
-        target.apply(icon);
-    }
+    if (target.applyIcon)
+        target.applyIcon(icon);
+
+    if (target.applyPixmap)
+        target.applyPixmap(pixmap);
 }
+
 
 
 QColor ThemedIconManager::themeColor() const {
@@ -70,4 +74,26 @@ QColor ThemedIconManager::themeColor() const {
 ThemedIconManager &ThemedIconManager::instance() {
     static ThemedIconManager inst;
     return inst;
+}
+
+void ThemedIconManager::addPixmapTarget(const QString &svgPath, QObject *receiver,
+                                        std::function<void(const QPixmap &)> applyPixmap, QSize size) {
+
+    if (!receiver || svgPath.isEmpty()) return;
+
+    // Удаляем старую запись, если такая есть
+    m_targets.erase(std::remove_if(m_targets.begin(), m_targets.end(),
+                                   [receiver](const IconTarget& t) {
+                                       return t.receiver == receiver;
+                                   }),
+                    m_targets.end());
+
+    IconTarget target;
+    target.path = svgPath;
+    target.size = size;
+    target.receiver = receiver;
+    target.applyPixmap = applyPixmap;
+
+    m_targets.append(target);
+    regenerateAndApplyIcon(m_targets.last());
 }

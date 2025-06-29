@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include <QPointer>
 #include <QSize>
 #include <QIcon>
 #include <QList>
@@ -27,7 +28,7 @@ public:
         target.path = svgPath;
         target.size = size;
         target.receiver = object;
-        target.apply = [object, setIconMethod](const QIcon& icon) {
+        target.applyIcon = [object, setIconMethod](const QIcon& icon) {
             if (object)
                 (object->*setIconMethod)(icon);
         };
@@ -35,6 +36,8 @@ public:
         m_targets.append(target);
         regenerateAndApplyIcon(m_targets.last());
     }
+
+    void addPixmapTarget(const QString& svgPath, QObject* receiver, std::function<void(const QPixmap&)> applyPixmap, QSize size = QSize(24, 24));
 
 
 protected:
@@ -47,7 +50,8 @@ private:
         QString path;
         QSize size;
         QPointer<QObject> receiver;
-        std::function<void(const QIcon&)> apply;
+        std::function<void(const QIcon&)> applyIcon;
+        std::function<void(const QPixmap&)> applyPixmap;
     };
 
     QList<IconTarget> m_targets;

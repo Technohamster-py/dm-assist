@@ -72,6 +72,9 @@ MusicPlayerWidget::MusicPlayerWidget(QWidget *parent, int id, QString title)
 
     ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/player/play.svg", ui->playButton, &QAbstractButton::setIcon);
     ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/edit.svg", ui->editButton, &QAbstractButton::setIcon);
+    ThemedIconManager::instance().addPixmapTarget(":/player/Volume-1.svg", ui->label, [label = ui->label](const QPixmap& px){
+        label->setPixmap(px);
+    });
 }
 
 /**
