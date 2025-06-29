@@ -2,6 +2,75 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>
+    <name>AttackDialog</name>
+    <message>
+        <location filename="../charsheet-widget/attackdialog.ui" line="14"/>
+        <source>AttackDialog</source>
+        <translation>Редактирование атаки</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/attackdialog.ui" line="22"/>
+        <location filename="../charsheet-widget/attackdialog.ui" line="29"/>
+        <source>Title</source>
+        <translation>Название</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/attackdialog.ui" line="40"/>
+        <source>Base stat</source>
+        <translation>Базовая характеристика</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/attackdialog.ui" line="48"/>
+        <source>Strengh</source>
+        <translation>Сила</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/attackdialog.ui" line="53"/>
+        <source>Dexterity</source>
+        <translation>Ловкость</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/attackdialog.ui" line="58"/>
+        <source>Constitution</source>
+        <translation>Телосложение</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/attackdialog.ui" line="63"/>
+        <source>Intelligence</source>
+        <translation>Ителлект</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/attackdialog.ui" line="68"/>
+        <source>Wisdom</source>
+        <translation>Мудрость</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/attackdialog.ui" line="73"/>
+        <source>Charisma</source>
+        <translation>Харизма</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/attackdialog.ui" line="81"/>
+        <source>Proficiency bonus</source>
+        <translation>Бонус умения</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/attackdialog.ui" line="98"/>
+        <source>Bonus</source>
+        <translation>Бонус атаки</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/attackdialog.ui" line="112"/>
+        <source>Damage</source>
+        <translation>Урон</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/attackdialog.ui" line="122"/>
+        <source>Notes</source>
+        <translation>Заметки</translation>
+    </message>
+</context>
+<context>
     <name>CalibrationTool</name>
     <message>
         <location filename="../map-widget/calibrationtool.cpp" line="43"/>
@@ -21,7 +90,7 @@
         <translation type="vanished">Структура кампейна</translation>
     </message>
     <message>
-        <location filename="../campaign-tree-widget/campaigntreewidget.cpp" line="193"/>
+        <location filename="../campaign-tree-widget/campaigntreewidget.cpp" line="197"/>
         <source>The selected folder does not contain campaign.json is not a campaign</source>
         <translation>Выбранная папка не содержит campaign.json и не является кампейном</translation>
     </message>
@@ -29,27 +98,27 @@
 <context>
     <name>DndAttackModel</name>
     <message>
-        <location filename="../charsheet-widget/dndmodels.cpp" line="14"/>
+        <location filename="../charsheet-widget/dndmodels.cpp" line="15"/>
         <source>Title</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndmodels.cpp" line="15"/>
+        <location filename="../charsheet-widget/dndmodels.cpp" line="16"/>
         <source>Bonus</source>
         <translation>Бонус атаки</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndmodels.cpp" line="16"/>
+        <location filename="../charsheet-widget/dndmodels.cpp" line="17"/>
         <source>Damage</source>
         <translation>Урон</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndmodels.cpp" line="17"/>
+        <location filename="../charsheet-widget/dndmodels.cpp" line="18"/>
         <source>Notes</source>
         <translation>Заметки</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndmodels.cpp" line="18"/>
+        <location filename="../charsheet-widget/dndmodels.cpp" line="19"/>
         <source>Delete</source>
         <translation>Удалить</translation>
     </message>
@@ -62,316 +131,361 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="40"/>
         <source>Character Name</source>
-        <translation>Имя персонажа</translation>
+        <translation type="vanished">Имя персонажа</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="61"/>
         <source>Class (subclass)</source>
-        <translation>Класс (подкласс)</translation>
+        <translation type="vanished">Класс (подкласс)</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="85"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="80"/>
         <source>Proficiency bonus:</source>
         <translation>Бонус мастерства:</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="92"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="87"/>
         <source>0</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="141"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="136"/>
         <source>HP</source>
         <translation>Хиты</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="173"/>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="180"/>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="225"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="210"/>
         <source>ft</source>
         <translation>фт</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="218"/>
         <source>maxHP</source>
-        <translation>Максимум хитов</translation>
+        <translation type="vanished">Максимум хитов</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="235"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="233"/>
         <source>Initiative:</source>
         <translation>Инициатива:</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="248"/>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="350"/>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="363"/>
         <source>speed</source>
-        <translation>Скорость</translation>
+        <translation type="vanished">Скорость</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="261"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="223"/>
         <source>/</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="268"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="203"/>
         <source>initiative bonus</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="382"/>
-        <source>TextLabel</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="453"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="342"/>
         <source>Strength</source>
         <translation>Сила</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="465"/>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="549"/>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="735"/>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="779"/>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="965"/>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1115"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="354"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="438"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="624"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="668"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="854"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1004"/>
         <source>bonus</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="523"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="412"/>
         <source>Athletics</source>
         <translation>Атлетика</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="609"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="498"/>
         <source>Dexterity</source>
         <translation>Ловкость</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="631"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="520"/>
         <source>Acrobatics</source>
         <translation>Акробатика</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="649"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="538"/>
         <source>Sleght of hand</source>
         <translation>Ловкость рук</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="667"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="556"/>
         <source>Stealth</source>
         <translation>Скрытность</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="699"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="588"/>
         <source>Constitution</source>
         <translation>Телосложение</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="797"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="686"/>
         <source>Intelligence</source>
         <translation>Ителлект</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="849"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="738"/>
         <source>Arcana</source>
         <translation>Магия</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="861"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="750"/>
         <source>History</source>
         <translation>История</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="873"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="762"/>
         <source>Investigation</source>
         <translation>Анализ</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="885"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="774"/>
         <source>Nature</source>
         <translation>Природа</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="897"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="786"/>
         <source>Religion</source>
         <translation>Религия</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="953"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="842"/>
         <source>Wisdom</source>
         <translation>Мудрость</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="999"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="888"/>
         <source>Animal handling</source>
         <translation>Уход за животными</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1011"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="900"/>
         <source>Insight</source>
         <translation>Проницательность</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1023"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="912"/>
         <source>Medicine</source>
         <translation>Медицина</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1035"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="924"/>
         <source>Perception</source>
         <translation>Внимательность</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1047"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="936"/>
         <source>Survival</source>
         <translation>Выживание</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1079"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="968"/>
         <source>Charisma</source>
         <translation>Харизма</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1149"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1038"/>
         <source>Deception</source>
         <translation>Обман</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1161"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1050"/>
         <source>Intimidation</source>
         <translation>Запугивание</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1173"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1062"/>
         <source>Performance</source>
         <translation>Выступление</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1185"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1074"/>
         <source>Persuasion</source>
         <translation>Убеждение</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1228"/>
-        <source>Attacs</source>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1125"/>
+        <source>Attacks</source>
         <translation>Атаки</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1268"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1153"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1226"/>
+        <source>Add</source>
+        <translation>Добавить</translation>
+    </message>
+    <message>
+        <source>Attacs</source>
+        <translation type="vanished">Атаки</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1198"/>
         <source>Resources</source>
         <translation>Ресурсы</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1302"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1246"/>
+        <source>Long Rest</source>
+        <translation>Долгий отдых</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1262"/>
+        <source>Short Rest</source>
+        <translation>Короткий отдых</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1299"/>
         <source>Traits</source>
         <translation>Умения и способности</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1352"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1349"/>
         <source>Personality</source>
         <translation>Черты характера</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1392"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1389"/>
         <source>Ideals</source>
         <translation>Идеалы</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1432"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1429"/>
         <source>Bonds</source>
         <translation>Привязанности</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1472"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1469"/>
         <source>Flaws</source>
         <translation>Слабости</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1506"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1503"/>
         <source>Proficiencies</source>
         <translation>Прочие умения и языки</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1555"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1552"/>
         <source>Equipment</source>
         <translation>Сняряжение</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1590"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1587"/>
         <source>ep</source>
         <translation>ЭМ</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1623"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1620"/>
         <source>sp</source>
         <translation>СМ</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1638"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1635"/>
         <source>pp</source>
         <translation>ПМ</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1653"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1650"/>
         <source>gp</source>
         <translation>ЗМ</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1722"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1719"/>
         <source>cp</source>
         <translation>ММ</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1763"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1760"/>
         <source>Treasures</source>
         <translation>Сокровища</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1823"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1820"/>
         <source>Features</source>
         <translation>Дополнительные способности и умения</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1848"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1845"/>
         <source>Quests</source>
         <translation>Цели и задачи</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1863"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1860"/>
         <source>Allies</source>
         <translation>Союзники и организации</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1897"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1894"/>
         <source>Background</source>
         <translation>Предыстория персонажа</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1959"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1956"/>
         <source>Notes</source>
         <translation>Заметки</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/dndcharsheetwidget.cpp" line="765"/>
+        <source>Save changes</source>
+        <translation>Сохранить изменения</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/dndcharsheetwidget.cpp" line="766"/>
+        <source>Save changes?</source>
+        <translation>Сохранить изменения?</translation>
+    </message>
+</context>
+<context>
+    <name>DndResourceModel</name>
+    <message>
+        <location filename="../charsheet-widget/dndmodels.cpp" line="181"/>
+        <source>Refill</source>
+        <translation>Восстановление</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/dndmodels.cpp" line="182"/>
+        <source>Title</source>
+        <translation>Название</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/dndmodels.cpp" line="183"/>
+        <source>Current</source>
+        <translation>Текущее</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/dndmodels.cpp" line="184"/>
+        <source>Max</source>
+        <translation>Макс</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/dndmodels.cpp" line="185"/>
+        <source>Delete</source>
+        <translation>Удалить</translation>
     </message>
 </context>
 <context>
     <name>HoverWidget</name>
     <message>
-        <location filename="../campaign-tree-widget/hoverwidget.cpp" line="92"/>
-        <location filename="../campaign-tree-widget/hoverwidget.cpp" line="104"/>
+        <location filename="../campaign-tree-widget/hoverwidget.cpp" line="93"/>
+        <location filename="../campaign-tree-widget/hoverwidget.cpp" line="105"/>
         <source>Edit</source>
         <translation>Правка</translation>
     </message>
     <message>
-        <location filename="../campaign-tree-widget/hoverwidget.cpp" line="94"/>
-        <location filename="../campaign-tree-widget/hoverwidget.cpp" line="98"/>
+        <location filename="../campaign-tree-widget/hoverwidget.cpp" line="95"/>
+        <location filename="../campaign-tree-widget/hoverwidget.cpp" line="99"/>
         <source>Add to current encounter</source>
         <translation>Добавить к текущему энкаунтеру</translation>
     </message>
     <message>
-        <location filename="../campaign-tree-widget/hoverwidget.cpp" line="100"/>
+        <location filename="../campaign-tree-widget/hoverwidget.cpp" line="101"/>
         <source>Replace current encounter</source>
         <translation>Заменить текущий энкаунтер</translation>
     </message>
@@ -473,23 +587,23 @@
         <translation>Отсортировать</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativetrackerwidget.cpp" line="232"/>
-        <location filename="../initiative-tracker/initiativetrackerwidget.cpp" line="332"/>
+        <location filename="../initiative-tracker/initiativetrackerwidget.cpp" line="233"/>
+        <location filename="../initiative-tracker/initiativetrackerwidget.cpp" line="333"/>
         <source>Save encounter to file</source>
         <translation>Сохранить энкаунтер в файл</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativetrackerwidget.cpp" line="247"/>
+        <location filename="../initiative-tracker/initiativetrackerwidget.cpp" line="248"/>
         <source>Open encounter from file</source>
         <translation>Открыть энкаунтер из файла</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativetrackerwidget.cpp" line="268"/>
+        <location filename="../initiative-tracker/initiativetrackerwidget.cpp" line="269"/>
         <source>Сохранение конфигурации</source>
         <translation>Сохранение конфигурации</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativetrackerwidget.cpp" line="269"/>
+        <location filename="../initiative-tracker/initiativetrackerwidget.cpp" line="270"/>
         <source>Сохранить трекер?</source>
         <translation>Сохранить трекер?</translation>
     </message>
@@ -497,59 +611,69 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.ui" line="315"/>
+        <location filename="../mainwindow.ui" line="328"/>
         <source>Glossary</source>
         <translation>Глоссарий</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="323"/>
+        <location filename="../mainwindow.ui" line="336"/>
         <source>Tools</source>
         <translation>Инструменты</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="343"/>
+        <location filename="../mainwindow.ui" line="356"/>
         <source>toolBar</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="365"/>
+        <location filename="../mainwindow.ui" line="378"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="376"/>
+        <location filename="../mainwindow.ui" line="389"/>
         <source>Spells</source>
         <translation>Заклинания</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="384"/>
+        <location filename="../mainwindow.ui" line="397"/>
         <source>Monsters</source>
         <translation>Бестиарий</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="392"/>
+        <location filename="../mainwindow.ui" line="405"/>
         <source>Magic items</source>
         <translation>Магические предметы</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="434"/>
+        <location filename="../mainwindow.ui" line="432"/>
+        <source>Close</source>
+        <translation>Закрыть</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="447"/>
         <source>Report bug</source>
         <translation>Сообщить об ошибке</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="439"/>
+        <location filename="../mainwindow.ui" line="452"/>
         <source>Map</source>
         <translation>Карта</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="448"/>
+        <location filename="../mainwindow.ui" line="461"/>
         <source>Reload from disk</source>
         <translation>Перезагрузить с диска</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="451"/>
+        <location filename="../mainwindow.ui" line="464"/>
         <source>Reload campaign from disk</source>
         <translation>Перезагрузить кампанию с диска</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="469"/>
+        <source>Character</source>
+        <translation>Персонаж</translation>
     </message>
     <message>
         <source>Play</source>
@@ -560,7 +684,7 @@
         <translation type="vanished">Файл</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="397"/>
+        <location filename="../mainwindow.ui" line="410"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
@@ -573,17 +697,16 @@
         <translation type="vanished">DM-assist музыка</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="419"/>
         <source>Save</source>
-        <translation>Сохранить</translation>
+        <translation type="vanished">Сохранить</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="368"/>
+        <location filename="../mainwindow.ui" line="381"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="357"/>
+        <location filename="../mainwindow.ui" line="370"/>
         <source>New</source>
         <translation>Новый</translation>
     </message>
@@ -593,27 +716,27 @@
         <translation>DM-assist</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="96"/>
+        <location filename="../mainwindow.ui" line="108"/>
         <source>No maps opened</source>
         <translation>Нет открытых карт</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="148"/>
+        <location filename="../mainwindow.ui" line="160"/>
         <source>Open new map</source>
         <translation>Открыть новую карту</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="297"/>
+        <location filename="../mainwindow.ui" line="309"/>
         <source>Campaign</source>
         <translation>Кампания</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="301"/>
+        <location filename="../mainwindow.ui" line="313"/>
         <source>Add</source>
         <translation>Добавить</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="360"/>
+        <location filename="../mainwindow.ui" line="373"/>
         <source>Ctrl+N</source>
         <translation></translation>
     </message>
@@ -630,174 +753,207 @@
         <translation type="vanished">Сохраниеть проект?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="292"/>
+        <location filename="../mainwindow.cpp" line="285"/>
         <source>Open player config file</source>
         <translation>Открыть конфигурационный файл проекта</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="294"/>
+        <location filename="../mainwindow.cpp" line="287"/>
         <source>Xml file (*.xml)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="302"/>
+        <location filename="../mainwindow.cpp" line="295"/>
         <source>Open File error</source>
         <translation>Open file error</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="468"/>
-        <location filename="../mainwindow.cpp" line="687"/>
+        <location filename="../mainwindow.cpp" line="461"/>
+        <location filename="../mainwindow.cpp" line="659"/>
         <source>Open file error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="169"/>
+        <location filename="../mainwindow.cpp" line="162"/>
         <source>Open Map Image</source>
         <translation>Открыть изображение карты</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="171"/>
+        <location filename="../mainwindow.cpp" line="164"/>
         <source>Map Files (*.dam);;Images (*.png *.jpg *.bmp)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="268"/>
+        <location filename="../mainwindow.cpp" line="261"/>
         <source>Open campaign directory</source>
         <translation>Открыть папку кампейна</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="459"/>
+        <location filename="../mainwindow.cpp" line="452"/>
         <source>Can&apos;t create subdirectory: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="582"/>
+        <location filename="../mainwindow.cpp" line="551"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="582"/>
+        <location filename="../mainwindow.cpp" line="551"/>
         <source>Failed to open map file.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="992"/>
+        <location filename="../mainwindow.cpp" line="965"/>
         <source>ruler</source>
         <translation>Линейка</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1004"/>
+        <location filename="../mainwindow.cpp" line="977"/>
         <source>calibrate</source>
         <translation>Калибровать</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1028"/>
+        <location filename="../mainwindow.cpp" line="1001"/>
         <source>Add fog to map</source>
         <translation>Добавить туман на карту</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1035"/>
+        <location filename="../mainwindow.cpp" line="1008"/>
         <source>Hide all</source>
         <translation>Скрыть все</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1054"/>
+        <location filename="../mainwindow.cpp" line="1027"/>
         <source>Remove fog from map</source>
         <translation>Убрать туман с карты</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1061"/>
+        <location filename="../mainwindow.cpp" line="1034"/>
         <source>Reveal all</source>
         <translation>Проявить все</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1081"/>
+        <location filename="../mainwindow.cpp" line="1054"/>
         <source>Edit light sources</source>
         <translation>Изменение источников света</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1086"/>
+        <location filename="../mainwindow.cpp" line="1059"/>
         <source>Bright radius</source>
         <translation>Радиус яркого света</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1093"/>
+        <location filename="../mainwindow.cpp" line="1066"/>
         <source>Dim radius</source>
         <translation>Радиус туслого света</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1120"/>
+        <location filename="../mainwindow.cpp" line="1093"/>
         <source>Update fog</source>
         <translation>Обновлять туман</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1137"/>
+        <location filename="../mainwindow.cpp" line="1110"/>
         <source>Draw line</source>
         <translation>Нарисовать линию</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1157"/>
+        <location filename="../mainwindow.cpp" line="1130"/>
         <source>Draw circle</source>
         <translation>Нарисовать круг</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1177"/>
+        <location filename="../mainwindow.cpp" line="1150"/>
         <source>Draw square</source>
         <translation>Нарисовать квадрат</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1197"/>
+        <location filename="../mainwindow.cpp" line="1170"/>
         <source>Draw triangle</source>
         <translation>Нарисовать треугольник</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1218"/>
+        <location filename="../mainwindow.cpp" line="1191"/>
         <source>Brush</source>
         <translation>Кисть</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1225"/>
+        <location filename="../mainwindow.cpp" line="1198"/>
         <source>Clear all</source>
         <translation>Очистить все</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1246"/>
+        <location filename="../mainwindow.cpp" line="1219"/>
         <source>Brush opacity</source>
         <translation>Прозрачность кисти</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="218"/>
+        <location filename="../mainwindow.cpp" line="1322"/>
+        <source>Chose character name</source>
+        <translation>Введите имя персонажа</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1323"/>
+        <source>Character name:</source>
+        <translation>Имя персонажа:</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1331"/>
+        <location filename="../mainwindow.cpp" line="1343"/>
+        <location filename="../mainwindow.cpp" line="1353"/>
+        <source>Can&apos;t add character</source>
+        <translation>Невозможно добавить персонажа</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1331"/>
+        <source>Open campaign first!</source>
+        <translation>Сначала откройте кампанию!</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1343"/>
+        <source>Character already exists 
+ Override?</source>
+        <translation>Персонаж уже существует \n Перезаписать?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1353"/>
+        <source>Unknown error</source>
+        <translation>Неизвестная ошибка</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="211"/>
         <source>Save map to file</source>
         <translation>Сохранить карту</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="329"/>
+        <location filename="../mainwindow.ui" line="342"/>
         <source>About</source>
         <translation>Справка</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="400"/>
+        <location filename="../mainwindow.ui" line="413"/>
         <source>Settings (ctrl+alt+s)</source>
         <translation>Настройки (Ctrl + Alt + S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="403"/>
+        <location filename="../mainwindow.ui" line="416"/>
         <source>Ctrl+Alt+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="411"/>
-        <location filename="../mainwindow.ui" line="414"/>
+        <location filename="../mainwindow.ui" line="424"/>
+        <location filename="../mainwindow.ui" line="427"/>
         <source>Character builder</source>
         <translation>Конструктор персонажей</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="424"/>
+        <location filename="../mainwindow.ui" line="437"/>
         <source>Help</source>
         <translation>Помощь</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="429"/>
+        <location filename="../mainwindow.ui" line="442"/>
         <source>Donate</source>
         <translation>Поддержать</translation>
     </message>
@@ -806,28 +962,23 @@
     <name>MusicPlayerWidget</name>
     <message>
         <location filename="../music-widget/musicplayer.ui" line="32"/>
-        <source>MusicPlayerWidget</source>
-        <translation></translation>
+        <source>Form</source>
+        <translation>Плейлист</translation>
     </message>
     <message>
-        <location filename="../music-widget/musicplayer.ui" line="81"/>
-        <source>1</source>
-        <translation></translation>
+        <location filename="../music-widget/musicplayer.ui" line="56"/>
+        <location filename="../music-widget/musicplayer.ui" line="75"/>
+        <source>TextLabel</source>
+        <translation>Название</translation>
     </message>
     <message>
-        <location filename="../music-widget/musicplayer.ui" line="109"/>
-        <source>Titile</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../music-widget/musicplayer.ui" line="141"/>
+        <location filename="../music-widget/musicplayer.ui" line="101"/>
         <source>play</source>
         <translation>Пуск</translation>
     </message>
     <message>
-        <location filename="../music-widget/musicplayer.ui" line="161"/>
         <source>Edit playlist</source>
-        <translation>Редактировать плейлист</translation>
+        <translation type="vanished">Редактировать плейлист</translation>
     </message>
 </context>
 <context>
@@ -1006,6 +1157,45 @@
     <message>
         <source>Audio files (*.mp3)</source>
         <translation type="vanished">аудиофайлы (*mp3)</translation>
+    </message>
+</context>
+<context>
+    <name>ResourceDialog</name>
+    <message>
+        <location filename="../charsheet-widget/resourcedialog.ui" line="26"/>
+        <source>ResourceDialog</source>
+        <translation>Изменение ресурса</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/resourcedialog.ui" line="34"/>
+        <location filename="../charsheet-widget/resourcedialog.ui" line="41"/>
+        <source>Title</source>
+        <translation>Название</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/resourcedialog.ui" line="52"/>
+        <source>Amount</source>
+        <translation>Количество</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/resourcedialog.ui" line="69"/>
+        <source>Maximum</source>
+        <translation>Максимум</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/resourcedialog.ui" line="88"/>
+        <source>Refill</source>
+        <translation>Восстановление</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/resourcedialog.ui" line="94"/>
+        <source>Long rest</source>
+        <translation>Длинный отдых</translation>
+    </message>
+    <message>
+        <location filename="../charsheet-widget/resourcedialog.ui" line="105"/>
+        <source>Short rest</source>
+        <translation>Короткий отдых</translation>
     </message>
 </context>
 <context>
@@ -1207,12 +1397,12 @@
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="133"/>
+        <location filename="../settingsdialog.cpp" line="128"/>
         <source>Select folder</source>
         <translation>Выбрать папку</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="157"/>
+        <location filename="../settingsdialog.cpp" line="152"/>
         <source>Select theme file</source>
         <translation>Выбрать файл темы</translation>
     </message>
@@ -1220,17 +1410,17 @@
 <context>
     <name>TabWidget</name>
     <message>
-        <location filename="../map-widget/maptabwidget.h" line="33"/>
+        <location filename="../map-widget/maptabwidget.h" line="35"/>
         <source>Open new map</source>
         <translation>Открыть новую карту</translation>
     </message>
     <message>
-        <location filename="../map-widget/maptabwidget.h" line="65"/>
+        <location filename="../map-widget/maptabwidget.h" line="67"/>
         <source>Share</source>
         <translation>Поделиться</translation>
     </message>
     <message>
-        <location filename="../map-widget/maptabwidget.h" line="68"/>
+        <location filename="../map-widget/maptabwidget.h" line="70"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
