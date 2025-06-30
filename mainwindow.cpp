@@ -78,8 +78,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);
     ui->campaignLayout->addWidget(campaignTreeWidget);
 
-    ThemedIconManager::instance().addPixmapTarget(":/player/Volume-1.svg", this, [label = ui->volMinLabel](const QPixmap& px){label->setPixmap(px);});
-    ThemedIconManager::instance().addPixmapTarget(":/player/Volume-2.svg", this, [label = ui->volMaxLabel](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/player/Volume-1.svg", ui->volMinLabel, [label = ui->volMinLabel](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/player/Volume-2.svg", ui->volMaxLabel, [label = ui->volMaxLabel](const QPixmap& px){label->setPixmap(px);});
 
     showMaximized();
 }
