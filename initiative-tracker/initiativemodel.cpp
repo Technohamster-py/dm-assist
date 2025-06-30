@@ -3,14 +3,22 @@
 #include <QColor>
 #include <QDomDocument>
 #include <QFile>
-#include <QIcon>
 #include <QRegularExpression>
 #include <QTextStream>
-#include <QJSEngine> // Для вычисления арифметики
+#include <QJSEngine>
+#include <themediconmanager.h>
 
 
 InitiativeModel::InitiativeModel(QObject *parent)
-        : QAbstractTableModel(parent) {}
+        : QAbstractTableModel(parent) {
+    m_initHeaderIcon = QIcon(":/d20.svg");
+    m_acHeaderIcon = QIcon(":/shield.svg");
+    m_hpHeaderIcon = QIcon(":/heart.svg");
+
+    ThemedIconManager::instance().addPixmapTarget(":/d20.svg", this, [=](const QPixmap& px){m_initHeaderIcon = QIcon(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/shield.svg", this, [=](const QPixmap& px){m_acHeaderIcon = QIcon(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/heart.svg", this, [=](const QPixmap& px){m_hpHeaderIcon = QIcon(px);});
+}
 
 /**
  * @brief Returns the number of rows in the model.
@@ -64,9 +72,9 @@ QVariant InitiativeModel::headerData(int section, Qt::Orientation orientation, i
 
     switch (section) {
         case 0: return tr("Name");
-        case 1: return QIcon(":/d20.svg");
-        case 2: return QIcon(":/shield.svg");
-        case 3: return QIcon(":/heart.svg");
+        case 1: return m_initHeaderIcon;
+        case 2: return m_acHeaderIcon;
+        case 3: return m_hpHeaderIcon;
         case 4: return tr("Max");
         case 5: return tr("Delete");
         default: return {};

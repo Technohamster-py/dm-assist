@@ -6,6 +6,7 @@
 
 #include "initiativetrackerwidget.h"
 #include "hpprogressbardelegate.h"
+#include <themediconmanager.h>
 #include "ui_initiativetrackerwidget.h"
 
 
@@ -56,6 +57,14 @@ void InitiativeTrackerWidget::setupUI() {
             model->removeCharacter(index.row());
         }
     });
+
+    ThemedIconManager::instance().addIconTarget<QPushButton>(":/save.svg", ui->saveButton, &QAbstractButton::setIcon);
+    ThemedIconManager::instance().addIconTarget<QPushButton>(":/upload.svg", ui->loadButton, &QAbstractButton::setIcon);
+    ThemedIconManager::instance().addIconTarget<QPushButton>(":/initiative tracker/back.svg", ui->backButton, &QAbstractButton::setIcon);
+    ThemedIconManager::instance().addIconTarget<QPushButton>(":/initiative tracker/forward.svg", ui->nextButton, &QAbstractButton::setIcon);
+    ThemedIconManager::instance().addIconTarget<QPushButton>(":/initiative tracker/share.svg", ui->shareButton, &QAbstractButton::setIcon);
+    ThemedIconManager::instance().addIconTarget<QPushButton>(":/add.svg", ui->addRowButton, &QAbstractButton::setIcon);
+    ThemedIconManager::instance().addIconTarget<QPushButton>(":/folder.svg", ui->addFromFileButton, &QAbstractButton::setIcon);
 }
 
 /**
