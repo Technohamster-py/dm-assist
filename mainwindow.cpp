@@ -13,6 +13,7 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include "saveconfigdialog.h"
+#include <QStyleFactory>
 #include <QTextStream>
 #include <QSpinBox>
 #include <QJsonDocument>
@@ -390,6 +391,7 @@ void MainWindow::loadSettings() {
     initiativeTrackerWidget->setSharedFieldVisible(4, initiativeFields & iniFields::maxHp);
     initiativeTrackerWidget->setSharedFieldVisible(5, initiativeFields & iniFields::del);
 
+    /// Appearance
     QString theme = settings.value(paths.appearance.theme, "Light").toString();
     if (theme == "Light")
         ThemeManager::applyPreset(ThemeManager::PresetTheme::Light);
@@ -399,6 +401,9 @@ void MainWindow::loadSettings() {
         ThemeManager::resetToSystemTheme();
     else
         ThemeManager::loadFromXml(theme);
+
+    QString style = settings.value(paths.appearance.style, "Fusion").toString();
+    QApplication::setStyle(QStyleFactory::create(style));
 
     /// Campaign
     currentCampaignDir = settings.value(paths.session.campaign, "").toString();

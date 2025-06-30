@@ -1,7 +1,3 @@
-//
-// Created by arseniy on 02.04.2025.
-//
-
 #ifndef DM_ASSIST_SETTINGSDIALOG_H
 #define DM_ASSIST_SETTINGSDIALOG_H
 
@@ -55,6 +51,7 @@ private:
 
     void populateLanguages();
     void populateThemes();
+    void populateStyles();
 };
 
 

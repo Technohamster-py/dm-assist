@@ -4,6 +4,7 @@
 #include <QSettings>
 #include <QStandardPaths>
 #include <QFileDialog>
+#include <QStyleFactory>
 #include <utility>
 #include "lib/bass/include/bass.h"
 
@@ -32,6 +33,7 @@ SettingsDialog::SettingsDialog(QString organisationName, QString applicationName
     populateAudioDevices();
     populateLanguages();
     populateThemes();
+    populateStyles();
 
     loadSettings();
 
@@ -111,6 +113,11 @@ void SettingsDialog::loadSettings() {
     index = ui->themeComboBox->findData(currentTheme);
     if (index != -1)
         ui->themeComboBox->setCurrentIndex(index);
+
+    QString currentStyle = settings.value(paths.appearance.style, "Fusion").toString();
+    index = ui->styleComboBox->findData(currentStyle);
+    if (index != -1)
+        ui->styleComboBox->setCurrentIndex(index);
 }
 
 /**
@@ -215,6 +222,7 @@ void SettingsDialog::saveSettings() {
     settings.setValue(paths.initiative.showHpComboBox, ui->showControlCheckBox->isChecked());
 
     settings.setValue(paths.appearance.theme, ui->themeComboBox->currentData().toString());
+    settings.setValue(paths.appearance.style, ui->styleComboBox->currentData().toString());
     settings.sync();
 }
 
@@ -326,6 +334,14 @@ void SettingsDialog::populateThemes() {
     for (const QString &file: themeFiles) {
         QString themeName = file.mid(0, file.length() - 4);
         ui->themeComboBox->addItem(themeName, file);
+    }
+}
+
+void SettingsDialog::populateStyles() {
+    QStringList styles = QStyleFactory::keys();
+
+    for (const QString& style : styles) {
+        ui->styleComboBox->addItem(style, style);
     }
 }
 

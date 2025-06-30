@@ -36,6 +36,7 @@ struct Settings{
 
     struct Appearance{
         QString theme = "appearance/theme";
+        QString style = "appearance/style";
     };
     Appearance appearance;
 
