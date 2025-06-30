@@ -1,5 +1,5 @@
 #include "dndmodels.h"
-#include <QIcon>
+#include <themediconmanager.h>
 
 DndAttackModel::DndAttackModel(QObject *parent) : QAbstractTableModel(parent) {}
 
@@ -147,7 +147,10 @@ void DndAttackModel::editAttack(int row, const Attack& attack) {
 }
 
 
-DndResourceModel::DndResourceModel(QObject *parent) : QAbstractTableModel(parent) {}
+DndResourceModel::DndResourceModel(QObject *parent) : QAbstractTableModel(parent) {
+    ThemedIconManager::instance().addPixmapTarget(":/charSheet/shortrest.svg", this, [=](const QPixmap& px){ m_shortRestIcon = QIcon(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/charSheet/longrest.svg", this, [=](const QPixmap& px){ m_longRestIcon = QIcon(px);});
+}
 
 QVariant DndResourceModel::data(const QModelIndex &index, int role) const {
     if (!index.isValid() || index.row() >= m_resourcesList.size())
@@ -155,8 +158,8 @@ QVariant DndResourceModel::data(const QModelIndex &index, int role) const {
     const Resource &r = m_resourcesList.at(index.row());
 
     if (role == Qt::DecorationRole && index.column() == 0){
-        if (r.refillOnShortRest) return QIcon(":/charSheet/shortrest.svg");
-        if (r.refillOnLongRest) return QIcon(":/charSheet/longrest.svg");
+        if (r.refillOnShortRest) return m_shortRestIcon;
+        if (r.refillOnLongRest) return m_longRestIcon;
         return {};
     }
 

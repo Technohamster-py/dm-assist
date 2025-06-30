@@ -7,6 +7,7 @@
 #include <QTextBlock>
 #include <QTextList>
 #include "dndcharsheetdialogs.h"
+#include <themediconmanager.h>
 
 
 DndCharsheetWidget::DndCharsheetWidget(QWidget* parent) :
@@ -54,6 +55,14 @@ DndCharsheetWidget::DndCharsheetWidget(QWidget* parent) :
                 break;
         }
     });
+
+    ThemedIconManager::instance().addIconTarget<QPushButton>(":/add.svg", ui->addResourceButton, &QAbstractButton::setIcon);
+    ThemedIconManager::instance().addIconTarget<QPushButton>(":/add.svg", ui->addAttackButton, &QAbstractButton::setIcon);
+    ThemedIconManager::instance().addIconTarget<QPushButton>(":/charSheet/longrest.svg", ui->longRestButton, &QAbstractButton::setIcon);
+    ThemedIconManager::instance().addIconTarget<QPushButton>(":/charSheet/shortrest.svg", ui->shortRestButton, &QAbstractButton::setIcon);
+
+    ThemedIconManager::instance().addPixmapTarget(":/shield.svg", ui->shieldIcon, [label = ui->shieldIcon](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/charSheet/run.svg", ui->runIcon, [label = ui->runIcon](const QPixmap& px){label->setPixmap(px);});
 }
 
 DndCharsheetWidget::DndCharsheetWidget(const QString& filePath, QWidget *parent): DndCharsheetWidget(parent){

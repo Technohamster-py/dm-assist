@@ -3,6 +3,7 @@
 
 #include <QAbstractTableModel>
 #include <QMap>
+#include <QIcon>
 #include <QJsonArray>
 #include <QJsonObject>
 
@@ -105,6 +106,9 @@ public slots:
 private:
     QVector<Resource> m_resourcesList;
     QJsonObject m_resourceObject;
+
+    QIcon m_shortRestIcon;
+    QIcon m_longRestIcon;
 };
 
 #endif //DM_ASSIST_DNDMODELS_H
