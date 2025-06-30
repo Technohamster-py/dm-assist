@@ -88,12 +88,13 @@ DM helper.
 ![evaluation.png](illustrations/evaluation.png) -> ![img.png](illustrations/evaluation-complete.png)
 
 Контроль:
-- Нажмите <img src="static/forward.svg" width="20"> или <img src="static/back.svg" width="20"> чтобы переходить к следующему или предыдущему персонажу.
+- Нажмите <img src="static/forward.svg" width="20"> или <img src="static/back.svg" width="20"> чтобы переходить 
+к следующему или предыдущему персонажу. Так же можно использовать `PageUp` и `PageDown`
 - Нажмите <img src="static/save.svg" width="20"> чтобы сохранить текущий энкаунтер в xml файл
 - Нажмите <img src="static/upload.svg" width="20"> чтобы открыть энкаунтер из файла **_со сбросом текущего_**
 - Нажмите **sort** для того, чтобы отсортировать персонажей по инициативе
 - Нажмите **Add** для добавления нового персонажа в энкаунтер
-- Нажмите <img src="static/folder.svg" width="20"> для **_добавления к текущему_** энкаунтеру заранее сохраненный энкаунтер
+- Нажмите <img src="static/folder.svg" width="20"> для **_добавления к текущему_** энкаунтеру заранее сохраненного энкаунтера
 - Используя выпадающий список можно настраивать режим отображения здоровья в общем окне.
 - Нажмите <img src="static/share.svg" width="20"> для открытия окна общего доступа
 
