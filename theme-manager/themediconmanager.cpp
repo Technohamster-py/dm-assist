@@ -46,7 +46,7 @@ void ThemedIconManager::regenerateAndApplyIcon(const IconTarget& target) {
     QString svg = QString::fromUtf8(file.readAll());
     file.close();
 
-    svg.replace(QRegularExpression(R"(current-color)"), themeColor().name());
+    svg.replace(QRegularExpression(R"(currentColor)"), themeColor().name());
 
     QSvgRenderer renderer(svg.toUtf8());
     QPixmap pixmap(target.size);
