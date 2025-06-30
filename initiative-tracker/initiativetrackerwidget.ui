@@ -177,6 +177,9 @@
         <iconset resource="../static/app_resources.qrc">
          <normaloff>:/initiative tracker/back.svg</normaloff>:/initiative tracker/back.svg</iconset>
        </property>
+       <property name="shortcut">
+        <string>PgUp</string>
+       </property>
       </widget>
      </item>
      <item>
@@ -208,6 +211,9 @@
        <property name="icon">
         <iconset resource="../static/app_resources.qrc">
          <normaloff>:/initiative tracker/forward.svg</normaloff>:/initiative tracker/forward.svg</iconset>
+       </property>
+       <property name="shortcut">
+        <string>PgDown</string>
        </property>
       </widget>
      </item>
