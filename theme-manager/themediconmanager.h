@@ -14,7 +14,7 @@ public:
     static ThemedIconManager& instance();
 
     template <typename T>
-    void addIconTarget(const QString& svgPath, T* object, void (T::*setIconMethod)(const QIcon&), QSize size = QSize(24, 24)){
+    void addIconTarget(const QString& svgPath, T* object, void (T::*setIconMethod)(const QIcon&), QSize size = QSize(24, 24)) {
         if (!object || svgPath.isEmpty())
             return;
 
@@ -35,11 +35,9 @@ public:
 
         m_targets.append(target);
         regenerateAndApplyIcon(m_targets.last());
-    };
+    }
 
     void addPixmapTarget(const QString& svgPath, QObject* receiver, std::function<void(const QPixmap&)> applyPixmap, QSize size = QSize(24, 24));
-
-    QIcon addRawTarget(const QString &svgPath, QSize size = QSize(24, 24));
 
 
 protected:
@@ -56,17 +54,9 @@ private:
         std::function<void(const QPixmap&)> applyPixmap;
     };
 
-    struct RawIconTarget {
-        QString path;
-        QSize size;
-        QWeakPointer<QIcon> icon;
-    };
-
     QList<IconTarget> m_targets;
-    QList<RawIconTarget> m_rawTargets;
 
     void regenerateAndApplyIcon(const IconTarget& target);
-
     void updateAllIcons();
     QColor themeColor() const;
 };
