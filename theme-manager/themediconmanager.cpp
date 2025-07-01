@@ -77,11 +77,12 @@ ThemedIconManager &ThemedIconManager::instance() {
 }
 
 void ThemedIconManager::addPixmapTarget(const QString &svgPath, QObject *receiver,
-                                        std::function<void(const QPixmap &)> applyPixmap, QSize size) {
+                                        std::function<void(const QPixmap &)> applyPixmap,
+                                        bool override, QSize size) {
 
     if (!receiver || svgPath.isEmpty()) return;
 
-    // Удаляем старую запись, если такая есть
+    if (override)
     m_targets.erase(std::remove_if(m_targets.begin(), m_targets.end(),
                                    [receiver](const IconTarget& t) {
                                        return t.receiver == receiver;
