@@ -15,9 +15,12 @@ InitiativeModel::InitiativeModel(QObject *parent)
     m_acHeaderIcon = QIcon(":/shield.svg");
     m_hpHeaderIcon = QIcon(":/heart.svg");
 
-    ThemedIconManager::instance().addPixmapTarget(":/d20.svg", this, [=](const QPixmap& px){m_initHeaderIcon = QIcon(px);});
-    ThemedIconManager::instance().addPixmapTarget(":/shield.svg", this, [=](const QPixmap& px){m_acHeaderIcon = QIcon(px);});
-    ThemedIconManager::instance().addPixmapTarget(":/heart.svg", this, [=](const QPixmap& px){m_hpHeaderIcon = QIcon(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/d20.svg", this,
+                                                  [=](const QPixmap &px) { m_initHeaderIcon = QIcon(px); }, false);
+    ThemedIconManager::instance().addPixmapTarget(":/shield.svg", this,
+                                                  [=](const QPixmap &px) { m_acHeaderIcon = QIcon(px); }, false);
+    ThemedIconManager::instance().addPixmapTarget(":/heart.svg", this,
+                                                  [=](const QPixmap &px) { m_hpHeaderIcon = QIcon(px); }, false);
 }
 
 /**

@@ -37,7 +37,8 @@ public:
         regenerateAndApplyIcon(m_targets.last());
     }
 
-    void addPixmapTarget(const QString& svgPath, QObject* receiver, std::function<void(const QPixmap&)> applyPixmap, QSize size = QSize(24, 24));
+    void addPixmapTarget(const QString &svgPath, QObject *receiver, std::function<void(const QPixmap &)> applyPixmap,
+                         bool override = true, QSize size = QSize(24, 24));
 
 
 protected:
