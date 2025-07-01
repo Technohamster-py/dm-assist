@@ -66,7 +66,6 @@ void ThemedIconManager::regenerateAndApplyIcon(const IconTarget& target) {
 }
 
 
-
 QColor ThemedIconManager::themeColor() const {
     return qApp->palette().color(QPalette::WindowText);
 }

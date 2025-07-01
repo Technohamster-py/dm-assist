@@ -1,7 +1,3 @@
-//
-// Created by arseniy on 11.10.2024.
-//
-
 #ifndef DM_ASSIST_MAINWINDOW_H
 #define DM_ASSIST_MAINWINDOW_H
 
@@ -23,11 +19,6 @@
 #include "initiative-tracker/initiativetrackerwidget.h"
 #include "music-widget/musicwidget.h"
 #include "settingsdialog.h"
-
-
-#define ORGANIZATION_NAME "Technohaster"
-#define ORGANIZATION_DOMAIN "github.com/Technohamster-py"
-#define APPLICATION_NAME "DM-assist"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

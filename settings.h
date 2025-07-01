@@ -4,7 +4,7 @@
 #include <QString>
 #include <QSettings>
 
-#define ORGANIZATION_NAME "Technohaster"
+#define ORGANIZATION_NAME "Technohamster"
 #define ORGANIZATION_DOMAIN "github.com/Technohamster-py"
 #define APPLICATION_NAME "DM-assist"
 
