@@ -72,9 +72,7 @@ MusicPlayerWidget::MusicPlayerWidget(QWidget *parent, int id, QString title)
 
     ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/player/play.svg", ui->playButton, &QAbstractButton::setIcon);
     ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/edit.svg", ui->editButton, &QAbstractButton::setIcon);
-    ThemedIconManager::instance().addPixmapTarget(":/player/Volume-1.svg", ui->label, [label = ui->label](const QPixmap& px){
-        label->setPixmap(px);
-    });
+    ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/player/Volume-1.svg", ui->muteButton, &QAbstractButton::setIcon);
 }
 
 /**
@@ -595,6 +593,19 @@ void MusicPlayerWidget::setVolume(int volume) {
 
 int MusicPlayerWidget::volumeSliderPosition() {
     return ui->volumeSlider->value();
+}
+
+void MusicPlayerWidget::on_muteButton_clicked() {
+    if (isMuted){
+        ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/player/Volume-1.svg", ui->muteButton, &QAbstractButton::setIcon);
+        setVolume(prevVolume);
+        isMuted = false;
+    } else{
+        ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/player/mute.svg", ui->muteButton, &QAbstractButton::setIcon);
+        prevVolume = volumeSliderPosition();
+        setVolume(0);
+        isMuted = true;
+    }
 }
 
 ////////////////////////////////////////////////

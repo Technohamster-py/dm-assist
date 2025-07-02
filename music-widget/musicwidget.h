@@ -73,6 +73,7 @@ protected:
 private slots:
     void on_playButton_clicked();
     void on_editButton_clicked();
+    void on_muteButton_clicked();
     void playShortcutTriggered();
 
     void playNextTrack();
@@ -88,6 +89,8 @@ private:
     QString localDir;
     int id;
     bool isActive = false;
+    bool isMuted = false;
+    int prevVolume = 100;
 
     QList<QString> filePaths;    // Список треков
     QList<HSTREAM> streams;      // Потоки BASS

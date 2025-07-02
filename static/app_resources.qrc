@@ -30,6 +30,7 @@
         <file>stop.svg</file>
         <file>Volume-1.svg</file>
         <file>Volume-2.svg</file>
+        <file>mute.svg</file>
     </qresource>
     <qresource prefix="map">
         <file>brush.svg</file>
