@@ -374,6 +374,7 @@ void MainWindow::loadSettings() {
     QDir dir(workingDir);
     if (!dir.exists())
         dir.mkpath(".");
+    defaultCampaignDir = settings.value(paths.general.defaultCampaignDir, "").toString();
     /// Music
     for (MusicPlayerWidget *player : players) {
         player->setAudioOutput(settings.value(paths.general.audioDevice, 0).toInt());
@@ -444,7 +445,7 @@ void MainWindow::loadSettings() {
  * - Updates the application's state to reflect the new campaign configuration.
  */
 void MainWindow::newCampaign() {
-    SaveConfigDialog dialog(this);
+    SaveConfigDialog dialog(this, defaultCampaignDir);
     QString fileName = "";
 
     if (dialog.exec() == QDialog::Accepted)
@@ -476,6 +477,9 @@ void MainWindow::newCampaign() {
     QJsonDocument doc(obj);
     configFile.write(doc.toJson(QJsonDocument::Indented));
     configFile.close();
+
+    dir.cdUp();
+    defaultCampaignDir = dir.absolutePath();
 
     setupCampaign(dialog.directoryPath);
 }
@@ -710,6 +714,7 @@ void MainWindow::saveSettings() {
     QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
     settings.setValue(paths.general.dir, workingDir);
     settings.setValue(paths.general.volume, ui->volumeSlider->value());
+    settings.setValue(paths.general.defaultCampaignDir, defaultCampaignDir);
     settings.setValue(paths.session.campaign, campaignTreeWidget->root());
     settings.sync();
 }

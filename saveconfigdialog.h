@@ -25,7 +25,7 @@ class SaveConfigDialog : public QDialog {
 Q_OBJECT
 
 public:
-    explicit SaveConfigDialog(QWidget *parent = nullptr);
+    explicit SaveConfigDialog(QWidget *parent = nullptr, QString baseDir = "");
 
     QString filename;
     QString directoryPath;

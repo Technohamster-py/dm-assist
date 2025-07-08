@@ -66,6 +66,7 @@ private:
     QTranslator translator;
     QString currentLanguage;
     QString currentCampaignDir;
+    QString defaultCampaignDir;
 
     int deviceIndex = -1;
     QVector<MusicPlayerWidget*> players;

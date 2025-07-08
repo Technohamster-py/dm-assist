@@ -11,7 +11,7 @@
  * saving the configuration, and canceling the operation, as well as a label for
  * displaying warnings or errors.
  */
-SaveConfigDialog::SaveConfigDialog(QWidget *parent)  : QDialog(parent), warningLabel(nullptr) {
+SaveConfigDialog::SaveConfigDialog(QWidget *parent, QString baseDir) : QDialog(parent), warningLabel(nullptr) {
     setWindowTitle(tr("Сохранение проекта"));
     resize(400, 200);
 
@@ -66,7 +66,12 @@ SaveConfigDialog::SaveConfigDialog(QWidget *parent)  : QDialog(parent), warningL
         directoryPath = rootFolderEdit->text().trimmed() + "/" + projectNameEdit->text().trimmed();
     });
 
-    rootFolderEdit->setText(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/dm_assist_campaigns");
+    if (baseDir.isEmpty())
+        rootFolderEdit->setText(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/dm_assist_campaigns");
+    else
+        rootFolderEdit->setText(baseDir);
+
+
     projectNameEdit->setText("Untitled campaign");
 }
 

@@ -31,6 +31,7 @@ struct Settings{
         QString dir = "general/dir";                    ///< String рабочая папка
         QString lang = "general/lang";                  ///< String язык
         QString volume = "general/volume";              ///< int основной ползунок громкости
+        QString defaultCampaignDir = "general/defaultCampaignDir"; ///< String папка в которую будут сохраняться кампании по-умолчанию
     };
     General general;
 
