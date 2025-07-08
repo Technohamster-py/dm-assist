@@ -36,7 +36,7 @@ set(FILES
         map-widget/lighttool.h  map-widget/lighttool.cpp
         map-widget/mapview.h    map-widget/mapview.cpp
         map-widget/mapscene.h   map-widget/mapscene.cpp
-        map-widget/maptabwidget.h   map-widget/maptabwidget.h
+        map-widget/maptabwidget.h   map-widget/maptabwidget.cpp
         map-widget/rulermaptool.h   map-widget/rulermaptool.cpp
         map-widget/sharedmapwindow.h    map-widget/sharedmapwindow.cpp
         map-widget/spellshapetool.h     map-widget/spellshapetool.cpp
@@ -49,7 +49,6 @@ set(FILES
         settings.h
         theme-manager/thememanager.h theme-manager/thememanager.cpp
         theme-manager/themediconmanager.h theme-manager/themediconmanager.cpp
-
 )
 
 set(UI_FILES

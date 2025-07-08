@@ -907,7 +907,7 @@ void MainWindow::setupMaps() {
     connect(mapTabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::deleteMapTab);
     connect(mapTabWidget, &TabWidget::share, this, &MainWindow::openSharedMapWindow);
     connect(mapTabWidget, &TabWidget::save, this, &MainWindow::slotExportMap);
-
+    connect(mapTabWidget, &TabWidget::dropAccepted, this, &MainWindow::openMapFromFile);
     updateVisibility();
 }
 

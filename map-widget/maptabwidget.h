@@ -2,6 +2,8 @@
 #define DM_ASSIST_MAPTABWIDGET_H
 
 #include <QApplication>
+#include <QDragEnterEvent>
+#include <QDropEvent>
 #include <QTabWidget>
 #include <QTabBar>
 #include <QToolButton>
@@ -25,53 +27,24 @@ class TabWidget : public QTabWidget {
 Q_OBJECT
 
 public:
-    explicit TabWidget(QWidget *parent = nullptr) : QTabWidget(parent) {
-        setTabsClosable(true);
-        setTabBarAutoHide(false);
-
-        auto *plusButton = new QToolButton(this);
-        ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/add.svg", plusButton, &QAbstractButton::setIcon);
-        plusButton->setAutoRaise(true);
-        plusButton->setToolTip(tr("Open new map"));
-
-        connect(plusButton, &QToolButton::clicked, this, &TabWidget::addNewTab);
-
-        auto *cornerWidget = new QWidget(this);
-        auto *layout = new QHBoxLayout(cornerWidget);
-        layout->setContentsMargins(0, 0, 0, 0);
-        layout->addStretch();
-        layout->addWidget(plusButton);
-
-        setCornerWidget(cornerWidget, Qt::TopRightCorner);
-
-        tabBar()->setContextMenuPolicy(Qt::CustomContextMenu);
-        connect(tabBar(), &QTabBar::customContextMenuRequested, this, &TabWidget::showContextMenu);
-    }
+    explicit TabWidget(QWidget *parent = nullptr);
 
 signals:
     void newTabRequested();
+    void dropAccepted(QString file);
     void share(int tab);
     void save(int tab);
+
+protected:
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    void dropEvent(QDropEvent *event) override;
 
 private slots:
     void addNewTab() {
         emit newTabRequested();
     }
 
-    void showContextMenu(const QPoint &pos){
-        int index = tabBar()->tabAt(pos);
-        if (index < 0) return;
-
-        QMenu menu;
-
-        QAction *shareAction = menu.addAction(tr("Share"));
-        connect(shareAction, &QAction::triggered, this, [=]() {emit share(index);});
-
-        QAction *saveAction = menu.addAction(tr("Save"));
-        connect(saveAction, &QAction::triggered, this, [=]() {emit save(index);});
-
-        menu.exec(tabBar()->mapToGlobal(pos));
-    }
+    void showContextMenu(const QPoint &pos);
 };
 
 #endif //DM_ASSIST_MAPTABWIDGET_H
