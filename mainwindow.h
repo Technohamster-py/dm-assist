@@ -48,18 +48,18 @@ public:
     void changeLanguage(const QString &languageCode);
 
 signals:
-    void languageChanged(const QString &languageCode);
 
 public slots:
     void stopAll();
     void stopOtherPlayers(int exeptId);
-    void saveSettings();
     void setVolumeDivider(int value);
 
+    void saveSettings();
     void loadSettings();
 
     void openSharedMapWindow(int index);
     void slotExportMap(int index);
+
 
 private:
     Ui::MainWindow *ui;
@@ -69,6 +69,8 @@ private:
 
     int deviceIndex = -1;
     QVector<MusicPlayerWidget*> players;
+    int prevVolume = 100;
+    bool isMuted = false;
 
     CampaignTreeWidget* campaignTreeWidget;
 
@@ -106,6 +108,7 @@ private slots:
 
     void addCharacter();
 
+    void on_muteButton_clicked();
     void loadMusicConfigFile(QString fileName);
     void saveMusicConfigFile(const QString& fileName);
     void on_actionSettings_triggered();

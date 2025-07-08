@@ -78,7 +78,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);
     ui->campaignLayout->addWidget(campaignTreeWidget);
 
-    ThemedIconManager::instance().addPixmapTarget(":/player/Volume-1.svg", ui->volMinLabel, [label = ui->volMinLabel](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/player/Volume-1.svg", ui->muteButton, &QAbstractButton::setIcon);
     ThemedIconManager::instance().addPixmapTarget(":/player/Volume-2.svg", ui->volMaxLabel, [label = ui->volMaxLabel](const QPixmap& px){label->setPixmap(px);});
 
     showMaximized();
@@ -1364,6 +1364,20 @@ void MainWindow::addCharacter() {
 
     setupCampaign(campaignTreeWidget->root());
     campaignTreeWidget->characterOpenRequested(dstFilePath);
+}
+
+void MainWindow::on_muteButton_clicked() {
+    if (isMuted){
+        isMuted = false;
+        ui->volumeSlider->setValue(prevVolume);
+        ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/player/Volume-1.svg", ui->muteButton, &QAbstractButton::setIcon);
+    } else{
+        ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/player/mute.svg", ui->muteButton, &QAbstractButton::setIcon);
+        isMuted = true;
+        prevVolume = ui->volumeSlider->value();
+        ui->volumeSlider->setValue(0);
+    }
+
 }
 
 
