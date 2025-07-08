@@ -629,6 +629,7 @@ PlaylistEditDialog::PlaylistEditDialog(QWidget *parent, const QStringList &track
 {
     ui->setupUi(this);
     resize(400, 300);
+    setAcceptDrops(true);
 
     QRegularExpression regex("[A-Za-z0-9\\-_ ]+");
     auto *validator = new QRegularExpressionValidator(regex, ui->titleEdit);
@@ -702,5 +703,29 @@ void PlaylistEditDialog::om_removeButton_clicked() {
     auto selectedTracks = ui->playlistWidget->selectedItems();
     for (QListWidgetItem *track : selectedTracks) {
         delete ui->playlistWidget->takeItem(ui->playlistWidget->row(track));
+    }
+}
+
+
+void PlaylistEditDialog::dragEnterEvent(QDragEnterEvent *event) {
+    if (event->mimeData()->hasUrls()) {
+        event->acceptProposedAction();
+    }
+}
+
+void PlaylistEditDialog::dropEvent(QDropEvent *event) {
+    QStringList files;
+    for (const QUrl &url : event->mimeData()->urls()) {
+        QString path = url.toLocalFile();
+        QFileInfo info(path);
+        if (info.exists() && info.isFile() && (info.suffix().toLower() == "mp3" || info.suffix().toLower() == "wav")) {
+            files.append(path);
+        }
+    }
+
+    if (!files.isEmpty())
+    {
+        for (const QString &file : files)
+            ui->playlistWidget->addItem(file);
     }
 }

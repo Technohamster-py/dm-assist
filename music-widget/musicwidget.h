@@ -114,6 +114,10 @@ public:
     QStringList getUpdatedPlaylist() const;
     QString getPlaylistName() const;
 
+protected:
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    void dropEvent(QDropEvent *event) override;
+
 private slots:
     void on_addButton_clicked();
     void om_removeButton_clicked();
