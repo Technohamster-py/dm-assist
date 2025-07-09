@@ -74,11 +74,11 @@ QVariant InitiativeModel::headerData(int section, Qt::Orientation orientation, i
         return {};
 
     switch (section) {
-        case 0: return tr("Name");
-        case 1: return m_initHeaderIcon;
-        case 2: return m_acHeaderIcon;
-        case 3: return m_hpHeaderIcon;
-        case 4: return tr("Max");
+        case fields::name: return tr("Name");
+        case fields::initiative: return m_initHeaderIcon;
+        case fields::Ac: return m_acHeaderIcon;
+        case fields::hp: return m_hpHeaderIcon;
+        case fields::maxHp: return tr("Max");
         default: return {};
     }
 }
@@ -113,10 +113,10 @@ QVariant InitiativeModel::data(const QModelIndex &index, int role) const {
     const InitiativeCharacter &c = characters.at(index.row());
 
     if (role == Qt::DisplayRole || role == Qt::EditRole || role == Qt::UserRole) {
-        if (role == Qt::DisplayRole && index.column() == 5)
+        if (role == Qt::DisplayRole && index.column() == fields::del)
             return "❌";
 
-        if (index.column() == 3) { // HP column
+        if (index.column() == fields::hp) { // HP column
             const auto &c = characters.at(index.row());
             bool ok;
             int hpVal = evaluateExpression(c.hp, &ok);
@@ -129,11 +129,11 @@ QVariant InitiativeModel::data(const QModelIndex &index, int role) const {
         }
 
         switch (index.column()) {
-            case 0: return c.name;
-            case 1: return c.initiative;
-            case 2: return c.ac;
-            case 3: return c.hp;
-            case 4: return c.maxHp;
+            case fields::name: return c.name;
+            case fields::initiative: return c.initiative;
+            case fields::Ac: return c.ac;
+            case fields::hp: return c.hp;
+            case fields::maxHp: return c.maxHp;
         }
     }
 
@@ -207,14 +207,14 @@ bool InitiativeModel::setData(const QModelIndex &index, const QVariant &value, i
     QString strVal = value.toString();
 
     switch (index.column()) {
-        case 0: c.name = strVal; break;
-        case 1: c.initiative = strVal.toInt(); break;
-        case 2: c.ac = strVal.toInt(); break;
-        case 3:
+        case fields::name: c.name = strVal; break;
+        case fields::initiative: c.initiative = strVal.toInt(); break;
+        case fields::Ac: c.ac = strVal.toInt(); break;
+        case fields::hp:
             c.hp = strVal;
             evaluateHP(index.row()); // вычисляем выражение
             break;
-        case 4: c.maxHp = strVal.toInt(); break;
+        case fields::maxHp: c.maxHp = strVal.toInt(); break;
         default: return false;
     }
 
@@ -364,7 +364,7 @@ void InitiativeModel::evaluateHP(int row) {
     QJSValue result = engine.evaluate(c.hp);
     if (result.isNumber()) {
         c.hp = QString::number(result.toInt());
-        emit dataChanged(index(row, 3), index(row, 3)); // HP колонка
+        emit dataChanged(index(row, fields::hp), index(row, fields::hp)); // HP колонка
     }
 }
 
