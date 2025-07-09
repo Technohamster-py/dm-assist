@@ -5,7 +5,7 @@
 #include <utility>
 
 #include "initiativetrackerwidget.h"
-#include "hpprogressbardelegate.h"
+#include "initiativedelegates.h"
 #include <themediconmanager.h>
 #include "ui_initiativetrackerwidget.h"
 

@@ -43,7 +43,7 @@ set(FILES
         map-widget/undostack.h
         music-widget/musicwidget.h music-widget/musicwidget.cpp
         initiative-tracker/initiativetrackerwidget.h initiative-tracker/initiativetrackerwidget.cpp
-        initiative-tracker/hpprogressbardelegate.h  initiative-tracker/hpprogressbardelegate.cpp
+        initiative-tracker/initiativedelegates.h initiative-tracker/initiativedelegates.cpp
         saveconfigdialog.h saveconfigdialog.cpp
         settingsdialog.h    settingsdialog.cpp
         settings.h

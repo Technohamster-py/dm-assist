@@ -1,9 +1,11 @@
-#include "hpprogressbardelegate.h"
+#include "initiativedelegates.h"
 
 
 #include <QStyleOptionProgressBar>
 #include <QApplication>
 #include <QPainter>
+#include <QHelpEvent>
+#include <QToolTip>
 
 #include <QDebug>
 
@@ -95,4 +97,42 @@ static QString calculateHpStatus(int hp, int maxHp)
         return "Good";
     else
         return "Bad";
+}
+
+void StatusDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
+    QVariant value = index.data(Qt::DecorationRole);
+    if (!value.canConvert<QList<QVariant>>())
+        return;
+
+    QList<QVariant> iconList = value.toList();
+    int x = option.rect.x();
+    int iconSize = option.rect.height() - 4;
+    for (const auto &iconVar : iconList) {
+        QIcon icon = iconVar.value<QIcon>();
+        icon.paint(painter, QRect(x, option.rect.y() + 2, iconSize, iconSize));
+        x += iconSize + 2;
+    }
+}
+
+bool StatusDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option,
+                               const QModelIndex &index) {
+    if (!event || !view)
+        return false;
+
+    if (event->type() == QEvent::ToolTip && index.isValid()) {
+        QVariant statusData = index.data(Qt::UserRole + 1);
+        if (statusData.canConvert<QList<Status>>()) {
+            QString tooltip;
+            const QList<Status> statuses = statusData.value<QList<Status>>();
+            for (const auto &status : statuses)
+                tooltip += QString("%1 (%2)").arg(status.name).arg(status.remainingRounds) + "\n";
+
+            if (!tooltip.isEmpty()) {
+                QToolTip::showText(event->globalPos(), tooltip.trimmed());
+                return true;
+            }
+        }
+    }
+
+    return QStyledItemDelegate::helpEvent(event, view, option, index);
 }

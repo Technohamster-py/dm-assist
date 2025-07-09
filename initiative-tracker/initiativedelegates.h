@@ -1,8 +1,9 @@
-#ifndef DM_ASSIST_HPPROGRESSBARDELEGATE_H
-#define DM_ASSIST_HPPROGRESSBARDELEGATE_H
+#ifndef DM_ASSIST_INITIATIVEDELEGATES_H
+#define DM_ASSIST_INITIATIVEDELEGATES_H
 
 #pragma once
 #include <QStyledItemDelegate>
+#include "initiativemodel.h"
 
 static QString calculateHpStatus(int hp, int maxHp);
 
@@ -15,9 +16,7 @@ static QString calculateHpStatus(int hp, int maxHp);
  * to display health point (HP) or progress-related data in three different visual modes:
  * Numeric, StatusText, and ProgressBar.
  */
-class HpProgressBarDelegate : public QStyledItemDelegate
-{
-Q_OBJECT
+class HpProgressBarDelegate : public QStyledItemDelegate {
 public:
     enum DisplayMode {
         Numeric,
@@ -38,4 +37,13 @@ private:
 };
 
 
-#endif //DM_ASSIST_HPPROGRESSBARDELEGATE_H
+class StatusDelegate : public QStyledItemDelegate {
+public:
+    using QStyledItemDelegate::QStyledItemDelegate;
+
+    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+    bool helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index);
+};
+
+
+#endif //DM_ASSIST_INITIATIVEDELEGATES_H
