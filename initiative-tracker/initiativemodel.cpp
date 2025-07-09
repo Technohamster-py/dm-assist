@@ -11,10 +11,13 @@
 
 InitiativeModel::InitiativeModel(QObject *parent)
         : QAbstractTableModel(parent) {
+    m_characterHeaderIcon = QIcon(":/human.svg");
     m_initHeaderIcon = QIcon(":/d20.svg");
     m_acHeaderIcon = QIcon(":/shield.svg");
     m_hpHeaderIcon = QIcon(":/heart.svg");
 
+    ThemedIconManager::instance().addPixmapTarget(":/human.svg", this,
+                                                  [=](const QPixmap &px) { m_characterHeaderIcon = QIcon(px); }, false);
     ThemedIconManager::instance().addPixmapTarget(":/d20.svg", this,
                                                   [=](const QPixmap &px) { m_initHeaderIcon = QIcon(px); }, false);
     ThemedIconManager::instance().addPixmapTarget(":/shield.svg", this,
@@ -74,7 +77,7 @@ QVariant InitiativeModel::headerData(int section, Qt::Orientation orientation, i
         return {};
 
     switch (section) {
-        case fields::name: return tr("Name");
+        case fields::name: return m_characterHeaderIcon;
         case fields::initiative: return m_initHeaderIcon;
         case fields::Ac: return m_acHeaderIcon;
         case fields::hp: return m_hpHeaderIcon;

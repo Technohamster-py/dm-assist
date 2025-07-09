@@ -115,6 +115,7 @@ private:
     QVector<InitiativeCharacter> characters;
     int currentIndex = 0;
 
+    QIcon m_characterHeaderIcon;
     QIcon m_initHeaderIcon;
     QIcon m_acHeaderIcon;
     QIcon m_hpHeaderIcon;
