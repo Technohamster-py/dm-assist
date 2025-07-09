@@ -79,7 +79,6 @@ QVariant InitiativeModel::headerData(int section, Qt::Orientation orientation, i
         case 2: return m_acHeaderIcon;
         case 3: return m_hpHeaderIcon;
         case 4: return tr("Max");
-        case 5: return tr("Delete");
         default: return {};
     }
 }
@@ -140,6 +139,14 @@ QVariant InitiativeModel::data(const QModelIndex &index, int role) const {
 
     if (role == Qt::BackgroundRole && index.row() == currentIndex) {
         return QBrush(QColor("#cceeff")); // Подсветка текущего
+    }
+
+    if (role == Qt::DecorationRole && index.column() == fields::statuses){
+        QList<QVariant> icons;
+        for (const auto &status : characters[index.row()].statuses) {
+            icons.append(QIcon(status.iconPath));
+        }
+        return icons;
     }
 
     return {};
@@ -471,6 +478,20 @@ bool InitiativeModel::addFromFile(const QString &filename) {
     }
     endResetModel();
     return true;
+}
+
+void InitiativeModel::decrementStatuses() {
+    for (auto &character : characters) {
+        auto it = character.statuses.begin();
+        while (it != character.statuses.end()){
+            it->remainingRounds --;
+            if (it->remainingRounds <= 0)
+                it = character.statuses.erase(it);
+            else
+                ++it;
+        }
+    }
+    emit dataChanged(index(0, fields::statuses), index(rowCount()-1, fields::statuses));
 }
 
 

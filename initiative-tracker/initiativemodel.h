@@ -8,6 +8,16 @@
 
 static int evaluateExpression(const QString &expression, bool *ok = nullptr);
 
+struct Status {
+    QString name;
+    QString iconPath;
+    int remainingRounds;
+
+    bool operator==(const Status& other) const {
+        return name == other.name;
+    }
+};
+
 /**
  * @struct InitiativeCharacter
  * @brief Represents a character with initiative, armor class, and health information.
@@ -23,7 +33,7 @@ struct InitiativeCharacter {
     int ac;
     QString hp;     // может содержать выражение типа "50-20"
     int maxHp;
-
+    QList<Status> statuses;
 
     void writeToXml(QXmlStreamWriter &writer) const {
         writer.writeStartElement("Character");
@@ -70,6 +80,7 @@ public:
         Ac,
         hp,
         maxHp,
+        statuses,
         del
     };
     explicit InitiativeModel(QObject *parent = nullptr);
@@ -94,6 +105,8 @@ public:
     bool saveToFile(const QString &filename) const;
     bool loadFromFile(const QString &filename);
     bool addFromFile(const QString &filename);
+
+    void decrementStatuses();
 
 signals:
     void dataChangedExternally();
