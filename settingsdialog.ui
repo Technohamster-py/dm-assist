@@ -90,7 +90,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>1</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="generalPage">
         <layout class="QFormLayout" name="formLayout">
@@ -196,7 +196,13 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="page">
+       <widget class="QWidget" name="initiativePage">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <layout class="QFormLayout" name="formLayout_3">
          <item row="0" column="0">
           <widget class="QLabel" name="fieldsLabel">
@@ -287,6 +293,20 @@
             </widget>
            </item>
           </layout>
+         </item>
+         <item row="2" column="1">
+          <widget class="QCheckBox" name="characterAutoRoll">
+           <property name="text">
+            <string>Characters</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Auto initiative rolls</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
