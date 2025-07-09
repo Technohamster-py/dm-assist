@@ -2,6 +2,7 @@
 #define DM_ASSIST_ABSTRACTCHARSHEETWIDGET_H
 
 #include <QWidget>
+#include <QRandomGenerator>
 #include "../initiative-tracker/initiativetrackerwidget.h"
 
 class AbstractCharsheetWidget : public QWidget{
@@ -14,7 +15,11 @@ public:
     virtual void loadFromFile(QString path) = 0;
     virtual void saveToFile(QString filePath = nullptr) = 0;
 
-    virtual void addToInitiative(InitiativeTrackerWidget* initiativeTrackerWidget) = 0;
+    virtual void addToInitiative(InitiativeTrackerWidget *initiativeTrackerWidget, bool autoRoll = false) = 0;
+
+    static int rollDice(int diceValue){
+        return QRandomGenerator::global()->bounded(1, diceValue);
+    };
 
 signals:
     void fileLoaded();
