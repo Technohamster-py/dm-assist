@@ -60,6 +60,9 @@ public slots:
     void openSharedMapWindow(int index);
     void slotExportMap(int index);
 
+protected:
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    void dropEvent(QDropEvent *event) override;
 
 private:
     Ui::MainWindow *ui;
@@ -88,6 +91,7 @@ private:
     CircleShapeTool* circleShapeTool;
     SquareShapeTool* squareShapeTool;
     TriangleShapeTool* triangleShapeTool;
+    QActionGroup *toolGroup;
 
     void setupCampaign(const QString campaignRoot);
     void setupPlayers();
@@ -95,12 +99,10 @@ private:
     void setupToolbar();
     void setupMaps();
     void setupShortcuts();
+    void exportMap(const QString& path, int index);
+
     SettingsDialog *settingsDialog = nullptr;
     Settings paths;
-
-    QActionGroup *toolGroup;
-
-    void exportMap(const QString& path, int index);
 
 private slots:
     void newCampaign();

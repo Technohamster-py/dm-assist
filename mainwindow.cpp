@@ -12,6 +12,7 @@
 #include <QFileInfo>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QMimeData>
 #include "saveconfigdialog.h"
 #include <QStyleFactory>
 #include <QTextStream>
@@ -51,6 +52,8 @@ MainWindow::MainWindow(QWidget *parent) :
     setupMaps();
 
     adjustSize();
+
+    setAcceptDrops(true);
 
     loadSettings();
     saveSettings();
@@ -1383,6 +1386,35 @@ void MainWindow::on_muteButton_clicked() {
         ui->volumeSlider->setValue(0);
     }
 
+}
+
+void MainWindow::dragEnterEvent(QDragEnterEvent *event) {
+    if (event->mimeData()->hasUrls()) {
+        event->acceptProposedAction();
+    }
+}
+
+void MainWindow::dropEvent(QDropEvent *event) {
+    QStringList files;
+    QString campaignPath = "";
+    for (const QUrl &url : event->mimeData()->urls()) {
+        QString path = url.toLocalFile();
+        QFileInfo info(path);
+        if (info.exists() && info.isFile() && (info.suffix().toLower() == "json")) {
+            files.append(info.dir().absolutePath());
+        }
+    }
+
+    if (files.size() == 1){
+        campaignPath = files[0];
+
+        QMessageBox::StandardButton reply = QMessageBox::question(this,
+                                                                  tr("Load campaign?"),
+                                                                  tr("Load campaign from %1?").arg(campaignPath),
+                                                                  QMessageBox::Yes | QMessageBox::No);
+        if (reply == QMessageBox::Yes)
+            setupCampaign(campaignPath);
+    }
 }
 
 
