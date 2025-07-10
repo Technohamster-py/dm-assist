@@ -53,7 +53,7 @@ void InitiativeTrackerWidget::setupUI() {
     connect(ui->shareButton, &QPushButton::clicked, this, &InitiativeTrackerWidget::openSharedWindow);
 
     connect(ui->table, &QTableView::clicked, this, [=](const QModelIndex &index) {
-        if (index.column() == 5) {
+        if (index.column() == InitiativeModel::fields::del) {
             model->removeCharacter(index.row());
         }
     });
@@ -134,7 +134,7 @@ void InitiativeTrackerWidget::openSharedWindow() {
     sharedWidget->setColumnHidden(InitiativeModel::fields::del, true);
 
     auto *hpDelegate = new HpProgressBarDelegate(HpProgressBarDelegate::Numeric, view);
-    view->setItemDelegateForColumn(3, hpDelegate);
+    view->setItemDelegateForColumn(InitiativeModel::fields::hp, hpDelegate);
 
     connect(ui->hpModeBox, QOverload<int>::of(&QComboBox::currentIndexChanged), [hpDelegate, view](int index) {
         hpDelegate->setDisplayMode(static_cast<HpProgressBarDelegate::DisplayMode>(index));
