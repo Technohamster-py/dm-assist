@@ -3,6 +3,8 @@
 #include "mainwindow.h"
 
 int main(int argc, char *argv[]) {
+    qRegisterMetaType<Status>();
+    qRegisterMetaType<QList<Status>>();
     QApplication a(argc, argv);
 
     MainWindow w;

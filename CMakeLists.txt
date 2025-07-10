@@ -28,6 +28,8 @@ set(FILES
         charsheet-widget/dndcharsheetdialogs.h charsheet-widget/dndcharsheetdialogs.cpp
         charsheet-widget/dndmodels.h charsheet-widget/dndmodels.cpp
         initiative-tracker/initiativemodel.h    initiative-tracker/initiativemodel.cpp
+        initiative-tracker/initiativestructures.h
+        initiative-tracker/statuseditdialog.h   initiative-tracker/statuseditdialog.cpp
         mainwindow.h    mainwindow.cpp
         map-widget/abstractmaptool.h
         map-widget/brushtool.h  map-widget/brushtool.cpp
@@ -59,6 +61,7 @@ set(UI_FILES
         music-widget/musicplayer.ui
         music-widget/playlisteditdialog.ui
         initiative-tracker/initiativetrackerwidget.ui
+        initiative-tracker/statuseditdialog.ui
         settingsdialog.ui
 )
 

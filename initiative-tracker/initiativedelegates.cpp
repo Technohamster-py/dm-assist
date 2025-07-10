@@ -2,10 +2,12 @@
 
 
 #include <QStyleOptionProgressBar>
+#include <QAbstractItemView>
 #include <QApplication>
 #include <QPainter>
 #include <QHelpEvent>
 #include <QToolTip>
+#include "statuseditdialog.h"
 
 #include <QDebug>
 
@@ -100,39 +102,68 @@ static QString calculateHpStatus(int hp, int maxHp)
 }
 
 void StatusDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
-    QVariant value = index.data(Qt::DecorationRole);
-    if (!value.canConvert<QList<QVariant>>())
-        return;
+    painter->save();
 
-    QList<QVariant> iconList = value.toList();
-    int x = option.rect.x();
-    int iconSize = option.rect.height() - 4;
-    for (const auto &iconVar : iconList) {
-        QIcon icon = iconVar.value<QIcon>();
-        icon.paint(painter, QRect(x, option.rect.y() + 2, iconSize, iconSize));
-        x += iconSize + 2;
+    QVariant data = index.data(Qt::UserRole + 1);
+    if (data.canConvert<QList<Status>>()) {
+        QList<Status> statuses = data.value<QList<Status>>();
+
+        int x = option.rect.x();
+        int y = option.rect.y();
+        int iconSize = option.rect.height();
+
+        for (const auto &status : statuses) {
+            QPixmap icon(status.iconPath);
+            QRect iconRect(x, y, iconSize, iconSize);
+            painter->drawPixmap(iconRect, icon);
+            x += iconSize + 2; // padding
+        }
     }
+
+    painter->restore();
 }
 
 bool StatusDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option,
                                const QModelIndex &index) {
-    if (!event || !view)
+    if (!event || !view || !index.isValid())
         return false;
 
-    if (event->type() == QEvent::ToolTip && index.isValid()) {
+    if (event->type() == QEvent::ToolTip) {
         QVariant statusData = index.data(Qt::UserRole + 1);
         if (statusData.canConvert<QList<Status>>()) {
             QString tooltip;
             const QList<Status> statuses = statusData.value<QList<Status>>();
-            for (const auto &status : statuses)
-                tooltip += QString("%1 (%2)").arg(status.name).arg(status.remainingRounds) + "\n";
+            for (const auto &status : statuses) {
+                tooltip += QString("%1 (%2 раундов)").arg(status.title).arg(status.remainingRounds) + "\n";
+            }
 
             if (!tooltip.isEmpty()) {
-                QToolTip::showText(event->globalPos(), tooltip.trimmed());
+                QToolTip::showText(event->globalPos(), tooltip.trimmed(), view->viewport());
                 return true;
             }
         }
     }
 
     return QStyledItemDelegate::helpEvent(event, view, option, index);
+}
+
+bool StatusDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option,
+                                 const QModelIndex &index) {
+    if (event->type() == QEvent::MouseButtonDblClick && index.isValid()) {
+        // Открываем диалог рядом с ячейкой
+        InitiativeCharacter character;
+        StatusEditDialog dialog(character);
+
+        // Смещение относительно глобального положения ячейки
+        QRect cellRect = option.rect;
+        QPoint globalPos = option.widget->mapToGlobal(cellRect.bottomRight());
+
+        dialog.move(globalPos);
+        if (dialog.exec() == QDialog::Accepted) {
+            QVariant newStatuses = QVariant::fromValue(dialog.getUpdatedCharacter());
+            model->setData(index, newStatuses, Qt::UserRole + 1);
+        }
+        return true;
+    }
+    return false;
 }

@@ -58,6 +58,9 @@ void InitiativeTrackerWidget::setupUI() {
         }
     });
 
+    auto *statusDelegate = new StatusDelegate(ui->table);
+    ui->table->setItemDelegateForColumn(InitiativeModel::fields::statuses, statusDelegate);
+
     ThemedIconManager::instance().addIconTarget<QPushButton>(":/save.svg", ui->saveButton, &QAbstractButton::setIcon);
     ThemedIconManager::instance().addIconTarget<QPushButton>(":/upload.svg", ui->loadButton, &QAbstractButton::setIcon);
     ThemedIconManager::instance().addIconTarget<QPushButton>(":/initiative tracker/back.svg", ui->backButton, &QAbstractButton::setIcon);

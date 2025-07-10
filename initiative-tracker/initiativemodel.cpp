@@ -79,6 +79,7 @@ QVariant InitiativeModel::headerData(int section, Qt::Orientation orientation, i
     switch (section) {
         case fields::name: return m_characterHeaderIcon;
         case fields::initiative: return m_initHeaderIcon;
+        case fields::statuses: return "statuses";
         case fields::Ac: return m_acHeaderIcon;
         case fields::hp: return m_hpHeaderIcon;
         case fields::maxHp: return tr("Max");
