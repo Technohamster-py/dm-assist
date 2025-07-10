@@ -79,6 +79,7 @@ private:
     CampaignTreeWidget* campaignTreeWidget;
 
     InitiativeTrackerWidget* initiativeTrackerWidget;
+    bool autoRoll = false;
 
     TabWidget *mapTabWidget;
     SharedMapWindow* sharedMapWindow = nullptr;

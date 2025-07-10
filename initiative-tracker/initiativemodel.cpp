@@ -1,8 +1,9 @@
 #include "initiativemodel.h"
 #include <QBrush>
-#include <QColor>
+#include <QApplication>
 #include <QDomDocument>
 #include <QFile>
+#include <QPalette>
 #include <QRegularExpression>
 #include <QTextStream>
 #include <QJSEngine>
@@ -139,7 +140,7 @@ QVariant InitiativeModel::data(const QModelIndex &index, int role) const {
     }
 
     if (role == Qt::BackgroundRole && index.row() == currentIndex) {
-        return QBrush(QColor("#cceeff")); // Подсветка текущего
+        return QBrush(QApplication::palette().color(QPalette::Highlight)); // Подсветка текущего
     }
 
     return {};

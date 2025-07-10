@@ -42,7 +42,7 @@ struct Settings{
     Appearance appearance;
 
     struct Initiative {
-        QString autoInitiative = "initiative/autoroll";            ///< uint8 (0:7) Автоматические броски инициативы для NPC/Монстров/Игроков (UNUSED)
+        QString autoInitiative = "initiative/autoRoll";            ///< uint8 (0:7) Автоматические броски инициативы для NPC/Монстров/Игроков
         QString fields = "initiative/fields";                      ///< uint8 Режим отображения полей в трекере инициативы
         QString hpBarMode = "initiative/hpBar";                    ///< uint8 (0:2) Режим отображения здоровья
         QString showHpComboBox = "initiative/showHpCombo";         ///< bool Показывать комбобокс с выбором режима в основном виджете
