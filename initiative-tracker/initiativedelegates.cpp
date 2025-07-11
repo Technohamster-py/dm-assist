@@ -134,7 +134,7 @@ bool StatusDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const
             QString tooltip;
             const QList<Status> statuses = statusData.value<QList<Status>>();
             for (const auto &status : statuses) {
-                tooltip += QString("%1 (%2 раундов)").arg(status.title).arg(status.remainingRounds) + "\n";
+                tooltip += tr("%1 (%2 rounds)").arg(status.title).arg(status.remainingRounds) + "\n";
             }
 
             if (!tooltip.isEmpty()) {
