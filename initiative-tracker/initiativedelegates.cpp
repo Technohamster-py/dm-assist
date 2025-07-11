@@ -155,8 +155,20 @@ bool StatusDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const
         auto *dialog = new StatusEditDialog(statuses);
 
 
-        QRect cellRect = option.rect;
-        QPoint globalPos = option.widget->mapToGlobal(cellRect.bottomRight());
+        QPoint globalPos = option.widget->mapToGlobal(option.rect.bottomLeft());
+        QSize dialogSize = dialog->sizeHint();
+        QScreen *screen = option.widget->screen();
+        QRect screenRect = screen->availableGeometry();
+
+        if (globalPos.x() + dialogSize.width() > screenRect.right())
+            globalPos.setX(screenRect.right() - dialogSize.width() - 50);
+
+        if (globalPos.y() + dialogSize.height() > screenRect.bottom())
+            globalPos.setY(screenRect.bottom() - dialogSize.height() - 50);
+
+        globalPos.setX(std::max(screenRect.left(), globalPos.x()));
+        globalPos.setY(std::max(screenRect.top(), globalPos.y()));
+
 
         dialog->move(globalPos);
 
