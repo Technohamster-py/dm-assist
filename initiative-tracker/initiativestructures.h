@@ -3,19 +3,6 @@
 
 #include <QXmlStreamWriter>
 
-struct Status {
-    QString title = "";
-    QString iconPath = "";
-    int remainingRounds = 0;
-
-    bool operator==(const Status& other) const {
-        return title == other.title;
-    }
-};
-
-Q_DECLARE_METATYPE(Status)
-Q_DECLARE_METATYPE(QList<Status>)
-
 static QList<QString> standardStatuses = {"blinded",
                                           "charmed",
                                           "deafened",
@@ -49,6 +36,43 @@ static  QMap<QString, QString> standardStatusIcons = {
         {"stunned",         ":/statuses/status-stunned.svg"},
         {"unconscious",     ":/statuses/status-unconscious.svg"}
 };
+
+struct Status {
+    QString title = "";
+    QString iconPath = "";
+    int remainingRounds = 0;
+
+    bool operator==(const Status& other) const {
+        return title == other.title;
+    }
+
+    void writeToXml(QXmlStreamWriter &writer) const
+    {
+        writer.writeStartElement("Status");
+        writer.writeTextElement("Title", title);
+        writer.writeTextElement("Icon", iconPath);
+        writer.writeTextElement("Remaining", QString::number(remainingRounds));
+        writer.writeEndElement();
+    }
+
+    static Status readFromXml(QXmlStreamReader &reader) {
+        Status status;
+
+        while (!(reader.tokenType() == QXmlStreamReader::EndElement && reader.name() == QString("Status"))) {
+            if (reader.readNextStartElement()) {
+                if (reader.name() == QString("Title")) status.title = reader.readElementText();
+                else if (reader.name() == QString("Icon")) status.iconPath = reader.readElementText();
+                else if (reader.name() == QString("Remaining")) status.remainingRounds = reader.readElementText().toInt();
+                else reader.skipCurrentElement();
+            }
+        }
+        return status;
+    }
+};
+
+Q_DECLARE_METATYPE(Status)
+Q_DECLARE_METATYPE(QList<Status>)
+
 /**
  * @struct InitiativeCharacter
  * @brief Represents a character with initiative, armor class, and health information.
