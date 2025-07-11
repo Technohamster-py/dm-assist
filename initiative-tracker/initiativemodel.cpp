@@ -407,6 +407,15 @@ bool InitiativeModel::saveToFile(const QString &filename) const {
         charElem.setAttribute("ac", c.ac);
         charElem.setAttribute("hp", c.hp);
         charElem.setAttribute("maxhp", c.maxHp);
+
+        for (auto status : c.statuses) {
+            QDomElement statElem = doc.createElement("status");
+            statElem.setAttribute("title", status.title);
+            statElem.setAttribute("icon", status.iconPath);
+            statElem.setAttribute("remaining", status.remainingRounds);
+            charElem.appendChild(statElem);
+        }
+
         root.appendChild(charElem);
     }
 
@@ -484,6 +493,18 @@ bool InitiativeModel::addFromFile(const QString &filename) {
         c.ac = elem.attribute("ac").toInt();
         c.hp = elem.attribute("hp");
         c.maxHp = elem.attribute("maxhp").toInt();
+
+        QDomNodeList statNodes = elem.elementsByTagName("status");
+        for (int j = 0; j < statNodes.count(); ++j) {
+            QDomElement statElem = statNodes.at(j).toElement();
+            Status status;
+            status.title = statElem.attribute("title");
+            status.iconPath = statElem.attribute("icon");
+            status.remainingRounds = statElem.attribute("remaining").toInt();
+
+            c.statuses.append(status);
+        }
+
         characters.append(c);
     }
     endResetModel();

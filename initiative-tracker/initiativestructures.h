@@ -73,6 +73,7 @@ struct Status {
 Q_DECLARE_METATYPE(Status)
 Q_DECLARE_METATYPE(QList<Status>)
 
+
 /**
  * @struct InitiativeCharacter
  * @brief Represents a character with initiative, armor class, and health information.
@@ -97,6 +98,8 @@ struct InitiativeCharacter {
         writer.writeTextElement("AC", QString::number(ac));
         writer.writeTextElement("HP", hp);
         writer.writeTextElement("MaxHP", QString::number(maxHp));
+        for (auto status : statuses)
+            status.writeToXml(writer);
         writer.writeEndElement();
     }
 
@@ -109,6 +112,7 @@ struct InitiativeCharacter {
                 else if (reader.name() == QString("AC")) character.ac = reader.readElementText().toInt();
                 else if (reader.name() == QString("HP")) character.hp = reader.readElementText();
                 else if (reader.name() == QString("MaxHP")) character.maxHp = reader.readElementText().toInt();
+                else if (reader.name() == QString("Status")) character.statuses.append(Status::readFromXml(reader));
                 else reader.skipCurrentElement();
             }
         }
