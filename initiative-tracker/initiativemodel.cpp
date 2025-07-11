@@ -54,7 +54,7 @@ int InitiativeModel::rowCount(const QModelIndex &) const {
  * @return int The total number of columns in the model, always 6.
  */
 int InitiativeModel::columnCount(const QModelIndex &) const {
-    return 6;
+    return fields::del;
 }
 
 
@@ -173,7 +173,7 @@ Qt::ItemFlags InitiativeModel::flags(const QModelIndex &index) const {
     if (!index.isValid())
         return Qt::NoItemFlags;
 
-    if (index.column() == 5)
+    if (index.column() == fields::del || index.column() == fields::statuses);
         return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 
     return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
