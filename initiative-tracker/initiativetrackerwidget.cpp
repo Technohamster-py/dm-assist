@@ -165,6 +165,8 @@ void InitiativeTrackerWidget::openSharedWindow() {
  */
 void InitiativeTrackerWidget::nextTurn() {
     int next = (model->getCurrentIndex() + 1) % model->rowCount();
+    if (next == 0)
+        model->decrementStatuses();
     model->setCurrentIndex(next);
 }
 
