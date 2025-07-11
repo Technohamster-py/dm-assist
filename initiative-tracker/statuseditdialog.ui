@@ -6,12 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>163</width>
-    <height>539</height>
+    <width>295</width>
+    <height>576</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>StatusEditDialog</string>
+  </property>
+  <property name="modal">
+   <bool>false</bool>
   </property>
   <layout class="QVBoxLayout" name="mainLayout">
    <property name="spacing">
@@ -833,7 +836,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QTableWidget" name="customStatusesView"/>
+    <widget class="QTableView" name="customStatusesView"/>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_16">
@@ -874,6 +877,7 @@
  </widget>
  <resources>
   <include location="../static/app_resources.qrc"/>
+  <include location="../../../.designer/static/app_resources.qrc"/>
  </resources>
  <connections/>
 </ui>

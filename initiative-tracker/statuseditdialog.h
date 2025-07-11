@@ -5,6 +5,33 @@
 #include <QMap>
 #include <QSpinBox>
 #include "initiativestructures.h"
+#include <QAbstractTableModel>
+
+class StatusModel : public QAbstractTableModel {
+Q_OBJECT
+public:
+    enum fields {
+        icon,
+        title,
+        timer,
+        del
+    };
+    explicit StatusModel(QObject* parent = nullptr);
+
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+    Qt::ItemFlags flags(const QModelIndex &index) const override;
+    bool setData(const QModelIndex &index, const QVariant &value, int role) override;
+
+    void addStatus(const Status &status);
+    void remove(int row);
+
+private:
+    QVector<Status> statuses;
+};
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class StatusEditDialog; }
@@ -14,7 +41,7 @@ class StatusEditDialog : public QDialog {
 Q_OBJECT
 
 public:
-    explicit StatusEditDialog(const InitiativeCharacter& character, QWidget *parent = nullptr);
+    explicit StatusEditDialog(InitiativeCharacter character, QWidget *parent = nullptr);
     ~StatusEditDialog() override;
     InitiativeCharacter getUpdatedCharacter() const;
 
@@ -25,8 +52,9 @@ protected:
     QMap<QString, QSpinBox*> m_standardStatusesMap;
 
     virtual void populate();
-    virtual void addRow(Status status);
-    QString m_currentIconPath = "";
+    QString m_currentIconPath = ":/statuses/status-blinded.svg";
+
+    void focusOutEvent (QFocusEvent *event) override;
 
 private slots:
     void on_addButton_clicked();
@@ -34,6 +62,8 @@ private slots:
 
 private:
     Ui::StatusEditDialog *ui;
+
+    StatusModel* model;
 };
 
 
