@@ -150,19 +150,21 @@ bool StatusDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const
 bool StatusDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option,
                                  const QModelIndex &index) {
     if (event->type() == QEvent::MouseButtonDblClick && index.isValid()) {
-        // Открываем диалог рядом с ячейкой
-        InitiativeCharacter character;
-        StatusEditDialog dialog(character);
 
-        // Смещение относительно глобального положения ячейки
+        auto statuses = index.data(Qt::UserRole + 1).value<QList<Status>>();
+        auto *dialog = new StatusEditDialog(statuses);
+
+
         QRect cellRect = option.rect;
         QPoint globalPos = option.widget->mapToGlobal(cellRect.bottomRight());
 
-        dialog.move(globalPos);
-        if (dialog.exec() == QDialog::Accepted) {
-            QVariant newStatuses = QVariant::fromValue(dialog.getUpdatedCharacter());
-            model->setData(index, newStatuses, Qt::UserRole + 1);
-        }
+        dialog->move(globalPos);
+
+        connect(dialog, &QDialog::finished, this, [=](int result) {
+            QVariant newStatusList = QVariant::fromValue(dialog->statuses());
+            model->setData(index, newStatusList);
+        });
+        dialog->show();
         return true;
     }
     return false;

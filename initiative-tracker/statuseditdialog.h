@@ -25,6 +25,7 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const override;
     bool setData(const QModelIndex &index, const QVariant &value, int role) override;
 
+    Status statusAt(int row);
     void addStatus(const Status &status);
     void remove(int row);
 
@@ -41,9 +42,10 @@ class StatusEditDialog : public QDialog {
 Q_OBJECT
 
 public:
-    explicit StatusEditDialog(InitiativeCharacter character, QWidget *parent = nullptr);
+    explicit StatusEditDialog(QList<Status> statuses, QWidget *parent = nullptr);
     ~StatusEditDialog() override;
-    InitiativeCharacter getUpdatedCharacter() const;
+
+    QList<Status> statuses() const;
 
 protected:
     InitiativeCharacter m_character;

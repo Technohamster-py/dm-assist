@@ -17,6 +17,7 @@ static QString calculateHpStatus(int hp, int maxHp);
  * Numeric, StatusText, and ProgressBar.
  */
 class HpProgressBarDelegate : public QStyledItemDelegate {
+    Q_OBJECT
 public:
     enum DisplayMode {
         Numeric,

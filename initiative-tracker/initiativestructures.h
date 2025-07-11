@@ -32,6 +32,23 @@ static QList<QString> standardStatuses = {"blinded",
                                           "stunned",
                                           "unconscious"};
 
+static  QMap<QString, QString> standardStatusIcons = {
+        {"blinded",         ":/statuses/status-blinded.svg"},
+        {"charmed",         ":/statuses/status-charmed.svg"},
+        {"deafened",        ":/statuses/status-deafened.svg"},
+        {"exhaustion",      ":/statuses/status-exhaustion.svg"},
+        {"frightened",      ":/statuses/status-frightened.svg"},
+        {"grappled",        ":/statuses/status-grappled.svg"},
+        {"incapacitated",   ":/statuses/status-incapacitated.svg"},
+        {"invisible",       ":/statuses/status-invisible.svg"},
+        {"paralyzed",       ":/statuses/status-paralyzed.svg"},
+        {"petrified",       ":/statuses/status-petrified.svg"},
+        {"poisoned",        ":/statuses/status-poisoned.svg"},
+        {"prone",           ":/statuses/status-prone.svg"},
+        {"restrained",      ":/statuses/status-restrained.svg"},
+        {"stunned",         ":/statuses/status-stunned.svg"},
+        {"unconscious",     ":/statuses/status-unconscious.svg"}
+};
 /**
  * @struct InitiativeCharacter
  * @brief Represents a character with initiative, armor class, and health information.

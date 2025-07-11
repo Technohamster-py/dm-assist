@@ -153,6 +153,9 @@ QVariant InitiativeModel::data(const QModelIndex &index, int role) const {
         return icons;
     }
 
+    if (role == Qt::UserRole + 1 && index.column() == fields::statuses)
+        return QVariant::fromValue(characters[index.row()].statuses);
+
     return {};
 }
 
@@ -203,7 +206,7 @@ Qt::ItemFlags InitiativeModel::flags(const QModelIndex &index) const {
  * returns false without making changes. If the update is successful, the `dataChanged`
  * signal is emitted for the specified index to notify views of the change.
  */
-bool InitiativeModel::setData(const QModelIndex &index, const QVariant &value, int) {
+bool InitiativeModel::setData(const QModelIndex &index, const QVariant &value, int role) {
     if (!index.isValid() || index.row() >= characters.size())
         return false;
 
@@ -219,6 +222,9 @@ bool InitiativeModel::setData(const QModelIndex &index, const QVariant &value, i
             evaluateHP(index.row()); // вычисляем выражение
             break;
         case fields::maxHp: c.maxHp = strVal.toInt(); break;
+        case fields::statuses:
+            if (value.canConvert<QList<Status>>())
+                c.statuses = value.value<QList<Status>>();
         default: return false;
     }
 

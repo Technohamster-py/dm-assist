@@ -2,6 +2,7 @@
 #include "ui_statuseditdialog.h"
 
 #include <QTimer>
+#include <utility>
 
 StatusModel::StatusModel(QObject *parent) : QAbstractTableModel(parent) {
 
@@ -30,9 +31,16 @@ QVariant StatusModel::data(const QModelIndex &index, int role) const {
             case fields::timer: return s.remainingRounds;
         }
     }
-    if (role == Qt::DecorationRole && index.column() == fields::icon){
-        return QIcon(s.iconPath);
+
+    if (index.column() == fields::icon)
+    {
+        if (role == Qt::DecorationRole)
+            return QIcon(s.iconPath);
+        if (role == Qt::UserRole)
+            return s.iconPath;
     }
+
+
 
     return {};
 }
@@ -87,13 +95,19 @@ void StatusModel::remove(int row) {
     endRemoveRows();
 }
 
+Status StatusModel::statusAt(int row) {
+    if (row >= 0 && row < statuses.size())
+        return statuses[row];
+    return {};
+}
 
 
-StatusEditDialog::StatusEditDialog(InitiativeCharacter character, QWidget *parent) :
-        QDialog(parent), ui(new Ui::StatusEditDialog), m_character(character) {
+StatusEditDialog::StatusEditDialog(QList<Status> statuses, QWidget *parent) :
+        QDialog(parent), ui(new Ui::StatusEditDialog), m_statuses(std::move(statuses)) {
     ui->setupUi(this);
 
     m_standardStatusesMap = {
+            {"blinded", ui->blindedSpinBox},
             {"charmed", ui->charmedSpinBox},
             {"deafened", ui->deafenedSpinBox},
             {"exhaustion", ui->exhaustionSpinBox},
@@ -109,9 +123,6 @@ StatusEditDialog::StatusEditDialog(InitiativeCharacter character, QWidget *paren
             {"stunned", ui->stunnedSpinBox},
             {"unconscious", ui->unconsciousSpinBox}
     };
-
-    m_statuses = character.statuses;
-    setWindowTitle(tr("%1 status edit").arg(character.name));
 
     model = new StatusModel(this);
     populate();
@@ -133,10 +144,6 @@ void StatusEditDialog::on_iconButton_clicked() {
     m_currentIconPath = "";
 }
 
-InitiativeCharacter StatusEditDialog::getUpdatedCharacter() const {
-    return InitiativeCharacter();
-}
-
 void StatusEditDialog::populate() {
     ui->customStatusesView->setModel(model);
     ui->customStatusesView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -152,4 +159,25 @@ void StatusEditDialog::populate() {
 void StatusEditDialog::focusOutEvent(QFocusEvent *event) {
     QDialog::focusOutEvent(event);
     QTimer::singleShot(0, this, &QDialog::accept);
+}
+
+QList<Status> StatusEditDialog::statuses() const {
+    QList<Status> result;
+
+    for (auto standardStatus : standardStatuses) {
+        Status status;
+        status.iconPath = standardStatusIcons[standardStatus];
+        status.title = standardStatus;
+        status.remainingRounds = m_standardStatusesMap[standardStatus]->value();
+
+        if (status.remainingRounds > 0)
+            result.append(status);
+    }
+
+    for (int row = 0; row < model->rowCount(); ++row) {
+        if (model->statusAt(row).remainingRounds > 0)
+            result.append(model->statusAt(row));
+    }
+
+    return result;
 }
