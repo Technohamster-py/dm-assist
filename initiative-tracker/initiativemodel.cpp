@@ -176,7 +176,7 @@ Qt::ItemFlags InitiativeModel::flags(const QModelIndex &index) const {
     if (!index.isValid())
         return Qt::NoItemFlags;
 
-    if (index.column() == fields::del || index.column() == fields::statuses);
+    if (index.column() == fields::del || index.column() == fields::statuses)
         return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 
     return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
