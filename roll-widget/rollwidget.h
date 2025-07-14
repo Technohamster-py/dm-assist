@@ -21,14 +21,21 @@ public:
         return QRandomGenerator::global()->bounded(1, diceValue+1);
     };
 
+    static QString compactExpression(QString original);
+    bool compactMode() const {return m_compactMode;};
+
 public slots:
     int executeRoll(QString command);
+    void addDice(QString dice);
+    void setCompactMode(bool mode);
 
 protected:
     QString m_lastRoll = "";
 
 private:
     Ui::RollWidget *ui;
+
+    bool m_compactMode = false;
 };
 
 

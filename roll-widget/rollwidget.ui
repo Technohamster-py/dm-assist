@@ -64,6 +64,16 @@
     </layout>
    </item>
    <item>
+    <widget class="QCheckBox" name="compactModeBox">
+     <property name="layoutDirection">
+      <enum>Qt::RightToLeft</enum>
+     </property>
+     <property name="text">
+      <string>Compact mode</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="QPushButton" name="d4Button">

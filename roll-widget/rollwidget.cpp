@@ -8,6 +8,8 @@ RollWidget::RollWidget(QWidget *parent) :
     ui->setupUi(this);
 
     connect(ui->commandButton, &QPushButton::clicked, [=](){ executeRoll(ui->rollEdit->text());});
+
+    connect(ui->compactModeBox, &QCheckBox::toggled, this, &RollWidget::setCompactMode);
 }
 
 RollWidget::~RollWidget() {
@@ -15,9 +17,13 @@ RollWidget::~RollWidget() {
 }
 
 int RollWidget::executeRoll(QString command) {
+    command = command.replace(" ", "");
     QRegularExpression tokenPattern(R"(([+\-]?[\d]*d\d+|[+\-]?\d+))", QRegularExpression::CaseInsensitiveOption);
     QRegularExpression dicePattern(R"(([+\-]?)(\d*)d(\d+))", QRegularExpression::CaseInsensitiveOption);
     QRegularExpression modificatorPattern(R"([+\-]?\s?\d+)", QRegularExpression::CaseInsensitiveOption);
+
+    if (compactMode())
+        command = compactExpression(command);
 
     int total = 0;
     m_lastRoll.clear();
@@ -67,4 +73,63 @@ int RollWidget::executeRoll(QString command) {
     ui->resultView->addItem(m_lastRoll);
 
     return total;
+}
+
+void RollWidget::addDice(QString dice) {
+
+}
+
+QString RollWidget::compactExpression(QString original) {
+    QRegularExpression tokenPattern(R"([+\-]?\d*d\d+|[+\-]?\d+)", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpression dicePattern(R"(([+\-]?)(\d*)d(\d+))", QRegularExpression::CaseInsensitiveOption);
+
+    auto it = tokenPattern.globalMatch(original);
+    // Ключ: "dX", значение: список со знаком (+/-) и количеством
+    QMap<QString, QMap<int, int>> diceGroups;
+    QStringList modifiers;
+
+    while (it.hasNext()) {
+        QString token = it.next().captured(0).trimmed();
+        auto match = dicePattern.match(token);
+
+        if (match.hasMatch()) {
+            QString signStr = match.captured(1);
+            int count = match.captured(2).isEmpty() ? 1 : match.captured(2).toInt();
+            int sign = (signStr == "-") ? -1 : 1;
+            QString die = "d" + match.captured(3);
+
+            diceGroups[die][sign] += count;
+        } else {
+            modifiers << token;
+        }
+    }
+
+    QStringList result;
+
+    for (auto dieIt = diceGroups.constBegin(); dieIt != diceGroups.constEnd(); ++dieIt) {
+        const QString& die = dieIt.key();
+        const QMap<int, int>& counts = dieIt.value();
+
+        for (auto countIt = counts.constBegin(); countIt != counts.constEnd(); ++countIt) {
+            int sign = countIt.key();
+            int count = countIt.value();
+
+            if (count == 0) continue;
+
+            QString part;
+            if (count == 1)
+                part = (sign == -1 ? "-" : "") + die;
+            else
+                part = QString("%1%2").arg(sign * count).arg(die);
+
+            result << part;
+        }
+    }
+
+    result.append(modifiers);
+    return result.join(" + ").replace(QRegularExpression(R"(\+\s*-)"), "- ");
+}
+
+void RollWidget::setCompactMode(bool mode) {
+ m_compactMode = mode;
 }
