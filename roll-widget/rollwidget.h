@@ -26,7 +26,7 @@ public:
 
 public slots:
     int executeRoll(QString command);
-    void addDice(QString dice);
+    void addDieToExpression(const QString& dieCode, bool rightClick);
     void setCompactMode(bool mode);
 
 protected:
@@ -34,8 +34,9 @@ protected:
 
 private:
     Ui::RollWidget *ui;
-
     bool m_compactMode = false;
+
+    void connectButtons();
 };
 
 

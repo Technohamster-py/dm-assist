@@ -8,8 +8,8 @@ RollWidget::RollWidget(QWidget *parent) :
     ui->setupUi(this);
 
     connect(ui->commandButton, &QPushButton::clicked, [=](){ executeRoll(ui->rollEdit->text());});
-
     connect(ui->compactModeBox, &QCheckBox::toggled, this, &RollWidget::setCompactMode);
+    connectButtons();
 }
 
 RollWidget::~RollWidget() {
@@ -75,16 +75,11 @@ int RollWidget::executeRoll(QString command) {
     return total;
 }
 
-void RollWidget::addDice(QString dice) {
-
-}
-
 QString RollWidget::compactExpression(QString original) {
     QRegularExpression tokenPattern(R"([+\-]?\d*d\d+|[+\-]?\d+)", QRegularExpression::CaseInsensitiveOption);
     QRegularExpression dicePattern(R"(([+\-]?)(\d*)d(\d+))", QRegularExpression::CaseInsensitiveOption);
 
     auto it = tokenPattern.globalMatch(original);
-    // Ключ: "dX", значение: список со знаком (+/-) и количеством
     QMap<QString, QMap<int, int>> diceGroups;
     QStringList modifiers;
 
@@ -132,4 +127,83 @@ QString RollWidget::compactExpression(QString original) {
 
 void RollWidget::setCompactMode(bool mode) {
  m_compactMode = mode;
+}
+
+void RollWidget::addDieToExpression(const QString &dieCode, bool rightClick) {
+    QString text = ui->rollEdit->text().trimmed();
+    if (text.isEmpty()) {
+        ui->rollEdit->setText(dieCode);
+        return;
+    }
+
+    QRegularExpression lastDiePattern(R"(([+\-]?)(\d*)(" + dieCode + R")\b)", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpression dicePattern(R"(([+\-]?)(\d*)d(\d+))");
+
+    QRegularExpressionMatchIterator it = dicePattern.globalMatch(text);
+    QString lastDie;
+    int lastDieStart = -1;
+    while (it.hasNext()) {
+        auto match = it.next();
+        lastDie = match.captured(0);
+        lastDieStart = match.capturedStart(0);
+    }
+
+    if (!lastDie.isEmpty() && lastDie.endsWith(dieCode)) {
+        QRegularExpression matchDie(R"(([+\-]?)(\d*)d(\d+))");
+        auto m = matchDie.match(lastDie);
+        if (m.hasMatch()) {
+            int count = m.captured(2).isEmpty() ? 1 : m.captured(2).toInt();
+            QString sign = m.captured(1).isEmpty() ? "+" : m.captured(1);
+            QString newText;
+            if (rightClick) {
+                if (count <= 1) {
+                    // Удалить
+                    text.remove(lastDieStart, lastDie.length());
+                } else {
+                    newText = QString("%1%2%3").arg(sign).arg(count - 1).arg(dieCode);
+                    text.replace(lastDieStart, lastDie.length(), newText);
+                }
+            } else {
+                newText = QString("%1%2%3").arg(sign).arg(count + 1).arg(dieCode);
+                text.replace(lastDieStart, lastDie.length(), newText);
+            }
+            ui->rollEdit->setText(text.trimmed());
+            return;
+        }
+    }
+
+    QString newDie = "+" + dieCode;
+    ui->rollEdit->setText(text + " " + newDie);
+}
+
+void RollWidget::connectButtons() {
+    connect(ui->d4Button, &QPushButton::clicked, [=](){
+        bool rightClick = QGuiApplication::mouseButtons() & Qt::RightButton;
+        addDieToExpression("d4", rightClick);
+    });
+    connect(ui->d6Button, &QPushButton::clicked, [=](){
+        bool rightClick = QGuiApplication::mouseButtons() & Qt::RightButton;
+        addDieToExpression("d6", rightClick);
+    });
+    connect(ui->d8Button, &QPushButton::clicked, [=](){
+        bool rightClick = QGuiApplication::mouseButtons() & Qt::RightButton;
+        addDieToExpression("d8", rightClick);
+    });
+    connect(ui->d10Button, &QPushButton::clicked, [=](){
+        bool rightClick = QGuiApplication::mouseButtons() & Qt::RightButton;
+        addDieToExpression("d10", rightClick);
+    });
+    connect(ui->d12Button, &QPushButton::clicked, [=](){
+        bool rightClick = QGuiApplication::mouseButtons() & Qt::RightButton;
+        addDieToExpression("d12", rightClick);
+    });
+    connect(ui->d20Button, &QPushButton::clicked, [=](){
+        bool rightClick = QGuiApplication::mouseButtons() & Qt::RightButton;
+        addDieToExpression("d20", rightClick);
+    });
+    connect(ui->d100Button, &QPushButton::clicked, [=](){
+        bool rightClick = QGuiApplication::mouseButtons() & Qt::RightButton;
+        addDieToExpression("d100", rightClick);
+    });
+
 }
