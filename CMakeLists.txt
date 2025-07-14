@@ -44,6 +44,7 @@ set(FILES
         music-widget/musicwidget.h music-widget/musicwidget.cpp
         initiative-tracker/initiativetrackerwidget.h initiative-tracker/initiativetrackerwidget.cpp
         initiative-tracker/hpprogressbardelegate.h  initiative-tracker/hpprogressbardelegate.cpp
+        roll-widget/rollwidget.h    roll-widget/rollwidget.cpp
         saveconfigdialog.h saveconfigdialog.cpp
         settingsdialog.h    settingsdialog.cpp
         settings.h
@@ -59,6 +60,7 @@ set(UI_FILES
         music-widget/musicplayer.ui
         music-widget/playlisteditdialog.ui
         initiative-tracker/initiativetrackerwidget.ui
+        roll-widget/rollwidget.ui
         settingsdialog.ui
 )
 

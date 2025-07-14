@@ -18,6 +18,7 @@
 #include "map-widget/spellshapetool.h"
 #include "initiative-tracker/initiativetrackerwidget.h"
 #include "music-widget/musicwidget.h"
+#include "roll-widget/rollwidget.h"
 #include "settingsdialog.h"
 
 QT_BEGIN_NAMESPACE
@@ -93,6 +94,8 @@ private:
     SquareShapeTool* squareShapeTool;
     TriangleShapeTool* triangleShapeTool;
     QActionGroup *toolGroup;
+
+    RollWidget* rollWidget;
 
     void setupCampaign(const QString campaignRoot);
     void setupPlayers();

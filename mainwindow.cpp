@@ -43,6 +43,9 @@ MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
+    rollWidget = new RollWidget(ui->leftAsideWidget);
+    ui->campaignLayout->addWidget(rollWidget);
+
     campaignTreeWidget = new CampaignTreeWidget(ui->leftAsideWidget);
     campaignTreeWidget->setVisible(false);
     setupCampaign(QString());
