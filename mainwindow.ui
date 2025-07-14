@@ -59,7 +59,10 @@
         <height>16777215</height>
        </size>
       </property>
-      <layout class="QVBoxLayout" name="campaignLayout">
+      <layout class="QVBoxLayout" name="leftAsideLayout">
+       <property name="spacing">
+        <number>5</number>
+       </property>
        <property name="leftMargin">
         <number>0</number>
        </property>
@@ -72,6 +75,12 @@
        <property name="bottomMargin">
         <number>0</number>
        </property>
+       <item>
+        <layout class="QVBoxLayout" name="campaignLayout"/>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="rollLayout"/>
+       </item>
       </layout>
      </widget>
     </item>

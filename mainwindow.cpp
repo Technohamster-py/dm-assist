@@ -44,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     rollWidget = new RollWidget(ui->leftAsideWidget);
-    ui->campaignLayout->addWidget(rollWidget);
+    ui->rollLayout->addWidget(rollWidget);
 
     campaignTreeWidget = new CampaignTreeWidget(ui->leftAsideWidget);
     campaignTreeWidget->setVisible(false);
