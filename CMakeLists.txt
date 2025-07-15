@@ -31,6 +31,7 @@ set(FILES
         initiative-tracker/initiativemodel.h    initiative-tracker/initiativemodel.cpp
         initiative-tracker/initiativestructures.h
         initiative-tracker/statuseditdialog.h   initiative-tracker/statuseditdialog.cpp
+        initiative-tracker/statusmanager.cpp    initiative-tracker/statusmanager.h
         mainwindow.h    mainwindow.cpp
         map-widget/abstractmaptool.h
         map-widget/brushtool.h  map-widget/brushtool.cpp

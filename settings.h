@@ -47,6 +47,9 @@ struct Settings{
         QString hpBarMode = "initiative/hpBar";                    ///< uint8 (0:2) Режим отображения здоровья
         QString showHpComboBox = "initiative/showHpCombo";         ///< bool Показывать комбобокс с выбором режима в основном виджете
         QString sharedWindows = "initiative/sharedWindowsCount";   ///< uint8 - Количество открытых расшаренных окон (UNUSED)
+        QString customStatuses = "initiative/customStatuses";      ///<
+        QString customStatusTitle = "title";                       ///<
+        QString customStatusIcon = "icon";                         ///<
     };
     Initiative initiative;
 

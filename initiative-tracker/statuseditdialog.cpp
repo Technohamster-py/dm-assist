@@ -41,9 +41,6 @@ QVariant StatusModel::data(const QModelIndex &index, int role) const {
         if (role == Qt::UserRole)
             return s.iconPath;
     }
-
-
-
     return {};
 }
 
