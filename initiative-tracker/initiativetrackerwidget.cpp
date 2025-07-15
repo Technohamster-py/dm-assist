@@ -166,7 +166,11 @@ void InitiativeTrackerWidget::openSharedWindow() {
 void InitiativeTrackerWidget::nextTurn() {
     int next = (model->getCurrentIndex() + 1) % model->rowCount();
     if (next == 0)
+    {
+        m_currentRound ++;
+        ui->roundLabel->setText(tr("Round: %1").arg(m_currentRound));
         model->decrementStatuses();
+    }
     model->setCurrentIndex(next);
 }
 
@@ -215,6 +219,7 @@ void InitiativeTrackerWidget::sortTable() {
  * @param filename The path of the file to load the initiative data from.
  */
 void InitiativeTrackerWidget::loadFromFile(const QString& filename){
+    on_resetButton_clicked();
     model->loadFromFile(filename);
 }
 
@@ -401,4 +406,9 @@ void InitiativeTrackerWidget::addCharacter(QString name, int maxHp, int ac, int 
     model->addCharacter(emptyCharacter);
 
     sortTable();
+}
+
+void InitiativeTrackerWidget::on_resetButton_clicked() {
+    m_currentRound = 1;
+    ui->roundLabel->setText(tr("Round: %1").arg(m_currentRound));
 }
