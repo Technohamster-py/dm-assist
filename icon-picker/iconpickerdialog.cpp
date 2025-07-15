@@ -5,6 +5,8 @@
 #include <QMouseEvent>
 #include <QMessageBox>
 
+#include "themediconmanager.h"
+
 IconLabel::IconLabel(const QString &iconPath, QWidget *parent)
         : QLabel(parent), m_iconPath(iconPath) {
     QPixmap pix(40, 40);
@@ -13,7 +15,7 @@ IconLabel::IconLabel(const QString &iconPath, QWidget *parent)
     QPainter painter(&pix);
     renderer.render(&painter);
 
-    setPixmap(pix);
+    ThemedIconManager::instance().addPixmapTarget(iconPath, this, [=](const QPixmap &px){ setPixmap(px);});
     setToolTip(iconPath);
     setFrameShape(QFrame::NoFrame);
     setAlignment(Qt::AlignCenter);

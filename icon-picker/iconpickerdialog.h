@@ -3,6 +3,7 @@
 
 #define ICON_DIR "/iconset"
 
+#include <QCoreApplication>
 #include <QDialog>
 #include <QGridLayout>
 #include <QScrollArea>
@@ -57,6 +58,8 @@ private:
     void loadIcons();
     void highlightLabel(IconLabel *label);
     void addIconToGrid(const QString &filePath);
+
+//    QIcon m_icon;
 };
 
 
