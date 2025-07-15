@@ -1,6 +1,8 @@
 #include "statuseditdialog.h"
 #include "ui_statuseditdialog.h"
 
+#include "iconpickerdialog.h"
+
 #include <QTimer>
 #include <utility>
 
@@ -141,7 +143,7 @@ void StatusEditDialog::on_addButton_clicked() {
 }
 
 void StatusEditDialog::on_iconButton_clicked() {
-    m_currentIconPath = "";
+    m_currentIconPath = IconPickerDialog::getSelectedIcon(ui->iconButton);
 }
 
 void StatusEditDialog::populate() {

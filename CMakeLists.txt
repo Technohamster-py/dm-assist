@@ -9,6 +9,7 @@ set(CMAKE_AUTOUIC ON)
 
 set(BASS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass/include)
 set(TEMPLATE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/file-templates)
+set(ICON_DIR ${CMAKE_CURRENT_SOURCE_DIR}/iconset)
 if (WIN32)
     set(CMAKE_PREFIX_PATH "C:/Qt/Qt6/6.9.0/mingw_64/lib/cmake")
     set(BASS_DLL "${CMAKE_SOURCE_DIR}/lib/bass/win/bass.dll")
@@ -44,6 +45,7 @@ set(FILES
         map-widget/spellshapetool.h     map-widget/spellshapetool.cpp
         map-widget/undostack.h
         music-widget/musicwidget.h music-widget/musicwidget.cpp
+        icon-picker/iconpickerdialog.h  icon-picker/iconpickerdialog.cpp
         initiative-tracker/initiativetrackerwidget.h initiative-tracker/initiativetrackerwidget.cpp
         initiative-tracker/initiativedelegates.h initiative-tracker/initiativedelegates.cpp
         saveconfigdialog.h saveconfigdialog.cpp
@@ -97,6 +99,7 @@ include_directories(
         translations
         static
         theme-manager
+        icon-picker
 )
 
 qt_add_translation(QM_FILES ${TS_FILES})
@@ -187,6 +190,12 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${TEMPLATE_DIR}"
         "${CMAKE_BINARY_DIR}/file-templates"
+)
+
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${ICON_DIR}"
+        "${CMAKE_BINARY_DIR}/iconset"
 )
 
 
