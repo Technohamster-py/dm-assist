@@ -56,8 +56,6 @@ protected:
     virtual void populate();
     QString m_currentIconPath = ":/statuses/status-blinded.svg";
 
-    void focusOutEvent (QFocusEvent *event) override;
-
 private slots:
     void on_addButton_clicked();
     void on_iconButton_clicked();
@@ -66,6 +64,8 @@ private:
     Ui::StatusEditDialog *ui;
 
     StatusModel* model;
+
+    void closeEvent(QCloseEvent *event);
 };
 
 

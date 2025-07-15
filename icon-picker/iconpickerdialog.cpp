@@ -43,6 +43,8 @@ void IconLabel::mouseDoubleClickEvent(QMouseEvent *event) {
 }
 
 
+
+
 QString IconPickerDialog::getSelectedIcon(QWidget *parent) {
     IconPickerDialog dlg(parent);
     dlg.setWindowFlags(Qt::Popup);
@@ -101,6 +103,7 @@ void IconPickerDialog::addIconToGrid(const QString &filePath) {
 
     connect(iconLabel, &IconLabel::doubleClicked, [this, iconLabel]() {
             selectedIconPath = iconLabel->toolTip();
+            emit iconSelected(selectedIconPath);
             accept();
     });
 }

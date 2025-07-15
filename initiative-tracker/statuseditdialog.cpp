@@ -128,7 +128,9 @@ StatusEditDialog::StatusEditDialog(QList<Status> statuses, QWidget *parent) :
 
     model = new StatusModel(this);
     populate();
-    setWindowFlags(Qt::Popup);
+    setWindowFlags(Qt::Dialog | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint | Qt::WindowCloseButtonHint);
+    setAttribute(Qt::WA_DeleteOnClose);
+
 }
 
 StatusEditDialog::~StatusEditDialog() {
@@ -143,7 +145,7 @@ void StatusEditDialog::on_addButton_clicked() {
 }
 
 void StatusEditDialog::on_iconButton_clicked() {
-    m_currentIconPath = IconPickerDialog::getSelectedIcon(ui->iconButton);
+    m_currentIconPath = IconPickerDialog::getSelectedIcon(this);
 }
 
 void StatusEditDialog::populate() {
@@ -156,11 +158,6 @@ void StatusEditDialog::populate() {
         else
             model->addStatus(status);
     }
-}
-
-void StatusEditDialog::focusOutEvent(QFocusEvent *event) {
-    QDialog::focusOutEvent(event);
-    QTimer::singleShot(0, this, &QDialog::accept);
 }
 
 QList<Status> StatusEditDialog::statuses() const {
@@ -182,4 +179,9 @@ QList<Status> StatusEditDialog::statuses() const {
     }
 
     return result;
+}
+
+void StatusEditDialog::closeEvent(QCloseEvent *event) {
+    accept();
+    QDialog::closeEvent(event);
 }

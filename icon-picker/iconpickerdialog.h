@@ -43,6 +43,9 @@ public:
     static QString getSelectedIcon(QWidget *parent = nullptr);
     explicit IconPickerDialog(QWidget *parent = nullptr);
 
+signals:
+    void iconSelected(const QString path);
+
 protected:
     void focusOutEvent(QFocusEvent *event) override;
     void dragEnterEvent(QDragEnterEvent *event) override;
@@ -58,8 +61,6 @@ private:
     void loadIcons();
     void highlightLabel(IconLabel *label);
     void addIconToGrid(const QString &filePath);
-
-//    QIcon m_icon;
 };
 
 
