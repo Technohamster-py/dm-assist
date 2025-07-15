@@ -174,6 +174,7 @@ void RollWidget::addDieToExpression(const QString &dieCode, bool rightClick) {
 
     QString newDie = "+" + dieCode;
     ui->rollEdit->setText(text + " " + newDie);
+    ui->rollEdit->setFocus();
 }
 
 void RollWidget::connectButtons() {
