@@ -2,8 +2,8 @@
 #include "ui_statuseditdialog.h"
 
 #include "iconpickerdialog.h"
+#include "themediconmanager.h"
 
-#include <QTimer>
 #include <utility>
 
 StatusModel::StatusModel(QObject *parent) : QAbstractTableModel(parent) {
@@ -37,7 +37,7 @@ QVariant StatusModel::data(const QModelIndex &index, int role) const {
     if (index.column() == fields::icon)
     {
         if (role == Qt::DecorationRole)
-            return QIcon(s.iconPath);
+            return statusIcons.at(index.row());
         if (role == Qt::UserRole)
             return s.iconPath;
     }
@@ -86,6 +86,8 @@ bool StatusModel::setData(const QModelIndex &index, const QVariant &value, int r
 void StatusModel::addStatus(const Status &status) {
     beginInsertRows(QModelIndex(), statuses.size(), statuses.size());
     statuses.append(status);
+    statusIcons.append(QIcon(status.iconPath));
+    ThemedIconManager::instance().addPixmapTarget(status.iconPath, this, [=](const QPixmap& px){statusIcons[statusIcons.count()-1] = QIcon(px);});
     endInsertRows();
 }
 
@@ -128,6 +130,7 @@ StatusEditDialog::StatusEditDialog(QList<Status> statuses, QWidget *parent) :
 
     model = new StatusModel(this);
     populate();
+    setupIcons();
     setWindowFlags(Qt::Dialog | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint | Qt::WindowCloseButtonHint);
     setAttribute(Qt::WA_DeleteOnClose);
 
@@ -184,4 +187,22 @@ QList<Status> StatusEditDialog::statuses() const {
 void StatusEditDialog::closeEvent(QCloseEvent *event) {
     accept();
     QDialog::closeEvent(event);
+}
+
+void StatusEditDialog::setupIcons() {
+    ThemedIconManager::instance().addPixmapTarget(":/statuses/status-blinded.svg", ui->blindedCheckBox, [label = ui->blindedCheckBox](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/statuses/status-charmed.svg", ui->charmedCheckBox, [label = ui->charmedCheckBox](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/statuses/status-deafened.svg", ui->deafenedCheckBox, [label = ui->deafenedCheckBox](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/statuses/status-exhaustion.svg", ui->exhaustionCheckBox, [label = ui->exhaustionCheckBox](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/statuses/status-frightened.svg", ui->frightenedCheckBox, [label = ui->frightenedCheckBox](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/statuses/status-grappled.svg", ui->grappledCheckBox, [label = ui->grappledCheckBox](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/statuses/status-incapacitated.svg", ui->incapacitatedCheckBox, [label = ui->incapacitatedCheckBox](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/statuses/status-invisible.svg", ui->invisibleCheckBox, [label = ui->invisibleCheckBox](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/statuses/status-paralyzed.svg", ui->paralyzedCheckBox, [label = ui->paralyzedCheckBox](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/statuses/status-petrified.svg", ui->petrifiedCheckBox, [label = ui->petrifiedCheckBox](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/statuses/status-poisoned.svg", ui->poisonedCheckBox, [label = ui->poisonedCheckBox](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/statuses/status-prone.svg", ui->proneCheckBox, [label = ui->proneCheckBox](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/statuses/status-restrained.svg", ui->restrainedCheckBox, [label = ui->restrainedCheckBox](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/statuses/status-stunned.svg", ui->stunnedCheckBox, [label = ui->stunnedCheckBox](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/statuses/status-unconscious.svg", ui->unconsciousCheckBox, [label = ui->unconsciousCheckBox](const QPixmap& px){label->setPixmap(px);});
 }

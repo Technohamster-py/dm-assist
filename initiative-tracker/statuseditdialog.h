@@ -31,6 +31,8 @@ public:
 
 private:
     QVector<Status> statuses;
+    QList<QIcon> statusIcons;
+
 };
 
 
@@ -50,10 +52,10 @@ public:
 protected:
     InitiativeCharacter m_character;
     QList<Status> m_statuses;
-
     QMap<QString, QSpinBox*> m_standardStatusesMap;
 
     virtual void populate();
+    virtual void setupIcons();
     QString m_currentIconPath = ":/statuses/status-blinded.svg";
 
 private slots:
