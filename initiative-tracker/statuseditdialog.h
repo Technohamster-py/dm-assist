@@ -28,6 +28,7 @@ public:
     Status statusAt(int row);
     void addStatus(const Status &status);
     void remove(int row);
+    void editStatusIcon(int row, QString newIconPath);
 
 private:
     QVector<Status> statuses;

@@ -105,6 +105,15 @@ Status StatusModel::statusAt(int row) {
     return {};
 }
 
+void StatusModel::editStatusIcon(int row, QString newIconPath) {
+    Status &s = statuses[row];
+    s.iconPath = std::move(newIconPath);
+    statusIcons[row] = QIcon(newIconPath);
+    ThemedIconManager::instance().addPixmapTarget(s.iconPath, this, [=](const QPixmap& px){statusIcons[row] = QIcon(px);});
+    emit dataChanged(index(row, fields::icon), index(row, fields::icon+1));
+
+}
+
 
 StatusEditDialog::StatusEditDialog(QList<Status> statuses, QWidget *parent) :
         QDialog(parent), ui(new Ui::StatusEditDialog), m_statuses(std::move(statuses)) {
@@ -134,6 +143,14 @@ StatusEditDialog::StatusEditDialog(QList<Status> statuses, QWidget *parent) :
     setWindowFlags(Qt::Dialog | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint | Qt::WindowCloseButtonHint);
     setAttribute(Qt::WA_DeleteOnClose);
 
+
+    connect(ui->customStatusesView, &QTableView::clicked, this, [=](const QModelIndex &index) {
+        if (index.column() == StatusModel::fields::icon)
+        {
+            QString iconPath = IconPickerDialog::getSelectedIcon(this);
+            model->editStatusIcon(index.row(), iconPath);
+        }
+    });
 }
 
 StatusEditDialog::~StatusEditDialog() {
