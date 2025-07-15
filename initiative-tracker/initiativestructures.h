@@ -2,6 +2,8 @@
 #define DM_ASSIST_INITIATIVESTRUCTURES_H
 
 #include <QXmlStreamWriter>
+#include <QMap>
+#include <QString>
 
 static QList<QString> standardStatuses = {"blinded",
                                           "charmed",

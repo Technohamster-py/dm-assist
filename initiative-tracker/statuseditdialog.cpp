@@ -159,10 +159,13 @@ void StatusEditDialog::on_addButton_clicked() {
     status.title = ui->titleEdit->text();
     status.iconPath = m_currentIconPath;
     model->addStatus(status);
+    ui->titleEdit->clear();
+    ui->iconButton->setIcon(QIcon());
 }
 
 void StatusEditDialog::on_iconButton_clicked() {
     m_currentIconPath = IconPickerDialog::getSelectedIcon(this);
+    ThemedIconManager::instance().addIconTarget<QPushButton>(m_currentIconPath, ui->iconButton, &QPushButton::setIcon);
 }
 
 void StatusEditDialog::populate() {
