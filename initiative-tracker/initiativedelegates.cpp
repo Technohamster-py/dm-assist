@@ -1,5 +1,5 @@
 #include "initiativedelegates.h"
-
+#include "themediconmanager.h"
 
 #include <QStyleOptionProgressBar>
 #include <QAbstractItemView>
@@ -112,12 +112,13 @@ void StatusDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
         int y = option.rect.y();
         int iconSize = option.rect.height();
 
-        for (const auto &status : statuses) {
-            QPixmap icon(status.iconPath);
-            QRect iconRect(x, y, iconSize, iconSize);
-            painter->drawPixmap(iconRect, icon);
-            x += iconSize + 2; // padding
+        QStringList iconPaths;
+        for (const auto status : statuses) {
+            iconPaths << status.iconPath;
         }
+        QPixmap icon = ThemedIconManager::instance().renderIconInline(iconPaths);
+        QRect iconRect(x, y, icon.width(), iconSize);
+        painter->drawPixmap(iconRect, icon);
     }
 
     painter->restore();

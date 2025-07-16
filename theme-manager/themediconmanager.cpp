@@ -30,6 +30,7 @@ void ThemedIconManager::updateAllIcons() {
     for (const auto& target : m_targets) {
         regenerateAndApplyIcon(target);
     }
+    emit themeChanged();
 }
 
 
@@ -96,4 +97,37 @@ void ThemedIconManager::addPixmapTarget(const QString &svgPath, QObject *receive
 
     m_targets.append(target);
     regenerateAndApplyIcon(m_targets.last());
+}
+
+QPixmap ThemedIconManager::renderIconInline(const QStringList &svgPaths, QSize iconSize, int spacing) {
+    int totalWidth = iconSize.width() * svgPaths.size() + spacing * (svgPaths.size() - 1);
+    QPixmap result(totalWidth, iconSize.height());
+    result.fill(Qt::transparent);
+
+    QPainter painter(&result);
+
+    int x = 0;
+    for (const auto& path : svgPaths) {
+        QFile file(path);
+        if (!file.open(QIODevice::ReadOnly))
+            continue;
+
+        QString svg = QString::fromUtf8(file.readAll());
+        file.close();
+
+        svg.replace(QRegularExpression(R"(currentColor)"), themeColor().name());
+
+        QSvgRenderer renderer(svg.toUtf8());
+        QPixmap iconPixmap(iconSize);
+        iconPixmap.fill(Qt::transparent);
+        QPainter p(&iconPixmap);
+        renderer.render(&p);
+        p.end();
+
+        painter.drawPixmap(x, 0, iconPixmap);
+        x += iconSize.width() + spacing;
+    }
+
+    painter.end();
+    return result;
 }

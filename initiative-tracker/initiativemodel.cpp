@@ -25,6 +25,10 @@ InitiativeModel::InitiativeModel(QObject *parent)
                                                   [=](const QPixmap &px) { m_acHeaderIcon = QIcon(px); }, false);
     ThemedIconManager::instance().addPixmapTarget(":/heart.svg", this,
                                                   [=](const QPixmap &px) { m_hpHeaderIcon = QIcon(px); }, false);
+
+    connect(&ThemedIconManager::instance(), &ThemedIconManager::themeChanged, [=](){
+        emit dataChanged(index(0, fields::statuses), index(rowCount()-1, fields::statuses), {Qt::DecorationRole});
+    });
 }
 
 /**
@@ -147,11 +151,11 @@ QVariant InitiativeModel::data(const QModelIndex &index, int role) const {
     }
 
     if (role == Qt::DecorationRole && index.column() == fields::statuses){
-        QList<QVariant> icons;
-        for (const auto &status : characters[index.row()].statuses) {
-            icons.append(QIcon(status.iconPath));
+       QStringList iconPaths;
+        for (const auto status : characters[index.row()].statuses) {
+            iconPaths << status.iconPath;
         }
-        return icons;
+        return ThemedIconManager::instance().renderIconInline(iconPaths);
     }
 
     if (role == Qt::UserRole + 1 && index.column() == fields::statuses)
