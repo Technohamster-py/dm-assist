@@ -55,7 +55,7 @@ int InitiativeModel::rowCount(const QModelIndex &) const {
  * @return int The total number of columns in the model, always 6.
  */
 int InitiativeModel::columnCount(const QModelIndex &) const {
-    return fields::del;
+    return fields::del+1;
 }
 
 

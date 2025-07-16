@@ -16,7 +16,7 @@ int StatusModel::rowCount(const QModelIndex &parent) const {
 }
 
 int StatusModel::columnCount(const QModelIndex &parent) const {
-    return fields::del;
+    return fields::del+1;
 }
 
 QVariant StatusModel::data(const QModelIndex &index, int role) const {
@@ -51,6 +51,7 @@ QVariant StatusModel::headerData(int section, Qt::Orientation orientation, int r
     switch (section) {
         case fields::title: return tr("Title");
         case fields::timer: return tr("Timer");
+        case fields::del: return "";
         default: return {};
     }
 }
@@ -156,6 +157,14 @@ StatusEditDialog::StatusEditDialog(QList<Status> statuses, QWidget *parent) :
         {
             QString iconPath = IconPickerDialog::getSelectedIcon(this);
             model->editStatusIcon(index.row(), iconPath);
+        }
+    });
+
+    connect(ui->customStatusesView, &QTableView::clicked, this, [=](const QModelIndex &index) {
+        if (index.column() == StatusModel::fields::del)
+        {
+            StatusManager::instance().removeStatus(model->statusAt(index.row()));
+            model->remove(index.row());
         }
     });
 }
