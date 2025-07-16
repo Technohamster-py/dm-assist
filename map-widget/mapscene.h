@@ -24,7 +24,7 @@ struct MapFileHeader {
 };
 #pragma pack(pop)
 
-enum qmapErrorCodes{
+enum mapErrorCodes{
     NoError,
     FileOpenError,
     FileSignatureError,

@@ -232,15 +232,15 @@ bool MapView::loadSceneFromFile(const QString &path) {
     int errorCode = scene->loadFromFile(path);
 
     switch (errorCode) {
-        case qmapErrorCodes::NoError:
+        case mapErrorCodes::NoError:
             return true;
-        case qmapErrorCodes::FileOpenError:
+        case mapErrorCodes::FileOpenError:
             QMessageBox::critical(this, "Open file error", QString("Can't open file %1").arg(path));
             break;
-        case qmapErrorCodes::FileSignatureError:
+        case mapErrorCodes::FileSignatureError:
             QMessageBox::critical(this, "Open file error", "File is not DM-assist map");
             break;
-        case qmapErrorCodes::JsonParseError:
+        case mapErrorCodes::JsonParseError:
             QMessageBox::critical(this, "Open file error", "Json parse error");
             break;
         default:

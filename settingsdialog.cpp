@@ -99,6 +99,7 @@ void SettingsDialog::loadSettings() {
         ui->languageComboBox->setCurrentIndex(index);
 
     /// Initiative
+    ui->characterAutoRoll->setChecked(settings.value(paths.initiative.autoInitiative, false).toBool());
     int initiativeFields = settings.value(paths.initiative.fields, 7).toInt();
     ui->nameCheckBox->setChecked(initiativeFields & iniFields::name);
     ui->initiativeCheckBox->setChecked(initiativeFields & iniFields::init);
@@ -220,6 +221,7 @@ void SettingsDialog::saveSettings() {
     settings.setValue(paths.initiative.fields, initiativeFields);
     settings.setValue(paths.initiative.hpBarMode, ui->hpModeComboBox->currentIndex());
     settings.setValue(paths.initiative.showHpComboBox, ui->showControlCheckBox->isChecked());
+    settings.setValue(paths.initiative.autoInitiative, ui->characterAutoRoll->isChecked());
 
     settings.setValue(paths.appearance.theme, ui->themeComboBox->currentData().toString());
     settings.setValue(paths.appearance.style, ui->styleComboBox->currentData().toString());

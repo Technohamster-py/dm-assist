@@ -27,11 +27,11 @@ enum iniFields{
 
 struct Settings{
     struct General{
-        QString audioDevice = "general/audioDevice";    ///< int Выбранное аудиоустройство
-        QString dir = "general/dir";                    ///< String рабочая папка
-        QString lang = "general/lang";                  ///< String язык
-        QString volume = "general/volume";              ///< int основной ползунок громкости
-        QString defaultCampaignDir = "general/defaultCampaignDir"; ///< String папка в которую будут сохраняться кампании по-умолчанию
+        QString audioDevice = "common/audioDevice";    ///< int Выбранное аудиоустройство
+        QString dir = "common/dir";                    ///< String рабочая папка
+        QString lang = "common/lang";                  ///< String язык
+        QString volume = "common/volume";              ///< int основной ползунок громкости
+        QString defaultCampaignDir = "common/defaultCampaignDir"; ///< String папка в которую будут сохраняться кампании по-умолчанию
     };
     General general;
 
@@ -42,7 +42,7 @@ struct Settings{
     Appearance appearance;
 
     struct Initiative {
-        QString autoInitiative = "initiative/autoroll";            ///< uint8 (0:7) Автоматические броски инициативы для NPC/Монстров/Игроков (UNUSED)
+        QString autoInitiative = "initiative/autoRoll";            ///< uint8 (0:7) Автоматические броски инициативы для NPC/Монстров/Игроков
         QString fields = "initiative/fields";                      ///< uint8 Режим отображения полей в трекере инициативы
         QString hpBarMode = "initiative/hpBar";                    ///< uint8 (0:2) Режим отображения здоровья
         QString showHpComboBox = "initiative/showHpCombo";         ///< bool Показывать комбобокс с выбором режима в основном виджете

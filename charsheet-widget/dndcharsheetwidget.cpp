@@ -566,8 +566,11 @@ void DndCharsheetWidget::updateCheckBoxes() {
  *
  * @param initiativeTrackerWidget A pointer to an instance of InitiativeTrackerWidget where the character will be added.
  */
-void DndCharsheetWidget::addToInitiative(InitiativeTrackerWidget *initiativeTrackerWidget) {
-    initiativeTrackerWidget->addCharacter(ui->nameEdit->text(), ui->maxHpBox->value(), ui->acBox->value(), ui->hpSpinBox->value());
+void DndCharsheetWidget::addToInitiative(InitiativeTrackerWidget *initiativeTrackerWidget, bool autoRoll) {
+    int initiative = 0;
+    if (autoRoll)
+        initiative = rollDice(20) + ui->initiativeLabel->text().toInt();
+    initiativeTrackerWidget->addCharacter(ui->nameEdit->text(), ui->maxHpBox->value(), ui->acBox->value(), ui->hpSpinBox->value(), initiative);
 }
 
 QString DndCharsheetWidget::parseParagraphs(const QJsonArray &content) {

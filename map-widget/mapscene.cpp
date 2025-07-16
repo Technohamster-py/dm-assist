@@ -648,7 +648,7 @@ int MapScene::loadFromFile(const QString& path) {
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly)) {
         qWarning() << "Не удалось открыть файл для чтения:" << path;
-        return qmapErrorCodes::FileOpenError;
+        return mapErrorCodes::FileOpenError;
     }
 
     QDataStream stream(&file);
@@ -656,11 +656,11 @@ int MapScene::loadFromFile(const QString& path) {
 
     MapFileHeader header;
     if (stream.readRawData(reinterpret_cast<char*>(&header), sizeof(header)) != sizeof(header))
-        return qmapErrorCodes::FileOpenError;
+        return mapErrorCodes::FileOpenError;
 
     if (header.magic != 0x444D414D) {
         qWarning() << "Файл не является картой DM-Assist.";
-        return qmapErrorCodes::FileSignatureError;
+        return mapErrorCodes::FileSignatureError;
     }
 
     QByteArray jsonData(header.jsonSize, 0);
@@ -675,7 +675,7 @@ int MapScene::loadFromFile(const QString& path) {
     QJsonDocument doc = QJsonDocument::fromJson(jsonData, &error);
     if (error.error != QJsonParseError::NoError) {
         qWarning() << "Ошибка разбора JSON:" << error.errorString();
-        return qmapErrorCodes::JsonParseError;
+        return mapErrorCodes::JsonParseError;
     }
 
     QImage mapImage;
@@ -691,7 +691,7 @@ int MapScene::loadFromFile(const QString& path) {
     fromJson(doc.object());
 
     file.close();
-    return qmapErrorCodes::NoError;
+    return mapErrorCodes::NoError;
 }
 
 /**

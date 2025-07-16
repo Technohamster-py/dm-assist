@@ -55,9 +55,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setAcceptDrops(true);
 
-    loadSettings();
-    saveSettings();
-
     setupShortcuts();
 
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newCampaign);
@@ -72,7 +69,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(campaignTreeWidget, &CampaignTreeWidget::characterAddRequested, this, [=](const QString& path) {
         DndCharsheetWidget character(path);
-        character.addToInitiative(initiativeTrackerWidget);
+        character.addToInitiative(initiativeTrackerWidget, autoRoll);
     });
     connect(campaignTreeWidget, &CampaignTreeWidget::characterOpenRequested, this, [=](const QString& path){
         auto* charsheetWidget = new DndCharsheetWidget(path);
@@ -85,6 +82,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ThemedIconManager::instance().addPixmapTarget(":/player/Volume-2.svg", ui->volMaxLabel, [label = ui->volMaxLabel](const QPixmap& px){label->setPixmap(px);});
 
     showMaximized();
+
+    loadSettings();
+    saveSettings();
 }
 
 /**
@@ -387,6 +387,7 @@ void MainWindow::loadSettings() {
     changeLanguage(settings.value(paths.general.lang, "ru_RU").toString());
     /// Initiative tracker
     initiativeTrackerWidget->setHpDisplayMode(settings.value(paths.initiative.hpBarMode, 0).toInt());
+    autoRoll = settings.value(paths.initiative.autoInitiative, false).toBool();
     int initiativeFields = settings.value(paths.initiative.fields, 7).toInt();
     initiativeTrackerWidget->setSharedFieldVisible(0, initiativeFields & iniFields::name);
     initiativeTrackerWidget->setSharedFieldVisible(1, initiativeFields & iniFields::init);
