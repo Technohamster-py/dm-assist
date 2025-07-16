@@ -3,7 +3,7 @@
 #include "../settings.h"
 
 StatusManager::StatusManager() {
-
+    load();
 }
 
 void StatusManager::addStatus(Status status) {
