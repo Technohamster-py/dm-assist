@@ -100,11 +100,20 @@ void ThemedIconManager::addPixmapTarget(const QString &svgPath, QObject *receive
 }
 
 QPixmap ThemedIconManager::renderIconInline(const QStringList &svgPaths, QSize iconSize, int spacing) {
-    int totalWidth = iconSize.width() * svgPaths.size() + spacing * (svgPaths.size() - 1);
-    QPixmap result(totalWidth, iconSize.height());
+    const qreal dpr = qApp->devicePixelRatio(); // Получаем DPR (например, 2.0 для Retina)
+
+    int iconWidthPx = iconSize.width() * dpr;
+    int iconHeightPx = iconSize.height() * dpr;
+    int totalWidth = iconWidthPx * svgPaths.size() + spacing * dpr * (svgPaths.size() - 1);
+    int totalHeight = iconHeightPx;
+
+    QPixmap result(totalWidth, totalHeight);
+    result.setDevicePixelRatio(dpr);
     result.fill(Qt::transparent);
 
     QPainter painter(&result);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setRenderHint(QPainter::SmoothPixmapTransform);
 
     int x = 0;
     for (const auto& path : svgPaths) {
@@ -118,14 +127,17 @@ QPixmap ThemedIconManager::renderIconInline(const QStringList &svgPaths, QSize i
         svg.replace(QRegularExpression(R"(currentColor)"), themeColor().name());
 
         QSvgRenderer renderer(svg.toUtf8());
-        QPixmap iconPixmap(iconSize);
+        QPixmap iconPixmap(iconWidthPx, iconHeightPx);
         iconPixmap.fill(Qt::transparent);
+
         QPainter p(&iconPixmap);
+        p.setRenderHint(QPainter::Antialiasing);
+        p.setRenderHint(QPainter::SmoothPixmapTransform);
         renderer.render(&p);
         p.end();
 
         painter.drawPixmap(x, 0, iconPixmap);
-        x += iconSize.width() + spacing;
+        x += iconWidthPx + spacing * dpr;
     }
 
     painter.end();
