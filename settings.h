@@ -27,11 +27,11 @@ enum iniFields{
 
 struct Settings{
     struct General{
-        QString audioDevice = "general/audioDevice";    ///< int Выбранное аудиоустройство
-        QString dir = "general/dir";                    ///< String рабочая папка
-        QString lang = "general/lang";                  ///< String язык
-        QString volume = "general/volume";              ///< int основной ползунок громкости
-        QString defaultCampaignDir = "general/defaultCampaignDir"; ///< String папка в которую будут сохраняться кампании по-умолчанию
+        QString audioDevice = "common/audioDevice";    ///< int Выбранное аудиоустройство
+        QString dir = "common/dir";                    ///< String рабочая папка
+        QString lang = "common/lang";                  ///< String язык
+        QString volume = "common/volume";              ///< int основной ползунок громкости
+        QString defaultCampaignDir = "common/defaultCampaignDir"; ///< String папка в которую будут сохраняться кампании по-умолчанию
     };
     General general;
 
