@@ -9,11 +9,13 @@ StatusManager::StatusManager() {
 void StatusManager::addStatus(Status status) {
     status.remainingRounds = 0;
     int index = m_statuses.contains(status);
-    if (!index)
-        m_statuses.append(status);
-    else
-        m_statuses[index] = status;
+    for (auto &s : m_statuses) {
+        if (status == s)
+            s.iconPath = status.iconPath;
+        return;
+    }
 
+    m_statuses.append(status);
     std::sort(m_statuses.begin(), m_statuses.end(), [](const Status &a, const Status &b)
     {return a.title.toLower() < b.title.toLower();});
 

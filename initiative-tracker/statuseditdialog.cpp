@@ -3,6 +3,7 @@
 
 #include "iconpickerdialog.h"
 #include "themediconmanager.h"
+#include "statusmanager.h"
 
 #include <utility>
 
@@ -81,6 +82,15 @@ bool StatusModel::setData(const QModelIndex &index, const QVariant &value, int r
 }
 
 void StatusModel::addStatus(const Status &status) {
+    for (int row; row < statuses.size(); ++row) {
+        if (status == statuses[row]){
+            statuses[row].iconPath = status.iconPath;
+            statuses[row].remainingRounds = status.remainingRounds;
+            emit dataChanged(index(row, 0), index(row, fields::timer+1));
+        }
+    }
+
+
     beginInsertRows(QModelIndex(), statuses.size(), statuses.size());
     statuses.append(status);
     statusIcons.append(QIcon(status.iconPath));
@@ -159,6 +169,7 @@ void StatusEditDialog::on_addButton_clicked() {
     status.title = ui->titleEdit->text();
     status.iconPath = m_currentIconPath;
     model->addStatus(status);
+    StatusManager::instance().addStatus(status);
     ui->titleEdit->clear();
     ui->iconButton->setIcon(QIcon());
 }
@@ -169,6 +180,11 @@ void StatusEditDialog::on_iconButton_clicked() {
 }
 
 void StatusEditDialog::populate() {
+    auto available = StatusManager::instance().availableStatuses();
+    for (const Status& status : available) {
+        model->addStatus(status);
+    }
+
     ui->customStatusesView->setModel(model);
     ui->customStatusesView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
