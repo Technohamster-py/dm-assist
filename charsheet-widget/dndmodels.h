@@ -27,6 +27,14 @@ class DndAttackModel : public QAbstractTableModel{
 Q_OBJECT
 
 public:
+    enum fields{
+        title,
+        bonus,
+        damage,
+        notes,
+        del
+    };
+
     explicit DndAttackModel(QObject* parent = nullptr);
     DndAttackModel(const QJsonArray& attackList, QObject *parent = nullptr);
 
@@ -83,6 +91,14 @@ struct Resource{
 class DndResourceModel : public QAbstractTableModel{
     Q_OBJECT
 public:
+    enum fields{
+        refill,
+        title,
+        current,
+        max,
+        del
+    };
+
     explicit DndResourceModel(QObject* parent = nullptr);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override {return m_resourcesList.size();};

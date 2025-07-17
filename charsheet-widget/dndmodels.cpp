@@ -12,11 +12,11 @@ QVariant DndAttackModel::headerData(int section, Qt::Orientation orientation, in
         return {};
 
     switch (section) {
-        case 0: return tr("Title");
-        case 1: return tr("Bonus");
-        case 2: return tr("Damage");
-        case 3: return tr("Notes");
-        case 4: return tr("Delete");
+        case fields::title: return tr("Title");
+        case fields::bonus: return tr("Bonus");
+        case fields::damage: return tr("Damage");
+        case fields::notes: return tr("Notes");
+        case fields::del: return tr("Delete");
         default: return {};
     }
 }
@@ -28,14 +28,14 @@ QVariant DndAttackModel::data(const QModelIndex &index, int role) const {
     const Attack &w = m_attackList.at(index.row());
 
     if (role == Qt::DisplayRole || role == Qt::EditRole || role == Qt::UserRole) {
-        if (role == Qt::DisplayRole && index.column() == 4)
+        if (role == Qt::DisplayRole && index.column() == fields::del)
             return "❌";
 
         switch (index.column()) {
-            case 0: return w.title;
-            case 1: return w.attackBonus(m_bonusMap);
-            case 2: return w.damage;
-            case 3: return w.notes;
+            case fields::title: return w.title;
+            case fields::bonus: return w.attackBonus(m_bonusMap);
+            case fields::damage: return w.damage;
+            case fields::notes: return w.notes;
         }
     }
     return {};
@@ -45,7 +45,7 @@ Qt::ItemFlags DndAttackModel::flags(const QModelIndex &index) const {
     if (!index.isValid())
         return Qt::NoItemFlags;
 
-    if (index.column() == 4)
+    if (index.column() == fields::del)
         return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 
     return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
@@ -59,10 +59,10 @@ bool DndAttackModel::setData(const QModelIndex &index, const QVariant &value, in
     QString strVal = value.toString();
 
     switch (index.column()) {
-        case 0: w.title = strVal; break;
-        case 1: w.bonus = strVal.toInt(); break;
-        case 2: w.damage = strVal; break;
-        case 3: w.notes = strVal; break;
+        case fields::title: w.title = strVal; break;
+        case fields::bonus: w.bonus = strVal.toInt(); break;
+        case fields::damage: w.damage = strVal; break;
+        case fields::notes: w.notes = strVal; break;
         default: return false;
     }
 
@@ -143,7 +143,7 @@ void DndAttackModel::editAttack(int row, const Attack& attack) {
     if (row < 0 || row >= m_attackList.size())
         return;
     m_attackList[row] = attack;
-    emit dataChanged(index(row, 0), index(row, 5));
+    emit dataChanged(index(row, 0), index(row, fields::del));
 }
 
 
@@ -157,20 +157,20 @@ QVariant DndResourceModel::data(const QModelIndex &index, int role) const {
         return {};
     const Resource &r = m_resourcesList.at(index.row());
 
-    if (role == Qt::DecorationRole && index.column() == 0){
+    if (role == Qt::DecorationRole && index.column() == fields::refill){
         if (r.refillOnShortRest) return m_shortRestIcon;
         if (r.refillOnLongRest) return m_longRestIcon;
         return {};
     }
 
     if (role == Qt::DisplayRole || role == Qt::EditRole || role == Qt::UserRole) {
-        if (role == Qt::DisplayRole && index.column() == 4)
+        if (role == Qt::DisplayRole && index.column() == fields::del)
             return "❌";
 
         switch (index.column()) {
-            case 1: return r.title;
-            case 2: return r.current;
-            case 3: return r.max;
+            case fields::title: return r.title;
+            case fields::current: return r.current;
+            case fields::max: return r.max;
         }
     }
     return {};
@@ -181,11 +181,11 @@ QVariant DndResourceModel::headerData(int section, Qt::Orientation orientation, 
         return {};
 
     switch (section) {
-        case 0: return tr("Refill");
-        case 1: return tr("Title");
-        case 2: return tr("Current");
-        case 3: return tr("Max");
-        case 4: return tr("Delete");
+        case fields::refill: return tr("Refill");
+        case fields::title: return tr("Title");
+        case fields::current: return tr("Current");
+        case fields::max: return tr("Max");
+        case fields::del: return tr("Delete");
         default: return {};
     }
 }
@@ -194,7 +194,7 @@ Qt::ItemFlags DndResourceModel::flags(const QModelIndex &index) const {
     if (!index.isValid())
         return Qt::NoItemFlags;
 
-    if (index.column() == 4 || index.column() == 0)
+    if (index.column() == fields::del || index.column() == fields::refill)
         return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 
     return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
@@ -208,9 +208,9 @@ bool DndResourceModel::setData(const QModelIndex &index, const QVariant &value, 
     QString strVal = value.toString();
 
     switch (index.column()) {
-        case 1: r.title = strVal; break;
-        case 2: r.current = strVal.toInt(); break;
-        case 3: r.max = strVal.toInt(); break;
+        case fields::title: r.title = strVal; break;
+        case fields::current: r.current = strVal.toInt(); break;
+        case fields::max: r.max = strVal.toInt(); break;
         default: return false;
     }
 
@@ -236,14 +236,14 @@ void DndResourceModel::doLongRest() {
     for (auto& r: m_resourcesList) {
         if (r.refillOnLongRest || r.refillOnShortRest) r.current = r.max;
     }
-    emit dataChanged(index(0, 2), index(m_resourcesList.size()-1, 3));
+    emit dataChanged(index(0, fields::current), index(m_resourcesList.size()-1, fields::current+1));
 }
 
 void DndResourceModel::doShortRest() {
     for (auto& r: m_resourcesList) {
         if (r.refillOnShortRest) r.current = r.max;
     }
-    emit dataChanged(index(0, 3), index(m_resourcesList.size()-1, 3));
+    emit dataChanged(index(0, fields::current), index(m_resourcesList.size()-1, fields::current+1));
 }
 
 bool DndResourceModel::fromJson(const QJsonObject &resourcesData) {
@@ -271,7 +271,7 @@ bool DndResourceModel::changeRefillMode(int row) {
 
     r.refillOnShortRest = false;
     r.refillOnLongRest = !(r.refillOnLongRest);
-    emit dataChanged(index(row, 0), index(row, 1));
+    emit dataChanged(index(row, refill), index(row, refill+1));
     return true;
 }
 
