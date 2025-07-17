@@ -35,13 +35,13 @@ AttackDialog::AttackDialog(QWidget *parent, const Attack& ref) :
         QDialog(parent), ui(new Ui::AttackDialog) {
     ui->setupUi(this);
 
-    if (!ref.title.isEmpty()){
-        ui->titleEdit->setText(ref.title);
-        ui->bonusSpinBox->setValue(ref.bonus);
-        ui->damageEdit->setText(ref.damage);
-        ui->notesEdit->setText(ref.damage);
-        ui->statComboBox->setCurrentIndex(statToIndex[ref.ability]);
-    }
+    currentId = ref.id;
+    ui->titleEdit->setText(ref.title);
+    ui->bonusSpinBox->setValue(ref.bonus);
+    ui->damageEdit->setText(ref.damage);
+    ui->notesEdit->setText(ref.notes);
+    ui->profCheckBox->setChecked(ref.prof);
+    ui->statComboBox->setCurrentIndex(statToIndex[ref.ability]);
 
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &ResourceDialog::accept);
     connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &ResourceDialog::reject);
@@ -54,11 +54,13 @@ AttackDialog::~AttackDialog() {
 Attack AttackDialog::getCreatedAttack() {
     Attack attack;
 
+    attack.id = currentId;
     attack.title = ui->titleEdit->text();
     attack.ability = indexToStat[ui->statComboBox->currentIndex()];
     attack.bonus = ui->bonusSpinBox->value();
     attack.damage = ui->damageEdit->text();
     attack.notes = ui->notesEdit->text();
+    attack.prof = ui->profCheckBox->isChecked();
 
     return attack;
 }

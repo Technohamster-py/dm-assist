@@ -19,7 +19,7 @@ struct Attack {
 public:
     int attackBonus(QMap<QString, int> bonusMap) const{
         int profBonus = (prof) ? bonusMap["prof"] : 0;
-        return bonusMap[ability] + profBonus;
+        return bonusMap[ability] + profBonus + bonus;
     }
 };
 

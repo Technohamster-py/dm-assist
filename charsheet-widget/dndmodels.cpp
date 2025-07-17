@@ -48,7 +48,7 @@ Qt::ItemFlags DndAttackModel::flags(const QModelIndex &index) const {
     if (index.column() == fields::del)
         return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 
-    return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
+    return Qt::ItemIsSelectable | Qt::ItemIsEnabled;
 }
 
 bool DndAttackModel::setData(const QModelIndex &index, const QVariant &value, int role) {
@@ -60,7 +60,6 @@ bool DndAttackModel::setData(const QModelIndex &index, const QVariant &value, in
 
     switch (index.column()) {
         case fields::title: w.title = strVal; break;
-        case fields::bonus: w.bonus = strVal.toInt(); break;
         case fields::damage: w.damage = strVal; break;
         case fields::notes: w.notes = strVal; break;
         default: return false;
@@ -110,8 +109,8 @@ bool DndAttackModel::fromJson(const QJsonArray& attackList) {
 }
 
 QJsonArray DndAttackModel::toJson() {
-    int i = 0;
-    for (auto & attack : m_attackList) {
+    for (int i = 0; i < m_attackList.size(); ++i) {
+        Attack attack = m_attackList[i];
         if (attack.id.isEmpty()){
             attack.id = QString("weapon-%1").arg(i);
             QJsonObject attackObj;
@@ -132,9 +131,9 @@ QJsonArray DndAttackModel::toJson() {
                 attackObj["isProf"] = attack.prof;
                 attackObj["modBonus"].toObject()["value"] = attack.bonus;
                 attackObj["notes"].toObject()["value"] = attack.notes;
+                break;
             }
         }
-        ++i;
     }
     return m_attackArray;
 }

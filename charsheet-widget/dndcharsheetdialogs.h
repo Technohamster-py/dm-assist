@@ -55,6 +55,7 @@ public:
 
 private:
     Ui::AttackDialog *ui;
+    QString currentId = "";
 };
 
 #endif //DM_ASSIST_DNDCHARSHEETDIALOGS_H
