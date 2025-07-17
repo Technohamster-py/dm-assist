@@ -56,6 +56,13 @@ public:
 
     void decrementStatuses();
 
+    int iconsPerRow() const {return m_iconsPerRow;};
+    void setIconsPerRow(int count) {m_iconsPerRow = count;};
+    int iconHeight() const {return m_iconHeight;};
+    void setIconHeight(int heightPx) {m_iconHeight = heightPx;};
+    int iconSpacing() const {return m_iconSpacing;};
+    void setIconSpacing(int spacingPx) {m_iconSpacing = spacingPx;};
+
 signals:
     void dataChangedExternally();
 
@@ -67,6 +74,10 @@ private:
     QIcon m_initHeaderIcon;
     QIcon m_acHeaderIcon;
     QIcon m_hpHeaderIcon;
+
+    int m_iconsPerRow = 5;
+    int m_iconHeight = 16;
+    int m_iconSpacing = 2;
 };
 
 

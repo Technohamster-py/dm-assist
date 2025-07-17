@@ -100,7 +100,7 @@ void ThemedIconManager::addPixmapTarget(const QString &svgPath, QObject *receive
 }
 
 QPixmap ThemedIconManager::renderIconInline(const QStringList &svgPaths, QSize iconSize, int spacing) {
-    const qreal dpr = qApp->devicePixelRatio(); // Получаем DPR (например, 2.0 для Retina)
+    const qreal dpr = qApp->devicePixelRatio();
 
     int iconWidthPx = iconSize.width() * dpr;
     int iconHeightPx = iconSize.height() * dpr;
@@ -142,4 +142,62 @@ QPixmap ThemedIconManager::renderIconInline(const QStringList &svgPaths, QSize i
 
     painter.end();
     return result;
+}
+
+QPixmap ThemedIconManager::renderIconGrid(const QStringList &svgPaths, QSize iconSize, int spacing, int maxIconsPerRow) {
+    if (svgPaths.isEmpty()) return {};
+
+    const qreal dpr = qApp->devicePixelRatio();
+    const int iconW = iconSize.width() * dpr;
+    const int iconH = iconSize.height() * dpr;
+
+    int iconsCount = svgPaths.size();
+
+    int iconsPerRow = std::min(maxIconsPerRow, iconsCount);
+    int rows = (svgPaths.size() + iconsPerRow - 1) / iconsPerRow;
+
+    int totalWidth = iconsPerRow * iconW + spacing * dpr * (iconsPerRow - 1);
+    int totalHeight = rows * iconH + spacing * dpr * (rows - 1);
+
+    QPixmap pixmap(totalWidth, totalHeight);
+    pixmap.setDevicePixelRatio(dpr);
+    pixmap.fill(Qt::transparent);
+
+    QPainter painter(&pixmap);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setRenderHint(QPainter::SmoothPixmapTransform);
+
+    int x = 0, y = 0;
+    int count = 0;
+    for (const auto& path : svgPaths) {
+        QFile file(path);
+        if (!file.open(QIODevice::ReadOnly)) continue;
+
+        QString svg = QString::fromUtf8(file.readAll());
+        file.close();
+
+        svg.replace(QRegularExpression(R"(currentColor)"), themeColor().name());
+
+        QSvgRenderer renderer(svg.toUtf8());
+        QPixmap icon(iconW, iconH);
+        icon.fill(Qt::transparent);
+
+        QPainter iconPainter(&icon);
+        iconPainter.setRenderHint(QPainter::Antialiasing);
+        renderer.render(&iconPainter);
+        iconPainter.end();
+
+        painter.drawPixmap(x, y, icon);
+
+        x += iconW + spacing * dpr;
+        count++;
+
+        if (count % iconsPerRow == 0) {
+            x = 0;
+            y += iconH + spacing * dpr;
+        }
+    }
+
+    painter.end();
+    return pixmap;
 }

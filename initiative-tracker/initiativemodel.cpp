@@ -155,7 +155,16 @@ QVariant InitiativeModel::data(const QModelIndex &index, int role) const {
         for (const auto status : characters[index.row()].statuses) {
             iconPaths << status.iconPath;
         }
-        return ThemedIconManager::instance().renderIconInline(iconPaths);
+        return ThemedIconManager::instance().renderIconGrid(iconPaths);
+    }
+
+    if (role == Qt::SizeHintRole && index.column() == fields::statuses){
+        const int count = characters[index.row()].statuses.size();
+
+        int rows = (count + m_iconsPerRow - 1) / m_iconsPerRow;
+        int height = rows * iconHeight() + (rows - 1) * m_iconSpacing;
+
+        return QSize(-1, height);
     }
 
     if (role == Qt::UserRole + 1 && index.column() == fields::statuses)
@@ -230,6 +239,8 @@ bool InitiativeModel::setData(const QModelIndex &index, const QVariant &value, i
         case fields::statuses:
             if (value.canConvert<QList<Status>>())
                 c.statuses = value.value<QList<Status>>();
+            emit dataChangedExternally();
+            break;
         default: return false;
     }
 

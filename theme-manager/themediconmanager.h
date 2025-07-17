@@ -41,6 +41,7 @@ public:
                          bool override = true, QSize size = QSize(24, 24));
 
     QPixmap renderIconInline(const QStringList& svgPaths, QSize iconSize = QSize(16, 16), int spacing = 2);
+    QPixmap renderIconGrid(const QStringList& svgPaths, QSize iconSize = QSize(16, 16), int spacing = 2, int maxIconsPerRow = 3);
 
 signals:
     void themeChanged();

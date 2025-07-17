@@ -44,6 +44,7 @@ InitiativeTrackerWidget::InitiativeTrackerWidget(QWidget *parent, InitiativeMode
 void InitiativeTrackerWidget::setupUI() {
     ui->table->setModel(model);
     ui->table->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    ui->table->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->table->setDropIndicatorShown(true);
 
     connect(ui->addRowButton, &QPushButton::clicked, this, &InitiativeTrackerWidget::addRow);
@@ -57,6 +58,8 @@ void InitiativeTrackerWidget::setupUI() {
             model->removeCharacter(index.row());
         }
     });
+
+    connect(model, &InitiativeModel::dataChangedExternally, [table = ui->table](){table->resizeRowsToContents(); table->resizeColumnsToContents();});
 
     auto *statusDelegate = new StatusDelegate(ui->table);
     ui->table->setItemDelegateForColumn(InitiativeModel::fields::statuses, statusDelegate);

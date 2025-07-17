@@ -116,7 +116,7 @@ void StatusDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
         for (const auto status : statuses) {
             iconPaths << status.iconPath;
         }
-        QPixmap icon = ThemedIconManager::instance().renderIconInline(iconPaths);
+        QPixmap icon = ThemedIconManager::instance().renderIconGrid(iconPaths);
         QRect iconRect(x, y, icon.width(), iconSize);
         painter->drawPixmap(iconRect, icon);
     }
