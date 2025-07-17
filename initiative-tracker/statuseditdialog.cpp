@@ -73,7 +73,7 @@ bool StatusModel::setData(const QModelIndex &index, const QVariant &value, int r
     Status &s = statuses[index.row()];
 
     switch (index.column()) {
-        case fields::title: s.title = value.toString(); break;
+        case fields::title: s.title = value.toString(); sort(); break;
         case fields::timer: s.remainingRounds = value.toInt(); break;
         default: return false;
     }
@@ -120,6 +120,13 @@ void StatusModel::editStatusIcon(int row, QString newIconPath) {
     ThemedIconManager::instance().addPixmapTarget(s.iconPath, this, [=](const QPixmap& px){statusIcons[row] = QIcon(px);});
     emit dataChanged(index(row, fields::icon), index(row, fields::icon+1));
 
+}
+
+void StatusModel::sort() {
+    std::sort(statuses.begin(), statuses.end(), [](const Status &a, const Status &b) {
+        return a.title < b.title;
+    });
+    emit dataChanged(index(0,0), index(rowCount()-1, columnCount()-1));
 }
 
 
@@ -181,6 +188,7 @@ void StatusEditDialog::on_addButton_clicked() {
     StatusManager::instance().addStatus(status);
     ui->titleEdit->clear();
     ui->iconButton->setIcon(QIcon());
+    model->sort();
 }
 
 void StatusEditDialog::on_iconButton_clicked() {
@@ -195,7 +203,8 @@ void StatusEditDialog::populate() {
     }
 
     ui->customStatusesView->setModel(model);
-    ui->customStatusesView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->customStatusesView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    ui->customStatusesView->horizontalHeader()->setSectionResizeMode(StatusModel::fields::title, QHeaderView::Stretch);
 
     for (const auto& status : m_statuses) {
         if (standardStatuses.contains(status.title, Qt::CaseInsensitive))

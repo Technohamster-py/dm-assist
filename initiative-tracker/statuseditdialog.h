@@ -29,6 +29,7 @@ public:
     void addStatus(const Status &status);
     void remove(int row);
     void editStatusIcon(int row, QString newIconPath);
+    void sort();
 
 private:
     QVector<Status> statuses;
@@ -58,6 +59,7 @@ protected:
     virtual void populate();
     virtual void setupIcons();
     QString m_currentIconPath = ":/statuses/status-blinded.svg";
+    void closeEvent(QCloseEvent *event) override;
 
 private slots:
     void on_addButton_clicked();
@@ -68,7 +70,6 @@ private:
 
     StatusModel* model;
 
-    void closeEvent(QCloseEvent *event);
 };
 
 

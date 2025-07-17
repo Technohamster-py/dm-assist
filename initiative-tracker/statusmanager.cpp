@@ -8,14 +8,17 @@ StatusManager::StatusManager() {
 
 void StatusManager::addStatus(Status status) {
     status.remainingRounds = 0;
-    int index = m_statuses.contains(status);
     for (auto &s : m_statuses) {
         if (status == s)
+        {
             s.iconPath = status.iconPath;
-        return;
+            save();
+            return;
+        }
     }
 
     m_statuses.append(status);
+
     std::sort(m_statuses.begin(), m_statuses.end(), [](const Status &a, const Status &b)
     {return a.title.toLower() < b.title.toLower();});
 
@@ -55,7 +58,6 @@ void StatusManager::save() {
         settings.setValue(paths.initiative.customStatusTitle, m_statuses[j].title);
         settings.setValue(paths.initiative.customStatusIcon, m_statuses[j].iconPath);
     }
-
     settings.endArray();
 }
 
