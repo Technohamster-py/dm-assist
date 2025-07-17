@@ -155,7 +155,7 @@ QVariant InitiativeModel::data(const QModelIndex &index, int role) const {
         for (const auto status : characters[index.row()].statuses) {
             iconPaths << status.iconPath;
         }
-        return ThemedIconManager::instance().renderIconGrid(iconPaths);
+        return ThemedIconManager::instance().renderIconGrid(iconPaths, QSize(m_iconHeight, m_iconHeight), m_iconSpacing, m_iconsPerRow);
     }
 
     if (role == Qt::SizeHintRole && index.column() == fields::statuses){

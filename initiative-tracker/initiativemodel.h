@@ -75,7 +75,7 @@ private:
     QIcon m_acHeaderIcon;
     QIcon m_hpHeaderIcon;
 
-    int m_iconsPerRow = 5;
+    int m_iconsPerRow = 3;
     int m_iconHeight = 16;
     int m_iconSpacing = 2;
 };

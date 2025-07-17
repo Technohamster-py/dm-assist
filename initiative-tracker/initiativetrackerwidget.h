@@ -52,6 +52,7 @@ public slots:
 
 protected:
     int m_currentRound = 1;
+    virtual void setupHeaderStretchPolicy();
 
 protected slots:
     void addRow();

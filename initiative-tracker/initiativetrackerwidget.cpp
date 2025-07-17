@@ -43,7 +43,7 @@ InitiativeTrackerWidget::InitiativeTrackerWidget(QWidget *parent, InitiativeMode
  */
 void InitiativeTrackerWidget::setupUI() {
     ui->table->setModel(model);
-    ui->table->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    setupHeaderStretchPolicy();
     ui->table->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->table->setDropIndicatorShown(true);
 
@@ -59,7 +59,7 @@ void InitiativeTrackerWidget::setupUI() {
         }
     });
 
-    connect(model, &InitiativeModel::dataChangedExternally, [table = ui->table](){table->resizeRowsToContents(); table->resizeColumnsToContents();});
+    connect(model, &InitiativeModel::dataChangedExternally, [table = ui->table](){table->resizeRowsToContents(); table->resizeColumnToContents(InitiativeModel::fields::statuses);});
 
     auto *statusDelegate = new StatusDelegate(ui->table);
     ui->table->setItemDelegateForColumn(InitiativeModel::fields::statuses, statusDelegate);
@@ -414,4 +414,15 @@ void InitiativeTrackerWidget::addCharacter(QString name, int maxHp, int ac, int 
 void InitiativeTrackerWidget::on_resetButton_clicked() {
     m_currentRound = 1;
     ui->roundLabel->setText(tr("Round: %1").arg(m_currentRound));
+}
+
+void InitiativeTrackerWidget::setupHeaderStretchPolicy() {
+    QHeaderView *header = ui->table->horizontalHeader();
+
+    for (int i = 0; i < model->columnCount(); ++i) {
+        if (i == InitiativeModel::fields::name)
+            header->setSectionResizeMode(i, QHeaderView::Stretch);
+        else
+            header->setSectionResizeMode(i, QHeaderView::ResizeToContents);
+    }
 }
