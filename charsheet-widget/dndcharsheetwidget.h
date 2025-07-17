@@ -35,7 +35,7 @@ public:
 
     void addToInitiative(InitiativeTrackerWidget *initiativeTrackerWidget, bool autoRoll = false) override;
 
-    static int bonusFromStat(int statValue) {return (statValue - 10) / 2;};
+    static int bonusFromStat(int statValue) {return (statValue >= 10) ? (statValue - 10) / 2 : (statValue - 11) / 2;};
     static QString bonusFromString(const QString& string);
     static int proficiencyByLevel(int level) {return level / 5 + 2;};
     static QJsonArray serializeHtmlToJson(const QString &html);
