@@ -301,7 +301,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-2073</y>
+        <y>-625</y>
         <width>1035</width>
         <height>3131</height>
        </rect>
@@ -326,7 +326,7 @@
            <item>
             <layout class="QGridLayout" name="strGrid">
              <item row="0" column="0">
-              <widget class="QLabel" name="label_2">
+              <widget class="ClickableLabel" name="strLabel">
                <property name="minimumSize">
                 <size>
                  <width>100</width>
@@ -380,7 +380,7 @@
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QCheckBox" name="strSaveCheckBox">
+              <widget class="TextClickableCheckBox" name="strSaveCheckBox">
                <property name="maximumSize">
                 <size>
                  <width>200</width>
@@ -402,7 +402,7 @@
            <item>
             <layout class="QVBoxLayout" name="strSkillsLayout">
              <item>
-              <widget class="QCheckBox" name="athlecicsCheckBox">
+              <widget class="TextClickableCheckBox" name="athlecicsCheckBox">
                <property name="font">
                 <font>
                  <pointsize>10</pointsize>
@@ -440,7 +440,7 @@
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QCheckBox" name="dexSaveCheckBox">
+              <widget class="TextClickableCheckBox" name="dexSaveCheckBox">
                <property name="maximumSize">
                 <size>
                  <width>200</width>
@@ -482,7 +482,7 @@
               </widget>
              </item>
              <item row="0" column="0">
-              <widget class="QLabel" name="label_7">
+              <widget class="ClickableLabel" name="dexLabel">
                <property name="minimumSize">
                 <size>
                  <width>100</width>
@@ -504,7 +504,7 @@
            <item>
             <layout class="QVBoxLayout" name="dexSkillsLayout">
              <item>
-              <widget class="QCheckBox" name="acrobatics">
+              <widget class="TextClickableCheckBox" name="acrobatics">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
                  <horstretch>0</horstretch>
@@ -522,7 +522,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="sleight">
+              <widget class="TextClickableCheckBox" name="sleight">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
                  <horstretch>0</horstretch>
@@ -540,7 +540,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="stealth">
+              <widget class="TextClickableCheckBox" name="stealth">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -572,7 +572,7 @@
            <item>
             <layout class="QGridLayout" name="conGrid">
              <item row="0" column="0">
-              <widget class="QLabel" name="label_10">
+              <widget class="ClickableLabel" name="conLabel">
                <property name="minimumSize">
                 <size>
                  <width>100</width>
@@ -626,7 +626,7 @@
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QCheckBox" name="conSaveCheckBox">
+              <widget class="TextClickableCheckBox" name="conSaveCheckBox">
                <property name="maximumSize">
                 <size>
                  <width>200</width>
@@ -670,7 +670,7 @@
               </widget>
              </item>
              <item row="0" column="0">
-              <widget class="QLabel" name="label_11">
+              <widget class="ClickableLabel" name="intLanel">
                <property name="minimumSize">
                 <size>
                  <width>100</width>
@@ -706,7 +706,7 @@
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QCheckBox" name="intSaveCheckBox">
+              <widget class="TextClickableCheckBox" name="intSaveCheckBox">
                <property name="maximumSize">
                 <size>
                  <width>200</width>
@@ -728,7 +728,7 @@
            <item>
             <layout class="QVBoxLayout" name="intSkillsLayout">
              <item>
-              <widget class="QCheckBox" name="arcana">
+              <widget class="TextClickableCheckBox" name="arcana">
                <property name="font">
                 <font>
                  <pointsize>10</pointsize>
@@ -740,7 +740,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="history">
+              <widget class="TextClickableCheckBox" name="history">
                <property name="font">
                 <font>
                  <pointsize>10</pointsize>
@@ -752,7 +752,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="investigation">
+              <widget class="TextClickableCheckBox" name="investigation">
                <property name="font">
                 <font>
                  <pointsize>10</pointsize>
@@ -764,7 +764,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="nature">
+              <widget class="TextClickableCheckBox" name="nature">
                <property name="font">
                 <font>
                  <pointsize>10</pointsize>
@@ -776,7 +776,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="religion">
+              <widget class="TextClickableCheckBox" name="religion">
                <property name="font">
                 <font>
                  <pointsize>10</pointsize>
@@ -826,7 +826,7 @@
               </widget>
              </item>
              <item row="0" column="0">
-              <widget class="QLabel" name="label_12">
+              <widget class="ClickableLabel" name="wisLabel">
                <property name="minimumSize">
                 <size>
                  <width>100</width>
@@ -856,7 +856,7 @@
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QCheckBox" name="wisSaveCheckBox">
+              <widget class="TextClickableCheckBox" name="wisSaveCheckBox">
                <property name="maximumSize">
                 <size>
                  <width>200</width>
@@ -878,7 +878,7 @@
            <item>
             <layout class="QVBoxLayout" name="wisSkillsLayout">
              <item>
-              <widget class="QCheckBox" name="handling">
+              <widget class="TextClickableCheckBox" name="handling">
                <property name="font">
                 <font>
                  <pointsize>10</pointsize>
@@ -890,7 +890,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="insight">
+              <widget class="TextClickableCheckBox" name="insight">
                <property name="font">
                 <font>
                  <pointsize>10</pointsize>
@@ -902,7 +902,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="medicine">
+              <widget class="TextClickableCheckBox" name="medicine">
                <property name="font">
                 <font>
                  <pointsize>10</pointsize>
@@ -914,7 +914,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="perception">
+              <widget class="TextClickableCheckBox" name="perception">
                <property name="font">
                 <font>
                  <pointsize>10</pointsize>
@@ -926,7 +926,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="survival">
+              <widget class="TextClickableCheckBox" name="survival">
                <property name="font">
                 <font>
                  <pointsize>10</pointsize>
@@ -952,7 +952,7 @@
            <item>
             <layout class="QGridLayout" name="chaGrid">
              <item row="0" column="0">
-              <widget class="QLabel" name="label_14">
+              <widget class="ClickableLabel" name="chaLabel">
                <property name="minimumSize">
                 <size>
                  <width>100</width>
@@ -1006,7 +1006,7 @@
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QCheckBox" name="chaSaveCheckBox">
+              <widget class="TextClickableCheckBox" name="chaSaveCheckBox">
                <property name="maximumSize">
                 <size>
                  <width>200</width>
@@ -1028,7 +1028,7 @@
            <item>
             <layout class="QVBoxLayout" name="chaSkillsLayout">
              <item>
-              <widget class="QCheckBox" name="deception">
+              <widget class="TextClickableCheckBox" name="deception">
                <property name="font">
                 <font>
                  <pointsize>10</pointsize>
@@ -1040,7 +1040,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="intimidation">
+              <widget class="TextClickableCheckBox" name="intimidation">
                <property name="font">
                 <font>
                  <pointsize>10</pointsize>
@@ -1052,7 +1052,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="performance">
+              <widget class="TextClickableCheckBox" name="performance">
                <property name="font">
                 <font>
                  <pointsize>10</pointsize>
@@ -1064,7 +1064,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="persuasion">
+              <widget class="TextClickableCheckBox" name="persuasion">
                <property name="font">
                 <font>
                  <pointsize>10</pointsize>
@@ -1981,6 +1981,18 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TextClickableCheckBox</class>
+   <extends>QCheckBox</extends>
+   <header location="global">textclickablecheckbox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ClickableLabel</class>
+   <extends>QLabel</extends>
+   <header location="global">textclickablecheckbox.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../static/app_resources.qrc"/>
  </resources>

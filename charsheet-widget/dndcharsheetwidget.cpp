@@ -416,36 +416,66 @@ void DndCharsheetWidget::connectSignals() {
     connect(ui->chaValueEdit, &QSpinBox::valueChanged, this, [=](){updateCheckBoxes();});
 
     connect(ui->strSaveCheckBox, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->strSaveCheckBox, ui->strValueEdit);});
+    connect(ui->strSaveCheckBox, &TextClickableCheckBox::textClicked, [=](){emit rollRequested(QString("d20 %1").arg(bonusFromString(ui->strSaveCheckBox->text())));});
     connect(ui->dexSaveCheckBox, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->dexSaveCheckBox, ui->dexValueEdit);});
+    connect(ui->dexSaveCheckBox, &TextClickableCheckBox::textClicked, [=](){emit rollRequested(QString("d20 %1").arg(bonusFromString(ui->dexSaveCheckBox->text())));});
     connect(ui->conSaveCheckBox, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->conSaveCheckBox, ui->conValueEdit);});
+    connect(ui->conSaveCheckBox, &TextClickableCheckBox::textClicked, [=](){emit rollRequested(QString("d20 %1").arg(bonusFromString(ui->conSaveCheckBox->text())));});
     connect(ui->intSaveCheckBox, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->intSaveCheckBox, ui->intValueEdit);});
+    connect(ui->intSaveCheckBox, &TextClickableCheckBox::textClicked, [=](){emit rollRequested(QString("d20 %1").arg(bonusFromString(ui->intSaveCheckBox->text())));});
     connect(ui->wisSaveCheckBox, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->wisSaveCheckBox, ui->wisValueEdit);});
+    connect(ui->wisSaveCheckBox, &TextClickableCheckBox::textClicked, [=](){emit rollRequested(QString("d20 %1").arg(bonusFromString(ui->wisSaveCheckBox->text())));});
     connect(ui->chaSaveCheckBox, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->chaSaveCheckBox, ui->chaValueEdit);});
+    connect(ui->chaSaveCheckBox, &TextClickableCheckBox::textClicked, [=](){emit rollRequested(QString("d20 %1").arg(bonusFromString(ui->chaSaveCheckBox->text())));});
 
     connect(ui->athlecicsCheckBox, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->athlecicsCheckBox, ui->strValueEdit);});
+    connect(ui->athlecicsCheckBox, &TextClickableCheckBox::textClicked, [=](){emit rollRequested(QString("d20 %1").arg(bonusFromString(ui->athlecicsCheckBox->text())));});
 
     connect(ui->acrobatics, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->acrobatics, ui->dexValueEdit);});
+    connect(ui->acrobatics, &TextClickableCheckBox::textClicked, [=](){emit rollRequested(QString("d20 %1").arg(bonusFromString(ui->acrobatics->text())));});
     connect(ui->sleight, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->sleight, ui->dexValueEdit);});
+    connect(ui->sleight, &TextClickableCheckBox::textClicked, [=](){emit rollRequested(QString("d20 %1").arg(bonusFromString(ui->sleight->text())));});
     connect(ui->stealth, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->stealth, ui->dexValueEdit);});
+    connect(ui->stealth, &TextClickableCheckBox::textClicked, [=](){emit rollRequested(QString("d20 %1").arg(bonusFromString(ui->stealth->text())));});
 
 
     connect(ui->arcana, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->arcana, ui->intValueEdit);});
+    connect(ui->arcana, &TextClickableCheckBox::textClicked, [=](){emit rollRequested(QString("d20 %1").arg(bonusFromString(ui->arcana->text())));});
     connect(ui->history, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->history, ui->intValueEdit);});
+    connect(ui->history, &TextClickableCheckBox::textClicked, [=](){emit rollRequested(QString("d20 %1").arg(bonusFromString(ui->history->text())));});
     connect(ui->investigation, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->investigation, ui->intValueEdit);});
+    connect(ui->investigation, &TextClickableCheckBox::textClicked, [=](){emit rollRequested(QString("d20 %1").arg(bonusFromString(ui->investigation->text())));});
     connect(ui->nature, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->nature, ui->intValueEdit);});
+    connect(ui->nature, &TextClickableCheckBox::textClicked, [=](){emit rollRequested(QString("d20 %1").arg(bonusFromString(ui->nature->text())));});
     connect(ui->religion, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->religion, ui->intValueEdit);});
+    connect(ui->religion, &TextClickableCheckBox::textClicked, [=](){emit rollRequested(QString("d20 %1").arg(bonusFromString(ui->religion->text())));});
 
     connect(ui->handling, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->handling, ui->wisValueEdit);});
+    connect(ui->handling, &TextClickableCheckBox::textClicked, [=](){emit rollRequested(QString("d20 %1").arg(bonusFromString(ui->handling->text())));});
     connect(ui->insight, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->insight, ui->wisValueEdit);});
+    connect(ui->insight, &TextClickableCheckBox::textClicked, [=](){emit rollRequested(QString("d20 %1").arg(bonusFromString(ui->insight->text())));});
     connect(ui->medicine, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->medicine, ui->wisValueEdit);});
+    connect(ui->medicine, &TextClickableCheckBox::textClicked, [=](){emit rollRequested(QString("d20 %1").arg(bonusFromString(ui->medicine->text())));});
     connect(ui->perception, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->perception, ui->wisValueEdit);});
+    connect(ui->perception, &TextClickableCheckBox::textClicked, [=](){emit rollRequested(QString("d20 %1").arg(bonusFromString(ui->perception->text())));});
     connect(ui->survival, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->survival, ui->wisValueEdit);});
+    connect(ui->survival, &TextClickableCheckBox::textClicked, [=](){emit rollRequested(QString("d20 %1").arg(bonusFromString(ui->survival->text())));});
 
     connect(ui->deception, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->deception, ui->chaValueEdit);});
+    connect(ui->deception, &TextClickableCheckBox::textClicked, [=](){emit rollRequested(QString("d20 %1").arg(bonusFromString(ui->deception->text())));});
     connect(ui->intimidation, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->intimidation, ui->chaValueEdit);});
+    connect(ui->intimidation, &TextClickableCheckBox::textClicked, [=](){emit rollRequested(QString("d20 %1").arg(bonusFromString(ui->intimidation->text())));});
     connect(ui->performance, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->performance, ui->chaValueEdit);});
+    connect(ui->performance, &TextClickableCheckBox::textClicked, [=](){emit rollRequested(QString("d20 %1").arg(bonusFromString(ui->performance->text())));});
     connect(ui->persuasion, &QCheckBox::toggled, this, [=](){updateCheckBox(ui->persuasion, ui->chaValueEdit);});
+    connect(ui->persuasion, &TextClickableCheckBox::textClicked, [=](){emit rollRequested(QString("d20 %1").arg(bonusFromString(ui->persuasion->text())));});
 
+    connect(ui->strLabel, &ClickableLabel::clicked, [=](){emit rollRequested(QString("d20 %1").arg((ui->strBonusLabel->text().startsWith("-")) ? ui->strBonusLabel->text() : "+" + ui->strBonusLabel->text()));});
+    connect(ui->dexLabel, &ClickableLabel::clicked, [=](){emit rollRequested(QString("d20 %1").arg((ui->dexBonusLabel->text().startsWith("-")) ? ui->dexBonusLabel->text() : "+" + ui->dexBonusLabel->text()));});
+    connect(ui->conLabel, &ClickableLabel::clicked, [=](){emit rollRequested(QString("d20 %1").arg((ui->conBonusLabel->text().startsWith("-")) ? ui->conBonusLabel->text() : "+" + ui->conBonusLabel->text()));});
+    connect(ui->intLanel, &ClickableLabel::clicked, [=](){emit rollRequested(QString("d20 %1").arg((ui->intBonusLabel->text().startsWith("-")) ? ui->intBonusLabel->text() : "+" + ui->intBonusLabel->text()));});
+    connect(ui->wisLabel, &ClickableLabel::clicked, [=](){emit rollRequested(QString("d20 %1").arg((ui->wisBonusLabel->text().startsWith("-")) ? ui->wisBonusLabel->text() : "+" + ui->wisBonusLabel->text()));});
+    connect(ui->chaLabel, &ClickableLabel::clicked, [=](){emit rollRequested(QString("d20 %1").arg((ui->chaBonusLabel->text().startsWith("-")) ? ui->chaBonusLabel->text() : "+" + ui->chaBonusLabel->text()));});
 
     connect(ui->addResourceButton, &QPushButton::clicked, [=](){
         ResourceDialog resourceDialog(this);
@@ -786,4 +816,9 @@ void DndCharsheetWidget::closeEvent(QCloseEvent *event) {
         saveToFile(m_originalFilePath);
 
     QWidget::closeEvent(event);
+}
+
+QString DndCharsheetWidget::bonusFromString(const QString& string) {
+    QString bonus = string.split(": ").value(1);
+    return bonus.startsWith("-") ? bonus : "+" + bonus;
 }

@@ -28,6 +28,7 @@ set(FILES
         charsheet-widget/dndcharsheetwidget.h charsheet-widget/dndcharsheetwidget.cpp
         charsheet-widget/dndcharsheetdialogs.h charsheet-widget/dndcharsheetdialogs.cpp
         charsheet-widget/dndmodels.h charsheet-widget/dndmodels.cpp
+        charsheet-widget/textclickablecheckbox.h    charsheet-widget/textclickablecheckbox.cpp
         initiative-tracker/initiativemodel.h    initiative-tracker/initiativemodel.cpp
         initiative-tracker/initiativestructures.h
         initiative-tracker/statuseditdialog.h   initiative-tracker/statuseditdialog.cpp
@@ -103,6 +104,7 @@ include_directories(
         static
         theme-manager
         icon-picker
+        charsheet-widget
 )
 
 qt_add_translation(QM_FILES ${TS_FILES})

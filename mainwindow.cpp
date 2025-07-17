@@ -76,6 +76,7 @@ MainWindow::MainWindow(QWidget *parent) :
     });
     connect(campaignTreeWidget, &CampaignTreeWidget::characterOpenRequested, this, [=](const QString& path){
         auto* charsheetWidget = new DndCharsheetWidget(path);
+        connect(charsheetWidget, &DndCharsheetWidget::rollRequested, rollWidget, &RollWidget::executeRoll);
         charsheetWidget->show();
     });
     connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);

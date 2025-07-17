@@ -23,6 +23,7 @@ public:
 
 signals:
     void fileLoaded();
+    void rollRequested(QString rollCommand);
 
 protected:
     QString m_originalFilePath;
