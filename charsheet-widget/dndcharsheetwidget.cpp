@@ -30,25 +30,37 @@ DndCharsheetWidget::DndCharsheetWidget(QWidget* parent) :
 
     connect(ui->attacsView, &QTableView::clicked, this, [=](const QModelIndex &index) {
         switch (index.column()) {
-            case 4:
+            case DndAttackModel::fields::del:
                 attackModel->deleteAttack(index.row());
                 break;
-            default:
-                AttackDialog attackDialog(this, attackModel->getAttack(index.row()));
-                if (attackDialog.exec()== QDialog::Accepted){
-                    Attack attack = attackDialog.getCreatedAttack();
-                    attackModel->editAttack(index.row(), attack);
-                }
+            case DndAttackModel::fields::damage:
+                emit rollRequested(attackModel->getAttack(index.row()).damage);
                 break;
+            default:
+                int bonus = attackModel->getAttack(index.row()).bonus;
+                QString strBonus = (bonus >= 0) ? "+" + QString::number(bonus) : QString::number(bonus);
+                emit rollRequested(QString("d20 %1").arg(strBonus));
+                break;
+        }
+    });
+
+    connect(ui->attacsView, &QTableView::doubleClicked, [=](const QModelIndex &index){
+        if (index.column() == DndAttackModel::fields::del)
+            return;
+
+        AttackDialog attackDialog(this, attackModel->getAttack(index.row()));
+        if (attackDialog.exec()== QDialog::Accepted){
+            Attack attack = attackDialog.getCreatedAttack();
+            attackModel->editAttack(index.row(), attack);
         }
     });
 
     connect(ui->resourcesView, &QTableView::clicked, this, [=](const QModelIndex &index) {
         switch (index.column()) {
-            case 4:
+            case DndResourceModel::fields::del:
                 resourceModel->deleteResource(index.row());
                 break;
-            case 0:
+            case DndResourceModel::fields::refill:
                 resourceModel->changeRefillMode(index.row());
                 break;
             default:
