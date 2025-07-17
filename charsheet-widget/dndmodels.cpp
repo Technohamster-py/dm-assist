@@ -109,33 +109,42 @@ bool DndAttackModel::fromJson(const QJsonArray& attackList) {
 }
 
 QJsonArray DndAttackModel::toJson() {
+    QJsonArray attackArray;
     for (int i = 0; i < m_attackList.size(); ++i) {
         Attack attack = m_attackList[i];
-        if (attack.id.isEmpty()){
+        if (attack.id.isEmpty()) {
             attack.id = QString("weapon-%1").arg(i);
-            QJsonObject attackObj;
-            attackObj["id"] = attack.id;
-            attackObj["name"] = QJsonObject();
-            attackObj["mod"] = QJsonObject();
-            attackObj["dmg"] = QJsonObject();
-            attackObj["modBonus"] = QJsonObject();
-            attackObj["notes"] = QJsonObject();
-            m_attackArray.append(attackObj);
         }
-        for (const auto & attackVal : m_attackArray){
-            QJsonObject attackObj = attackVal.toObject();
-            if (attackObj["id"].toString() == attack.id){
-                attackObj["name"].toObject()["value"] = attack.title;
-                attackObj["dmg"].toObject()["value"] = attack.damage;
-                attackObj["ability"] = attack.ability;
-                attackObj["isProf"] = attack.prof;
-                attackObj["modBonus"].toObject()["value"] = attack.bonus;
-                attackObj["notes"].toObject()["value"] = attack.notes;
-                break;
-            }
-        }
+
+        QJsonObject attackObj;
+        attackObj["id"] = attack.id;
+        attackObj["ability"] = attack.ability;
+        attackObj["isProf"] = attack.prof;
+
+        QJsonObject nameObj;
+        nameObj["value"] = attack.title;
+        attackObj["name"] = nameObj;
+
+        QJsonObject modObj;
+        modObj["value"] = 0;
+        attackObj["mod"] = modObj;
+
+        QJsonObject dmgObj;
+        dmgObj["value"] = attack.damage;
+        attackObj["dmg"] = dmgObj;
+
+        QJsonObject bonusObj;
+        bonusObj["value"] = attack.bonus;
+        attackObj["modBonus"] = bonusObj;
+
+        QJsonObject notesObj;
+        notesObj["value"] = attack.notes;
+        attackObj["notes"] = notesObj;
+
+
+        attackArray.append(attackObj);
     }
-    return m_attackArray;
+    return attackArray;
 }
 
 void DndAttackModel::editAttack(int row, const Attack& attack) {
