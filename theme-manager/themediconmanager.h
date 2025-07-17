@@ -40,6 +40,11 @@ public:
     void addPixmapTarget(const QString &svgPath, QObject *receiver, std::function<void(const QPixmap &)> applyPixmap,
                          bool override = true, QSize size = QSize(24, 24));
 
+    QPixmap renderIconInline(const QStringList& svgPaths, QSize iconSize = QSize(16, 16), int spacing = 2);
+    QPixmap renderIconGrid(const QStringList& svgPaths, QSize iconSize = QSize(16, 16), int spacing = 2, int maxIconsPerRow = 3);
+
+signals:
+    void themeChanged();
 
 protected:
     bool eventFilter(QObject* obj, QEvent* event) override;

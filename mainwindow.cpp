@@ -58,9 +58,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setAcceptDrops(true);
 
-    loadSettings();
-    saveSettings();
-
     setupShortcuts();
 
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newCampaign);
@@ -88,6 +85,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ThemedIconManager::instance().addPixmapTarget(":/player/Volume-2.svg", ui->volMaxLabel, [label = ui->volMaxLabel](const QPixmap& px){label->setPixmap(px);});
 
     showMaximized();
+
+    loadSettings();
+    saveSettings();
 }
 
 /**

@@ -1,9 +1,13 @@
-#include "hpprogressbardelegate.h"
-
+#include "initiativedelegates.h"
+#include "themediconmanager.h"
 
 #include <QStyleOptionProgressBar>
+#include <QAbstractItemView>
 #include <QApplication>
 #include <QPainter>
+#include <QHelpEvent>
+#include <QToolTip>
+#include "statuseditdialog.h"
 
 #include <QDebug>
 
@@ -95,4 +99,86 @@ static QString calculateHpStatus(int hp, int maxHp)
         return "Good";
     else
         return "Bad";
+}
+
+void StatusDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
+    painter->save();
+
+    QVariant data = index.data(Qt::UserRole + 1);
+    if (data.canConvert<QList<Status>>()) {
+        QList<Status> statuses = data.value<QList<Status>>();
+
+        int x = option.rect.x();
+        int y = option.rect.y();
+        int iconSize = option.rect.height();
+
+        QStringList iconPaths;
+        for (const auto status : statuses) {
+            iconPaths << status.iconPath;
+        }
+        QPixmap icon = ThemedIconManager::instance().renderIconGrid(iconPaths);
+        QRect iconRect(x, y, icon.width(), iconSize);
+        painter->drawPixmap(iconRect, icon);
+    }
+
+    painter->restore();
+}
+
+bool StatusDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option,
+                               const QModelIndex &index) {
+    if (!event || !view || !index.isValid())
+        return false;
+
+    if (event->type() == QEvent::ToolTip) {
+        QVariant statusData = index.data(Qt::UserRole + 1);
+        if (statusData.canConvert<QList<Status>>()) {
+            QString tooltip;
+            const QList<Status> statuses = statusData.value<QList<Status>>();
+            for (const auto &status : statuses) {
+                tooltip += tr("%1 (%2 rounds)").arg(status.title).arg(status.remainingRounds) + "\n";
+            }
+
+            if (!tooltip.isEmpty()) {
+                QToolTip::showText(event->globalPos(), tooltip.trimmed(), view->viewport());
+                return true;
+            }
+        }
+    }
+
+    return QStyledItemDelegate::helpEvent(event, view, option, index);
+}
+
+bool StatusDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option,
+                                 const QModelIndex &index) {
+    if (event->type() == QEvent::MouseButtonDblClick && index.isValid()) {
+
+        auto statuses = index.data(Qt::UserRole + 1).value<QList<Status>>();
+        auto *dialog = new StatusEditDialog(statuses);
+
+
+        QPoint globalPos = option.widget->mapToGlobal(option.rect.bottomLeft());
+        QSize dialogSize = dialog->sizeHint();
+        QScreen *screen = option.widget->screen();
+        QRect screenRect = screen->availableGeometry();
+
+        if (globalPos.x() + dialogSize.width() > screenRect.right())
+            globalPos.setX(screenRect.right() - dialogSize.width() - 50);
+
+        if (globalPos.y() + dialogSize.height() > screenRect.bottom())
+            globalPos.setY(screenRect.bottom() - dialogSize.height() - 50);
+
+        globalPos.setX(std::max(screenRect.left(), globalPos.x()));
+        globalPos.setY(std::max(screenRect.top(), globalPos.y()));
+
+
+        dialog->move(globalPos);
+
+        connect(dialog, &QDialog::finished, this, [=](int result) {
+            QVariant newStatusList = QVariant::fromValue(dialog->statuses());
+            model->setData(index, newStatusList);
+        });
+        dialog->show();
+        return true;
+    }
+    return false;
 }

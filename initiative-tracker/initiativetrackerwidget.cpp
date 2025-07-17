@@ -5,7 +5,7 @@
 #include <utility>
 
 #include "initiativetrackerwidget.h"
-#include "hpprogressbardelegate.h"
+#include "initiativedelegates.h"
 #include <themediconmanager.h>
 #include "ui_initiativetrackerwidget.h"
 
@@ -43,7 +43,8 @@ InitiativeTrackerWidget::InitiativeTrackerWidget(QWidget *parent, InitiativeMode
  */
 void InitiativeTrackerWidget::setupUI() {
     ui->table->setModel(model);
-    ui->table->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    setupHeaderStretchPolicy();
+    ui->table->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->table->setDropIndicatorShown(true);
 
     connect(ui->addRowButton, &QPushButton::clicked, this, &InitiativeTrackerWidget::addRow);
@@ -53,10 +54,15 @@ void InitiativeTrackerWidget::setupUI() {
     connect(ui->shareButton, &QPushButton::clicked, this, &InitiativeTrackerWidget::openSharedWindow);
 
     connect(ui->table, &QTableView::clicked, this, [=](const QModelIndex &index) {
-        if (index.column() == 5) {
+        if (index.column() == InitiativeModel::fields::del) {
             model->removeCharacter(index.row());
         }
     });
+
+    connect(model, &InitiativeModel::dataChangedExternally, [table = ui->table](){table->resizeRowsToContents(); table->resizeColumnToContents(InitiativeModel::fields::statuses);});
+
+    auto *statusDelegate = new StatusDelegate(ui->table);
+    ui->table->setItemDelegateForColumn(InitiativeModel::fields::statuses, statusDelegate);
 
     ThemedIconManager::instance().addIconTarget<QPushButton>(":/save.svg", ui->saveButton, &QAbstractButton::setIcon);
     ThemedIconManager::instance().addIconTarget<QPushButton>(":/upload.svg", ui->loadButton, &QAbstractButton::setIcon);
@@ -134,7 +140,7 @@ void InitiativeTrackerWidget::openSharedWindow() {
     sharedWidget->setColumnHidden(InitiativeModel::fields::del, true);
 
     auto *hpDelegate = new HpProgressBarDelegate(HpProgressBarDelegate::Numeric, view);
-    view->setItemDelegateForColumn(3, hpDelegate);
+    view->setItemDelegateForColumn(InitiativeModel::fields::hp, hpDelegate);
 
     connect(ui->hpModeBox, QOverload<int>::of(&QComboBox::currentIndexChanged), [hpDelegate, view](int index) {
         hpDelegate->setDisplayMode(static_cast<HpProgressBarDelegate::DisplayMode>(index));
@@ -162,6 +168,12 @@ void InitiativeTrackerWidget::openSharedWindow() {
  */
 void InitiativeTrackerWidget::nextTurn() {
     int next = (model->getCurrentIndex() + 1) % model->rowCount();
+    if (next == 0)
+    {
+        m_currentRound ++;
+        ui->roundLabel->setText(tr("Round: %1").arg(m_currentRound));
+        model->decrementStatuses();
+    }
     model->setCurrentIndex(next);
 }
 
@@ -210,6 +222,7 @@ void InitiativeTrackerWidget::sortTable() {
  * @param filename The path of the file to load the initiative data from.
  */
 void InitiativeTrackerWidget::loadFromFile(const QString& filename){
+    on_resetButton_clicked();
     model->loadFromFile(filename);
 }
 
@@ -396,4 +409,20 @@ void InitiativeTrackerWidget::addCharacter(QString name, int maxHp, int ac, int 
     model->addCharacter(emptyCharacter);
 
     sortTable();
+}
+
+void InitiativeTrackerWidget::on_resetButton_clicked() {
+    m_currentRound = 1;
+    ui->roundLabel->setText(tr("Round: %1").arg(m_currentRound));
+}
+
+void InitiativeTrackerWidget::setupHeaderStretchPolicy() {
+    QHeaderView *header = ui->table->horizontalHeader();
+
+    for (int i = 0; i < model->columnCount(); ++i) {
+        if (i == InitiativeModel::fields::name)
+            header->setSectionResizeMode(i, QHeaderView::Stretch);
+        else
+            header->setSectionResizeMode(i, QHeaderView::ResizeToContents);
+    }
 }

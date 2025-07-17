@@ -102,6 +102,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QLabel" name="roundLabel">
+       <property name="text">
+        <string>Round: 1</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="saveButton">
        <property name="maximumSize">
         <size>
@@ -331,8 +338,24 @@
      </item>
      <item>
       <widget class="QPushButton" name="sortButton">
+       <property name="toolTip">
+        <string>sort by initiative</string>
+       </property>
        <property name="text">
         <string>Sort</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="resetButton">
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Reset</string>
        </property>
       </widget>
      </item>

@@ -9,6 +9,7 @@ set(CMAKE_AUTOUIC ON)
 
 set(BASS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass/include)
 set(TEMPLATE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/file-templates)
+set(ICON_DIR ${CMAKE_CURRENT_SOURCE_DIR}/iconset)
 if (WIN32)
     set(CMAKE_PREFIX_PATH "C:/Qt/Qt6/6.9.0/mingw_64/lib/cmake")
     set(BASS_DLL "${CMAKE_SOURCE_DIR}/lib/bass/win/bass.dll")
@@ -28,6 +29,9 @@ set(FILES
         charsheet-widget/dndcharsheetdialogs.h charsheet-widget/dndcharsheetdialogs.cpp
         charsheet-widget/dndmodels.h charsheet-widget/dndmodels.cpp
         initiative-tracker/initiativemodel.h    initiative-tracker/initiativemodel.cpp
+        initiative-tracker/initiativestructures.h
+        initiative-tracker/statuseditdialog.h   initiative-tracker/statuseditdialog.cpp
+        initiative-tracker/statusmanager.cpp    initiative-tracker/statusmanager.h
         mainwindow.h    mainwindow.cpp
         map-widget/abstractmaptool.h
         map-widget/brushtool.h  map-widget/brushtool.cpp
@@ -42,9 +46,10 @@ set(FILES
         map-widget/spellshapetool.h     map-widget/spellshapetool.cpp
         map-widget/undostack.h
         music-widget/musicwidget.h music-widget/musicwidget.cpp
+        icon-picker/iconpickerdialog.h  icon-picker/iconpickerdialog.cpp
         initiative-tracker/initiativetrackerwidget.h initiative-tracker/initiativetrackerwidget.cpp
-        initiative-tracker/hpprogressbardelegate.h  initiative-tracker/hpprogressbardelegate.cpp
         roll-widget/rollwidget.h    roll-widget/rollwidget.cpp
+        initiative-tracker/initiativedelegates.h initiative-tracker/initiativedelegates.cpp
         saveconfigdialog.h saveconfigdialog.cpp
         settingsdialog.h    settingsdialog.cpp
         settings.h
@@ -61,6 +66,7 @@ set(UI_FILES
         music-widget/playlisteditdialog.ui
         initiative-tracker/initiativetrackerwidget.ui
         roll-widget/rollwidget.ui
+        initiative-tracker/statuseditdialog.ui
         settingsdialog.ui
 )
 
@@ -96,6 +102,7 @@ include_directories(
         translations
         static
         theme-manager
+        icon-picker
 )
 
 qt_add_translation(QM_FILES ${TS_FILES})
@@ -186,6 +193,12 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${TEMPLATE_DIR}"
         "${CMAKE_BINARY_DIR}/file-templates"
+)
+
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${ICON_DIR}"
+        "${CMAKE_BINARY_DIR}/iconset"
 )
 
 

@@ -57,4 +57,21 @@
         <file>longrest.svg</file>
         <file>shortrest.svg</file>
     </qresource>
+    <qresource prefix="statuses">
+        <file>status-blinded.svg</file>
+        <file>status-charmed.svg</file>
+        <file>status-deafened.svg</file>
+        <file>status-exhaustion.svg</file>
+        <file>status-frightened.svg</file>
+        <file>status-grappled.svg</file>
+        <file>status-incapacitated.svg</file>
+        <file>status-invisible.svg</file>
+        <file>status-paralyzed.svg</file>
+        <file>status-petrified.svg</file>
+        <file>status-poisoned.svg</file>
+        <file>status-prone.svg</file>
+        <file>status-restrained.svg</file>
+        <file>status-stunned.svg</file>
+        <file>status-unconscious.svg</file>
+    </qresource>
 </RCC>

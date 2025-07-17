@@ -12,16 +12,23 @@
 
 InitiativeModel::InitiativeModel(QObject *parent)
         : QAbstractTableModel(parent) {
+    m_characterHeaderIcon = QIcon(":/human.svg");
     m_initHeaderIcon = QIcon(":/d20.svg");
     m_acHeaderIcon = QIcon(":/shield.svg");
     m_hpHeaderIcon = QIcon(":/heart.svg");
 
+    ThemedIconManager::instance().addPixmapTarget(":/human.svg", this,
+                                                  [=](const QPixmap &px) { m_characterHeaderIcon = QIcon(px); }, false);
     ThemedIconManager::instance().addPixmapTarget(":/d20.svg", this,
                                                   [=](const QPixmap &px) { m_initHeaderIcon = QIcon(px); }, false);
     ThemedIconManager::instance().addPixmapTarget(":/shield.svg", this,
                                                   [=](const QPixmap &px) { m_acHeaderIcon = QIcon(px); }, false);
     ThemedIconManager::instance().addPixmapTarget(":/heart.svg", this,
                                                   [=](const QPixmap &px) { m_hpHeaderIcon = QIcon(px); }, false);
+
+    connect(&ThemedIconManager::instance(), &ThemedIconManager::themeChanged, [=](){
+        emit dataChanged(index(0, fields::statuses), index(rowCount()-1, fields::statuses), {Qt::DecorationRole});
+    });
 }
 
 /**
@@ -52,7 +59,7 @@ int InitiativeModel::rowCount(const QModelIndex &) const {
  * @return int The total number of columns in the model, always 6.
  */
 int InitiativeModel::columnCount(const QModelIndex &) const {
-    return 6;
+    return fields::del+1;
 }
 
 
@@ -75,12 +82,12 @@ QVariant InitiativeModel::headerData(int section, Qt::Orientation orientation, i
         return {};
 
     switch (section) {
-        case 0: return tr("Name");
-        case 1: return m_initHeaderIcon;
-        case 2: return m_acHeaderIcon;
-        case 3: return m_hpHeaderIcon;
-        case 4: return tr("Max");
-        case 5: return tr("Delete");
+        case fields::name: return m_characterHeaderIcon;
+        case fields::initiative: return m_initHeaderIcon;
+        case fields::statuses: return "statuses";
+        case fields::Ac: return m_acHeaderIcon;
+        case fields::hp: return m_hpHeaderIcon;
+        case fields::maxHp: return tr("Max");
         default: return {};
     }
 }
@@ -115,10 +122,10 @@ QVariant InitiativeModel::data(const QModelIndex &index, int role) const {
     const InitiativeCharacter &c = characters.at(index.row());
 
     if (role == Qt::DisplayRole || role == Qt::EditRole || role == Qt::UserRole) {
-        if (role == Qt::DisplayRole && index.column() == 5)
+        if (role == Qt::DisplayRole && index.column() == fields::del)
             return "❌";
 
-        if (index.column() == 3) { // HP column
+        if (index.column() == fields::hp) { // HP column
             const auto &c = characters.at(index.row());
             bool ok;
             int hpVal = evaluateExpression(c.hp, &ok);
@@ -131,17 +138,37 @@ QVariant InitiativeModel::data(const QModelIndex &index, int role) const {
         }
 
         switch (index.column()) {
-            case 0: return c.name;
-            case 1: return c.initiative;
-            case 2: return c.ac;
-            case 3: return c.hp;
-            case 4: return c.maxHp;
+            case fields::name: return c.name;
+            case fields::initiative: return c.initiative;
+            case fields::Ac: return c.ac;
+            case fields::hp: return c.hp;
+            case fields::maxHp: return c.maxHp;
         }
     }
 
     if (role == Qt::BackgroundRole && index.row() == currentIndex) {
         return QBrush(QApplication::palette().color(QPalette::Highlight)); // Подсветка текущего
     }
+
+    if (role == Qt::DecorationRole && index.column() == fields::statuses){
+       QStringList iconPaths;
+        for (const auto status : characters[index.row()].statuses) {
+            iconPaths << status.iconPath;
+        }
+        return ThemedIconManager::instance().renderIconGrid(iconPaths, QSize(m_iconHeight, m_iconHeight), m_iconSpacing, m_iconsPerRow);
+    }
+
+    if (role == Qt::SizeHintRole && index.column() == fields::statuses){
+        const int count = characters[index.row()].statuses.size();
+
+        int rows = (count + m_iconsPerRow - 1) / m_iconsPerRow;
+        int height = rows * iconHeight() + (rows - 1) * m_iconSpacing;
+
+        return QSize(-1, height);
+    }
+
+    if (role == Qt::UserRole + 1 && index.column() == fields::statuses)
+        return QVariant::fromValue(characters[index.row()].statuses);
 
     return {};
 }
@@ -163,7 +190,7 @@ Qt::ItemFlags InitiativeModel::flags(const QModelIndex &index) const {
     if (!index.isValid())
         return Qt::NoItemFlags;
 
-    if (index.column() == 5)
+    if (index.column() == fields::del || index.column() == fields::statuses)
         return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 
     return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
@@ -193,7 +220,7 @@ Qt::ItemFlags InitiativeModel::flags(const QModelIndex &index) const {
  * returns false without making changes. If the update is successful, the `dataChanged`
  * signal is emitted for the specified index to notify views of the change.
  */
-bool InitiativeModel::setData(const QModelIndex &index, const QVariant &value, int) {
+bool InitiativeModel::setData(const QModelIndex &index, const QVariant &value, int role) {
     if (!index.isValid() || index.row() >= characters.size())
         return false;
 
@@ -201,14 +228,19 @@ bool InitiativeModel::setData(const QModelIndex &index, const QVariant &value, i
     QString strVal = value.toString();
 
     switch (index.column()) {
-        case 0: c.name = strVal; break;
-        case 1: c.initiative = strVal.toInt(); break;
-        case 2: c.ac = strVal.toInt(); break;
-        case 3:
+        case fields::name: c.name = strVal; break;
+        case fields::initiative: c.initiative = strVal.toInt(); break;
+        case fields::Ac: c.ac = strVal.toInt(); break;
+        case fields::hp:
             c.hp = strVal;
             evaluateHP(index.row()); // вычисляем выражение
             break;
-        case 4: c.maxHp = strVal.toInt(); break;
+        case fields::maxHp: c.maxHp = strVal.toInt(); break;
+        case fields::statuses:
+            if (value.canConvert<QList<Status>>())
+                c.statuses = value.value<QList<Status>>();
+            emit dataChangedExternally();
+            break;
         default: return false;
     }
 
@@ -358,7 +390,7 @@ void InitiativeModel::evaluateHP(int row) {
     QJSValue result = engine.evaluate(c.hp);
     if (result.isNumber()) {
         c.hp = QString::number(result.toInt());
-        emit dataChanged(index(row, 3), index(row, 3)); // HP колонка
+        emit dataChanged(index(row, fields::hp), index(row, fields::hp)); // HP колонка
     }
 }
 
@@ -391,6 +423,15 @@ bool InitiativeModel::saveToFile(const QString &filename) const {
         charElem.setAttribute("ac", c.ac);
         charElem.setAttribute("hp", c.hp);
         charElem.setAttribute("maxhp", c.maxHp);
+
+        for (auto status : c.statuses) {
+            QDomElement statElem = doc.createElement("status");
+            statElem.setAttribute("title", status.title);
+            statElem.setAttribute("icon", status.iconPath);
+            statElem.setAttribute("remaining", status.remainingRounds);
+            charElem.appendChild(statElem);
+        }
+
         root.appendChild(charElem);
     }
 
@@ -468,10 +509,36 @@ bool InitiativeModel::addFromFile(const QString &filename) {
         c.ac = elem.attribute("ac").toInt();
         c.hp = elem.attribute("hp");
         c.maxHp = elem.attribute("maxhp").toInt();
+
+        QDomNodeList statNodes = elem.elementsByTagName("status");
+        for (int j = 0; j < statNodes.count(); ++j) {
+            QDomElement statElem = statNodes.at(j).toElement();
+            Status status;
+            status.title = statElem.attribute("title");
+            status.iconPath = statElem.attribute("icon");
+            status.remainingRounds = statElem.attribute("remaining").toInt();
+
+            c.statuses.append(status);
+        }
+
         characters.append(c);
     }
     endResetModel();
     return true;
+}
+
+void InitiativeModel::decrementStatuses() {
+    for (auto &character : characters) {
+        auto it = character.statuses.begin();
+        while (it != character.statuses.end()){
+            it->remainingRounds --;
+            if (it->remainingRounds <= 0)
+                it = character.statuses.erase(it);
+            else
+                ++it;
+        }
+    }
+    emit dataChanged(index(0, fields::statuses), index(rowCount()-1, fields::statuses));
 }
 
 

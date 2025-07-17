@@ -50,24 +50,26 @@ public slots:
     void addCharacter(const QJsonDocument& characterDocument);
     void addCharacter(QString name, int maxHp, int ac = 10, int hp = 0, int initiative = 0);
 
+protected:
+    int m_currentRound = 1;
+    virtual void setupHeaderStretchPolicy();
 
-
-private slots:
+protected slots:
     void addRow();
     void nextTurn();
     void prevTurn();
     void sortTable();
     void openSharedWindow();
 
+private slots:
     void on_saveButton_clicked();
     void on_loadButton_clicked();
     void on_addFromFileButton_clicked();
+    void on_resetButton_clicked();
 
 private:
     Ui::InitiativeTrackerWidget *ui;
-    int currentRowIndex = 0;    ///< Индекс текущего активного персонажа.
 
-    int visibleColumns = 0;
     QList<QPointer<QWidget>> sharedWindows;
 
     InitiativeModel *model;
