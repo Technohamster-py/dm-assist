@@ -18,8 +18,8 @@ RollWidget::~RollWidget() {
 
 int RollWidget::executeRoll(QString command) {
     command = command.replace(" ", "");
-    QRegularExpression tokenPattern(R"(([+\-]?[\d]*d\d+|[+\-]?\d+))", QRegularExpression::CaseInsensitiveOption);
-    QRegularExpression dicePattern(R"(([+\-]?)(\d*)d(\d+))", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpression tokenPattern(R"(([+\-]?[\d]*[d|к]\d+|[+\-]?\d+))", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpression dicePattern(R"(([+\-]?)(\d*)[d|к](\d+))", QRegularExpression::CaseInsensitiveOption);
     QRegularExpression modificatorPattern(R"([+\-]?\s?\d+)", QRegularExpression::CaseInsensitiveOption);
 
     if (compactMode())
@@ -71,6 +71,7 @@ int RollWidget::executeRoll(QString command) {
         m_lastRoll.removeAt(0);
 
     ui->resultView->addItem(m_lastRoll);
+    ui->resultView->scrollToBottom();
 
     return total;
 }
