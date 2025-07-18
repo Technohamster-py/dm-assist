@@ -236,7 +236,8 @@ void InitiativeTrackerWidget::loadFromFile(const QString& filename){
  * @param filename The name of the file to save the data to.
  */
 void InitiativeTrackerWidget::saveToFile(const QString& filename){
-    model->saveToFile(filename);
+    if (!filename.isEmpty())
+        model->saveToFile(filename);
 }
 
 

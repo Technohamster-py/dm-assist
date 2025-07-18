@@ -412,6 +412,8 @@ void InitiativeModel::evaluateHP(int row) {
  * Otherwise, it writes the serialized XML document to the file and returns true.
  */
 bool InitiativeModel::saveToFile(const QString &filename) const {
+    if (filename.isEmpty())
+        return false;
     QDomDocument doc("InitiativeTracker");
     QDomElement root = doc.createElement("initiative");
     doc.appendChild(root);
