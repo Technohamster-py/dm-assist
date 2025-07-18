@@ -164,6 +164,7 @@ StatusEditDialog::StatusEditDialog(QList<Status> statuses, QWidget *parent) :
         {
             QString iconPath = IconPickerDialog::getSelectedIcon(this);
             model->editStatusIcon(index.row(), iconPath);
+            StatusManager::instance().addStatus(model->statusAt(index.row()));  ///< Update status icon in manager
         }
     });
 
