@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QRandomGenerator>
+#include <QRegularExpression>
 
 
 QT_BEGIN_NAMESPACE
@@ -21,7 +22,7 @@ public:
         return QRandomGenerator::global()->bounded(1, diceValue+1);
     };
 
-    static QString compactExpression(QString original);
+    QString compactExpression(QString original);
     bool compactMode() const {return m_compactMode;};
 
 public slots:
@@ -31,6 +32,10 @@ public slots:
 
 protected:
     QString m_lastRoll = "";
+
+    QRegularExpression m_tokenPattern = QRegularExpression(R"([+\-]?\d*[d|к]\d+|[+\-]?\d+)", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpression m_dicePattern = QRegularExpression(R"(([+\-]?)(\d*)[d|к](\d+))", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpression m_modificatorPattern = QRegularExpression(R"([+\-]?\s*\d+)", QRegularExpression::CaseInsensitiveOption);
 
 private:
     Ui::RollWidget *ui;
