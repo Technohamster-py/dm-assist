@@ -68,6 +68,12 @@ DndCharsheetWidget::DndCharsheetWidget(QWidget* parent) :
         }
     });
 
+    ui->resourcesView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    ui->resourcesView->horizontalHeader()->setSectionResizeMode(DndResourceModel::fields::title, QHeaderView::Stretch);
+
+    ui->attacsView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    ui->attacsView->horizontalHeader()->setSectionResizeMode(DndAttackModel::fields::title, QHeaderView::Stretch);
+
     ThemedIconManager::instance().addIconTarget<QPushButton>(":/add.svg", ui->addResourceButton, &QAbstractButton::setIcon);
     ThemedIconManager::instance().addIconTarget<QPushButton>(":/add.svg", ui->addAttackButton, &QAbstractButton::setIcon);
     ThemedIconManager::instance().addIconTarget<QPushButton>(":/charSheet/longrest.svg", ui->longRestButton, &QAbstractButton::setIcon);

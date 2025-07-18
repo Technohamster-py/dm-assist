@@ -16,7 +16,7 @@ QVariant DndAttackModel::headerData(int section, Qt::Orientation orientation, in
         case fields::bonus: return tr("Bonus");
         case fields::damage: return tr("Damage");
         case fields::notes: return tr("Notes");
-        case fields::del: return tr("Delete");
+//        case fields::del: return tr("Delete");
         default: return {};
     }
 }
@@ -189,11 +189,11 @@ QVariant DndResourceModel::headerData(int section, Qt::Orientation orientation, 
         return {};
 
     switch (section) {
-        case fields::refill: return tr("Refill");
+//        case fields::refill: return tr("Refill");
         case fields::title: return tr("Title");
         case fields::current: return tr("Current");
         case fields::max: return tr("Max");
-        case fields::del: return tr("Delete");
+//        case fields::del: return tr("Delete");
         default: return {};
     }
 }
