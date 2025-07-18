@@ -19,8 +19,8 @@ RollWidget::~RollWidget() {
 int RollWidget::executeRoll(QString command) {
     command = command.replace(" ", "");
     QRegularExpression tokenPattern(R"(([+\-]?[\d]*[d|к]\d+|[+\-]?\d+))", QRegularExpression::CaseInsensitiveOption);
-    QRegularExpression dicePattern(R"(([+\-]?)(\d*)[d|к](\d+))", QRegularExpression::CaseInsensitiveOption);
-    QRegularExpression modificatorPattern(R"([+\-]?\s?\d+)", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpression dicePattern(R"(([+\-]?)\s*(\d*)[d|к](\d+))", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpression modificatorPattern(R"([+\-]?\s*\d+)", QRegularExpression::CaseInsensitiveOption);
 
     if (compactMode())
         command = compactExpression(command);
@@ -93,13 +93,11 @@ QString RollWidget::compactExpression(QString original) {
             int count = match.captured(2).isEmpty() ? 1 : match.captured(2).toInt();
             int sign = (signStr == "-") ? -1 : 1;
             QString die = "d" + match.captured(3);
-
             diceGroups[die][sign] += count;
         } else {
             modifiers << token;
         }
     }
-
     QStringList result;
 
     for (auto dieIt = diceGroups.constBegin(); dieIt != diceGroups.constEnd(); ++dieIt) {
@@ -123,7 +121,7 @@ QString RollWidget::compactExpression(QString original) {
     }
 
     result.append(modifiers);
-    return result.join(" + ").replace(QRegularExpression(R"(\+\s*-)"), "- ");
+    return result.join(" + ").replace(QRegularExpression(R"(\+\s*-)"), "- ").replace(" ", "");
 }
 
 void RollWidget::setCompactMode(bool mode) {
