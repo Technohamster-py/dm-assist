@@ -259,17 +259,15 @@ bool DndResourceModel::fromJson(const QJsonObject &resourcesData) {
     for (const auto &key: resourcesData.keys()) {
         QJsonObject resourceObj = resourcesData[key].toObject();
         Resource resource;
-
         resource.key = key;
         resource.title = resourceObj["name"].toString();
         resource.current = resourceObj["current"].toInt();
         resource.max = resourceObj["max"].toInt();
-        resource.refillOnShortRest = resourceObj["isShortRest"].toBool();
         resource.refillOnLongRest = resourceObj["isLongRest"].toBool();
-
+        resource.refillOnShortRest = resourceObj["isShortRest"].toBool() ^ !resource.refillOnLongRest;
         addResource(resource);
     }
-    return false;
+    return true;
 }
 
 bool DndResourceModel::changeRefillMode(int row) {
@@ -277,30 +275,31 @@ bool DndResourceModel::changeRefillMode(int row) {
         return false;
     Resource &r = m_resourcesList[row];
 
-    r.refillOnShortRest = false;
+    r.refillOnShortRest = !(r.refillOnShortRest);
     r.refillOnLongRest = !(r.refillOnLongRest);
     emit dataChanged(index(row, refill), index(row, refill+1));
     return true;
 }
 
 QJsonObject DndResourceModel::toJson() {
-    int i = 0;
-    for (auto& resource : m_resourcesList){
+    QJsonObject result;
+    for (int i = 0; i < m_resourcesList.size(); ++i){
+        Resource resource = m_resourcesList[i];
         if (resource.key.isEmpty()){
             resource.key = QString("resource-%1").arg(i);
-            QJsonObject newResourceObj;
-            newResourceObj["id"] = resource.key;
-            newResourceObj["location"] = "traits";
         }
 
         QJsonObject resourceObj = m_resourceObject[resource.key].toObject();
+        resourceObj["id"] = resource.key;
         resourceObj["name"] = resource.title;
         resourceObj["current"] = resource.current;
         resourceObj["max"] = resource.max;
         resourceObj["isShortRest"] = resource.refillOnShortRest;
         resourceObj["isLongRest"] = resource.refillOnLongRest;
         resourceObj["icon"] = resource.refillOnLongRest ? "short-rest" : "long-rest";
-        ++i;
+        resourceObj["location"] = "traits";
+
+        result[resource.key] = resourceObj;
     }
-    return m_resourceObject;
+    return result;
 }
