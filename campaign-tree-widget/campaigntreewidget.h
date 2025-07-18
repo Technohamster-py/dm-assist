@@ -12,7 +12,6 @@ public:
     bool setRootDir(const QString &rootPath);
     QString root() const {return m_rootPath;};
     QString campaignName() const {return m_campaignName;};
-
 signals:
     void characterOpenRequested(const QString& path);
     void characterAddRequested(const QString& path);
@@ -23,6 +22,9 @@ signals:
     void mapOpenRequested(const QString& path);
 
     void campaignLoaded(const QString &name);
+
+public slots:
+    void showContextMenu(const QPoint &pos);
 
 private:
     void populateTree(const QString &path, QTreeWidgetItem *parentItem);
