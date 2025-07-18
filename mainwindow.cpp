@@ -417,6 +417,9 @@ void MainWindow::loadSettings() {
     /// Campaign
     currentCampaignDir = settings.value(paths.session.campaign, "").toString();
     setupCampaign(currentCampaignDir);
+
+    /// Rolls
+    rollWidget->setCompactMode(settings.value(paths.rolls.compactMode).toBool());
 }
 
 /**
@@ -724,6 +727,7 @@ void MainWindow::saveSettings() {
     settings.setValue(paths.general.volume, ui->volumeSlider->value());
     settings.setValue(paths.general.defaultCampaignDir, defaultCampaignDir);
     settings.setValue(paths.session.campaign, campaignTreeWidget->root());
+    settings.setValue(paths.rolls.compactMode, rollWidget->compactMode());
     settings.sync();
 }
 

@@ -8,7 +8,7 @@ RollWidget::RollWidget(QWidget *parent) :
     ui->setupUi(this);
 
     connect(ui->commandButton, &QPushButton::clicked, [=](){ executeRoll(ui->rollEdit->text());});
-    connect(ui->compactModeBox, &QCheckBox::toggled, this, &RollWidget::setCompactMode);
+    connect(ui->compactModeBox, &QCheckBox::toggled, [=](bool mode){m_compactMode = mode;});
     connectButtons();
 }
 
@@ -125,7 +125,7 @@ QString RollWidget::compactExpression(QString original) {
 }
 
 void RollWidget::setCompactMode(bool mode) {
- m_compactMode = mode;
+    ui->compactModeBox->setChecked(mode);
 }
 
 void RollWidget::addDieToExpression(const QString &dieCode, bool rightClick) {
