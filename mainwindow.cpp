@@ -636,6 +636,7 @@ void MainWindow::closeCampaign() {
 
     currentCampaignDir = "";
     campaignTreeWidget->clear();
+    initiativeTrackerWidget->setBaseDir();
 }
 
 /**
@@ -861,6 +862,7 @@ void MainWindow::setupCampaign(const QString campaignRoot) {
         saveMusicConfigFile(musicConfigFile);
 
     currentCampaignDir = campaignRoot;
+    initiativeTrackerWidget->setBaseDir(currentCampaignDir + "/Encounters");
     campaignTreeWidget->setVisible(true);
 }
 

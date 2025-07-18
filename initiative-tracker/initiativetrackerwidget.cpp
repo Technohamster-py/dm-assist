@@ -1,6 +1,5 @@
 #include <QItemSelectionModel>
 #include <QFileDialog>
-#include <QStandardPaths>
 #include <QMessageBox>
 #include <utility>
 
@@ -251,9 +250,10 @@ void InitiativeTrackerWidget::saveToFile(const QString& filename){
  * The dialog filters for `.xml` files as the saving format.
  */
 void InitiativeTrackerWidget::on_saveButton_clicked(){
+
     QString filename = QFileDialog::getSaveFileName(this,
                                                     tr("Save encounter to file"),
-                                                    QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
+                                                    m_baseDirectoryPath,
                                                     "Xml file (*.xml)");
     saveToFile(filename);
 }
@@ -425,4 +425,11 @@ void InitiativeTrackerWidget::setupHeaderStretchPolicy() {
         else
             header->setSectionResizeMode(i, QHeaderView::ResizeToContents);
     }
+}
+
+void InitiativeTrackerWidget::setBaseDir(QString dirPath) {
+    if (dirPath.isEmpty())
+        m_baseDirectoryPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    else
+        m_baseDirectoryPath = dirPath;
 }

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QSortFilterProxyModel>
+#include <QStandardPaths>
 #include <QStyledItemDelegate>
 #include <QPainter>
 #include <QList>
@@ -32,6 +33,7 @@ Q_OBJECT
 public:
     explicit InitiativeTrackerWidget(QWidget *parent = nullptr, InitiativeModel *sharedModel = nullptr);
 
+    void setBaseDir(QString dirPath = "");
 signals:
     void fieldVisibilityChanged(int field, bool hidden);
     void columnHidden(int  column);
@@ -80,5 +82,7 @@ private:
     bool isSharedHpVisible = false;
     bool isSharedMaxHpVisible = false;
     bool isSharedAcVisible = true;
+
+    QString m_baseDirectoryPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 };
 #endif //DM_ASSIST_INITIATIVETRACKERWIDGET_H
