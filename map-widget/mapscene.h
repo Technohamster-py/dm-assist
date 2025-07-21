@@ -34,6 +34,7 @@ enum mapErrorCodes{
 
 enum mapLayers{
     Background = -100,
+    Height = 3,
     Shapes = 5,
     Brush = 6,
     Ruler = 10,
@@ -83,6 +84,8 @@ public:
     void addUndoableItem(QGraphicsItem* item);
     void removeUndoableItem(QGraphicsItem* item);
     void undoLastAction();
+
+    qreal heightAt(const QPointF& pos) const;
 signals:
     void fogUpdated(const QImage &fogImage);
     void toolChanged(const AbstractMapTool*);

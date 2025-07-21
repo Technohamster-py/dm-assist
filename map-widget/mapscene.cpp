@@ -5,6 +5,7 @@
 
 #include "mapscene.h"
 #include "lighttool.h"
+#include "heightmaptool.h"
 #include <QBuffer>
 #include <QFile>
 #include <QInputDialog>
@@ -707,4 +708,13 @@ int MapScene::loadFromFile(const QString& path) {
 QRectF MapScene::mapRect() const {
     QPixmap pixmap = getMapPixmap();
     return pixmap.rect();;
+}
+
+qreal MapScene::heightAt(const QPointF &pos) const {
+    for (QGraphicsItem* item : items(pos)) {
+        auto *region = dynamic_cast<HeightRegionItem*>(item);
+        if (region && region->contains(region->mapFromScene(pos)))
+            return region->height();
+    }
+    return 0.0;
 }
