@@ -31,6 +31,13 @@ MapView::MapView(QWidget *parent)
     setRenderHint(QPainter::Antialiasing);
     setTransformationAnchor(AnchorUnderMouse);
     mapPixmapItem = nullptr;
+
+    heightLabel = new QLabel(this);
+    heightLabel->setStyleSheet("QLabel"
+                               "{ background: palette(Window);"
+                               "padding: 2px;}");
+    heightLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    heightLabel->setVisible(false);
 }
 
 
