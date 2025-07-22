@@ -36,8 +36,8 @@ void HeightMapTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsSc
         if (regionItem){
             scene->removeItem(regionItem);
             delete regionItem;
-            return;
         }
+        return;
     }
     path = QPainterPath(event->scenePos());
     preview = new QGraphicsPathItem();

@@ -408,7 +408,22 @@ QJsonObject MapScene::toJson() {
     for (auto item : items()) {
         QJsonObject itemObj;
 
-        if (auto* polyItem = qgraphicsitem_cast<QGraphicsPolygonItem*>(item)) {
+        if (auto* light = dynamic_cast<LightSourceItem*>(item)) {
+            itemObj["type"] = "light";
+            itemObj["center"] = QJsonArray{ light->pos().x(), light->pos().y() };
+            itemObj["r1"] = light->brightRadius();
+            itemObj["r2"] = light->dimRadius();
+            itemObj["color"] = light->color().name();
+        }
+        else if (auto* heightRegion = dynamic_cast<HeightRegionItem*>(item)){
+            itemObj["type"] = "heightRegion";
+            QJsonArray points;
+            for (const QPointF& p : heightRegion->polygon())
+                points.append(QJsonArray{ p.x(), p.y() });
+            itemObj["points"] = points;
+            itemObj["height"] = heightRegion->height();
+        }
+        else if (auto* polyItem = qgraphicsitem_cast<QGraphicsPolygonItem*>(item)) {
             itemObj["type"] = "polygon";
 
             QJsonArray points;
@@ -436,13 +451,6 @@ QJsonObject MapScene::toJson() {
             itemObj["color"] = line->pen().color().name();
             itemObj["z"] = line->zValue();
 
-        }
-        else if (auto* light = dynamic_cast<LightSourceItem*>(item)) {
-            itemObj["type"] = "light";
-            itemObj["center"] = QJsonArray{ light->pos().x(), light->pos().y() };
-            itemObj["r1"] = light->brightRadius();
-            itemObj["r2"] = light->dimRadius();
-            itemObj["color"] = light->color().name();
         }
 
         if (!itemObj.isEmpty())
@@ -548,6 +556,14 @@ void MapScene::fromJson(const QJsonObject& obj) {
             QColor color(itemObj["color"].toString());
             auto* light = new LightSourceItem(itemObj["r1"].toDouble(), itemObj["r2"].toDouble(), color, center, nullptr);
             addItem(light);
+        }
+        else if (type == "heightRegion"){
+            QPolygonF polygon;
+            for (const auto& pt : itemObj["points"].toArray())
+                polygon << QPointF(pt.toArray()[0].toDouble(), pt.toArray()[1].toDouble());
+            qreal height = itemObj["height"].toDouble(0);
+            auto* heightRegion = new HeightRegionItem(polygon, height);
+            addItem(heightRegion);
         }
     }
 
