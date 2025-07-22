@@ -16,6 +16,7 @@
 #include "map-widget/rulermaptool.h"
 #include "map-widget/sharedmapwindow.h"
 #include "map-widget/spellshapetool.h"
+#include "map-widget/heightmaptool.h"
 #include "initiative-tracker/initiativetrackerwidget.h"
 #include "music-widget/musicwidget.h"
 #include "roll-widget/rollwidget.h"
@@ -93,6 +94,7 @@ private:
     CircleShapeTool* circleShapeTool;
     SquareShapeTool* squareShapeTool;
     TriangleShapeTool* triangleShapeTool;
+    HeightMapTool* heightMapTool;
     QActionGroup *toolGroup;
 
     RollWidget* rollWidget;

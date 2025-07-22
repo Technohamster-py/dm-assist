@@ -24,7 +24,9 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent* event, QGraphicsScene* scene) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override;
-    void cancel();
+    virtual void wheelEvent(QGraphicsSceneWheelEvent *event, QGraphicsScene *scene) override {};
+    virtual void deactivate(QGraphicsScene *scene) override {};
+//    void cancel();
 private:
     QPainterPath path;
     QGraphicsPathItem* preview = nullptr;
