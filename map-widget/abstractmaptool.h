@@ -1,7 +1,3 @@
-//
-// Created by arseniy on 02.05.2025.
-//
-
 #ifndef DM_ASSIST_ABSTRACTMAPTOOL_H
 #define DM_ASSIST_ABSTRACTMAPTOOL_H
 

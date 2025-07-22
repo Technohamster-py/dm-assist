@@ -31,6 +31,14 @@ void HeightRegionItem::updateColor() {
 
 
 void HeightMapTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene * scene) {
+    if (event->button() == Qt::RightButton) {
+        HeightRegionItem* regionItem = dynamic_cast<HeightRegionItem*>(scene->itemAt(event->scenePos(), QTransform()));
+        if (regionItem){
+            scene->removeItem(regionItem);
+            delete regionItem;
+            return;
+        }
+    }
     path = QPainterPath(event->scenePos());
     preview = new QGraphicsPathItem();
 
