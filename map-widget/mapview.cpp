@@ -33,10 +33,12 @@ MapView::MapView(QWidget *parent)
     mapPixmapItem = nullptr;
 
     heightLabel = new QLabel(this);
+    heightLabel->setText("Height");
     heightLabel->setStyleSheet("QLabel"
                                "{ background: palette(Window);"
                                "padding: 2px;}");
     heightLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    heightLabel->move(10, viewport()->height() - heightLabel->height() + 10);
     heightLabel->setVisible(false);
 }
 
@@ -155,6 +157,14 @@ void MapView::mouseMoveEvent(QMouseEvent *event)
         verticalScrollBar()->setValue(verticalScrollBar()->value() - delta.y());
         event->accept();
     } else {
+        QPointF scenePos = mapToScene(event->pos());
+        if (!sceneRect().contains(scenePos)){
+            heightLabel->setVisible(false);
+        } else {
+            double height = scene->heightAt(scenePos);
+            heightLabel->setText(tr("Height: %1").arg(height, 0, 'f', 1));
+            heightLabel->setVisible(true);
+        }
         QGraphicsView::mouseMoveEvent(event);
     }
 }
