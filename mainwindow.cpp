@@ -896,6 +896,7 @@ void MainWindow::setupToolbar() {
     circleShapeTool = new CircleShapeTool();
     squareShapeTool = new SquareShapeTool();
     triangleShapeTool = new TriangleShapeTool();
+    heightMapTool = new HeightMapTool();
 
     toolGroup = new QActionGroup(this);
     toolGroup->setExclusive(true);
@@ -1216,6 +1217,28 @@ void MainWindow::setupToolbar() {
             triangleShapeTool->setColor(chosen);
             brushTool->setColor(chosen);
         }
+    });
+
+
+    ui->toolBar->addSeparator();
+    /// Height Map
+    auto* heightMapAction = new QAction(this);
+    heightMapAction->setCheckable(true);
+    ThemedIconManager::instance().addIconTarget(":map/mountain.svg", heightMapAction, &QAction::setIcon);
+    toolGroup->addAction(heightMapAction);
+
+    auto* heightButton = new QToolButton(this);
+    heightButton->setCheckable(true);
+    heightButton->setToolTip(tr("Height"));
+    heightButton->setDefaultAction(heightMapAction);
+    ui->toolBar->addWidget(heightButton);
+
+    connect(heightMapAction, &QAction::triggered, [=](bool checked){
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (checked)
+            currentView->setActiveTool(heightMapTool);
+        else
+            currentView->setActiveTool(nullptr);
     });
 }
 

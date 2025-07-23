@@ -1,7 +1,3 @@
-//
-// Created by arseniy on 02.05.2025.
-//
-
 #ifndef DM_ASSIST_ABSTRACTMAPTOOL_H
 #define DM_ASSIST_ABSTRACTMAPTOOL_H
 
@@ -27,6 +23,7 @@ public:
     virtual ~AbstractMapTool() = default;
 
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) = 0;
+    virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) {};
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) = 0;
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) = 0;
     virtual void wheelEvent(QGraphicsSceneWheelEvent *event, QGraphicsScene *scene) = 0;

@@ -5,6 +5,7 @@
 
 #include "mapscene.h"
 #include "lighttool.h"
+#include "heightmaptool.h"
 #include <QBuffer>
 #include <QFile>
 #include <QInputDialog>
@@ -44,6 +45,24 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
         m_activeTool->mousePressEvent(event, this);
     } else {
         QGraphicsScene::mousePressEvent(event);
+    }
+}
+
+
+void MapScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
+    if (m_activeTool) {
+        m_activeTool->mouseDoubleClickEvent(event, this);
+    } else {
+        auto* region = dynamic_cast<HeightRegionItem*>(itemAt(event->scenePos(), QTransform()));
+        if (!region)
+            return;
+
+        bool ok;
+        qreal h = QInputDialog::getDouble(nullptr, tr("Change height"), tr("NewHeight"), region->height(), -100, 100, 1, &ok);
+        if (ok)
+            region->setHeight(h);
+
+        QGraphicsScene::mouseDoubleClickEvent(event);
     }
 }
 
@@ -407,7 +426,22 @@ QJsonObject MapScene::toJson() {
     for (auto item : items()) {
         QJsonObject itemObj;
 
-        if (auto* polyItem = qgraphicsitem_cast<QGraphicsPolygonItem*>(item)) {
+        if (auto* light = dynamic_cast<LightSourceItem*>(item)) {
+            itemObj["type"] = "light";
+            itemObj["center"] = QJsonArray{ light->pos().x(), light->pos().y() };
+            itemObj["r1"] = light->brightRadius();
+            itemObj["r2"] = light->dimRadius();
+            itemObj["color"] = light->color().name();
+        }
+        else if (auto* heightRegion = dynamic_cast<HeightRegionItem*>(item)){
+            itemObj["type"] = "heightRegion";
+            QJsonArray points;
+            for (const QPointF& p : heightRegion->polygon())
+                points.append(QJsonArray{ p.x(), p.y() });
+            itemObj["points"] = points;
+            itemObj["height"] = heightRegion->height();
+        }
+        else if (auto* polyItem = qgraphicsitem_cast<QGraphicsPolygonItem*>(item)) {
             itemObj["type"] = "polygon";
 
             QJsonArray points;
@@ -435,13 +469,6 @@ QJsonObject MapScene::toJson() {
             itemObj["color"] = line->pen().color().name();
             itemObj["z"] = line->zValue();
 
-        }
-        else if (auto* light = dynamic_cast<LightSourceItem*>(item)) {
-            itemObj["type"] = "light";
-            itemObj["center"] = QJsonArray{ light->pos().x(), light->pos().y() };
-            itemObj["r1"] = light->brightRadius();
-            itemObj["r2"] = light->dimRadius();
-            itemObj["color"] = light->color().name();
         }
 
         if (!itemObj.isEmpty())
@@ -547,6 +574,14 @@ void MapScene::fromJson(const QJsonObject& obj) {
             QColor color(itemObj["color"].toString());
             auto* light = new LightSourceItem(itemObj["r1"].toDouble(), itemObj["r2"].toDouble(), color, center, nullptr);
             addItem(light);
+        }
+        else if (type == "heightRegion"){
+            QPolygonF polygon;
+            for (const auto& pt : itemObj["points"].toArray())
+                polygon << QPointF(pt.toArray()[0].toDouble(), pt.toArray()[1].toDouble());
+            qreal height = itemObj["height"].toDouble(0);
+            auto* heightRegion = new HeightRegionItem(polygon, height);
+            addItem(heightRegion);
         }
     }
 
@@ -707,4 +742,13 @@ int MapScene::loadFromFile(const QString& path) {
 QRectF MapScene::mapRect() const {
     QPixmap pixmap = getMapPixmap();
     return pixmap.rect();;
+}
+
+qreal MapScene::heightAt(const QPointF &pos) const {
+    for (QGraphicsItem* item : items(pos)) {
+        auto *region = dynamic_cast<HeightRegionItem*>(item);
+        if (region && region->contains(region->mapFromScene(pos)))
+            return region->height();
+    }
+    return 0.0;
 }

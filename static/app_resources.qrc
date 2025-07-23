@@ -44,6 +44,7 @@
         <file>ruler.svg</file>
         <file>sphere.svg</file>
         <file>torch.svg</file>
+        <file>mountain.svg</file>
     </qresource>
     <qresource prefix="initiative tracker">
         <file>back.svg</file>
