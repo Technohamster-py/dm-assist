@@ -1235,6 +1235,7 @@ void MainWindow::setupToolbar() {
 
     connect(heightMapAction, &QAction::triggered, [=](bool checked){
         auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (!currentView) return;
         if (checked)
             currentView->setActiveTool(heightMapTool);
         else
