@@ -48,6 +48,24 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     }
 }
 
+
+void MapScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
+    if (m_activeTool) {
+        m_activeTool->mouseDoubleClickEvent(event, this);
+    } else {
+        auto* region = dynamic_cast<HeightRegionItem*>(itemAt(event->scenePos(), QTransform()));
+        if (!region)
+            return;
+
+        bool ok;
+        qreal h = QInputDialog::getDouble(nullptr, tr("Change height"), tr("NewHeight"), region->height(), -100, 100, 1, &ok);
+        if (ok)
+            region->setHeight(h);
+
+        QGraphicsScene::mouseDoubleClickEvent(event);
+    }
+}
+
 /**
  * @brief Handles mouse move events for the MapScene.
  *
