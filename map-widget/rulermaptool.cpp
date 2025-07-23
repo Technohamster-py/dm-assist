@@ -43,6 +43,8 @@ void RulerMapTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsSce
         QLineF line(toolPoints[0], toolPoints[1]);
         if (auto mapScene = qobject_cast<MapScene*>(scene)) {
             double distance = line.length() * mapScene->getScaleFactor();
+            qreal dz = abs(mapScene->heightAt(toolPoints[0]) - mapScene->heightAt(toolPoints[1]));
+            distance = std::sqrt(distance*distance + dz*dz);
             auto lineItem = scene->addLine(line, QPen(Qt::red, 2));
             auto label = scene->addText(QString("%1 ft").arg(distance, 0, 'f', 1));
             label->setDefaultTextColor(Qt::red);
@@ -87,7 +89,8 @@ void RulerMapTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScen
         QLineF line(toolPoints[0], current);
         if (auto mapScene = qobject_cast<MapScene*>(scene)) {
             double distance = line.length() * mapScene->getScaleFactor();
-
+            qreal dz = abs(mapScene->heightAt(toolPoints[0]) - mapScene->heightAt(current));
+            distance = std::sqrt(distance*distance + dz*dz);
             if (!tempLine) {
                 tempLine = scene->addLine(line, QPen(Qt::DashLine));
             } else {
