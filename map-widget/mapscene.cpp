@@ -729,10 +729,8 @@ QRectF MapScene::mapRect() const {
 qreal MapScene::heightAt(const QPointF &pos) const {
     for (QGraphicsItem* item : items(pos)) {
         auto *region = dynamic_cast<HeightRegionItem*>(item);
-        if (region) {
-            qDebug() << region->height();
+        if (region && region->contains(region->mapFromScene(pos)))
             return region->height();
-        }
     }
     return 0.0;
 }
