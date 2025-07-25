@@ -22,6 +22,12 @@
 #include "roll-widget/rollwidget.h"
 #include "settingsdialog.h"
 
+
+static QMap<QString, QString> sourcesMap = {
+        {"Icons for initiative statuses", "https://ttg.club/"}
+};
+
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -128,6 +134,7 @@ private slots:
     void updateVisibility();
 
     void coverMapWithFog(bool hide);
+    void showSourcesMessageBox(const QMap<QString, QString> &sources);
 };
 
 

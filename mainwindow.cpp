@@ -16,6 +16,7 @@
 #include "saveconfigdialog.h"
 #include <QStyleFactory>
 #include <QTextStream>
+#include <QTextBrowser>
 #include <QSpinBox>
 #include <QJsonDocument>
 
@@ -63,9 +64,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newCampaign);
     connect(ui->actionClose, &QAction::triggered, this, &MainWindow::closeCampaign);
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::loadCampaign);
-    connect(ui->actionHelp, &QAction::triggered, [](){QDesktopServices::openUrl(QUrl("https://github.com/Technohamster-py/dm-assist/wiki/%D0%9D%D0%B0%D1%87%D0%B0%D0%BB%D0%BE"));});
-    connect(ui->actionDonate, &QAction::triggered, [](){QDesktopServices::openUrl(QUrl("https://pay.cloudtips.ru/p/8f6d339a"));});
-    connect(ui->actionReport_bug, &QAction::triggered, [](){QDesktopServices::openUrl(QUrl("https://github.com/Technohamster-py/dm-assist/issues/new"));});
+    connect(ui->actionHelp, &QAction::triggered, [](){QDesktopServices::openUrl(QUrl(HELP_URL));});
+    connect(ui->actionDonate, &QAction::triggered, [](){QDesktopServices::openUrl(QUrl(DONATE_URL));});
+    connect(ui->actionReport_bug, &QAction::triggered, [](){QDesktopServices::openUrl(QUrl(ISSUES_URL));});
+    connect(ui->actionSources, &QAction::triggered, [=]() { showSourcesMessageBox(sourcesMap);});
     connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::setVolumeDivider);
     connect(ui->actionReload, &QAction::triggered, [=](){setupCampaign(campaignTreeWidget->root());});
     connect(ui->actionAddCharacter, &QAction::triggered, this, &MainWindow::addCharacter);
@@ -1401,6 +1403,35 @@ void MainWindow::dropEvent(QDropEvent *event) {
         if (reply == QMessageBox::Yes)
             setupCampaign(campaignPath);
     }
+}
+
+
+void MainWindow::showSourcesMessageBox(const QMap<QString, QString> &sources)
+{
+    QString html;
+    html += "<html><body><ul>";
+
+    for (auto it = sources.constBegin(); it != sources.constEnd(); ++it) {
+    html += QString("<li><a href=\"%1\">%2</a></li>")
+    .arg(it.value(), it.key());
+    }
+
+    html += "</ul></body></html>";
+
+    QMessageBox msgBox(this);
+    msgBox.setWindowTitle("Sources");
+    msgBox.setText("List of used sources:");
+
+
+    QTextBrowser *textBrowser = new QTextBrowser;
+    textBrowser->setHtml(html);
+    textBrowser->setOpenExternalLinks(true);
+
+    textBrowser->setMinimumSize(400, 200);
+
+    msgBox.layout()->addWidget(textBrowser);
+
+    msgBox.exec();
 }
 
 

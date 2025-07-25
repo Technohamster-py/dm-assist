@@ -8,6 +8,10 @@
 #define ORGANIZATION_DOMAIN "github.com/Technohamster-py"
 #define APPLICATION_NAME "DM-assist"
 
+#define HELP_URL "https://github.com/Technohamster-py/dm-assist?tab=readme-ov-file#dm-assist"
+#define DONATE_URL "https://pay.cloudtips.ru/p/8f6d339a"
+#define ISSUES_URL  "https://github.com/Technohamster-py/dm-assist/issues"
+
 enum hpBarMode {
     bar = 0,
     value,

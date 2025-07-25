@@ -363,6 +363,7 @@
     <addaction name="actionHelp"/>
     <addaction name="actionDonate"/>
     <addaction name="actionReport_bug"/>
+    <addaction name="actionSources"/>
    </widget>
    <addaction name="menuCampain"/>
    <addaction name="menuGlossary"/>
@@ -486,6 +487,11 @@
   <action name="actionAddCharacter">
    <property name="text">
     <string>Character</string>
+   </property>
+  </action>
+  <action name="actionSources">
+   <property name="text">
+    <string>Sources</string>
    </property>
   </action>
  </widget>
