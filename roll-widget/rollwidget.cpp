@@ -1,6 +1,7 @@
 #include "rollwidget.h"
 #include "ui_rollwidget.h"
 
+#include <QRegularExpression>
 
 RollWidget::RollWidget(QWidget *parent) :
         QWidget(parent), ui(new Ui::RollWidget) {
@@ -17,6 +18,10 @@ RollWidget::~RollWidget() {
 
 int RollWidget::executeRoll(QString command) {
     command = command.replace(" ", "");
+    QRegularExpression tokenPattern(R"(([+\-]?[\d]*[d|к]\d+|[+\-]?\d+))", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpression dicePattern(R"(([+\-]?)\s*(\d*)[d|к](\d+))", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpression modificatorPattern(R"([+\-]?\s*\d+)", QRegularExpression::CaseInsensitiveOption);
+
     if (compactMode())
         command = compactExpression(command);
 
@@ -24,12 +29,13 @@ int RollWidget::executeRoll(QString command) {
     m_lastRoll.clear();
     QStringList rollParts;
 
-    auto it = m_tokenPattern.globalMatch(command);
+    auto it = tokenPattern.globalMatch(command);
     while (it.hasNext()) {
         auto match = it.next();
         QString token = match.captured(1).trimmed();
-        auto diceMatch = m_dicePattern.match(token);
-        auto modMatch = m_modificatorPattern.match(token);
+
+        auto diceMatch = dicePattern.match(token);
+        auto modMatch = modificatorPattern.match(token);
 
         if (diceMatch.hasMatch()) {
             QString signStr = diceMatch.captured(1);
@@ -71,20 +77,24 @@ int RollWidget::executeRoll(QString command) {
 }
 
 QString RollWidget::compactExpression(QString original) {
-    auto it = m_tokenPattern.globalMatch(original);
+    QRegularExpression tokenPattern(R"([+\-]?\d*d\d+|[+\-]?\d+)", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpression dicePattern(R"(([+\-]?)(\d*)d(\d+))", QRegularExpression::CaseInsensitiveOption);
+
+    auto it = tokenPattern.globalMatch(original);
     QMap<QString, QMap<int, int>> diceGroups;
     QStringList modifiers;
 
     while (it.hasNext()) {
         QString token = it.next().captured(0).trimmed();
-        auto match = m_dicePattern.match(token);
+        auto match = dicePattern.match(token);
+
         if (match.hasMatch()) {
             QString signStr = match.captured(1);
             int count = match.captured(2).isEmpty() ? 1 : match.captured(2).toInt();
             int sign = (signStr == "-") ? -1 : 1;
             QString die = "d" + match.captured(3);
             diceGroups[die][sign] += count;
-        } else if (m_modificatorPattern.match(token).hasMatch()) {
+        } else {
             modifiers << token;
         }
     }
