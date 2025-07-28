@@ -723,7 +723,7 @@ int MapScene::loadFromFile(const QString& path) {
     QGraphicsPixmapItem* pixmapItem = addPixmap(QPixmap::fromImage(mapImage));
     pixmapItem->setZValue(mapLayers::Background);
     initializeFog(mapImage.size());
-    m_lineWidth = pixmapItem->boundingRect().height() / 100;
+    m_lineWidth = pixmapItem->boundingRect().height() / 200;
 
     fromJson(doc.object());
 

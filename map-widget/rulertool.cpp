@@ -54,7 +54,7 @@ void RulerTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene 
             qreal width = mapScene->lineWidth();
 
             // Line
-            auto lineItem = scene->addLine(line, QPen(Qt::red, width));
+            auto lineItem = scene->addLine(line, QPen(QColor::fromRgb(252, 115, 3), width));
             lineItem->setZValue(mapLayers::Ruler);
 
             // Label
