@@ -13,7 +13,7 @@
 #include "map-widget/brushtool.h"
 #include "map-widget/calibrationtool.h"
 #include "map-widget/lighttool.h"
-#include "map-widget/rulermaptool.h"
+#include "map-widget/rulertool.h"
 #include "map-widget/sharedmapwindow.h"
 #include "map-widget/spellshapetool.h"
 #include "map-widget/heightmaptool.h"
@@ -95,7 +95,7 @@ private:
     CalibrationTool* calibrationTool;
     FogTool* fogTool;
     LightTool* lightTool;
-    RulerMapTool* rulerMapTool;
+    RulerTool* rulerMapTool;
     LineShapeTool* lineShapeTool;
     CircleShapeTool* circleShapeTool;
     SquareShapeTool* squareShapeTool;

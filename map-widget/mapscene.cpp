@@ -716,12 +716,14 @@ int MapScene::loadFromFile(const QString& path) {
     QImage mapImage;
     mapImage.loadFromData(imageData, "PNG");
 
-    if (!mapImage.isNull()) {
-        clear();
-        QGraphicsPixmapItem* pixmapItem = addPixmap(QPixmap::fromImage(mapImage));
-        pixmapItem->setZValue(mapLayers::Background);
-        initializeFog(mapImage.size());
-    }
+    if (mapImage.isNull())
+        return mapErrorCodes::NoDataError;
+
+    clear();
+    QGraphicsPixmapItem* pixmapItem = addPixmap(QPixmap::fromImage(mapImage));
+    pixmapItem->setZValue(mapLayers::Background);
+    initializeFog(mapImage.size());
+    m_lineWidth = pixmapItem->boundingRect().height() / 100;
 
     fromJson(doc.object());
 

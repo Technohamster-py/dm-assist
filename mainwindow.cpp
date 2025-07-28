@@ -893,7 +893,7 @@ void MainWindow::setupToolbar() {
     calibrationTool = new CalibrationTool(this);
     fogTool = new FogTool(this);
     lightTool = new LightTool(this);
-    rulerMapTool = new RulerMapTool(this);
+    rulerMapTool = new RulerTool(this);
     lineShapeTool = new LineShapeTool();
     circleShapeTool = new CircleShapeTool();
     squareShapeTool = new SquareShapeTool();

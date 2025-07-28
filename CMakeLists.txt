@@ -43,7 +43,7 @@ set(FILES
         map-widget/mapview.h    map-widget/mapview.cpp
         map-widget/mapscene.h   map-widget/mapscene.cpp
         map-widget/maptabwidget.h   map-widget/maptabwidget.cpp
-        map-widget/rulermaptool.h   map-widget/rulermaptool.cpp
+        map-widget/rulertool.h map-widget/rulertool.cpp
         map-widget/sharedmapwindow.h    map-widget/sharedmapwindow.cpp
         map-widget/spellshapetool.h     map-widget/spellshapetool.cpp
         map-widget/undostack.h
