@@ -50,7 +50,7 @@ public slots:
     void setHpComboBoxVisible(int visible);
 
     void addCharacter(const QJsonDocument& characterDocument);
-    void addCharacter(QString name, int maxHp, int ac = 10, int hp = 0, int initiative = 0);
+    void addCharacter(QString name, int maxHp, int ac = 10, int hp = 0, int initiative = 0, int speed = 30);
 
 protected:
     int m_currentRound = 1;

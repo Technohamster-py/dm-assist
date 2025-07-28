@@ -399,13 +399,14 @@ void InitiativeTrackerWidget::addCharacter(const QJsonDocument& characterDocumen
     sortTable();
 }
 
-void InitiativeTrackerWidget::addCharacter(QString name, int maxHp, int ac, int hp, int initiative) {
+void InitiativeTrackerWidget::addCharacter(QString name, int maxHp, int ac, int hp, int initiative, int speed) {
     InitiativeCharacter emptyCharacter;
     emptyCharacter.name = std::move(name);
     emptyCharacter.maxHp = maxHp;
     emptyCharacter.ac = ac,
     emptyCharacter.hp = QString::number(hp),
     emptyCharacter.initiative = initiative;
+    emptyCharacter.speed = speed;
 
     model->addCharacter(emptyCharacter);
 

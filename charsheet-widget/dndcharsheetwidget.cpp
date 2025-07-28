@@ -618,7 +618,7 @@ void DndCharsheetWidget::addToInitiative(InitiativeTrackerWidget *initiativeTrac
     int initiative = 0;
     if (autoRoll)
         initiative = rollDice(20) + ui->initiativeLabel->text().toInt();
-    initiativeTrackerWidget->addCharacter(ui->nameEdit->text(), ui->maxHpBox->value(), ui->acBox->value(), ui->hpSpinBox->value(), initiative);
+    initiativeTrackerWidget->addCharacter(ui->nameEdit->text(), ui->maxHpBox->value(), ui->acBox->value(), ui->hpSpinBox->value(), initiative, ui->speedBox->value());
 }
 
 QString DndCharsheetWidget::parseParagraphs(const QJsonArray &content) {

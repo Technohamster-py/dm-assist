@@ -16,6 +16,7 @@ InitiativeModel::InitiativeModel(QObject *parent)
     m_initHeaderIcon = QIcon(":/d20.svg");
     m_acHeaderIcon = QIcon(":/shield.svg");
     m_hpHeaderIcon = QIcon(":/heart.svg");
+    m_speedHeaderIcon = QIcon(":/charSheet/run.svg");
 
     ThemedIconManager::instance().addPixmapTarget(":/human.svg", this,
                                                   [=](const QPixmap &px) { m_characterHeaderIcon = QIcon(px); }, false);
@@ -25,6 +26,8 @@ InitiativeModel::InitiativeModel(QObject *parent)
                                                   [=](const QPixmap &px) { m_acHeaderIcon = QIcon(px); }, false);
     ThemedIconManager::instance().addPixmapTarget(":/heart.svg", this,
                                                   [=](const QPixmap &px) { m_hpHeaderIcon = QIcon(px); }, false);
+    ThemedIconManager::instance().addPixmapTarget(":/charSheet/run.svg", this,
+                                                  [=](const QPixmap &px) { m_speedHeaderIcon = QIcon(px); }, false);
 
     connect(&ThemedIconManager::instance(), &ThemedIconManager::themeChanged, [=](){
         emit dataChanged(index(0, fields::statuses), index(rowCount()-1, fields::statuses), {Qt::DecorationRole});
@@ -84,6 +87,7 @@ QVariant InitiativeModel::headerData(int section, Qt::Orientation orientation, i
     switch (section) {
         case fields::name: return m_characterHeaderIcon;
         case fields::initiative: return m_initHeaderIcon;
+        case fields::speed: return m_speedHeaderIcon;
         case fields::statuses: return "statuses";
         case fields::Ac: return m_acHeaderIcon;
         case fields::hp: return m_hpHeaderIcon;
@@ -140,6 +144,7 @@ QVariant InitiativeModel::data(const QModelIndex &index, int role) const {
         switch (index.column()) {
             case fields::name: return c.name;
             case fields::initiative: return c.initiative;
+            case fields::speed: return c.speed;
             case fields::Ac: return c.ac;
             case fields::hp: return c.hp;
             case fields::maxHp: return c.maxHp;
@@ -230,6 +235,7 @@ bool InitiativeModel::setData(const QModelIndex &index, const QVariant &value, i
     switch (index.column()) {
         case fields::name: c.name = strVal; break;
         case fields::initiative: c.initiative = strVal.toInt(); break;
+        case fields::speed: c.speed = strVal.toInt(); break;
         case fields::Ac: c.ac = strVal.toInt(); break;
         case fields::hp:
             c.hp = strVal;
@@ -422,6 +428,7 @@ bool InitiativeModel::saveToFile(const QString &filename) const {
         QDomElement charElem = doc.createElement("character");
         charElem.setAttribute("name", c.name);
         charElem.setAttribute("initiative", c.initiative);
+        charElem.setAttribute("speed", c.speed);
         charElem.setAttribute("ac", c.ac);
         charElem.setAttribute("hp", c.hp);
         charElem.setAttribute("maxhp", c.maxHp);
@@ -508,6 +515,7 @@ bool InitiativeModel::addFromFile(const QString &filename) {
         InitiativeCharacter c;
         c.name = elem.attribute("name");
         c.initiative = elem.attribute("initiative").toInt();
+        c.speed = elem.attribute("speed").toInt();
         c.ac = elem.attribute("ac").toInt();
         c.hp = elem.attribute("hp");
         c.maxHp = elem.attribute("maxhp").toInt();
