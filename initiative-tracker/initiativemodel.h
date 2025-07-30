@@ -76,6 +76,7 @@ private:
     QIcon m_speedHeaderIcon;
     QIcon m_acHeaderIcon;
     QIcon m_hpHeaderIcon;
+    QIcon m_hpMaxHeaderIcon;
 
     int m_iconsPerRow = 3;
     int m_iconHeight = 16;

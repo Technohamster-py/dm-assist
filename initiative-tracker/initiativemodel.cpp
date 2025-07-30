@@ -15,6 +15,7 @@ InitiativeModel::InitiativeModel(QObject *parent)
     m_characterHeaderIcon = QIcon(":/human.svg");
     m_initHeaderIcon = QIcon(":/d20.svg");
     m_acHeaderIcon = QIcon(":/shield.svg");
+    m_hpHeaderIcon = QIcon(":/heart-broken.svg");
     m_hpHeaderIcon = QIcon(":/heart.svg");
     m_speedHeaderIcon = QIcon(":/charSheet/run.svg");
 
@@ -24,8 +25,10 @@ InitiativeModel::InitiativeModel(QObject *parent)
                                                   [=](const QPixmap &px) { m_initHeaderIcon = QIcon(px); }, false);
     ThemedIconManager::instance().addPixmapTarget(":/shield.svg", this,
                                                   [=](const QPixmap &px) { m_acHeaderIcon = QIcon(px); }, false);
-    ThemedIconManager::instance().addPixmapTarget(":/heart.svg", this,
+    ThemedIconManager::instance().addPixmapTarget(":/heart-broken.svg", this,
                                                   [=](const QPixmap &px) { m_hpHeaderIcon = QIcon(px); }, false);
+    ThemedIconManager::instance().addPixmapTarget(":/heart.svg", this,
+                                                  [=](const QPixmap &px) { m_hpMaxHeaderIcon = QIcon(px); }, false);
     ThemedIconManager::instance().addPixmapTarget(":/charSheet/run.svg", this,
                                                   [=](const QPixmap &px) { m_speedHeaderIcon = QIcon(px); }, false);
 
@@ -91,7 +94,7 @@ QVariant InitiativeModel::headerData(int section, Qt::Orientation orientation, i
         case fields::statuses: return "statuses";
         case fields::Ac: return m_acHeaderIcon;
         case fields::hp: return m_hpHeaderIcon;
-        case fields::maxHp: return tr("Max");
+        case fields::maxHp: return m_hpMaxHeaderIcon;
         default: return {};
     }
 }
