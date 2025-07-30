@@ -579,7 +579,7 @@
     <message>
         <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="361"/>
         <source>Reset</source>
-        <translation>Reset rounds</translation>
+        <translation>Reset</translation>
     </message>
     <message>
         <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="140"/>
