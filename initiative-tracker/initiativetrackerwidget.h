@@ -34,6 +34,7 @@ public:
     explicit InitiativeTrackerWidget(QWidget *parent = nullptr, InitiativeModel *sharedModel = nullptr);
 
     void setBaseDir(QString dirPath = "");
+
 signals:
     void fieldVisibilityChanged(int field, bool hidden);
     void columnHidden(int  column);
@@ -51,6 +52,8 @@ public slots:
 
     void addCharacter(const QJsonDocument& characterDocument);
     void addCharacter(QString name, int maxHp, int ac = 10, int hp = 0, int initiative = 0, int speed = 30);
+
+    void updateTranslator();
 
 protected:
     int m_currentRound = 1;

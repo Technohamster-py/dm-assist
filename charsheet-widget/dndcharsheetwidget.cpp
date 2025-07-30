@@ -840,3 +840,7 @@ QString DndCharsheetWidget::bonusFromString(const QString& string) {
     QString bonus = string.split(": ").value(1);
     return bonus.startsWith("-") ? bonus : "+" + bonus;
 }
+
+void DndCharsheetWidget::updateTranslator() {
+    ui->retranslateUi(this);
+}

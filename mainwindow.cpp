@@ -45,6 +45,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     rollWidget = new RollWidget(ui->leftAsideWidget);
+    connect(this, &MainWindow::translatorChanged, rollWidget, &RollWidget::updateTranslator);
     ui->rollLayout->addWidget(rollWidget);
 
     campaignTreeWidget = new CampaignTreeWidget(ui->leftAsideWidget);
@@ -79,6 +80,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(campaignTreeWidget, &CampaignTreeWidget::characterOpenRequested, this, [=](const QString& path){
         auto* charsheetWidget = new DndCharsheetWidget(path);
         connect(charsheetWidget, &DndCharsheetWidget::rollRequested, rollWidget, &RollWidget::executeRoll);
+        connect(this, &MainWindow::translatorChanged, charsheetWidget, &DndCharsheetWidget::updateTranslator);
         charsheetWidget->show();
     });
     connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);
@@ -128,6 +130,7 @@ void MainWindow::changeLanguage(const QString &languageCode) {
         qApp->installTranslator(&translator);
         currentLanguage = languageCode;
         ui->retranslateUi(this);
+        emit translatorChanged();
     }
 }
 
@@ -798,6 +801,7 @@ void MainWindow::setupCampaign(const QString campaignRoot) {
 void MainWindow::setupPlayers() {
     for (int i = 0; i < 9; ++i) {
         auto *player = new MusicPlayerWidget(this, i + 1, QString("Player %1").arg(i + 1));
+        connect(this, &MainWindow::translatorChanged, player, &MusicPlayerWidget::updateTranslator);
         players.append(player);
     }
 
@@ -1259,6 +1263,7 @@ void MainWindow::setupTracker() {
     connect(campaignTreeWidget, &CampaignTreeWidget::encounterReplaceRequested, initiativeTrackerWidget, &InitiativeTrackerWidget::loadFromFile);
     connect(campaignTreeWidget, &CampaignTreeWidget::encounterAddRequested, initiativeTrackerWidget, &InitiativeTrackerWidget::addFromFile);
     connect(campaignTreeWidget, &CampaignTreeWidget::encounterReplaceRequested, initiativeTrackerWidget, &InitiativeTrackerWidget::loadFromFile);
+    connect(this, &MainWindow::translatorChanged, initiativeTrackerWidget, &InitiativeTrackerWidget::updateTranslator);
 }
 
 /**

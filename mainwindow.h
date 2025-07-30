@@ -56,6 +56,7 @@ public:
     void changeLanguage(const QString &languageCode);
 
 signals:
+    void translatorChanged();
 
 public slots:
     void stopAll();

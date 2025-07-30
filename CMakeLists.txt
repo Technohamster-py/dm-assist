@@ -109,7 +109,7 @@ include_directories(
 )
 
 qt_add_translation(QM_FILES ${TS_FILES})
-add_custom_target(translations DEPENDS ${QM_FILES})
+#add_custom_target(translations DEPENDS ${QM_FILES})
 
 add_executable(${PROJECT_NAME}
 #        WIN32
@@ -120,7 +120,7 @@ add_executable(${PROJECT_NAME}
 )
 
 target_sources(${PROJECT_NAME} PRIVATE ${QM_FILES})
-add_dependencies(${PROJECT_NAME} translations)
+#add_dependencies(${PROJECT_NAME} translations)
 
 target_link_libraries(${PROJECT_NAME}
         Qt6::Core

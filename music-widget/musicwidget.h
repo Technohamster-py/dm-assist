@@ -65,6 +65,7 @@ public slots:
     void stop();
     void edit();
     void setVolume(int volume);
+    void updateTranslator();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;

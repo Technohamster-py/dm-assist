@@ -202,3 +202,7 @@ void RollWidget::connectButtons() {
     });
 
 }
+
+void RollWidget::updateTranslator() {
+    ui->retranslateUi(this);
+}

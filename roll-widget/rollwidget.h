@@ -28,6 +28,7 @@ public slots:
     int executeRoll(QString command);
     void addDieToExpression(const QString& dieCode, bool rightClick);
     void setCompactMode(bool mode);
+    void updateTranslator();
 
 protected:
     QString m_lastRoll = "";

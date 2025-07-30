@@ -608,6 +608,10 @@ void MusicPlayerWidget::on_muteButton_clicked() {
     }
 }
 
+void MusicPlayerWidget::updateTranslator() {
+    ui->retranslateUi(this);
+}
+
 ////////////////////////////////////////////////
 /////////       PlaylistEditDialog            ///////
 ////////////////////////////////////////////////

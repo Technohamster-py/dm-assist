@@ -40,6 +40,8 @@ public:
     static int proficiencyByLevel(int level) {return level / 5 + 2;};
     static QJsonArray serializeHtmlToJson(const QString &html);
 
+public slots:
+    void updateTranslator();
 private:
     Ui::DndCharsheetWidget *ui;
 

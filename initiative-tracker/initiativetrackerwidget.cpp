@@ -435,3 +435,7 @@ void InitiativeTrackerWidget::setBaseDir(QString dirPath) {
     else
         m_baseDirectoryPath = dirPath;
 }
+
+void InitiativeTrackerWidget::updateTranslator() {
+    ui->retranslateUi(this);
+}
