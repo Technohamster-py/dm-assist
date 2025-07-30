@@ -573,8 +573,13 @@
     </message>
     <message>
         <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="358"/>
+        <source>Reset rounds counter</source>
+        <translation>Сбросить счестчик раундов</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="361"/>
         <source>Reset</source>
-        <translation>Сбросить раунды</translation>
+        <translation>Сбросить</translation>
     </message>
     <message>
         <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="140"/>
