@@ -112,7 +112,7 @@ qt_add_translation(QM_FILES ${TS_FILES})
 #add_custom_target(translations DEPENDS ${QM_FILES})
 
 add_executable(${PROJECT_NAME}
-#        WIN32
+        WIN32
         main.cpp
         ${FILES}
         ${UI_FILES}
