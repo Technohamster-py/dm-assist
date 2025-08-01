@@ -57,6 +57,7 @@ set(FILES
         settings.h
         theme-manager/thememanager.h theme-manager/thememanager.cpp
         theme-manager/themediconmanager.h theme-manager/themediconmanager.cpp
+        updatechecker.h updatechecker.cpp
 )
 
 set(UI_FILES
@@ -101,6 +102,7 @@ include_directories(
         ${Qt6Sql_INCLUDE_DIRS}
         ${Qt6Multimedia_INCLUDE_DIRS}
         ${BASS_INCLUDE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}
         translations
         static
         theme-manager
