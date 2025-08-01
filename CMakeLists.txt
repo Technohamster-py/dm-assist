@@ -70,6 +70,8 @@ set(UI_FILES
         roll-widget/rollwidget.ui
         initiative-tracker/statuseditdialog.ui
         settingsdialog.ui
+        tutorial/tutorialmanager.cpp
+        tutorial/tutorialmanager.h
 )
 
 set(TS_FILES
