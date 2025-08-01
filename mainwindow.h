@@ -21,6 +21,7 @@
 #include "music-widget/musicwidget.h"
 #include "roll-widget/rollwidget.h"
 #include "settingsdialog.h"
+#include "updatechecker.h"
 
 
 static QMap<QString, QString> sourcesMap = {
@@ -69,6 +70,8 @@ public slots:
     void openSharedMapWindow(int index);
     void slotExportMap(int index);
 
+    void handleUpdates(bool hasUpdates);
+
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dropEvent(QDropEvent *event) override;
@@ -76,6 +79,7 @@ protected:
 private:
     Ui::MainWindow *ui;
     QTranslator translator;
+    UpdateChecker* updateChecker;
     QString currentLanguage;
     QString currentCampaignDir;
     QString defaultCampaignDir;
@@ -106,7 +110,7 @@ private:
 
     RollWidget* rollWidget;
 
-    void setupCampaign(const QString campaignRoot);
+    void setupCampaign(QString campaignRoot);
     void setupPlayers();
     void setupTracker();
     void setupToolbar();

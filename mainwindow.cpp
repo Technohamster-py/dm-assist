@@ -44,6 +44,9 @@ MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
+    updateChecker = new UpdateChecker(VERSION, RELEASES_URL, this);
+    ui->updateBanner->hide();
+
     rollWidget = new RollWidget(ui->leftAsideWidget);
     connect(this, &MainWindow::translatorChanged, rollWidget, &RollWidget::updateTranslator);
     ui->rollLayout->addWidget(rollWidget);
@@ -72,6 +75,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::setVolumeDivider);
     connect(ui->actionReload, &QAction::triggered, [=](){setupCampaign(campaignTreeWidget->root());});
     connect(ui->actionAddCharacter, &QAction::triggered, this, &MainWindow::addCharacter);
+    connect(ui->actionCheck, &QAction::triggered, [=](){updateChecker->checkFotUpdates();});
+    connect(updateChecker, &UpdateChecker::updateCheckFinished, this, &MainWindow::handleUpdates);
 
     connect(campaignTreeWidget, &CampaignTreeWidget::characterAddRequested, this, [=](const QString& path) {
         DndCharsheetWidget character(path);
@@ -93,6 +98,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     loadSettings();
     saveSettings();
+
+    updateChecker->checkFotUpdates();
 }
 
 /**
@@ -1437,6 +1444,17 @@ void MainWindow::showSourcesMessageBox(const QMap<QString, QString> &sources)
     msgBox.layout()->addWidget(textBrowser);
 
     msgBox.exec();
+}
+
+void MainWindow::handleUpdates(bool hasUpdates) {
+    if (hasUpdates){
+        QString latest = updateChecker->latestVersion();
+        QString latestUrl = updateChecker->latestUrl();
+        ui->updateBanner->setCurrentVersion(VERSION);
+        ui->updateBanner->setLatestVersion(latest);
+        ui->updateBanner->setUrl(latestUrl);
+        ui->updateBanner->show();
+    }
 }
 
 
