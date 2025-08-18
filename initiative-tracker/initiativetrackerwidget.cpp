@@ -353,7 +353,7 @@ void InitiativeTrackerWidget::addFromFile(const QString& filename) {
  */
 void InitiativeTrackerWidget::on_addFromFileButton_clicked() {
     QString filename = QFileDialog::getOpenFileName(this,
-                                                    tr("Save encounter to file"),
+                                                    tr("Add encounter from file"),
                                                     QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
                                                     "Xml file (*.xml)");
     addFromFile(filename);
@@ -438,4 +438,56 @@ void InitiativeTrackerWidget::setBaseDir(QString dirPath) {
 
 void InitiativeTrackerWidget::updateTranslator() {
     ui->retranslateUi(this);
+}
+
+void InitiativeTrackerWidget::setupTutorial() {
+    m_tutorialSteps.clear();
+
+    TutorialStep viewStep;
+    viewStep.target = ui->table;
+    viewStep.title = tr("Tracker");
+    viewStep.description = tr("Here is your encounter is displayed. \n You can see Name, Initiative, AC, current and max HP and also statuses and conditions");
+    m_tutorialSteps.append(viewStep);
+
+    TutorialStep roundStep;
+    roundStep.target = ui->roundLabel;
+    roundStep.title = tr("Rounds");
+    roundStep.description = tr("Round counter");
+    m_tutorialSteps.append(roundStep);
+
+    TutorialStep resetStep;
+    resetStep.target = ui->resetButton;
+    resetStep.title = tr("Reset");
+    resetStep.title = tr("Reset round counter");
+    m_tutorialSteps.append(resetStep);
+
+    TutorialStep nextStep;
+    nextStep.target = ui->nextButton;
+    nextStep.title = tr("Next character");
+    nextStep.description = tr("Click here or press PgDown to move to next character");
+    m_tutorialSteps.append(nextStep);
+
+    TutorialStep prevStep;
+    prevStep.target = ui->backButton;
+    nextStep.title = tr("Previous character");
+    prevStep.title = tr("Click here or press PgUp to move to previous character");
+    m_tutorialSteps.append(prevStep);
+
+    TutorialStep shareStep;
+    shareStep.target = ui->shareButton;
+    shareStep.title = tr("Share");
+    shareStep.description = tr("Open shared window for your players. \n It will synchronized with main view.");
+    m_tutorialSteps.append(shareStep);
+
+    TutorialStep modeStep;
+    modeStep.target = ui->hpModeBox;
+    modeStep.title = tr("HP display mode");
+    modeStep.description = tr("You can select HP display mode in shared window");
+    m_tutorialSteps.append(modeStep);
+
+    TutorialStep hpStep;
+    hpStep.target = ui->table;
+    hpStep.title = tr("HP evaluation");
+    hpStep.description = tr("You can enter simple arithmetic expressions in the HP column to ease calculations. They are evaluated once the cell loses focus.");
+    m_tutorialSteps.append(hpStep);
 }

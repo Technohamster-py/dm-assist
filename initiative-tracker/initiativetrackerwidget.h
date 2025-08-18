@@ -11,7 +11,7 @@
 #include "initiativemodel.h"
 #include <QJsonDocument>
 #include <QJsonObject>
-
+#include "tutorialstep.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -35,6 +35,7 @@ public:
 
     void setBaseDir(QString dirPath = "");
 
+    QVector<TutorialStep> getTutorialSteps() {setupTutorial(); return m_tutorialSteps;};
 signals:
     void fieldVisibilityChanged(int field, bool hidden);
     void columnHidden(int  column);
@@ -58,6 +59,9 @@ public slots:
 protected:
     int m_currentRound = 1;
     virtual void setupHeaderStretchPolicy();
+
+    QVector<TutorialStep> m_tutorialSteps;
+    void setupTutorial();
 
 protected slots:
     void addRow();
