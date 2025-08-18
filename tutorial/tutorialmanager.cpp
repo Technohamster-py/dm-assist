@@ -80,6 +80,7 @@ TutorialManager::TutorialManager(QWidget *parentWindow): QObject(parentWindow), 
     connect(m_prevButton, &QPushButton::clicked, this, &TutorialManager::prevStep);
     connect(m_closeButton, &QPushButton::clicked, this, &TutorialManager::cancel);
 
+    m_opacityEffect = new QGraphicsOpacityEffect(m_instructionWidget);
     m_instructionWidget->setGraphicsEffect(m_opacityEffect);
     m_fadeAnimation = new QPropertyAnimation(m_opacityEffect, "opacity");
     m_fadeAnimation->setDuration(400);
