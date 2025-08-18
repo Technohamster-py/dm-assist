@@ -361,6 +361,7 @@
      <string>About</string>
     </property>
     <addaction name="actionHelp"/>
+    <addaction name="actionTutorial"/>
     <addaction name="actionDonate"/>
     <addaction name="actionReport_bug"/>
     <addaction name="actionSources"/>
@@ -492,6 +493,11 @@
   <action name="actionSources">
    <property name="text">
     <string>Sources</string>
+   </property>
+  </action>
+  <action name="actionTutorial">
+   <property name="text">
+    <string>Show Tutorial</string>
    </property>
   </action>
  </widget>

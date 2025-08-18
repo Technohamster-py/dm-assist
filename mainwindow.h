@@ -21,7 +21,7 @@
 #include "music-widget/musicwidget.h"
 #include "roll-widget/rollwidget.h"
 #include "settingsdialog.h"
-
+#include "tutorialmanager.h"
 
 static QMap<QString, QString> sourcesMap = {
         {"Icons for initiative statuses", "https://ttg.club/"}
@@ -68,6 +68,8 @@ public slots:
 
     void openSharedMapWindow(int index);
     void slotExportMap(int index);
+
+    void showTutorial();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
@@ -116,6 +118,9 @@ private:
 
     SettingsDialog *settingsDialog = nullptr;
     Settings paths;
+
+    TutorialManager* tutorialManager = nullptr;
+    bool tutorialShown;
 
 private slots:
     void newCampaign();

@@ -93,6 +93,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     loadSettings();
     saveSettings();
+
+    connect(ui->actionTutorial, &QAction::triggered, this, &MainWindow::showTutorial);
+
+    if (!tutorialShown)
+        showTutorial();
 }
 
 /**
@@ -387,6 +392,7 @@ void MainWindow::loadSettings() {
     if (!dir.exists())
         dir.mkpath(".");
     defaultCampaignDir = settings.value(paths.general.defaultCampaignDir, "").toString();
+    tutorialShown = settings.value(paths.general.tutorialShown).toBool();
     /// Music
     for (MusicPlayerWidget *player : players) {
         player->setAudioOutput(settings.value(paths.general.audioDevice, 0).toInt());
@@ -730,6 +736,7 @@ void MainWindow::saveMusicConfigFile(const QString& fileName) {
 void MainWindow::saveSettings() {
     QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
     settings.setValue(paths.general.dir, workingDir);
+    settings.setValue(paths.general.tutorialShown, tutorialShown);
     settings.setValue(paths.general.volume, ui->volumeSlider->value());
     settings.setValue(paths.general.defaultCampaignDir, defaultCampaignDir);
     settings.setValue(paths.session.campaign, campaignTreeWidget->root());
@@ -1437,6 +1444,17 @@ void MainWindow::showSourcesMessageBox(const QMap<QString, QString> &sources)
     msgBox.layout()->addWidget(textBrowser);
 
     msgBox.exec();
+}
+
+void MainWindow::showTutorial() {
+    delete tutorialManager;
+    tutorialManager = new TutorialManager(this);
+    tutorialManager->addSteps(campaignTreeWidget->getTutorialSteps());
+    tutorialManager->addSteps(players[0]->getTutorialSteps());
+    tutorialManager->addSteps(initiativeTrackerWidget->getTutorialSteps());
+
+    tutorialManager->start();
+    tutorialShown = true;
 }
 
 
