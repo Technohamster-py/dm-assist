@@ -3,6 +3,7 @@
 #include <QTreeWidget>
 #include <QDir>
 #include "hoverwidget.h"
+#include "tutorialstep.h"
 
 class CampaignTreeWidget : public QTreeWidget{
     Q_OBJECT
@@ -12,6 +13,8 @@ public:
     bool setRootDir(const QString &rootPath);
     QString root() const {return m_rootPath;};
     QString campaignName() const {return m_campaignName;};
+
+    QVector<TutorialStep> getTutorialSteps() {setupTutorial(); return m_tutorialSteps;};
 signals:
     void characterOpenRequested(const QString& path);
     void characterAddRequested(const QString& path);
@@ -25,6 +28,10 @@ signals:
 
 public slots:
     void showContextMenu(const QPoint &pos);
+
+protected:
+    QVector<TutorialStep> m_tutorialSteps;
+    void setupTutorial();
 
 private:
     void populateTree(const QString &path, QTreeWidgetItem *parentItem);

@@ -3,7 +3,6 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QHBoxLayout>
-#include <QVBoxLayout>
 
 TutorialOverlay::TutorialOverlay(QWidget *parent): QWidget(parent) {
     setAttribute(Qt::WA_TransparentForMouseEvents, false);

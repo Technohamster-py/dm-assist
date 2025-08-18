@@ -270,3 +270,12 @@ void CampaignTreeWidget::showContextMenu(const QPoint &pos) {
 
     menu.exec(this->mapToGlobal(pos));
 }
+
+void CampaignTreeWidget::setupTutorial() {
+    m_tutorialSteps.clear();
+
+    TutorialStep treeStep;
+    treeStep.target = this;
+    treeStep.title = tr("Campaign tree");
+    treeStep.description = tr("Here is your campaign files");
+}
