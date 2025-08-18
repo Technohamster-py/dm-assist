@@ -11,6 +11,7 @@
 #include <QStandardPaths>
 #include <QWidget>
 #include "bass.h"
+#include "tutorialstep.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MusicPlayerWidget; class PlaylistEditDialog;}
@@ -53,6 +54,7 @@ public:
 
     void playTrackAt(int index);
 
+    QVector<TutorialStep> getTutorialSteps() {setupTutorial(); return m_tutorialSteps;};
 
 signals:
     void playerStarted(int id);
@@ -70,6 +72,9 @@ public slots:
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dropEvent(QDropEvent *event) override;
+
+    QVector<TutorialStep> m_tutorialSteps;
+    void setupTutorial();
 
 private slots:
     void on_playButton_clicked();
@@ -93,8 +98,8 @@ private:
     bool isMuted = false;
     int prevVolume = 100;
 
-    QList<QString> filePaths;    // Список треков
-    QList<HSTREAM> streams;      // Потоки BASS
+    QList<QString> filePaths;
+    QList<HSTREAM> streams;
 
     int m_deviceIndex = -1;
 
@@ -115,9 +120,13 @@ public:
     QStringList getUpdatedPlaylist() const;
     QString getPlaylistName() const;
 
+    QVector<TutorialStep> getTutorialSteps() {setupTutorial(); return m_tutorialSteps;};
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dropEvent(QDropEvent *event) override;
+
+    QVector<TutorialStep> m_tutorialSteps;
+    void setupTutorial();
 
 private slots:
     void on_addButton_clicked();

@@ -612,6 +612,40 @@ void MusicPlayerWidget::updateTranslator() {
     ui->retranslateUi(this);
 }
 
+void MusicPlayerWidget::setupTutorial() {
+    m_tutorialSteps.clear();
+
+    TutorialStep playStep;
+    playStep.target = ui->playButton;
+    playStep.title = tr("Play");
+    playStep.description = tr("Click here to start music \n Or press %1").arg(playKey->key().toString());
+    m_tutorialSteps.append(playStep);
+
+    TutorialStep pauseStep;
+    pauseStep.target = ui->playButton;
+    pauseStep.title = tr("Pause");
+    pauseStep.description = tr("Click again to stop music");
+    m_tutorialSteps.append(playStep);
+
+    TutorialStep volumeStep;
+    volumeStep.target = ui->volumeSlider;
+    volumeStep.title = tr("Volume");
+    volumeStep.description = tr("Adjust volume here");
+    m_tutorialSteps.append(volumeStep);
+
+    TutorialStep muteStep;
+    muteStep.target = ui->muteButton;
+    muteStep.title = tr("Mute");
+    muteStep.description = tr("Click here to mute or unmute player");
+    m_tutorialSteps.append(muteStep);
+
+    TutorialStep editStep;
+    editStep.target = ui->editButton;
+    editStep.title = tr("Edit");
+    editStep.description = tr("Click here to edit playlist.");
+    m_tutorialSteps.append(editStep);
+}
+
 ////////////////////////////////////////////////
 /////////       PlaylistEditDialog            ///////
 ////////////////////////////////////////////////
@@ -732,4 +766,32 @@ void PlaylistEditDialog::dropEvent(QDropEvent *event) {
         for (const QString &file : files)
             ui->playlistWidget->addItem(file);
     }
+}
+
+void PlaylistEditDialog::setupTutorial() {
+    m_tutorialSteps.clear();
+
+    TutorialStep titleStep;
+    titleStep.target = ui->titleEdit;
+    titleStep.title = tr("Title");
+    titleStep.description = tr("You can edit playlist title here");
+    m_tutorialSteps.append(titleStep);
+
+    TutorialStep tracksStep;
+    tracksStep.target = ui->playlistWidget;
+    tracksStep.title = tr("Tracks");
+    tracksStep.description = tr("Your music files is visible here");
+    m_tutorialSteps.append(tracksStep);
+
+    TutorialStep addStep;
+    addStep.target = ui->addButton;
+    addStep.title = tr("Add");
+    addStep.description = tr("Click here to add music file from your computer");
+    m_tutorialSteps.append(addStep);
+
+    TutorialStep removeStep;
+    removeStep.target = ui->removeButton;
+    removeStep.title = tr("Remove");
+    removeStep.description = tr("select file below and click here to delete it from playlist");
+    m_tutorialSteps.append(removeStep);
 }
