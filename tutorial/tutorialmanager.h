@@ -6,12 +6,10 @@
 #include <QWidget>
 #include <QLabel>
 #include <QPushButton>
+#include <QGraphicsOpacityEffect>
+#include <QPropertyAnimation>
 
-struct TutorialStep {
-    QString title;
-    QString description;
-    QWidget* target;
-};
+#include "tutorialstep.h"
 
 
 class TutorialOverlay : public QWidget{
@@ -20,12 +18,15 @@ public:
     explicit TutorialOverlay(QWidget* parent = nullptr);
 
     void setTarget(QWidget* target);
+    void setInstructionWidget(QWidget* instr);
 
 protected:
     void paintEvent(QPaintEvent* event) override;
+    bool eventFilter(QObject* obj, QEvent* event) override;
 
 private:
     QWidget* m_target = nullptr;
+    QWidget* m_instructionWidget = nullptr;
 };
 
 
@@ -34,6 +35,7 @@ class TutorialManager : public QObject{
 public:
     explicit TutorialManager(QWidget* parentWindow);
 
+public slots:
     void addStep(const TutorialStep& step);
     void start();
     void nextStep();
@@ -42,17 +44,22 @@ public:
 
 private:
     void showCurrentStep();
+    void animateInstruction();
 
     QVector<TutorialStep> m_steps;
     int m_currentIndex = -1;
+
     QWidget* m_parentWindow;
     TutorialOverlay* m_overlay;
     QLabel* m_titleLabel;
     QLabel* m_descriptionLabel;
-    QPushButton* m_nextbutton;
+    QPushButton* m_nextButton;
     QPushButton* m_prevButton;
-    QPushButton* closeButton;
+    QPushButton* m_closeButton;
     QWidget* m_instructionWidget;
+
+    QGraphicsOpacityEffect* m_opacityEffect;
+    QPropertyAnimation* m_fadeAnimation;
 };
 
 
