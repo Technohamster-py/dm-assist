@@ -146,3 +146,7 @@ void TutorialManager::animateInstruction() {
     m_fadeAnimation->setEndValue(1.0);
     m_fadeAnimation->start();
 }
+
+void TutorialManager::addSteps(const QVector<TutorialStep>& steps) {
+    m_steps.append(steps);
+}

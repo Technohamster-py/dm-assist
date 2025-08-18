@@ -37,6 +37,7 @@ public:
 
 public slots:
     void addStep(const TutorialStep& step);
+    void addSteps(const QVector<TutorialStep>& steps);
     void start();
     void nextStep();
     void prevStep();
