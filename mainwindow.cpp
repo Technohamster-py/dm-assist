@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "map-widget/mapview.h"
 #include "charsheet-widget/dndcharsheetwidget.h"
+#include "bestiary/dndbestiarypage.h"
 
 #include <QDesktopServices>
 #include "QDomDocument"
@@ -84,6 +85,13 @@ MainWindow::MainWindow(QWidget *parent) :
         charsheetWidget->show();
     });
     connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);
+    connect(campaignTreeWidget, &CampaignTreeWidget::beastAddRequested, [=](const QString& path) {
+
+    });
+    connect(campaignTreeWidget, &CampaignTreeWidget::beastOpenRequested, [=](const QString& path){
+        auto* bestiaryPage = new DndBestiaryPage(path);
+        bestiaryPage->show();
+    });
     ui->campaignLayout->addWidget(campaignTreeWidget);
 
     ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/player/Volume-1.svg", ui->muteButton, &QAbstractButton::setIcon);

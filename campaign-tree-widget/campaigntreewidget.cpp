@@ -62,6 +62,8 @@ NodeType CampaignTreeWidget::determieNodeType(const QString &path)
         return NodeType::Map;
     if (path.contains("/Music"))
         return NodeType::Music;
+    if (path.contains("/Bestiary"))
+        return NodeType::Beast;
     return NodeType::Unknown;
 }
 
@@ -168,6 +170,9 @@ void CampaignTreeWidget::populateTree(const QString &path, QTreeWidgetItem *pare
             case NodeType::Map:
                 connect(widget, &HoverWidget::action1Clicked, this, [=](){ emit mapOpenRequested(fullPath); });
                 break;
+            case NodeType::Beast:
+                connect(widget, &HoverWidget::action1Clicked, [=](){emit beastOpenRequested(fullPath);});
+                connect(widget, &HoverWidget::action2Clicked, [=](){emit beastAddRequested(fullPath);});
             default:
                 break;
         }

@@ -20,6 +20,10 @@ public:
 
     static int bonusFromStat(int statValue) {return (statValue >= 10) ? (statValue - 10) / 2 : (statValue - 11) / 2;};
 
+    virtual void saveToFile(QString filePath = nullptr){};
+
+    virtual void addToInitiative(InitiativeTrackerWidget *initiativeTrackerWidget, bool autoRoll = false){};
+
 protected:
     DndBeast beastStruct;
     virtual void loadFromFile(QString filePath) override;

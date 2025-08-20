@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>BestiaryPage</class>
- <widget class="QWidget" name="BestiaryPage">
+ <class>DndBestiaryPage</class>
+ <widget class="QWidget" name="DndBestiaryPage">
   <property name="geometry">
    <rect>
     <x>0</x>
