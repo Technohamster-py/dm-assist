@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>583</width>
-    <height>684</height>
+    <height>793</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,6 +29,13 @@
      </property>
      <property name="text">
       <string notr="true">TextLabel</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="detailsLabel">
+     <property name="text">
+      <string>TextLabel</string>
      </property>
     </widget>
    </item>
@@ -858,18 +865,6 @@
    <item>
     <layout class="QFormLayout" name="formLayout_2">
      <item row="0" column="0">
-      <widget class="QLabel" name="davethrows">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Savethrows</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
       <widget class="QLabel" name="skills">
        <property name="font">
         <font>
@@ -881,7 +876,10 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
+     <item row="0" column="1">
+      <layout class="QHBoxLayout" name="skillsLayout"/>
+     </item>
+     <item row="1" column="0">
       <widget class="QLabel" name="DamageResistance">
        <property name="font">
         <font>
@@ -893,97 +891,7 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="damageImmunity">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Damage immunity</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="vulnerability">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Vulnerability</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="ConditionImmunity">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Condition immunity</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="0">
-      <widget class="QLabel" name="Feelings">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Feelings</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="0">
-      <widget class="QLabel" name="Languages">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Languages</string>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="0">
-      <widget class="QLabel" name="Danger">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Danger</string>
-       </property>
-      </widget>
-     </item>
-     <item row="9" column="0">
-      <widget class="QLabel" name="prof">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Proficiency bonus</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <layout class="QHBoxLayout" name="saveLayout"/>
-     </item>
      <item row="1" column="1">
-      <layout class="QHBoxLayout" name="skillsLayout"/>
-     </item>
-     <item row="2" column="1">
       <widget class="QLabel" name="drLabel">
        <property name="font">
         <font>
@@ -995,7 +903,19 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="2" column="0">
+      <widget class="QLabel" name="damageImmunity">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Damage immunity</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
       <widget class="QLabel" name="diLabel">
        <property name="font">
         <font>
@@ -1007,7 +927,19 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
+     <item row="3" column="0">
+      <widget class="QLabel" name="vulnerability">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Vulnerability</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
       <widget class="QLabel" name="dvLabel">
        <property name="font">
         <font>
@@ -1019,7 +951,19 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="1">
+     <item row="4" column="0">
+      <widget class="QLabel" name="ConditionImmunity">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Condition immunity</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
       <widget class="QLabel" name="ciLabel">
        <property name="font">
         <font>
@@ -1031,7 +975,19 @@
        </property>
       </widget>
      </item>
-     <item row="6" column="1">
+     <item row="5" column="0">
+      <widget class="QLabel" name="Feelings">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Feelings</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
       <widget class="QLabel" name="fellingsLabel">
        <property name="font">
         <font>
@@ -1043,7 +999,19 @@
        </property>
       </widget>
      </item>
-     <item row="7" column="1">
+     <item row="6" column="0">
+      <widget class="QLabel" name="Languages">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Languages</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
       <widget class="QLabel" name="langLabel">
        <property name="font">
         <font>
@@ -1055,7 +1023,19 @@
        </property>
       </widget>
      </item>
-     <item row="8" column="1">
+     <item row="7" column="0">
+      <widget class="QLabel" name="Danger">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Danger</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1">
       <widget class="QLabel" name="dangerLabel">
        <property name="font">
         <font>
@@ -1067,7 +1047,19 @@
        </property>
       </widget>
      </item>
-     <item row="9" column="1">
+     <item row="8" column="0">
+      <widget class="QLabel" name="prof">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Proficiency bonus</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
       <widget class="QLabel" name="profLabel">
        <property name="font">
         <font>
@@ -1080,6 +1072,35 @@
       </widget>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line_2">
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTextEdit" name="infoField">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>200</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background: palette(Window)</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

@@ -22,7 +22,7 @@ endif ()
 
 
 set(FILES
-        bestiary/bestiarypage.h bestiary/bestiarypage.cpp
+        bestiary/dndbestiarypage.h bestiary/dndbestiarypage.cpp
         campaign-tree-widget/campaigntreewidget.cpp campaign-tree-widget/campaigntreewidget.h
         campaign-tree-widget/hoverwidget.cpp    campaign-tree-widget/hoverwidget.h
         charsheet-widget/abstractcharsheetwidget.h
@@ -58,6 +58,7 @@ set(FILES
         settings.h
         theme-manager/thememanager.h theme-manager/thememanager.cpp
         theme-manager/themediconmanager.h theme-manager/themediconmanager.cpp
+        bestiary/dndbeaststructure.h
 )
 
 set(UI_FILES
@@ -71,7 +72,7 @@ set(UI_FILES
         roll-widget/rollwidget.ui
         initiative-tracker/statuseditdialog.ui
         settingsdialog.ui
-        bestiary/bestiarypage.ui
+        bestiary/dndbestiarypage.ui
 )
 
 set(TS_FILES
