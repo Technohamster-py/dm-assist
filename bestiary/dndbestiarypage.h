@@ -25,8 +25,8 @@ public:
     virtual void addToInitiative(InitiativeTrackerWidget *initiativeTrackerWidget, bool autoRoll = false){};
 
 protected:
-    DndBeast beastStruct;
     virtual void loadFromFile(QString filePath) override;
+    QMap<QString, QList<BestiaryItem>> descriptionSections;
 
 private:
     Ui::DndBestiaryPage *ui;

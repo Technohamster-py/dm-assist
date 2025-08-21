@@ -147,11 +147,31 @@ void DndBestiaryPage::loadFromFile(QString filePath) {
 
     /// Description
     QJsonArray items = root["items"].toArray();
-    QString description;
 
     for (const auto& itemVal : items) {
         QJsonObject item = itemVal.toObject();
-        description += QString("<b>%1</b>: %2").arg(item.value("name").toString(), item["system"].toObject()["description"].toObject().value("value").toString());
+        BestiaryItem bestiaryItem;
+
+        bestiaryItem.name = item.value("name").toString();
+        bestiaryItem.description = item["system"].toObject().value("description").toObject().value("value").toString().split("<div class=\"rd__spc-inline-post\"></div>")[0].replace(QRegularExpression(R"(@Compendium\[([^\]]+)\])"), "");
+
+        QString activationType = item["system"].toObject()["activation"].toObject().value("type").toString();
+        if (activationType == "legendary" || activationType == "lair" || activationType == "action" && item.value("type").toString() != "spell")
+            bestiaryItem.type = activationType;
+        else
+            bestiaryItem.type = item.value("type").toString();
+        bestiaryItem.activationCost = item["system"].toObject()["activation"].toObject().value("cost").toInt();
+
+        descriptionSections[bestiaryItem.type].append(bestiaryItem);
     }
+
+    QString description;
+    for (const auto& sectionTitle : descriptionSections.keys()){
+        description += QString("<H1>%1</H1>").arg(sectionTitle);
+        for (const auto& item : descriptionSections[sectionTitle]) {
+            description += QString("<H2>%1</H2>%2").arg(item.name, item.description);
+        }
+    }
+
     ui->infoField->setText(description);
 }
