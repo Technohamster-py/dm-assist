@@ -153,7 +153,12 @@ void DndBestiaryPage::loadFromFile(QString filePath) {
         BestiaryItem bestiaryItem;
 
         bestiaryItem.name = item.value("name").toString();
-        bestiaryItem.description = item["system"].toObject().value("description").toObject().value("value").toString().split("<div class=\"rd__spc-inline-post\"></div>")[0].replace(QRegularExpression(R"(@Compendium\[([^\]]+)\])"), "");
+        QString desc = item["system"].toObject().value("description").toObject().value("value").toString().split("<div class=\"rd__spc-inline-post\"></div>")[0];
+        desc.replace(QRegularExpression(R"(@Compendium\[([^\]]+)\])"), "");
+        desc.replace("<hr />", " ");
+        desc.replace("{", "<u>");
+        desc.replace("}", "</u>");
+        bestiaryItem.description = desc;
 
         QString activationType = item["system"].toObject()["activation"].toObject().value("type").toString();
         if (activationType == "legendary" || activationType == "lair" || activationType == "action" && item.value("type").toString() != "spell")
