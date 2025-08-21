@@ -92,8 +92,16 @@ void DndBestiaryPage::loadFromFile(QString filePath) {
 
     ui->fellingsLabel->setText(senses);
 
-    /// Spell casting
 
+    /// Languages
+    QJsonObject traitsObj = systemObj["traits"].toObject();
+    QJsonArray languagesList = traitsObj["languages"].toObject()["value"].toArray();
+    QString languages = "";
+    for (const auto& langVal: languagesList) {
+        languages += QString("%1, ").arg(langVal.toString());
+    }
+    languages += traitsObj["languages"].toObject().value("custom").toString();
+    ui->langLabel->setText(languages);
 
     /// Abilities
     QJsonObject abilitiesObj = systemObj["abilities"].toObject();
