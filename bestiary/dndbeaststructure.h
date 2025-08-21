@@ -3,9 +3,8 @@
 
 #include <QString>
 #include <QMap>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QJsonArray>
+#include <QObject>
+
 
 
 struct BestiaryItem {

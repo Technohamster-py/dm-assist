@@ -28,8 +28,17 @@ protected:
     virtual void loadFromFile(QString filePath) override;
     QMap<QString, QList<BestiaryItem>> descriptionSections;
 
+    QMap<QString, QString> typeToHeader {
+            {"action", tr("Actions")},
+            {"feat", tr("Feats")},
+            {"lair", tr("Lair actions")},
+            {"legendary", tr("Legendary actions")},
+            {"spell", tr("Spells")}
+    };
+
 private:
     Ui::DndBestiaryPage *ui;
+    QString convertToHeader(QString type);
 };
 
 

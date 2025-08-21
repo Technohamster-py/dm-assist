@@ -3,6 +3,7 @@
 
 #include <QFile>
 #include <QMessageBox>
+#include <QJsonArray>
 
 
 DndBestiaryPage::DndBestiaryPage(QWidget *parent) :
@@ -172,11 +173,17 @@ void DndBestiaryPage::loadFromFile(QString filePath) {
 
     QString description;
     for (const auto& sectionTitle : descriptionSections.keys()){
-        description += QString("<H1>%1</H1>").arg(sectionTitle);
+        description += QString("<H1>%1</H1>").arg(convertToHeader(sectionTitle));
         for (const auto& item : descriptionSections[sectionTitle]) {
-            description += QString("<H2>%1</H2>%2").arg(item.name, item.description);
+            description += QString("<H3>%1</H3>%2").arg(item.name, item.description);
         }
     }
 
     ui->infoField->setText(description);
+}
+
+QString DndBestiaryPage::convertToHeader(QString type) {
+    if (! typeToHeader.keys().contains(type))
+        return type;
+    return typeToHeader[type];
 }
