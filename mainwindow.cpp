@@ -21,7 +21,6 @@
 #include <QSpinBox>
 #include <QJsonDocument>
 
-#include <QDebug>
 #include "theme-manager/thememanager.h"
 #include "theme-manager/themediconmanager.h"
 

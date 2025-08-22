@@ -21,6 +21,9 @@ public:
         return QRandomGenerator::global()->bounded(1, diceValue);
     };
 
+public slots:
+    virtual void updateTranslator() = 0;
+
 signals:
     void fileLoaded();
     void rollRequested(QString rollCommand);

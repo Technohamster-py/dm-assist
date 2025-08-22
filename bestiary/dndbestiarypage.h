@@ -22,7 +22,10 @@ public:
 
     virtual void saveToFile(QString filePath = nullptr){};
 
-    virtual void addToInitiative(InitiativeTrackerWidget *initiativeTrackerWidget, bool autoRoll = false){};
+    virtual void addToInitiative(InitiativeTrackerWidget *initiativeTrackerWidget, bool autoRoll = false);
+
+public slots:
+    void updateTranslator() override;
 
 protected:
     virtual void loadFromFile(QString filePath) override;

@@ -41,7 +41,7 @@ public:
     static QJsonArray serializeHtmlToJson(const QString &html);
 
 public slots:
-    void updateTranslator();
+    void updateTranslator() override;
 private:
     Ui::DndCharsheetWidget *ui;
 

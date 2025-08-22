@@ -233,3 +233,14 @@ QString DndBestiaryPage::convertToHeader(QString type) {
         return type;
     return typeToHeader[type];
 }
+
+void DndBestiaryPage::addToInitiative(InitiativeTrackerWidget *initiativeTrackerWidget, bool autoRoll) {
+    int initiative = 0;
+    if (autoRoll)
+        initiative = rollDice(20) + ui->dexBonusLabel->text().toInt();
+    initiativeTrackerWidget->addCharacter(ui->nameLabel->text(), ui->hpLabel->text().toInt(), ui->acLabel->text().toInt(), ui->hpLabel->text().toInt(), initiative);
+}
+
+void DndBestiaryPage::updateTranslator() {
+    ui->retranslateUi(this);
+}
