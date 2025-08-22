@@ -103,6 +103,44 @@ void DndBestiaryPage::loadFromFile(QString filePath) {
     languages += traitsObj["languages"].toObject().value("custom").toString();
     ui->langLabel->setText(languages);
 
+
+    /// Resistances and immunities
+    QJsonObject diObj = traitsObj["di"].toObject();
+    QJsonArray damageImmunityList = diObj["value"].toArray();
+    QString damageImmunity = "";
+    for (const auto& diVal : damageImmunityList) {
+        damageImmunity += QString("%1, ").arg(diVal.toString());
+    }
+    damageImmunity += diObj.value("custom").toString();
+    ui->diLabel->setText(damageImmunity);
+
+    QJsonObject drObj = traitsObj["dr"].toObject();
+    QJsonArray damageResistanceList = drObj["value"].toArray();
+    QString damageResistance = "";
+    for (const auto& drVal : damageResistanceList) {
+        damageResistance += QString("%1, ").arg(drVal.toString());
+    }
+    damageResistance += drObj.value("custom").toString();
+    ui->drLabel->setText(damageResistance);
+
+    QJsonObject ciObj = traitsObj["ci"].toObject();
+    QJsonArray conditionImmunityList = ciObj["value"].toArray();
+    QString conditionImmunity = "";
+    for (const auto& ciVal : conditionImmunityList) {
+        conditionImmunity += QString("%1, ").arg(ciVal.toString());
+    }
+    conditionImmunity += ciObj.value("custom").toString();
+    ui->ciLabel->setText(conditionImmunity);
+
+    QJsonObject dvObj = traitsObj["dv"].toObject();
+    QJsonArray damageVulnerabilityList = dvObj["value"].toArray();
+    QString damageVulnerability = "";
+    for (const auto& ciVal : damageVulnerabilityList) {
+        damageVulnerability += QString("%1, ").arg(ciVal.toString());
+    }
+    damageVulnerability += dvObj.value("custom").toString();
+    ui->dvLabel->setText(damageVulnerability);
+    
     /// Abilities
     QJsonObject abilitiesObj = systemObj["abilities"].toObject();
     int saveBonus;
