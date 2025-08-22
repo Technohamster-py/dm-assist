@@ -90,12 +90,12 @@
         <translation type="vanished">Структура кампейна</translation>
     </message>
     <message>
-        <location filename="../campaign-tree-widget/campaigntreewidget.cpp" line="202"/>
+        <location filename="../campaign-tree-widget/campaigntreewidget.cpp" line="207"/>
         <source>The selected folder does not contain campaign.json is not a campaign</source>
         <translation>Выбранная папка не содержит campaign.json и не является кампейном</translation>
     </message>
     <message>
-        <location filename="../campaign-tree-widget/campaigntreewidget.cpp" line="266"/>
+        <location filename="../campaign-tree-widget/campaigntreewidget.cpp" line="271"/>
         <source>Show in file system</source>
         <translation>Показать в файлах</translation>
     </message>
@@ -125,6 +125,184 @@
     <message>
         <source>Delete</source>
         <translation type="vanished">Удалить</translation>
+    </message>
+</context>
+<context>
+    <name>DndBestiaryPage</name>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="14"/>
+        <source>BestiaryPage</source>
+        <translation>Страница бестиария</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="38"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="114"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="200"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="283"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="644"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="671"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="698"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="752"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="908"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="932"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="956"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="980"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="1004"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="1034"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="1064"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="1088"/>
+        <source>TextLabel</source>
+        <translation>Название</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="256"/>
+        <source>DEX</source>
+        <translation>ЛОВ</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="393"/>
+        <source>WIS</source>
+        <translation>МДР</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="422"/>
+        <source>INT</source>
+        <translation>ИНТ</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="451"/>
+        <source>CHA</source>
+        <translation>ХАР</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="507"/>
+        <source>STR</source>
+        <translation>СИЛ</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="617"/>
+        <source>CON</source>
+        <translation>ТЕЛ</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="862"/>
+        <source>Saves</source>
+        <translation>Спасброски</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="881"/>
+        <source>Skills</source>
+        <translation>Навыки</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="896"/>
+        <source>Damage resistance</source>
+        <translation>Сопротивление урону</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="920"/>
+        <source>Damage immunity</source>
+        <translation>Иммунитет к урону</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="944"/>
+        <source>Vulnerability</source>
+        <translation>Уязвимость</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="968"/>
+        <source>Condition immunity</source>
+        <translation>Иммунитет к состояниям</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="992"/>
+        <source>Feelings</source>
+        <translation>Чувства</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="1016"/>
+        <source>Languages</source>
+        <translation>Языки</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="1052"/>
+        <source>Danger</source>
+        <translation>Уровень опасности</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="1076"/>
+        <source>Proficiency bonus</source>
+        <translation>Бонус умения</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.h" line="35"/>
+        <source>Actions</source>
+        <translation>Действия</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.h" line="36"/>
+        <source>Feats</source>
+        <translation>Умения</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.h" line="37"/>
+        <source>Lair actions</source>
+        <translation>Действия логова</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.h" line="38"/>
+        <source>Legendary actions</source>
+        <translation>Легендарные действия</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.h" line="39"/>
+        <source>Spells</source>
+        <translation>Заклинания</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.cpp" line="58"/>
+        <source>Walk: %1 %2</source>
+        <translation>Ходьба: %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.cpp" line="61"/>
+        <source>, Burrow: %1 %2</source>
+        <translation>, Копание: %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.cpp" line="64"/>
+        <source>, climb: %1 %2</source>
+        <translation>, лазание: %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.cpp" line="67"/>
+        <source>, fly: %1 %2</source>
+        <translation>, полет: %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.cpp" line="70"/>
+        <source>, swim: %1 %2</source>
+        <translation>, плавание: %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.cpp" line="80"/>
+        <source>Dark vision %1 %2</source>
+        <translation>Темное зрения %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.cpp" line="83"/>
+        <source>Blindsight %1 %2</source>
+        <translation>Слепозрение %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.cpp" line="86"/>
+        <source>Tremorsense %1 %2</source>
+        <translation>Чувство вибрации %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.cpp" line="89"/>
+        <source>Truesight %1 %2</source>
+        <translation>Истинное зрение %1 %2</translation>
     </message>
 </context>
 <context>
@@ -483,6 +661,7 @@
     <message>
         <location filename="../campaign-tree-widget/hoverwidget.cpp" line="95"/>
         <location filename="../campaign-tree-widget/hoverwidget.cpp" line="99"/>
+        <location filename="../campaign-tree-widget/hoverwidget.cpp" line="111"/>
         <source>Add to current encounter</source>
         <translation>Добавить к текущему энкаунтеру</translation>
     </message>
@@ -490,6 +669,11 @@
         <location filename="../campaign-tree-widget/hoverwidget.cpp" line="101"/>
         <source>Replace current encounter</source>
         <translation>Заменить текущий энкаунтер</translation>
+    </message>
+    <message>
+        <location filename="../campaign-tree-widget/hoverwidget.cpp" line="109"/>
+        <source>View</source>
+        <translation>Просмотр</translation>
     </message>
 </context>
 <context>
@@ -798,191 +982,191 @@
         <translation type="vanished">Сохраниеть проект?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="301"/>
+        <location filename="../mainwindow.cpp" line="308"/>
         <source>Open player config file</source>
         <translation>Открыть конфигурационный файл проекта</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="303"/>
+        <location filename="../mainwindow.cpp" line="310"/>
         <source>Xml file (*.xml)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="311"/>
+        <location filename="../mainwindow.cpp" line="318"/>
         <source>Open File error</source>
         <translation>Open file error</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="486"/>
-        <location filename="../mainwindow.cpp" line="688"/>
+        <location filename="../mainwindow.cpp" line="493"/>
+        <location filename="../mainwindow.cpp" line="695"/>
         <source>Open file error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="178"/>
+        <location filename="../mainwindow.cpp" line="185"/>
         <source>Open Map Image</source>
         <translation>Открыть изображение карты</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="180"/>
+        <location filename="../mainwindow.cpp" line="187"/>
         <source>Map Files (*.dam);;Images (*.png *.jpg *.bmp)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="277"/>
+        <location filename="../mainwindow.cpp" line="284"/>
         <source>Open campaign directory</source>
         <translation>Открыть папку кампейна</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="477"/>
+        <location filename="../mainwindow.cpp" line="484"/>
         <source>Can&apos;t create subdirectory: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="579"/>
+        <location filename="../mainwindow.cpp" line="586"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="579"/>
+        <location filename="../mainwindow.cpp" line="586"/>
         <source>Failed to open map file.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="913"/>
+        <location filename="../mainwindow.cpp" line="920"/>
         <source>ruler</source>
         <translation>Линейка</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="925"/>
+        <location filename="../mainwindow.cpp" line="932"/>
         <source>calibrate</source>
         <translation>Калибровать</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="960"/>
+        <location filename="../mainwindow.cpp" line="967"/>
         <source>Add fog to map</source>
         <translation>Добавить туман на карту</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="967"/>
+        <location filename="../mainwindow.cpp" line="974"/>
         <source>Hide all</source>
         <translation>Скрыть все</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="993"/>
+        <location filename="../mainwindow.cpp" line="1000"/>
         <source>Remove fog from map</source>
         <translation>Убрать туман с карты</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1000"/>
+        <location filename="../mainwindow.cpp" line="1007"/>
         <source>Reveal all</source>
         <translation>Проявить все</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1027"/>
+        <location filename="../mainwindow.cpp" line="1034"/>
         <source>Edit light sources</source>
         <translation>Изменение источников света</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1032"/>
+        <location filename="../mainwindow.cpp" line="1039"/>
         <source>Bright radius</source>
         <translation>Радиус яркого света</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1039"/>
+        <location filename="../mainwindow.cpp" line="1046"/>
         <source>Dim radius</source>
         <translation>Радиус туслого света</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1073"/>
+        <location filename="../mainwindow.cpp" line="1080"/>
         <source>Update fog</source>
         <translation>Обновлять туман</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1090"/>
+        <location filename="../mainwindow.cpp" line="1097"/>
         <source>Draw line</source>
         <translation>Нарисовать линию</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1111"/>
+        <location filename="../mainwindow.cpp" line="1118"/>
         <source>Draw circle</source>
         <translation>Нарисовать круг</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1132"/>
+        <location filename="../mainwindow.cpp" line="1139"/>
         <source>Draw square</source>
         <translation>Нарисовать квадрат</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1153"/>
+        <location filename="../mainwindow.cpp" line="1160"/>
         <source>Draw triangle</source>
         <translation>Нарисовать треугольник</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1175"/>
+        <location filename="../mainwindow.cpp" line="1182"/>
         <source>Brush</source>
         <translation>Кисть</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1182"/>
+        <location filename="../mainwindow.cpp" line="1189"/>
         <source>Clear all</source>
         <translation>Очистить все</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1204"/>
+        <location filename="../mainwindow.cpp" line="1211"/>
         <source>Brush opacity</source>
         <translation>Прозрачность кисти</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1238"/>
+        <location filename="../mainwindow.cpp" line="1245"/>
         <source>Height</source>
         <translation>Высота</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1331"/>
+        <location filename="../mainwindow.cpp" line="1338"/>
         <source>Chose character name</source>
         <translation>Введите имя персонажа</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1332"/>
+        <location filename="../mainwindow.cpp" line="1339"/>
         <source>Character name:</source>
         <translation>Имя персонажа:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1340"/>
-        <location filename="../mainwindow.cpp" line="1352"/>
-        <location filename="../mainwindow.cpp" line="1362"/>
+        <location filename="../mainwindow.cpp" line="1347"/>
+        <location filename="../mainwindow.cpp" line="1359"/>
+        <location filename="../mainwindow.cpp" line="1369"/>
         <source>Can&apos;t add character</source>
         <translation>Невозможно добавить персонажа</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1340"/>
+        <location filename="../mainwindow.cpp" line="1347"/>
         <source>Open campaign first!</source>
         <translation>Сначала откройте кампанию!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1352"/>
+        <location filename="../mainwindow.cpp" line="1359"/>
         <source>Character already exists 
  Override?</source>
         <translation>Персонаж уже существует \n Перезаписать?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1362"/>
+        <location filename="../mainwindow.cpp" line="1369"/>
         <source>Unknown error</source>
         <translation>Неизвестная ошибка</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1405"/>
+        <location filename="../mainwindow.cpp" line="1412"/>
         <source>Load campaign?</source>
         <translation>Загрузить кампанию?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1406"/>
+        <location filename="../mainwindow.cpp" line="1413"/>
         <source>Load campaign from %1?</source>
         <translation>Загрузить кампанию из %1?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="227"/>
+        <location filename="../mainwindow.cpp" line="234"/>
         <source>Save map to file</source>
         <translation>Сохранить карту</translation>
     </message>
