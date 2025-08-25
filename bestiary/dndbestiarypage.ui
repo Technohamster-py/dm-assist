@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>560</width>
-    <height>724</height>
+    <height>923</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1102,7 +1102,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QTextEdit" name="infoField">
+    <widget class="RollTextBrowser" name="infoField">
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -1122,6 +1122,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>RollTextBrowser</class>
+   <extends>QTextBrowser</extends>
+   <header location="global">rolltextbrowser.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../static/app_resources.qrc"/>
  </resources>

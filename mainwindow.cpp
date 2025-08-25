@@ -85,10 +85,13 @@ MainWindow::MainWindow(QWidget *parent) :
     });
     connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);
     connect(campaignTreeWidget, &CampaignTreeWidget::beastAddRequested, [=](const QString& path) {
-
+        DndBestiaryPage beast(path);
+        beast.addToInitiative(initiativeTrackerWidget, autoRoll);
     });
     connect(campaignTreeWidget, &CampaignTreeWidget::beastOpenRequested, [=](const QString& path){
         auto* bestiaryPage = new DndBestiaryPage(path);
+        connect(bestiaryPage, &DndCharsheetWidget::rollRequested, rollWidget, &RollWidget::executeRoll);
+        connect(this, &MainWindow::translatorChanged, bestiaryPage, &DndBestiaryPage::updateTranslator);
         bestiaryPage->show();
     });
     ui->campaignLayout->addWidget(campaignTreeWidget);

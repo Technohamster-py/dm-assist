@@ -1,6 +1,8 @@
 #ifndef DM_ASSIST_DNDBESTIARYPAGE_H
 #define DM_ASSIST_DNDBESTIARYPAGE_H
 
+#include <utility>
+
 #include "../charsheet-widget/abstractcharsheetwidget.h"
 #include "dndbeaststructure.h"
 
@@ -23,6 +25,7 @@ public:
     virtual void saveToFile(QString filePath = nullptr){};
 
     virtual void addToInitiative(InitiativeTrackerWidget *initiativeTrackerWidget, bool autoRoll = false);
+
 
 public slots:
     void updateTranslator() override;

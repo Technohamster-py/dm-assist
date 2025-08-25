@@ -9,6 +9,7 @@
 DndBestiaryPage::DndBestiaryPage(QWidget *parent) :
         AbstractCharsheetWidget(parent), ui(new Ui::DndBestiaryPage) {
     ui->setupUi(this);
+    connect(ui->infoField, &RollTextBrowser::rollRequested, [=](const QString& expr){emit rollRequested(expr);});
 }
 
 DndBestiaryPage::~DndBestiaryPage() {
@@ -17,6 +18,7 @@ DndBestiaryPage::~DndBestiaryPage() {
 
 DndBestiaryPage::DndBestiaryPage(QString filePath, QWidget *parent) : AbstractCharsheetWidget(parent), ui(new Ui::DndBestiaryPage) {
     ui->setupUi(this);
+    connect(ui->infoField, &RollTextBrowser::rollRequested, [=](const QString& expr){emit rollRequested(expr);});
     loadFromFile(filePath);
 }
 
@@ -225,7 +227,7 @@ void DndBestiaryPage::loadFromFile(QString filePath) {
         }
     }
 
-    ui->infoField->setText(description);
+    ui->infoField->setCustomHtml(description);
 }
 
 QString DndBestiaryPage::convertToHeader(QString type) {

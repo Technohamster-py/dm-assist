@@ -26,7 +26,7 @@ public slots:
 
 signals:
     void fileLoaded();
-    void rollRequested(QString rollCommand);
+    void rollRequested(const QString& rollCommand);
 
 protected:
     QString m_originalFilePath;
