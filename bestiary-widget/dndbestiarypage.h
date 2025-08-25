@@ -2,6 +2,8 @@
 #define DM_ASSIST_DNDBESTIARYPAGE_H
 
 #include <utility>
+#include <QtNetwork>
+
 
 #include "../charsheet-widget/abstractcharsheetwidget.h"
 #include "dndbeaststructure.h"
@@ -31,7 +33,7 @@ public slots:
     void updateTranslator() override;
 
 protected:
-    virtual void loadFromFile(QString filePath) override;
+    virtual void loadFromFile(const QString &filePath) override;
     QMap<QString, QList<BestiaryItem>> descriptionSections;
 
     QMap<QString, QString> typeToHeader {
@@ -42,6 +44,10 @@ protected:
             {"spell", tr("Spells")}
     };
 
+    virtual bool downloadToken(const QString& link);
+    QNetworkAccessManager* m_manager;
+
+    virtual void setTokenPixmap(const QString& filePath);
 private:
     Ui::DndBestiaryPage *ui;
     QString convertToHeader(QString type);

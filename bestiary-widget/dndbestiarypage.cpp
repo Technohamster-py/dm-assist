@@ -6,9 +6,9 @@
 #include <QJsonArray>
 
 
-DndBestiaryPage::DndBestiaryPage(QWidget *parent) :
-        AbstractCharsheetWidget(parent), ui(new Ui::DndBestiaryPage) {
+DndBestiaryPage::DndBestiaryPage(QWidget *parent) : AbstractCharsheetWidget(parent), ui(new Ui::DndBestiaryPage) {
     ui->setupUi(this);
+    m_manager = new QNetworkAccessManager(this);
     connect(ui->infoField, &RollTextBrowser::rollRequested, [=](const QString& expr){emit rollRequested(expr);});
 }
 
@@ -18,12 +18,15 @@ DndBestiaryPage::~DndBestiaryPage() {
 
 DndBestiaryPage::DndBestiaryPage(QString filePath, QWidget *parent) : AbstractCharsheetWidget(parent), ui(new Ui::DndBestiaryPage) {
     ui->setupUi(this);
+    m_manager = new QNetworkAccessManager(this);
     connect(ui->infoField, &RollTextBrowser::rollRequested, [=](const QString& expr){emit rollRequested(expr);});
     loadFromFile(filePath);
 }
 
-void DndBestiaryPage::loadFromFile(QString filePath) {
-    QFile beastFile(filePath);
+void DndBestiaryPage::loadFromFile(const QString &path) {
+    QFile beastFile(path);
+    m_campaignPath = campaignDirFromFile(path);
+
     if (!beastFile.open(QIODevice::ReadOnly)){
         QMessageBox::warning(this, "error", "Can't open bestiary file");
         return;
@@ -38,6 +41,9 @@ void DndBestiaryPage::loadFromFile(QString filePath) {
     QJsonObject systemObj = root["system"].toObject();
 
     QJsonObject attributesObj = systemObj["attributes"].toObject();
+
+    /// Token
+    downloadToken(root.value("img").toString());
 
     /// AC
     QJsonObject acObj = attributesObj["ac"].toObject();
@@ -245,4 +251,70 @@ void DndBestiaryPage::addToInitiative(InitiativeTrackerWidget *initiativeTracker
 
 void DndBestiaryPage::updateTranslator() {
     ui->retranslateUi(this);
+}
+
+bool DndBestiaryPage::downloadToken(const QString &link) {
+    QUrl qurl(link);
+    if (!qurl.isValid()) {
+        qWarning() << "Invalid URL:" << link;
+        return false;
+    }
+
+    QString filename = qurl.fileName();
+    if (filename.isEmpty()) {
+        qWarning() << "URL does not contain filename:" << link;
+        return false;
+    }
+
+    QDir dir(m_campaignPath);
+    if (!dir.exists()) {
+        qWarning() << "Campaign dir does not exist:" << m_campaignPath;
+        return false;
+    }
+
+    // ensure tokens/ folder
+    if (!dir.exists("Tokens")) {
+        if (!dir.mkdir("Tokens")) {
+            qWarning() << "Cannot create tokens dir!";
+            return false;
+        }
+    }
+
+    QString fullPath = dir.filePath("Tokens/" + filename);
+    QFileInfo fi(fullPath);
+    if (fi.exists()) {
+        qInfo() << "Token already exists:" << fullPath;
+        setTokenPixmap(fullPath);
+        return false;
+    }
+
+    // async download
+    QNetworkRequest req(qurl);
+    auto reply = m_manager->get(req);
+
+    connect(reply, &QNetworkReply::finished, this, [=]() {
+        if (reply->error() != QNetworkReply::NoError) {
+            qWarning() << "Download failed:" << reply->errorString();
+            reply->deleteLater();
+            return;
+        }
+        QByteArray data = reply->readAll();
+
+        QFile f(fullPath);
+        if (!f.open(QIODevice::WriteOnly)) {
+            qWarning() << "Cannot write file:" << fullPath;
+            reply->deleteLater();
+            return;
+        }
+        f.write(data);
+        f.close();
+        qInfo() << "Saved token:" << fullPath;
+        setTokenPixmap(fullPath);
+        reply->deleteLater();
+    });
+    return true;
+}
+
+void DndBestiaryPage::setTokenPixmap(const QString &filePath) {
+    ui->token->setPixmap(QPixmap(filePath));
 }

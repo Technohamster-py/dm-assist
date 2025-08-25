@@ -30,7 +30,7 @@ public:
     DndCharsheetWidget(const QString& filePath, QWidget* parent = nullptr);
     ~DndCharsheetWidget() override;
 
-    void loadFromFile(QString path) override;
+    void loadFromFile(const QString &path) override;
     void saveToFile(QString path) override;
 
     void addToInitiative(InitiativeTrackerWidget *initiativeTrackerWidget, bool autoRoll = false) override;
@@ -39,7 +39,6 @@ public:
     static QString bonusFromString(const QString& string);
     static int proficiencyByLevel(int level) {return level / 5 + 2;};
     static QJsonArray serializeHtmlToJson(const QString &html);
-
 public slots:
     void updateTranslator() override;
 private:
