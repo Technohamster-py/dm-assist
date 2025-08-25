@@ -44,6 +44,27 @@ protected:
             {"spell", tr("Spells")}
     };
 
+    QMap<QString, QString> skillTitles {
+            {"acr", tr("Acrobatics")},
+            {"ani", tr("Animal handling")},
+            {"arc", tr("Arcana")},
+            {"ath", tr("Athletics")},
+            {"dec", tr("Deception")},
+            {"his", tr("History")},
+            {"ins", tr("Insight")},
+            {"itm", tr("Intimidation")},
+            {"inv", tr("Investigation")},
+            {"med", tr("Medicine")},
+            {"nat", tr("Nature")},
+            {"prc", tr("Perception")},
+            {"prf", tr("Performance")},
+            {"per", tr("Persuasion")},
+            {"rel", tr("Religion")},
+            {"slt", tr("Sleight of hand")},
+            {"ste", tr("Stealth")},
+            {"sur", tr("Survival")}
+    };
+
     virtual bool downloadToken(const QString& link);
     QNetworkAccessManager* m_manager;
 

@@ -10,6 +10,7 @@ DndBestiaryPage::DndBestiaryPage(QWidget *parent) : AbstractCharsheetWidget(pare
     ui->setupUi(this);
     m_manager = new QNetworkAccessManager(this);
     connect(ui->infoField, &RollTextBrowser::rollRequested, [=](const QString& expr){emit rollRequested(expr);});
+    connect(ui->skillsBrowser, &RollTextBrowser::rollRequested, [=](const QString& expr){emit rollRequested(expr);});
 }
 
 DndBestiaryPage::~DndBestiaryPage() {
@@ -20,6 +21,8 @@ DndBestiaryPage::DndBestiaryPage(QString filePath, QWidget *parent) : AbstractCh
     ui->setupUi(this);
     m_manager = new QNetworkAccessManager(this);
     connect(ui->infoField, &RollTextBrowser::rollRequested, [=](const QString& expr){emit rollRequested(expr);});
+    connect(ui->skillsBrowser, &RollTextBrowser::rollRequested, [=](const QString& expr){emit rollRequested(expr);});
+
     loadFromFile(filePath);
 }
 
@@ -182,6 +185,38 @@ void DndBestiaryPage::loadFromFile(const QString &path) {
     ui->chaBonusLabel->setText(QString::number(bonusFromStat(abilitiesObj["cha"].toObject().value("value").toInt())));
     saveBonus = ui->chaBonusLabel->text().toInt() + ((abilitiesObj["cha"].toObject().value("proficient").toInt() > 0) ? ui->profLabel->text().toInt() : 0);
     ui->chaSaveBonus->setText((saveBonus > 0) ? "+" + QString::number(saveBonus) : QString::number(saveBonus));
+
+    /// Skills
+    QJsonObject skillsObj = systemObj["skills"].toObject();
+    QString skillsHtml = "";
+    for (const auto& skillKey : skillTitles.keys()) {
+        QJsonObject skillObj = skillsObj[skillKey].toObject();
+        if (skillObj.value("value").toInt() <= 0)
+            continue;
+
+        QString skillAbility = skillObj.value("ability").toString();
+        QString skillTitle = skillTitles[skillKey];
+        int bonus = 0;
+        QString skillBonus;
+
+        if (skillAbility == "str")
+            bonus = ui->strBonusLabel->text().toInt() + ui->profLabel->text().toInt();
+        if (skillAbility == "dex")
+            bonus = ui->dexBonusLabel->text().toInt() + ui->profLabel->text().toInt();
+        if (skillAbility == "con")
+            bonus = ui->conBonusLabel->text().toInt() + ui->profLabel->text().toInt();
+        if (skillAbility == "int")
+            bonus = ui->intBonusLabel->text().toInt() + ui->profLabel->text().toInt();
+        if (skillAbility == "wis")
+            bonus = ui->wisBonusLabel->text().toInt() + ui->profLabel->text().toInt();
+        if (skillAbility == "cha")
+            bonus = ui->chaBonusLabel->text().toInt() + ui->profLabel->text().toInt();
+
+        skillBonus = (bonus > 0)? "+" + QString::number(bonus) : QString::number(bonus);
+
+        skillsHtml += QString("%1: [[/r 1d20 %2]] (%2), ").arg(skillTitle, skillBonus);
+    }
+    ui->skillsBrowser->setCustomHtml(skillsHtml);
 
     /// Details
     QJsonObject detailsObj = systemObj["details"].toObject();
