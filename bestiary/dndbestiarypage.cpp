@@ -148,32 +148,32 @@ void DndBestiaryPage::loadFromFile(QString filePath) {
     int saveBonus;
 
     ui->strValueLabel->setText(QString::number(abilitiesObj["str"].toObject().value("value").toInt()));
-    ui->strBonusLabel->setText(QString::number(abilitiesObj["str"].toObject().value("mod").toInt()));
+    ui->strBonusLabel->setText(QString::number(bonusFromStat(abilitiesObj["str"].toObject().value("value").toInt())));
     saveBonus = ui->strBonusLabel->text().toInt() + ((abilitiesObj["str"].toObject().value("proficient").toInt() > 0) ? ui->profLabel->text().toInt() : 0);
     ui->strSaveBonus->setText((saveBonus > 0) ? "+" + QString::number(saveBonus) : QString::number(saveBonus));
 
     ui->dexValueLabel->setText(QString::number(abilitiesObj["dex"].toObject().value("value").toInt()));
-    ui->dexBonusLabel->setText(QString::number(abilitiesObj["dex"].toObject().value("mod").toInt()));
+    ui->dexBonusLabel->setText(QString::number(bonusFromStat(abilitiesObj["dex"].toObject().value("value").toInt())));
     saveBonus = ui->dexBonusLabel->text().toInt() + ((abilitiesObj["dex"].toObject().value("proficient").toInt() > 0) ? ui->profLabel->text().toInt() : 0);
     ui->dexSaveBonus->setText((saveBonus > 0) ? "+" + QString::number(saveBonus) : QString::number(saveBonus));
 
     ui->conValueLabel->setText(QString::number(abilitiesObj["con"].toObject().value("value").toInt()));
-    ui->conBonusLabel->setText(QString::number(abilitiesObj["con"].toObject().value("mod").toInt()));
+    ui->conBonusLabel->setText(QString::number(bonusFromStat(abilitiesObj["con"].toObject().value("value").toInt())));
     saveBonus = ui->conBonusLabel->text().toInt() + ((abilitiesObj["con"].toObject().value("proficient").toInt() > 0) ? ui->profLabel->text().toInt() : 0);
     ui->conSaveBonus->setText((saveBonus > 0) ? "+" + QString::number(saveBonus) : QString::number(saveBonus));
 
     ui->intValueLabel->setText(QString::number(abilitiesObj["int"].toObject().value("value").toInt()));
-    ui->intBonusLabel->setText(QString::number(abilitiesObj["int"].toObject().value("mod").toInt()));
+    ui->intBonusLabel->setText(QString::number(bonusFromStat(abilitiesObj["int"].toObject().value("value").toInt())));
     saveBonus = ui->intBonusLabel->text().toInt() + ((abilitiesObj["int"].toObject().value("proficient").toInt() > 0) ? ui->profLabel->text().toInt() : 0);
     ui->intSaveBonus->setText((saveBonus > 0) ? "+" + QString::number(saveBonus) : QString::number(saveBonus));
 
     ui->wisValueLabel->setText(QString::number(abilitiesObj["wis"].toObject().value("value").toInt()));
-    ui->wisBonusLabel->setText(QString::number(abilitiesObj["wis"].toObject().value("mod").toInt()));
+    ui->wisBonusLabel->setText(QString::number(bonusFromStat(abilitiesObj["wis"].toObject().value("value").toInt())));
     saveBonus = ui->wisBonusLabel->text().toInt() + ((abilitiesObj["wis"].toObject().value("proficient").toInt() > 0) ? ui->profLabel->text().toInt() : 0);
     ui->wisSaveBonus->setText((saveBonus > 0) ? "+" + QString::number(saveBonus) : QString::number(saveBonus));
 
     ui->chaValueLabel->setText(QString::number(abilitiesObj["cha"].toObject().value("value").toInt()));
-    ui->chaBonusLabel->setText(QString::number(abilitiesObj["cha"].toObject().value("mod").toInt()));
+    ui->chaBonusLabel->setText(QString::number(bonusFromStat(abilitiesObj["cha"].toObject().value("value").toInt())));
     saveBonus = ui->chaBonusLabel->text().toInt() + ((abilitiesObj["cha"].toObject().value("proficient").toInt() > 0) ? ui->profLabel->text().toInt() : 0);
     ui->chaSaveBonus->setText((saveBonus > 0) ? "+" + QString::number(saveBonus) : QString::number(saveBonus));
 
