@@ -22,9 +22,9 @@ endif ()
 
 
 set(FILES
-        bestiary/dndbestiarypage.h bestiary/dndbestiarypage.cpp
-        bestiary/dndbeaststructure.h
-        bestiary/rolltextbrowser.h  bestiary/rolltextbrowser.cpp
+        bestiary-widget/dndbestiarypage.h bestiary-widget/dndbestiarypage.cpp
+        bestiary-widget/dndbeaststructure.h
+        bestiary-widget/rolltextbrowser.h bestiary-widget/rolltextbrowser.cpp
         campaign-tree-widget/campaigntreewidget.cpp campaign-tree-widget/campaigntreewidget.h
         campaign-tree-widget/hoverwidget.cpp    campaign-tree-widget/hoverwidget.h
         charsheet-widget/abstractcharsheetwidget.h
@@ -73,7 +73,7 @@ set(UI_FILES
         roll-widget/rollwidget.ui
         initiative-tracker/statuseditdialog.ui
         settingsdialog.ui
-        bestiary/dndbestiarypage.ui
+        bestiary-widget/dndbestiarypage.ui
 )
 
 set(TS_FILES
@@ -105,7 +105,7 @@ include_directories(
         ${Qt6Sql_INCLUDE_DIRS}
         ${Qt6Multimedia_INCLUDE_DIRS}
         ${BASS_INCLUDE_DIR}
-        bestiary
+        bestiary-widget
         translations
         static
         theme-manager

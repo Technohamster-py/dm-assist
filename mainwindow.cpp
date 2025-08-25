@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 #include "map-widget/mapview.h"
 #include "charsheet-widget/dndcharsheetwidget.h"
-#include "bestiary/dndbestiarypage.h"
+#include "bestiary-widget/dndbestiarypage.h"
 
 #include <QDesktopServices>
 #include "QDomDocument"
