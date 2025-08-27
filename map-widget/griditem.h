@@ -10,11 +10,12 @@ public:
     enum GridType {Square, Hex};
 
     explicit GridItem(MapScene* scene);
+
     void setGridType(GridType type);
     void setCellSize(qreal size);
     void setVisible(bool visible);
 
-    QRectF boundingRect() const override;
+//    QRectF boundingRect() const override;
     void paint(QPainter* p, const QStyleOptionGraphicsItem* s, QWidget* w) override;
 
 private:

@@ -1,6 +1,7 @@
 #include "griditem.h"
 
-GridItem::GridItem(MapScene *scene) : m_scene(scene){
+GridItem::GridItem(MapScene *scene) : QGraphicsItem(), m_scene(scene){
+
 }
 
 void GridItem::setGridType(GridItem::GridType type) {

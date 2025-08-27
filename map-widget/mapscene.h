@@ -62,6 +62,10 @@ public:
     void setScaleFactor(double factor);
     [[nodiscard]] double getScaleFactor() const { return m_scaleFactor; };
 
+//    void setGrid(GridItem::GridType gridType);
+    void enableGrid(bool enabled);
+//    void updateGrid();
+
     void initializeFog(const QSize &size);
     void drawFogCircle(const QPointF &scenePos, int radius, bool hide);
     void drawScaledCircle(const QPointF &scenePos, int radius, bool hide);
@@ -101,6 +105,9 @@ protected:
 private:
     AbstractMapTool *m_activeTool = nullptr;
     double m_scaleFactor = 1.0;           ///< Масштаб
+
+//    GridItem* m_gridItem = nullptr;
+    bool m_gridEnabled = false;
 
     QGraphicsPixmapItem *fogItem = nullptr;
     QImage fogImage;

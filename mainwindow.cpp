@@ -907,6 +907,7 @@ void MainWindow::setupToolbar() {
     toolGroup = new QActionGroup(this);
     toolGroup->setExclusive(true);
 
+
     /// Ruler tool
     auto *rulerButton = new QToolButton(this);
     rulerButton->setCheckable(true);
@@ -949,6 +950,7 @@ void MainWindow::setupToolbar() {
     });
     ui->toolBar->addWidget(rulerButton);
 
+
     /// Fog-hide tool
     auto* fogHideAction = new QAction(this);
     fogHideAction->setCheckable(true);
@@ -981,6 +983,7 @@ void MainWindow::setupToolbar() {
             currentView->setActiveTool(fogTool);
         }
     });
+
 
     /// Fog-reveal tool
     auto* fogRevealAction = new QAction(this);
@@ -1015,6 +1018,7 @@ void MainWindow::setupToolbar() {
     });
 
     ui->toolBar->addSeparator();
+
 
     /// Light tool
     auto* lightAction = new QAction(this);
@@ -1078,6 +1082,7 @@ void MainWindow::setupToolbar() {
 
     ui->toolBar->addSeparator();
 
+
     /// Spells
     /// LineShapeTool
     auto* lineAction = new QAction(this);
@@ -1100,6 +1105,7 @@ void MainWindow::setupToolbar() {
             currentView->setActiveTool(nullptr);
     });
 
+
     /// CircleShapeTool
     auto* circleAction = new QAction(this);
     circleAction->setCheckable(true);
@@ -1121,6 +1127,7 @@ void MainWindow::setupToolbar() {
             currentView->setActiveTool(nullptr);
     });
 
+
     /// SquareShapeTool
     auto* squareAction = new QAction(this);
     squareAction->setCheckable(true);
@@ -1141,6 +1148,7 @@ void MainWindow::setupToolbar() {
         else
             currentView->setActiveTool(nullptr);
     });
+
 
     /// TriangleShapeTool
     auto* triangleAction = new QAction(this);
@@ -1209,6 +1217,7 @@ void MainWindow::setupToolbar() {
         brushTool->setOpacity(v / 100.0);
     });
 
+
     /// Shape color button
     auto *ShapeToolColorButton = new QPushButton();
     ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/map/palette.svg", ShapeToolColorButton, &QAbstractButton::setIcon);
@@ -1227,6 +1236,8 @@ void MainWindow::setupToolbar() {
 
 
     ui->toolBar->addSeparator();
+
+
     /// Height Map
     auto* heightMapAction = new QAction(this);
     heightMapAction->setCheckable(true);
@@ -1247,6 +1258,30 @@ void MainWindow::setupToolbar() {
         else
             currentView->setActiveTool(nullptr);
     });
+
+
+    /// Grid
+    QActionGroup *gridGroup = new QActionGroup(this);
+    gridGroup->setExclusive(true);
+
+    QAction *gridNone = ui->toolBar->addAction(tr("None"));
+    gridNone->setCheckable(true);
+    gridGroup->addAction(gridNone);
+    connect(gridNone, &QAction::triggered, [=](bool checked){
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (!currentView) return;
+        currentView->getScene()->enableGrid(checked);
+    });
+
+    QAction *gridSquare = ui->toolBar->addAction(tr("Square"));
+    gridSquare->setCheckable(true);
+    gridGroup->addAction(gridSquare);
+
+    QAction *gridHex = ui->toolBar->addAction(tr("Hex"));
+    gridHex->setCheckable(true);
+    gridGroup->addAction(gridHex);
+
+    gridNone->setChecked(true);
 }
 
 /**

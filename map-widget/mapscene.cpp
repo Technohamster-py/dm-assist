@@ -754,3 +754,18 @@ qreal MapScene::heightAt(const QPointF &pos) const {
     }
     return 0.0;
 }
+
+//void MapScene::setGrid(GridItem::GridType gridType) {
+//
+//}
+//
+void MapScene::enableGrid(bool enabled) {
+    m_gridEnabled = enabled;
+//    if (!m_gridItem){
+//        m_gridItem = new GridItem(this)
+//    }
+}
+//
+//void MapScene::updateGrid() {
+//
+//}
