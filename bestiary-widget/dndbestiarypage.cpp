@@ -307,13 +307,13 @@ bool DndBestiaryPage::downloadToken(const QString &link) {
 
     QString filename = qurl.fileName();
     if (filename.isEmpty()) {
-        qWarning() << "URL does not contain filename:" << link;
+//        qWarning() << "URL does not contain filename:" << link;
         return false;
     }
 
     QDir dir(m_campaignPath);
     if (!dir.exists()) {
-        qWarning() << "Campaign dir does not exist:" << m_campaignPath;
+//        qWarning() << "Campaign dir does not exist:" << m_campaignPath;
         return false;
     }
 
@@ -328,7 +328,7 @@ bool DndBestiaryPage::downloadToken(const QString &link) {
     QString fullPath = dir.filePath("Tokens/" + filename);
     QFileInfo fi(fullPath);
     if (fi.exists()) {
-        qInfo() << "Token already exists:" << fullPath;
+//        qInfo() << "Token already exists:" << fullPath;
         setTokenPixmap(fullPath);
         return false;
     }
@@ -353,7 +353,7 @@ bool DndBestiaryPage::downloadToken(const QString &link) {
         }
         f.write(data);
         f.close();
-        qInfo() << "Saved token:" << fullPath;
+//        qInfo() << "Saved token:" << fullPath;
         setTokenPixmap(fullPath);
         reply->deleteLater();
     });
