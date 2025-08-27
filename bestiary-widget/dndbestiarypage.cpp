@@ -38,6 +38,7 @@ void DndBestiaryPage::loadFromFile(const QString &path) {
     QJsonDocument document = QJsonDocument::fromJson(beastFile.readAll());
     QJsonObject root = document.object();
 
+
     /// Name
     ui->nameLabel->setText(root.value("name").toString());
 
@@ -45,21 +46,26 @@ void DndBestiaryPage::loadFromFile(const QString &path) {
 
     QJsonObject attributesObj = systemObj["attributes"].toObject();
 
+
     /// Token
     downloadToken(root.value("img").toString());
+
 
     /// AC
     QJsonObject acObj = attributesObj["ac"].toObject();
     ui->acLabel->setText(QString::number(acObj.value("flat").toInt()));
     ui->acCalcLabel->setText(acObj.value("calc").toString());
 
+
     /// HP
     QJsonObject hpObj = attributesObj["hp"].toObject();
     ui->hpLabel->setText(QString::number(hpObj.value("max").toInt()));
     ui->hpFormula->setText(hpObj.value("formula").toString());
 
+
     /// Proficiency
     ui->profLabel->setText(QString::number(attributesObj.value("prof").toInt()));
+
 
     /// Movement
     QJsonObject movementObj = attributesObj["movement"].toObject();
@@ -152,7 +158,8 @@ void DndBestiaryPage::loadFromFile(const QString &path) {
     }
     damageVulnerability += dvObj.value("custom").toString();
     ui->dvLabel->setText(damageVulnerability);
-    
+
+
     /// Abilities
     QJsonObject abilitiesObj = systemObj["abilities"].toObject();
     int saveBonus;
@@ -187,6 +194,7 @@ void DndBestiaryPage::loadFromFile(const QString &path) {
     saveBonus = ui->chaBonusLabel->text().toInt() + ((abilitiesObj["cha"].toObject().value("proficient").toInt() > 0) ? ui->profLabel->text().toInt() : 0);
     ui->chaSaveBonus->setText((saveBonus > 0) ? "+" + QString::number(saveBonus) : QString::number(saveBonus));
 
+
     /// Skills
     QJsonObject skillsObj = systemObj["skills"].toObject();
     QString skillsHtml = "";
@@ -218,6 +226,7 @@ void DndBestiaryPage::loadFromFile(const QString &path) {
         skillsHtml += QString("%1: [[/r 1d20 %2]] (%2), ").arg(skillTitle, skillBonus);
     }
     ui->skillsBrowser->setCustomHtml(skillsHtml);
+
 
     /// Details
     QJsonObject detailsObj = systemObj["details"].toObject();
