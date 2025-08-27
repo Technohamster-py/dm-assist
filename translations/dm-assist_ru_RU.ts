@@ -130,177 +130,268 @@
 <context>
     <name>DndBestiaryPage</name>
     <message>
-        <location filename="../bestiary/dndbestiarypage.ui" line="14"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="14"/>
         <source>BestiaryPage</source>
         <translation>Страница бестиария</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.ui" line="38"/>
-        <location filename="../bestiary/dndbestiarypage.ui" line="114"/>
-        <location filename="../bestiary/dndbestiarypage.ui" line="200"/>
-        <location filename="../bestiary/dndbestiarypage.ui" line="283"/>
-        <location filename="../bestiary/dndbestiarypage.ui" line="644"/>
-        <location filename="../bestiary/dndbestiarypage.ui" line="671"/>
-        <location filename="../bestiary/dndbestiarypage.ui" line="698"/>
-        <location filename="../bestiary/dndbestiarypage.ui" line="752"/>
-        <location filename="../bestiary/dndbestiarypage.ui" line="908"/>
-        <location filename="../bestiary/dndbestiarypage.ui" line="932"/>
-        <location filename="../bestiary/dndbestiarypage.ui" line="956"/>
-        <location filename="../bestiary/dndbestiarypage.ui" line="980"/>
-        <location filename="../bestiary/dndbestiarypage.ui" line="1004"/>
-        <location filename="../bestiary/dndbestiarypage.ui" line="1034"/>
-        <location filename="../bestiary/dndbestiarypage.ui" line="1064"/>
-        <location filename="../bestiary/dndbestiarypage.ui" line="1088"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="38"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="107"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="141"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="211"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="294"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="655"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="682"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="709"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="763"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="916"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="940"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="964"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="988"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="1012"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="1042"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="1072"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="1096"/>
         <source>TextLabel</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.ui" line="256"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="267"/>
         <source>DEX</source>
         <translation>ЛОВ</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.ui" line="393"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="404"/>
         <source>WIS</source>
         <translation>МДР</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.ui" line="422"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="433"/>
         <source>INT</source>
         <translation>ИНТ</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.ui" line="451"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="462"/>
         <source>CHA</source>
         <translation>ХАР</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.ui" line="507"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="518"/>
         <source>STR</source>
         <translation>СИЛ</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.ui" line="617"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="628"/>
         <source>CON</source>
         <translation>ТЕЛ</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.ui" line="862"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="873"/>
         <source>Saves</source>
         <translation>Спасброски</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.ui" line="881"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="892"/>
         <source>Skills</source>
         <translation>Навыки</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.ui" line="896"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="904"/>
         <source>Damage resistance</source>
         <translation>Сопротивление урону</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.ui" line="920"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="928"/>
         <source>Damage immunity</source>
         <translation>Иммунитет к урону</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.ui" line="944"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="952"/>
         <source>Vulnerability</source>
         <translation>Уязвимость</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.ui" line="968"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="976"/>
         <source>Condition immunity</source>
         <translation>Иммунитет к состояниям</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.ui" line="992"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="1000"/>
         <source>Feelings</source>
         <translation>Чувства</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.ui" line="1016"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="1024"/>
         <source>Languages</source>
         <translation>Языки</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.ui" line="1052"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="1060"/>
         <source>Danger</source>
         <translation>Уровень опасности</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.ui" line="1076"/>
+        <location filename="../bestiary-widget/dndbestiarypage.ui" line="1084"/>
         <source>Proficiency bonus</source>
         <translation>Бонус умения</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.h" line="35"/>
+        <location filename="../bestiary-widget/dndbestiarypage.h" line="40"/>
         <source>Actions</source>
         <translation>Действия</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.h" line="36"/>
+        <location filename="../bestiary-widget/dndbestiarypage.h" line="41"/>
         <source>Feats</source>
         <translation>Умения</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.h" line="37"/>
+        <location filename="../bestiary-widget/dndbestiarypage.h" line="42"/>
         <source>Lair actions</source>
         <translation>Действия логова</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.h" line="38"/>
+        <location filename="../bestiary-widget/dndbestiarypage.h" line="43"/>
         <source>Legendary actions</source>
         <translation>Легендарные действия</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.h" line="39"/>
+        <location filename="../bestiary-widget/dndbestiarypage.h" line="44"/>
         <source>Spells</source>
         <translation>Заклинания</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.cpp" line="58"/>
+        <location filename="../bestiary-widget/dndbestiarypage.h" line="48"/>
+        <source>Acrobatics</source>
+        <translation>Акробатика</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/dndbestiarypage.h" line="49"/>
+        <source>Animal handling</source>
+        <translation>Уход за животными</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/dndbestiarypage.h" line="50"/>
+        <source>Arcana</source>
+        <translation>Магия</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/dndbestiarypage.h" line="51"/>
+        <source>Athletics</source>
+        <translation>Атлетика</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/dndbestiarypage.h" line="52"/>
+        <source>Deception</source>
+        <translation>Обман</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/dndbestiarypage.h" line="53"/>
+        <source>History</source>
+        <translation>История</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/dndbestiarypage.h" line="54"/>
+        <source>Insight</source>
+        <translation>Проницательность</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/dndbestiarypage.h" line="55"/>
+        <source>Intimidation</source>
+        <translation>Запугивание</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/dndbestiarypage.h" line="56"/>
+        <source>Investigation</source>
+        <translation>Анализ</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/dndbestiarypage.h" line="57"/>
+        <source>Medicine</source>
+        <translation>Медицина</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/dndbestiarypage.h" line="58"/>
+        <source>Nature</source>
+        <translation>Природа</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/dndbestiarypage.h" line="59"/>
+        <source>Perception</source>
+        <translation>Внимательность</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/dndbestiarypage.h" line="60"/>
+        <source>Performance</source>
+        <translation>Выступление</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/dndbestiarypage.h" line="61"/>
+        <source>Persuasion</source>
+        <translation>Убеждение</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/dndbestiarypage.h" line="62"/>
+        <source>Religion</source>
+        <translation>Религия</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/dndbestiarypage.h" line="63"/>
+        <source>Sleight of hand</source>
+        <translation>Ловкость рук</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/dndbestiarypage.h" line="64"/>
+        <source>Stealth</source>
+        <translation>Скрытность</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/dndbestiarypage.h" line="65"/>
+        <source>Survival</source>
+        <translation>Выживание</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/dndbestiarypage.cpp" line="76"/>
         <source>Walk: %1 %2</source>
         <translation>Ходьба: %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.cpp" line="61"/>
+        <location filename="../bestiary-widget/dndbestiarypage.cpp" line="79"/>
         <source>, Burrow: %1 %2</source>
         <translation>, Копание: %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.cpp" line="64"/>
+        <location filename="../bestiary-widget/dndbestiarypage.cpp" line="82"/>
         <source>, climb: %1 %2</source>
         <translation>, лазание: %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.cpp" line="67"/>
+        <location filename="../bestiary-widget/dndbestiarypage.cpp" line="85"/>
         <source>, fly: %1 %2</source>
         <translation>, полет: %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.cpp" line="70"/>
+        <location filename="../bestiary-widget/dndbestiarypage.cpp" line="88"/>
         <source>, swim: %1 %2</source>
         <translation>, плавание: %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.cpp" line="80"/>
+        <location filename="../bestiary-widget/dndbestiarypage.cpp" line="98"/>
         <source>Dark vision %1 %2</source>
         <translation>Темное зрения %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.cpp" line="83"/>
+        <location filename="../bestiary-widget/dndbestiarypage.cpp" line="101"/>
         <source>Blindsight %1 %2</source>
         <translation>Слепозрение %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.cpp" line="86"/>
+        <location filename="../bestiary-widget/dndbestiarypage.cpp" line="104"/>
         <source>Tremorsense %1 %2</source>
         <translation>Чувство вибрации %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary/dndbestiarypage.cpp" line="89"/>
+        <location filename="../bestiary-widget/dndbestiarypage.cpp" line="107"/>
         <source>Truesight %1 %2</source>
         <translation>Истинное зрение %1 %2</translation>
     </message>
@@ -614,12 +705,12 @@
         <translation>Заметки</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.cpp" line="825"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.cpp" line="830"/>
         <source>Save changes</source>
         <translation>Сохранить изменения</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.cpp" line="826"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.cpp" line="831"/>
         <source>Save changes?</source>
         <translation>Сохранить изменения?</translation>
     </message>
@@ -987,191 +1078,191 @@
         <translation type="vanished">Сохраниеть проект?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="308"/>
+        <location filename="../mainwindow.cpp" line="318"/>
         <source>Open player config file</source>
         <translation>Открыть конфигурационный файл проекта</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="310"/>
+        <location filename="../mainwindow.cpp" line="320"/>
         <source>Xml file (*.xml)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="318"/>
+        <location filename="../mainwindow.cpp" line="328"/>
         <source>Open File error</source>
         <translation>Open file error</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="493"/>
-        <location filename="../mainwindow.cpp" line="695"/>
+        <location filename="../mainwindow.cpp" line="503"/>
+        <location filename="../mainwindow.cpp" line="705"/>
         <source>Open file error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="185"/>
+        <location filename="../mainwindow.cpp" line="195"/>
         <source>Open Map Image</source>
         <translation>Открыть изображение карты</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="187"/>
+        <location filename="../mainwindow.cpp" line="197"/>
         <source>Map Files (*.dam);;Images (*.png *.jpg *.bmp)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="284"/>
+        <location filename="../mainwindow.cpp" line="294"/>
         <source>Open campaign directory</source>
         <translation>Открыть папку кампейна</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="484"/>
+        <location filename="../mainwindow.cpp" line="494"/>
         <source>Can&apos;t create subdirectory: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="586"/>
+        <location filename="../mainwindow.cpp" line="596"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="586"/>
+        <location filename="../mainwindow.cpp" line="596"/>
         <source>Failed to open map file.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="920"/>
+        <location filename="../mainwindow.cpp" line="930"/>
         <source>ruler</source>
         <translation>Линейка</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="932"/>
+        <location filename="../mainwindow.cpp" line="942"/>
         <source>calibrate</source>
         <translation>Калибровать</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="967"/>
+        <location filename="../mainwindow.cpp" line="977"/>
         <source>Add fog to map</source>
         <translation>Добавить туман на карту</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="974"/>
+        <location filename="../mainwindow.cpp" line="984"/>
         <source>Hide all</source>
         <translation>Скрыть все</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1000"/>
+        <location filename="../mainwindow.cpp" line="1010"/>
         <source>Remove fog from map</source>
         <translation>Убрать туман с карты</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1007"/>
+        <location filename="../mainwindow.cpp" line="1017"/>
         <source>Reveal all</source>
         <translation>Проявить все</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1034"/>
+        <location filename="../mainwindow.cpp" line="1044"/>
         <source>Edit light sources</source>
         <translation>Изменение источников света</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1039"/>
+        <location filename="../mainwindow.cpp" line="1049"/>
         <source>Bright radius</source>
         <translation>Радиус яркого света</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1046"/>
+        <location filename="../mainwindow.cpp" line="1056"/>
         <source>Dim radius</source>
         <translation>Радиус туслого света</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1080"/>
+        <location filename="../mainwindow.cpp" line="1090"/>
         <source>Update fog</source>
         <translation>Обновлять туман</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1097"/>
+        <location filename="../mainwindow.cpp" line="1107"/>
         <source>Draw line</source>
         <translation>Нарисовать линию</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1118"/>
+        <location filename="../mainwindow.cpp" line="1128"/>
         <source>Draw circle</source>
         <translation>Нарисовать круг</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1139"/>
+        <location filename="../mainwindow.cpp" line="1149"/>
         <source>Draw square</source>
         <translation>Нарисовать квадрат</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1160"/>
+        <location filename="../mainwindow.cpp" line="1170"/>
         <source>Draw triangle</source>
         <translation>Нарисовать треугольник</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1182"/>
+        <location filename="../mainwindow.cpp" line="1192"/>
         <source>Brush</source>
         <translation>Кисть</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1189"/>
+        <location filename="../mainwindow.cpp" line="1199"/>
         <source>Clear all</source>
         <translation>Очистить все</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1211"/>
+        <location filename="../mainwindow.cpp" line="1221"/>
         <source>Brush opacity</source>
         <translation>Прозрачность кисти</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1245"/>
+        <location filename="../mainwindow.cpp" line="1255"/>
         <source>Height</source>
         <translation>Высота</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1338"/>
+        <location filename="../mainwindow.cpp" line="1348"/>
         <source>Chose character name</source>
         <translation>Введите имя персонажа</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1339"/>
+        <location filename="../mainwindow.cpp" line="1349"/>
         <source>Character name:</source>
         <translation>Имя персонажа:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1347"/>
-        <location filename="../mainwindow.cpp" line="1359"/>
+        <location filename="../mainwindow.cpp" line="1357"/>
         <location filename="../mainwindow.cpp" line="1369"/>
+        <location filename="../mainwindow.cpp" line="1379"/>
         <source>Can&apos;t add character</source>
         <translation>Невозможно добавить персонажа</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1347"/>
+        <location filename="../mainwindow.cpp" line="1357"/>
         <source>Open campaign first!</source>
         <translation>Сначала откройте кампанию!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1359"/>
+        <location filename="../mainwindow.cpp" line="1369"/>
         <source>Character already exists 
  Override?</source>
         <translation>Персонаж уже существует \n Перезаписать?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1369"/>
+        <location filename="../mainwindow.cpp" line="1379"/>
         <source>Unknown error</source>
         <translation>Неизвестная ошибка</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1412"/>
+        <location filename="../mainwindow.cpp" line="1422"/>
         <source>Load campaign?</source>
         <translation>Загрузить кампанию?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1413"/>
+        <location filename="../mainwindow.cpp" line="1423"/>
         <source>Load campaign from %1?</source>
         <translation>Загрузить кампанию из %1?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="234"/>
+        <location filename="../mainwindow.cpp" line="244"/>
         <source>Save map to file</source>
         <translation>Сохранить карту</translation>
     </message>
@@ -1480,47 +1571,47 @@
         <translation>Напрмер: 2d20 + 4</translation>
     </message>
     <message>
-        <location filename="../roll-widget/rollwidget.ui" line="76"/>
+        <location filename="../roll-widget/rollwidget.ui" line="79"/>
         <source>Roll!</source>
         <translation>Бросить!</translation>
     </message>
     <message>
-        <location filename="../roll-widget/rollwidget.ui" line="88"/>
+        <location filename="../roll-widget/rollwidget.ui" line="91"/>
         <source>Compact mode</source>
         <translation>Компактный режим</translation>
     </message>
     <message>
-        <location filename="../roll-widget/rollwidget.ui" line="97"/>
+        <location filename="../roll-widget/rollwidget.ui" line="100"/>
         <source>d4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../roll-widget/rollwidget.ui" line="104"/>
+        <location filename="../roll-widget/rollwidget.ui" line="107"/>
         <source>d6</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../roll-widget/rollwidget.ui" line="111"/>
+        <location filename="../roll-widget/rollwidget.ui" line="114"/>
         <source>d8</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../roll-widget/rollwidget.ui" line="118"/>
+        <location filename="../roll-widget/rollwidget.ui" line="121"/>
         <source>d10</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../roll-widget/rollwidget.ui" line="125"/>
+        <location filename="../roll-widget/rollwidget.ui" line="128"/>
         <source>d12</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../roll-widget/rollwidget.ui" line="132"/>
+        <location filename="../roll-widget/rollwidget.ui" line="135"/>
         <source>d20</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../roll-widget/rollwidget.ui" line="139"/>
+        <location filename="../roll-widget/rollwidget.ui" line="142"/>
         <source>d100</source>
         <translation></translation>
     </message>
@@ -1889,13 +1980,13 @@
 <context>
     <name>UpdateBannerWidget</name>
     <message>
-        <location filename="../updatechecker.cpp" line="26"/>
-        <location filename="../updatechecker.cpp" line="52"/>
+        <location filename="../updatechecker.cpp" line="29"/>
+        <location filename="../updatechecker.cpp" line="55"/>
         <source>New version available! Currently using version %1 and the latest is: %2</source>
         <translation>Доступна новая версия! Текущая версия %1, а последняя %2</translation>
     </message>
     <message>
-        <location filename="../updatechecker.cpp" line="27"/>
+        <location filename="../updatechecker.cpp" line="30"/>
         <source>Download</source>
         <translation>Скачать</translation>
     </message>
