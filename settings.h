@@ -8,6 +8,12 @@
 #define ORGANIZATION_DOMAIN "github.com/Technohamster-py"
 #define APPLICATION_NAME "DM-assist"
 
+#define HELP_URL "https://github.com/Technohamster-py/dm-assist?tab=readme-ov-file#dm-assist"
+#define DONATE_URL "https://pay.cloudtips.ru/p/8f6d339a"
+#define ISSUES_URL  "https://github.com/Technohamster-py/dm-assist/issues"
+#define RELEASES_URL "https://api.github.com/repos/Technohamster-py/dm-assist/releases/latest"
+#define VERSION "1.1"
+
 enum hpBarMode {
     bar = 0,
     value,
@@ -47,7 +53,7 @@ struct Settings{
         QString hpBarMode = "initiative/hpBar";                    ///< uint8 (0:2) Режим отображения здоровья
         QString showHpComboBox = "initiative/showHpCombo";         ///< bool Показывать комбобокс с выбором режима в основном виджете
         QString sharedWindows = "initiative/sharedWindowsCount";   ///< uint8 - Количество открытых расшаренных окон (UNUSED)
-        QString customStatuses = "initiative/customStatuses";      ///<
+        QString customStatuses = "initiative/customStatuses";      ///< list - Список кастомных статусов с названиями и иконками
         QString customStatusTitle = "title";                       ///<
         QString customStatusIcon = "icon";                         ///<
     };
@@ -57,7 +63,7 @@ struct Settings{
         QString brightRadius = "map/light/brightRadius";    ///< int Радиус яркий
         QString dimRadius = "map/light/dimRadius";          ///< int Радиус тусклый
         QString lightColor = "map/light/color";             ///< string цвет света
-        QString color = "map/color";                    ///< string цвет инструментов
+        QString color = "map/color";                        ///< string цвет инструментов
     };
     Map map;
 
@@ -65,6 +71,11 @@ struct Settings{
         QString campaign = "session/campaign";
     };
     LastSession session;
+
+    struct Rolls {
+        QString compactMode = "rolls/compact";    ///< bool Компактный режим;
+    };
+    Rolls rolls;
 };
 
 #endif //DM_ASSIST_SETTINGS_H

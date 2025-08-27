@@ -1,7 +1,7 @@
-#include "rulermaptool.h"
+#include "rulertool.h"
 #include "mapscene.h"
 
-RulerMapTool::RulerMapTool(QObject *parent) : AbstractMapTool(parent) {}
+RulerTool::RulerTool(QObject *parent) : AbstractMapTool(parent) {}
 
 /**
  * @brief Handles mouse press events for the RulerMapTool.
@@ -23,12 +23,18 @@ RulerMapTool::RulerMapTool(QObject *parent) : AbstractMapTool(parent) {}
  * @param event The QGraphicsSceneMouseEvent that triggered the function.
  * @param scene The QGraphicsScene in which the mouse press event occurred.
  */
-void RulerMapTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) {
+void RulerTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) {
     QPointF point = event->scenePos();
 
     if (event->button() == Qt::RightButton) {
         QGraphicsItem *item = scene->itemAt(point, QTransform());
-        if (permanentItems.contains(item)) {
+        if (item && permanentItems.contains(item)) {
+            QGraphicsItem* partner = (item->data(0).value<QGraphicsItem*>());
+            if (partner){
+                scene->removeItem(partner);
+                permanentItems.removeOne(partner);
+                delete partner;
+            }
             scene->removeItem(item);
             permanentItems.removeOne(item);
             delete item;
@@ -43,13 +49,26 @@ void RulerMapTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsSce
         QLineF line(toolPoints[0], toolPoints[1]);
         if (auto mapScene = qobject_cast<MapScene*>(scene)) {
             double distance = line.length() * mapScene->getScaleFactor();
-            auto lineItem = scene->addLine(line, QPen(Qt::red, 2));
-            auto label = scene->addText(QString("%1 ft").arg(distance, 0, 'f', 1));
-            label->setDefaultTextColor(Qt::red);
-            label->setPos((line.p1() + line.p2()) / 2);
+            qreal dz = abs(mapScene->heightAt(toolPoints[0]) - mapScene->heightAt(toolPoints[1]));
+            distance = std::sqrt(distance*distance + dz*dz);
+            qreal width = mapScene->lineWidth();
 
+            // Line
+            auto lineItem = scene->addLine(line, QPen(QColor::fromRgb(252, 115, 3), width));
             lineItem->setZValue(mapLayers::Ruler);
+
+            // Label
+            auto label = scene->addText(QString("%1 ft").arg(distance, 0, 'f', 1));
+            QFont font;
+            font.setPointSizeF(width*4);
+            label->setPos((line.p1() + line.p2()) / 2);
+            label->setFont(font);
+            label->setDefaultTextColor(Qt::red);
             label->setZValue(mapLayers::Ruler);
+
+
+            lineItem->setData(0, QVariant::fromValue<QGraphicsItem*>(label));
+            label->setData(0, QVariant::fromValue<QGraphicsItem*>(lineItem));
 
             permanentItems.append(lineItem);
             permanentItems.append(label);
@@ -81,15 +100,16 @@ void RulerMapTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsSce
  * @param scene The scene in which the ruler tool is being used. Must be of type `MapScene`
  *              or derived from `QGraphicsScene`.
  */
-void RulerMapTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) {
+void RulerTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) {
     if (toolPoints.size() == 1) {
         QPointF current = event->scenePos();
         QLineF line(toolPoints[0], current);
         if (auto mapScene = qobject_cast<MapScene*>(scene)) {
             double distance = line.length() * mapScene->getScaleFactor();
-
+            qreal dz = abs(mapScene->heightAt(toolPoints[0]) - mapScene->heightAt(current));
+            distance = std::sqrt(distance*distance + dz*dz);
             if (!tempLine) {
-                tempLine = scene->addLine(line, QPen(Qt::DashLine));
+                tempLine = scene->addLine(line, QPen(static_cast<const QBrush>(nullptr), mapScene->lineWidth(), Qt::DashLine));
             } else {
                 tempLine->setLine(line);
             }
@@ -97,6 +117,7 @@ void RulerMapTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScen
             if (!tempLabel) {
                 tempLabel = scene->addText(QString("%1 ft").arg(distance, 0, 'f', 1));
                 tempLabel->setDefaultTextColor(Qt::gray);
+                tempLabel->setTextWidth(400);
             } else {
                 tempLabel->setPlainText(QString("%1 ft").arg(distance, 0, 'f', 1));
             }
@@ -118,7 +139,7 @@ void RulerMapTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScen
  * @param scene A pointer to the `QGraphicsScene` instance where the tool was active.
  *              This scene is used to remove temporary graphical elements.
  */
-void RulerMapTool::deactivate(QGraphicsScene *scene) {
+void RulerTool::deactivate(QGraphicsScene *scene) {
     toolPoints.clear();
 
     if (tempLine) {

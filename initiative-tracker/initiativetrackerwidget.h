@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QSortFilterProxyModel>
+#include <QStandardPaths>
 #include <QStyledItemDelegate>
 #include <QPainter>
 #include <QList>
@@ -32,6 +33,8 @@ Q_OBJECT
 public:
     explicit InitiativeTrackerWidget(QWidget *parent = nullptr, InitiativeModel *sharedModel = nullptr);
 
+    void setBaseDir(QString dirPath = "");
+
 signals:
     void fieldVisibilityChanged(int field, bool hidden);
     void columnHidden(int  column);
@@ -48,7 +51,9 @@ public slots:
     void setHpComboBoxVisible(int visible);
 
     void addCharacter(const QJsonDocument& characterDocument);
-    void addCharacter(QString name, int maxHp, int ac = 10, int hp = 0, int initiative = 0);
+    void addCharacter(QString name, int maxHp, int ac = 10, int hp = 0, int initiative = 0, int speed = 30);
+
+    void updateTranslator();
 
 protected:
     int m_currentRound = 1;
@@ -80,5 +85,7 @@ private:
     bool isSharedHpVisible = false;
     bool isSharedMaxHpVisible = false;
     bool isSharedAcVisible = true;
+
+    QString m_baseDirectoryPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 };
 #endif //DM_ASSIST_INITIATIVETRACKERWIDGET_H

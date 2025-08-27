@@ -327,15 +327,14 @@ void SettingsDialog::populateLanguages() {
  */
 void SettingsDialog::populateThemes() {
     QDir themesDir(QCoreApplication::applicationDirPath() + "/themes");
-    QStringList themeFiles = themesDir.entryList(QStringList() << "*.xml", QDir::Files);
+    QFileInfoList themeFilesInfo = themesDir.entryInfoList(QStringList() << "*.xml", QDir::Files);
 
     ui->themeComboBox->addItem("System", "System");
     ui->themeComboBox->addItem("Light", "Light");
     ui->themeComboBox->addItem("Dark", "Dark");
 
-    for (const QString &file: themeFiles) {
-        QString themeName = file.mid(0, file.length() - 4);
-        ui->themeComboBox->addItem(themeName, file);
+    for (const QFileInfo &info: themeFilesInfo) {
+        ui->themeComboBox->addItem(info.completeBaseName(), info.absoluteFilePath());
     }
 }
 

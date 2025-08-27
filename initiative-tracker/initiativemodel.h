@@ -25,6 +25,7 @@ public:
     enum fields{
         name = 0,
         initiative,
+        speed,
         Ac,
         hp,
         maxHp,
@@ -72,8 +73,10 @@ private:
 
     QIcon m_characterHeaderIcon;
     QIcon m_initHeaderIcon;
+    QIcon m_speedHeaderIcon;
     QIcon m_acHeaderIcon;
     QIcon m_hpHeaderIcon;
+    QIcon m_hpMaxHeaderIcon;
 
     int m_iconsPerRow = 3;
     int m_iconHeight = 16;

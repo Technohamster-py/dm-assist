@@ -1,6 +1,5 @@
 #include <QItemSelectionModel>
 #include <QFileDialog>
-#include <QStandardPaths>
 #include <QMessageBox>
 #include <utility>
 
@@ -237,7 +236,8 @@ void InitiativeTrackerWidget::loadFromFile(const QString& filename){
  * @param filename The name of the file to save the data to.
  */
 void InitiativeTrackerWidget::saveToFile(const QString& filename){
-    model->saveToFile(filename);
+    if (!filename.isEmpty())
+        model->saveToFile(filename);
 }
 
 
@@ -251,9 +251,10 @@ void InitiativeTrackerWidget::saveToFile(const QString& filename){
  * The dialog filters for `.xml` files as the saving format.
  */
 void InitiativeTrackerWidget::on_saveButton_clicked(){
+
     QString filename = QFileDialog::getSaveFileName(this,
                                                     tr("Save encounter to file"),
-                                                    QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
+                                                    m_baseDirectoryPath,
                                                     "Xml file (*.xml)");
     saveToFile(filename);
 }
@@ -398,13 +399,14 @@ void InitiativeTrackerWidget::addCharacter(const QJsonDocument& characterDocumen
     sortTable();
 }
 
-void InitiativeTrackerWidget::addCharacter(QString name, int maxHp, int ac, int hp, int initiative) {
+void InitiativeTrackerWidget::addCharacter(QString name, int maxHp, int ac, int hp, int initiative, int speed) {
     InitiativeCharacter emptyCharacter;
     emptyCharacter.name = std::move(name);
     emptyCharacter.maxHp = maxHp;
     emptyCharacter.ac = ac,
     emptyCharacter.hp = QString::number(hp),
     emptyCharacter.initiative = initiative;
+    emptyCharacter.speed = speed;
 
     model->addCharacter(emptyCharacter);
 
@@ -425,4 +427,15 @@ void InitiativeTrackerWidget::setupHeaderStretchPolicy() {
         else
             header->setSectionResizeMode(i, QHeaderView::ResizeToContents);
     }
+}
+
+void InitiativeTrackerWidget::setBaseDir(QString dirPath) {
+    if (dirPath.isEmpty())
+        m_baseDirectoryPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    else
+        m_baseDirectoryPath = dirPath;
+}
+
+void InitiativeTrackerWidget::updateTranslator() {
+    ui->retranslateUi(this);
 }

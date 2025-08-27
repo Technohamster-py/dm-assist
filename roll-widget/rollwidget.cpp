@@ -8,7 +8,7 @@ RollWidget::RollWidget(QWidget *parent) :
     ui->setupUi(this);
 
     connect(ui->commandButton, &QPushButton::clicked, [=](){ executeRoll(ui->rollEdit->text());});
-    connect(ui->compactModeBox, &QCheckBox::toggled, this, &RollWidget::setCompactMode);
+    connect(ui->compactModeBox, &QCheckBox::toggled, [=](bool mode){m_compactMode = mode;});
     connectButtons();
 }
 
@@ -18,9 +18,6 @@ RollWidget::~RollWidget() {
 
 int RollWidget::executeRoll(QString command) {
     command = command.replace(" ", "");
-    QRegularExpression tokenPattern(R"(([+\-]?[\d]*[d|к]\d+|[+\-]?\d+))", QRegularExpression::CaseInsensitiveOption);
-    QRegularExpression dicePattern(R"(([+\-]?)\s*(\d*)[d|к](\d+))", QRegularExpression::CaseInsensitiveOption);
-    QRegularExpression modificatorPattern(R"([+\-]?\s*\d+)", QRegularExpression::CaseInsensitiveOption);
 
     if (compactMode())
         command = compactExpression(command);
@@ -35,7 +32,7 @@ int RollWidget::executeRoll(QString command) {
         QString token = match.captured(1).trimmed();
 
         auto diceMatch = dicePattern.match(token);
-        auto modMatch = modificatorPattern.match(token);
+        auto modMatch = modifierPattern.match(token);
 
         if (diceMatch.hasMatch()) {
             QString signStr = diceMatch.captured(1);
@@ -77,24 +74,22 @@ int RollWidget::executeRoll(QString command) {
 }
 
 QString RollWidget::compactExpression(QString original) {
-    QRegularExpression tokenPattern(R"([+\-]?\d*d\d+|[+\-]?\d+)", QRegularExpression::CaseInsensitiveOption);
-    QRegularExpression dicePattern(R"(([+\-]?)(\d*)d(\d+))", QRegularExpression::CaseInsensitiveOption);
-
     auto it = tokenPattern.globalMatch(original);
     QMap<QString, QMap<int, int>> diceGroups;
     QStringList modifiers;
 
     while (it.hasNext()) {
         QString token = it.next().captured(0).trimmed();
-        auto match = dicePattern.match(token);
+        auto diceMatch = dicePattern.match(token);
+        auto modMatch = modifierPattern.match(token);
 
-        if (match.hasMatch()) {
-            QString signStr = match.captured(1);
-            int count = match.captured(2).isEmpty() ? 1 : match.captured(2).toInt();
+        if (diceMatch.hasMatch()) {
+            QString signStr = diceMatch.captured(1);
+            int count = diceMatch.captured(2).isEmpty() ? 1 : diceMatch.captured(2).toInt();
             int sign = (signStr == "-") ? -1 : 1;
-            QString die = "d" + match.captured(3);
+            QString die = "d" + diceMatch.captured(3);
             diceGroups[die][sign] += count;
-        } else {
+        } else if (modMatch.hasMatch()){
             modifiers << token;
         }
     }
@@ -125,7 +120,7 @@ QString RollWidget::compactExpression(QString original) {
 }
 
 void RollWidget::setCompactMode(bool mode) {
- m_compactMode = mode;
+    ui->compactModeBox->setChecked(mode);
 }
 
 void RollWidget::addDieToExpression(const QString &dieCode, bool rightClick) {
@@ -206,4 +201,8 @@ void RollWidget::connectButtons() {
         addDieToExpression("d100", rightClick);
     });
 
+}
+
+void RollWidget::updateTranslator() {
+    ui->retranslateUi(this);
 }

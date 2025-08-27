@@ -13,13 +13,21 @@
 #include "map-widget/brushtool.h"
 #include "map-widget/calibrationtool.h"
 #include "map-widget/lighttool.h"
-#include "map-widget/rulermaptool.h"
+#include "map-widget/rulertool.h"
 #include "map-widget/sharedmapwindow.h"
 #include "map-widget/spellshapetool.h"
+#include "map-widget/heightmaptool.h"
 #include "initiative-tracker/initiativetrackerwidget.h"
 #include "music-widget/musicwidget.h"
 #include "roll-widget/rollwidget.h"
 #include "settingsdialog.h"
+#include "updatechecker.h"
+
+
+static QMap<QString, QString> sourcesMap = {
+        {"Icons for initiative statuses", "https://ttg.club/"}
+};
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -49,6 +57,7 @@ public:
     void changeLanguage(const QString &languageCode);
 
 signals:
+    void translatorChanged();
 
 public slots:
     void stopAll();
@@ -61,6 +70,8 @@ public slots:
     void openSharedMapWindow(int index);
     void slotExportMap(int index);
 
+    void handleUpdates(bool hasUpdates);
+
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dropEvent(QDropEvent *event) override;
@@ -68,6 +79,7 @@ protected:
 private:
     Ui::MainWindow *ui;
     QTranslator translator;
+    UpdateChecker* updateChecker;
     QString currentLanguage;
     QString currentCampaignDir;
     QString defaultCampaignDir;
@@ -88,16 +100,17 @@ private:
     CalibrationTool* calibrationTool;
     FogTool* fogTool;
     LightTool* lightTool;
-    RulerMapTool* rulerMapTool;
+    RulerTool* rulerMapTool;
     LineShapeTool* lineShapeTool;
     CircleShapeTool* circleShapeTool;
     SquareShapeTool* squareShapeTool;
     TriangleShapeTool* triangleShapeTool;
+    HeightMapTool* heightMapTool;
     QActionGroup *toolGroup;
 
     RollWidget* rollWidget;
 
-    void setupCampaign(const QString campaignRoot);
+    void setupCampaign(QString campaignRoot);
     void setupPlayers();
     void setupTracker();
     void setupToolbar();
@@ -125,11 +138,8 @@ private slots:
     void deleteMapTab(int index);
     void updateVisibility();
 
-    void setCalibrationTool();
-    void setMeasureTool(bool checked);
-    void setFogTool(bool checked, FogTool::Mode mode = FogTool::Hide);
-    void setLightTool(bool checked);
     void coverMapWithFog(bool hide);
+    void showSourcesMessageBox(const QMap<QString, QString> &sources);
 };
 
 

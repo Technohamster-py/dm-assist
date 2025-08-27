@@ -1,9 +1,5 @@
-//
-// Created by arseniy on 02.05.2025.
-//
-
-#ifndef DM_ASSIST_RULERMAPTOOL_H
-#define DM_ASSIST_RULERMAPTOOL_H
+#ifndef DM_ASSIST_RULERTOOL_H
+#define DM_ASSIST_RULERTOOL_H
 
 #include "abstractmaptool.h"
 #include <QGraphicsLineItem>
@@ -29,9 +25,9 @@
  * The tool interacts with a custom graphical scene, utilizing the scale
  * factor provided by the scene to compute accurate distances.
  */
-class RulerMapTool : public AbstractMapTool{
+class RulerTool : public AbstractMapTool{
 public:
-    explicit RulerMapTool(QObject *parent = nullptr);
+    explicit RulerTool(QObject *parent = nullptr);
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override;
@@ -47,4 +43,4 @@ private:
 };
 
 
-#endif //DM_ASSIST_RULERMAPTOOL_H
+#endif //DM_ASSIST_RULERTOOL_H

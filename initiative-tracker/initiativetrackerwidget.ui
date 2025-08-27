@@ -354,6 +354,9 @@
          <height>16777215</height>
         </size>
        </property>
+       <property name="toolTip">
+        <string>Reset rounds counter</string>
+       </property>
        <property name="text">
         <string>Reset</string>
        </property>

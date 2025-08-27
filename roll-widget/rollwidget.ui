@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>516</width>
+    <width>602</width>
     <height>300</height>
    </rect>
   </property>
@@ -36,6 +36,16 @@
     <number>2</number>
    </property>
    <item>
+    <widget class="Line" name="line">
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QListWidget" name="resultView">
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
@@ -59,6 +69,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="commandButton">
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="text">
         <string>Roll!</string>
        </property>

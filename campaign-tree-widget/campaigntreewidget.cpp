@@ -3,6 +3,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
+#include <QMenu>
+#include <QDesktopServices>
 
 /**
  * Constructs a CampaignTreeWidget object.
@@ -28,6 +30,9 @@ CampaignTreeWidget::CampaignTreeWidget(QWidget *parent) : QTreeWidget(parent)
     setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     setFrameStyle(QFrame::NoFrame);
+    setContextMenuPolicy(Qt::CustomContextMenu);
+
+    connect(this, &QTreeWidget::customContextMenuRequested, this, &CampaignTreeWidget::showContextMenu);
 }
 
 /**
@@ -252,4 +257,16 @@ QString CampaignTreeWidget::loadCampaignName(const QString &rootPath) {
 
     QJsonObject obj = doc.object();
     return obj.value("name").toString("Unnamed Campaign");
+}
+
+
+void CampaignTreeWidget::showContextMenu(const QPoint &pos) {
+    QMenu menu;
+
+    QAction *openAction = menu.addAction(tr("Show in file system"));
+    connect(openAction, &QAction::triggered, [=](){
+        QDesktopServices::openUrl(QUrl(QString("file:/%1").arg(m_rootPath)));
+    });
+
+    menu.exec(this->mapToGlobal(pos));
 }

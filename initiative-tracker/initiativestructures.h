@@ -88,6 +88,7 @@ Q_DECLARE_METATYPE(QList<Status>)
 struct InitiativeCharacter {
     QString name;
     int initiative;
+    int speed = 0;
     int ac;
     QString hp;     // может содержать выражение типа "50-20"
     int maxHp;
@@ -97,6 +98,7 @@ struct InitiativeCharacter {
         writer.writeStartElement("Character");
         writer.writeTextElement("Name", name);
         writer.writeTextElement("Initiative", QString::number(initiative));
+        writer.writeTextElement("Speed", QString::number(speed));
         writer.writeTextElement("AC", QString::number(ac));
         writer.writeTextElement("HP", hp);
         writer.writeTextElement("MaxHP", QString::number(maxHp));
@@ -111,6 +113,7 @@ struct InitiativeCharacter {
             if (reader.readNextStartElement()) {
                 if (reader.name() == QString("Name")) character.name = reader.readElementText();
                 else if (reader.name() == QString("Initiative")) character.initiative = reader.readElementText().toInt();
+                else if (reader.name() == QString("Speed")) character.speed = reader.readElementText().toInt();
                 else if (reader.name() == QString("AC")) character.ac = reader.readElementText().toInt();
                 else if (reader.name() == QString("HP")) character.hp = reader.readElementText();
                 else if (reader.name() == QString("MaxHP")) character.maxHp = reader.readElementText().toInt();

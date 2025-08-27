@@ -47,7 +47,6 @@ void IconLabel::mouseDoubleClickEvent(QMouseEvent *event) {
 
 QString IconPickerDialog::getSelectedIcon(QWidget *parent) {
     IconPickerDialog dlg(parent);
-    dlg.setWindowFlags(Qt::Popup);
     dlg.exec();
     return dlg.selectedIconPath;
 }
@@ -55,7 +54,6 @@ QString IconPickerDialog::getSelectedIcon(QWidget *parent) {
 IconPickerDialog::IconPickerDialog(QWidget *parent)
         : QDialog(parent), scrollArea(new QScrollArea(this)), gridLayout(new QGridLayout()) {
     setAcceptDrops(true);
-    setWindowFlags(Qt::Popup);
     setMinimumSize(400, 300);
 
     QWidget *container = new QWidget();

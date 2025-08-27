@@ -38,8 +38,8 @@ Settings can be accessed via the menu panel `Campaign -> Settings` or by using t
 
 ### General
 ![settings-common.png](illustrations/settings-common.png)
-- **Language** determines the localization of the application. Russian and English versions are available out of the box.
-[How to add a new localization](https://github.com/Technohamster-py/dm-assist/wiki/%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BD%D0%BE%D0%B2%D0%BE%D0%B9-%D0%BB%D0%BE%D0%BA%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8)
+- **Language** determines the localization of the application. Russian and English versions are available out of the box. You can download localization file [here](https://github.com/Technohamster-py/dm-assist/issues/42)  
+[How to add a new localization](https://github.com/Technohamster-py/dm-assist/wiki/Loacalisation)
 - **Audio output** determines the device that will play music from the players.
 Using a [virtual cable](https://vb-audio.com/Cable/), you can connect the audio output to the Discord microphone and 
 broadcast music during an online game.
@@ -247,7 +247,7 @@ Click an attack to edit it.
 Use `ctrl + B`, `ctrl + I`, and `ctrl + U` for bold, italic, and underline formatting in note fields.
 
 # Known Issues:
-- It is not recommended to use any style other than Fusion (the default) with the dark theme.
+- It is not recommended to use any style other than Fusion (the default) or Windows 11 with the dark theme.
   Windows styles currently cause incorrect rendering.
 
 # Planned Features and Supported Game Systems

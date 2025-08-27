@@ -9,6 +9,7 @@
 #include <QGraphicsView>
 #include <QWheelEvent>
 #include <QKeyEvent>
+#include <QLabel>
 #include <QGraphicsPixmapItem>
 #include "mapscene.h"
 #include "abstractmaptool.h"
@@ -80,6 +81,7 @@ private:
     QGraphicsPixmapItem *mapPixmapItem;   /**< Item displaying the map image */
     bool dragging;                        /**< Whether the view is currently panning */
     QPoint lastMousePos;                  /**< Last mouse position for drag calculation */
+    QLabel* heightLabel;
 };
 
 #endif // MAPVIEW_H

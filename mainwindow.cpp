@@ -16,6 +16,7 @@
 #include "saveconfigdialog.h"
 #include <QStyleFactory>
 #include <QTextStream>
+#include <QTextBrowser>
 #include <QSpinBox>
 #include <QJsonDocument>
 
@@ -43,7 +44,11 @@ MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
+    updateChecker = new UpdateChecker(VERSION, RELEASES_URL, this);
+    ui->updateBanner->hide();
+
     rollWidget = new RollWidget(ui->leftAsideWidget);
+    connect(this, &MainWindow::translatorChanged, rollWidget, &RollWidget::updateTranslator);
     ui->rollLayout->addWidget(rollWidget);
 
     campaignTreeWidget = new CampaignTreeWidget(ui->leftAsideWidget);
@@ -63,12 +68,15 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newCampaign);
     connect(ui->actionClose, &QAction::triggered, this, &MainWindow::closeCampaign);
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::loadCampaign);
-    connect(ui->actionHelp, &QAction::triggered, [](){QDesktopServices::openUrl(QUrl("https://github.com/Technohamster-py/dm-assist/wiki/%D0%9D%D0%B0%D1%87%D0%B0%D0%BB%D0%BE"));});
-    connect(ui->actionDonate, &QAction::triggered, [](){QDesktopServices::openUrl(QUrl("https://pay.cloudtips.ru/p/8f6d339a"));});
-    connect(ui->actionReport_bug, &QAction::triggered, [](){QDesktopServices::openUrl(QUrl("https://github.com/Technohamster-py/dm-assist/issues/new"));});
+    connect(ui->actionHelp, &QAction::triggered, [](){QDesktopServices::openUrl(QUrl(HELP_URL));});
+    connect(ui->actionDonate, &QAction::triggered, [](){QDesktopServices::openUrl(QUrl(DONATE_URL));});
+    connect(ui->actionReport_bug, &QAction::triggered, [](){QDesktopServices::openUrl(QUrl(ISSUES_URL));});
+    connect(ui->actionSources, &QAction::triggered, [=]() { showSourcesMessageBox(sourcesMap);});
     connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::setVolumeDivider);
     connect(ui->actionReload, &QAction::triggered, [=](){setupCampaign(campaignTreeWidget->root());});
     connect(ui->actionAddCharacter, &QAction::triggered, this, &MainWindow::addCharacter);
+    connect(ui->actionCheck, &QAction::triggered, [=](){updateChecker->checkFotUpdates();});
+    connect(updateChecker, &UpdateChecker::updateCheckFinished, this, &MainWindow::handleUpdates);
 
     connect(campaignTreeWidget, &CampaignTreeWidget::characterAddRequested, this, [=](const QString& path) {
         DndCharsheetWidget character(path);
@@ -77,6 +85,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(campaignTreeWidget, &CampaignTreeWidget::characterOpenRequested, this, [=](const QString& path){
         auto* charsheetWidget = new DndCharsheetWidget(path);
         connect(charsheetWidget, &DndCharsheetWidget::rollRequested, rollWidget, &RollWidget::executeRoll);
+        connect(this, &MainWindow::translatorChanged, charsheetWidget, &DndCharsheetWidget::updateTranslator);
         charsheetWidget->show();
     });
     connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);
@@ -89,6 +98,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     loadSettings();
     saveSettings();
+
+    updateChecker->checkFotUpdates();
 }
 
 /**
@@ -126,6 +137,7 @@ void MainWindow::changeLanguage(const QString &languageCode) {
         qApp->installTranslator(&translator);
         currentLanguage = languageCode;
         ui->retranslateUi(this);
+        emit translatorChanged();
     }
 }
 
@@ -417,6 +429,9 @@ void MainWindow::loadSettings() {
     /// Campaign
     currentCampaignDir = settings.value(paths.session.campaign, "").toString();
     setupCampaign(currentCampaignDir);
+
+    /// Rolls
+    rollWidget->setCompactMode(settings.value(paths.rolls.compactMode).toBool());
 }
 
 /**
@@ -633,6 +648,7 @@ void MainWindow::closeCampaign() {
 
     currentCampaignDir = "";
     campaignTreeWidget->clear();
+    initiativeTrackerWidget->setBaseDir();
 }
 
 /**
@@ -724,93 +740,8 @@ void MainWindow::saveSettings() {
     settings.setValue(paths.general.volume, ui->volumeSlider->value());
     settings.setValue(paths.general.defaultCampaignDir, defaultCampaignDir);
     settings.setValue(paths.session.campaign, campaignTreeWidget->root());
+    settings.setValue(paths.rolls.compactMode, rollWidget->compactMode());
     settings.sync();
-}
-
-/**
- * @brief Activates the calibration mode in the currently selected map view.
- *
- * This method retrieves the currently active widget from the mapTabWidget and
- * attempts to cast it to a MapView instance. If the cast is successful, it sets
- * the active tool in the MapView to the calibrationTool, enabling the calibration mode.
- *
- * @note This function assumes that calibrationTool has already been initialized and that
- * the current widget in mapTabWidget is a compatible MapView instance.
- */
-void MainWindow::setCalibrationTool() {
-    auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
-    if (currentView){
-        currentView->setActiveTool(calibrationTool);
-    }
-}
-
-/**
- * @brief Sets the current fog tool state and mode for the active map view.
- *
- * This method toggles the fog tool for the currently active map view within the
- * MainWindow. If the `checked` parameter is set to false, the fog tool is disabled
- * for the current view by setting the active tool to `nullptr`. If `checked` is true,
- * the specified fog mode is applied to the fog tool, and the fog tool is activated
- * for the current map view.
- *
- * @param checked A boolean value indicating whether the fog tool should be activated.
- *        If false, the fog tool is deactivated for the current map view.
- * @param mode The fog mode to be applied to the fog tool. This determines whether
- *        the fog tool is used to hide or reveal areas of the map.
- *
- * @details The method checks the currently active tab in the `mapTabWidget`, casts
- *          it to `MapView`, and applies the specified fog tool settings if the
- *          active tab is valid. The `FogTool::Mode` enum can be either `Hide` or
- *          `Reveal` and is used to configure the tool's behavior.
- */
-void MainWindow::setFogTool(bool checked, FogTool::Mode mode) {
-    auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
-    if (currentView){
-        if (!checked){
-            currentView->setActiveTool(nullptr);
-        } else{
-            fogTool->setMode(mode);
-            currentView->setActiveTool(fogTool);
-        }
-    }
-}
-
-/**
- * @brief Activates or deactivates the light tool in the current map view.
- *
- * This method sets the light tool as the active tool for the currently visible
- * MapView in the mapTabWidget. If `checked` is true, the light tool is activated,
- * allowing the user to interact with light-related functionality in the map.
- * If `checked` is false, no tool is active.
- *
- * @param checked Determines whether to activate or deactivate the light tool.
- */
-void MainWindow::setLightTool(bool checked) {
-    auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
-    if (checked)
-        currentView->setActiveTool(lightTool);
-    else
-        currentView->setActiveTool(nullptr);
-}
-
-/**
- * @brief Sets the measure mode by activating or deactivating the ruler tool.
- *
- * This method sets the current map view's active tool to the ruler map tool
- * if measure mode is enabled (checked is true) or null if measure mode is
- * disabled (checked is false). This allows the user to enable or disable
- * the measuring functionality on the currently active map tab.
- *
- * @param checked A boolean indicating whether to enable (true) or disable (false) the measure mode.
- */
-void MainWindow::setMeasureTool(bool checked) {
-    auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
-    if (currentView){
-        if (checked)
-            currentView->setActiveTool(rulerMapTool);
-        else
-            currentView->setActiveTool(nullptr);
-    }
 }
 
 /**
@@ -857,6 +788,7 @@ void MainWindow::setupCampaign(const QString campaignRoot) {
         saveMusicConfigFile(musicConfigFile);
 
     currentCampaignDir = campaignRoot;
+    initiativeTrackerWidget->setBaseDir(currentCampaignDir + "/Encounters");
     campaignTreeWidget->setVisible(true);
 }
 
@@ -876,6 +808,7 @@ void MainWindow::setupCampaign(const QString campaignRoot) {
 void MainWindow::setupPlayers() {
     for (int i = 0; i < 9; ++i) {
         auto *player = new MusicPlayerWidget(this, i + 1, QString("Player %1").arg(i + 1));
+        connect(this, &MainWindow::translatorChanged, player, &MusicPlayerWidget::updateTranslator);
         players.append(player);
     }
 
@@ -971,11 +904,12 @@ void MainWindow::setupToolbar() {
     calibrationTool = new CalibrationTool(this);
     fogTool = new FogTool(this);
     lightTool = new LightTool(this);
-    rulerMapTool = new RulerMapTool(this);
+    rulerMapTool = new RulerTool(this);
     lineShapeTool = new LineShapeTool();
     circleShapeTool = new CircleShapeTool();
     squareShapeTool = new SquareShapeTool();
     triangleShapeTool = new TriangleShapeTool();
+    heightMapTool = new HeightMapTool();
 
     toolGroup = new QActionGroup(this);
     toolGroup->setExclusive(true);
@@ -999,14 +933,25 @@ void MainWindow::setupToolbar() {
         QAction *chosen = contextMenu.exec(rulerButton->mapToGlobal(pos));
         if (chosen == calibrateAct) {
             // временно активируем CalibrationTool
-            setCalibrationTool();
+            auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+            if (!currentView) return;
+                currentView->setActiveTool(calibrationTool);
             // отключим кнопку линейки на время
             rulerAction->setChecked(false);
         }
     });
-    connect(rulerAction, SIGNAL(triggered(bool)), this, SLOT(setMeasureTool(bool)));
+    connect(rulerAction, &QAction::triggered, [=](bool checked){
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (!currentView) return;
+        if (checked)
+            currentView->setActiveTool(rulerMapTool);
+        else
+            currentView->setActiveTool(nullptr);
+    });
     connect(calibrationTool, &AbstractMapTool::finished, [=]() {
-        setMeasureTool(true);
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (currentView)
+            currentView->setActiveTool(rulerMapTool);
         rulerAction->setChecked(true);
     });
     ui->toolBar->addWidget(rulerButton);
@@ -1034,7 +979,14 @@ void MainWindow::setupToolbar() {
 
 
     connect(fogHideAction, &QAction::triggered, this, [=](bool checked){
-        setFogTool(checked, FogTool::Hide);
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (!currentView) return;
+        if (!checked){
+            currentView->setActiveTool(nullptr);
+        } else{
+            fogTool->setMode(FogTool::Hide);
+            currentView->setActiveTool(fogTool);
+        }
     });
 
     /// Fog-reveal tool
@@ -1059,7 +1011,14 @@ void MainWindow::setupToolbar() {
     });
 
     connect(fogRevealAction, &QAction::triggered, this, [=](bool checked){
-        setFogTool(checked, FogTool::Reveal);
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (!currentView) return;
+        if (!checked){
+            currentView->setActiveTool(nullptr);
+        } else{
+            fogTool->setMode(FogTool::Reveal);
+            currentView->setActiveTool(fogTool);
+        }
     });
 
     ui->toolBar->addSeparator();
@@ -1094,7 +1053,14 @@ void MainWindow::setupToolbar() {
     ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/map/palette.svg", lightColorBtn, &QAbstractButton::setIcon);
     ui->toolBar->addWidget(lightColorBtn);
 
-    connect(lightAction, &QAction::triggered, this, &MainWindow::setLightTool);
+    connect(lightAction, &QAction::triggered, [=](bool checked){
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (!currentView) return;
+        if (checked)
+            currentView->setActiveTool(lightTool);
+        else
+            currentView->setActiveTool(nullptr);
+    });
 
     connect(brightRadiusBox, QOverload<int>::of(&QSpinBox::valueChanged), this, [=](int value){
         dimRadiusBox->setMinimum(value);
@@ -1134,6 +1100,7 @@ void MainWindow::setupToolbar() {
 
     connect(lineAction, &QAction::triggered, this, [=](bool checked){
         auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (!currentView) return;
         if (checked)
             currentView->setActiveTool(lineShapeTool);
         else
@@ -1154,6 +1121,7 @@ void MainWindow::setupToolbar() {
 
     connect(circleAction, &QAction::triggered, this, [=](bool checked){
         auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (!currentView) return;
         if (checked)
             currentView->setActiveTool(circleShapeTool);
         else
@@ -1174,6 +1142,7 @@ void MainWindow::setupToolbar() {
 
     connect(squareAction, &QAction::triggered, this, [=](bool checked){
         auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (!currentView) return;
         if (checked)
             currentView->setActiveTool(squareShapeTool);
         else
@@ -1194,6 +1163,7 @@ void MainWindow::setupToolbar() {
 
     connect(triangleAction, &QAction::triggered, this, [=](bool checked){
         auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (!currentView) return;
         if (checked)
             currentView->setActiveTool(triangleShapeTool);
         else
@@ -1226,6 +1196,7 @@ void MainWindow::setupToolbar() {
 
     connect(brushAction, &QAction::triggered, this, [=](bool checked){
         auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (!currentView) return;
         if (checked)
             currentView->setActiveTool(brushTool);
         else
@@ -1260,6 +1231,29 @@ void MainWindow::setupToolbar() {
             brushTool->setColor(chosen);
         }
     });
+
+
+    ui->toolBar->addSeparator();
+    /// Height Map
+    auto* heightMapAction = new QAction(this);
+    heightMapAction->setCheckable(true);
+    ThemedIconManager::instance().addIconTarget(":map/mountain.svg", heightMapAction, &QAction::setIcon);
+    toolGroup->addAction(heightMapAction);
+
+    auto* heightButton = new QToolButton(this);
+    heightButton->setCheckable(true);
+    heightButton->setToolTip(tr("Height"));
+    heightButton->setDefaultAction(heightMapAction);
+    ui->toolBar->addWidget(heightButton);
+
+    connect(heightMapAction, &QAction::triggered, [=](bool checked){
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (!currentView) return;
+        if (checked)
+            currentView->setActiveTool(heightMapTool);
+        else
+            currentView->setActiveTool(nullptr);
+    });
 }
 
 /**
@@ -1276,6 +1270,7 @@ void MainWindow::setupTracker() {
     connect(campaignTreeWidget, &CampaignTreeWidget::encounterReplaceRequested, initiativeTrackerWidget, &InitiativeTrackerWidget::loadFromFile);
     connect(campaignTreeWidget, &CampaignTreeWidget::encounterAddRequested, initiativeTrackerWidget, &InitiativeTrackerWidget::addFromFile);
     connect(campaignTreeWidget, &CampaignTreeWidget::encounterReplaceRequested, initiativeTrackerWidget, &InitiativeTrackerWidget::loadFromFile);
+    connect(this, &MainWindow::translatorChanged, initiativeTrackerWidget, &InitiativeTrackerWidget::updateTranslator);
 }
 
 /**
@@ -1419,6 +1414,46 @@ void MainWindow::dropEvent(QDropEvent *event) {
                                                                   QMessageBox::Yes | QMessageBox::No);
         if (reply == QMessageBox::Yes)
             setupCampaign(campaignPath);
+    }
+}
+
+
+void MainWindow::showSourcesMessageBox(const QMap<QString, QString> &sources)
+{
+    QString html;
+    html += "<html><body><ul>";
+
+    for (auto it = sources.constBegin(); it != sources.constEnd(); ++it) {
+    html += QString("<li><a href=\"%1\">%2</a></li>")
+    .arg(it.value(), it.key());
+    }
+
+    html += "</ul></body></html>";
+
+    QMessageBox msgBox(this);
+    msgBox.setWindowTitle("Sources");
+    msgBox.setText("List of used sources:");
+
+
+    QTextBrowser *textBrowser = new QTextBrowser;
+    textBrowser->setHtml(html);
+    textBrowser->setOpenExternalLinks(true);
+
+    textBrowser->setMinimumSize(400, 200);
+
+    msgBox.layout()->addWidget(textBrowser);
+
+    msgBox.exec();
+}
+
+void MainWindow::handleUpdates(bool hasUpdates) {
+    if (hasUpdates){
+        QString latest = updateChecker->latestVersion();
+        QString latestUrl = updateChecker->latestUrl();
+        ui->updateBanner->setCurrentVersion(VERSION);
+        ui->updateBanner->setLatestVersion(latest);
+        ui->updateBanner->setUrl(latestUrl);
+        ui->updateBanner->show();
     }
 }
 

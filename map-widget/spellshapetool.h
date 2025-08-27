@@ -19,12 +19,12 @@ Q_OBJECT
 public:
     explicit SpellShapeTool(QObject *parent = nullptr);
 
-    void mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) = 0;
+    void mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override = 0;
     void rightClickEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) = 0;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override = 0;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override {};
     void wheelEvent(QGraphicsSceneWheelEvent *event, QGraphicsScene *scene) override {};
-    void deactivate(QGraphicsScene *scene) { clearPreview(scene);};
+    void deactivate(QGraphicsScene *scene) override { clearPreview(scene);};
 
     void setColor(QColor c);
 

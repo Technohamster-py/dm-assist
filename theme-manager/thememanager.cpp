@@ -70,68 +70,68 @@ void ThemeManager::applyPreset(ThemeManager::PresetTheme theme) {
 bool ThemeManager::loadFromXml(const QString& path) {
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "Cannot open theme file:" << path;
+        qWarning() << "Cannot open theme file:" << path << "\t\tbecause of:" << file.errorString();
         return false;
     }
 
     QXmlStreamReader xml(&file);
     QPalette palette;
 
-    QMap<QString, QPalette::ColorRole> roleMap = {
-            {"Window", QPalette::Window},
-            {"WindowText", QPalette::WindowText},
-            {"Base", QPalette::Base},
-            {"AlternateBase", QPalette::AlternateBase},
-            {"ToolTipBase", QPalette::ToolTipBase},
-            {"ToolTipText", QPalette::ToolTipText},
-            {"Text", QPalette::Text},
-            {"Button", QPalette::Button},
-            {"ButtonText", QPalette::ButtonText},
-            {"BrightText", QPalette::BrightText},
-            {"Highlight", QPalette::Highlight},
-            {"HighlightedText", QPalette::HighlightedText},
-            {"Link", QPalette::Link},
-            {"LinkVisited", QPalette::LinkVisited},
-#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
-            {"PlaceholderText", QPalette::PlaceholderText},
-#endif
-    };
-
-    QMap<QString, QPalette::ColorGroup> groupMap = {
-            {"active", QPalette::Active},
-            {"inactive", QPalette::Inactive},
-            {"disabled", QPalette::Disabled}
-    };
-
     while (!xml.atEnd()) {
         xml.readNext();
 
         if (xml.isStartElement() && groupMap.contains(xml.name().toString().toLower())) {
             QPalette::ColorGroup group = groupMap[xml.name().toString().toLower()];
+            QString groupTagName = xml.name().toString().toLower();
 
-            while (!(xml.isEndElement() && xml.name().toString().toLower() == groupMap.key(group)) && !xml.atEnd()) {
+            while (!(xml.isEndElement() && xml.name().toString().toLower() == groupTagName) && !xml.atEnd()) {
                 xml.readNext();
 
-                if (xml.isStartElement() && xml.name() == QString("colorrole")) {
+                if (xml.isStartElement() && xml.name().toString() == "colorrole") {
                     QString roleStr = xml.attributes().value("role").toString();
-
-                    if (!roleMap.contains(roleStr))
-                        continue;
+                    if (!roleMap.contains(roleStr)) continue;
 
                     QPalette::ColorRole role = roleMap[roleStr];
+                    QColor color;
+                    bool colorFound = false;
 
-                    // Перейти к <color>
-                    while (!(xml.isStartElement() && xml.name() == QString("color")) && !xml.atEnd())
+                    // Внутри <colorrole> ищем <color>
+                    while (!(xml.isEndElement() && xml.name().toString() == "colorrole") && !xml.atEnd()) {
                         xml.readNext();
 
-                    if (xml.isStartElement() && xml.name() == QString("color")) {
-                        auto a = xml.attributes();
-                        QColor color(
-                                a.value("red").toInt(),
-                                a.value("green").toInt(),
-                                a.value("blue").toInt(),
-                                a.hasAttribute("alpha") ? a.value("alpha").toInt() : 255
-                        );
+                        if (xml.isStartElement() && xml.name().toString() == "color") {
+                            // Сначала считываем alpha, если есть (это атрибут)
+                            QXmlStreamAttributes attrs = xml.attributes();
+                            int a = attrs.hasAttribute("alpha") ? attrs.value("alpha").toInt() : 255;
+
+                            int r = 0, g = 0, b = 0;
+
+                            // Чтение вложенных тегов red, green, blue
+                            while (!(xml.isEndElement() && xml.name().toString() == "color") && !xml.atEnd()) {
+                                xml.readNext();
+
+                                if (xml.isStartElement()) {
+                                    QString cname = xml.name().toString().toLower();
+                                    xml.readNext();
+
+                                    if (xml.isCharacters()) {
+                                        bool ok = false;
+                                        int val = xml.text().toInt(&ok);
+                                        if (ok) {
+                                            if (cname == "red") r = val;
+                                            else if (cname == "green") g = val;
+                                            else if (cname == "blue") b = val;
+                                        }
+                                    }
+                                }
+                            }
+
+                            color = QColor(r, g, b, a);
+                            colorFound = true;
+                        }
+                    }
+
+                    if (colorFound) {
                         palette.setColor(group, role, color);
                     }
                 }
@@ -147,6 +147,8 @@ bool ThemeManager::loadFromXml(const QString& path) {
     qApp->setPalette(palette);
     return true;
 }
+
+
 
 void ThemeManager::resetToSystemTheme() {
     qApp->setPalette(QPalette());

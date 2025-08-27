@@ -90,9 +90,14 @@
         <translation type="vanished">Campaign structure</translation>
     </message>
     <message>
-        <location filename="../campaign-tree-widget/campaigntreewidget.cpp" line="197"/>
+        <location filename="../campaign-tree-widget/campaigntreewidget.cpp" line="202"/>
         <source>The selected folder does not contain campaign.json is not a campaign</source>
         <translation>The selected folder does not contain campaign.json is not a campaign</translation>
+    </message>
+    <message>
+        <location filename="../campaign-tree-widget/campaigntreewidget.cpp" line="266"/>
+        <source>Show in file system</source>
+        <translation>Show in file system</translation>
     </message>
 </context>
 <context>
@@ -118,9 +123,8 @@
         <translation>Notes</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndmodels.cpp" line="19"/>
         <source>Delete</source>
-        <translation>Delete</translation>
+        <translation type="vanished">Delete</translation>
     </message>
 </context>
 <context>
@@ -432,12 +436,12 @@
         <translation>Notes</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.cpp" line="765"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.cpp" line="825"/>
         <source>Save changes</source>
         <translation>Save changes</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.cpp" line="766"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.cpp" line="826"/>
         <source>Save changes?</source>
         <translation>Save changes?</translation>
     </message>
@@ -445,29 +449,27 @@
 <context>
     <name>DndResourceModel</name>
     <message>
-        <location filename="../charsheet-widget/dndmodels.cpp" line="181"/>
         <source>Refill</source>
-        <translation>Refill</translation>
+        <translation type="vanished">Refill</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndmodels.cpp" line="182"/>
+        <location filename="../charsheet-widget/dndmodels.cpp" line="193"/>
         <source>Title</source>
         <translation>Title</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndmodels.cpp" line="183"/>
+        <location filename="../charsheet-widget/dndmodels.cpp" line="194"/>
         <source>Current</source>
         <translation>Current</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndmodels.cpp" line="184"/>
+        <location filename="../charsheet-widget/dndmodels.cpp" line="195"/>
         <source>Max</source>
         <translation>Max</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndmodels.cpp" line="185"/>
         <source>Delete</source>
-        <translation>Delete</translation>
+        <translation type="vanished">Delete</translation>
     </message>
 </context>
 <context>
@@ -493,14 +495,12 @@
 <context>
     <name>InitiativeModel</name>
     <message>
-        <location filename="../initiative-tracker/initiativemodel.cpp" line="66"/>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation type="vanished">Name</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativemodel.cpp" line="70"/>
         <source>Max</source>
-        <translation>Max</translation>
+        <translation type="vanished">Max</translation>
     </message>
     <message>
         <source>Initiative</source>
@@ -519,9 +519,8 @@
         <translation type="vanished">Max HP</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativemodel.cpp" line="71"/>
         <source>Delete</source>
-        <translation>Delete</translation>
+        <translation type="vanished">Delete</translation>
     </message>
 </context>
 <context>
@@ -537,73 +536,114 @@
         <translation>initiative tracker</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="113"/>
+        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="107"/>
+        <source>Round: 1</source>
+        <translation>Round: 1</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="120"/>
         <source>save to file</source>
         <translation>Save to file</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="168"/>
+        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="178"/>
         <source>Previous turn</source>
         <translation>Previous turn</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="200"/>
+        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="188"/>
+        <source>PgUp</source>
+        <translation>PgUp</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="213"/>
         <source>NextTurn</source>
         <translation>Next turn</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="232"/>
+        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="223"/>
+        <source>PgDown</source>
+        <translation>PgDown</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="248"/>
         <source>Open player wiev</source>
         <translation>Open shared view</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="248"/>
+        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="358"/>
+        <source>Reset rounds counter</source>
+        <translation>Reset rounds counter</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="361"/>
+        <source>Reset</source>
+        <translation>Reset</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="140"/>
         <source>load from file</source>
         <translation>Load from file</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="271"/>
+        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="287"/>
         <source>Numeric</source>
         <translation>Numeric</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="276"/>
+        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="292"/>
         <source>Text status</source>
         <translation>Text status</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="281"/>
+        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="297"/>
         <source>Progress bar</source>
         <translation>Progress bar</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="291"/>
+        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="307"/>
         <source>Add</source>
         <translation>Add</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="323"/>
+        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="318"/>
+        <source>add from file</source>
+        <translation>Add from file</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="342"/>
+        <source>sort by initiative</source>
+        <translation>Sort by initiative</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/initiativetrackerwidget.ui" line="345"/>
         <source>Sort</source>
         <translation>Sort</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativetrackerwidget.cpp" line="233"/>
-        <location filename="../initiative-tracker/initiativetrackerwidget.cpp" line="333"/>
+        <location filename="../initiative-tracker/initiativetrackerwidget.cpp" line="173"/>
+        <location filename="../initiative-tracker/initiativetrackerwidget.cpp" line="418"/>
+        <source>Round: %1</source>
+        <translation>Round: %1</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/initiativetrackerwidget.cpp" line="256"/>
+        <location filename="../initiative-tracker/initiativetrackerwidget.cpp" line="356"/>
         <source>Save encounter to file</source>
         <translation>Save encounter to file</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativetrackerwidget.cpp" line="248"/>
+        <location filename="../initiative-tracker/initiativetrackerwidget.cpp" line="271"/>
         <source>Open encounter from file</source>
         <translation>Open encounter from file</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativetrackerwidget.cpp" line="269"/>
+        <location filename="../initiative-tracker/initiativetrackerwidget.cpp" line="292"/>
         <source>Сохранение конфигурации</source>
         <translation>Save config</translation>
     </message>
     <message>
-        <location filename="../initiative-tracker/initiativetrackerwidget.cpp" line="270"/>
+        <location filename="../initiative-tracker/initiativetrackerwidget.cpp" line="293"/>
         <source>Сохранить трекер?</source>
         <translation>Save tracker?</translation>
     </message>
@@ -611,74 +651,84 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.ui" line="313"/>
+        <location filename="../mainwindow.ui" line="339"/>
         <source>Add</source>
         <translation>Add</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="328"/>
+        <location filename="../mainwindow.ui" line="354"/>
         <source>Glossary</source>
         <translation>Glossary</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="336"/>
+        <location filename="../mainwindow.ui" line="362"/>
         <source>Tools</source>
         <translation>Tools</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="356"/>
+        <location filename="../mainwindow.ui" line="384"/>
         <source>toolBar</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="378"/>
+        <location filename="../mainwindow.ui" line="406"/>
         <source>Open</source>
         <translation>Open</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="389"/>
+        <location filename="../mainwindow.ui" line="417"/>
         <source>Spells</source>
         <translation>Spells</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="397"/>
+        <location filename="../mainwindow.ui" line="425"/>
         <source>Monsters</source>
         <translation>Monsters</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="405"/>
+        <location filename="../mainwindow.ui" line="433"/>
         <source>Magic items</source>
         <translation>Magic items</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="432"/>
+        <location filename="../mainwindow.ui" line="460"/>
         <source>Close</source>
         <translation>Close</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="447"/>
+        <location filename="../mainwindow.ui" line="475"/>
         <source>Report bug</source>
         <translation>Report bug</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="452"/>
+        <location filename="../mainwindow.ui" line="480"/>
         <source>Map</source>
         <translation>Map</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="461"/>
+        <location filename="../mainwindow.ui" line="489"/>
         <source>Reload from disk</source>
         <translation>Reload from disk</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="464"/>
+        <location filename="../mainwindow.ui" line="492"/>
         <source>Reload campaign from disk</source>
         <translation>Reload cmpaign from disk</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="469"/>
+        <location filename="../mainwindow.ui" line="497"/>
         <source>Character</source>
         <translation>Character</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="502"/>
+        <source>Sources</source>
+        <translation>Sources</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="507"/>
+        <source>Check for updates</source>
+        <translation>Check for updates</translation>
     </message>
     <message>
         <source>Play</source>
@@ -689,7 +739,7 @@
         <translation type="vanished">File</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="410"/>
+        <location filename="../mainwindow.ui" line="438"/>
         <source>Settings</source>
         <translation>Settings</translation>
     </message>
@@ -706,12 +756,12 @@
         <translation type="vanished">Save</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="381"/>
+        <location filename="../mainwindow.ui" line="409"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="370"/>
+        <location filename="../mainwindow.ui" line="398"/>
         <source>New</source>
         <translation>New</translation>
     </message>
@@ -721,22 +771,22 @@
         <translation>DM-assist</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="108"/>
+        <location filename="../mainwindow.ui" line="122"/>
         <source>No maps opened</source>
         <translation>No maps opened</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="160"/>
+        <location filename="../mainwindow.ui" line="174"/>
         <source>Open new map</source>
         <translation>Open new map</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="309"/>
+        <location filename="../mainwindow.ui" line="335"/>
         <source>Campaign</source>
         <translation>Campaign</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="373"/>
+        <location filename="../mainwindow.ui" line="401"/>
         <source>Ctrl+N</source>
         <translation></translation>
     </message>
@@ -753,209 +803,245 @@
         <translation type="vanished">Save project?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="285"/>
+        <location filename="../mainwindow.cpp" line="306"/>
         <source>Open player config file</source>
         <translation>Open player config file</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="287"/>
+        <location filename="../mainwindow.cpp" line="308"/>
         <source>Xml file (*.xml)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="295"/>
+        <location filename="../mainwindow.cpp" line="316"/>
         <source>Open File error</source>
         <translation>Open file error</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="461"/>
-        <location filename="../mainwindow.cpp" line="659"/>
+        <location filename="../mainwindow.cpp" line="491"/>
+        <location filename="../mainwindow.cpp" line="693"/>
         <source>Open file error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="162"/>
+        <location filename="../mainwindow.cpp" line="183"/>
         <source>Open Map Image</source>
         <translation>Open map image</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="164"/>
+        <location filename="../mainwindow.cpp" line="185"/>
         <source>Map Files (*.dam);;Images (*.png *.jpg *.bmp)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="261"/>
+        <location filename="../mainwindow.cpp" line="282"/>
         <source>Open campaign directory</source>
         <translation>Open campaign directory</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="452"/>
+        <location filename="../mainwindow.cpp" line="482"/>
         <source>Can&apos;t create subdirectory: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="551"/>
+        <location filename="../mainwindow.cpp" line="584"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="551"/>
+        <location filename="../mainwindow.cpp" line="584"/>
         <source>Failed to open map file.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="965"/>
+        <location filename="../mainwindow.cpp" line="918"/>
         <source>ruler</source>
         <translation>Ruler</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="977"/>
+        <location filename="../mainwindow.cpp" line="930"/>
         <source>calibrate</source>
         <translation>Calibrate</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1001"/>
+        <location filename="../mainwindow.cpp" line="965"/>
         <source>Add fog to map</source>
         <translation>Add fog to map</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1008"/>
+        <location filename="../mainwindow.cpp" line="972"/>
         <source>Hide all</source>
         <translation>Hide all</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1027"/>
+        <location filename="../mainwindow.cpp" line="998"/>
         <source>Remove fog from map</source>
         <translation>Remove fog from map</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1034"/>
+        <location filename="../mainwindow.cpp" line="1005"/>
         <source>Reveal all</source>
         <translation>Reveal all</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1054"/>
+        <location filename="../mainwindow.cpp" line="1032"/>
         <source>Edit light sources</source>
         <translation>Edit light sources</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1059"/>
+        <location filename="../mainwindow.cpp" line="1037"/>
         <source>Bright radius</source>
         <translation>Bright light radius</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1066"/>
+        <location filename="../mainwindow.cpp" line="1044"/>
         <source>Dim radius</source>
         <translation>Dim light radius</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1093"/>
+        <location filename="../mainwindow.cpp" line="1078"/>
         <source>Update fog</source>
         <translation>Update fog</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1110"/>
+        <location filename="../mainwindow.cpp" line="1095"/>
         <source>Draw line</source>
         <translation>Draw line</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1130"/>
+        <location filename="../mainwindow.cpp" line="1116"/>
         <source>Draw circle</source>
         <translation>Draw circle</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1150"/>
+        <location filename="../mainwindow.cpp" line="1137"/>
         <source>Draw square</source>
         <translation>Draw square</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1170"/>
+        <location filename="../mainwindow.cpp" line="1158"/>
         <source>Draw triangle</source>
         <translation>Draw triangle</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1191"/>
+        <location filename="../mainwindow.cpp" line="1180"/>
         <source>Brush</source>
         <translation>Brush</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1198"/>
+        <location filename="../mainwindow.cpp" line="1187"/>
         <source>Clear all</source>
         <translation>Clear all</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1219"/>
+        <location filename="../mainwindow.cpp" line="1209"/>
         <source>Brush opacity</source>
         <translation>Brush opacity</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1322"/>
+        <location filename="../mainwindow.cpp" line="1243"/>
+        <source>Height</source>
+        <translation>Height</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1336"/>
         <source>Chose character name</source>
         <translation>Chose character name</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1323"/>
+        <location filename="../mainwindow.cpp" line="1337"/>
         <source>Character name:</source>
         <translation>Character name:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1331"/>
-        <location filename="../mainwindow.cpp" line="1343"/>
-        <location filename="../mainwindow.cpp" line="1353"/>
+        <location filename="../mainwindow.cpp" line="1345"/>
+        <location filename="../mainwindow.cpp" line="1357"/>
+        <location filename="../mainwindow.cpp" line="1367"/>
         <source>Can&apos;t add character</source>
         <translation>Can&apos;t add character</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1331"/>
+        <location filename="../mainwindow.cpp" line="1345"/>
         <source>Open campaign first!</source>
         <translation>Open campaign first!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1343"/>
+        <location filename="../mainwindow.cpp" line="1357"/>
         <source>Character already exists 
  Override?</source>
         <translation>Character already exists \n Override?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1353"/>
+        <location filename="../mainwindow.cpp" line="1367"/>
         <source>Unknown error</source>
         <translation>Unknown error</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="211"/>
+        <location filename="../mainwindow.cpp" line="1410"/>
+        <source>Load campaign?</source>
+        <translation>Load campaign?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1411"/>
+        <source>Load campaign from %1?</source>
+        <translation>Load campaign from %1?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="232"/>
         <source>Save map to file</source>
         <translation>Save map to file</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="342"/>
+        <location filename="../mainwindow.ui" line="368"/>
         <source>About</source>
         <translation>About</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="413"/>
+        <location filename="../mainwindow.ui" line="441"/>
         <source>Settings (ctrl+alt+s)</source>
         <translation>Settings (Ctrl + Alt + S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="416"/>
+        <location filename="../mainwindow.ui" line="444"/>
         <source>Ctrl+Alt+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="424"/>
-        <location filename="../mainwindow.ui" line="427"/>
+        <location filename="../mainwindow.ui" line="452"/>
+        <location filename="../mainwindow.ui" line="455"/>
         <source>Character builder</source>
         <translation>Character builder</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="437"/>
+        <location filename="../mainwindow.ui" line="465"/>
         <source>Help</source>
         <translation>Help</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="442"/>
+        <location filename="../mainwindow.ui" line="470"/>
         <source>Donate</source>
         <translation>Donate</translation>
+    </message>
+</context>
+<context>
+    <name>MapScene</name>
+    <message>
+        <location filename="../map-widget/mapscene.cpp" line="61"/>
+        <source>Change height</source>
+        <translation>Change height</translation>
+    </message>
+    <message>
+        <location filename="../map-widget/mapscene.cpp" line="61"/>
+        <source>NewHeight</source>
+        <translation>New height</translation>
+    </message>
+</context>
+<context>
+    <name>MapView</name>
+    <message>
+        <location filename="../map-widget/mapview.cpp" line="165"/>
+        <source>Height: %1</source>
+        <translation>Height: %1</translation>
     </message>
 </context>
 <context>
@@ -966,13 +1052,12 @@
         <translation>playlist</translation>
     </message>
     <message>
-        <location filename="../music-widget/musicplayer.ui" line="56"/>
-        <location filename="../music-widget/musicplayer.ui" line="75"/>
+        <location filename="../music-widget/musicplayer.ui" line="81"/>
         <source>TextLabel</source>
         <translation>Title</translation>
     </message>
     <message>
-        <location filename="../music-widget/musicplayer.ui" line="101"/>
+        <location filename="../music-widget/musicplayer.ui" line="94"/>
         <source>play</source>
         <translation>Play</translation>
     </message>
@@ -1199,6 +1284,64 @@
     </message>
 </context>
 <context>
+    <name>RollWidget</name>
+    <message>
+        <location filename="../roll-widget/rollwidget.ui" line="20"/>
+        <source>RollWidget</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../roll-widget/rollwidget.ui" line="63"/>
+        <source>Example: 2d20 + 4</source>
+        <translation>Example: 2d20 + 4</translation>
+    </message>
+    <message>
+        <location filename="../roll-widget/rollwidget.ui" line="76"/>
+        <source>Roll!</source>
+        <translation>Roll!</translation>
+    </message>
+    <message>
+        <location filename="../roll-widget/rollwidget.ui" line="88"/>
+        <source>Compact mode</source>
+        <translation>Compact mode</translation>
+    </message>
+    <message>
+        <location filename="../roll-widget/rollwidget.ui" line="97"/>
+        <source>d4</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../roll-widget/rollwidget.ui" line="104"/>
+        <source>d6</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../roll-widget/rollwidget.ui" line="111"/>
+        <source>d8</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../roll-widget/rollwidget.ui" line="118"/>
+        <source>d10</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../roll-widget/rollwidget.ui" line="125"/>
+        <source>d12</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../roll-widget/rollwidget.ui" line="132"/>
+        <source>d20</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../roll-widget/rollwidget.ui" line="139"/>
+        <source>d100</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>SaveConfigDialog</name>
     <message>
         <location filename="../saveconfigdialog.cpp" line="15"/>
@@ -1231,7 +1374,7 @@
         <translation>Cancel</translation>
     </message>
     <message>
-        <location filename="../saveconfigdialog.cpp" line="85"/>
+        <location filename="../saveconfigdialog.cpp" line="90"/>
         <source>Выберите папку</source>
         <translation>Choose folder</translation>
     </message>
@@ -1242,17 +1385,17 @@
         <translation>Folder will be saved into folder %1/%2</translation>
     </message>
     <message>
-        <location filename="../saveconfigdialog.cpp" line="119"/>
+        <location filename="../saveconfigdialog.cpp" line="124"/>
         <source>Введите имя проекта.</source>
         <translation>Enter project name.</translation>
     </message>
     <message>
-        <location filename="../saveconfigdialog.cpp" line="123"/>
+        <location filename="../saveconfigdialog.cpp" line="128"/>
         <source>Укажите корневую папку.</source>
         <translation>Select root folder.</translation>
     </message>
     <message>
-        <location filename="../saveconfigdialog.cpp" line="132"/>
+        <location filename="../saveconfigdialog.cpp" line="137"/>
         <source>Указанная папка не пуста.</source>
         <translation>Choosed folder is not empty.</translation>
     </message>
@@ -1327,102 +1470,250 @@
         <translation>Theme</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="194"/>
+        <location filename="../settingsdialog.ui" line="190"/>
+        <source>Style</source>
+        <translation>Style</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="210"/>
         <source>Display fields in shared view</source>
         <translation>Display fields in shared view</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="203"/>
+        <location filename="../settingsdialog.ui" line="219"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="210"/>
+        <location filename="../settingsdialog.ui" line="226"/>
         <source>Iinitiative</source>
         <translation>Initiative</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="217"/>
+        <location filename="../settingsdialog.ui" line="233"/>
         <source>Armor Class</source>
         <translation>Armor class</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="224"/>
+        <location filename="../settingsdialog.ui" line="240"/>
         <source>Hit Points</source>
         <translation>Hit points</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="231"/>
+        <location filename="../settingsdialog.ui" line="247"/>
         <source>max Hit Points</source>
         <translation>max hit points</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="238"/>
+        <location filename="../settingsdialog.ui" line="254"/>
         <source>Delete</source>
         <translation>Delete</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="247"/>
+        <location filename="../settingsdialog.ui" line="263"/>
         <source>Hp display mode</source>
         <translation>HP display mode</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="257"/>
+        <location filename="../settingsdialog.ui" line="273"/>
         <source>Numeric</source>
         <translation>Numeric</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="262"/>
+        <location filename="../settingsdialog.ui" line="278"/>
         <source>Text status</source>
         <translation>Text status</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="267"/>
+        <location filename="../settingsdialog.ui" line="283"/>
         <source>Progress bar</source>
         <translation>Progress bar</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="275"/>
+        <location filename="../settingsdialog.ui" line="291"/>
         <source>Show control in main widget</source>
         <translation>Show control in main widget</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="303"/>
+        <location filename="../settingsdialog.ui" line="300"/>
+        <source>Characters</source>
+        <translation>Characters</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="307"/>
+        <source>Auto initiative rolls</source>
+        <translation>Auto initiative roll</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="333"/>
         <source>Apply</source>
         <translation>Apply</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="310"/>
+        <location filename="../settingsdialog.ui" line="340"/>
         <source>Cancel</source>
         <translation>Cancel</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="128"/>
+        <location filename="../settingsdialog.cpp" line="136"/>
         <source>Select folder</source>
         <translation>Select folder</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="152"/>
+        <location filename="../settingsdialog.cpp" line="160"/>
         <source>Select theme file</source>
         <translation>Select theme file</translation>
     </message>
 </context>
 <context>
+    <name>StatusDelegate</name>
+    <message>
+        <location filename="../initiative-tracker/initiativedelegates.cpp" line="138"/>
+        <source>%1 (%2 rounds)</source>
+        <translation>%1 (%2 rounds)</translation>
+    </message>
+</context>
+<context>
+    <name>StatusEditDialog</name>
+    <message>
+        <location filename="../initiative-tracker/statuseditdialog.ui" line="14"/>
+        <source>StatusEditDialog</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/statuseditdialog.ui" line="65"/>
+        <source>Blinded</source>
+        <translation>Blinded</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/statuseditdialog.ui" line="120"/>
+        <source>Charmed</source>
+        <translation>Charmed</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/statuseditdialog.ui" line="172"/>
+        <source>Deafened</source>
+        <translation>Deafened</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/statuseditdialog.ui" line="224"/>
+        <source>Exhaustion</source>
+        <translation>Exhaustion</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/statuseditdialog.ui" line="276"/>
+        <source>Frightened</source>
+        <translation>Frightened</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/statuseditdialog.ui" line="328"/>
+        <source>Grappled</source>
+        <translation>Grappled</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/statuseditdialog.ui" line="380"/>
+        <source>Incapacitated</source>
+        <translation>Incapacitated</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/statuseditdialog.ui" line="432"/>
+        <source>Invisible</source>
+        <translation>Invisible</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/statuseditdialog.ui" line="484"/>
+        <source>Paralyzed</source>
+        <translation>Paralyzed</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/statuseditdialog.ui" line="536"/>
+        <source>Petrified</source>
+        <translation>Petrified</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/statuseditdialog.ui" line="588"/>
+        <source>Poisoned</source>
+        <translation>Poisoned</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/statuseditdialog.ui" line="640"/>
+        <source>Prone</source>
+        <translation>Condition prone</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/statuseditdialog.ui" line="692"/>
+        <source>Restrained</source>
+        <translation>Restrained</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/statuseditdialog.ui" line="744"/>
+        <source>Stunned</source>
+        <translation>Stunned</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/statuseditdialog.ui" line="796"/>
+        <source>Unconscious</source>
+        <translation>Unconscious</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/statuseditdialog.ui" line="831"/>
+        <source>Custom</source>
+        <translation>Custom</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/statuseditdialog.ui" line="852"/>
+        <source>icon</source>
+        <translation>Icon</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/statuseditdialog.ui" line="859"/>
+        <source>Status title</source>
+        <translation>Status title</translation>
+    </message>
+</context>
+<context>
+    <name>StatusModel</name>
+    <message>
+        <location filename="../initiative-tracker/statuseditdialog.cpp" line="52"/>
+        <source>Title</source>
+        <translation>Title</translation>
+    </message>
+    <message>
+        <location filename="../initiative-tracker/statuseditdialog.cpp" line="53"/>
+        <source>Timer</source>
+        <translation>Timer</translation>
+    </message>
+</context>
+<context>
     <name>TabWidget</name>
     <message>
-        <location filename="../map-widget/maptabwidget.h" line="35"/>
+        <location filename="../map-widget/maptabwidget.cpp" line="13"/>
         <source>Open new map</source>
         <translation>Open new map</translation>
     </message>
     <message>
-        <location filename="../map-widget/maptabwidget.h" line="67"/>
+        <location filename="../map-widget/maptabwidget.cpp" line="35"/>
         <source>Share</source>
         <translation>Share</translation>
     </message>
     <message>
-        <location filename="../map-widget/maptabwidget.h" line="70"/>
+        <location filename="../map-widget/maptabwidget.cpp" line="38"/>
         <source>Save</source>
         <translation>Save</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateBannerWidget</name>
+    <message>
+        <location filename="../updatechecker.cpp" line="26"/>
+        <location filename="../updatechecker.cpp" line="52"/>
+        <source>New version available! Currently using version %1 and the latest is: %2</source>
+        <translation>New version available! Currently using version %1 and the latest is: %2</translation>
+    </message>
+    <message>
+        <location filename="../updatechecker.cpp" line="27"/>
+        <source>Download</source>
+        <translation>Download</translation>
     </message>
 </context>
 <context>

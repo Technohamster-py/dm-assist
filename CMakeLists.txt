@@ -38,11 +38,12 @@ set(FILES
         map-widget/brushtool.h  map-widget/brushtool.cpp
         map-widget/calibrationtool.h    map-widget/calibrationtool.cpp
         map-widget/fogtool.h    map-widget/fogtool.cpp
+        map-widget/heightmaptool.h  map-widget/heightmaptool.cpp
         map-widget/lighttool.h  map-widget/lighttool.cpp
         map-widget/mapview.h    map-widget/mapview.cpp
         map-widget/mapscene.h   map-widget/mapscene.cpp
         map-widget/maptabwidget.h   map-widget/maptabwidget.cpp
-        map-widget/rulermaptool.h   map-widget/rulermaptool.cpp
+        map-widget/rulertool.h map-widget/rulertool.cpp
         map-widget/sharedmapwindow.h    map-widget/sharedmapwindow.cpp
         map-widget/spellshapetool.h     map-widget/spellshapetool.cpp
         map-widget/undostack.h
@@ -56,6 +57,7 @@ set(FILES
         settings.h
         theme-manager/thememanager.h theme-manager/thememanager.cpp
         theme-manager/themediconmanager.h theme-manager/themediconmanager.cpp
+        updatechecker.h updatechecker.cpp
 )
 
 set(UI_FILES
@@ -100,6 +102,7 @@ include_directories(
         ${Qt6Sql_INCLUDE_DIRS}
         ${Qt6Multimedia_INCLUDE_DIRS}
         ${BASS_INCLUDE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}
         translations
         static
         theme-manager
@@ -108,10 +111,10 @@ include_directories(
 )
 
 qt_add_translation(QM_FILES ${TS_FILES})
-add_custom_target(translations DEPENDS ${QM_FILES})
+#add_custom_target(translations DEPENDS ${QM_FILES})
 
 add_executable(${PROJECT_NAME}
-#        WIN32
+        WIN32
         main.cpp
         ${FILES}
         ${UI_FILES}
@@ -119,7 +122,7 @@ add_executable(${PROJECT_NAME}
 )
 
 target_sources(${PROJECT_NAME} PRIVATE ${QM_FILES})
-add_dependencies(${PROJECT_NAME} translations)
+#add_dependencies(${PROJECT_NAME} translations)
 
 target_link_libraries(${PROJECT_NAME}
         Qt6::Core
@@ -165,28 +168,28 @@ if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     target_sources(${PROJECT_NAME} PRIVATE ${APP_ICON_RESOURCE_WINDOWS})
 endif ()
 
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E echo "Current config: $<CONFIG>"
-        COMMAND ${CMAKE_COMMAND} -E echo "Cleaning up unnecessary files if Release..."
-
-        COMMAND ${CMAKE_COMMAND} -E remove_directory "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/CMakeFiles,ignore>"
-        COMMAND ${CMAKE_COMMAND} -E remove_directory "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/DM-assist_autogen,ignore>"
-        COMMAND ${CMAKE_COMMAND} -E remove_directory "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/Testing,ignore>"
-        COMMAND ${CMAKE_COMMAND} -E remove_directory "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/.cmake,ignore>"
-
-        COMMAND ${CMAKE_COMMAND} -E remove -f "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/CMakeCache.txt,ignore>"
-        COMMAND ${CMAKE_COMMAND} -E remove -f "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/Makefile,ignore>"
-        COMMAND ${CMAKE_COMMAND} -E remove -f "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/cmake_install.cmake,ignore>"
-        COMMAND ${CMAKE_COMMAND} -E remove -f "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/build.ninja,ignore>"
-
-        COMMENT "Stripping build directory for Release (only if config is Release)..."
-)
+#add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+#        COMMAND ${CMAKE_COMMAND} -E echo "Current config: $<CONFIG>"
+#        COMMAND ${CMAKE_COMMAND} -E echo "Cleaning up unnecessary files if Release..."
+#
+#        COMMAND ${CMAKE_COMMAND} -E remove_directory "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/CMakeFiles,ignore>"
+#        COMMAND ${CMAKE_COMMAND} -E remove_directory "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/DM-assist_autogen,ignore>"
+#        COMMAND ${CMAKE_COMMAND} -E remove_directory "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/Testing,ignore>"
+#        COMMAND ${CMAKE_COMMAND} -E remove_directory "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/.cmake,ignore>"
+#
+#        COMMAND ${CMAKE_COMMAND} -E remove -f "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/CMakeCache.txt,ignore>"
+#        COMMAND ${CMAKE_COMMAND} -E remove -f "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/Makefile,ignore>"
+#        COMMAND ${CMAKE_COMMAND} -E remove -f "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/cmake_install.cmake,ignore>"
+#        COMMAND ${CMAKE_COMMAND} -E remove -f "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/build.ninja,ignore>"
+#
+#        COMMENT "Stripping build directory for Release (only if config is Release)..."
+#)
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${BASS_DLL}"
         "${CMAKE_BINARY_DIR}"
-        COMMENT "Копирование bass в папку сборки..."
+        COMMENT "Copying bass..."
 )
 
 
