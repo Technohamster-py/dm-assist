@@ -50,7 +50,8 @@ void DndBestiaryPage::loadFromFile(const QString &path) {
 
     /// AC
     QJsonObject acObj = attributesObj["ac"].toObject();
-    ui->acLabel->setText(QString::number(acObj.value("flat").toInt()) + " " + acObj.value("calc").toString());
+    ui->acLabel->setText(QString::number(acObj.value("flat").toInt()));
+    ui->acCalcLabel->setText(acObj.value("calc").toString());
 
     /// HP
     QJsonObject hpObj = attributesObj["hp"].toObject();
