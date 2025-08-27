@@ -33,8 +33,8 @@ public slots:
 protected:
     QString m_lastRoll = "";
 
-    QRegularExpression tokenPattern = QRegularExpression(R"(([+\-]?[\d]*[d|к]\d+|[+\-]?\d+))", QRegularExpression::CaseInsensitiveOption);
-    QRegularExpression dicePattern = QRegularExpression(R"(([+\-]?)\s*(\d*)[d|к](\d+))", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpression tokenPattern = QRegularExpression(R"(([+\-]?[\d]*[d|к|д]\d+|[+\-]?\d+))", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpression dicePattern = QRegularExpression(R"(([+\-]?)\s*(\d*)[d|к|д](\d+))", QRegularExpression::CaseInsensitiveOption);
     QRegularExpression modifierPattern = QRegularExpression(R"([+\-]?\s*\d+)", QRegularExpression::CaseInsensitiveOption);
 private:
     Ui::RollWidget *ui;
