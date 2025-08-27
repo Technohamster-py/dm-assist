@@ -90,12 +90,12 @@
         <translation type="vanished">Campaign structure</translation>
     </message>
     <message>
-        <location filename="../campaign-tree-widget/campaigntreewidget.cpp" line="202"/>
+        <location filename="../campaign-tree-widget/campaigntreewidget.cpp" line="207"/>
         <source>The selected folder does not contain campaign.json is not a campaign</source>
         <translation>The selected folder does not contain campaign.json is not a campaign</translation>
     </message>
     <message>
-        <location filename="../campaign-tree-widget/campaigntreewidget.cpp" line="266"/>
+        <location filename="../campaign-tree-widget/campaigntreewidget.cpp" line="271"/>
         <source>Show in file system</source>
         <translation>Show in file system</translation>
     </message>
@@ -125,6 +125,184 @@
     <message>
         <source>Delete</source>
         <translation type="vanished">Delete</translation>
+    </message>
+</context>
+<context>
+    <name>DndBestiaryPage</name>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="14"/>
+        <source>BestiaryPage</source>
+        <translation>Bestiary Page</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="38"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="114"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="200"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="283"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="644"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="671"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="698"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="752"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="908"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="932"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="956"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="980"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="1004"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="1034"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="1064"/>
+        <location filename="../bestiary/dndbestiarypage.ui" line="1088"/>
+        <source>TextLabel</source>
+        <translation>Title</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="256"/>
+        <source>DEX</source>
+        <translation>DEX</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="393"/>
+        <source>WIS</source>
+        <translation>WIS</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="422"/>
+        <source>INT</source>
+        <translation>INT</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="451"/>
+        <source>CHA</source>
+        <translation>CHA</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="507"/>
+        <source>STR</source>
+        <translation>STR</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="617"/>
+        <source>CON</source>
+        <translation>CON</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="862"/>
+        <source>Saves</source>
+        <translation>Saves</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="881"/>
+        <source>Skills</source>
+        <translation>Skills</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="896"/>
+        <source>Damage resistance</source>
+        <translation>Damage resistance</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="920"/>
+        <source>Damage immunity</source>
+        <translation>Damage immunity</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="944"/>
+        <source>Vulnerability</source>
+        <translation>Vulnerability</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="968"/>
+        <source>Condition immunity</source>
+        <translation>Condition immunity</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="992"/>
+        <source>Feelings</source>
+        <translation>Feelings</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="1016"/>
+        <source>Languages</source>
+        <translation>Languages</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="1052"/>
+        <source>Danger</source>
+        <translation>Danger</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.ui" line="1076"/>
+        <source>Proficiency bonus</source>
+        <translation>Proficiency bonus</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.h" line="35"/>
+        <source>Actions</source>
+        <translation>Actions</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.h" line="36"/>
+        <source>Feats</source>
+        <translation>Feats</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.h" line="37"/>
+        <source>Lair actions</source>
+        <translation>Lair actions</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.h" line="38"/>
+        <source>Legendary actions</source>
+        <translation>Legendary actions</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.h" line="39"/>
+        <source>Spells</source>
+        <translation>Spells</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.cpp" line="58"/>
+        <source>Walk: %1 %2</source>
+        <translation>Walk: %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.cpp" line="61"/>
+        <source>, Burrow: %1 %2</source>
+        <translation>, Burrow: %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.cpp" line="64"/>
+        <source>, climb: %1 %2</source>
+        <translation>, climb: %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.cpp" line="67"/>
+        <source>, fly: %1 %2</source>
+        <translation>, fly: %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.cpp" line="70"/>
+        <source>, swim: %1 %2</source>
+        <translation>, swim: %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.cpp" line="80"/>
+        <source>Dark vision %1 %2</source>
+        <translation>Dark vision %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.cpp" line="83"/>
+        <source>Blindsight %1 %2</source>
+        <translation>Blindsight %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.cpp" line="86"/>
+        <source>Tremorsense %1 %2</source>
+        <translation>Tremorsense %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary/dndbestiarypage.cpp" line="89"/>
+        <source>Truesight %1 %2</source>
+        <translation>Truesight %1 %2</translation>
     </message>
 </context>
 <context>
@@ -483,6 +661,7 @@
     <message>
         <location filename="../campaign-tree-widget/hoverwidget.cpp" line="95"/>
         <location filename="../campaign-tree-widget/hoverwidget.cpp" line="99"/>
+        <location filename="../campaign-tree-widget/hoverwidget.cpp" line="111"/>
         <source>Add to current encounter</source>
         <translation>Add to current encounter</translation>
     </message>
@@ -490,6 +669,11 @@
         <location filename="../campaign-tree-widget/hoverwidget.cpp" line="101"/>
         <source>Replace current encounter</source>
         <translation>Replace current encounter</translation>
+    </message>
+    <message>
+        <location filename="../campaign-tree-widget/hoverwidget.cpp" line="109"/>
+        <source>View</source>
+        <translation>View</translation>
     </message>
 </context>
 <context>
@@ -803,191 +987,191 @@
         <translation type="vanished">Save project?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="306"/>
+        <location filename="../mainwindow.cpp" line="308"/>
         <source>Open player config file</source>
         <translation>Open player config file</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="308"/>
+        <location filename="../mainwindow.cpp" line="310"/>
         <source>Xml file (*.xml)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="316"/>
+        <location filename="../mainwindow.cpp" line="318"/>
         <source>Open File error</source>
         <translation>Open file error</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="491"/>
-        <location filename="../mainwindow.cpp" line="693"/>
+        <location filename="../mainwindow.cpp" line="493"/>
+        <location filename="../mainwindow.cpp" line="695"/>
         <source>Open file error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="183"/>
+        <location filename="../mainwindow.cpp" line="185"/>
         <source>Open Map Image</source>
         <translation>Open map image</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="185"/>
+        <location filename="../mainwindow.cpp" line="187"/>
         <source>Map Files (*.dam);;Images (*.png *.jpg *.bmp)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="282"/>
+        <location filename="../mainwindow.cpp" line="284"/>
         <source>Open campaign directory</source>
         <translation>Open campaign directory</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="482"/>
+        <location filename="../mainwindow.cpp" line="484"/>
         <source>Can&apos;t create subdirectory: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="584"/>
+        <location filename="../mainwindow.cpp" line="586"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="584"/>
+        <location filename="../mainwindow.cpp" line="586"/>
         <source>Failed to open map file.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="918"/>
+        <location filename="../mainwindow.cpp" line="920"/>
         <source>ruler</source>
         <translation>Ruler</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="930"/>
+        <location filename="../mainwindow.cpp" line="932"/>
         <source>calibrate</source>
         <translation>Calibrate</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="965"/>
+        <location filename="../mainwindow.cpp" line="967"/>
         <source>Add fog to map</source>
         <translation>Add fog to map</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="972"/>
+        <location filename="../mainwindow.cpp" line="974"/>
         <source>Hide all</source>
         <translation>Hide all</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="998"/>
+        <location filename="../mainwindow.cpp" line="1000"/>
         <source>Remove fog from map</source>
         <translation>Remove fog from map</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1005"/>
+        <location filename="../mainwindow.cpp" line="1007"/>
         <source>Reveal all</source>
         <translation>Reveal all</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1032"/>
+        <location filename="../mainwindow.cpp" line="1034"/>
         <source>Edit light sources</source>
         <translation>Edit light sources</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1037"/>
+        <location filename="../mainwindow.cpp" line="1039"/>
         <source>Bright radius</source>
         <translation>Bright light radius</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1044"/>
+        <location filename="../mainwindow.cpp" line="1046"/>
         <source>Dim radius</source>
         <translation>Dim light radius</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1078"/>
+        <location filename="../mainwindow.cpp" line="1080"/>
         <source>Update fog</source>
         <translation>Update fog</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1095"/>
+        <location filename="../mainwindow.cpp" line="1097"/>
         <source>Draw line</source>
         <translation>Draw line</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1116"/>
+        <location filename="../mainwindow.cpp" line="1118"/>
         <source>Draw circle</source>
         <translation>Draw circle</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1137"/>
+        <location filename="../mainwindow.cpp" line="1139"/>
         <source>Draw square</source>
         <translation>Draw square</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1158"/>
+        <location filename="../mainwindow.cpp" line="1160"/>
         <source>Draw triangle</source>
         <translation>Draw triangle</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1180"/>
+        <location filename="../mainwindow.cpp" line="1182"/>
         <source>Brush</source>
         <translation>Brush</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1187"/>
+        <location filename="../mainwindow.cpp" line="1189"/>
         <source>Clear all</source>
         <translation>Clear all</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1209"/>
+        <location filename="../mainwindow.cpp" line="1211"/>
         <source>Brush opacity</source>
         <translation>Brush opacity</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1243"/>
+        <location filename="../mainwindow.cpp" line="1245"/>
         <source>Height</source>
         <translation>Height</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1336"/>
+        <location filename="../mainwindow.cpp" line="1338"/>
         <source>Chose character name</source>
         <translation>Chose character name</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1337"/>
+        <location filename="../mainwindow.cpp" line="1339"/>
         <source>Character name:</source>
         <translation>Character name:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1345"/>
-        <location filename="../mainwindow.cpp" line="1357"/>
-        <location filename="../mainwindow.cpp" line="1367"/>
+        <location filename="../mainwindow.cpp" line="1347"/>
+        <location filename="../mainwindow.cpp" line="1359"/>
+        <location filename="../mainwindow.cpp" line="1369"/>
         <source>Can&apos;t add character</source>
         <translation>Can&apos;t add character</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1345"/>
+        <location filename="../mainwindow.cpp" line="1347"/>
         <source>Open campaign first!</source>
         <translation>Open campaign first!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1357"/>
+        <location filename="../mainwindow.cpp" line="1359"/>
         <source>Character already exists 
  Override?</source>
         <translation>Character already exists \n Override?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1367"/>
+        <location filename="../mainwindow.cpp" line="1369"/>
         <source>Unknown error</source>
         <translation>Unknown error</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1410"/>
+        <location filename="../mainwindow.cpp" line="1412"/>
         <source>Load campaign?</source>
         <translation>Load campaign?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1411"/>
+        <location filename="../mainwindow.cpp" line="1413"/>
         <source>Load campaign from %1?</source>
         <translation>Load campaign from %1?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="232"/>
+        <location filename="../mainwindow.cpp" line="234"/>
         <source>Save map to file</source>
         <translation>Save map to file</translation>
     </message>
