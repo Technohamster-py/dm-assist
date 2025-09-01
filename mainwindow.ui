@@ -113,6 +113,12 @@
            <layout class="QVBoxLayout" name="phLayout">
             <item>
              <widget class="QLabel" name="Msg">
+              <property name="minimumSize">
+               <size>
+                <width>300</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <pointsize>20</pointsize>
