@@ -640,7 +640,13 @@ PlaylistEditDialog::PlaylistEditDialog(QWidget *parent, const QStringList &track
     ui->titleEdit->setValidator(validator);
 
     ui->titleEdit->setText(title);
-    ui->playlistWidget->addItems(tracks);
+
+    for (const QString& path : tracks) {
+        QFileInfo info(path);
+        auto *item = new QListWidgetItem(info.fileName(), ui->playlistWidget);
+        item->setData(Qt::UserRole, path);
+    }
+
     ui->playlistWidget->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->playlistWidget->setDragDropMode(QAbstractItemView::InternalMove);
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &PlaylistEditDialog::accept);
@@ -661,7 +667,9 @@ PlaylistEditDialog::~PlaylistEditDialog() = default;
 void PlaylistEditDialog::on_addButton_clicked() {
     QStringList files = QFileDialog::getOpenFileNames(this, "Add audio files", QStandardPaths::writableLocation(QStandardPaths::MusicLocation), "Audio Files (*.mp3 *.wav)");
     for (const QString &file : files) {
-        ui->playlistWidget->addItem(file);
+        QFileInfo info(file);
+        auto *item = new QListWidgetItem(info.fileName(), ui->playlistWidget);
+        item->setData(Qt::UserRole, file);
     }
 }
 
@@ -676,8 +684,10 @@ void PlaylistEditDialog::on_addButton_clicked() {
 QStringList PlaylistEditDialog::getUpdatedPlaylist() const {
     QStringList result;
     for (int i = 0; i < ui->playlistWidget->count(); ++i) {
-        result << ui->playlistWidget->item(i)->text();
+        QListWidgetItem *item = ui->playlistWidget->item(i);
+        result << item->data(Qt::UserRole).toString();
     }
+    qDebug() << result;
     return result;
 }
 
@@ -719,7 +729,7 @@ void PlaylistEditDialog::dragEnterEvent(QDragEnterEvent *event) {
 
 void PlaylistEditDialog::dropEvent(QDropEvent *event) {
     QStringList files;
-    for (const QUrl &url : event->mimeData()->urls()) {
+    for (const QUrl &url: event->mimeData()->urls()) {
         QString path = url.toLocalFile();
         QFileInfo info(path);
         if (info.exists() && info.isFile() && (info.suffix().toLower() == "mp3" || info.suffix().toLower() == "wav")) {
@@ -727,9 +737,11 @@ void PlaylistEditDialog::dropEvent(QDropEvent *event) {
         }
     }
 
-    if (!files.isEmpty())
-    {
-        for (const QString &file : files)
-            ui->playlistWidget->addItem(file);
+    if (!files.isEmpty()) {
+        for (const QString &file: files) {
+            QFileInfo info(file);
+            auto *item = new QListWidgetItem(info.fileName(), ui->playlistWidget);
+            item->setData(Qt::UserRole, file);
+        }
     }
 }
