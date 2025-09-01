@@ -540,9 +540,10 @@ void DndBestiaryPage::parseFromFvtt10(QJsonObject root) {
                 desc += "<br>" + entry.toString();
             }
 
-            desc.replace("&nbsp", "");
+            desc.replace("&nbsp;", "");
             desc.replace("{@atk rs}", "");
             desc.replace("{@atk mw}", "");
+            desc.replace("{@h};", "");
             desc.replace("{@h}", "");
             desc.replace("<hr />", " ");
             desc.replace("{", "");
