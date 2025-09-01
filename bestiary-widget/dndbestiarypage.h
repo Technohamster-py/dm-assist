@@ -41,7 +41,8 @@ protected:
             {"feat", tr("Feats")},
             {"lair", tr("Lair actions")},
             {"legendary", tr("Legendary actions")},
-            {"spell", tr("Spells")}
+            {"spell", tr("Spells")},
+            {"trait", tr("Traits")}
     };
 
     QMap<QString, QString> skillTitles {
@@ -72,6 +73,9 @@ protected:
 private:
     Ui::DndBestiaryPage *ui;
     QString convertToHeader(QString type);
+
+    void parseFromFvtt11(QJsonObject root);
+    void parseFromFvtt10(QJsonObject root);
 };
 
 
