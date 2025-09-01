@@ -154,6 +154,9 @@
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
         </property>
+        <property name="maximum">
+         <number>10000</number>
+        </property>
        </widget>
       </item>
       <item row="0" column="0">
@@ -195,6 +198,12 @@
           <height>16777215</height>
          </size>
         </property>
+        <property name="suffix">
+         <string/>
+        </property>
+        <property name="maximum">
+         <number>10000</number>
+        </property>
        </widget>
       </item>
       <item row="2" column="2" colspan="2">
@@ -235,7 +244,11 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QSpinBox" name="acBox"/>
+       <widget class="QSpinBox" name="acBox">
+        <property name="maximum">
+         <number>100</number>
+        </property>
+       </widget>
       </item>
       <item row="0" column="4">
        <widget class="QLabel" name="runIcon">
@@ -270,6 +283,9 @@
           <height>16777215</height>
          </size>
         </property>
+        <property name="maximum">
+         <number>500</number>
+        </property>
        </widget>
       </item>
      </layout>
@@ -301,7 +317,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-625</y>
+        <y>0</y>
         <width>1035</width>
         <height>3131</height>
        </rect>
