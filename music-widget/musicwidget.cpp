@@ -703,7 +703,7 @@ QString PlaylistEditDialog::getPlaylistName() const {
  *
  * @note The memory associated with the removed items is cleaned up using `delete`.
  */
-void PlaylistEditDialog::om_removeButton_clicked() {
+void PlaylistEditDialog::on_removeButton_clicked() {
     auto selectedTracks = ui->playlistWidget->selectedItems();
     for (QListWidgetItem *track : selectedTracks) {
         delete ui->playlistWidget->takeItem(ui->playlistWidget->row(track));
