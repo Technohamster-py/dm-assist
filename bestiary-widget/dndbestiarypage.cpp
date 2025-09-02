@@ -546,8 +546,7 @@ void DndBestiaryPage::parseFromFvtt10(QJsonObject root) {
             desc.replace("{@h};", "");
             desc.replace("{@h}", "");
             desc.replace("<hr />", " ");
-            desc.replace("{", "");
-            desc.replace("}", "");
+
             bestiaryItem.description = desc;
 
             bestiaryItem.type = section;
