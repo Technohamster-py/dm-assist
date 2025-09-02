@@ -294,16 +294,17 @@ void MusicPlayerWidget::play() {
 void MusicPlayerWidget::playTrackAt(int index) {
     if (index < 0 || index >= streams.size()) return;
 
-    stop(); // на всякий случай
+    stop();
 
     stream = streams[index];
     BASS_ChannelPlay(stream, FALSE);
 
-    // Установка синхронизации на окончание трека
+    // Sync track end
     BASS_ChannelSetSync(stream, BASS_SYNC_END, 0, [](HSYNC, DWORD handle, DWORD, void *user) {
         auto *self = static_cast<MusicPlayerWidget*>(user);
         QMetaObject::invokeMethod(self, "playNextTrack", Qt::QueuedConnection);
     }, this);
+    changeVolume(ui->volumeSlider->value()); ///< Updating volume for the new stream
 
     isActive = true;
     ui->playButton->setStyleSheet("QPushButton {border: none; background: palette(highlight);}"
