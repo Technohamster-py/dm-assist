@@ -63,9 +63,10 @@ int RollWidget::executeRoll(QString command) {
         } else continue;
     }
 
-    m_lastRoll = rollParts.join(" ") + " = " + QString::number(total);
-    if (m_lastRoll.startsWith("+"))
-        m_lastRoll.removeAt(0);
+    QString result = rollParts.join(" ");
+    if (result.startsWith("+"))
+        result.removeAt(0);
+    m_lastRoll = QString::number(total) + " = " + result;
 
     ui->resultView->addItem(m_lastRoll);
     ui->resultView->scrollToBottom();
