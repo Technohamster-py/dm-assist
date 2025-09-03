@@ -236,164 +236,132 @@
         <translation>Proficiency bonus</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.h" line="40"/>
         <source>Actions</source>
-        <translation>Actions</translation>
+        <translation type="vanished">Actions</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.h" line="41"/>
         <source>Feats</source>
-        <translation>Feats</translation>
+        <translation type="vanished">Feats</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.h" line="42"/>
         <source>Lair actions</source>
-        <translation>Lair actions</translation>
+        <translation type="vanished">Lair actions</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.h" line="43"/>
         <source>Legendary actions</source>
-        <translation>Legendary actions</translation>
+        <translation type="vanished">Legendary actions</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.h" line="44"/>
         <source>Spells</source>
-        <translation>Spells</translation>
+        <translation type="vanished">Spells</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.h" line="48"/>
         <source>Acrobatics</source>
-        <translation>Acrobatics</translation>
+        <translation type="vanished">Acrobatics</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.h" line="49"/>
         <source>Animal handling</source>
-        <translation>Animal handling</translation>
+        <translation type="vanished">Animal handling</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.h" line="50"/>
         <source>Arcana</source>
-        <translation>Arcana</translation>
+        <translation type="vanished">Arcana</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.h" line="51"/>
         <source>Athletics</source>
-        <translation>Athletics</translation>
+        <translation type="vanished">Athletics</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.h" line="52"/>
         <source>Deception</source>
-        <translation>Deception</translation>
+        <translation type="vanished">Deception</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.h" line="53"/>
         <source>History</source>
-        <translation>History</translation>
+        <translation type="vanished">History</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.h" line="54"/>
         <source>Insight</source>
-        <translation>Insight</translation>
+        <translation type="vanished">Insight</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.h" line="55"/>
         <source>Intimidation</source>
-        <translation>Intimidation</translation>
+        <translation type="vanished">Intimidation</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.h" line="56"/>
         <source>Investigation</source>
-        <translation>Investigation</translation>
+        <translation type="vanished">Investigation</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.h" line="57"/>
         <source>Medicine</source>
-        <translation>Medicine</translation>
+        <translation type="vanished">Medicine</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.h" line="58"/>
         <source>Nature</source>
-        <translation>Nature</translation>
+        <translation type="vanished">Nature</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.h" line="59"/>
         <source>Perception</source>
-        <translation>Perception</translation>
+        <translation type="vanished">Perception</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.h" line="60"/>
         <source>Performance</source>
-        <translation>Performance</translation>
+        <translation type="vanished">Performance</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.h" line="61"/>
         <source>Persuasion</source>
-        <translation>Persuasion</translation>
+        <translation type="vanished">Persuasion</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.h" line="62"/>
         <source>Religion</source>
-        <translation>Religion</translation>
+        <translation type="vanished">Religion</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.h" line="63"/>
         <source>Sleight of hand</source>
-        <translation>Sleight of hand</translation>
+        <translation type="vanished">Sleight of hand</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.h" line="64"/>
         <source>Stealth</source>
-        <translation>Stealth</translation>
+        <translation type="vanished">Stealth</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.h" line="65"/>
         <source>Survival</source>
-        <translation>Survival</translation>
+        <translation type="vanished">Survival</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.cpp" line="76"/>
         <source>Walk: %1 %2</source>
-        <translation>Walk: %1 %2</translation>
+        <translation type="vanished">Walk: %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.cpp" line="79"/>
         <source>, Burrow: %1 %2</source>
-        <translation>, Burrow: %1 %2</translation>
+        <translation type="vanished">, Burrow: %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.cpp" line="82"/>
         <source>, climb: %1 %2</source>
-        <translation>, climb: %1 %2</translation>
+        <translation type="vanished">, climb: %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.cpp" line="85"/>
         <source>, fly: %1 %2</source>
-        <translation>, fly: %1 %2</translation>
+        <translation type="vanished">, fly: %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.cpp" line="88"/>
         <source>, swim: %1 %2</source>
-        <translation>, swim: %1 %2</translation>
+        <translation type="vanished">, swim: %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.cpp" line="98"/>
         <source>Dark vision %1 %2</source>
-        <translation>Dark vision %1 %2</translation>
+        <translation type="vanished">Dark vision %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.cpp" line="101"/>
         <source>Blindsight %1 %2</source>
-        <translation>Blindsight %1 %2</translation>
+        <translation type="vanished">Blindsight %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.cpp" line="104"/>
         <source>Tremorsense %1 %2</source>
-        <translation>Tremorsense %1 %2</translation>
+        <translation type="vanished">Tremorsense %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/dndbestiarypage.cpp" line="107"/>
         <source>Truesight %1 %2</source>
-        <translation>Truesight %1 %2</translation>
+        <translation type="vanished">Truesight %1 %2</translation>
     </message>
 </context>
 <context>
@@ -427,7 +395,7 @@
         <translation>HP</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="210"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="225"/>
         <source>ft</source>
         <translation>ft</translation>
     </message>
@@ -436,7 +404,7 @@
         <translation type="vanished">Max HP</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="233"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="248"/>
         <source>Initiative:</source>
         <translation>Initiative:</translation>
     </message>
@@ -445,153 +413,153 @@
         <translation type="vanished">Speed</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="223"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="238"/>
         <source>/</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="203"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="218"/>
         <source>initiative bonus</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="342"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="376"/>
         <source>Strength</source>
         <translation>Strength</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="354"/>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="438"/>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="624"/>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="668"/>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="854"/>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1004"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="388"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="472"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="658"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="702"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="888"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1038"/>
         <source>bonus</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="412"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="446"/>
         <source>Athletics</source>
         <translation>Athletics</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="498"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="532"/>
         <source>Dexterity</source>
         <translation>Dexterity</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="520"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="554"/>
         <source>Acrobatics</source>
         <translation>Acrobatics</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="538"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="572"/>
         <source>Sleght of hand</source>
         <translation>Sleight of hand</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="556"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="590"/>
         <source>Stealth</source>
         <translation>Stealth</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="588"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="622"/>
         <source>Constitution</source>
         <translation>Constitution</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="686"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="720"/>
         <source>Intelligence</source>
         <translation>Intelligence</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="738"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="772"/>
         <source>Arcana</source>
         <translation>Arcana</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="750"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="784"/>
         <source>History</source>
         <translation>History</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="762"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="796"/>
         <source>Investigation</source>
         <translation>Investigation</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="774"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="808"/>
         <source>Nature</source>
         <translation>Nature</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="786"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="820"/>
         <source>Religion</source>
         <translation>Religion</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="842"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="876"/>
         <source>Wisdom</source>
         <translation>Wisdom</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="888"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="922"/>
         <source>Animal handling</source>
         <translation>Animal handling</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="900"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="934"/>
         <source>Insight</source>
         <translation>Insight</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="912"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="946"/>
         <source>Medicine</source>
         <translation>Medicine</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="924"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="958"/>
         <source>Perception</source>
         <translation>Perception</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="936"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="970"/>
         <source>Survival</source>
         <translation>Survival</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="968"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1002"/>
         <source>Charisma</source>
         <translation>Charisma</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1038"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1072"/>
         <source>Deception</source>
         <translation>Deception</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1050"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1084"/>
         <source>Intimidation</source>
         <translation>Intimidation</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1062"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1096"/>
         <source>Performance</source>
         <translation>Performance</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1074"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1108"/>
         <source>Persuasion</source>
         <translation>Persuasion</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1125"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1159"/>
         <source>Attacks</source>
         <translation>Attacks</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1153"/>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1226"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1187"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1260"/>
         <source>Add</source>
         <translation>Add</translation>
     </message>
@@ -600,107 +568,107 @@
         <translation type="vanished">Attacks</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1198"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1232"/>
         <source>Resources</source>
         <translation>Resources</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1246"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1280"/>
         <source>Long Rest</source>
         <translation>Long rest</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1262"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1296"/>
         <source>Short Rest</source>
         <translation>Short rest</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1299"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1333"/>
         <source>Traits</source>
         <translation>Traits</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1349"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1383"/>
         <source>Personality</source>
         <translation>Personality</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1389"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1423"/>
         <source>Ideals</source>
         <translation>Ideals</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1429"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1463"/>
         <source>Bonds</source>
         <translation>Bonds</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1469"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1503"/>
         <source>Flaws</source>
         <translation>Flaws</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1503"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1537"/>
         <source>Proficiencies</source>
         <translation>Proficiencies and Languages</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1552"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1586"/>
         <source>Equipment</source>
         <translation>Equipment</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1587"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1621"/>
         <source>ep</source>
         <translation>EP</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1620"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1654"/>
         <source>sp</source>
         <translation>SP</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1635"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1669"/>
         <source>pp</source>
         <translation>PP</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1650"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1684"/>
         <source>gp</source>
         <translation>GP</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1719"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1753"/>
         <source>cp</source>
         <translation>CP</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1760"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1794"/>
         <source>Treasures</source>
         <translation>Treasures</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1820"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1854"/>
         <source>Features</source>
         <translation>Features</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1845"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1879"/>
         <source>Quests</source>
         <translation>Quests</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1860"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1894"/>
         <source>Allies</source>
         <translation>Allies</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1894"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1928"/>
         <source>Background</source>
         <translation>Background</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1956"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1990"/>
         <source>Notes</source>
         <translation>Notes</translation>
     </message>
@@ -742,6 +710,82 @@
     </message>
 </context>
 <context>
+    <name>Fvtt10Parser</name>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="30"/>
+        <source>Walk: %1 %2</source>
+        <translation>Walk: %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="33"/>
+        <source>, Burrow: %1 %2</source>
+        <translation>, Burrow: %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="36"/>
+        <source>, climb: %1 %2</source>
+        <translation>, climb: %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="39"/>
+        <source>, fly: %1 %2</source>
+        <translation>, fly: %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="42"/>
+        <source>, swim: %1 %2</source>
+        <translation>, swim: %1 %2</translation>
+    </message>
+</context>
+<context>
+    <name>Fvtt11Parser</name>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="219"/>
+        <source>Walk: %1 %2</source>
+        <translation>Walk: %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="222"/>
+        <source>, Burrow: %1 %2</source>
+        <translation>, Burrow: %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="225"/>
+        <source>, climb: %1 %2</source>
+        <translation>, climb: %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="228"/>
+        <source>, fly: %1 %2</source>
+        <translation>, fly: %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="231"/>
+        <source>, swim: %1 %2</source>
+        <translation>, swim: %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="241"/>
+        <source>Dark vision %1 %2</source>
+        <translation>Dark vision %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="244"/>
+        <source>Blindsight %1 %2</source>
+        <translation>Blindsight %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="247"/>
+        <source>Tremorsense %1 %2</source>
+        <translation>Tremorsense %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="250"/>
+        <source>Truesight %1 %2</source>
+        <translation>Truesight %1 %2</translation>
+    </message>
+</context>
+<context>
     <name>HoverWidget</name>
     <message>
         <location filename="../campaign-tree-widget/hoverwidget.cpp" line="93"/>
@@ -765,6 +809,129 @@
         <location filename="../campaign-tree-widget/hoverwidget.cpp" line="109"/>
         <source>View</source>
         <translation>View</translation>
+    </message>
+</context>
+<context>
+    <name>IFvttParser</name>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.h" line="29"/>
+        <source>Acrobatics</source>
+        <translation>Acrobatics</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.h" line="30"/>
+        <source>Animal handling</source>
+        <translation>Animal handling</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.h" line="31"/>
+        <source>Arcana</source>
+        <translation>Arcana</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.h" line="32"/>
+        <source>Athletics</source>
+        <translation>Athletics</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.h" line="33"/>
+        <source>Deception</source>
+        <translation>Deception</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.h" line="34"/>
+        <source>History</source>
+        <translation>History</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.h" line="35"/>
+        <source>Insight</source>
+        <translation>Insight</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.h" line="36"/>
+        <source>Intimidation</source>
+        <translation>Intimidation</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.h" line="37"/>
+        <source>Investigation</source>
+        <translation>Investigation</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.h" line="38"/>
+        <source>Medicine</source>
+        <translation>Medicine</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.h" line="39"/>
+        <source>Nature</source>
+        <translation>Nature</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.h" line="40"/>
+        <source>Perception</source>
+        <translation>Perception</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.h" line="41"/>
+        <source>Performance</source>
+        <translation>Performance</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.h" line="42"/>
+        <source>Persuasion</source>
+        <translation>Persuasion</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.h" line="43"/>
+        <source>Religion</source>
+        <translation>Religion</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.h" line="44"/>
+        <source>Sleight of hand</source>
+        <translation>Sleight of hand</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.h" line="45"/>
+        <source>Stealth</source>
+        <translation>Stealth</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.h" line="46"/>
+        <source>Survival</source>
+        <translation>Survival</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.h" line="50"/>
+        <source>Actions</source>
+        <translation>Actions</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.h" line="51"/>
+        <source>Feats</source>
+        <translation>Feats</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.h" line="52"/>
+        <source>Lair actions</source>
+        <translation>Lair actions</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.h" line="53"/>
+        <source>Legendary actions</source>
+        <translation>Legendary actions</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.h" line="54"/>
+        <source>Spells</source>
+        <translation>Spells</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.h" line="55"/>
+        <source>Traits</source>
+        <translation>Traits</translation>
     </message>
 </context>
 <context>
@@ -926,82 +1093,82 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.ui" line="339"/>
+        <location filename="../mainwindow.ui" line="345"/>
         <source>Add</source>
         <translation>Add</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="354"/>
+        <location filename="../mainwindow.ui" line="360"/>
         <source>Glossary</source>
         <translation>Glossary</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="362"/>
+        <location filename="../mainwindow.ui" line="368"/>
         <source>Tools</source>
         <translation>Tools</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="384"/>
+        <location filename="../mainwindow.ui" line="390"/>
         <source>toolBar</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="406"/>
+        <location filename="../mainwindow.ui" line="412"/>
         <source>Open</source>
         <translation>Open</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="417"/>
+        <location filename="../mainwindow.ui" line="423"/>
         <source>Spells</source>
         <translation>Spells</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="425"/>
+        <location filename="../mainwindow.ui" line="431"/>
         <source>Monsters</source>
         <translation>Monsters</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="433"/>
+        <location filename="../mainwindow.ui" line="439"/>
         <source>Magic items</source>
         <translation>Magic items</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="460"/>
+        <location filename="../mainwindow.ui" line="466"/>
         <source>Close</source>
         <translation>Close</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="475"/>
+        <location filename="../mainwindow.ui" line="481"/>
         <source>Report bug</source>
         <translation>Report bug</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="480"/>
+        <location filename="../mainwindow.ui" line="486"/>
         <source>Map</source>
         <translation>Map</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="489"/>
+        <location filename="../mainwindow.ui" line="495"/>
         <source>Reload from disk</source>
         <translation>Reload from disk</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="492"/>
+        <location filename="../mainwindow.ui" line="498"/>
         <source>Reload campaign from disk</source>
         <translation>Reload cmpaign from disk</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="497"/>
+        <location filename="../mainwindow.ui" line="503"/>
         <source>Character</source>
         <translation>Character</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="502"/>
+        <location filename="../mainwindow.ui" line="508"/>
         <source>Sources</source>
         <translation>Sources</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="507"/>
+        <location filename="../mainwindow.ui" line="513"/>
         <source>Check for updates</source>
         <translation>Check for updates</translation>
     </message>
@@ -1014,7 +1181,7 @@
         <translation type="vanished">File</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="438"/>
+        <location filename="../mainwindow.ui" line="444"/>
         <source>Settings</source>
         <translation>Settings</translation>
     </message>
@@ -1031,12 +1198,12 @@
         <translation type="vanished">Save</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="409"/>
+        <location filename="../mainwindow.ui" line="415"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="398"/>
+        <location filename="../mainwindow.ui" line="404"/>
         <source>New</source>
         <translation>New</translation>
     </message>
@@ -1046,22 +1213,22 @@
         <translation>DM-assist</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="122"/>
+        <location filename="../mainwindow.ui" line="128"/>
         <source>No maps opened</source>
         <translation>No maps opened</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="174"/>
+        <location filename="../mainwindow.ui" line="180"/>
         <source>Open new map</source>
         <translation>Open new map</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="335"/>
+        <location filename="../mainwindow.ui" line="341"/>
         <source>Campaign</source>
         <translation>Campaign</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="401"/>
+        <location filename="../mainwindow.ui" line="407"/>
         <source>Ctrl+N</source>
         <translation></translation>
     </message>
@@ -1267,33 +1434,33 @@
         <translation>Save map to file</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="368"/>
+        <location filename="../mainwindow.ui" line="374"/>
         <source>About</source>
         <translation>About</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="441"/>
+        <location filename="../mainwindow.ui" line="447"/>
         <source>Settings (ctrl+alt+s)</source>
         <translation>Settings (Ctrl + Alt + S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="444"/>
+        <location filename="../mainwindow.ui" line="450"/>
         <source>Ctrl+Alt+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="452"/>
-        <location filename="../mainwindow.ui" line="455"/>
+        <location filename="../mainwindow.ui" line="458"/>
+        <location filename="../mainwindow.ui" line="461"/>
         <source>Character builder</source>
         <translation>Character builder</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="465"/>
+        <location filename="../mainwindow.ui" line="471"/>
         <source>Help</source>
         <translation>Help</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="470"/>
+        <location filename="../mainwindow.ui" line="476"/>
         <source>Donate</source>
         <translation>Donate</translation>
     </message>
@@ -1327,12 +1494,11 @@
         <translation>playlist</translation>
     </message>
     <message>
-        <location filename="../music-widget/musicplayer.ui" line="81"/>
         <source>TextLabel</source>
-        <translation>Title</translation>
+        <translation type="vanished">Title</translation>
     </message>
     <message>
-        <location filename="../music-widget/musicplayer.ui" line="94"/>
+        <location filename="../music-widget/musicplayer.ui" line="97"/>
         <source>play</source>
         <translation>Play</translation>
     </message>
