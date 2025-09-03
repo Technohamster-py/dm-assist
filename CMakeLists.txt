@@ -22,6 +22,7 @@ endif ()
 
 
 set(FILES
+        bestiary-widget/fvttparser.h    bestiary-widget/fvttparser.cpp
         bestiary-widget/dndbestiarypage.h bestiary-widget/dndbestiarypage.cpp
         bestiary-widget/dndbeaststructure.h
         bestiary-widget/rolltextbrowser.h bestiary-widget/rolltextbrowser.cpp

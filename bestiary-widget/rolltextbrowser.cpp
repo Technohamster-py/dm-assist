@@ -28,7 +28,7 @@ void RollTextBrowser::setCustomHtml(const QString &html) {
         processed.replace(m.captured(0), link);
     }
 
-    QRegularExpression re3(R"(\{@hit/s*([+-]?\d+)\})"); ///< {@hit 12}
+    QRegularExpression re3(R"(\{@hit\s*([+-]?\d+)\})"); ///< {@hit 12}
     it = re3.globalMatch(processed);
     while (it.hasNext()){
         auto m = it.next();

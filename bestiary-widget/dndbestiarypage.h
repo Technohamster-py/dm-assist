@@ -6,7 +6,7 @@
 
 
 #include "../charsheet-widget/abstractcharsheetwidget.h"
-#include "dndbeaststructure.h"
+#include "fvttparser.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -24,47 +24,18 @@ public:
 
     static int bonusFromStat(int statValue) {return (statValue >= 10) ? (statValue - 10) / 2 : (statValue - 11) / 2;};
 
+    virtual void loadFromFile(const QString &filePath) override;
+    virtual void populateWidget(BestiaryPageData data);
     virtual void saveToFile(QString filePath = nullptr){};
 
     virtual void addToInitiative(InitiativeTrackerWidget *initiativeTrackerWidget, bool autoRoll = false);
-
 
 public slots:
     void updateTranslator() override;
 
 protected:
-    virtual void loadFromFile(const QString &filePath) override;
     QMap<QString, QList<BestiaryItem>> descriptionSections;
-
-    QMap<QString, QString> typeToHeader {
-            {"action", tr("Actions")},
-            {"feat", tr("Feats")},
-            {"lair", tr("Lair actions")},
-            {"legendary", tr("Legendary actions")},
-            {"spell", tr("Spells")},
-            {"trait", tr("Traits")}
-    };
-
-    QMap<QString, QString> skillTitles {
-            {"acr", tr("Acrobatics")},
-            {"ani", tr("Animal handling")},
-            {"arc", tr("Arcana")},
-            {"ath", tr("Athletics")},
-            {"dec", tr("Deception")},
-            {"his", tr("History")},
-            {"ins", tr("Insight")},
-            {"itm", tr("Intimidation")},
-            {"inv", tr("Investigation")},
-            {"med", tr("Medicine")},
-            {"nat", tr("Nature")},
-            {"prc", tr("Perception")},
-            {"prf", tr("Performance")},
-            {"per", tr("Persuasion")},
-            {"rel", tr("Religion")},
-            {"slt", tr("Sleight of hand")},
-            {"ste", tr("Stealth")},
-            {"sur", tr("Survival")}
-    };
+    IFvttParser *m_parser = nullptr;
 
     virtual bool downloadToken(const QString& link);
     QNetworkAccessManager* m_manager;
