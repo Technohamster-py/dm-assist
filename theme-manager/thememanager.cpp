@@ -38,6 +38,7 @@ void ThemeManager::applyPreset(ThemeManager::PresetTheme theme) {
             palette.setColor(QPalette::ButtonText, Qt::white);
             palette.setColor(QPalette::Highlight, QColor("#3f51b5"));
             palette.setColor(QPalette::HighlightedText, Qt::white);
+            palette.setColor(QPalette::Link, QColor("#55aaff"));
             break;
         default:
             resetToSystemTheme();
