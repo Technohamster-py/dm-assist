@@ -19,6 +19,7 @@
 #include <QTextStream>
 #include <QTextBrowser>
 #include <QSpinBox>
+#include <QComboBox>
 #include <QJsonDocument>
 
 #include "theme-manager/thememanager.h"
@@ -54,10 +55,10 @@ MainWindow::MainWindow(QWidget *parent) :
     campaignTreeWidget = new CampaignTreeWidget(ui->leftAsideWidget);
     campaignTreeWidget->setVisible(false);
     setupCampaign(QString());
-    setupToolbar();
     setupPlayers();
     setupTracker();
     setupMaps();
+    setupToolbar();
 
     adjustSize();
 
@@ -924,6 +925,7 @@ void MainWindow::setupToolbar() {
     toolGroup = new QActionGroup(this);
     toolGroup->setExclusive(true);
 
+
     /// Ruler tool
     auto *rulerButton = new QToolButton(this);
     rulerButton->setCheckable(true);
@@ -966,6 +968,7 @@ void MainWindow::setupToolbar() {
     });
     ui->toolBar->addWidget(rulerButton);
 
+
     /// Fog-hide tool
     auto* fogHideAction = new QAction(this);
     fogHideAction->setCheckable(true);
@@ -998,6 +1001,7 @@ void MainWindow::setupToolbar() {
             currentView->setActiveTool(fogTool);
         }
     });
+
 
     /// Fog-reveal tool
     auto* fogRevealAction = new QAction(this);
@@ -1032,6 +1036,7 @@ void MainWindow::setupToolbar() {
     });
 
     ui->toolBar->addSeparator();
+
 
     /// Light tool
     auto* lightAction = new QAction(this);
@@ -1095,6 +1100,7 @@ void MainWindow::setupToolbar() {
 
     ui->toolBar->addSeparator();
 
+
     /// Spells
     /// LineShapeTool
     auto* lineAction = new QAction(this);
@@ -1117,6 +1123,7 @@ void MainWindow::setupToolbar() {
             currentView->setActiveTool(nullptr);
     });
 
+
     /// CircleShapeTool
     auto* circleAction = new QAction(this);
     circleAction->setCheckable(true);
@@ -1138,6 +1145,7 @@ void MainWindow::setupToolbar() {
             currentView->setActiveTool(nullptr);
     });
 
+
     /// SquareShapeTool
     auto* squareAction = new QAction(this);
     squareAction->setCheckable(true);
@@ -1158,6 +1166,7 @@ void MainWindow::setupToolbar() {
         else
             currentView->setActiveTool(nullptr);
     });
+
 
     /// TriangleShapeTool
     auto* triangleAction = new QAction(this);
@@ -1226,6 +1235,7 @@ void MainWindow::setupToolbar() {
         brushTool->setOpacity(v / 100.0);
     });
 
+
     /// Shape color button
     auto *ShapeToolColorButton = new QPushButton();
     ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/map/palette.svg", ShapeToolColorButton, &QAbstractButton::setIcon);
@@ -1244,6 +1254,8 @@ void MainWindow::setupToolbar() {
 
 
     ui->toolBar->addSeparator();
+
+
     /// Height Map
     auto* heightMapAction = new QAction(this);
     heightMapAction->setCheckable(true);
@@ -1263,6 +1275,43 @@ void MainWindow::setupToolbar() {
             currentView->setActiveTool(heightMapTool);
         else
             currentView->setActiveTool(nullptr);
+    });
+
+
+    /// Grid
+    auto* gridBox = new QComboBox(this);
+    for (int i = 0; i <= GridItem::modesCount(); ++i) {
+        gridBox->addItem(GridItem::stringMode(i));
+    }
+    gridBox->setMaximumWidth(80);
+    gridBox->setCurrentIndex(GridItem::GridType::None);
+    connect(gridBox, &QComboBox::currentIndexChanged, [=](int mode){
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (!currentView) return;
+        currentView->getScene()->setGridType(mode);
+    });
+    ui->toolBar->addWidget(gridBox);
+
+    auto* gridSizeSpinBox = new QSpinBox(this);
+    gridSizeSpinBox->setRange(1, 100);
+    gridSizeSpinBox->setSingleStep(1);
+    gridSizeSpinBox->setToolTip(tr("Grid cell size (feet)"));
+    gridSizeSpinBox->setMaximumWidth(40);
+    ui->toolBar->addWidget(gridSizeSpinBox);
+    connect(gridSizeSpinBox, &QSpinBox::valueChanged, [=](int size){
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (!currentView) return;
+        currentView->getScene()->setGridSize(size);
+    });
+
+
+    /// Connecting map change event
+    connect(mapTabWidget, &QTabWidget::currentChanged, [=](){
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (!currentView) return;
+
+        gridBox->setCurrentIndex(currentView->getScene()->gridType());
+        gridSizeSpinBox->setValue(currentView->getScene()->gridSize());
     });
 }
 
