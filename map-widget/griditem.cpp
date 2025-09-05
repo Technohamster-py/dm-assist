@@ -90,5 +90,6 @@ QString GridItem::stringMode(int mode) {
         case GridType::Square: return QObject::tr("Square");
         case GridType::Hex: return QObject::tr("Hexagon");
     }
+    return QObject::tr("None");
 }
 

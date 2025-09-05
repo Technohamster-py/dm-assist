@@ -66,6 +66,8 @@ public:
 
     void initializeGrid();
     void enableGrid(bool enabled);
+    int gridType() const {return m_gridType;}
+    int gridSize() const {return m_gridSize;}
 
     void initializeFog(const QSize &size);
     void drawFogCircle(const QPointF &scenePos, int radius, bool hide);

@@ -52,10 +52,10 @@ MainWindow::MainWindow(QWidget *parent) :
     campaignTreeWidget = new CampaignTreeWidget(ui->leftAsideWidget);
     campaignTreeWidget->setVisible(false);
     setupCampaign(QString());
-    setupToolbar();
     setupPlayers();
     setupTracker();
     setupMaps();
+    setupToolbar();
 
     adjustSize();
 
@@ -1285,6 +1285,16 @@ void MainWindow::setupToolbar() {
         auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
         if (!currentView) return;
         currentView->getScene()->setGridSize(size);
+    });
+
+
+    /// Connecting map change event
+    connect(mapTabWidget, &QTabWidget::currentChanged, [=](){
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (!currentView) return;
+
+        gridBox->setCurrentIndex(currentView->getScene()->gridType());
+        gridSizeSpinBox->setValue(currentView->getScene()->gridSize());
     });
 }
 
