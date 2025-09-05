@@ -67,7 +67,6 @@ public:
     void initializeGrid();
     void setGridType(GridItem::GridType gridType);
     void enableGrid(bool enabled);
-    void setGridSize(qreal feet);
 
     void initializeFog(const QSize &size);
     void drawFogCircle(const QPointF &scenePos, int radius, bool hide);
@@ -93,6 +92,10 @@ public:
     void undoLastAction();
     qreal heightAt(const QPointF &pos) const;
     qreal lineWidth() const {return m_lineWidth;};
+
+public slots:
+    void setGridSize(int feet);
+
 
 signals:
     void fogUpdated(const QImage &fogImage);

@@ -419,6 +419,7 @@ void MapScene::undoLastAction() {
 QJsonObject MapScene::toJson() {
     QJsonObject obj;
     obj["scaleFactor"] = m_scaleFactor;
+    obj["gridCellSie"] = m_gridSize;
 
     if (m_activeTool)
         m_activeTool->deactivate(this);
@@ -532,6 +533,7 @@ QJsonObject MapScene::toJson() {
  */
 void MapScene::fromJson(const QJsonObject& obj) {
     m_scaleFactor = obj["scaleFactor"].toDouble(1.0);
+    m_gridSize = obj["gridCellSie"].toDouble(5.0);
 
 
     QJsonArray itemsArray = obj["items"].toArray();
@@ -772,7 +774,7 @@ void MapScene::setGridType(GridItem::GridType gridType) {
         m_gridItem->setGridType(gridType);
 }
 
-void MapScene::setGridSize(qreal feet) {
+void MapScene::setGridSize(int feet) {
     m_gridSize = qMax<qreal>(feet, 0.01);
     if (m_gridItem)
         m_gridItem->setCellFeet(m_gridSize);

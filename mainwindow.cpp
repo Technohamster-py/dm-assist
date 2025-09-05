@@ -1293,6 +1293,18 @@ void MainWindow::setupToolbar() {
         currentView->getScene()->setGridType(GridItem::GridType::Hex);
     });
 
+    auto* gridSizeSpinBox = new QSpinBox(this);
+    gridSizeSpinBox->setRange(1, 100);
+    gridSizeSpinBox->setSingleStep(1);
+    gridSizeSpinBox->setToolTip(tr("Grid cell size (feet)"));
+    gridSizeSpinBox->setMaximumWidth(40);
+    ui->toolBar->addWidget(gridSizeSpinBox);
+    connect(gridSizeSpinBox, &QSpinBox::valueChanged, [=](int size){
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (!currentView) return;
+        currentView->getScene()->setGridSize(size);
+    });
+
     gridNone->setChecked(true);
 }
 
