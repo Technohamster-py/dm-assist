@@ -184,6 +184,15 @@ Use `ctrl + SCROLL` to change brush size (similar to fog tool).
 
 Right-click a drawn line to delete it.
 
+
+### Grid
+![grid-square.png](illustrations/grid-square.png)
+![grid-hex.png](illustrations/grid-hex.png)
+
+A square or hexagonal grid can be applied to the map. The mode is selected by switching the drop-down list.
+
+Next to the drop-down list, you can control the size of the grid cells.
+
 ## Campaigns
 Campaigns allow you to store maps, characters, encounters, and playlists together and load everything at once.
 
