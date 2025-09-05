@@ -13,6 +13,7 @@
 
 #include "abstractmaptool.h"
 #include "undostack.h"
+#include "griditem.h"
 
 
 #pragma pack(push, 1)
@@ -35,6 +36,7 @@ enum mapErrorCodes{
 
 enum mapLayers{
     Background = -100,
+    Grid = -90,
     Height = 3,
     Shapes = 5,
     Brush = 6,
@@ -62,9 +64,10 @@ public:
     void setScaleFactor(double factor);
     [[nodiscard]] double getScaleFactor() const { return m_scaleFactor; };
 
-//    void setGrid(GridItem::GridType gridType);
+    void initializeGrid();
+    void setGridType(GridItem::GridType gridType);
     void enableGrid(bool enabled);
-//    void updateGrid();
+    void setGridSize(qreal feet);
 
     void initializeFog(const QSize &size);
     void drawFogCircle(const QPointF &scenePos, int radius, bool hide);
@@ -104,10 +107,12 @@ protected:
 
 private:
     AbstractMapTool *m_activeTool = nullptr;
-    double m_scaleFactor = 1.0;           ///< Масштаб
+    double m_scaleFactor = 1.0;           ///< Scale [feet/px]
 
-//    GridItem* m_gridItem = nullptr;
+    GridItem* m_gridItem = nullptr;
     bool m_gridEnabled = false;
+    GridItem::GridType m_gridType = GridItem::GridType::Square;
+    qreal m_gridSize = 5.0;     ///< Feet
 
     QGraphicsPixmapItem *fogItem = nullptr;
     QImage fogImage;

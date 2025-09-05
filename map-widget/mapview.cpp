@@ -67,8 +67,9 @@ void MapView::loadMapImage(const QString &filePath)
             delete mapPixmapItem;
         }
         mapPixmapItem = scene->addPixmap(pixmap);
-        mapPixmapItem->setZValue(mapLayers::Background); // ниже всех остальных элементов
+        mapPixmapItem->setZValue(mapLayers::Background);
         scene->initializeFog(pixmap.size());
+        scene->initializeGrid();
         scene->setSceneRect(mapPixmapItem->boundingRect());
     }
 }

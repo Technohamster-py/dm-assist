@@ -1270,16 +1270,28 @@ void MainWindow::setupToolbar() {
     connect(gridNone, &QAction::triggered, [=](bool checked){
         auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
         if (!currentView) return;
-        currentView->getScene()->enableGrid(checked);
+        currentView->getScene()->enableGrid(!checked);
     });
 
     QAction *gridSquare = ui->toolBar->addAction(tr("Square"));
     gridSquare->setCheckable(true);
     gridGroup->addAction(gridSquare);
+    connect(gridSquare, &QAction::triggered, [=](bool checked){
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (!currentView) return;
+        currentView->getScene()->enableGrid(checked);
+        currentView->getScene()->setGridType(GridItem::GridType::Square);
+    });
 
     QAction *gridHex = ui->toolBar->addAction(tr("Hex"));
     gridHex->setCheckable(true);
     gridGroup->addAction(gridHex);
+    connect(gridHex, &QAction::triggered, [=](bool checked){
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (!currentView) return;
+        currentView->getScene()->enableGrid(checked);
+        currentView->getScene()->setGridType(GridItem::GridType::Hex);
+    });
 
     gridNone->setChecked(true);
 }

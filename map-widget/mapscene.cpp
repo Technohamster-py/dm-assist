@@ -128,6 +128,8 @@ void MapScene::wheelEvent(QGraphicsSceneWheelEvent *event) {
 
 void MapScene::setScaleFactor(double factor) {
     m_scaleFactor = factor;
+    if (m_gridItem)
+        m_gridItem->setPixelsPerFoot(1/m_scaleFactor);
 }
 
 /**
@@ -728,6 +730,8 @@ int MapScene::loadFromFile(const QString& path) {
     fromJson(doc.object());
 
     file.close();
+
+    initializeGrid();
     return mapErrorCodes::NoError;
 }
 
@@ -743,7 +747,7 @@ int MapScene::loadFromFile(const QString& path) {
  */
 QRectF MapScene::mapRect() const {
     QPixmap pixmap = getMapPixmap();
-    return pixmap.rect();;
+    return pixmap.rect();
 }
 
 qreal MapScene::heightAt(const QPointF &pos) const {
@@ -755,17 +759,33 @@ qreal MapScene::heightAt(const QPointF &pos) const {
     return 0.0;
 }
 
-//void MapScene::setGrid(GridItem::GridType gridType) {
-//
-//}
-//
+
 void MapScene::enableGrid(bool enabled) {
     m_gridEnabled = enabled;
-//    if (!m_gridItem){
-//        m_gridItem = new GridItem(this)
-//    }
+    if (m_gridItem)
+        m_gridItem->setVisible(m_gridEnabled);
 }
-//
-//void MapScene::updateGrid() {
-//
-//}
+
+void MapScene::setGridType(GridItem::GridType gridType) {
+    m_gridType = gridType;
+    if (m_gridItem)
+        m_gridItem->setGridType(gridType);
+}
+
+void MapScene::setGridSize(qreal feet) {
+    m_gridSize = qMax<qreal>(feet, 0.01);
+    if (m_gridItem)
+        m_gridItem->setCellFeet(m_gridSize);
+}
+
+void MapScene::initializeGrid() {
+    if (!m_gridItem){
+        m_gridItem = new GridItem(mapRect());
+        m_gridItem->setZValue(mapLayers::Grid);
+        addItem(m_gridItem);
+        m_gridItem->setPixelsPerFoot(1/m_scaleFactor);
+        m_gridItem->setCellFeet(m_gridSize);
+        m_gridItem->setGridType(m_gridType);
+        m_gridItem->setVisible(false);
+    }
+}

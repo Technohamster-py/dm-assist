@@ -1,56 +1,86 @@
 #include "griditem.h"
+#include <QPainter>
+#include <QStyleOptionGraphicsItem>
 
-GridItem::GridItem(MapScene *scene) : QGraphicsItem(), m_scene(scene){
-
+GridItem::GridItem(const QRectF &size, QGraphicsItem *parent) : QGraphicsItem(parent), m_rect(size)
+{
+    m_pen.setCosmetic(true);
 }
 
-void GridItem::setGridType(GridItem::GridType type) {
-    m_gridType = type;
-}
+void GridItem::paint(QPainter *p, const QStyleOptionGraphicsItem *opt, QWidget *)
+{
+    if (!isVisible() || m_cellFeet <= 0 || m_pixelsPerFoot <= 0) return;
 
-void GridItem::setCellSize(qreal size) {
-    m_cellSize = size;
-}
+    p->setRenderHint(QPainter::Antialiasing, false);
+    p->setPen(m_pen);
 
-void GridItem::paint(QPainter *p, const QStyleOptionGraphicsItem *s, QWidget *w) {
-    if (!isVisible()) return;
+    const QRectF exposed = opt ? opt->exposedRect : QRectF(-5e5,-5e5,1e6,1e6);
 
-    QPen pen(Qt::gray, 0);
-    pen.setCosmetic(true);
-    p->setPen(pen);
-
-    qreal pxPerFt = m_scene->getScaleFactor();
-    qreal size = m_cellSize * pxPerFt;
-    QRectF rect = m_scene->sceneRect();
-
-
-    switch (m_gridType) {
-        case Square:
-            for (qreal x = std::floor(rect.left() / size) * size; x <= rect.right(); x += size)
-                p->drawLine(QLineF(x, rect.top(), x, rect.bottom()));
-
-            for (qreal y = std::floor(rect.top() / size) * size; y <= rect.bottom() ; y += size)
-                p->drawLine(QLineF(rect.left(), y, rect.right(), y));
+    qreal stepPx;
+    switch (m_type) {
+        case GridType::Square:
+            stepPx = m_cellFeet * m_pixelsPerFoot;
+            paintSquareGrid(p, exposed, stepPx);
             break;
-        case Hex:
-            qreal dx = size * 3.0 / 4.0;
-            qreal dy = size * std::sqrt(3) / 2.0;
-            for (int row = 0;; ++row) {
-                qreal y = rect.top() + row * dy;
-                if (y > rect.bottom()) break;
+        case GridType::Hex:
+            stepPx = m_cellFeet * m_pixelsPerFoot; // side-to-side
+            paintHexGrid(p, exposed, stepPx);
+            break;
+    }
+}
 
-                for (int col = 0;; ++col) {
-                    qreal x = rect.left() + col * dx + (row % 2) * dx / 2;
-                    if (x > rect.right()) break;
+void GridItem::paintSquareGrid(QPainter* p, const QRectF& rect, qreal stepPx)
+{
+    if (stepPx <= 0) return;
 
-                    QPolygonF hex;
-                    for (int i = 0; i < 6; ++i) {
-                        qreal angle = M_PI / 3.0 * i;
-                        hex << QPointF(x + size/2 * std::cos(angle), y + size/2 * std::sin(angle));
-                    }
-                    p->drawPolygon(hex);
-                }
-            }
+    qreal x0 = std::floor(rect.left() / stepPx) * stepPx;
+    qreal x1 = rect.right();
+    qreal y0 = std::floor(rect.top() / stepPx) * stepPx;
+    qreal y1 = rect.bottom();
+
+    for (qreal x = x0; x <= x1; x += stepPx)
+        p->drawLine(QLineF(x, rect.top(), x, rect.bottom()));
+
+    for (qreal y = y0; y <= y1; y += stepPx)
+        p->drawLine(QLineF(rect.left(), y, rect.right(), y));
+}
+
+
+
+void GridItem::paintHexGrid(QPainter* p, const QRectF& rect, qreal flatToFlatPx)
+{
+    if (flatToFlatPx <= 0) return;
+
+    const qreal s  = flatToFlatPx / std::sqrt(3.0);
+    const qreal h  = 2.0 * s;
+    const qreal dx = flatToFlatPx;
+    const qreal dy = 0.75 * h;
+
+    QPolygonF hex;
+    for (int i = 0; i < 6; ++i) {
+        qreal ang = M_PI/3.0 * i - M_PI/6.0;
+        hex << QPointF(std::cos(ang) * s, std::sin(ang) * s);
     }
 
+    int rowStart = int(std::floor(rect.top() / dy)) - 1;
+    int rowEnd   = int(std::ceil (rect.bottom() / dy)) + 1;
+
+    for (int row = rowStart; row <= rowEnd; ++row) {
+        qreal cy = row * dy;
+        if (cy > rect.bottom()) break;
+
+        qreal offsetX = (row & 1) ? dx * 0.5 : 0.0;
+
+        int colStart = int(std::floor((rect.left() - offsetX) / dx)) - 1;
+        int colEnd   = int(std::ceil ((rect.right()- offsetX) / dx)) + 1;
+
+        for (int col = colStart; col <= colEnd; ++col) {
+            qreal cx = offsetX + col * dx;
+            if (cx > rect.right()) break;
+
+            QTransform t = QTransform::fromTranslate(cx, cy);
+            p->drawPolygon(t.map(hex));
+        }
+    }
 }
+
