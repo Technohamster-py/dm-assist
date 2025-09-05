@@ -768,9 +768,10 @@ void MapScene::enableGrid(bool enabled) {
         m_gridItem->setVisible(m_gridEnabled);
 }
 
-void MapScene::setGridType(GridItem::GridType gridType) {
+void MapScene::setGridType(int gridType) {
     m_gridType = gridType;
-    if (m_gridItem)
+    enableGrid(gridType != GridItem::GridType::None);
+    if (m_gridItem && m_gridEnabled)
         m_gridItem->setGridType(gridType);
 }
 

@@ -65,7 +65,6 @@ public:
     [[nodiscard]] double getScaleFactor() const { return m_scaleFactor; };
 
     void initializeGrid();
-    void setGridType(GridItem::GridType gridType);
     void enableGrid(bool enabled);
 
     void initializeFog(const QSize &size);
@@ -95,7 +94,7 @@ public:
 
 public slots:
     void setGridSize(int feet);
-
+    void setGridType(int gridType);
 
 signals:
     void fogUpdated(const QImage &fogImage);
@@ -114,7 +113,7 @@ private:
 
     GridItem* m_gridItem = nullptr;
     bool m_gridEnabled = false;
-    GridItem::GridType m_gridType = GridItem::GridType::Square;
+    int m_gridType = GridItem::GridType::Square;
     qreal m_gridSize = 5.0;     ///< Feet
 
     QGraphicsPixmapItem *fogItem = nullptr;

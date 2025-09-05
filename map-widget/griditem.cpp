@@ -84,3 +84,11 @@ void GridItem::paintHexGrid(QPainter* p, const QRectF& rect, qreal flatToFlatPx)
     }
 }
 
+QString GridItem::stringMode(int mode) {
+    switch (mode) {
+        case GridType::None: return QObject::tr("None");
+        case GridType::Square: return QObject::tr("Square");
+        case GridType::Hex: return QObject::tr("Hexagon");
+    }
+}
+

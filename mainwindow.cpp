@@ -18,6 +18,7 @@
 #include <QTextStream>
 #include <QTextBrowser>
 #include <QSpinBox>
+#include <QComboBox>
 #include <QJsonDocument>
 
 #include <QDebug>
@@ -1261,37 +1262,18 @@ void MainWindow::setupToolbar() {
 
 
     /// Grid
-    QActionGroup *gridGroup = new QActionGroup(this);
-    gridGroup->setExclusive(true);
-
-    QAction *gridNone = ui->toolBar->addAction(tr("None"));
-    gridNone->setCheckable(true);
-    gridGroup->addAction(gridNone);
-    connect(gridNone, &QAction::triggered, [=](bool checked){
+    auto* gridBox = new QComboBox(this);
+    for (int i = 0; i <= GridItem::modesCount(); ++i) {
+        gridBox->addItem(GridItem::stringMode(i));
+    }
+    gridBox->setMaximumWidth(80);
+    gridBox->setCurrentIndex(GridItem::GridType::None);
+    connect(gridBox, &QComboBox::currentIndexChanged, [=](int mode){
         auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
         if (!currentView) return;
-        currentView->getScene()->enableGrid(!checked);
+        currentView->getScene()->setGridType(mode);
     });
-
-    QAction *gridSquare = ui->toolBar->addAction(tr("Square"));
-    gridSquare->setCheckable(true);
-    gridGroup->addAction(gridSquare);
-    connect(gridSquare, &QAction::triggered, [=](bool checked){
-        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
-        if (!currentView) return;
-        currentView->getScene()->enableGrid(checked);
-        currentView->getScene()->setGridType(GridItem::GridType::Square);
-    });
-
-    QAction *gridHex = ui->toolBar->addAction(tr("Hex"));
-    gridHex->setCheckable(true);
-    gridGroup->addAction(gridHex);
-    connect(gridHex, &QAction::triggered, [=](bool checked){
-        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
-        if (!currentView) return;
-        currentView->getScene()->enableGrid(checked);
-        currentView->getScene()->setGridType(GridItem::GridType::Hex);
-    });
+    ui->toolBar->addWidget(gridBox);
 
     auto* gridSizeSpinBox = new QSpinBox(this);
     gridSizeSpinBox->setRange(1, 100);
@@ -1304,8 +1286,6 @@ void MainWindow::setupToolbar() {
         if (!currentView) return;
         currentView->getScene()->setGridSize(size);
     });
-
-    gridNone->setChecked(true);
 }
 
 /**
