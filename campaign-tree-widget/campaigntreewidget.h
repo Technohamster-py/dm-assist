@@ -26,6 +26,9 @@ signals:
 public slots:
     void showContextMenu(const QPoint &pos);
 
+protected:
+    void startDrag(Qt::DropActions) override;
+
 private:
     void populateTree(const QString &path, QTreeWidgetItem *parentItem);
     NodeType determieNodeType(const QString& path);

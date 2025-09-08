@@ -6,6 +6,7 @@
 #include "mapscene.h"
 #include "lighttool.h"
 #include "heightmaptool.h"
+#include "tokenitem.h"
 #include <QBuffer>
 #include <QFile>
 #include <QInputDialog>
@@ -13,6 +14,7 @@
 #include <QJsonDocument>
 #include <QPainter>
 #include <QKeyEvent>
+#include <QMimeData>
 
 #include <QDebug>
 
@@ -792,3 +794,40 @@ void MapScene::initializeGrid() {
         m_gridItem->setVisible(false);
     }
 }
+
+void MapScene::dragEnterEvent(QGraphicsSceneDragDropEvent* event)
+{
+    if (event->mimeData()->hasFormat("application/x-character"))
+        event->acceptProposedAction();
+}
+
+void MapScene::dropEvent(QGraphicsSceneDragDropEvent* event)
+{
+    if (!event->mimeData()->hasFormat("application/x-character"))
+        return;
+
+    QByteArray data = event->mimeData()->data("application/x-character");
+    QString jsonPath = QString::fromUtf8(data);
+
+    QFile f(jsonPath);
+    if (!f.open(QIODevice::ReadOnly)) return;
+
+    QJsonObject obj = QJsonDocument::fromJson(f.readAll()).object();
+    QString name = obj["name"].toString("Unknown");
+    QString imgPath = obj["token"].toString();
+    qreal sizeFeet = obj["sizeFeet"].toDouble(5.0);
+
+    QPixmap tokenPixmap;
+    if (!imgPath.isEmpty() && QFile::exists(imgPath))
+        tokenPixmap.load(imgPath);
+    else
+        tokenPixmap.load(":/images/default_token.png");
+
+    auto* token = new TokenItem(name, tokenPixmap, sizeFeet, 1/m_scaleFactor);
+    token->setZValue(mapLayers::Tokens);
+    addItem(token);
+    token->setPos(event->scenePos());
+
+    event->acceptProposedAction();
+}
+

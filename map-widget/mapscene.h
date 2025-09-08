@@ -38,6 +38,7 @@ enum mapLayers{
     Background = -100,
     Grid = -90,
     Height = 3,
+    Tokens = 4,
     Shapes = 5,
     Brush = 6,
     Ruler = 10,
@@ -109,6 +110,9 @@ protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
+
+    void dragEnterEvent(QGraphicsSceneDragDropEvent *event) override;
+    void dropEvent(QGraphicsSceneDragDropEvent *event) override;
 
 private:
     AbstractMapTool *m_activeTool = nullptr;

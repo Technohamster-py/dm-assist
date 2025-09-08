@@ -1,9 +1,11 @@
 #include "campaigntreewidget.h"
+#include <QDrag>
 #include <QFileInfo>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
 #include <QMenu>
+#include <QMimeData>
 #include <QDesktopServices>
 
 /**
@@ -160,6 +162,7 @@ void CampaignTreeWidget::populateTree(const QString &path, QTreeWidgetItem *pare
             case NodeType::Character:
                 connect(widget, &HoverWidget::action1Clicked, this, [=](){ emit characterOpenRequested(fullPath); });
                 connect(widget, &HoverWidget::action2Clicked, this, [=](){ emit characterAddRequested(fullPath); });
+                item->setData(0, Qt::UserRole, fullPath);
                 break;
             case NodeType::Encounter:
                 connect(widget, &HoverWidget::action1Clicked, this, [=](){ emit encounterAddRequested(fullPath); });
@@ -269,4 +272,17 @@ void CampaignTreeWidget::showContextMenu(const QPoint &pos) {
     });
 
     menu.exec(this->mapToGlobal(pos));
+}
+
+void CampaignTreeWidget::startDrag(Qt::DropActions) {
+    QTreeWidgetItem* item = currentItem();
+    if (!item) return;
+    if (item->data(0, Qt::UserRole).isNull()) return;
+
+    auto* mimeData = new QMimeData();
+    mimeData->setData("application/x-character", item->data(0, Qt::UserRole).toByteArray());
+
+    auto* drag = new QDrag(this);
+    drag->setMimeData(mimeData);
+    drag->exec(Qt::CopyAction);
 }
