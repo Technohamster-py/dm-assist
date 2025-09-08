@@ -47,6 +47,7 @@ set(FILES
         map-widget/rulertool.h map-widget/rulertool.cpp
         map-widget/sharedmapwindow.h    map-widget/sharedmapwindow.cpp
         map-widget/spellshapetool.h     map-widget/spellshapetool.cpp
+        map-widget/tokenitem.h  map-widget/tokenitem.cpp
         map-widget/undostack.h
         music-widget/musicwidget.h music-widget/musicwidget.cpp
         icon-picker/iconpickerdialog.h  icon-picker/iconpickerdialog.cpp
