@@ -626,6 +626,33 @@ void DndCharsheetWidget::addToInitiative(InitiativeTrackerWidget *initiativeTrac
     initiativeTrackerWidget->addCharacter(ui->nameEdit->text(), ui->maxHpBox->value(), ui->acBox->value(), ui->hpSpinBox->value(), initiative, ui->speedBox->value());
 }
 
+/**
+ * @brief Parses a JSON array of paragraphs into an HTML-formatted string.
+ *
+ * This method processes a QJsonArray, extracting paragraphs, formatting
+ * their text content based on specified styles, and joining them into
+ * an HTML-compatible string. Each paragraph is enclosed in `<p>` tags,
+ * and specific text styles are applied where defined.
+ *
+ * The function performs the following:
+ * - Iterates through the JSON array to identify objects with a "type" field
+ *   set to "paragraph".
+ * - Extracts the "content" field from each paragraph object, which contains
+ *   an array of text parts.
+ * - For each text part, retrieves the "text" field and applies formatting
+ *   where "marks" are present. Supported marks include:
+ *   - Bold (`<b>`)
+ *   - Italic (`<i>`)
+ *   - Underline (`<u>`)
+ * - Combines the formatted text parts into a complete paragraph.
+ * - Adds the formatted paragraph to the result, enclosed in `<p>` tags.
+ *
+ * @param content A QJsonArray representing a series of paragraph objects.
+ *                Each paragraph object may contain text parts with
+ *                formatting metadata.
+ * @return A QString containing the HTML-formatted representation of the
+ *         paragraphs, with all applied styles and encapsulated in `<p>` tags.
+ */
 QString DndCharsheetWidget::parseParagraphs(const QJsonArray &content) {
     QString result;
     for (const auto& paragraphVal : content) {
@@ -660,6 +687,21 @@ QString DndCharsheetWidget::parseParagraphs(const QJsonArray &content) {
     return result.trimmed();
 }
 
+/**
+ * @brief Parses and updates the notes section in the character sheet.
+ *
+ * This method collects data from multiple "notes" fields in the
+ * character's JSON structure, processes it into a formatted HTML
+ * representation, and updates the notes editor in the user interface.
+ *
+ * The method performs the following:
+ * - Extracts arrays of content from the "text" field's sub-objects labeled
+ *   "notes-1" through "notes-6".
+ * - For each notes field, calls the `parseParagraphs` method to process
+ *   the content into formatted HTML paragraphs.
+ * - Aggregates the resulting HTML content into a single string.
+ * - Sets the aggregated HTML string as the content of the `notesEdit` UI element.
+ */
 void DndCharsheetWidget::parseNotes() {
     QString result;
 
@@ -673,6 +715,23 @@ void DndCharsheetWidget::parseNotes() {
     ui->notesEdit->setHtml(result);
 }
 
+/**
+ * @brief Configures keyboard shortcuts for text formatting in the widget.
+ *
+ * This method registers and sets up the following keyboard shortcuts:
+ * - Ctrl + B: Toggles bold text formatting for the selected text in the currently focused QTextEdit.
+ * - Ctrl + I: Toggles italic text formatting for the selected text in the currently focused QTextEdit.
+ * - Ctrl + U: Toggles underline text formatting for the selected text in the currently focused QTextEdit.
+ *
+ * Each shortcut is connected to a lambda function that retrieves the currently focused QTextEdit,
+ * checks if text is selected, and modifies its QTextCursor's QTextCharFormat based on the current
+ * formatting. The lambdas ensure that the respective text formatting is toggled on or off depending
+ * on the current state of the selection.
+ *
+ * This functionality depends on:
+ * - The `getFocusedEdit()` method, which returns the QTextEdit that is currently focused.
+ * - The QTextCursor API for applying and toggling character formats.
+ */
 void DndCharsheetWidget::setupShortcuts() {
     m_boldShortcut = new QShortcut(QKeySequence("Ctrl+B"), this);
     connect(m_boldShortcut, &QShortcut::activated, [=](){
@@ -713,12 +772,49 @@ void DndCharsheetWidget::setupShortcuts() {
     });
 }
 
+/**
+ * @brief Retrieves the currently focused QTextEdit widget.
+ *
+ * This method checks the widget that currently has input focus within
+ * the application and returns it as a QTextEdit object if applicable.
+ * It is used to identify the active text editor, enabling operations
+ * like formatting or editing on that widget.
+ *
+ * @return A pointer to the focused QTextEdit, or nullptr if the focused
+ * widget is not a QTextEdit.
+ */
 QTextEdit *DndCharsheetWidget::getFocusedEdit() {
     QWidget *focusWidget = QApplication::focusWidget();
     return qobject_cast<QTextEdit*>(focusWidget);
 }
 
 
+/**
+ * @brief Serializes HTML content into a JSON array representation.
+ *
+ * This method takes an HTML string input, processes its structure,
+ * and converts it into a JSON array, where the content is broken down
+ * into paragraphs, each containing its corresponding text and formatting
+ * attributes (e.g., bold, italic, underline).
+ *
+ * The serialization process iterates through the blocks and fragments
+ * of the HTML content, capturing their text and relevant formatting
+ * attributes. If a block contains a text list, its items are serialized
+ * individually. Empty blocks result in the inclusion of a placeholder
+ * paragraph object.
+ *
+ * The resulting JSON structure for each block includes:
+ * - "type": Specifies the type of the block, defaulting to "paragraph".
+ * - "content": An array of text objects within the block, each of which
+ *   includes:
+ *   - "type": Specifies the type of the content (e.g., "text").
+ *   - "text": The actual string content of the fragment.
+ *   - "marks" (optional): An array of formatting attributes (e.g., "bold",
+ *     "italic", "underline") if applicable.
+ *
+ * @param html A QString containing the HTML to be serialized.
+ * @return A QJsonArray representing the serialized structure of the HTML.
+ */
 QJsonArray DndCharsheetWidget::serializeHtmlToJson(const QString &html) {
     QJsonArray contentArray;
 
@@ -806,6 +902,22 @@ QJsonArray DndCharsheetWidget::serializeHtmlToJson(const QString &html) {
     return contentArray;
 }
 
+/**
+ * @brief Saves the current character sheet data to a specified file in JSON format.
+ *
+ * This method collects the updated data from the widget, integrates it into the
+ * existing JSON document structure, and writes the finalized data to the specified file.
+ * If the file cannot be opened for writing, the method exits without saving.
+ *
+ * @param path A QString representing the destination file path where the JSON data should be saved.
+ *
+ * The method performs the following:
+ * - Retrieves the updated data by calling `collectData()`, which is stored as a QJsonObject.
+ * - Converts the collected data into a compact JSON string.
+ * - Updates the "data" field in the root level of the original JSON document with the new data.
+ * - Opens the specified file in write mode. If the file cannot be opened, the method returns silently.
+ * - Writes the updated JSON document to the file in indented format and closes the file.
+ */
 void DndCharsheetWidget::saveToFile(QString path) {
     QJsonObject updatedData = collectData();
 
@@ -825,6 +937,24 @@ void DndCharsheetWidget::saveToFile(QString path) {
     fileOut.close();
 }
 
+/**
+ * @brief Handles the close event for the widget.
+ *
+ * This method is triggered when the widget receives a close event.
+ * It performs custom logic to ensure proper handling of unsaved changes
+ * or other cleanup before the widget is closed.
+ *
+ * @param event A pointer to the QCloseEvent object containing details
+ * about the close request.
+ *
+ * The method performs the following:
+ * - Checks for unsaved changes or other conditions that might prevent
+ *   the widget from closing.
+ * - If the close request is rejected, the event is ignored, preventing
+ *   the widget from being closed.
+ * - If the close request is accepted, it executes any necessary cleanup
+ *   logic before the widget is closed.
+ */
 void DndCharsheetWidget::closeEvent(QCloseEvent *event) {
     QMessageBox::StandardButton reply = QMessageBox::question(this,
                                                               tr("Save changes"),
@@ -841,11 +971,44 @@ void DndCharsheetWidget::closeEvent(QCloseEvent *event) {
     QWidget::closeEvent(event);
 }
 
+/**
+ * @brief Extracts and formats a bonus value from a given string.
+ *
+ * This method processes a string containing a key-value pair in the format
+ * "key: bonus" and extracts the bonus value. It ensures that the returned
+ * bonus value has a "+" sign prepended unless it already starts with a "-" sign.
+ *
+ * @param string A QString in the format of "key: bonus", where "bonus" is
+ *        the numerical part to be extracted (positive or negative).
+ * @return A formatted QString containing the extracted bonus value with
+ *         a "+" sign for positive values or the original string for negative values.
+ *
+ * The method performs the following:
+ * - Splits the input string on ": " to separate the key and bonus.
+ * - Extracts the second part (bonus) from the split result.
+ * - If the bonus does not start with a "-", prepends a "+" sign to it.
+ * - Returns the modified bonus string.
+ */
 QString DndCharsheetWidget::bonusFromString(const QString& string) {
     QString bonus = string.split(": ").value(1);
     return bonus.startsWith("-") ? bonus : "+" + bonus;
 }
 
+/**
+ * @brief Updates the application's translator for the specified language.
+ *
+ * This method reloads the translation files based on the provided language code.
+ * It ensures that the application reflects the correct translations for UI elements
+ * and user-facing text.
+ *
+ * @param languageCode A QString representing the desired language code (e.g., "en", "fr").
+ *
+ * The method performs the following:
+ * - Removes any previously loaded translator instances.
+ * - Loads the appropriate translation file corresponding to the specified language.
+ * - Applies the loaded translator to the application to update the language dynamically.
+ * - Displays a warning message if the translation file cannot be loaded.
+ */
 void DndCharsheetWidget::updateTranslator() {
     ui->retranslateUi(this);
 }

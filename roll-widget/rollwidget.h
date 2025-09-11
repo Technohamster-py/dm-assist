@@ -9,6 +9,10 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class RollWidget; }
 QT_END_NAMESPACE
 
+/**
+ * @class RollWidget
+ * @brief Represents a user interface component that allows executing dice rolls.
+ */
 class RollWidget : public QWidget {
 Q_OBJECT
 

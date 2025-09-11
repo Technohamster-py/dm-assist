@@ -5,6 +5,16 @@ RollTextBrowser::RollTextBrowser(QWidget *parent) : QTextBrowser(parent) {
     connect(this, &QTextBrowser::anchorClicked, this, &RollTextBrowser::onAnchorClicked);
 }
 
+/**
+ * Replaces specific patterns in the input HTML string with custom hyperlinks and sets
+ * the processed HTML as the content of the text browser.
+ *
+ * The method processes patterns that represent dice roll expressions, hit modifiers,
+ * and damage expressions. These patterns are converted to clickable HTML links
+ * that provide additional functionality.
+ *
+ * @param html The input HTML string to be processed and displayed in the text browser.
+ */
 void RollTextBrowser::setCustomHtml(const QString &html) {
     QString processed = html;
 
@@ -55,6 +65,17 @@ void RollTextBrowser::setCustomHtml(const QString &html) {
     setHtml(processed);
 }
 
+/**
+ * Handles the event triggered when an anchor link within the text browser is clicked.
+ *
+ * This function checks the URL scheme of the clicked anchor. If the scheme matches "roll",
+ * it emits a signal with the extracted path of the URL, which represents a roll expression.
+ *
+ * @param url The URL of the clicked anchor.
+ *
+ * @note This function is connected to the anchorClicked signal of the QTextBrowser.
+ *       The scheme "roll" is used to handle specific clickable actions for dice rolls.
+ */
 void RollTextBrowser::onAnchorClicked(const QUrl &url) {
     if (url.scheme() == "roll") {
         emit rollRequested(url.path());

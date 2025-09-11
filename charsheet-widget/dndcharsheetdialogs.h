@@ -41,8 +41,6 @@ private:
 };
 
 
-
-
 class AttackDialog : public QDialog {
 Q_OBJECT
 
