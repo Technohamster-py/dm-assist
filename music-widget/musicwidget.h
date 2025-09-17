@@ -53,8 +53,6 @@ public:
 
     void playTrackAt(int index);
 
-    static void showError(const QString& title, const QString& message);
-
 signals:
     void playerStarted(int id);
     void playerStopped();

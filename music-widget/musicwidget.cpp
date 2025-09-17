@@ -15,6 +15,7 @@
 
 #include "bass.h"
 #include <themediconmanager.h>
+#include <errorhandler.h>
 
 #define BASS_DEVICE_INDEX 1
 
@@ -58,7 +59,7 @@ MusicPlayerWidget::MusicPlayerWidget(QWidget *parent, int id, QString title)
 
     if (!BASS_Init(BASS_DEVICE_INDEX, 44100, 0, nullptr, nullptr)) {
         auto err = BASS_ErrorGetCode();
-        showError("BASS Init Failed",
+        ErrorHandler::showError("BASS Init Failed",
                   QString("Could not initialize BASS on selected device.\nError code: %1").arg(err));
         return;
     }
@@ -541,7 +542,7 @@ void MusicPlayerWidget::setAudioOutput(const QString &deviceName) {
     BASS_Free();
 
     if (!BASS_Init(found, 44100, 0, nullptr, nullptr)) {
-        showError("BASS Init Failed", "Could not initialize BASS on selected device.");
+        ErrorHandler::showError("BASS Init Failed", "Could not initialize BASS on selected device.");
         return;
     }
     m_deviceIndex = found;
@@ -570,8 +571,8 @@ void MusicPlayerWidget::setAudioOutput(int deviceIndex) {
     freeStreams();
     BASS_Free();
 
-    if (!BASS_Init(deviceIndex, 44100, 0, nullptr, nullptr)) {
-        showError("BASS Init Failed", "Could not initialize BASS on selected device.");
+    if (!BASS_Init(50, 44100, 0, nullptr, nullptr)) {
+        ErrorHandler::showError("BASS Init Failed", "Could not initialize BASS on selected device.");
         return;
     }
     m_deviceIndex = deviceIndex;
@@ -611,15 +612,6 @@ void MusicPlayerWidget::on_muteButton_clicked() {
 
 void MusicPlayerWidget::updateTranslator() {
     ui->retranslateUi(this);
-}
-
-void MusicPlayerWidget::showError(const QString &title, const QString &message) {
-    static bool errorVisible = false;
-    if (errorVisible) return;
-
-    errorVisible = true;
-    QMessageBox::critical(nullptr, title, message);
-    errorVisible = false;
 }
 
 ////////////////////////////////////////////////

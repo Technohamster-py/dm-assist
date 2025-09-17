@@ -33,6 +33,7 @@ set(FILES
         charsheet-widget/dndcharsheetdialogs.h charsheet-widget/dndcharsheetdialogs.cpp
         charsheet-widget/dndmodels.h charsheet-widget/dndmodels.cpp
         charsheet-widget/textclickablecheckbox.h    charsheet-widget/textclickablecheckbox.cpp
+        error-handler/errorhandler.h    error-handler/errorhandler.cpp
         initiative-tracker/initiativemodel.h    initiative-tracker/initiativemodel.cpp
         initiative-tracker/initiativestructures.h
         initiative-tracker/statuseditdialog.h   initiative-tracker/statuseditdialog.cpp
@@ -110,6 +111,7 @@ include_directories(
         ${BASS_INCLUDE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}
         bestiary-widget
+        error-handler
         translations
         static
         theme-manager
