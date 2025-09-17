@@ -1541,7 +1541,7 @@ void MainWindow::showSourcesMessageBox(const QMap<QString, QString> &sources)
     msgBox.setText("List of used sources:");
 
 
-    QTextBrowser *textBrowser = new QTextBrowser(msgBox);
+    QTextBrowser *textBrowser = new QTextBrowser;
     textBrowser->setHtml(html);
     textBrowser->setOpenExternalLinks(true);
 
