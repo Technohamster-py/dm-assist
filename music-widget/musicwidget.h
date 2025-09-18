@@ -53,7 +53,6 @@ public:
 
     void playTrackAt(int index);
 
-
 signals:
     void playerStarted(int id);
     void playerStopped();
