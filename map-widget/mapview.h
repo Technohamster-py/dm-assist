@@ -75,7 +75,8 @@ protected:
 
     void keyPressEvent(QKeyEvent *event) override;
 
-
+//    void dragEnterEvent(QDragEnterEvent *event) override;
+//    void dropEvent(QDropEvent *event) override;
 private:
     MapScene *scene;                       /**< Scene containing map and tools */
     QGraphicsPixmapItem *mapPixmapItem;   /**< Item displaying the map image */

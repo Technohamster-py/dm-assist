@@ -112,6 +112,7 @@ protected:
     void keyPressEvent(QKeyEvent *event) override;
 
     void dragEnterEvent(QGraphicsSceneDragDropEvent *event) override;
+    void dragMoveEvent(QGraphicsSceneDragDropEvent* event) override;
     void dropEvent(QGraphicsSceneDragDropEvent *event) override;
 
 private:

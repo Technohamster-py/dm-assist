@@ -33,6 +33,7 @@ CampaignTreeWidget::CampaignTreeWidget(QWidget *parent) : QTreeWidget(parent)
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     setFrameStyle(QFrame::NoFrame);
     setContextMenuPolicy(Qt::CustomContextMenu);
+    setDragEnabled(true);
 
     connect(this, &QTreeWidget::customContextMenuRequested, this, &CampaignTreeWidget::showContextMenu);
 }
@@ -176,6 +177,7 @@ void CampaignTreeWidget::populateTree(const QString &path, QTreeWidgetItem *pare
             case NodeType::Beast:
                 connect(widget, &HoverWidget::action1Clicked, [=](){emit beastOpenRequested(fullPath);});
                 connect(widget, &HoverWidget::action2Clicked, [=](){emit beastAddRequested(fullPath);});
+                item->setData(0, Qt::UserRole, fullPath);
             default:
                 break;
         }

@@ -30,6 +30,7 @@ MapScene::MapScene(QObject *parent)
         : QGraphicsScene(parent)
 {
     setBackgroundBrush(Qt::darkGray);
+
 }
 
 /**
@@ -797,12 +798,14 @@ void MapScene::initializeGrid() {
 
 void MapScene::dragEnterEvent(QGraphicsSceneDragDropEvent* event)
 {
+    qDebug() << "MapScene::dragEnterEvent" << event->mimeData()->hasFormat("application/x-character");
     if (event->mimeData()->hasFormat("application/x-character"))
         event->acceptProposedAction();
 }
 
 void MapScene::dropEvent(QGraphicsSceneDragDropEvent* event)
 {
+    qDebug() << "MapScene::dropEvent";
     if (!event->mimeData()->hasFormat("application/x-character"))
         return;
 
@@ -829,5 +832,13 @@ void MapScene::dropEvent(QGraphicsSceneDragDropEvent* event)
     token->setPos(event->scenePos());
 
     event->acceptProposedAction();
+}
+
+void MapScene::dragMoveEvent(QGraphicsSceneDragDropEvent *event) {
+    bool inside = sceneRect().contains(event->scenePos());
+    if (event->mimeData()->hasFormat("application/x-character") && inside)
+        event->acceptProposedAction();
+    else
+        event->ignore();
 }
 

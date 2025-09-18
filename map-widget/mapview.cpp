@@ -30,6 +30,7 @@ MapView::MapView(QWidget *parent)
     setDragMode(QGraphicsView::ScrollHandDrag);
     setRenderHint(QPainter::Antialiasing);
     setTransformationAnchor(AnchorUnderMouse);
+    setAcceptDrops(true);
     mapPixmapItem = nullptr;
 
     heightLabel = new QLabel(this);
@@ -267,3 +268,19 @@ bool MapView::loadSceneFromFile(const QString &path) {
     }
     return false;
 }
+
+//void MapView::dragEnterEvent(QDragEnterEvent *event) {
+//    if (!scene){
+//        event->ignore();
+//        return;
+//    }
+//    event->accept();
+//}
+//
+//void MapView::dropEvent(QDropEvent *event) {
+//    if (!scene){
+//        event->ignore();
+//        return;
+//    }
+//    event->accept();
+//}
