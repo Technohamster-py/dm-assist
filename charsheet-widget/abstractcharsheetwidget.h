@@ -23,6 +23,13 @@ public:
         return QRandomGenerator::global()->bounded(1, diceValue);
     };
 
+    static QString campaignDirFromFile(const QString& filePath) {
+        QFileInfo fi(filePath);
+        QDir dir = fi.absoluteDir();
+        dir.cdUp();
+        return dir.absolutePath();
+    };
+
 public slots:
     virtual void updateTranslator() = 0;
 
@@ -33,12 +40,6 @@ signals:
 protected:
     QString m_originalFilePath;
     QString m_campaignPath = "";
-    virtual QString campaignDirFromFile(const QString& filePath) {
-        QFileInfo fi(filePath);
-        QDir dir = fi.absoluteDir();
-        dir.cdUp();
-        return dir.absolutePath();
-    };
 };
 
 

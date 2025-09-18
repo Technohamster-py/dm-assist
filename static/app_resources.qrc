@@ -46,6 +46,7 @@
         <file>sphere.svg</file>
         <file>torch.svg</file>
         <file>mountain.svg</file>
+        <file>default-token.png</file>
     </qresource>
     <qresource prefix="initiative tracker">
         <file>back.svg</file>

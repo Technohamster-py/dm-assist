@@ -815,18 +815,15 @@ void MapScene::dropEvent(QGraphicsSceneDragDropEvent* event)
     QFile f(jsonPath);
     if (!f.open(QIODevice::ReadOnly)) return;
 
-    QJsonObject obj = QJsonDocument::fromJson(f.readAll()).object();
-    QString name = obj["name"].toString("Unknown");
-    QString imgPath = obj["token"].toString();
-    qreal sizeFeet = obj["sizeFeet"].toDouble(5.0);
+    TokenStruct tokenStruct = TokenItem::fromJson(jsonPath);
 
     QPixmap tokenPixmap;
-    if (!imgPath.isEmpty() && QFile::exists(imgPath))
-        tokenPixmap.load(imgPath);
+    if (!tokenStruct.imgPath.isEmpty() && QFile::exists(tokenStruct.imgPath))
+        tokenPixmap.load(tokenStruct.imgPath);
     else
-        tokenPixmap.load(":/images/default_token.png");
+        tokenPixmap.load(":/map/default-token.png");
 
-    auto* token = new TokenItem(name, tokenPixmap, sizeFeet, 1/m_scaleFactor);
+    auto* token = new TokenItem(tokenStruct.name, tokenPixmap, tokenStruct.size, 1/m_scaleFactor);
     token->setZValue(mapLayers::Tokens);
     addItem(token);
     token->setPos(event->scenePos());
@@ -841,4 +838,3 @@ void MapScene::dragMoveEvent(QGraphicsSceneDragDropEvent *event) {
     else
         event->ignore();
 }
-

@@ -2,6 +2,14 @@
 #define DM_ASSIST_TOKENITEM_H
 
 #include <QGraphicsObject>
+#include <QJsonObject>
+#include "fvttparser.h"
+
+struct TokenStruct{
+    QString name = "";
+    QString imgPath = "";
+    qreal size = 5.0;
+};
 
 class TokenItem : public QGraphicsObject
 {
@@ -12,6 +20,7 @@ public:
     QRectF boundingRect() const override { return childrenBoundingRect(); }
     void paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget*) override {}
 
+    static TokenStruct fromJson(const QString &filePath);
 signals:
     void addToTracker(TokenItem*);
     void openCharSheet(TokenItem*);
