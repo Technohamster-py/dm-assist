@@ -1,8 +1,10 @@
-#ifndef DM_ASSIST_DNDCHARSHEETSTRUCTRURE_H
-#define DM_ASSIST_DNDCHARSHEETSTRUCTRURE_H
+#ifndef DM_ASSIST_DNDCHARACTERDATA_H
+#define DM_ASSIST_DNDCHARACTERDATA_H
 
 #include <QString>
 #include <QMap>
+
+
 
 struct DndCharacterData{
     QString name;
@@ -63,4 +65,4 @@ struct DndCharacterData{
     QString flawsHtml;
 };
 
-#endif //DM_ASSIST_DNDCHARSHEETSTRUCTRURE_H
+#endif //DM_ASSIST_DNDCHARACTERDATA_H

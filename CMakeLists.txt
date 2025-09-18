@@ -76,7 +76,7 @@ set(UI_FILES
         initiative-tracker/statuseditdialog.ui
         settingsdialog.ui
         bestiary-widget/dndbestiarypage.ui
-        charsheet-widget/dndCharsheetStructrure.h
+        charsheet-widget/dndCharacterData.h
 )
 
 set(TS_FILES
