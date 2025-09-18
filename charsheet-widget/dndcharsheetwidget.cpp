@@ -1,6 +1,8 @@
 #include "dndcharsheetwidget.h"
 #include "ui_dndcharsheetwidget.h"
 
+#include <QDir>
+#include <QFileInfo>
 #include <QMessageBox>
 #include <QStandardItemModel>
 #include <QTextDocument>
@@ -110,8 +112,11 @@ DndCharsheetWidget::~DndCharsheetWidget() {
  *   a QJsonObject in `m_dataObject`.
  * - Calls `populateWidget()` to update the widget with the extracted data.
  */
-void DndCharsheetWidget::loadFromFile(QString path) {
+void DndCharsheetWidget::loadFromFile(const QString &path) {
     m_originalFilePath = path;
+
+    m_campaignPath = campaignDirFromFile(path);
+
     QFile characterFile(path);
     if (!characterFile.open(QIODevice::ReadOnly)){
         QMessageBox::warning(this, "error", "Can't open character file");

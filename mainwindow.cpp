@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "map-widget/mapview.h"
 #include "charsheet-widget/dndcharsheetwidget.h"
+#include "bestiary-widget/dndbestiarypage.h"
 
 #include <QDesktopServices>
 #include "QDomDocument"
@@ -21,7 +22,6 @@
 #include <QComboBox>
 #include <QJsonDocument>
 
-#include <QDebug>
 #include "theme-manager/thememanager.h"
 #include "theme-manager/themediconmanager.h"
 
@@ -44,6 +44,9 @@ static bool removeDirectoryRecursively(const QString &directoryPath, bool delete
 MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
+
+    updateChecker = new UpdateChecker(VERSION, RELEASES_URL, this);
+    ui->updateBanner->hide();
 
     rollWidget = new RollWidget(ui->leftAsideWidget);
     connect(this, &MainWindow::translatorChanged, rollWidget, &RollWidget::updateTranslator);
@@ -73,6 +76,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::setVolumeDivider);
     connect(ui->actionReload, &QAction::triggered, [=](){setupCampaign(campaignTreeWidget->root());});
     connect(ui->actionAddCharacter, &QAction::triggered, this, &MainWindow::addCharacter);
+    connect(ui->actionCheck, &QAction::triggered, [=](){updateChecker->checkFotUpdates();});
+    connect(updateChecker, &UpdateChecker::updateCheckFinished, this, &MainWindow::handleUpdates);
 
     connect(campaignTreeWidget, &CampaignTreeWidget::characterAddRequested, this, [=](const QString& path) {
         DndCharsheetWidget character(path);
@@ -85,6 +90,16 @@ MainWindow::MainWindow(QWidget *parent) :
         charsheetWidget->show();
     });
     connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);
+    connect(campaignTreeWidget, &CampaignTreeWidget::beastAddRequested, [=](const QString& path) {
+        DndBestiaryPage beast(path);
+        beast.addToInitiative(initiativeTrackerWidget, autoRoll);
+    });
+    connect(campaignTreeWidget, &CampaignTreeWidget::beastOpenRequested, [=](const QString& path){
+        auto* bestiaryPage = new DndBestiaryPage(path);
+        connect(bestiaryPage, &DndCharsheetWidget::rollRequested, rollWidget, &RollWidget::executeRoll);
+        connect(this, &MainWindow::translatorChanged, bestiaryPage, &DndBestiaryPage::updateTranslator);
+        bestiaryPage->show();
+    });
     ui->campaignLayout->addWidget(campaignTreeWidget);
 
     ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/player/Volume-1.svg", ui->muteButton, &QAbstractButton::setIcon);
@@ -94,6 +109,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     loadSettings();
     saveSettings();
+
+    updateChecker->checkFotUpdates();
 }
 
 /**
@@ -1486,6 +1503,17 @@ void MainWindow::showSourcesMessageBox(const QMap<QString, QString> &sources)
     msgBox.layout()->addWidget(textBrowser);
 
     msgBox.exec();
+}
+
+void MainWindow::handleUpdates(bool hasUpdates) {
+    if (hasUpdates){
+        QString latest = updateChecker->latestVersion();
+        QString latestUrl = updateChecker->latestUrl();
+        ui->updateBanner->setCurrentVersion(VERSION);
+        ui->updateBanner->setLatestVersion(latest);
+        ui->updateBanner->setUrl(latestUrl);
+        ui->updateBanner->show();
+    }
 }
 
 

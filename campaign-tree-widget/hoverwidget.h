@@ -11,6 +11,7 @@ enum class NodeType {
     Encounter,
     Map,
     Music,
+    Beast,
     Unknown
 };
 

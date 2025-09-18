@@ -22,6 +22,10 @@ endif ()
 
 
 set(FILES
+        bestiary-widget/fvttparser.h    bestiary-widget/fvttparser.cpp
+        bestiary-widget/dndbestiarypage.h bestiary-widget/dndbestiarypage.cpp
+        bestiary-widget/dndbeaststructure.h
+        bestiary-widget/rolltextbrowser.h bestiary-widget/rolltextbrowser.cpp
         campaign-tree-widget/campaigntreewidget.cpp campaign-tree-widget/campaigntreewidget.h
         campaign-tree-widget/hoverwidget.cpp    campaign-tree-widget/hoverwidget.h
         charsheet-widget/abstractcharsheetwidget.h
@@ -59,6 +63,7 @@ set(FILES
         settings.h
         theme-manager/thememanager.h theme-manager/thememanager.cpp
         theme-manager/themediconmanager.h theme-manager/themediconmanager.cpp
+        updatechecker.h updatechecker.cpp
 )
 
 set(UI_FILES
@@ -72,6 +77,7 @@ set(UI_FILES
         roll-widget/rollwidget.ui
         initiative-tracker/statuseditdialog.ui
         settingsdialog.ui
+        bestiary-widget/dndbestiarypage.ui
 )
 
 set(TS_FILES
@@ -103,6 +109,8 @@ include_directories(
         ${Qt6Sql_INCLUDE_DIRS}
         ${Qt6Multimedia_INCLUDE_DIRS}
         ${BASS_INCLUDE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        bestiary-widget
         translations
         static
         theme-manager
@@ -168,28 +176,28 @@ if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     target_sources(${PROJECT_NAME} PRIVATE ${APP_ICON_RESOURCE_WINDOWS})
 endif ()
 
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E echo "Current config: $<CONFIG>"
-        COMMAND ${CMAKE_COMMAND} -E echo "Cleaning up unnecessary files if Release..."
-
-        COMMAND ${CMAKE_COMMAND} -E remove_directory "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/CMakeFiles,ignore>"
-        COMMAND ${CMAKE_COMMAND} -E remove_directory "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/DM-assist_autogen,ignore>"
-        COMMAND ${CMAKE_COMMAND} -E remove_directory "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/Testing,ignore>"
-        COMMAND ${CMAKE_COMMAND} -E remove_directory "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/.cmake,ignore>"
-
-        COMMAND ${CMAKE_COMMAND} -E remove -f "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/CMakeCache.txt,ignore>"
-        COMMAND ${CMAKE_COMMAND} -E remove -f "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/Makefile,ignore>"
-        COMMAND ${CMAKE_COMMAND} -E remove -f "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/cmake_install.cmake,ignore>"
-        COMMAND ${CMAKE_COMMAND} -E remove -f "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/build.ninja,ignore>"
-
-        COMMENT "Stripping build directory for Release (only if config is Release)..."
-)
+#add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+#        COMMAND ${CMAKE_COMMAND} -E echo "Current config: $<CONFIG>"
+#        COMMAND ${CMAKE_COMMAND} -E echo "Cleaning up unnecessary files if Release..."
+#
+#        COMMAND ${CMAKE_COMMAND} -E remove_directory "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/CMakeFiles,ignore>"
+#        COMMAND ${CMAKE_COMMAND} -E remove_directory "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/DM-assist_autogen,ignore>"
+#        COMMAND ${CMAKE_COMMAND} -E remove_directory "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/Testing,ignore>"
+#        COMMAND ${CMAKE_COMMAND} -E remove_directory "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/.cmake,ignore>"
+#
+#        COMMAND ${CMAKE_COMMAND} -E remove -f "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/CMakeCache.txt,ignore>"
+#        COMMAND ${CMAKE_COMMAND} -E remove -f "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/Makefile,ignore>"
+#        COMMAND ${CMAKE_COMMAND} -E remove -f "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/cmake_install.cmake,ignore>"
+#        COMMAND ${CMAKE_COMMAND} -E remove -f "$<IF:$<CONFIG:Release>,${CMAKE_BINARY_DIR}/build.ninja,ignore>"
+#
+#        COMMENT "Stripping build directory for Release (only if config is Release)..."
+#)
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${BASS_DLL}"
         "${CMAKE_BINARY_DIR}"
-        COMMENT "Копирование bass в папку сборки..."
+        COMMENT "Copying bass..."
 )
 
 

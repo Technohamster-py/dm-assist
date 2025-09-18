@@ -64,6 +64,8 @@ NodeType CampaignTreeWidget::determieNodeType(const QString &path)
         return NodeType::Map;
     if (path.contains("/Music"))
         return NodeType::Music;
+    if (path.contains("/Bestiary"))
+        return NodeType::Beast;
     return NodeType::Unknown;
 }
 
@@ -93,7 +95,7 @@ bool CampaignTreeWidget::ignore(const QFileInfo &info)
     QString relativePath = QDir(m_rootPath).relativeFilePath(info.absoluteFilePath());
     QString normalized = QDir::cleanPath(relativePath).toLower();
 
-    if (normalized.startsWith("music/") || normalized == "music")
+    if (normalized.startsWith("music/") || normalized == "music" || normalized.startsWith("tokens/") || normalized == "tokens")
         return true;
     if (normalized == "playerconfig.xml" || normalized == "root" || normalized == "campaign.json")
         return true;
@@ -171,6 +173,9 @@ void CampaignTreeWidget::populateTree(const QString &path, QTreeWidgetItem *pare
             case NodeType::Map:
                 connect(widget, &HoverWidget::action1Clicked, this, [=](){ emit mapOpenRequested(fullPath); });
                 break;
+            case NodeType::Beast:
+                connect(widget, &HoverWidget::action1Clicked, [=](){emit beastOpenRequested(fullPath);});
+                connect(widget, &HoverWidget::action2Clicked, [=](){emit beastAddRequested(fullPath);});
             default:
                 break;
         }

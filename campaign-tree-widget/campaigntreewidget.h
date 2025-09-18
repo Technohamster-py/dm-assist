@@ -21,6 +21,9 @@ signals:
 
     void mapOpenRequested(const QString& path);
 
+    void beastOpenRequested(const QString& path);
+    void beastAddRequested(const QString& path);
+
     void campaignLoaded(const QString &name);
 
 public slots:

@@ -141,7 +141,7 @@
        <widget class="QSpinBox" name="hpSpinBox">
         <property name="minimumSize">
          <size>
-          <width>0</width>
+          <width>50</width>
           <height>20</height>
          </size>
         </property>
@@ -153,6 +153,9 @@
         </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="maximum">
+         <number>10000</number>
         </property>
        </widget>
       </item>
@@ -189,11 +192,23 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="maximumSize">
          <size>
           <width>70</width>
           <height>16777215</height>
          </size>
+        </property>
+        <property name="suffix">
+         <string/>
+        </property>
+        <property name="maximum">
+         <number>10000</number>
         </property>
        </widget>
       </item>
@@ -235,7 +250,17 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QSpinBox" name="acBox"/>
+       <widget class="QSpinBox" name="acBox">
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximum">
+         <number>100</number>
+        </property>
+       </widget>
       </item>
       <item row="0" column="4">
        <widget class="QLabel" name="runIcon">
@@ -264,11 +289,20 @@
       </item>
       <item row="0" column="5">
        <widget class="QSpinBox" name="speedBox">
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="maximumSize">
          <size>
           <width>40</width>
           <height>16777215</height>
          </size>
+        </property>
+        <property name="maximum">
+         <number>500</number>
         </property>
        </widget>
       </item>
@@ -301,7 +335,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-625</y>
+        <y>0</y>
         <width>1035</width>
         <height>3131</height>
        </rect>
