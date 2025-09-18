@@ -1,0 +1,10 @@
+#ifndef DM_ASSIST_CHARAСTERPARSER_H
+#define DM_ASSIST_CHARAСTERPARSER_H
+
+
+class ICharaсterParser {
+
+};
+
+
+#endif //DM_ASSIST_CHARAСTERPARSER_H
