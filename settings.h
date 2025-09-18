@@ -12,7 +12,7 @@
 #define DONATE_URL "https://pay.cloudtips.ru/p/8f6d339a"
 #define ISSUES_URL  "https://github.com/Technohamster-py/dm-assist/issues"
 #define RELEASES_URL "https://api.github.com/repos/Technohamster-py/dm-assist/releases/latest"
-#define VERSION "1.2"
+#define VERSION "1.2.2"
 
 enum hpBarMode {
     bar = 0,
