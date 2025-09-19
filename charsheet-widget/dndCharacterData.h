@@ -3,7 +3,8 @@
 
 #include <QString>
 #include <QMap>
-
+#include <QJsonArray>
+#include <QJsonObject>
 
 
 struct DndCharacterData{
@@ -63,6 +64,10 @@ struct DndCharacterData{
     QString idealsHtml;
     QString bondsHtml;
     QString flawsHtml;
+    QString notes;
+
+    QJsonArray weapons;
+    QJsonObject resourcesObj;
 };
 
 #endif //DM_ASSIST_DNDCHARACTERDATA_H

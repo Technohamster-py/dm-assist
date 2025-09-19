@@ -3,6 +3,7 @@
 
 #include "abstractcharsheetwidget.h"
 #include "dndmodels.h"
+#include "dndCharacterData.h"
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QCheckBox>
@@ -38,7 +39,7 @@ public:
     static int bonusFromStat(int statValue) {return (statValue >= 10) ? (statValue - 10) / 2 : (statValue - 11) / 2;};
     static QString bonusFromString(const QString& string);
     static int proficiencyByLevel(int level) {return level / 5 + 2;};
-    static QJsonArray serializeHtmlToJson(const QString &html);
+
 public slots:
     void updateTranslator() override;
 private:
@@ -47,14 +48,12 @@ private:
     QJsonDocument m_originalDocument;
     QJsonObject m_dataObject;
 
-    void populateWidget();
+    void populateWidget(const DndCharacterData& data);
     void connectSignals();
     void setupShortcuts();
     void updateCheckBox(QCheckBox* checkBox, QSpinBox* baseSpinBox);
     void updateCheckBoxes();
 
-    static QString parseParagraphs(const QJsonArray& content);
-    void parseNotes();
     static QTextEdit* getFocusedEdit();
 
     QShortcut* m_boldShortcut;
@@ -64,7 +63,7 @@ private:
     DndAttackModel* attackModel;
     DndResourceModel* resourceModel;
 
-    QJsonObject collectData(const QString& filePath = nullptr);
+    DndCharacterData collectData(const QString& filePath = nullptr);
 
     void closeEvent(QCloseEvent *event) override;
 };
