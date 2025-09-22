@@ -5,10 +5,9 @@
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QStandardItemModel>
-#include <QTextDocument>
-#include <QTextBlock>
-#include <QTextList>
+
 #include "dndcharsheetdialogs.h"
+#include "charaсterparser.h"
 #include <themediconmanager.h>
 
 
@@ -123,14 +122,15 @@ void DndCharsheetWidget::loadFromFile(const QString &path) {
         return;
     }
     m_originalDocument = QJsonDocument::fromJson(characterFile.readAll());
-    QJsonObject rootObj = m_originalDocument.object();
-
-    QString dataString = rootObj.value("data").toString();
-    m_dataObject = QJsonDocument::fromJson(dataString.toUtf8()).object();
-
     characterFile.close();
 
-    populateWidget();
+    QJsonObject root = m_originalDocument.object();
+
+    QString dataString = root.value("data").toString();
+    m_dataObject = QJsonDocument::fromJson(dataString.toUtf8()).object();
+
+    LssDndParser parser;
+    populateWidget(parser.parseDnd(path));
 }
 
 /**
@@ -172,241 +172,189 @@ void DndCharsheetWidget::loadFromFile(const QString &path) {
  * This ensures that the widget displays up-to-date character data and can be used for dynamic visualization
  * or modification of character details within the application.
  */
-void DndCharsheetWidget::populateWidget() {
-    ui->nameEdit->setText(m_dataObject["name"].toObject()["value"].toString());
+void DndCharsheetWidget::populateWidget(const DndCharacterData& data) {
+    ui->nameEdit->setText(data.name);
 
 
-    QJsonObject infoObject = m_dataObject["info"].toObject();
-    QString classString = QString("%1 (%2)").arg(infoObject["charClass"].toObject()["value"].toString(), infoObject["charSubclass"].toObject()["value"].toString());
-    ui->classEdit->setText(classString);
-    ui->levelBox->setValue(infoObject["level"].toObject()["value"].toInt());
+    ui->classEdit->setText(data.className);
+    ui->levelBox->setValue(data.level);
     ui->proficiencyLabel->setText(QString::number(proficiencyByLevel(ui->levelBox->value())));
 
 
-    QJsonObject vitalityObject = m_dataObject["vitality"].toObject();
-    ui->speedBox->setValue(vitalityObject["speed"].toObject()["value"].toString().toInt());
-    ui->acBox->setValue(vitalityObject["ac"].toObject()["value"].toInt());
-    ui->hpSpinBox->setValue(vitalityObject["hp-current"].toObject()["value"].toInt());
-    ui->maxHpBox->setValue(vitalityObject["hp-max"].toObject()["value"].toInt());
+    ui->speedBox->setValue(data.speed);
+    ui->acBox->setValue(data.ac);
+    ui->hpSpinBox->setValue(data.hp);
+    ui->maxHpBox->setValue(data.maxHp);
 
-
-    QJsonObject statsObject = m_dataObject["stats"].toObject();
-    QJsonObject savesObject = m_dataObject["saves"].toObject();
-    ui->strValueEdit->setValue(statsObject["str"].toObject()["score"].toInt());
+    ui->strValueEdit->setValue(data.stats["str"]);
     ui->strBonusLabel->setText(QString::number(bonusFromStat(ui->strValueEdit->value())));
     ui->strSaveCheckBox->setChecked(true);
-    ui->strSaveCheckBox->setChecked(savesObject["str"].toObject()["isProf"].toBool());
+    ui->strSaveCheckBox->setChecked(data.statProf["str"]);
 
-    ui->dexValueEdit->setValue(statsObject["dex"].toObject()["score"].toInt());
+    ui->dexValueEdit->setValue(data.stats["dex"]);
     ui->dexBonusLabel->setText(QString::number(bonusFromStat(ui->dexValueEdit->value())));
     ui->dexSaveCheckBox->setChecked(true);
-    ui->dexSaveCheckBox->setChecked(savesObject["dex"].toObject()["isProf"].toBool());
+    ui->dexSaveCheckBox->setChecked(data.statProf["dex"]);
 
-    ui->conValueEdit->setValue(statsObject["con"].toObject()["score"].toInt());
+    ui->conValueEdit->setValue(data.stats["con"]);
     ui->conBonusLabel->setText(QString::number(bonusFromStat(ui->conValueEdit->value())));
     ui->conSaveCheckBox->setChecked(true);
-    ui->conSaveCheckBox->setChecked(savesObject["con"].toObject()["isProf"].toBool());
+    ui->conSaveCheckBox->setChecked(data.statProf["con"]);
 
-    ui->intValueEdit->setValue(statsObject["int"].toObject()["score"].toInt());
+    ui->intValueEdit->setValue(data.stats["int"]);
     ui->intBonusLabel->setText(QString::number(bonusFromStat(ui->intValueEdit->value())));
     ui->intSaveCheckBox->setChecked(true);
-    ui->intSaveCheckBox->setChecked(savesObject["int"].toObject()["isProf"].toBool());
+    ui->intSaveCheckBox->setChecked(data.statProf["int"]);
 
-    ui->wisValueEdit->setValue(statsObject["wis"].toObject()["score"].toInt());
+    ui->wisValueEdit->setValue(data.stats["wis"]);
     ui->wisBonusLabel->setText(QString::number(bonusFromStat(ui->wisValueEdit->value())));
     ui->wisSaveCheckBox->setChecked(true);
-    ui->wisSaveCheckBox->setChecked(savesObject["wis"].toObject()["isProf"].toBool());
+    ui->wisSaveCheckBox->setChecked(data.statProf["wis"]);
 
-    ui->chaValueEdit->setValue(statsObject["cha"].toObject()["score"].toInt());
+    ui->chaValueEdit->setValue(data.stats["cha"]);
     ui->chaBonusLabel->setText(QString::number(bonusFromStat(ui->chaValueEdit->value())));
     ui->chaSaveCheckBox->setChecked(true);
-    ui->chaSaveCheckBox->setChecked(savesObject["cha"].toObject()["isProf"].toBool());
+    ui->chaSaveCheckBox->setChecked(data.statProf["cha"]);
 
 
-    QJsonObject skillsObject = m_dataObject["skills"].toObject();
     ui->athlecicsCheckBox->setChecked(true);
-    ui->athlecicsCheckBox->setChecked(skillsObject["athletics"].toObject()["isProf"].toInt());
+    ui->athlecicsCheckBox->setChecked(data.skillsProf["athletics"]);
 
     ui->acrobatics->setChecked(true);
-    ui->acrobatics->setChecked(skillsObject["acrobatics"].toObject()["isProf"].toInt());
+    ui->acrobatics->setChecked(data.skillsProf["acrobatics"]);
 
     ui->sleight->setChecked(true);
-    ui->sleight->setChecked(skillsObject["sleight of hand"].toObject()["isProf"].toInt());
+    ui->sleight->setChecked(data.skillsProf["sleight of hand"]);
 
     ui->stealth->setChecked(true);
-    ui->stealth->setChecked(skillsObject["stealth"].toObject()["isProf"].toInt());
+    ui->stealth->setChecked(data.skillsProf["stealth"]);
 
     ui->arcana->setChecked(true);
-    ui->arcana->setChecked(skillsObject["arcana"].toObject()["isProf"].toInt());
+    ui->arcana->setChecked(data.skillsProf["arcana"]);
 
     ui->history->setChecked(true);
-    ui->history->setChecked(skillsObject["history"].toObject()["isProf"].toInt());
+    ui->history->setChecked(data.skillsProf["history"]);
 
     ui->investigation->setChecked(true);
-    ui->investigation->setChecked(skillsObject["investigation"].toObject()["isProf"].toInt());
+    ui->investigation->setChecked(data.skillsProf["investigation"]);
 
     ui->nature->setChecked(true);
-    ui->nature->setChecked(skillsObject["nature"].toObject()["isProf"].toInt());
+    ui->nature->setChecked(data.skillsProf["nature"]);
 
     ui->religion->setChecked(true);
-    ui->religion->setChecked(skillsObject["religion"].toObject()["isProf"].toInt());
+    ui->religion->setChecked(data.skillsProf["religion"]);
 
     ui->handling->setChecked(true);
-    ui->handling->setChecked(skillsObject["animal handling"].toObject()["isProf"].toInt());
+    ui->handling->setChecked(data.skillsProf["animal handling"]);
 
     ui->insight->setChecked(true);
-    ui->insight->setChecked(skillsObject["insight"].toObject()["isProf"].toInt());
+    ui->insight->setChecked(data.skillsProf["insight"]);
 
     ui->medicine->setChecked(true);
-    ui->medicine->setChecked(skillsObject["medicine"].toObject()["isProf"].toInt());
+    ui->medicine->setChecked(data.skillsProf["medicine"]);
 
     ui->perception->setChecked(true);
-    ui->perception->setChecked(skillsObject["perception"].toObject()["isProf"].toInt());
+    ui->perception->setChecked(data.skillsProf["perception"]);
 
     ui->survival->setChecked(true);
-    ui->survival->setChecked(skillsObject["survival"].toObject()["isProf"].toInt());
+    ui->survival->setChecked(data.skillsProf["survival"]);
 
     ui->deception->setChecked(true);
-    ui->deception->setChecked(skillsObject["deception"].toObject()["isProf"].toInt());
+    ui->deception->setChecked(data.skillsProf["deception"]);
 
     ui->intimidation->setChecked(true);
-    ui->intimidation->setChecked(skillsObject["intimidation"].toObject()["isProf"].toInt());
+    ui->intimidation->setChecked(data.skillsProf["intimidation"]);
 
     ui->performance->setChecked(true);
-    ui->performance->setChecked(skillsObject["performance"].toObject()["isProf"].toInt());
+    ui->performance->setChecked(data.skillsProf["performance"]);
 
     ui->persuasion->setChecked(true);
-    ui->persuasion->setChecked(skillsObject["persuasion"].toObject()["isProf"].toInt());
+    ui->persuasion->setChecked(data.skillsProf["persuasion"]);
 
 
 
-    ui->proficienciesEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["prof"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
-    ui->traitsEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["traits"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
-    ui->equipmentEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["equipment"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
-    ui->featuresEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["features"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
-    ui->alliesEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["allies"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
-    ui->personalityEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["personality"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
-    ui->backgroundEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["background"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
-    ui->questsEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["quests"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
-    ui->idealsEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["ideals"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
-    ui->bondsEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["bonds"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
-    ui->flawsEdit->setHtml(parseParagraphs(m_dataObject["text"].toObject()["flaws"].toObject()["value"].toObject()["data"].toObject()["content"].toArray()));
+    ui->proficienciesEdit->setHtml(data.proficienciesHtml);
+    ui->traitsEdit->setHtml(data.traitsHtml);
+    ui->equipmentEdit->setHtml(data.equipmentHtml);
+    ui->featuresEdit->setHtml(data.featuresHtml);
+    ui->alliesEdit->setHtml(data.alliesHtml);
+    ui->personalityEdit->setHtml(data.personalityHtml);
+    ui->backgroundEdit->setHtml(data.backgroundHtml);
+    ui->questsEdit->setHtml(data.questsHtml);
+    ui->idealsEdit->setHtml(data.idealsHtml);
+    ui->bondsEdit->setHtml(data.bondsHtml);
+    ui->flawsEdit->setHtml(data.flawsHtml);
 
-    parseNotes();
-    attackModel->fromJson(m_dataObject["weaponsList"].toArray());
-    resourceModel->fromJson(m_dataObject["resources"].toObject());
+    ui->notesEdit->setHtml(data.notes);
+
+    attackModel->fromJson(data.weapons);
+    resourceModel->fromJson(data.resourcesObj);
 }
 
-QJsonObject DndCharsheetWidget::collectData(const QString& filePath) {
-    QJsonObject result = m_dataObject;
+DndCharacterData DndCharsheetWidget::collectData() {
+    DndCharacterData result;
 
     // name
-    result["name"] = QJsonObject{
-            {"value", ui->nameEdit->text()}
-    };
-
-    // info
-    QJsonObject info;
-    info["charClass"] = QJsonObject{{"value", ui->classEdit->text().split(" (").first()}};
-    info["charSubclass"] = QJsonObject{{"value", ui->classEdit->text().split(" (").value(1).chopped(1)}};
-    info["level"] = QJsonObject{{"value", ui->levelBox->value()}};
-    info["playerName"] = QJsonObject{{"value", "Technohamster"}};  // при необходимости
-    info["background"] = QJsonObject{{"value", result["info"].toObject().value("background").toObject().value("value")}};
-    info["race"] = QJsonObject{{"value", result["info"].toObject().value("race").toObject().value("value")}};
-    info["alignment"] = QJsonObject{{"value", result["info"].toObject().value("alignment").toObject().value("value")}};
-    info["experience"] = QJsonObject{{"value", ""}};
-    result["info"] = info;
+    result.name = ui->nameEdit->text();
 
     // vitality
-    QJsonObject vitality;
-    vitality["speed"] = QJsonObject{{"value", ui->speedBox->text()}};
-    vitality["ac"] = QJsonObject{{"value", ui->acBox->value()}};
-    vitality["hp-current"] = QJsonObject{{"value", ui->hpSpinBox->value()}};
-    vitality["hp-max"] = QJsonObject{{"value", ui->maxHpBox->value()}};
-    result["vitality"] = vitality;
+    result.speed = ui->speedBox->text().toInt();
+    result.ac = ui->acBox->value();
+    result.hp = ui->hpSpinBox->value();
+    result.maxHp = ui->maxHpBox->value();
 
-    // stats
-    auto statObject = [&](const QString& statName, int score) {
-        return QJsonObject{{"score", score}, {"modifier", bonusFromStat(score)}};
-    };
 
-    QJsonObject stats;
-    stats["str"] = statObject("str", ui->strValueEdit->value());
-    stats["dex"] = statObject("dex", ui->dexValueEdit->value());
-    stats["con"] = statObject("con", ui->conValueEdit->value());
-    stats["int"] = statObject("int", ui->intValueEdit->value());
-    stats["wis"] = statObject("wis", ui->wisValueEdit->value());
-    stats["cha"] = statObject("cha", ui->chaValueEdit->value());
-    result["stats"] = stats;
+    result.stats["str"] = ui->strValueEdit->value();
+    result.stats["dex"] = ui->dexValueEdit->value();
+    result.stats["con"] = ui->conValueEdit->value();
+    result.stats["int"] = ui->intValueEdit->value();
+    result.stats["wis"] = ui->wisValueEdit->value();
+    result.stats["cha"] = ui->chaValueEdit->value();
 
     // saves
-    QJsonObject saves;
-    saves["str"] = QJsonObject{{"isProf", ui->strSaveCheckBox->isChecked()}};
-    saves["dex"] = QJsonObject{{"isProf", ui->dexSaveCheckBox->isChecked()}};
-    saves["con"] = QJsonObject{{"isProf", ui->conSaveCheckBox->isChecked()}};
-    saves["int"] = QJsonObject{{"isProf", ui->intSaveCheckBox->isChecked()}};
-    saves["wis"] = QJsonObject{{"isProf", ui->wisSaveCheckBox->isChecked()}};
-    saves["cha"] = QJsonObject{{"isProf", ui->chaSaveCheckBox->isChecked()}};
-    result["saves"] = saves;
+    result.statProf["str"] = ui->strSaveCheckBox->isChecked();
+    result.statProf["dex"] = ui->dexSaveCheckBox->isChecked();
+    result.statProf["con"] = ui->conSaveCheckBox->isChecked();
+    result.statProf["int"] = ui->intSaveCheckBox->isChecked();
+    result.statProf["wis"] = ui->wisSaveCheckBox->isChecked();
+    result.statProf["cha"] = ui->chaSaveCheckBox->isChecked();
 
-    // skills
-    auto skill = [&](const QString& name, QCheckBox *checkBox, const QString& stat = "") {
-        QJsonObject obj;
-        obj["name"] = name;
-        if (!stat.isEmpty()) obj["baseStat"] = stat;
-        if (checkBox->isChecked()) obj["isProf"] = 1;
-        return obj;
-    };
 
-    QJsonObject skills;
-    skills["acrobatics"] = skill("acrobatics", ui->acrobatics, "dex");
-    skills["athletics"] = skill("athletics", ui->athlecicsCheckBox, "str");
-    skills["sleight of hand"] = skill("sleight of hand", ui->sleight, "dex");
-    skills["stealth"] = skill("stealth", ui->stealth, "dex");
-    skills["arcana"] = skill("arcana", ui->arcana, "int");
-    skills["history"] = skill("history", ui->history, "int");
-    skills["investigation"] = skill("investigation", ui->investigation, "int");
-    skills["nature"] = skill("nature", ui->nature, "int");
-    skills["religion"] = skill("religion", ui->religion, "int");
-    skills["animal handling"] = skill("animal handling", ui->handling, "wis");
-    skills["insight"] = skill("insight", ui->insight, "wis");
-    skills["medicine"] = skill("medicine", ui->medicine, "wis");
-    skills["perception"] = skill("perception", ui->perception, "wis");
-    skills["survival"] = skill("survival", ui->survival, "wis");
-    skills["deception"] = skill("deception", ui->deception, "cha");
-    skills["intimidation"] = skill("intimidation", ui->intimidation, "cha");
-    skills["performance"] = skill("performance", ui->performance, "cha");
-    skills["persuasion"] = skill("persuasion", ui->persuasion, "cha");
-    result["skills"] = skills;
+    result.skillsProf["acrobatics"] = ui->acrobatics->isChecked();
+    result.skillsProf["athletics"] = ui->athlecicsCheckBox->isChecked();
+    result.skillsProf["sleight of hand"] = ui->sleight->isChecked();
+    result.skillsProf["stealth"] = ui->stealth->isChecked();
+    result.skillsProf["arcana"] = ui->arcana->isChecked();
+    result.skillsProf["history"] = ui->history->isChecked();
+    result.skillsProf["investigation"] = ui->investigation->isChecked();
+    result.skillsProf["nature"] = ui->nature->isChecked();
+    result.skillsProf["religion"] = ui->religion->isChecked();
+    result.skillsProf["animal handling"] = ui->handling->isChecked();
+    result.skillsProf["insight"] = ui->insight->isChecked();
+    result.skillsProf["medicine"] = ui->medicine->isChecked();
+    result.skillsProf["perception"] = ui->perception->isChecked();
+    result.skillsProf["survival"] = ui->survival->isChecked();
+    result.skillsProf["deception"] = ui->deception->isChecked();
+    result.skillsProf["intimidation"] = ui->intimidation->isChecked();
+    result.skillsProf["performance"] = ui->performance->isChecked();
+    result.skillsProf["persuasion"] = ui->persuasion->isChecked();
 
-    // текстовые блоки
-    auto toDoc = [&](const QString &html) {
-        return QJsonObject{
-                {"value", QJsonObject{
-                        {"data", QJsonObject{
-                                {"type", "doc"},
-                                {"content", serializeHtmlToJson(html)}  // сериализация HTML в JSON
-                        }}
-                }}
-        };
-    };
-    QJsonObject text;
-    text["prof"] = toDoc(ui->proficienciesEdit->toHtml());
-    text["traits"] = toDoc(ui->traitsEdit->toHtml());
-    text["equipment"] = toDoc(ui->equipmentEdit->toHtml());
-    text["features"] = toDoc(ui->featuresEdit->toHtml());
-    text["allies"] = toDoc(ui->alliesEdit->toHtml());
-    text["personality"] = toDoc(ui->personalityEdit->toHtml());
-    text["background"] = toDoc(ui->backgroundEdit->toHtml());
-    text["quests"] = toDoc(ui->questsEdit->toHtml());
-    text["ideals"] = toDoc(ui->idealsEdit->toHtml());
-    text["bonds"] = toDoc(ui->bondsEdit->toHtml());
-    text["flaws"] = toDoc(ui->flawsEdit->toHtml());
-    result["text"] = text;
+
+    result.proficienciesHtml = ui->proficienciesEdit->toHtml();
+    result.traitsHtml = ui->proficienciesEdit->toHtml();
+    result.equipmentHtml = ui->equipmentEdit->toHtml();
+    result.featuresHtml = ui->featuresEdit->toHtml();
+    result.alliesHtml = ui->alliesEdit->toHtml();
+    result.personalityHtml = ui->personalityEdit->toHtml();
+    result.backgroundHtml = ui->backgroundEdit->toHtml();
+    result.questsHtml = ui->questsEdit->toHtml();
+    result.idealsHtml = ui->idealsEdit->toHtml();
+    result.bondsHtml = ui->bondsEdit->toHtml();
+    result.flawsHtml = ui->flawsEdit->toHtml();
 
     // оружие и ресурсы
-    result["weaponsList"] = attackModel->toJson();
-    result["resources"] = resourceModel->toJson();
+    result.weapons = attackModel->toJson();
+    result.resourcesObj = resourceModel->toJson();
 
     return result;
 }
@@ -626,112 +574,6 @@ void DndCharsheetWidget::addToInitiative(InitiativeTrackerWidget *initiativeTrac
     initiativeTrackerWidget->addCharacter(ui->nameEdit->text(), ui->maxHpBox->value(), ui->acBox->value(), ui->hpSpinBox->value(), initiative, ui->speedBox->value());
 }
 
-/**
- * @brief Parses a JSON array of paragraphs into an HTML-formatted string.
- *
- * This method processes a QJsonArray, extracting paragraphs, formatting
- * their text content based on specified styles, and joining them into
- * an HTML-compatible string. Each paragraph is enclosed in `<p>` tags,
- * and specific text styles are applied where defined.
- *
- * The function performs the following:
- * - Iterates through the JSON array to identify objects with a "type" field
- *   set to "paragraph".
- * - Extracts the "content" field from each paragraph object, which contains
- *   an array of text parts.
- * - For each text part, retrieves the "text" field and applies formatting
- *   where "marks" are present. Supported marks include:
- *   - Bold (`<b>`)
- *   - Italic (`<i>`)
- *   - Underline (`<u>`)
- * - Combines the formatted text parts into a complete paragraph.
- * - Adds the formatted paragraph to the result, enclosed in `<p>` tags.
- *
- * @param content A QJsonArray representing a series of paragraph objects.
- *                Each paragraph object may contain text parts with
- *                formatting metadata.
- * @return A QString containing the HTML-formatted representation of the
- *         paragraphs, with all applied styles and encapsulated in `<p>` tags.
- */
-QString DndCharsheetWidget::parseParagraphs(const QJsonArray &content) {
-    QString result;
-    for (const auto& paragraphVal : content) {
-        QJsonObject paragraph = paragraphVal.toObject();
-        if (!(paragraph["type"].toString() == "paragraph"))
-            continue;
-        QJsonArray parts = paragraph["content"].toArray();
-        QString line;
-        for (const auto& partVal: parts) {
-            QJsonObject part = partVal.toObject();
-            QString text = part["text"].toString();
-            if (text.isEmpty()) continue;
-
-            if (part.contains("marks")){
-                QJsonArray marks = part["marks"].toArray();
-                for (const auto& markVal : marks) {
-                    QString markType = markVal.toObject()["type"].toString();
-
-                    if (markType == "bold")
-                        text = "<b>" + text + "</b>";
-                    else if (markType == "italic")
-                        text = "<i>" + text + "</i>";
-                    else if (markType == "underline")
-                        text = "<u>" + text + "</u>";
-                }
-            }
-            line += text;
-        }
-        if (!line.isEmpty())
-            result += "<p>" + line + "</p>";
-    }
-    return result.trimmed();
-}
-
-/**
- * @brief Parses and updates the notes section in the character sheet.
- *
- * This method collects data from multiple "notes" fields in the
- * character's JSON structure, processes it into a formatted HTML
- * representation, and updates the notes editor in the user interface.
- *
- * The method performs the following:
- * - Extracts arrays of content from the "text" field's sub-objects labeled
- *   "notes-1" through "notes-6".
- * - For each notes field, calls the `parseParagraphs` method to process
- *   the content into formatted HTML paragraphs.
- * - Aggregates the resulting HTML content into a single string.
- * - Sets the aggregated HTML string as the content of the `notesEdit` UI element.
- */
-void DndCharsheetWidget::parseNotes() {
-    QString result;
-
-    result += parseParagraphs(m_dataObject["text"].toObject()["notes-1"].toObject()["value"].toObject()["data"].toObject()["content"].toArray());
-    result += parseParagraphs(m_dataObject["text"].toObject()["notes-2"].toObject()["value"].toObject()["data"].toObject()["content"].toArray());
-    result += parseParagraphs(m_dataObject["text"].toObject()["notes-3"].toObject()["value"].toObject()["data"].toObject()["content"].toArray());
-    result += parseParagraphs(m_dataObject["text"].toObject()["notes-4"].toObject()["value"].toObject()["data"].toObject()["content"].toArray());
-    result += parseParagraphs(m_dataObject["text"].toObject()["notes-5"].toObject()["value"].toObject()["data"].toObject()["content"].toArray());
-    result += parseParagraphs(m_dataObject["text"].toObject()["notes-6"].toObject()["value"].toObject()["data"].toObject()["content"].toArray());
-
-    ui->notesEdit->setHtml(result);
-}
-
-/**
- * @brief Configures keyboard shortcuts for text formatting in the widget.
- *
- * This method registers and sets up the following keyboard shortcuts:
- * - Ctrl + B: Toggles bold text formatting for the selected text in the currently focused QTextEdit.
- * - Ctrl + I: Toggles italic text formatting for the selected text in the currently focused QTextEdit.
- * - Ctrl + U: Toggles underline text formatting for the selected text in the currently focused QTextEdit.
- *
- * Each shortcut is connected to a lambda function that retrieves the currently focused QTextEdit,
- * checks if text is selected, and modifies its QTextCursor's QTextCharFormat based on the current
- * formatting. The lambdas ensure that the respective text formatting is toggled on or off depending
- * on the current state of the selection.
- *
- * This functionality depends on:
- * - The `getFocusedEdit()` method, which returns the QTextEdit that is currently focused.
- * - The QTextCursor API for applying and toggling character formats.
- */
 void DndCharsheetWidget::setupShortcuts() {
     m_boldShortcut = new QShortcut(QKeySequence("Ctrl+B"), this);
     connect(m_boldShortcut, &QShortcut::activated, [=](){
@@ -789,152 +631,9 @@ QTextEdit *DndCharsheetWidget::getFocusedEdit() {
 }
 
 
-/**
- * @brief Serializes HTML content into a JSON array representation.
- *
- * This method takes an HTML string input, processes its structure,
- * and converts it into a JSON array, where the content is broken down
- * into paragraphs, each containing its corresponding text and formatting
- * attributes (e.g., bold, italic, underline).
- *
- * The serialization process iterates through the blocks and fragments
- * of the HTML content, capturing their text and relevant formatting
- * attributes. If a block contains a text list, its items are serialized
- * individually. Empty blocks result in the inclusion of a placeholder
- * paragraph object.
- *
- * The resulting JSON structure for each block includes:
- * - "type": Specifies the type of the block, defaulting to "paragraph".
- * - "content": An array of text objects within the block, each of which
- *   includes:
- *   - "type": Specifies the type of the content (e.g., "text").
- *   - "text": The actual string content of the fragment.
- *   - "marks" (optional): An array of formatting attributes (e.g., "bold",
- *     "italic", "underline") if applicable.
- *
- * @param html A QString containing the HTML to be serialized.
- * @return A QJsonArray representing the serialized structure of the HTML.
- */
-QJsonArray DndCharsheetWidget::serializeHtmlToJson(const QString &html) {
-    QJsonArray contentArray;
-
-    QTextDocument doc;
-    doc.setHtml(html);
-
-    for (QTextBlock block = doc.begin(); block.isValid(); block = block.next()) {
-        QJsonObject paragraph;
-        QJsonArray paragraphContent;
-
-        if (block.textList()) {
-            QTextList *list = block.textList();
-
-            QJsonObject item;
-            item["type"] = "paragraph";
-
-            QJsonArray innerContent;
-            for (QTextBlock::iterator it = block.begin(); !it.atEnd(); ++it) {
-                QTextFragment frag = it.fragment();
-                if (!frag.isValid()) continue;
-
-                QString fragText = frag.text();
-                if (fragText.trimmed().isEmpty()) continue;
-
-                QJsonObject textObject;
-                textObject["type"] = "text";
-                textObject["text"] = fragText;
-
-                QJsonArray marks;
-                QTextCharFormat fmt = frag.charFormat();
-                if (fmt.fontWeight() == QFont::Bold)
-                    marks.append(QJsonObject{{"type", "bold"}});
-                if (fmt.fontItalic())
-                    marks.append(QJsonObject{{"type", "italic"}});
-                if (fmt.fontUnderline())
-                    marks.append(QJsonObject{{"type", "underline"}});
-
-                if (!marks.isEmpty())
-                    textObject["marks"] = marks;
-
-                innerContent.append(textObject);
-            }
-
-            item["content"] = innerContent;
-            contentArray.append(item);
-            continue;
-        }
-
-        paragraph["type"] = "paragraph";
-        for (QTextBlock::iterator it = block.begin(); !it.atEnd(); ++it) {
-            QTextFragment frag = it.fragment();
-            if (!frag.isValid()) continue;
-
-            QString fragText = frag.text();
-            if (fragText.trimmed().isEmpty()) continue;
-
-            QJsonObject textObject;
-            textObject["type"] = "text";
-            textObject["text"] = fragText;
-
-            QJsonArray marks;
-            QTextCharFormat fmt = frag.charFormat();
-            if (fmt.fontWeight() == QFont::Bold)
-                marks.append(QJsonObject{{"type", "bold"}});
-            if (fmt.fontItalic())
-                marks.append(QJsonObject{{"type", "italic"}});
-            if (fmt.fontUnderline())
-                marks.append(QJsonObject{{"type", "underline"}});
-
-            if (!marks.isEmpty())
-                textObject["marks"] = marks;
-
-            paragraphContent.append(textObject);
-        }
-
-        if (!paragraphContent.isEmpty()) {
-            paragraph["content"] = paragraphContent;
-            contentArray.append(paragraph);
-        } else {
-            // Добавим пустой параграф, если строка была пустой
-            contentArray.append(QJsonObject{{"type", "paragraph"}});
-        }
-    }
-
-    return contentArray;
-}
-
-/**
- * @brief Saves the current character sheet data to a specified file in JSON format.
- *
- * This method collects the updated data from the widget, integrates it into the
- * existing JSON document structure, and writes the finalized data to the specified file.
- * If the file cannot be opened for writing, the method exits without saving.
- *
- * @param path A QString representing the destination file path where the JSON data should be saved.
- *
- * The method performs the following:
- * - Retrieves the updated data by calling `collectData()`, which is stored as a QJsonObject.
- * - Converts the collected data into a compact JSON string.
- * - Updates the "data" field in the root level of the original JSON document with the new data.
- * - Opens the specified file in write mode. If the file cannot be opened, the method returns silently.
- * - Writes the updated JSON document to the file in indented format and closes the file.
- */
 void DndCharsheetWidget::saveToFile(QString path) {
-    QJsonObject updatedData = collectData();
-
-    QJsonDocument innerDoc(updatedData);
-    QString jsonString = QString::fromUtf8(innerDoc.toJson(QJsonDocument::Compact));
-
-    QJsonObject root = m_originalDocument.object();
-    root["data"] = jsonString;
-
-    QJsonDocument finalDoc(root);
-    QFile fileOut(path);
-    if (!fileOut.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        return;
-    }
-
-    fileOut.write(finalDoc.toJson(QJsonDocument::Indented));
-    fileOut.close();
+    LssDndParser parser;
+    parser.writeDnd(collectData(), path);
 }
 
 /**

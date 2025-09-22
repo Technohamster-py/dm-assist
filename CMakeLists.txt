@@ -29,6 +29,7 @@ set(FILES
         campaign-tree-widget/campaigntreewidget.cpp campaign-tree-widget/campaigntreewidget.h
         campaign-tree-widget/hoverwidget.cpp    campaign-tree-widget/hoverwidget.h
         charsheet-widget/abstractcharsheetwidget.h
+        charsheet-widget/charaсterparser.h  charsheet-widget/charaсterparser.cpp
         charsheet-widget/dndcharsheetwidget.h charsheet-widget/dndcharsheetwidget.cpp
         charsheet-widget/dndcharsheetdialogs.h charsheet-widget/dndcharsheetdialogs.cpp
         charsheet-widget/dndmodels.h charsheet-widget/dndmodels.cpp
@@ -78,6 +79,7 @@ set(UI_FILES
         initiative-tracker/statuseditdialog.ui
         settingsdialog.ui
         bestiary-widget/dndbestiarypage.ui
+        charsheet-widget/dndCharacterData.h
 )
 
 set(TS_FILES
