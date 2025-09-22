@@ -15,6 +15,7 @@
 
 #include "bass.h"
 #include <themediconmanager.h>
+#include <errorhandler.h>
 
 #define BASS_DEVICE_INDEX 1
 
@@ -58,8 +59,8 @@ MusicPlayerWidget::MusicPlayerWidget(QWidget *parent, int id, QString title)
 
     if (!BASS_Init(BASS_DEVICE_INDEX, 44100, 0, nullptr, nullptr)) {
         auto err = BASS_ErrorGetCode();
-        QMessageBox::critical(this, "BASS Init Failed",
-                              QString("Could not initialize BASS on selected device.\nError code: %1").arg(err));
+        ErrorHandler::showError("BASS Init Failed",
+                  QString("Could not initialize BASS on selected device.\nError code: %1").arg(err));
         return;
     }
 
@@ -541,7 +542,7 @@ void MusicPlayerWidget::setAudioOutput(const QString &deviceName) {
     BASS_Free();
 
     if (!BASS_Init(found, 44100, 0, nullptr, nullptr)) {
-        QMessageBox::critical(this, "BASS Init Failed", "Could not initialize BASS on selected device.");
+        ErrorHandler::showError("BASS Init Failed", "Could not initialize BASS on selected device.");
         return;
     }
     m_deviceIndex = found;
@@ -571,7 +572,7 @@ void MusicPlayerWidget::setAudioOutput(int deviceIndex) {
     BASS_Free();
 
     if (!BASS_Init(deviceIndex, 44100, 0, nullptr, nullptr)) {
-        QMessageBox::critical(this, "BASS Init Failed", "Could not initialize BASS on selected device.");
+        ErrorHandler::showError("BASS Init Failed", "Could not initialize BASS on selected device.");
         return;
     }
     m_deviceIndex = deviceIndex;

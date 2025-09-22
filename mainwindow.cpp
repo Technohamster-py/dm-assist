@@ -1391,6 +1391,18 @@ void MainWindow::updateVisibility() {
     ui->placeHolderWidget->setVisible(!hasTabs);
 }
 
+/**
+ * @brief Adds a new character to the current campaign.
+ *
+ * Prompts the user to input a character name. The method validates the input,
+ * checks the existence of a campaign directory, and ensures the destination
+ * file does not already exist unless the user chooses to overwrite it.
+ * It copies a character template file to the appropriate location in the
+ * campaign directory and integrates the new character into the campaign structure.
+ *
+ * If no campaign is open, the user is notified via a warning message. Similarly,
+ * appropriate notifications are displayed for invalid inputs or file operation failures.
+ */
 void MainWindow::addCharacter() {
     bool ok;
     QString characterName = QInputDialog::getText(this,
@@ -1433,6 +1445,13 @@ void MainWindow::addCharacter() {
     campaignTreeWidget->characterOpenRequested(dstFilePath);
 }
 
+/**
+ * @brief Handles the mute button click event.
+ *
+ * Toggles the mute state of the application. When the mute button is clicked:
+ * - If the application is currently muted, restores the previous volume level and updates the button icon to the volume icon.
+ * - If the application is not muted, saves the current volume level, sets the volume to zero, and updates the button icon to the mute icon.
+ */
 void MainWindow::on_muteButton_clicked() {
     if (isMuted){
         isMuted = false;
@@ -1447,12 +1466,30 @@ void MainWindow::on_muteButton_clicked() {
 
 }
 
+/**
+ * @brief Handles drag enter events for the widget.
+ *
+ * Determines whether the incoming data is acceptable when a drag operation
+ * enters the widget's boundaries. This method allows the widget to accept
+ * or reject the drag based on the data type or other criteria.
+ *
+ * @param event Pointer to the QDragEnterEvent containing details about the drag operation.
+ * The event can be accepted or ignored based on the implemented logic.
+ */
 void MainWindow::dragEnterEvent(QDragEnterEvent *event) {
     if (event->mimeData()->hasUrls()) {
         event->acceptProposedAction();
     }
 }
 
+/**
+ * @brief Handles the drop event for the widget.
+ *
+ * Processes data dropped onto the widget, determining appropriate
+ * actions based on the type and content of the dropped data.
+ *
+ * @param event Pointer to the QDropEvent containing details about the drop.
+ */
 void MainWindow::dropEvent(QDropEvent *event) {
     QStringList files;
     QString campaignPath = "";
@@ -1477,6 +1514,16 @@ void MainWindow::dropEvent(QDropEvent *event) {
 }
 
 
+/**
+ * @brief Displays a message box with a list of sources as clickable links.
+ *
+ * This method creates a message box with an HTML-formatted list of source links
+ * that can be clicked to open in an external web browser. It dynamically generates
+ * the content based on the provided map of source names and URLs.
+ *
+ * @param sources A QMap where each key represents the display name of a source
+ * and the corresponding value is the URL for that source.
+ */
 void MainWindow::showSourcesMessageBox(const QMap<QString, QString> &sources)
 {
     QString html;
@@ -1505,7 +1552,16 @@ void MainWindow::showSourcesMessageBox(const QMap<QString, QString> &sources)
     msgBox.exec();
 }
 
-void MainWindow::handleUpdates(bool hasUpdates) {
+/**
+ * @brief Handles application update notifications and displays update information.
+ *
+ * This method checks if updates are available, retrieves the latest version and update URL
+ * from the update checker, and updates the UI to inform the user about the updates.
+ *
+ * @param hasUpdates A boolean indicating whether updates are available. If true, the latest
+ * version and update details will be displayed in the update banner.
+ */
+void MainWindow::handleUpdates(bool hasUpdates) const {
     if (hasUpdates){
         QString latest = updateChecker->latestVersion();
         QString latestUrl = updateChecker->latestUrl();

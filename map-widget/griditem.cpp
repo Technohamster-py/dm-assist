@@ -7,6 +7,19 @@ GridItem::GridItem(const QRectF &size, QGraphicsItem *parent) : QGraphicsItem(pa
     m_pen.setCosmetic(true);
 }
 
+/**
+ * @brief Renders the grid on the scene using a specified grid type.
+ *
+ * This function handles the painting of grid lines within the exposed rectangular area.
+ * The type of grid to draw (square or hexagonal) is determined by the member variable `m_type`.
+ * Ensures that a grid is only drawn if the item is visible and the scaling factors
+ * (`m_cellFeet` and `m_pixelsPerFoot`) are valid.
+ *
+ * @param p Pointer to a QPainter instance used for rendering the grid.
+ * @param opt Pointer to a QStyleOptionGraphicsItem providing details about rendering options,
+ *            such as the exposed rectangle.
+ * @param w Unused widget parameter, typically set to nullptr.
+ */
 void GridItem::paint(QPainter *p, const QStyleOptionGraphicsItem *opt, QWidget *)
 {
     if (!isVisible() || m_cellFeet <= 0 || m_pixelsPerFoot <= 0) return;
@@ -29,6 +42,19 @@ void GridItem::paint(QPainter *p, const QStyleOptionGraphicsItem *opt, QWidget *
     }
 }
 
+/**
+ * @brief Draws a square grid within the specified rectangular area.
+ *
+ * This function renders a square grid with lines separated by a fixed
+ * pixel distance (`stepPx`) inside the given rectangular region (`rect`).
+ * Horizontal and vertical lines are drawn iteratively to create the grid.
+ * This method is utilized when the grid type is set to Square.
+ *
+ * @param p Pointer to the QPainter object used for rendering the grid lines.
+ * @param rect The rectangular region within which the grid is drawn.
+ * @param stepPx The distance between adjacent grid lines in pixels.
+ *               Must be greater than zero.
+ */
 void GridItem::paintSquareGrid(QPainter* p, const QRectF& rect, qreal stepPx)
 {
     if (stepPx <= 0) return;
@@ -46,7 +72,19 @@ void GridItem::paintSquareGrid(QPainter* p, const QRectF& rect, qreal stepPx)
 }
 
 
-
+/**
+ * @brief Paints a hexagonal grid on the provided rectangular area.
+ *
+ * This function draws a grid of hexagons within the specified rectangular area.
+ * The spacing and size of the hexagons are determined by the `flatToFlatPx` parameter,
+ * which represents the flat-to-flat (horizontal) distance of a hexagon in pixels.
+ * Hexagons are positioned in staggered rows where every second row is horizontally
+ * offset to create a honeycomb pattern.
+ *
+ * @param p Pointer to a QPainter instance used for rendering the hexagonal grid.
+ * @param rect Specifies the rectangular area to be covered by the hexagonal grid.
+ * @param flatToFlatPx The flat-to-flat distance of a hexagon in pixels. Must be greater than 0.
+ */
 void GridItem::paintHexGrid(QPainter* p, const QRectF& rect, qreal flatToFlatPx)
 {
     if (flatToFlatPx <= 0) return;
@@ -84,12 +122,24 @@ void GridItem::paintHexGrid(QPainter* p, const QRectF& rect, qreal flatToFlatPx)
     }
 }
 
+/**
+ * @brief Converts a grid type mode to its corresponding string representation.
+ *
+ * This static function accepts an integer value representing a grid type
+ * and returns the localized string representation of that type.
+ * It supports `None`, `Square`, and `Hex` grid types as defined in the `GridType` enum.
+ * If an unrecognized mode value is provided, it defaults to returning "None".
+ *
+ * @param mode Integer value representing the grid type.
+ *             Valid values align with `GridType` enum: `None`, `Square`, `Hex`.
+ * @return QString Localized string representation of the grid type.
+ */
 QString GridItem::stringMode(int mode) {
     switch (mode) {
         case GridType::None: return QObject::tr("None");
         case GridType::Square: return QObject::tr("Square");
         case GridType::Hex: return QObject::tr("Hexagon");
+        default: return QObject::tr("None");
     }
-    return QObject::tr("None");
 }
 

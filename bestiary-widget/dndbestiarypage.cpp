@@ -6,6 +6,13 @@
 #include <QJsonArray>
 
 
+/**
+ * Constructs a DndBestiaryPage widget.
+ *
+ * @param parent The parent QWidget for this widget. Defaults to nullptr if no parent is provided.
+ *
+ * @return An instance of DndBestiaryPage initialized with the provided parent widget.
+ */
 DndBestiaryPage::DndBestiaryPage(QWidget *parent) : AbstractCharsheetWidget(parent), ui(new Ui::DndBestiaryPage) {
     ui->setupUi(this);
     m_manager = new QNetworkAccessManager(this);
@@ -17,6 +24,13 @@ DndBestiaryPage::~DndBestiaryPage() {
     delete ui;
 }
 
+/**
+ * Creates an instance of DndBestiaryPage.
+ *
+ * @param parent The parent widget for this instance. If no parent is specified, it defaults to nullptr.
+ *
+ * @return A new instance of DndBestiaryPage configured with the given parent widget.
+ */
 DndBestiaryPage::DndBestiaryPage(QString filePath, QWidget *parent) : AbstractCharsheetWidget(parent), ui(new Ui::DndBestiaryPage) {
     ui->setupUi(this);
     m_manager = new QNetworkAccessManager(this);
@@ -26,6 +40,11 @@ DndBestiaryPage::DndBestiaryPage(QString filePath, QWidget *parent) : AbstractCh
     loadFromFile(filePath);
 }
 
+/**
+ * Loads bestiary data from the specified file path and populates the widget with the parsed data.
+ *
+ * @param path The file path of the bestiary data file to load.
+ */
 void DndBestiaryPage::loadFromFile(const QString &path) {
     QFile beastFile(path);
     m_campaignPath = campaignDirFromFile(path);
@@ -49,6 +68,13 @@ void DndBestiaryPage::loadFromFile(const QString &path) {
     populateWidget(m_parser->parse(root));
 }
 
+/**
+ * Adds the current character's details to an initiative tracker.
+ *
+ * @param initiativeTrackerWidget The widget managing the initiative tracker.
+ * @param autoRoll Determines whether the initiative roll should be computed automatically.
+ *                 If true, the initiative is rolled as a d20 added to the character's Dexterity bonus.
+ */
 void DndBestiaryPage::addToInitiative(InitiativeTrackerWidget *initiativeTrackerWidget, bool autoRoll) {
     int initiative = 0;
     if (autoRoll)
@@ -60,6 +86,18 @@ void DndBestiaryPage::updateTranslator() {
     ui->retranslateUi(this);
 }
 
+/**
+ * Downloads a token from the specified URL and saves it to the campaign's token directory.
+ *
+ * This method validates the URL, ensures the campaign directory and token subdirectory exist,
+ * and downloads the token asynchronously. If the file already exists, the token is immediately
+ * loaded without re-downloading.
+ *
+ * @param link The URL of the token to be downloaded.
+ *
+ * @return True if the download process was successfully initiated or the token already exists;
+ *         false if the URL is invalid, the directory structure cannot be created, or other errors occur.
+ */
 bool DndBestiaryPage::downloadToken(const QString &link) {
     QUrl qurl(link);
     if (!qurl.isValid()) {
@@ -122,10 +160,26 @@ bool DndBestiaryPage::downloadToken(const QString &link) {
     return true;
 }
 
+/**
+ * Sets the pixmap of the token display based on the provided file path.
+ *
+ * @param filePath The file path of the image to be used as the token pixmap.
+ */
 void DndBestiaryPage::setTokenPixmap(const QString &filePath) {
     ui->token->setPixmap(QPixmap(filePath));
 }
 
+/**
+ * Populates the UI of the DndBestiaryPage widget with the provided BestiaryPageData.
+ *
+ * This function updates various UI labels and fields with the corresponding values
+ * from the `BestiaryPageData` structure. It also includes the logic to calculate
+ * and display ability bonuses and saving throws based on the provided data, as well
+ * as setting text for attributes such as skills, damage resistances, details, and more.
+ *
+ * @param data The `BestiaryPageData` object containing all relevant information
+ *             to populate the widget.
+ */
 void DndBestiaryPage::populateWidget(BestiaryPageData data) {
     ui->nameLabel->setText(data.name);
 

@@ -8,6 +8,19 @@
 #include <QPointer>
 #include <functional>
 
+/**
+ * @class ThemedIconManager
+ * @brief A manager class responsible for handling themed icons within an application.
+ *
+ * The ThemedIconManager class manages and provides access to icons that are designed for
+ * different themes, ensuring a consistent and dynamic visual representation within the
+ * application. This class allows loading, retrieving, and switching icons based on active themes.
+ *
+ * It supports functionalities like loading theme-specific resources, fetching icons by theme,
+ * and monitoring theme changes to dynamically update the displayed icons.
+ *
+ * This class is useful for applications with customizable themes or dynamic visual styling.
+ */
 class ThemedIconManager : public QObject {
 Q_OBJECT
 public:
@@ -40,8 +53,9 @@ public:
     void addPixmapTarget(const QString &svgPath, QObject *receiver, std::function<void(const QPixmap &)> applyPixmap,
                          bool override = true, QSize size = QSize(24, 24));
 
-    QPixmap renderIconInline(const QStringList& svgPaths, QSize iconSize = QSize(16, 16), int spacing = 2);
-    QPixmap renderIconGrid(const QStringList& svgPaths, QSize iconSize = QSize(16, 16), int spacing = 2, int maxIconsPerRow = 3);
+static QPixmap renderIconInline(const QStringList& svgPaths, QSize iconSize = QSize(16, 16), int spacing = 2);
+
+static QPixmap renderIconGrid(const QStringList& svgPaths, QSize iconSize = QSize(16, 16), int spacing = 2, int maxIconsPerRow = 3);
 
 signals:
     void themeChanged();
@@ -62,7 +76,8 @@ private:
 
     QList<IconTarget> m_targets;
 
-    void regenerateAndApplyIcon(const IconTarget& target);
+    void regenerateAndApplyIcon(const IconTarget& target) const;
     void updateAllIcons();
-    QColor themeColor() const;
+
+static QColor themeColor();
 };

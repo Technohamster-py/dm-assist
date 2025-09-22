@@ -70,7 +70,7 @@ public slots:
     void openSharedMapWindow(int index);
     void slotExportMap(int index);
 
-    void handleUpdates(bool hasUpdates);
+    void handleUpdates(bool hasUpdates) const;
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
