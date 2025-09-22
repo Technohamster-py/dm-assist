@@ -289,6 +289,8 @@ void DndCharsheetWidget::populateWidget(const DndCharacterData& data) {
 
     attackModel->fromJson(data.weapons);
     resourceModel->fromJson(data.resourcesObj);
+
+    downloadToken(data.tokenUrl);
 }
 
 DndCharacterData DndCharsheetWidget::collectData() {
@@ -710,4 +712,69 @@ QString DndCharsheetWidget::bonusFromString(const QString& string) {
  */
 void DndCharsheetWidget::updateTranslator() {
     ui->retranslateUi(this);
+}
+
+bool DndCharsheetWidget::downloadToken(const QString &link) {
+    QString fullPath = getTokenFileName(m_campaignPath, link);
+    if (!fullPath.isEmpty()){
+        setTokenPixmap(fullPath);
+        return true;
+    }
+
+    QUrl qurl(link);
+    if (!qurl.isValid()) {
+        qWarning() << "Invalid URL:" << link;
+        return false;
+    }
+
+    QString filename = qurl.fileName();
+    if (filename.isEmpty()) {
+//        qWarning() << "URL does not contain filename:" << link;
+        return false;
+    }
+
+    QDir dir(m_campaignPath);
+    if (!dir.exists()) {
+//        qWarning() << "Campaign dir does not exist:" << m_campaignPath;
+        return false;
+    }
+
+    // ensure tokens/ folder
+    if (!dir.exists("Tokens")) {
+        if (!dir.mkdir("Tokens")) {
+            qWarning() << "Cannot create tokens dir!";
+            return false;
+        }
+    }
+
+    // async download
+    QNetworkRequest req(qurl);
+    if (!m_manager) m_manager = new QNetworkAccessManager;
+    auto reply = m_manager->get(req);
+
+    connect(reply, &QNetworkReply::finished, this, [=]() {
+        if (reply->error() != QNetworkReply::NoError) {
+            qWarning() << "Download failed:" << reply->errorString();
+            reply->deleteLater();
+            return;
+        }
+        QByteArray data = reply->readAll();
+
+        QFile f(fullPath);
+        if (!f.open(QIODevice::WriteOnly)) {
+            qWarning() << "Cannot write file:" << fullPath;
+            reply->deleteLater();
+            return;
+        }
+        f.write(data);
+        f.close();
+//        qInfo() << "Saved token:" << fullPath;
+        setTokenPixmap(fullPath);
+        reply->deleteLater();
+    });
+    return true;
+}
+
+void DndCharsheetWidget::setTokenPixmap(const QString &filePath) {
+    ui->token->setPixmap(QPixmap(filePath));
 }
