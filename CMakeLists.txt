@@ -22,6 +22,7 @@ endif ()
 
 
 set(FILES
+        bestiary-widget/fvttparser.h    bestiary-widget/fvttparser.cpp
         bestiary-widget/dndbestiarypage.h bestiary-widget/dndbestiarypage.cpp
         bestiary-widget/dndbeaststructure.h
         bestiary-widget/rolltextbrowser.h bestiary-widget/rolltextbrowser.cpp
@@ -33,6 +34,7 @@ set(FILES
         charsheet-widget/dndcharsheetdialogs.h charsheet-widget/dndcharsheetdialogs.cpp
         charsheet-widget/dndmodels.h charsheet-widget/dndmodels.cpp
         charsheet-widget/textclickablecheckbox.h    charsheet-widget/textclickablecheckbox.cpp
+        error-handler/errorhandler.h    error-handler/errorhandler.cpp
         initiative-tracker/initiativemodel.h    initiative-tracker/initiativemodel.cpp
         initiative-tracker/initiativestructures.h
         initiative-tracker/statuseditdialog.h   initiative-tracker/statuseditdialog.cpp
@@ -42,6 +44,7 @@ set(FILES
         map-widget/brushtool.h  map-widget/brushtool.cpp
         map-widget/calibrationtool.h    map-widget/calibrationtool.cpp
         map-widget/fogtool.h    map-widget/fogtool.cpp
+        map-widget/griditem.h   map-widget/griditem.cpp
         map-widget/heightmaptool.h  map-widget/heightmaptool.cpp
         map-widget/lighttool.h  map-widget/lighttool.cpp
         map-widget/mapview.h    map-widget/mapview.cpp
@@ -110,6 +113,7 @@ include_directories(
         ${BASS_INCLUDE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}
         bestiary-widget
+        error-handler
         translations
         static
         theme-manager

@@ -13,6 +13,7 @@
 
 #include "abstractmaptool.h"
 #include "undostack.h"
+#include "griditem.h"
 
 
 #pragma pack(push, 1)
@@ -35,6 +36,7 @@ enum mapErrorCodes{
 
 enum mapLayers{
     Background = -100,
+    Grid = -90,
     Height = 3,
     Shapes = 5,
     Brush = 6,
@@ -62,6 +64,11 @@ public:
     void setScaleFactor(double factor);
     [[nodiscard]] double getScaleFactor() const { return m_scaleFactor; };
 
+    void initializeGrid();
+    void enableGrid(bool enabled);
+    int gridType() const {return m_gridType;}
+    int gridSize() const {return m_gridSize;}
+
     void initializeFog(const QSize &size);
     void drawFogCircle(const QPointF &scenePos, int radius, bool hide);
     void drawScaledCircle(const QPointF &scenePos, int radius, bool hide);
@@ -87,6 +94,10 @@ public:
     qreal heightAt(const QPointF &pos) const;
     qreal lineWidth() const {return m_lineWidth;};
 
+public slots:
+    void setGridSize(int feet);
+    void setGridType(int gridType);
+
 signals:
     void fogUpdated(const QImage &fogImage);
     void toolChanged(const AbstractMapTool *);
@@ -100,7 +111,12 @@ protected:
 
 private:
     AbstractMapTool *m_activeTool = nullptr;
-    double m_scaleFactor = 1.0;           ///< Масштаб
+    double m_scaleFactor = 1.0;           ///< Scale [feet/px]
+
+    GridItem* m_gridItem = nullptr;
+    bool m_gridEnabled = false;
+    int m_gridType = GridItem::GridType::Square;
+    qreal m_gridSize = 5.0;     ///< Feet
 
     QGraphicsPixmapItem *fogItem = nullptr;
     QImage fogImage;

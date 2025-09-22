@@ -93,7 +93,7 @@ bool CampaignTreeWidget::ignore(const QFileInfo &info)
     QString relativePath = QDir(m_rootPath).relativeFilePath(info.absoluteFilePath());
     QString normalized = QDir::cleanPath(relativePath).toLower();
 
-    if (normalized.startsWith("music/") || normalized == "music")
+    if (normalized.startsWith("music/") || normalized == "music" || normalized.startsWith("tokens/") || normalized == "tokens")
         return true;
     if (normalized == "playerconfig.xml" || normalized == "root" || normalized == "campaign.json")
         return true;

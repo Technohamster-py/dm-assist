@@ -141,7 +141,7 @@
        <widget class="QSpinBox" name="hpSpinBox">
         <property name="minimumSize">
          <size>
-          <width>0</width>
+          <width>50</width>
           <height>20</height>
          </size>
         </property>
@@ -191,6 +191,12 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>0</height>
+         </size>
         </property>
         <property name="maximumSize">
          <size>
@@ -245,6 +251,12 @@
       </item>
       <item row="0" column="1">
        <widget class="QSpinBox" name="acBox">
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="maximum">
          <number>100</number>
         </property>
@@ -277,6 +289,12 @@
       </item>
       <item row="0" column="5">
        <widget class="QSpinBox" name="speedBox">
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="maximumSize">
          <size>
           <width>40</width>

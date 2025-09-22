@@ -614,16 +614,46 @@ void DndCharsheetWidget::setupShortcuts() {
     });
 }
 
+/**
+ * @brief Retrieves the currently focused QTextEdit widget.
+ *
+ * This method checks the widget that currently has input focus within
+ * the application and returns it as a QTextEdit object if applicable.
+ * It is used to identify the active text editor, enabling operations
+ * like formatting or editing on that widget.
+ *
+ * @return A pointer to the focused QTextEdit, or nullptr if the focused
+ * widget is not a QTextEdit.
+ */
 QTextEdit *DndCharsheetWidget::getFocusedEdit() {
     QWidget *focusWidget = QApplication::focusWidget();
     return qobject_cast<QTextEdit*>(focusWidget);
 }
+
 
 void DndCharsheetWidget::saveToFile(QString path) {
     LssDndParser parser;
     parser.writeDnd(collectData(), path);
 }
 
+/**
+ * @brief Handles the close event for the widget.
+ *
+ * This method is triggered when the widget receives a close event.
+ * It performs custom logic to ensure proper handling of unsaved changes
+ * or other cleanup before the widget is closed.
+ *
+ * @param event A pointer to the QCloseEvent object containing details
+ * about the close request.
+ *
+ * The method performs the following:
+ * - Checks for unsaved changes or other conditions that might prevent
+ *   the widget from closing.
+ * - If the close request is rejected, the event is ignored, preventing
+ *   the widget from being closed.
+ * - If the close request is accepted, it executes any necessary cleanup
+ *   logic before the widget is closed.
+ */
 void DndCharsheetWidget::closeEvent(QCloseEvent *event) {
     QMessageBox::StandardButton reply = QMessageBox::question(this,
                                                               tr("Save changes"),
@@ -640,11 +670,44 @@ void DndCharsheetWidget::closeEvent(QCloseEvent *event) {
     QWidget::closeEvent(event);
 }
 
+/**
+ * @brief Extracts and formats a bonus value from a given string.
+ *
+ * This method processes a string containing a key-value pair in the format
+ * "key: bonus" and extracts the bonus value. It ensures that the returned
+ * bonus value has a "+" sign prepended unless it already starts with a "-" sign.
+ *
+ * @param string A QString in the format of "key: bonus", where "bonus" is
+ *        the numerical part to be extracted (positive or negative).
+ * @return A formatted QString containing the extracted bonus value with
+ *         a "+" sign for positive values or the original string for negative values.
+ *
+ * The method performs the following:
+ * - Splits the input string on ": " to separate the key and bonus.
+ * - Extracts the second part (bonus) from the split result.
+ * - If the bonus does not start with a "-", prepends a "+" sign to it.
+ * - Returns the modified bonus string.
+ */
 QString DndCharsheetWidget::bonusFromString(const QString& string) {
     QString bonus = string.split(": ").value(1);
     return bonus.startsWith("-") ? bonus : "+" + bonus;
 }
 
+/**
+ * @brief Updates the application's translator for the specified language.
+ *
+ * This method reloads the translation files based on the provided language code.
+ * It ensures that the application reflects the correct translations for UI elements
+ * and user-facing text.
+ *
+ * @param languageCode A QString representing the desired language code (e.g., "en", "fr").
+ *
+ * The method performs the following:
+ * - Removes any previously loaded translator instances.
+ * - Loads the appropriate translation file corresponding to the specified language.
+ * - Applies the loaded translator to the application to update the language dynamically.
+ * - Displays a warning message if the translation file cannot be loaded.
+ */
 void DndCharsheetWidget::updateTranslator() {
     ui->retranslateUi(this);
 }

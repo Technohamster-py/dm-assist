@@ -15,6 +15,7 @@
 
 #include "bass.h"
 #include <themediconmanager.h>
+#include <errorhandler.h>
 
 #define BASS_DEVICE_INDEX 1
 
@@ -58,8 +59,8 @@ MusicPlayerWidget::MusicPlayerWidget(QWidget *parent, int id, QString title)
 
     if (!BASS_Init(BASS_DEVICE_INDEX, 44100, 0, nullptr, nullptr)) {
         auto err = BASS_ErrorGetCode();
-        QMessageBox::critical(this, "BASS Init Failed",
-                              QString("Could not initialize BASS on selected device.\nError code: %1").arg(err));
+        ErrorHandler::showError("BASS Init Failed",
+                  QString("Could not initialize BASS on selected device.\nError code: %1").arg(err));
         return;
     }
 
@@ -294,16 +295,17 @@ void MusicPlayerWidget::play() {
 void MusicPlayerWidget::playTrackAt(int index) {
     if (index < 0 || index >= streams.size()) return;
 
-    stop(); // на всякий случай
+    stop();
 
     stream = streams[index];
     BASS_ChannelPlay(stream, FALSE);
 
-    // Установка синхронизации на окончание трека
+    // Sync track end
     BASS_ChannelSetSync(stream, BASS_SYNC_END, 0, [](HSYNC, DWORD handle, DWORD, void *user) {
         auto *self = static_cast<MusicPlayerWidget*>(user);
         QMetaObject::invokeMethod(self, "playNextTrack", Qt::QueuedConnection);
     }, this);
+    changeVolume(ui->volumeSlider->value()); ///< Updating volume for the new stream
 
     isActive = true;
     ui->playButton->setStyleSheet("QPushButton {border: none; background: palette(highlight);}"
@@ -540,7 +542,7 @@ void MusicPlayerWidget::setAudioOutput(const QString &deviceName) {
     BASS_Free();
 
     if (!BASS_Init(found, 44100, 0, nullptr, nullptr)) {
-        QMessageBox::critical(this, "BASS Init Failed", "Could not initialize BASS on selected device.");
+        ErrorHandler::showError("BASS Init Failed", "Could not initialize BASS on selected device.");
         return;
     }
     m_deviceIndex = found;
@@ -569,8 +571,8 @@ void MusicPlayerWidget::setAudioOutput(int deviceIndex) {
     freeStreams();
     BASS_Free();
 
-    if (!BASS_Init(deviceIndex, 44100, 0, nullptr, nullptr)) {
-        QMessageBox::critical(this, "BASS Init Failed", "Could not initialize BASS on selected device.");
+    if (!BASS_Init(50, 44100, 0, nullptr, nullptr)) {
+        ErrorHandler::showError("BASS Init Failed", "Could not initialize BASS on selected device.");
         return;
     }
     m_deviceIndex = deviceIndex;
@@ -640,7 +642,13 @@ PlaylistEditDialog::PlaylistEditDialog(QWidget *parent, const QStringList &track
     ui->titleEdit->setValidator(validator);
 
     ui->titleEdit->setText(title);
-    ui->playlistWidget->addItems(tracks);
+
+    for (const QString& path : tracks) {
+        QFileInfo info(path);
+        auto *item = new QListWidgetItem(info.fileName(), ui->playlistWidget);
+        item->setData(Qt::UserRole, path);
+    }
+
     ui->playlistWidget->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->playlistWidget->setDragDropMode(QAbstractItemView::InternalMove);
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &PlaylistEditDialog::accept);
@@ -661,7 +669,9 @@ PlaylistEditDialog::~PlaylistEditDialog() = default;
 void PlaylistEditDialog::on_addButton_clicked() {
     QStringList files = QFileDialog::getOpenFileNames(this, "Add audio files", QStandardPaths::writableLocation(QStandardPaths::MusicLocation), "Audio Files (*.mp3 *.wav)");
     for (const QString &file : files) {
-        ui->playlistWidget->addItem(file);
+        QFileInfo info(file);
+        auto *item = new QListWidgetItem(info.fileName(), ui->playlistWidget);
+        item->setData(Qt::UserRole, file);
     }
 }
 
@@ -676,8 +686,10 @@ void PlaylistEditDialog::on_addButton_clicked() {
 QStringList PlaylistEditDialog::getUpdatedPlaylist() const {
     QStringList result;
     for (int i = 0; i < ui->playlistWidget->count(); ++i) {
-        result << ui->playlistWidget->item(i)->text();
+        QListWidgetItem *item = ui->playlistWidget->item(i);
+        result << item->data(Qt::UserRole).toString();
     }
+    qDebug() << result;
     return result;
 }
 
@@ -703,7 +715,7 @@ QString PlaylistEditDialog::getPlaylistName() const {
  *
  * @note The memory associated with the removed items is cleaned up using `delete`.
  */
-void PlaylistEditDialog::om_removeButton_clicked() {
+void PlaylistEditDialog::on_removeButton_clicked() {
     auto selectedTracks = ui->playlistWidget->selectedItems();
     for (QListWidgetItem *track : selectedTracks) {
         delete ui->playlistWidget->takeItem(ui->playlistWidget->row(track));
@@ -719,7 +731,7 @@ void PlaylistEditDialog::dragEnterEvent(QDragEnterEvent *event) {
 
 void PlaylistEditDialog::dropEvent(QDropEvent *event) {
     QStringList files;
-    for (const QUrl &url : event->mimeData()->urls()) {
+    for (const QUrl &url: event->mimeData()->urls()) {
         QString path = url.toLocalFile();
         QFileInfo info(path);
         if (info.exists() && info.isFile() && (info.suffix().toLower() == "mp3" || info.suffix().toLower() == "wav")) {
@@ -727,9 +739,11 @@ void PlaylistEditDialog::dropEvent(QDropEvent *event) {
         }
     }
 
-    if (!files.isEmpty())
-    {
-        for (const QString &file : files)
-            ui->playlistWidget->addItem(file);
+    if (!files.isEmpty()) {
+        for (const QString &file: files) {
+            QFileInfo info(file);
+            auto *item = new QListWidgetItem(info.fileName(), ui->playlistWidget);
+            item->setData(Qt::UserRole, file);
+        }
     }
 }

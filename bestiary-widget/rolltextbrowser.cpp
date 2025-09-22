@@ -5,6 +5,16 @@ RollTextBrowser::RollTextBrowser(QWidget *parent) : QTextBrowser(parent) {
     connect(this, &QTextBrowser::anchorClicked, this, &RollTextBrowser::onAnchorClicked);
 }
 
+/**
+ * Replaces specific patterns in the input HTML string with custom hyperlinks and sets
+ * the processed HTML as the content of the text browser.
+ *
+ * The method processes patterns that represent dice roll expressions, hit modifiers,
+ * and damage expressions. These patterns are converted to clickable HTML links
+ * that provide additional functionality.
+ *
+ * @param html The input HTML string to be processed and displayed in the text browser.
+ */
 void RollTextBrowser::setCustomHtml(const QString &html) {
     QString processed = html;
 
@@ -15,7 +25,6 @@ void RollTextBrowser::setCustomHtml(const QString &html) {
         QString rollExpr = m.captured(1); ///< e.g. 1d20+5
         QString shownText = m.captured(2); ///< e.g. +5
         QString link = QString("<a href=\"roll: %1\">%2</a>").arg(rollExpr, shownText);
-
         processed.replace(m.captured(0), link);
     }
 
@@ -26,13 +35,47 @@ void RollTextBrowser::setCustomHtml(const QString &html) {
         QString rollExpr = m.captured(1); ///< e.g. 1d20+5
         QString shownText = rollExpr;
         QString link = QString("<a href=\"roll: %1\">%2</a>").arg(rollExpr, shownText);
-
         processed.replace(m.captured(0), link);
     }
+
+    QRegularExpression re3(R"(\{@hit\s*([+-]?\d+)\})"); ///< {@hit 12}
+    it = re3.globalMatch(processed);
+    while (it.hasNext()){
+        auto m = it.next();
+        QString mod = m.captured(1);
+        QString rollExpr;
+        if (!mod.startsWith("-") && !mod.startsWith("+"))
+            mod = "+ " + mod;
+        rollExpr = "1d20 " + mod;
+        QString link = QString("<a href=\"roll: %1\">%2</a>").arg(rollExpr, mod);
+        processed.replace(m.captured(0), link);
+    }
+
+    QRegularExpression re4(R"((\d+)\(\{@damage\s*(\d+d\d+\s*[+-]?\s*\d*)\}\}\))"); ///< 36({@damage 5d12 + 4}})
+    it = re4.globalMatch(processed);
+    while (it.hasNext()){
+        auto m = it.next();
+        QString rollExpr = m.captured(2);
+        QString shownText = m.captured(1);
+        QString link = QString("%2 <a href=\"roll: %1\">(%1)</a>").arg(rollExpr, shownText);
+        processed.replace(m.captured(0), link);
+    }
+
 
     setHtml(processed);
 }
 
+/**
+ * Handles the event triggered when an anchor link within the text browser is clicked.
+ *
+ * This function checks the URL scheme of the clicked anchor. If the scheme matches "roll",
+ * it emits a signal with the extracted path of the URL, which represents a roll expression.
+ *
+ * @param url The URL of the clicked anchor.
+ *
+ * @note This function is connected to the anchorClicked signal of the QTextBrowser.
+ *       The scheme "roll" is used to handle specific clickable actions for dice rolls.
+ */
 void RollTextBrowser::onAnchorClicked(const QUrl &url) {
     if (url.scheme() == "roll") {
         emit rollRequested(url.path());

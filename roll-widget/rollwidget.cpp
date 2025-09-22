@@ -16,6 +16,23 @@ RollWidget::~RollWidget() {
     delete ui;
 }
 
+/**
+ * Executes a dice roll or modifier computation based on the given command string.
+ *
+ * This function processes a string representing a dice roll expression or arithmetic modifiers.
+ * The command is parsed for tokens matching dice or modifier patterns. Results of the computation
+ * are displayed in the user interface and stored in the internal last roll representation.
+ *
+ * The command can be in concise mode or standard format. Dice rolls are randomized, and any modifiers
+ * or arithmetic operations provided in the command are applied to compute the final result.
+ *
+ * @param command A QString representing the dice roll command or modifiers. Examples of tokens include
+ *        "2d6", "+5", "d20", or complex expressions like "2d6 + d4 - 3".
+ *        Any whitespace in the original command is ignored during processing.
+ *
+ * @return The total value resulting from the dice rolls and modifiers parsed from the command string.
+ *         This integer represents the final computed result of the expression.
+ */
 int RollWidget::executeRoll(QString command) {
     command = command.replace(" ", "");
 
@@ -63,9 +80,10 @@ int RollWidget::executeRoll(QString command) {
         } else continue;
     }
 
-    m_lastRoll = rollParts.join(" ") + " = " + QString::number(total);
-    if (m_lastRoll.startsWith("+"))
-        m_lastRoll.removeAt(0);
+    QString result = rollParts.join(" ");
+    if (result.startsWith("+"))
+        result.removeAt(0);
+    m_lastRoll = QString::number(total) + " = " + result;
 
     ui->resultView->addItem(m_lastRoll);
     ui->resultView->scrollToBottom();
@@ -73,6 +91,21 @@ int RollWidget::executeRoll(QString command) {
     return total;
 }
 
+/**
+ * Creates a compact representation of a dice roll expression by grouping similar dice terms
+ * and preserving arithmetic modifiers.
+ *
+ * This function processes an original dice roll expression, identifying and grouping dice rolls
+ * with the same type while combining their counts. The numeric modifiers (e.g., "+5", "-3") are
+ * preserved and included in the final compact form. The function ensures a minimal and unambiguous
+ * representation of the input expression.
+ *
+ * @param original A QString containing the original dice roll expression or arithmetic modifiers.
+ *        Expressions can include dice terms such as "2d6", "-d8", or numeric modifiers like "+5" or "-3".
+ *
+ * @return A QString representing the compacted dice roll expression. Dice terms are grouped, and modifiers
+ *         are appended at the end. The resulting expression is simplified and formatted without unnecessary spaces.
+ */
 QString RollWidget::compactExpression(QString original) {
     auto it = tokenPattern.globalMatch(original);
     QMap<QString, QMap<int, int>> diceGroups;
@@ -123,6 +156,18 @@ void RollWidget::setCompactMode(bool mode) {
     ui->compactModeBox->setChecked(mode);
 }
 
+/**
+ * Adds a new die or updates an existing die in the roll expression editor.
+ *
+ * This function modifies the current text in the roll expression editor based on the provided die code.
+ * If the specified die is already included in the expression, the quantity of that die is incremented
+ * or decremented depending on the `rightClick` parameter. If the die is not present, it is added as a new term.
+ * The expression is updated dynamically, preserving the formatting, and the text field gains focus.
+ *
+ * @param dieCode A QString representing the die type to be added or modified (e.g., "d6", "d20").
+ * @param rightClick A boolean indicating the user interaction mode. If true, the die count is decremented
+ *        (or removed if the count becomes zero). If false, the die count is incremented.
+ */
 void RollWidget::addDieToExpression(const QString &dieCode, bool rightClick) {
     QString text = ui->rollEdit->text().trimmed();
     if (text.isEmpty()) {

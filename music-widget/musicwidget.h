@@ -53,7 +53,6 @@ public:
 
     void playTrackAt(int index);
 
-
 signals:
     void playerStarted(int id);
     void playerStopped();
@@ -121,7 +120,7 @@ protected:
 
 private slots:
     void on_addButton_clicked();
-    void om_removeButton_clicked();
+    void on_removeButton_clicked();
 
 private:
     Ui::PlaylistEditDialog *ui;
