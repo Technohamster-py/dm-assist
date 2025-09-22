@@ -3,7 +3,6 @@
 
 #include <QGraphicsObject>
 #include <QJsonObject>
-#include "fvttparser.h"
 
 struct TokenStruct{
     QString name = "";

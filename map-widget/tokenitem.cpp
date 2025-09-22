@@ -1,6 +1,8 @@
 #include "tokenitem.h"
 #include "mapscene.h"
 #include "abstractcharsheetwidget.h"
+#include "fvttparser.h"
+#include "charaсterparser.h"
 #include <QGraphicsSceneContextMenuEvent>
 #include <QPen>
 #include <QMenu>
@@ -57,9 +59,9 @@ TokenStruct TokenItem::fromJson(const QString &filePath) {
 
     TokenStruct tokenStruct;
     QJsonObject obj = QJsonDocument::fromJson(f.readAll()).object();
-    BestiaryPageData data;
-    IFvttParser* parser;
     if (obj["jsonType"].isNull()){
+        BestiaryPageData data;
+        IFvttParser* parser;
         if (!obj["system"].isNull())
             parser = new Fvtt11Parser;
         else
@@ -68,23 +70,21 @@ TokenStruct TokenItem::fromJson(const QString &filePath) {
         delete parser;
 
         tokenStruct.name = data.name;
-
-        QUrl qurl(data.imgLink);
-        if (!qurl.isValid())
-            return tokenStruct;
-        QString filename = qurl.fileName();
-        if (filename.isEmpty())
-            return tokenStruct;
-        QDir dir(campaignPath);
-        if (!dir.exists())
-            return  tokenStruct;
-        QString fullPath = dir.filePath("Tokens/" + filename);
-        QFileInfo fi(fullPath);
-        if (fi.exists()) {
-            tokenStruct.imgPath = fullPath;
-        }
-        return tokenStruct;
-    } else {
+        QString fullPath = AbstractCharsheetWidget::getTokenFileName(campaignPath, data.imgLink);
+        tokenStruct.imgPath = fullPath;
         return tokenStruct;
     }
+    else if (obj["jsonType"] == "character"){
+        IDndParser* characterParser;
+
+        characterParser = new LssDndParser;
+
+        DndCharacterData data = characterParser->parseDnd(filePath);
+
+        tokenStruct.name = data.name;
+        QString fullPath = AbstractCharsheetWidget::getTokenFileName(campaignPath, data.tokenUrl);
+        tokenStruct.imgPath = fullPath;
+        return tokenStruct;
+    }
+    return {};
 }
