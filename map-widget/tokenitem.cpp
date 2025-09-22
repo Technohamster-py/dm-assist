@@ -8,8 +8,8 @@
 #include <QMenu>
 #include <QUrl>
 
-TokenItem::TokenItem(const QString& name, const QPixmap& pixmap, qreal realSize, qreal pxPerFoot)
-        : m_realSize(realSize), m_pxPerFoot(pxPerFoot)
+TokenItem::TokenItem(const QString &filePath, const QString &name, const QPixmap &pixmap, qreal realSize, qreal pxPerFoot)
+        : m_realSize(realSize), m_pxPerFoot(pxPerFoot), m_filePath(filePath)
 {
     setFlags(ItemIsMovable | ItemIsSelectable | ItemSendsScenePositionChanges);
 
@@ -31,8 +31,8 @@ void TokenItem::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
     QAction* sheet   = menu.addAction("Open charsheet");
 
     QAction* selected = menu.exec(event->screenPos());
-    if (selected == tracker) emit addToTracker(this);
-    else if (selected == sheet) emit openCharSheet(this);
+    if (selected == tracker) emit addToTracker(m_filePath);
+    else if (selected == sheet) emit openCharSheet(m_filePath);
 }
 
 void TokenItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)

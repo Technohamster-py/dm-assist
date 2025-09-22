@@ -12,6 +12,9 @@ public:
     bool setRootDir(const QString &rootPath);
     QString root() const {return m_rootPath;};
     QString campaignName() const {return m_campaignName;};
+
+    static NodeType determieNodeType(const QString& path);
+
 signals:
     void characterOpenRequested(const QString& path);
     void characterAddRequested(const QString& path);
@@ -34,7 +37,6 @@ protected:
 
 private:
     void populateTree(const QString &path, QTreeWidgetItem *parentItem);
-    NodeType determieNodeType(const QString& path);
     bool ignore(const QFileInfo& info);
 
     QString m_rootPath;

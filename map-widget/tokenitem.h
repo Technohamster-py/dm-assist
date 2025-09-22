@@ -14,15 +14,15 @@ class TokenItem : public QGraphicsObject
 {
     Q_OBJECT
 public:
-    TokenItem(const QString& name, const QPixmap& pixmap, qreal realSize, qreal pxPerFoot);
+    TokenItem(const QString &filePath, const QString &name, const QPixmap &pixmap, qreal realSize, qreal pxPerFoot);
 
     QRectF boundingRect() const override { return childrenBoundingRect(); }
     void paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget*) override {}
 
     static TokenStruct fromJson(const QString &filePath);
 signals:
-    void addToTracker(TokenItem*);
-    void openCharSheet(TokenItem*);
+    void addToTracker(const QString&);
+    void openCharSheet(const QString&);
 
 protected:
     void contextMenuEvent(QGraphicsSceneContextMenuEvent* event) override;
@@ -33,6 +33,7 @@ private:
     QGraphicsSimpleTextItem* labelItem;
     qreal m_realSize;
     qreal m_pxPerFoot;
+    QString m_filePath;
 };
 
 

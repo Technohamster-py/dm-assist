@@ -798,14 +798,12 @@ void MapScene::initializeGrid() {
 
 void MapScene::dragEnterEvent(QGraphicsSceneDragDropEvent* event)
 {
-    qDebug() << "MapScene::dragEnterEvent" << event->mimeData()->hasFormat("application/x-character");
     if (event->mimeData()->hasFormat("application/x-character"))
         event->acceptProposedAction();
 }
 
 void MapScene::dropEvent(QGraphicsSceneDragDropEvent* event)
 {
-    qDebug() << "MapScene::dropEvent";
     if (!event->mimeData()->hasFormat("application/x-character"))
         return;
 
@@ -823,7 +821,7 @@ void MapScene::dropEvent(QGraphicsSceneDragDropEvent* event)
     else
         tokenPixmap.load(":/map/default-token.png");
 
-    auto* token = new TokenItem(tokenStruct.name, tokenPixmap, tokenStruct.size, 1/m_scaleFactor);
+    auto* token = new TokenItem(jsonPath, tokenStruct.name, tokenPixmap, tokenStruct.size, 1 / m_scaleFactor);
     token->setZValue(mapLayers::Tokens);
     addItem(token);
     token->setPos(event->scenePos());
