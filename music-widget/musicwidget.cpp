@@ -571,7 +571,7 @@ void MusicPlayerWidget::setAudioOutput(int deviceIndex) {
     freeStreams();
     BASS_Free();
 
-    if (!BASS_Init(50, 44100, 0, nullptr, nullptr)) {
+    if (!BASS_Init(deviceIndex, 44100, 0, nullptr, nullptr)) {
         ErrorHandler::showError("BASS Init Failed", "Could not initialize BASS on selected device.");
         return;
     }
