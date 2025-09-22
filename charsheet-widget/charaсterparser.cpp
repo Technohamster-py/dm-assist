@@ -224,11 +224,11 @@ DndCharacterData LssDndParser::parseDnd(const QString &filePath) {
 
 bool LssDndParser::writeDnd(const DndCharacterData &data, const QString &filePath) {
     QFile file(filePath);
-    if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) return false;
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) return false;
 
     QJsonDocument document = QJsonDocument::fromJson(file.readAll());
     QJsonObject root = document.object();
-
+    file.close();
     QString dataString = root.value("data").toString();
     QJsonObject dataObj = QJsonDocument::fromJson(dataString.toUtf8()).object();
 
@@ -345,9 +345,9 @@ bool LssDndParser::writeDnd(const DndCharacterData &data, const QString &filePat
 
     root["data"] = jsonString;
 
-    QJsonDocument finalDoc(root);
-
-    file.write(finalDoc.toJson(QJsonDocument::Indented));
+    document = QJsonDocument(root);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) return false;
+    file.write(document.toJson(QJsonDocument::Indented));
     file.close();
     return true;
 }

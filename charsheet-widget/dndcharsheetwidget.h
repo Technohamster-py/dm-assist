@@ -63,7 +63,7 @@ private:
     DndAttackModel* attackModel;
     DndResourceModel* resourceModel;
 
-    DndCharacterData collectData(const QString& filePath = nullptr);
+    DndCharacterData collectData();
 
     void closeEvent(QCloseEvent *event) override;
 };

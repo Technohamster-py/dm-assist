@@ -291,7 +291,7 @@ void DndCharsheetWidget::populateWidget(const DndCharacterData& data) {
     resourceModel->fromJson(data.resourcesObj);
 }
 
-DndCharacterData DndCharsheetWidget::collectData(const QString& filePath) {
+DndCharacterData DndCharsheetWidget::collectData() {
     DndCharacterData result;
 
     // name
