@@ -16,7 +16,7 @@ public:
     };
     virtual ~ICharacterParser() = default;
     virtual QVariantMap parse(const QString& filePath) = 0;
-    virtual bool writeToFile(const QVariantMap& dataMap, const QString& filePath = ""){return true;}
+    virtual bool writeToFile(const QVariantMap& dataMap, const QString& filePath){return true;}
     static filetypes fileExt(const QString& filePath) {
         QFileInfo fi(filePath);
         if (!fi.exists()) return none;
