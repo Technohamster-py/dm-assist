@@ -782,6 +782,13 @@ void MapScene::setGridSize(int feet) {
     m_gridSize = qMax<qreal>(feet, 0.01);
     if (m_gridItem)
         m_gridItem->setCellFeet(m_gridSize);
+
+    for (auto* item : items()) {
+        if (item->zValue() == mapLayers::Tokens){
+            if (auto* token = dynamic_cast<TokenItem*>(item))
+                token->setGridStep(feet);
+        }
+    }
 }
 
 void MapScene::initializeGrid() {

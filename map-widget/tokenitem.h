@@ -18,6 +18,8 @@ public:
 
     QRectF boundingRect() const override { return childrenBoundingRect(); }
     void paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget*) override {}
+    void setGridStep(int step);
+    int gridStep() const {return m_gridStep;}
 
     static TokenStruct fromJson(const QString &filePath);
 signals:
@@ -34,6 +36,7 @@ private:
     qreal m_realSize;
     qreal m_pxPerFoot;
     QString m_filePath;
+    int m_gridStep = 5;
 };
 
 

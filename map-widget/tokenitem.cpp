@@ -44,13 +44,12 @@ void TokenItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
     QGraphicsObject::mouseReleaseEvent(event);
 
-    // снап к сетке
     if (scene()) {
         auto* mapScene = qobject_cast<MapScene*>(scene());
         if (mapScene && mapScene->gridEnabled()) {
-            qreal step = 5 * m_pxPerFoot; // базовый размер клетки
+            qreal stepFt = m_gridStep * m_pxPerFoot;
             QPointF pos = this->pos();
-            QPointF snapped(qRound(pos.x()/step)*step, qRound(pos.y()/step)*step);
+            QPointF snapped(qRound(pos.x() / stepFt) * stepFt, qRound(pos.y() / stepFt) * stepFt);
             setPos(snapped);
         }
     }
@@ -92,4 +91,12 @@ TokenStruct TokenItem::fromJson(const QString &filePath) {
         return tokenStruct;
     }
     return {};
+}
+
+/**
+ *
+ * @param step Grid step in feet
+ */
+void TokenItem::setGridStep(int step) {
+    m_gridStep = step;
 }
