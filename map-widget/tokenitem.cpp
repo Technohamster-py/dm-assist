@@ -20,7 +20,7 @@ TokenItem::TokenItem(const QString &filePath, const QString &name, const QPixmap
 
     labelItem = new QGraphicsSimpleTextItem(name, this);
     labelItem->setBrush(Qt::white);
-    labelItem->setPen(QPen(Qt::black, 1));
+    labelItem->setPen(QPen(Qt::black, 0));
     labelItem->setPos(-labelItem->boundingRect().width()/2, pixmapItem->boundingRect().height()/2);
     setTitleDisplayMode(m_mode);
 }
