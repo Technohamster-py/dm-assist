@@ -20,8 +20,9 @@ TokenItem::TokenItem(const QString &filePath, const QString &name, const QPixmap
 
     labelItem = new QGraphicsSimpleTextItem(name, this);
     labelItem->setBrush(Qt::white);
-    labelItem->setPen(QPen(Qt::black, 2));
+    labelItem->setPen(QPen(Qt::black, 1));
     labelItem->setPos(-labelItem->boundingRect().width()/2, pixmapItem->boundingRect().height()/2);
+    setTitleDisplayMode(m_mode);
 }
 
 void TokenItem::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
@@ -99,4 +100,44 @@ TokenStruct TokenItem::fromJson(const QString &filePath) {
  */
 void TokenItem::setGridStep(int step) {
     m_gridStep = step;
+}
+
+void TokenItem::setTitleDisplayMode(int mode) {
+    m_mode = mode;
+
+    switch (m_mode) {
+        case TokenTitleDisplayMode::noTitle:
+            if (labelItem)
+                labelItem->setVisible(false);
+            setToolTip(QString());
+            break;
+        case TokenTitleDisplayMode::tooltip:
+            if (labelItem)
+                labelItem->setVisible(false);
+            setToolTip(labelItem ? labelItem->text() : QString());
+            break;
+        case TokenTitleDisplayMode::always:
+            if (labelItem)
+                labelItem->setVisible(true);
+            setToolTip(QString());
+            break;
+        default:
+            if (labelItem)
+                labelItem->setVisible(true);
+            setToolTip(QString());
+            break;
+    }
+}
+
+QString TokenItem::stringMode(int mode) {
+    switch (mode) {
+        case TokenTitleDisplayMode::noTitle:
+            return tr("No title");
+        case TokenTitleDisplayMode::tooltip:
+            return tr("On hover");
+        case TokenTitleDisplayMode::always:
+            return tr("Always");
+        default:
+            return tr("N/A");
+    }
 }

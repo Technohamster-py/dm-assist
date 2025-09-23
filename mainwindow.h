@@ -121,6 +121,8 @@ private:
     SettingsDialog *settingsDialog = nullptr;
     Settings paths;
 
+    int currentTokenTitleMode = 0;
+
 private slots:
     void newCampaign();
     void loadCampaign();

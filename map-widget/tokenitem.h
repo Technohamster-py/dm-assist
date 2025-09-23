@@ -4,6 +4,12 @@
 #include <QGraphicsObject>
 #include <QJsonObject>
 
+enum TokenTitleDisplayMode{
+    always,
+    tooltip,
+    noTitle
+};
+
 struct TokenStruct{
     QString name = "";
     QString imgPath = "";
@@ -20,8 +26,11 @@ public:
     void paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget*) override {}
     void setGridStep(int step);
     int gridStep() const {return m_gridStep;}
+    void setTitleDisplayMode(int mode);
+    int mode() const {return m_mode;}
 
     static TokenStruct fromJson(const QString &filePath);
+    static QString stringMode(int mode);
 signals:
     void addToTracker(const QString&);
     void openCharSheet(const QString&);
@@ -37,6 +46,7 @@ private:
     qreal m_pxPerFoot;
     QString m_filePath;
     int m_gridStep = 5;
+    int m_mode = TokenTitleDisplayMode::always;
 };
 
 

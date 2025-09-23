@@ -52,6 +52,7 @@ private:
     void populateLanguages();
     void populateThemes();
     void populateStyles();
+    void populateTokenModes();
 };
 
 

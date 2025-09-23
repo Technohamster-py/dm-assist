@@ -845,8 +845,18 @@ void MapScene::addToken(const TokenStruct &tokenStruct, const QString &filePath,
 
     connect(token, &TokenItem::openCharSheet, this, &MapScene::openCharseetRequested);
     connect(token, &TokenItem::addToTracker, this, &MapScene::addToEncounterRequested);
+    token->setTitleDisplayMode(m_tokenMode);
 
     token->setZValue(mapLayers::Tokens);
     addItem(token);
     token->setPos(pos);
+}
+
+void MapScene::setTokenTitleMode(int mode) {
+    m_tokenMode = mode;
+
+    for (auto* pItem : items()) {
+        if (auto* token = dynamic_cast<TokenItem*>(pItem))
+            token->setTitleDisplayMode(m_tokenMode);
+    }
 }

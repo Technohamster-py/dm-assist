@@ -69,6 +69,8 @@ public:
     [[nodiscard]] double getScaleFactor() const { return m_scaleFactor; };
 
     void addToken(const TokenStruct &tokenStruct, const QString &filePath, QPointF pos);
+    void setTokenTitleMode(int mode);
+    int tokenTitleDisplayMode() const {return m_tokenMode;}
 
     void initializeGrid();
     void enableGrid(bool enabled);
@@ -127,6 +129,8 @@ protected:
 private:
     AbstractMapTool *m_activeTool = nullptr;
     double m_scaleFactor = 1.0;           ///< Scale [feet/px]
+
+    int m_tokenMode = 0;
 
     GridItem* m_gridItem = nullptr;
     bool m_gridEnabled = false;

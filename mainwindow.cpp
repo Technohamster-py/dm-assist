@@ -443,6 +443,14 @@ void MainWindow::loadSettings() {
 
     /// Rolls
     rollWidget->setCompactMode(settings.value(paths.rolls.compactMode).toBool());
+
+    /// Tokens
+    currentTokenTitleMode = settings.value(paths.map.tokenTitleMode, 0).toInt();
+    for (int i = 0; i < mapTabWidget->count(); i++){
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(i));
+        if (!currentView) return;
+        currentView->getScene()->setTokenTitleMode(currentTokenTitleMode);
+    }
 }
 
 /**
@@ -584,6 +592,7 @@ void MainWindow::openMapFromFile(const QString& fileName) {
         mapTabWidget->addTab(view, fileInfo.baseName());
         updateVisibility();
         mapTabWidget->setCurrentIndex(mapTabWidget->count() - 1);
+        view->getScene()->setTokenTitleMode(currentTokenTitleMode);
 
         connect(view->getScene(), &MapScene::toolChanged, this, [=](const AbstractMapTool* tool){
             if (!tool){

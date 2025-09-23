@@ -7,6 +7,7 @@
 #include <QStyleFactory>
 #include <utility>
 #include "lib/bass/include/bass.h"
+#include "map-widget/tokenitem.h"
 
 
 /**
@@ -34,6 +35,7 @@ SettingsDialog::SettingsDialog(QString organisationName, QString applicationName
     populateLanguages();
     populateThemes();
     populateStyles();
+    populateTokenModes();
 
     loadSettings();
 
@@ -110,6 +112,8 @@ void SettingsDialog::loadSettings() {
     ui->hpModeComboBox->setCurrentIndex(settings.value(paths.initiative.hpBarMode, 0).toInt());
     ui->showControlCheckBox->setChecked(settings.value(paths.initiative.showHpComboBox, true).toBool());
 
+
+    /// Appearance
     QString currentTheme = settings.value(paths.appearance.theme, "Light").toString();
     index = ui->themeComboBox->findData(currentTheme);
     if (index != -1)
@@ -119,6 +123,8 @@ void SettingsDialog::loadSettings() {
     index = ui->styleComboBox->findData(currentStyle);
     if (index != -1)
         ui->styleComboBox->setCurrentIndex(index);
+
+    ui->tokenComboBox->setCurrentIndex(settings.value(paths.map.tokenTitleMode, 0).toInt());
 }
 
 /**
@@ -223,8 +229,11 @@ void SettingsDialog::saveSettings() {
     settings.setValue(paths.initiative.showHpComboBox, ui->showControlCheckBox->isChecked());
     settings.setValue(paths.initiative.autoInitiative, ui->characterAutoRoll->isChecked());
 
+    /// Appearance
     settings.setValue(paths.appearance.theme, ui->themeComboBox->currentData().toString());
     settings.setValue(paths.appearance.style, ui->styleComboBox->currentData().toString());
+    settings.setValue(paths.map.tokenTitleMode, ui->tokenComboBox->currentIndex());
+
     settings.sync();
 }
 
@@ -343,6 +352,12 @@ void SettingsDialog::populateStyles() {
 
     for (const QString& style : styles) {
         ui->styleComboBox->addItem(style, style);
+    }
+}
+
+void SettingsDialog::populateTokenModes() {
+    for (int i = 0; i <= TokenTitleDisplayMode::noTitle; i++){
+        ui->tokenComboBox->addItem(TokenItem::stringMode(i));
     }
 }
 
