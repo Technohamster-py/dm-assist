@@ -55,6 +55,9 @@ enum mapLayers{
  * fog of war manipulation, and undo/redo capabilities for certain scene modifications. It emits
  * relevant signals when tools are changed or the fog of war is updated.
  */
+
+struct TokenStruct;
+
 class MapScene : public QGraphicsScene {
 Q_OBJECT
 
@@ -64,6 +67,8 @@ public:
     void setActiveTool(AbstractMapTool *tool);
     void setScaleFactor(double factor);
     [[nodiscard]] double getScaleFactor() const { return m_scaleFactor; };
+
+    void addToken(const TokenStruct &tokenStruct, const QString &filePath, QPointF pos);
 
     void initializeGrid();
     void enableGrid(bool enabled);
@@ -96,13 +101,17 @@ public:
     qreal heightAt(const QPointF &pos) const;
     qreal lineWidth() const {return m_lineWidth;};
 
-public slots:
-    void setGridSize(int feet);
-    void setGridType(int gridType);
 
 signals:
     void fogUpdated(const QImage &fogImage);
     void toolChanged(const AbstractMapTool *);
+
+    void openCharseetRequested(const QString& filePath);
+    void addToEncounterRequested(const QString& filePath);
+
+public slots:
+    void setGridSize(int feet);
+    void setGridType(int gridType);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;

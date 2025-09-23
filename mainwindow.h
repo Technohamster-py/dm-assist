@@ -134,7 +134,7 @@ private slots:
     void on_actionSettings_triggered();
 
     void createNewMapTab();
-    void openMapFromFile(const QString& fileName);
+    void openMapFromFile(const QString& path);
     void deleteMapTab(int index);
     void updateVisibility();
 

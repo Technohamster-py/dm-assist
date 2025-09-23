@@ -592,6 +592,44 @@ void MainWindow::openMapFromFile(const QString& fileName) {
                 }
             }
         });
+
+        connect(view->getScene(), &MapScene::openCharseetRequested, [=](const QString& path){
+            AbstractCharsheetWidget* charsheetWidget;
+            switch (CampaignTreeWidget::determieNodeType(path)) {
+                case NodeType::Character:
+                    charsheetWidget = new DndCharsheetWidget(path);
+                    connect(charsheetWidget, &DndCharsheetWidget::rollRequested, rollWidget, &RollWidget::executeRoll);
+                    connect(this, &MainWindow::translatorChanged, charsheetWidget, &AbstractCharsheetWidget::updateTranslator);
+                    charsheetWidget->show();
+                    break;
+                case NodeType::Beast:
+                    charsheetWidget = new DndBestiaryPage(path);
+                    connect(charsheetWidget, &DndCharsheetWidget::rollRequested, rollWidget, &RollWidget::executeRoll);
+                    connect(this, &MainWindow::translatorChanged, charsheetWidget, &AbstractCharsheetWidget::updateTranslator);
+                    charsheetWidget->show();
+                    break;
+                default:
+                    return;
+            }
+        });
+
+        connect(view->getScene(), &MapScene::addToEncounterRequested, [=](const QString& path){
+            AbstractCharsheetWidget* charsheetWidget;
+            switch (CampaignTreeWidget::determieNodeType(path)){
+                case NodeType::Character:
+                    charsheetWidget = new DndCharsheetWidget(path);
+                    charsheetWidget->addToInitiative(initiativeTrackerWidget, autoRoll);
+                    break;
+                case NodeType::Beast:
+                    charsheetWidget = new DndBestiaryPage(path);
+                    charsheetWidget->addToInitiative(initiativeTrackerWidget, autoRoll);
+                    break;
+                default:
+                    return;
+            }
+            delete charsheetWidget;
+        });
+
     } else {
         delete view;
         QMessageBox::warning(this, tr("Error"), tr("Failed to open map file."));

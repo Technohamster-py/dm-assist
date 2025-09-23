@@ -821,17 +821,7 @@ void MapScene::dropEvent(QGraphicsSceneDragDropEvent* event)
     if (!f.open(QIODevice::ReadOnly)) return;
 
     TokenStruct tokenStruct = TokenItem::fromJson(jsonPath);
-
-    QPixmap tokenPixmap;
-    if (!tokenStruct.imgPath.isEmpty() && QFile::exists(tokenStruct.imgPath))
-        tokenPixmap.load(tokenStruct.imgPath);
-    else
-        tokenPixmap.load(":/map/default-token.png");
-
-    auto* token = new TokenItem(jsonPath, tokenStruct.name, tokenPixmap, tokenStruct.size, 1 / m_scaleFactor);
-    token->setZValue(mapLayers::Tokens);
-    addItem(token);
-    token->setPos(event->scenePos());
+    addToken(tokenStruct, jsonPath, event->scenePos());
 
     event->acceptProposedAction();
 }
@@ -842,4 +832,21 @@ void MapScene::dragMoveEvent(QGraphicsSceneDragDropEvent *event) {
         event->acceptProposedAction();
     else
         event->ignore();
+}
+
+void MapScene::addToken(const TokenStruct &tokenStruct, const QString &filePath, QPointF pos) {
+    QPixmap tokenPixmap;
+    if (!tokenStruct.imgPath.isEmpty() && QFile::exists(tokenStruct.imgPath))
+        tokenPixmap.load(tokenStruct.imgPath);
+    else
+        tokenPixmap.load(":/map/default-token.png");
+
+    auto* token = new TokenItem(filePath, tokenStruct.name, tokenPixmap, tokenStruct.size, 1 / m_scaleFactor);
+
+    connect(token, &TokenItem::openCharSheet, this, &MapScene::openCharseetRequested);
+    connect(token, &TokenItem::addToTracker, this, &MapScene::addToEncounterRequested);
+
+    token->setZValue(mapLayers::Tokens);
+    addItem(token);
+    token->setPos(pos);
 }
