@@ -27,12 +27,17 @@ TokenItem::TokenItem(const QString &filePath, const QString &name, const QPixmap
 void TokenItem::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
 {
     QMenu menu;
-    QAction* tracker = menu.addAction("Add to tracker");
-    QAction* sheet   = menu.addAction("Open charsheet");
+    QAction* tracker = menu.addAction(tr("Add to tracker"));
+    QAction* sheet   = menu.addAction(tr("Open charsheet"));
+    QAction* del     = menu.addAction(tr("Remove from map"));
 
     QAction* selected = menu.exec(event->screenPos());
     if (selected == tracker) emit addToTracker(m_filePath);
     else if (selected == sheet) emit openCharSheet(m_filePath);
+    else if (selected == del){
+        scene()->removeItem(this);
+        delete this;
+    }
 }
 
 void TokenItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
