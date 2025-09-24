@@ -23,7 +23,7 @@ TokenItem::TokenItem(const QString &filePath, const QString &name, const QPixmap
     labelItem->setOutlineColor(Qt::black);
     labelItem->setOutlineWidth(2.0);
     labelItem->setFont(QFont("Arial", 12));
-    labelItem->setPos(-labelItem->boundingRect().width()/2, pixmapItem->boundingRect().height()/2 + 4);
+    labelItem->setPos(0, pixmapItem->boundingRect().height() / 2.0 + 4);
     setTitleDisplayMode(m_mode);
 }
 
@@ -142,4 +142,12 @@ QString TokenItem::stringMode(int mode) {
         default:
             return tr("N/A");
     }
+}
+
+QVariant TokenItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value) {
+    if (change == ItemPositionHasChanged && scene()){
+        QRectF r = mapToScene(boundingRect()).boundingRect();
+        scene()->update(r.adjusted(-40, -40, 40, 40));
+    }
+    return QGraphicsItem::itemChange(change, value);
 }

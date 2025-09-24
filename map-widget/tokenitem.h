@@ -39,6 +39,7 @@ signals:
 protected:
     void contextMenuEvent(QGraphicsSceneContextMenuEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
+    QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
 
 private:
     QGraphicsPixmapItem* pixmapItem;

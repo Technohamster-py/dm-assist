@@ -13,7 +13,7 @@ public:
 
     void paint(QPainter* p, const QStyleOptionGraphicsItem* opt, QWidget* w) override;
 
-
+    QRectF boundingRect() const override;
 private:
     QColor outlineColor = Qt::black;
     qreal outlineWidth = 2.0;
