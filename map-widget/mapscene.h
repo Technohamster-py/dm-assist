@@ -73,7 +73,7 @@ public:
     void drawFogCircle(const QPointF &scenePos, int radius, bool hide);
     void drawScaledCircle(const QPointF &scenePos, int radius, bool hide);
     void drawFogPath(const QPainterPath &path, bool hide);
-    void clearFog();
+    void clearFog(bool clear = true);
 
     QImage getFogImage() const { return fogImage; };
     QPixmap getMapPixmap() const;

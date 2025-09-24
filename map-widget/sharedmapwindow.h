@@ -18,7 +18,7 @@ protected:
         if (!m_scene->getFogImage().isNull()){
             painter->save();
             painter->setOpacity(1.0);
-            painter->drawImage(sceneRect(), m_scene->getFogImage());
+            painter->drawImage(QPointF(0, 0), m_scene->getFogImage());
             painter->restore();
         }
     }
