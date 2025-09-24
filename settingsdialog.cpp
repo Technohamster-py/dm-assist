@@ -125,6 +125,7 @@ void SettingsDialog::loadSettings() {
         ui->styleComboBox->setCurrentIndex(index);
 
     ui->tokenComboBox->setCurrentIndex(settings.value(paths.map.tokenTitleMode, 0).toInt());
+    ui->fontSizeSpinBox->setValue(settings.value(paths.map.tokenFontSize, 12).toInt());
 }
 
 /**
@@ -233,6 +234,7 @@ void SettingsDialog::saveSettings() {
     settings.setValue(paths.appearance.theme, ui->themeComboBox->currentData().toString());
     settings.setValue(paths.appearance.style, ui->styleComboBox->currentData().toString());
     settings.setValue(paths.map.tokenTitleMode, ui->tokenComboBox->currentIndex());
+    settings.setValue(paths.map.tokenFontSize, ui->fontSizeSpinBox->value());
 
     settings.sync();
 }

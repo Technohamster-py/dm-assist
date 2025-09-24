@@ -860,3 +860,10 @@ void MapScene::setTokenTitleMode(int mode) {
             token->setTitleDisplayMode(m_tokenMode);
     }
 }
+
+void MapScene::setTokenTextSize(int size) {
+    for (auto* pItem : items()) {
+        if (auto* token = dynamic_cast<TokenItem*>(pItem))
+            token->setFontSize(size);
+    }
+}

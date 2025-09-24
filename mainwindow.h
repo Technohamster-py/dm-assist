@@ -122,6 +122,7 @@ private:
     Settings paths;
 
     int currentTokenTitleMode = 0;
+    int currentTokenFontSize = 12;
 
 private slots:
     void newCampaign();

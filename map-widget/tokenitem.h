@@ -28,6 +28,7 @@ public:
     void setGridStep(int step);
     int gridStep() const {return m_gridStep;}
     void setTitleDisplayMode(int mode);
+    void setFontSize(int size);
     int mode() const {return m_mode;}
 
     static TokenStruct fromJson(const QString &filePath);

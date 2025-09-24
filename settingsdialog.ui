@@ -204,6 +204,16 @@
          <item row="2" column="1">
           <widget class="QComboBox" name="tokenComboBox"/>
          </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="fontSizeLabel">
+           <property name="text">
+            <string>Token text font size</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QSpinBox" name="fontSizeSpinBox"/>
+         </item>
         </layout>
        </widget>
        <widget class="QWidget" name="initiativePage">

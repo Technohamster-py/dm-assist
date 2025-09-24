@@ -70,6 +70,7 @@ public:
 
     void addToken(const TokenStruct &tokenStruct, const QString &filePath, QPointF pos);
     void setTokenTitleMode(int mode);
+    void setTokenTextSize(int size);
     int tokenTitleDisplayMode() const {return m_tokenMode;}
 
     void initializeGrid();

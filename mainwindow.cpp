@@ -446,10 +446,12 @@ void MainWindow::loadSettings() {
 
     /// Tokens
     currentTokenTitleMode = settings.value(paths.map.tokenTitleMode, 0).toInt();
+    currentTokenFontSize = settings.value(paths.map.tokenFontSize, 12).toInt();
     for (int i = 0; i < mapTabWidget->count(); i++){
         auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(i));
         if (!currentView) return;
         currentView->getScene()->setTokenTitleMode(currentTokenTitleMode);
+        currentView->getScene()->setTokenTextSize(currentTokenFontSize);
     }
 }
 

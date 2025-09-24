@@ -151,3 +151,8 @@ QVariant TokenItem::itemChange(QGraphicsItem::GraphicsItemChange change, const Q
     }
     return QGraphicsItem::itemChange(change, value);
 }
+
+void TokenItem::setFontSize(int size) {
+    if (labelItem)
+        labelItem->setFont(QFont("Arial", size));
+}
