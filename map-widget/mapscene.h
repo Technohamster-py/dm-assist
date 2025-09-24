@@ -118,7 +118,6 @@ private:
     int m_gridType = GridItem::GridType::Square;
     qreal m_gridSize = 5.0;     ///< Feet
 
-    QGraphicsPixmapItem *fogItem = nullptr;
     QImage fogImage;
 
     UndoStack undoStack;

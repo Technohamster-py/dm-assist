@@ -23,7 +23,7 @@
  */
 SharedMapWindow::SharedMapWindow(MapScene *originalScene, QWidget *parent)
     : QWidget(parent){
-    view = new QGraphicsView(originalScene, this);
+    view = new SharedMapView(originalScene, this);
     view->setDragMode(QGraphicsView::NoDrag);
     view->setInteractive(false);
     view->setTransformationAnchor(QGraphicsView::AnchorViewCenter);

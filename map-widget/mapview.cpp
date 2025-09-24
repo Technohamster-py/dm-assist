@@ -267,3 +267,15 @@ bool MapView::loadSceneFromFile(const QString &path) {
     }
     return false;
 }
+
+void MapView::drawForeground(QPainter *painter, const QRectF &rect) {
+    Q_UNUSED(rect);
+    if (!scene) return;
+
+    if (!scene->getFogImage().isNull()){
+        painter->save();
+        painter->setOpacity(0.4);
+        painter->drawImage(sceneRect(), scene->getFogImage());
+        painter->restore();
+    }
+}

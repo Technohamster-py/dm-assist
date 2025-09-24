@@ -75,6 +75,8 @@ protected:
 
     void keyPressEvent(QKeyEvent *event) override;
 
+    void drawForeground(QPainter* painter, const QRectF& rect) override;
+
 
 private:
     MapScene *scene;                       /**< Scene containing map and tools */
