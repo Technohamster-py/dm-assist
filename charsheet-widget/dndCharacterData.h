@@ -66,6 +66,8 @@ struct DndCharacterData{
     QString flawsHtml;
     QString notes;
 
+    QString tokenUrl;
+
     QJsonArray weapons;
     QJsonObject resourcesObj;
 };

@@ -30,6 +30,7 @@ MapView::MapView(QWidget *parent)
     setDragMode(QGraphicsView::ScrollHandDrag);
     setRenderHint(QPainter::Antialiasing);
     setTransformationAnchor(AnchorUnderMouse);
+    setAcceptDrops(true);
     mapPixmapItem = nullptr;
 
     heightLabel = new QLabel(this);

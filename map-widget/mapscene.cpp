@@ -6,6 +6,7 @@
 #include "mapscene.h"
 #include "lighttool.h"
 #include "heightmaptool.h"
+#include "tokenitem.h"
 #include <QBuffer>
 #include <QFile>
 #include <QInputDialog>
@@ -13,6 +14,7 @@
 #include <QJsonDocument>
 #include <QPainter>
 #include <QKeyEvent>
+#include <QMimeData>
 
 #include <QDebug>
 
@@ -28,6 +30,7 @@ MapScene::MapScene(QObject *parent)
         : QGraphicsScene(parent)
 {
     setBackgroundBrush(Qt::darkGray);
+
 }
 
 /**
@@ -721,6 +724,13 @@ void MapScene::setGridSize(int feet) {
     m_gridSize = qMax<qreal>(feet, 0.01);
     if (m_gridItem)
         m_gridItem->setCellFeet(m_gridSize);
+
+    for (auto* item : items()) {
+        if (item->zValue() == mapLayers::Tokens){
+            if (auto* token = dynamic_cast<TokenItem*>(item))
+                token->setGridStep(feet);
+        }
+    }
 }
 
 void MapScene::initializeGrid() {
@@ -732,5 +742,122 @@ void MapScene::initializeGrid() {
         m_gridItem->setCellFeet(m_gridSize);
         m_gridItem->setGridType(m_gridType);
         m_gridItem->setVisible(false);
+    }
+}
+
+void MapScene::dragEnterEvent(QGraphicsSceneDragDropEvent* event)
+{
+    if (event->mimeData()->hasFormat("application/x-character"))
+        event->acceptProposedAction();
+}
+
+void MapScene::dropEvent(QGraphicsSceneDragDropEvent* event)
+{
+    if (!event->mimeData()->hasFormat("application/x-character"))
+        return;
+
+    QByteArray data = event->mimeData()->data("application/x-character");
+    QString jsonPath = QString::fromUtf8(data);
+
+    QFile f(jsonPath);
+    if (!f.open(QIODevice::ReadOnly)) return;
+
+    TokenStruct tokenStruct = TokenItem::fromJson(jsonPath);
+    addToken(tokenStruct, jsonPath, event->scenePos());
+
+    event->acceptProposedAction();
+}
+
+void MapScene::dragMoveEvent(QGraphicsSceneDragDropEvent *event) {
+    bool inside = sceneRect().contains(event->scenePos());
+    if (event->mimeData()->hasFormat("application/x-character") && inside)
+        event->acceptProposedAction();
+    else
+        event->ignore();
+}
+
+void MapScene::addToken(const TokenStruct &tokenStruct, const QString &filePath, QPointF pos) {
+    QPixmap tokenPixmap;
+    if (!tokenStruct.imgPath.isEmpty() && QFile::exists(tokenStruct.imgPath))
+        tokenPixmap.load(tokenStruct.imgPath);
+    else
+        tokenPixmap.load(":/map/default-token.png");
+
+    auto* token = new TokenItem(filePath, tokenStruct.name, tokenPixmap, tokenStruct.size, 1 / m_scaleFactor);
+
+    connect(token, &TokenItem::openCharSheet, this, &MapScene::openCharseetRequested);
+    connect(token, &TokenItem::addToTracker, this, &MapScene::addToEncounterRequested);
+    token->setTitleDisplayMode(m_tokenMode);
+
+    token->setZValue(mapLayers::Tokens);
+    addItem(token);
+    token->setPos(pos);
+}
+
+void MapScene::setTokenTitleMode(int mode) {
+    m_tokenMode = mode;
+
+    for (auto* pItem : items()) {
+        if (auto* token = dynamic_cast<TokenItem*>(pItem))
+            token->setTitleDisplayMode(m_tokenMode);
+    }
+}
+
+void MapScene::setTokenTextSize(int size) {
+    for (auto* pItem : items()) {
+        if (auto* token = dynamic_cast<TokenItem*>(pItem))
+            token->setFontSize(size);
+    }
+}
+
+QPointF MapScene::snapToGrid(const QPointF &pos, qreal objSizeFeet) const {
+    if (!m_gridItem || !m_gridEnabled) return pos;
+
+    const int nCells = qMax(1, int(std::llround(objSizeFeet / m_gridSize)));
+    QRectF gridRect = m_gridItem->boundingRect();
+    QPointF origin = gridRect.topLeft();
+
+    if (m_gridType == GridItem::GridType::Square){
+        const qreal step = m_gridSize / m_scaleFactor;  ///< px per cell
+        const qreal halfSizePx = (nCells * step) / 2.0;
+
+        qreal topLeftX = std::floor((pos.x() - halfSizePx - origin.x()) / step) * step + origin.x();
+        qreal topLeftY = std::floor((pos.y() - halfSizePx - origin.y()) / step) * step + origin.y();
+        qreal centerX = topLeftX + (nCells * step) / 2.0;
+        qreal centerY = topLeftY + (nCells * step) / 2.0;
+        return QPointF(centerX, centerY);
+    } else {
+        const qreal  flatToFlatPx = m_gridSize / m_scaleFactor;
+        const qreal s = flatToFlatPx / std::sqrt(3.0);
+        const qreal px = pos.x() - origin.x();
+        const qreal py = pos.y() - origin.y();
+
+        qreal qf = ((std::sqrt(3.0) / 3.0) * px - (1.0/3.0) * py) / s;
+        qreal rf = ((2.0/3.0) * py) / s;
+
+
+        qreal x = qf;
+        qreal z = rf;
+        qreal y = -x -z;
+
+        long rx = std::llround(x);
+        long ry = std::llround(y);
+        long rz = std::llround(z);
+
+        double dx = std::fabs(rx - x);
+        double dy = std::fabs(ry - y);
+        double dz = std::fabs(rz - z);
+
+        if (dx > dy && dx > dz) rx = -ry -rz;
+        else if (dy > dz && dy > dx) ry = -rx - rz;
+        else rz = -rx - ry;
+
+        long q = rx;
+        long r = rz;
+
+        double centerX = s * std::sqrt(3.0) * (q + r / 2.0) + origin.x();
+        double centerY = s * 1.5 * r + origin.y();
+
+        return QPointF(centerX, centerY);
     }
 }

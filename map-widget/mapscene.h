@@ -38,6 +38,7 @@ enum mapLayers{
     Background = -100,
     Grid = -90,
     Height = 3,
+    Tokens = 4,
     Shapes = 5,
     Brush = 6,
     Ruler = 10,
@@ -54,6 +55,9 @@ enum mapLayers{
  * fog of war manipulation, and undo/redo capabilities for certain scene modifications. It emits
  * relevant signals when tools are changed or the fog of war is updated.
  */
+
+struct TokenStruct;
+
 class MapScene : public QGraphicsScene {
 Q_OBJECT
 
@@ -64,10 +68,17 @@ public:
     void setScaleFactor(double factor);
     [[nodiscard]] double getScaleFactor() const { return m_scaleFactor; };
 
+    void addToken(const TokenStruct &tokenStruct, const QString &filePath, QPointF pos);
+    void setTokenTitleMode(int mode);
+    void setTokenTextSize(int size);
+    int tokenTitleDisplayMode() const {return m_tokenMode;}
+    QPointF snapToGrid(const QPointF &pos, qreal objSizeFeet) const;
+
     void initializeGrid();
     void enableGrid(bool enabled);
     int gridType() const {return m_gridType;}
     int gridSize() const {return m_gridSize;}
+    bool gridEnabled() const {return m_gridEnabled;}
 
     void initializeFog(const QSize &size);
     void drawFogCircle(const QPointF &scenePos, int radius, bool hide);
@@ -91,13 +102,17 @@ public:
     qreal heightAt(const QPointF &pos) const;
     qreal lineWidth() const {return m_lineWidth;};
 
-public slots:
-    void setGridSize(int feet);
-    void setGridType(int gridType);
 
 signals:
     void fogUpdated(const QImage &fogImage);
     void toolChanged(const AbstractMapTool *);
+
+    void openCharseetRequested(const QString& filePath);
+    void addToEncounterRequested(const QString& filePath);
+
+public slots:
+    void setGridSize(int feet);
+    void setGridType(int gridType);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
@@ -106,9 +121,15 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
 
+    void dragEnterEvent(QGraphicsSceneDragDropEvent *event) override;
+    void dragMoveEvent(QGraphicsSceneDragDropEvent* event) override;
+    void dropEvent(QGraphicsSceneDragDropEvent *event) override;
+
 private:
     AbstractMapTool *m_activeTool = nullptr;
     double m_scaleFactor = 1.0;           ///< Scale [feet/px]
+
+    int m_tokenMode = 0;
 
     GridItem* m_gridItem = nullptr;
     bool m_gridEnabled = false;

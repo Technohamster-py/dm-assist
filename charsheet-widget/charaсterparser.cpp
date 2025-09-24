@@ -95,6 +95,8 @@ QVariantMap LssDndParser::parse(const QString &filePath) {
     result["weaponList"] = m_dataObject["weaponsList"].toArray();
     result["resourcedList"] = m_dataObject["resources"].toVariant();
 
+    result["tokenUrl"] = m_dataObject["avatar"].toObject()["webp"].toString();
+
     return result;
 }
 
@@ -218,6 +220,8 @@ DndCharacterData LssDndParser::parseDnd(const QString &filePath) {
 
     result.weapons = dataObject["weaponsList"].toArray();
     result.resourcesObj = dataObject["resources"].toObject();
+
+    result.tokenUrl = dataObject["avatar"].toObject()["webp"].toString();
 
     return result;
 }

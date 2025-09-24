@@ -2,7 +2,6 @@
 #define DM_ASSIST_DNDBESTIARYPAGE_H
 
 #include <utility>
-#include <QtNetwork>
 
 
 #include "../charsheet-widget/abstractcharsheetwidget.h"
@@ -24,11 +23,12 @@ public:
 
     static int bonusFromStat(int statValue) {return (statValue >= 10) ? (statValue - 10) / 2 : (statValue - 11) / 2;};
 
-    virtual void loadFromFile(const QString &filePath) override;
+    void loadFromFile(const QString &filePath) override;
     virtual void populateWidget(BestiaryPageData data);
-    virtual void saveToFile(QString filePath = nullptr){};
+    void saveToFile(QString filePath) override{};
 
-    virtual void addToInitiative(InitiativeTrackerWidget *initiativeTrackerWidget, bool autoRoll = false);
+    void addToInitiative(InitiativeTrackerWidget *initiativeTrackerWidget, bool autoRoll = false) override;
+    void setTokenPixmap(const QString& filePath) override;
 
 public slots:
     void updateTranslator() override;
@@ -37,16 +37,10 @@ protected:
     QMap<QString, QList<BestiaryItem>> descriptionSections;
     IFvttParser *m_parser = nullptr;
 
-    virtual bool downloadToken(const QString& link);
-    QNetworkAccessManager* m_manager;
+    bool downloadToken(const QString& link) override;
 
-    virtual void setTokenPixmap(const QString& filePath);
 private:
     Ui::DndBestiaryPage *ui;
-    QString convertToHeader(QString type);
-
-    void parseFromFvtt11(QJsonObject root);
-    void parseFromFvtt10(QJsonObject root);
 };
 
 

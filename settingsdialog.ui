@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>900</width>
-    <height>703</height>
+    <width>743</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -90,7 +90,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>2</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="generalPage">
         <layout class="QFormLayout" name="formLayout">
@@ -193,6 +193,26 @@
          </item>
          <item row="1" column="1">
           <widget class="QComboBox" name="styleComboBox"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="tokenLabel">
+           <property name="text">
+            <string>Token title display mode</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QComboBox" name="tokenComboBox"/>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="fontSizeLabel">
+           <property name="text">
+            <string>Token text font size</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QSpinBox" name="fontSizeSpinBox"/>
          </item>
         </layout>
        </widget>
