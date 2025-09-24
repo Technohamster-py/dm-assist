@@ -490,7 +490,8 @@ void MapScene::fromJson(const QJsonObject& obj) {
 
     QJsonArray itemsArray = obj["items"].toArray();
     int currentProgress, step;
-    step = std::floor((99 - 35) / itemsArray.count());
+    if (itemsArray.count() > 0)
+        step = std::floor((99 - 35) / itemsArray.count());
     currentProgress = 36;
     for (const auto& val : itemsArray) {
         emit progressChanged(currentProgress+=step, "Populating map with graphics");
@@ -642,7 +643,6 @@ int MapScene::loadFromFile(const QString& path) {
     QDataStream stream(&file);
     stream.setByteOrder(QDataStream::LittleEndian);
 
-    file.close();
 
     MapFileHeader header;
     if (stream.readRawData(reinterpret_cast<char*>(&header), sizeof(header)) != sizeof(header))
@@ -685,7 +685,7 @@ int MapScene::loadFromFile(const QString& path) {
     m_lineWidth = pixmapItem->boundingRect().height() / 200;
 
     fromJson(doc.object());
-
+    file.close();
     emit progressChanged(99, tr("Initializing grid"));
     initializeGrid();
     emit progressChanged(100, tr("Done!"));
