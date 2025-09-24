@@ -175,15 +175,6 @@ void MapScene::setActiveTool(AbstractMapTool *tool) {
 void MapScene::initializeFog(const QSize &size) {
     fogImage = QImage(size, QImage::Format_ARGB32_Premultiplied);
     fogImage.fill(Qt::transparent);
-
-    if (fogItem) {
-        removeItem(fogItem);
-        delete fogItem;
-    }
-
-    fogItem = addPixmap(QPixmap::fromImage(fogImage));
-    fogItem->setZValue(mapLayers::Fog);
-    fogItem->setOpacity(0.5);
 }
 
 /**
@@ -216,30 +207,8 @@ void MapScene::drawFogCircle(const QPointF &scenePos, int radius, bool hide) {
     painter.drawEllipse(center, radius, radius);
     painter.end();
 
-    if (fogItem) {
-        fogItem->setPixmap(QPixmap::fromImage(fogImage));
-    }
     emit fogUpdated(fogImage);
-}
-
-/**
- * @brief Sets the opacity level of the fog overlay in the map scene.
- *
- * This function adjusts the transparency of the fog of war item if it has been
- * initialized. The fog's opacity determines how see-through the fog appears on
- * the map.
- *
- * @param opacity The desired opacity for the fog item. Should be a value
- *                between 0.0 (completely transparent) and 1.0 (completely opaque).
- *
- * @warning If the fog item has not been initialized, a warning message is logged.
- */
-void MapScene::setFogOpacity(qreal opacity) {
-    if (fogItem) {
-        fogItem->setOpacity(opacity);
-    } else {
-        qWarning("Fog item not initialized!");
-    }
+    update();
 }
 
 /**
@@ -255,9 +224,7 @@ QPixmap MapScene::getMapPixmap() const {
     auto mapItems = items(Qt::AscendingOrder);
     for (auto *item : mapItems) {
         if (auto pixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem *>(item)) {
-            if (pixmapItem != fogItem) {
-                return pixmapItem->pixmap();
-            }
+            return pixmapItem->pixmap();
         }
     }
     return {};
@@ -287,7 +254,7 @@ void MapScene::drawFogPath(const QPainterPath &path, bool hide) {
     painter.drawPath(path);
     painter.end();
 
-    updateFog();
+    update();
 }
 
 /**
@@ -301,31 +268,13 @@ void MapScene::drawFogPath(const QPainterPath &path, bool hide) {
  * @note This operation modifies the internal `fogImage` and emits
  * a `fogUpdated()` signal to reflect the changes.
  */
-void MapScene::clearFog() {
-    fogImage.fill(Qt::transparent);
+void MapScene::clearFog(bool clear) {
+    if (clear)
+        fogImage.fill(Qt::transparent);
+    else
+        fogImage.fill(Qt::black);
 
-    updateFog();
-}
-
-/**
- * @brief Updates the fog of war display in the scene.
- *
- * This method refreshes the QGraphicsPixmapItem associated with the fog of war (fogItem)
- * using the updated QImage (fogImage). If fogItem is not null, it sets its pixmap to
- * the current fogImage. After updating the fog display, the method emits the `fogUpdated`
- * signal, providing the updated fog image.
- *
- * @note This method assumes that fogItem has been initialized and that fogImage is the
- * current representation of the fog of war.
- *
- * @signal fogUpdated(const QImage &fogImage)
- *        Emitted after the fog of war has been updated, providing the new fog image.
- */
-void MapScene::updateFog() {
-    if (fogItem) {
-        fogItem->setPixmap(QPixmap::fromImage(fogImage));
-    }
-    emit fogUpdated(fogImage);
+    update();
 }
 
 /**
@@ -597,17 +546,10 @@ void MapScene::fromJson(const QJsonObject& obj) {
         QImage img;
         if (img.loadFromData(byteArray, "PNG")) {
             fogImage = img;
-            if (fogItem) {
-                removeItem(fogItem);
-                delete fogItem;
-            }
-
-            fogItem = addPixmap(QPixmap::fromImage(fogImage));
-            fogItem->setZValue(mapLayers::Fog); // поверх карты
-            fogItem->setOpacity(0.5);
-            updateFog();
         }
     }
+
+    update();
 }
 
 /**

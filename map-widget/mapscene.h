@@ -84,14 +84,11 @@ public:
     void drawFogCircle(const QPointF &scenePos, int radius, bool hide);
     void drawScaledCircle(const QPointF &scenePos, int radius, bool hide);
     void drawFogPath(const QPainterPath &path, bool hide);
-    void clearFog();
+    void clearFog(bool clear = true);
 
     QImage getFogImage() const { return fogImage; };
     QPixmap getMapPixmap() const;
     QRectF mapRect() const;
-
-    void setFogOpacity(qreal opacity); // 0.0–1.0
-    void updateFog();
 
     QJsonObject toJson();
     void fromJson(const QJsonObject &obj);
@@ -139,7 +136,6 @@ private:
     int m_gridType = GridItem::GridType::Square;
     qreal m_gridSize = 5.0;     ///< Feet
 
-    QGraphicsPixmapItem *fogItem = nullptr;
     QImage fogImage;
 
     UndoStack undoStack;

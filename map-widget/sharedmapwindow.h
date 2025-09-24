@@ -5,6 +5,27 @@
 #include "mapscene.h"
 
 
+
+class SharedMapView : public QGraphicsView {
+    Q_OBJECT
+public:
+    explicit SharedMapView(MapScene* scene, QWidget* parent = nullptr) : QGraphicsView(parent), m_scene(scene) { setScene(scene);}
+protected:
+    void drawForeground(QPainter* painter, const QRectF& rect) override {
+        Q_UNUSED(rect);
+        if (!m_scene) return;
+
+        if (!m_scene->getFogImage().isNull()){
+            painter->save();
+            painter->setOpacity(1.0);
+            painter->drawImage(QPointF(0, 0), m_scene->getFogImage());
+            painter->restore();
+        }
+    }
+private:
+    MapScene *m_scene;
+};
+
 /**
  * @class SharedMapWindow
  * @brief A window that provides a synchronized view of a shared map scene.
@@ -22,7 +43,7 @@ public:
 public slots:
     void updateFogImage(const QImage &fog);
 private:
-    QGraphicsView *view;
+    SharedMapView *view;
     QGraphicsPixmapItem *fogItem;
 protected:
     void resizeEvent(QResizeEvent* event) override;

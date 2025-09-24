@@ -149,11 +149,7 @@ void FogTool::hideAll(QGraphicsScene *scene) {
 
     auto mapScene = dynamic_cast<MapScene*>(scene);
     if (!mapScene) return;
-
-    QRectF bounds = scene->sceneRect();
-    QPainterPath path;
-    path.addRect(bounds);
-    mapScene->drawFogPath(path, true);
+    mapScene->clearFog(false);
 }
 
 /**

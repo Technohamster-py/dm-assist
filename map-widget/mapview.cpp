@@ -269,18 +269,14 @@ bool MapView::loadSceneFromFile(const QString &path) {
     return false;
 }
 
-//void MapView::dragEnterEvent(QDragEnterEvent *event) {
-//    if (!scene){
-//        event->ignore();
-//        return;
-//    }
-//    event->accept();
-//}
-//
-//void MapView::dropEvent(QDropEvent *event) {
-//    if (!scene){
-//        event->ignore();
-//        return;
-//    }
-//    event->accept();
-//}
+void MapView::drawForeground(QPainter *painter, const QRectF &rect) {
+    Q_UNUSED(rect);
+    if (!scene) return;
+
+    if (!scene->getFogImage().isNull()){
+        painter->save();
+        painter->setOpacity(0.4);
+        painter->drawImage(QPointF(0, 0), scene->getFogImage());
+        painter->restore();
+    }
+}
