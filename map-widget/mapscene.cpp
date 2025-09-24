@@ -867,3 +867,55 @@ void MapScene::setTokenTextSize(int size) {
             token->setFontSize(size);
     }
 }
+
+QPointF MapScene::snapToGrid(const QPointF &pos, qreal objSizeFeet) const {
+    if (!m_gridItem || !m_gridEnabled) return pos;
+
+    const int nCells = qMax(1, int(std::llround(objSizeFeet / m_gridSize)));
+    QRectF gridRect = m_gridItem->boundingRect();
+    QPointF origin = gridRect.topLeft();
+
+    if (m_gridType == GridItem::GridType::Square){
+        const qreal step = m_gridSize / m_scaleFactor;  ///< px per cell
+        const qreal halfSizePx = (nCells * step) / 2.0;
+
+        qreal topLeftX = std::floor((pos.x() - halfSizePx - origin.x()) / step) * step + origin.x();
+        qreal topLeftY = std::floor((pos.y() - halfSizePx - origin.y()) / step) * step + origin.y();
+        qreal centerX = topLeftX + (nCells * step) / 2.0;
+        qreal centerY = topLeftY + (nCells * step) / 2.0;
+        return QPointF(centerX, centerY);
+    } else {
+        const qreal  flatToFlatPx = m_gridSize / m_scaleFactor;
+        const qreal s = flatToFlatPx / std::sqrt(3.0);
+        const qreal px = pos.x() - origin.x();
+        const qreal py = pos.y() - origin.y();
+
+        qreal qf = ((std::sqrt(3.0) / 3.0) * px - (1.0/3.0) * py) / s;
+        qreal rf = ((2.0/3.0) * py) / s;
+
+
+        qreal x = qf;
+        qreal z = rf;
+        qreal y = -x -z;
+
+        long rx = std::llround(x);
+        long ry = std::llround(y);
+        long rz = std::llround(z);
+
+        double dx = std::fabs(rx - x);
+        double dy = std::fabs(ry - y);
+        double dz = std::fabs(rz - z);
+
+        if (dx > dy && dx > dz) rx = -ry -rz;
+        else if (dy > dz && dy > dx) ry = -rx - rz;
+        else rz = -rx - ry;
+
+        long q = rx;
+        long r = rz;
+
+        double centerX = s * std::sqrt(3.0) * (q + r / 2.0) + origin.x();
+        double centerY = s * 1.5 * r + origin.y();
+
+        return QPointF(centerX, centerY);
+    }
+}

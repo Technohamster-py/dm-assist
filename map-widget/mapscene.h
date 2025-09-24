@@ -72,6 +72,7 @@ public:
     void setTokenTitleMode(int mode);
     void setTokenTextSize(int size);
     int tokenTitleDisplayMode() const {return m_tokenMode;}
+    QPointF snapToGrid(const QPointF &pos, qreal objSizeFeet) const;
 
     void initializeGrid();
     void enableGrid(bool enabled);

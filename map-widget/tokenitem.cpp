@@ -61,12 +61,8 @@ void TokenItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 
     if (scene()) {
         auto* mapScene = qobject_cast<MapScene*>(scene());
-        if (mapScene && mapScene->gridEnabled()) {
-            qreal stepFt = m_gridStep * m_pxPerFoot;
-            QPointF pos = this->pos();
-            QPointF snapped(qRound(pos.x() / stepFt) * stepFt, qRound(pos.y() / stepFt) * stepFt);
-            setPos(snapped);
-        }
+        if (mapScene && mapScene->gridEnabled())
+            setPos(mapScene->snapToGrid(this->pos(), m_realSize));
     }
 }
 
