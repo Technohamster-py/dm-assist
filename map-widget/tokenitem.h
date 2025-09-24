@@ -29,6 +29,7 @@ public:
     int gridStep() const {return m_gridStep;}
     void setTitleDisplayMode(int mode);
     void setFontSize(int size);
+    void setRealSize(qreal size);
     int mode() const {return m_mode;}
 
     static TokenStruct fromJson(const QString &filePath);
@@ -43,6 +44,7 @@ protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
 
 private:
+    QPixmap originalPixmap;
     QGraphicsPixmapItem* pixmapItem;
     FixedSizeTextItem* labelItem;
     qreal m_realSize;
