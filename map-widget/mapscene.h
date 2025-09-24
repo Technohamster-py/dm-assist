@@ -38,12 +38,12 @@ enum mapLayers{
     Background = -100,
     Grid = -90,
     Height = 3,
-    Tokens = 4,
     Shapes = 5,
     Brush = 6,
     Ruler = 10,
     Fog = 100,
-    Light = 110
+    Light = 110,
+    Tokens = 150
 };
 
 
