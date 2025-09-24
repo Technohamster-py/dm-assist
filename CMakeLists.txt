@@ -43,6 +43,7 @@ set(FILES
         map-widget/abstractmaptool.h
         map-widget/brushtool.h  map-widget/brushtool.cpp
         map-widget/calibrationtool.h    map-widget/calibrationtool.cpp
+        map-widget/fixedsizetextitem.h          map-widget/fixedsizetextitem.cpp
         map-widget/fogtool.h    map-widget/fogtool.cpp
         map-widget/griditem.h   map-widget/griditem.cpp
         map-widget/heightmaptool.h  map-widget/heightmaptool.cpp
@@ -53,6 +54,7 @@ set(FILES
         map-widget/rulertool.h map-widget/rulertool.cpp
         map-widget/sharedmapwindow.h    map-widget/sharedmapwindow.cpp
         map-widget/spellshapetool.h     map-widget/spellshapetool.cpp
+        map-widget/tokenitem.h  map-widget/tokenitem.cpp
         map-widget/undostack.h
         music-widget/musicwidget.h music-widget/musicwidget.cpp
         icon-picker/iconpickerdialog.h  icon-picker/iconpickerdialog.cpp

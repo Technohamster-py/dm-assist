@@ -35,6 +35,7 @@ public:
     void saveToFile(QString path) override;
 
     void addToInitiative(InitiativeTrackerWidget *initiativeTrackerWidget, bool autoRoll = false) override;
+    virtual void setTokenPixmap(const QString& filePath);
 
     static int bonusFromStat(int statValue) {return (statValue >= 10) ? (statValue - 10) / 2 : (statValue - 11) / 2;};
     static QString bonusFromString(const QString& string);
@@ -42,6 +43,9 @@ public:
 
 public slots:
     void updateTranslator() override;
+
+protected:
+    bool downloadToken(const QString &link) override;
 private:
     Ui::DndCharsheetWidget *ui;
 

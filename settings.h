@@ -64,6 +64,8 @@ struct Settings{
         QString dimRadius = "map/light/dimRadius";          ///< int Радиус тусклый
         QString lightColor = "map/light/color";             ///< string цвет света
         QString color = "map/color";                        ///< string цвет инструментов
+        QString tokenTitleMode = "map/tokenTitleMode";      ///< int режим отображения имени у токенов на карте
+        QString tokenFontSize = "map/tokenFontSize";        ///< int размер шрифта токенов
     };
     Map map;
 

@@ -443,6 +443,16 @@ void MainWindow::loadSettings() {
 
     /// Rolls
     rollWidget->setCompactMode(settings.value(paths.rolls.compactMode).toBool());
+
+    /// Tokens
+    currentTokenTitleMode = settings.value(paths.map.tokenTitleMode, 0).toInt();
+    currentTokenFontSize = settings.value(paths.map.tokenFontSize, 12).toInt();
+    for (int i = 0; i < mapTabWidget->count(); i++){
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(i));
+        if (!currentView) return;
+        currentView->getScene()->setTokenTitleMode(currentTokenTitleMode);
+        currentView->getScene()->setTokenTextSize(currentTokenFontSize);
+    }
 }
 
 /**
@@ -584,6 +594,7 @@ void MainWindow::openMapFromFile(const QString& fileName) {
         mapTabWidget->addTab(view, fileInfo.baseName());
         updateVisibility();
         mapTabWidget->setCurrentIndex(mapTabWidget->count() - 1);
+        view->getScene()->setTokenTitleMode(currentTokenTitleMode);
 
         connect(view->getScene(), &MapScene::toolChanged, this, [=](const AbstractMapTool* tool){
             if (!tool){
@@ -592,6 +603,44 @@ void MainWindow::openMapFromFile(const QString& fileName) {
                 }
             }
         });
+
+        connect(view->getScene(), &MapScene::openCharseetRequested, [=](const QString& path){
+            AbstractCharsheetWidget* charsheetWidget;
+            switch (CampaignTreeWidget::determieNodeType(path)) {
+                case NodeType::Character:
+                    charsheetWidget = new DndCharsheetWidget(path);
+                    connect(charsheetWidget, &DndCharsheetWidget::rollRequested, rollWidget, &RollWidget::executeRoll);
+                    connect(this, &MainWindow::translatorChanged, charsheetWidget, &AbstractCharsheetWidget::updateTranslator);
+                    charsheetWidget->show();
+                    break;
+                case NodeType::Beast:
+                    charsheetWidget = new DndBestiaryPage(path);
+                    connect(charsheetWidget, &DndCharsheetWidget::rollRequested, rollWidget, &RollWidget::executeRoll);
+                    connect(this, &MainWindow::translatorChanged, charsheetWidget, &AbstractCharsheetWidget::updateTranslator);
+                    charsheetWidget->show();
+                    break;
+                default:
+                    return;
+            }
+        });
+
+        connect(view->getScene(), &MapScene::addToEncounterRequested, [=](const QString& path){
+            AbstractCharsheetWidget* charsheetWidget;
+            switch (CampaignTreeWidget::determieNodeType(path)){
+                case NodeType::Character:
+                    charsheetWidget = new DndCharsheetWidget(path);
+                    charsheetWidget->addToInitiative(initiativeTrackerWidget, autoRoll);
+                    break;
+                case NodeType::Beast:
+                    charsheetWidget = new DndBestiaryPage(path);
+                    charsheetWidget->addToInitiative(initiativeTrackerWidget, autoRoll);
+                    break;
+                default:
+                    return;
+            }
+            delete charsheetWidget;
+        });
+
     } else {
         delete view;
         QMessageBox::warning(this, tr("Error"), tr("Failed to open map file."));

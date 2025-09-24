@@ -121,6 +121,9 @@ private:
     SettingsDialog *settingsDialog = nullptr;
     Settings paths;
 
+    int currentTokenTitleMode = 0;
+    int currentTokenFontSize = 12;
+
 private slots:
     void newCampaign();
     void loadCampaign();
@@ -134,7 +137,7 @@ private slots:
     void on_actionSettings_triggered();
 
     void createNewMapTab();
-    void openMapFromFile(const QString& fileName);
+    void openMapFromFile(const QString& path);
     void deleteMapTab(int index);
     void updateVisibility();
 
