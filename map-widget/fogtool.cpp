@@ -166,5 +166,5 @@ void FogTool::revealAll(QGraphicsScene *scene) {
     auto mapScene = dynamic_cast<MapScene*>(scene);
     if (!mapScene) return;
 
-    mapScene->clearFog(false);
+    mapScene->clearFog();
 }
