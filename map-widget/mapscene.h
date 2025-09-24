@@ -106,6 +106,7 @@ public:
 signals:
     void fogUpdated(const QImage &fogImage);
     void toolChanged(const AbstractMapTool *);
+    void progressChanged(int percent, const QString& message);
 
     void openCharseetRequested(const QString& filePath);
     void addToEncounterRequested(const QString& filePath);

@@ -25,6 +25,7 @@ MapView::MapView(QWidget *parent)
         : QGraphicsView(parent), dragging(false)
 {
     scene = new MapScene(this);
+    connect(scene, &MapScene::progressChanged, this, &MapView::progressChanged);
     setScene(scene);
     setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
     setDragMode(QGraphicsView::ScrollHandDrag);
