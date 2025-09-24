@@ -79,9 +79,6 @@ public:
     QPixmap getMapPixmap() const;
     QRectF mapRect() const;
 
-    void setFogOpacity(qreal opacity); // 0.0–1.0
-    void updateFog();
-
     QJsonObject toJson();
     void fromJson(const QJsonObject &obj);
     bool saveToFile(const QString &path);

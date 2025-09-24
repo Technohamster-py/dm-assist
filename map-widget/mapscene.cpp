@@ -250,8 +250,6 @@ void MapScene::drawFogPath(const QPainterPath &path, bool hide) {
                                     : QPainter::CompositionMode_Clear);
     painter.drawPath(path);
     painter.end();
-
-    updateFog();
 }
 
 /**
@@ -267,8 +265,6 @@ void MapScene::drawFogPath(const QPainterPath &path, bool hide) {
  */
 void MapScene::clearFog() {
     fogImage.fill(Qt::transparent);
-
-    updateFog();
 }
 
 /**
@@ -540,7 +536,6 @@ void MapScene::fromJson(const QJsonObject& obj) {
         QImage img;
         if (img.loadFromData(byteArray, "PNG")) {
             fogImage = img;
-            updateFog();
         }
     }
 }
