@@ -18,10 +18,12 @@ TokenItem::TokenItem(const QString &filePath, const QString &name, const QPixmap
     pixmapItem = new QGraphicsPixmapItem(pixmap.scaled(sizePx, sizePx, Qt::KeepAspectRatio, Qt::SmoothTransformation), this);
     pixmapItem->setOffset(-pixmapItem->boundingRect().width()/2, -pixmapItem->boundingRect().height()/2);
 
-    labelItem = new QGraphicsSimpleTextItem(name, this);
-    labelItem->setBrush(Qt::white);
-    labelItem->setPen(QPen(Qt::black, 0));
-    labelItem->setPos(-labelItem->boundingRect().width()/2, pixmapItem->boundingRect().height()/2);
+    labelItem = new FixedSizeTextItem(name, this);
+    labelItem->setDefaultTextColor(Qt::white);
+    labelItem->setOutlineColor(Qt::black);
+    labelItem->setOutlineWidth(2.0);
+    labelItem->setFont(QFont("Arial", 12));
+    labelItem->setPos(-labelItem->boundingRect().width()/2, pixmapItem->boundingRect().height()/2 + 4);
     setTitleDisplayMode(m_mode);
 }
 
@@ -114,7 +116,7 @@ void TokenItem::setTitleDisplayMode(int mode) {
         case TokenTitleDisplayMode::tooltip:
             if (labelItem)
                 labelItem->setVisible(false);
-            setToolTip(labelItem ? labelItem->text() : QString());
+            setToolTip(labelItem ? labelItem->toPlainText() : QString());
             break;
         case TokenTitleDisplayMode::always:
             if (labelItem)

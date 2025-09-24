@@ -43,6 +43,7 @@ set(FILES
         map-widget/abstractmaptool.h
         map-widget/brushtool.h  map-widget/brushtool.cpp
         map-widget/calibrationtool.h    map-widget/calibrationtool.cpp
+        map-widget/fixedsizetextitem.h          map-widget/fixedsizetextitem.cpp
         map-widget/fogtool.h    map-widget/fogtool.cpp
         map-widget/griditem.h   map-widget/griditem.cpp
         map-widget/heightmaptool.h  map-widget/heightmaptool.cpp

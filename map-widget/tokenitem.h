@@ -3,6 +3,7 @@
 
 #include <QGraphicsObject>
 #include <QJsonObject>
+#include "fixedsizetextitem.h"
 
 enum TokenTitleDisplayMode{
     always,
@@ -41,7 +42,7 @@ protected:
 
 private:
     QGraphicsPixmapItem* pixmapItem;
-    QGraphicsSimpleTextItem* labelItem;
+    FixedSizeTextItem* labelItem;
     qreal m_realSize;
     qreal m_pxPerFoot;
     QString m_filePath;
