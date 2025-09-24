@@ -592,7 +592,7 @@ void MainWindow::openMapFromFile(const QString& fileName) {
     connect(view, &MapView::progressChanged, this, [=](int percent, const QString& message){
         progressBar->setVisible(true);
         progressBar->setValue(percent);
-        progressBar->setFormat(QString("%1: %2%").arg(message, percent));
+        progressBar->setFormat(QString("%1: %2%").arg(message).arg(percent));
         if (percent == 100)
             QTimer::singleShot(1500, progressBar, [=](){progressBar->setVisible(false);});
     });
