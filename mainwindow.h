@@ -7,6 +7,7 @@
 #include <QSettings>
 #include <QShortcut>
 #include <QTranslator>
+#include <QProgressBar>
 #include "campaign-tree-widget/campaigntreewidget.h"
 #include "map-widget/maptabwidget.h"
 #include "map-widget/fogtool.h"
@@ -72,6 +73,8 @@ public slots:
 
     void handleUpdates(bool hasUpdates) const;
 
+    void slotUpdateProgressBar(int percent, const QString& message = "");
+
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dropEvent(QDropEvent *event) override;
@@ -109,6 +112,8 @@ private:
     QActionGroup *toolGroup;
 
     RollWidget* rollWidget;
+
+    QProgressBar* progressBar;
 
     void setupCampaign(QString campaignRoot);
     void setupPlayers();

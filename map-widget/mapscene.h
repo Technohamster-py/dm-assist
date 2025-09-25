@@ -38,12 +38,12 @@ enum mapLayers{
     Background = -100,
     Grid = -90,
     Height = 3,
-    Tokens = 4,
     Shapes = 5,
     Brush = 6,
     Ruler = 10,
     Fog = 100,
-    Light = 110
+    Light = 110,
+    Tokens = 150
 };
 
 
@@ -106,6 +106,7 @@ public:
 signals:
     void fogUpdated(const QImage &fogImage);
     void toolChanged(const AbstractMapTool *);
+    void progressChanged(int percent, const QString& message);
 
     void openCharseetRequested(const QString& filePath);
     void addToEncounterRequested(const QString& filePath);

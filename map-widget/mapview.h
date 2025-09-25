@@ -43,7 +43,8 @@ public:
 
     [[nodiscard]] MapScene* getScene() const {return scene;};
     bool loadSceneFromFile(const QString& path);
-
+signals:
+    void progressChanged(int percent, const QString& message);
 
 public slots:
     void setActiveTool(AbstractMapTool* tool);

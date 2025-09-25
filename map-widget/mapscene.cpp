@@ -377,8 +377,14 @@ QJsonObject MapScene::toJson() {
         m_activeTool->deactivate(this);
 
 
+    int currentProgress, step;
+    if (items().count() > 0)
+        step = std::floor((80 - 12) / items().count());
+    currentProgress = 12;
+
     QJsonArray itemsArray;
     for (auto item : items()) {
+        emit progressChanged(currentProgress+=step, "Collecting graphic objects");
         QJsonObject itemObj;
 
         if (auto* light = dynamic_cast<LightSourceItem*>(item)) {
@@ -489,7 +495,12 @@ void MapScene::fromJson(const QJsonObject& obj) {
 
 
     QJsonArray itemsArray = obj["items"].toArray();
+    int currentProgress, step;
+    if (itemsArray.count() > 0)
+        step = std::floor((99 - 35) / itemsArray.count());
+    currentProgress = 36;
     for (const auto& val : itemsArray) {
+        emit progressChanged(currentProgress+=step, "Populating map with graphics");
         QJsonObject itemObj = val.toObject();
         QString type = itemObj["type"].toString();
 
@@ -573,10 +584,12 @@ void MapScene::fromJson(const QJsonObject& obj) {
  */
 bool MapScene::saveToFile(const QString& path) {
     QFile file(path);
+    emit progressChanged(5, tr("Opening file"));
     if (!file.open(QIODevice::WriteOnly)) {
+        emit progressChanged(0, tr("Failed to open file"));
         return false;
     }
-
+    emit progressChanged(10, tr("Collecting graphic objects"));
     QJsonObject mapJson = this->toJson();
     QJsonDocument doc(mapJson);
     QByteArray jsonData = doc.toJson(QJsonDocument::Compact);
@@ -593,11 +606,15 @@ bool MapScene::saveToFile(const QString& path) {
 
     QDataStream stream(&file);
     stream.setByteOrder(QDataStream::LittleEndian);
+    emit progressChanged(80, tr("Writing signature"));
     stream.writeRawData(reinterpret_cast<char*>(&header), sizeof(header));
+    emit progressChanged(85, tr("Writing graphics data"));
     stream.writeRawData(jsonData.constData(), jsonData.size());
+    emit progressChanged(90, tr("Writing map image"));
     stream.writeRawData(imageData.constData(), imageData.size());
 
     file.close();
+    emit progressChanged(100, tr("Done!"));
     return true;
 }
 
@@ -629,19 +646,21 @@ bool MapScene::saveToFile(const QString& path) {
  * 8. Closes the file and returns qmapErrorCodes::NoError upon successful completion.
  */
 int MapScene::loadFromFile(const QString& path) {
+    emit progressChanged(0, tr("Opening file"));
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly)) {
         qWarning() << "Не удалось открыть файл для чтения:" << path;
         return mapErrorCodes::FileOpenError;
     }
-
     QDataStream stream(&file);
     stream.setByteOrder(QDataStream::LittleEndian);
+
 
     MapFileHeader header;
     if (stream.readRawData(reinterpret_cast<char*>(&header), sizeof(header)) != sizeof(header))
         return mapErrorCodes::FileOpenError;
 
+    emit progressChanged(5, tr("Checking signature"));
     if (header.magic != 0x444D414D) {
         qWarning() << "Файл не является картой DM-Assist.";
         return mapErrorCodes::FileSignatureError;
@@ -662,6 +681,7 @@ int MapScene::loadFromFile(const QString& path) {
         return mapErrorCodes::JsonParseError;
     }
 
+    emit progressChanged(30, tr("Loading map image"));
     QImage mapImage;
     mapImage.loadFromData(imageData, "PNG");
 
@@ -671,14 +691,16 @@ int MapScene::loadFromFile(const QString& path) {
     clear();
     QGraphicsPixmapItem* pixmapItem = addPixmap(QPixmap::fromImage(mapImage));
     pixmapItem->setZValue(mapLayers::Background);
+
+    emit progressChanged(35, tr("Initializing fog"));
     initializeFog(mapImage.size());
     m_lineWidth = pixmapItem->boundingRect().height() / 200;
 
     fromJson(doc.object());
-
     file.close();
-
+    emit progressChanged(99, tr("Initializing grid"));
     initializeGrid();
+    emit progressChanged(100, tr("Done!"));
     return mapErrorCodes::NoError;
 }
 
