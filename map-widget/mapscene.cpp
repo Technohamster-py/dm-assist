@@ -372,6 +372,7 @@ QJsonObject MapScene::toJson() {
     QJsonObject obj;
     obj["scaleFactor"] = m_scaleFactor;
     obj["gridCellSie"] = m_gridSize;
+    obj["grid"] = m_gridType;
 
     if (m_activeTool)
         m_activeTool->deactivate(this);
@@ -559,6 +560,12 @@ void MapScene::fromJson(const QJsonObject& obj) {
             fogImage = img;
         }
     }
+
+    if (obj.contains("gridCellSie"))
+        setGridSize(obj["gridCellSie"].toInt());
+
+    if (obj.contains("grid"))
+        setGridType(obj["grid"].toInt());
 
     update();
 }
