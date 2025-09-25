@@ -9,7 +9,7 @@
 #define APPLICATION_NAME "DM-assist"
 
 #define HELP_URL "https://github.com/Technohamster-py/dm-assist?tab=readme-ov-file#dm-assist"
-#define DONATE_URL "https://pay.cloudtips.ru/p/8f6d339a"
+#define DONATE_URL "https://technohamster.taplink.ws"
 #define ISSUES_URL  "https://github.com/Technohamster-py/dm-assist/issues"
 #define RELEASES_URL "https://api.github.com/repos/Technohamster-py/dm-assist/releases/latest"
 #define VERSION "1.2.2"
