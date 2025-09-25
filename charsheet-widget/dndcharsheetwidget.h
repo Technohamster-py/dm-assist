@@ -35,7 +35,7 @@ public:
     void saveToFile(QString path) override;
 
     void addToInitiative(InitiativeTrackerWidget *initiativeTrackerWidget, bool autoRoll = false) override;
-    virtual void setTokenPixmap(const QString& filePath);
+    void setTokenPixmap(const QString& filePath) override;
 
     static int bonusFromStat(int statValue) {return (statValue >= 10) ? (statValue - 10) / 2 : (statValue - 11) / 2;};
     static QString bonusFromString(const QString& string);
