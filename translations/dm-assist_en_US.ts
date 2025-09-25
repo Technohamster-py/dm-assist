@@ -90,12 +90,12 @@
         <translation type="vanished">Campaign structure</translation>
     </message>
     <message>
-        <location filename="../campaign-tree-widget/campaigntreewidget.cpp" line="207"/>
+        <location filename="../campaign-tree-widget/campaigntreewidget.cpp" line="212"/>
         <source>The selected folder does not contain campaign.json is not a campaign</source>
         <translation>The selected folder does not contain campaign.json is not a campaign</translation>
     </message>
     <message>
-        <location filename="../campaign-tree-widget/campaigntreewidget.cpp" line="271"/>
+        <location filename="../campaign-tree-widget/campaigntreewidget.cpp" line="276"/>
         <source>Show in file system</source>
         <translation>Show in file system</translation>
     </message>
@@ -390,12 +390,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="136"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="131"/>
         <source>HP</source>
         <translation>HP</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="225"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="220"/>
         <source>ft</source>
         <translation>ft</translation>
     </message>
@@ -404,7 +404,7 @@
         <translation type="vanished">Max HP</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="248"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="243"/>
         <source>Initiative:</source>
         <translation>Initiative:</translation>
     </message>
@@ -413,153 +413,153 @@
         <translation type="vanished">Speed</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="238"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="233"/>
         <source>/</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="218"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="213"/>
         <source>initiative bonus</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="376"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="399"/>
         <source>Strength</source>
         <translation>Strength</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="388"/>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="472"/>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="658"/>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="702"/>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="888"/>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1038"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="411"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="495"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="681"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="725"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="911"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1061"/>
         <source>bonus</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="446"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="469"/>
         <source>Athletics</source>
         <translation>Athletics</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="532"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="555"/>
         <source>Dexterity</source>
         <translation>Dexterity</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="554"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="577"/>
         <source>Acrobatics</source>
         <translation>Acrobatics</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="572"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="595"/>
         <source>Sleght of hand</source>
         <translation>Sleight of hand</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="590"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="613"/>
         <source>Stealth</source>
         <translation>Stealth</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="622"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="645"/>
         <source>Constitution</source>
         <translation>Constitution</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="720"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="743"/>
         <source>Intelligence</source>
         <translation>Intelligence</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="772"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="795"/>
         <source>Arcana</source>
         <translation>Arcana</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="784"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="807"/>
         <source>History</source>
         <translation>History</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="796"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="819"/>
         <source>Investigation</source>
         <translation>Investigation</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="808"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="831"/>
         <source>Nature</source>
         <translation>Nature</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="820"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="843"/>
         <source>Religion</source>
         <translation>Religion</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="876"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="899"/>
         <source>Wisdom</source>
         <translation>Wisdom</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="922"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="945"/>
         <source>Animal handling</source>
         <translation>Animal handling</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="934"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="957"/>
         <source>Insight</source>
         <translation>Insight</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="946"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="969"/>
         <source>Medicine</source>
         <translation>Medicine</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="958"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="981"/>
         <source>Perception</source>
         <translation>Perception</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="970"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="993"/>
         <source>Survival</source>
         <translation>Survival</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1002"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1025"/>
         <source>Charisma</source>
         <translation>Charisma</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1072"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1095"/>
         <source>Deception</source>
         <translation>Deception</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1084"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1107"/>
         <source>Intimidation</source>
         <translation>Intimidation</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1096"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1119"/>
         <source>Performance</source>
         <translation>Performance</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1108"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1131"/>
         <source>Persuasion</source>
         <translation>Persuasion</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1159"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1182"/>
         <source>Attacks</source>
         <translation>Attacks</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1187"/>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1260"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1210"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1283"/>
         <source>Add</source>
         <translation>Add</translation>
     </message>
@@ -568,117 +568,117 @@
         <translation type="vanished">Attacks</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1232"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1255"/>
         <source>Resources</source>
         <translation>Resources</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1280"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1303"/>
         <source>Long Rest</source>
         <translation>Long rest</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1296"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1319"/>
         <source>Short Rest</source>
         <translation>Short rest</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1333"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1356"/>
         <source>Traits</source>
         <translation>Traits</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1383"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1406"/>
         <source>Personality</source>
         <translation>Personality</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1423"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1446"/>
         <source>Ideals</source>
         <translation>Ideals</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1463"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1486"/>
         <source>Bonds</source>
         <translation>Bonds</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1503"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1526"/>
         <source>Flaws</source>
         <translation>Flaws</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1537"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1560"/>
         <source>Proficiencies</source>
         <translation>Proficiencies and Languages</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1586"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1609"/>
         <source>Equipment</source>
         <translation>Equipment</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1621"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1644"/>
         <source>ep</source>
         <translation>EP</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1654"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1677"/>
         <source>sp</source>
         <translation>SP</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1669"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1692"/>
         <source>pp</source>
         <translation>PP</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1684"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1707"/>
         <source>gp</source>
         <translation>GP</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1753"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1776"/>
         <source>cp</source>
         <translation>CP</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1794"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1817"/>
         <source>Treasures</source>
         <translation>Treasures</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1854"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1877"/>
         <source>Features</source>
         <translation>Features</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1879"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1902"/>
         <source>Quests</source>
         <translation>Quests</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1894"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1917"/>
         <source>Allies</source>
         <translation>Allies</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1928"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1951"/>
         <source>Background</source>
         <translation>Background</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="1990"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.ui" line="2013"/>
         <source>Notes</source>
         <translation>Notes</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.cpp" line="830"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.cpp" line="661"/>
         <source>Save changes</source>
         <translation>Save changes</translation>
     </message>
     <message>
-        <location filename="../charsheet-widget/dndcharsheetwidget.cpp" line="831"/>
+        <location filename="../charsheet-widget/dndcharsheetwidget.cpp" line="662"/>
         <source>Save changes?</source>
         <translation>Save changes?</translation>
     </message>
@@ -1245,196 +1245,196 @@
         <translation type="vanished">Save project?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="319"/>
+        <location filename="../mainwindow.cpp" line="325"/>
         <source>Open player config file</source>
         <translation>Open player config file</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="321"/>
+        <location filename="../mainwindow.cpp" line="327"/>
         <source>Xml file (*.xml)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="329"/>
+        <location filename="../mainwindow.cpp" line="335"/>
         <source>Open File error</source>
         <translation>Open file error</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="504"/>
-        <location filename="../mainwindow.cpp" line="706"/>
+        <location filename="../mainwindow.cpp" line="520"/>
+        <location filename="../mainwindow.cpp" line="763"/>
         <source>Open file error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="196"/>
+        <location filename="../mainwindow.cpp" line="202"/>
         <source>Open Map Image</source>
         <translation>Open map image</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="198"/>
+        <location filename="../mainwindow.cpp" line="204"/>
         <source>Map Files (*.dam);;Images (*.png *.jpg *.bmp)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="295"/>
+        <location filename="../mainwindow.cpp" line="301"/>
         <source>Open campaign directory</source>
         <translation>Open campaign directory</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="495"/>
+        <location filename="../mainwindow.cpp" line="511"/>
         <source>Can&apos;t create subdirectory: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="597"/>
+        <location filename="../mainwindow.cpp" line="654"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="597"/>
+        <location filename="../mainwindow.cpp" line="654"/>
         <source>Failed to open map file.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="932"/>
+        <location filename="../mainwindow.cpp" line="989"/>
         <source>ruler</source>
         <translation>Ruler</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="944"/>
+        <location filename="../mainwindow.cpp" line="1001"/>
         <source>calibrate</source>
         <translation>Calibrate</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="980"/>
+        <location filename="../mainwindow.cpp" line="1037"/>
         <source>Add fog to map</source>
         <translation>Add fog to map</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="987"/>
+        <location filename="../mainwindow.cpp" line="1044"/>
         <source>Hide all</source>
         <translation>Hide all</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1014"/>
+        <location filename="../mainwindow.cpp" line="1071"/>
         <source>Remove fog from map</source>
         <translation>Remove fog from map</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1021"/>
+        <location filename="../mainwindow.cpp" line="1078"/>
         <source>Reveal all</source>
         <translation>Reveal all</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1049"/>
+        <location filename="../mainwindow.cpp" line="1106"/>
         <source>Edit light sources</source>
         <translation>Edit light sources</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1054"/>
+        <location filename="../mainwindow.cpp" line="1111"/>
         <source>Bright radius</source>
         <translation>Bright light radius</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1061"/>
+        <location filename="../mainwindow.cpp" line="1118"/>
         <source>Dim radius</source>
         <translation>Dim light radius</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1095"/>
+        <location filename="../mainwindow.cpp" line="1152"/>
         <source>Update fog</source>
         <translation>Update fog</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1113"/>
+        <location filename="../mainwindow.cpp" line="1170"/>
         <source>Draw line</source>
         <translation>Draw line</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1135"/>
+        <location filename="../mainwindow.cpp" line="1192"/>
         <source>Draw circle</source>
         <translation>Draw circle</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1157"/>
+        <location filename="../mainwindow.cpp" line="1214"/>
         <source>Draw square</source>
         <translation>Draw square</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1179"/>
+        <location filename="../mainwindow.cpp" line="1236"/>
         <source>Draw triangle</source>
         <translation>Draw triangle</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1201"/>
+        <location filename="../mainwindow.cpp" line="1258"/>
         <source>Brush</source>
         <translation>Brush</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1208"/>
+        <location filename="../mainwindow.cpp" line="1265"/>
         <source>Clear all</source>
         <translation>Clear all</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1230"/>
+        <location filename="../mainwindow.cpp" line="1287"/>
         <source>Brush opacity</source>
         <translation>Brush opacity</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1267"/>
+        <location filename="../mainwindow.cpp" line="1324"/>
         <source>Height</source>
         <translation>Height</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1298"/>
+        <location filename="../mainwindow.cpp" line="1355"/>
         <source>Grid cell size (feet)</source>
         <translation>Grid cell size (feet)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1397"/>
+        <location filename="../mainwindow.cpp" line="1466"/>
         <source>Chose character name</source>
         <translation>Chose character name</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1398"/>
+        <location filename="../mainwindow.cpp" line="1467"/>
         <source>Character name:</source>
         <translation>Character name:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1406"/>
-        <location filename="../mainwindow.cpp" line="1418"/>
-        <location filename="../mainwindow.cpp" line="1428"/>
+        <location filename="../mainwindow.cpp" line="1475"/>
+        <location filename="../mainwindow.cpp" line="1487"/>
+        <location filename="../mainwindow.cpp" line="1497"/>
         <source>Can&apos;t add character</source>
         <translation>Can&apos;t add character</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1406"/>
+        <location filename="../mainwindow.cpp" line="1475"/>
         <source>Open campaign first!</source>
         <translation>Open campaign first!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1418"/>
+        <location filename="../mainwindow.cpp" line="1487"/>
         <source>Character already exists 
  Override?</source>
         <translation>Character already exists \n Override?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1428"/>
+        <location filename="../mainwindow.cpp" line="1497"/>
         <source>Unknown error</source>
         <translation>Unknown error</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1471"/>
+        <location filename="../mainwindow.cpp" line="1565"/>
         <source>Load campaign?</source>
         <translation>Load campaign?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1472"/>
+        <location filename="../mainwindow.cpp" line="1566"/>
         <source>Load campaign from %1?</source>
         <translation>Load campaign from %1?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="245"/>
+        <location filename="../mainwindow.cpp" line="251"/>
         <source>Save map to file</source>
         <translation>Save map to file</translation>
     </message>
@@ -1473,20 +1473,82 @@
 <context>
     <name>MapScene</name>
     <message>
-        <location filename="../map-widget/mapscene.cpp" line="61"/>
+        <location filename="../map-widget/mapscene.cpp" line="64"/>
         <source>Change height</source>
         <translation>Change height</translation>
     </message>
     <message>
-        <location filename="../map-widget/mapscene.cpp" line="61"/>
+        <location filename="../map-widget/mapscene.cpp" line="64"/>
         <source>NewHeight</source>
         <translation>New height</translation>
+    </message>
+    <message>
+        <location filename="../map-widget/mapscene.cpp" line="504"/>
+        <source>Populating map with graphics</source>
+        <translation>Populating map with graphics</translation>
+    </message>
+    <message>
+        <location filename="../map-widget/mapscene.cpp" line="594"/>
+        <location filename="../map-widget/mapscene.cpp" line="656"/>
+        <source>Opening file</source>
+        <translation>Opening file</translation>
+    </message>
+    <message>
+        <location filename="../map-widget/mapscene.cpp" line="596"/>
+        <source>Failed to open file</source>
+        <translation>Failed to open file</translation>
+    </message>
+    <message>
+        <location filename="../map-widget/mapscene.cpp" line="599"/>
+        <source>Collecting graphic objects</source>
+        <translation>Collecting graphic objects</translation>
+    </message>
+    <message>
+        <location filename="../map-widget/mapscene.cpp" line="616"/>
+        <source>Writing signature</source>
+        <translation>Writing signature</translation>
+    </message>
+    <message>
+        <location filename="../map-widget/mapscene.cpp" line="618"/>
+        <source>Writing graphics data</source>
+        <translation>Writing graphics data</translation>
+    </message>
+    <message>
+        <location filename="../map-widget/mapscene.cpp" line="620"/>
+        <source>Writing map image</source>
+        <translation>Writing map image</translation>
+    </message>
+    <message>
+        <location filename="../map-widget/mapscene.cpp" line="624"/>
+        <location filename="../map-widget/mapscene.cpp" line="710"/>
+        <source>Done!</source>
+        <translation>Done!</translation>
+    </message>
+    <message>
+        <location filename="../map-widget/mapscene.cpp" line="670"/>
+        <source>Checking signature</source>
+        <translation>Checking signature</translation>
+    </message>
+    <message>
+        <location filename="../map-widget/mapscene.cpp" line="691"/>
+        <source>Loading map image</source>
+        <translation>Loading map image</translation>
+    </message>
+    <message>
+        <location filename="../map-widget/mapscene.cpp" line="702"/>
+        <source>Initializing fog</source>
+        <translation>Initializing fog</translation>
+    </message>
+    <message>
+        <location filename="../map-widget/mapscene.cpp" line="708"/>
+        <source>Initializing grid</source>
+        <translation>Initializing grid</translation>
     </message>
 </context>
 <context>
     <name>MapView</name>
     <message>
-        <location filename="../map-widget/mapview.cpp" line="166"/>
+        <location filename="../map-widget/mapview.cpp" line="168"/>
         <source>Height: %1</source>
         <translation>Height: %1</translation>
     </message>
@@ -1607,18 +1669,18 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../map-widget/griditem.cpp" line="89"/>
-        <location filename="../map-widget/griditem.cpp" line="93"/>
+        <location filename="../map-widget/griditem.cpp" line="139"/>
+        <location filename="../map-widget/griditem.cpp" line="142"/>
         <source>None</source>
         <translation>None</translation>
     </message>
     <message>
-        <location filename="../map-widget/griditem.cpp" line="90"/>
+        <location filename="../map-widget/griditem.cpp" line="140"/>
         <source>Square</source>
         <translation>Square</translation>
     </message>
     <message>
-        <location filename="../map-widget/griditem.cpp" line="91"/>
+        <location filename="../map-widget/griditem.cpp" line="141"/>
         <source>Hexagon</source>
         <translation>Hexagon</translation>
     </message>
@@ -1940,92 +2002,102 @@
         <translation>Style</translation>
     </message>
     <message>
+        <location filename="../settingsdialog.ui" line="200"/>
+        <source>Token title display mode</source>
+        <translation>Token title display mode</translation>
+    </message>
+    <message>
         <location filename="../settingsdialog.ui" line="210"/>
+        <source>Token text font size</source>
+        <translation>Token text font size</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="230"/>
         <source>Display fields in shared view</source>
         <translation>Display fields in shared view</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="219"/>
+        <location filename="../settingsdialog.ui" line="239"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="226"/>
+        <location filename="../settingsdialog.ui" line="246"/>
         <source>Iinitiative</source>
         <translation>Initiative</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="233"/>
+        <location filename="../settingsdialog.ui" line="253"/>
         <source>Armor Class</source>
         <translation>Armor class</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="240"/>
+        <location filename="../settingsdialog.ui" line="260"/>
         <source>Hit Points</source>
         <translation>Hit points</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="247"/>
+        <location filename="../settingsdialog.ui" line="267"/>
         <source>max Hit Points</source>
         <translation>max hit points</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="254"/>
+        <location filename="../settingsdialog.ui" line="274"/>
         <source>Delete</source>
         <translation>Delete</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="263"/>
+        <location filename="../settingsdialog.ui" line="283"/>
         <source>Hp display mode</source>
         <translation>HP display mode</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="273"/>
+        <location filename="../settingsdialog.ui" line="293"/>
         <source>Numeric</source>
         <translation>Numeric</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="278"/>
+        <location filename="../settingsdialog.ui" line="298"/>
         <source>Text status</source>
         <translation>Text status</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="283"/>
+        <location filename="../settingsdialog.ui" line="303"/>
         <source>Progress bar</source>
         <translation>Progress bar</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="291"/>
+        <location filename="../settingsdialog.ui" line="311"/>
         <source>Show control in main widget</source>
         <translation>Show control in main widget</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="300"/>
+        <location filename="../settingsdialog.ui" line="320"/>
         <source>Characters</source>
         <translation>Characters</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="307"/>
+        <location filename="../settingsdialog.ui" line="327"/>
         <source>Auto initiative rolls</source>
         <translation>Auto initiative roll</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="333"/>
+        <location filename="../settingsdialog.ui" line="353"/>
         <source>Apply</source>
         <translation>Apply</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="340"/>
+        <location filename="../settingsdialog.ui" line="360"/>
         <source>Cancel</source>
         <translation>Cancel</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="136"/>
+        <location filename="../settingsdialog.cpp" line="143"/>
         <source>Select folder</source>
         <translation>Select folder</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="160"/>
+        <location filename="../settingsdialog.cpp" line="167"/>
         <source>Select theme file</source>
         <translation>Select theme file</translation>
     </message>
@@ -2165,6 +2237,49 @@
         <location filename="../map-widget/maptabwidget.cpp" line="38"/>
         <source>Save</source>
         <translation>Save</translation>
+    </message>
+</context>
+<context>
+    <name>TokenItem</name>
+    <message>
+        <location filename="../map-widget/tokenitem.cpp" line="34"/>
+        <source>Add to tracker</source>
+        <translation>Add to tracker</translation>
+    </message>
+    <message>
+        <location filename="../map-widget/tokenitem.cpp" line="35"/>
+        <source>Open charsheet</source>
+        <translation>Open charsheet</translation>
+    </message>
+    <message>
+        <location filename="../map-widget/tokenitem.cpp" line="36"/>
+        <source>Change Creature Size</source>
+        <translation>Change Creature Size</translation>
+    </message>
+    <message>
+        <location filename="../map-widget/tokenitem.cpp" line="37"/>
+        <source>Remove from map</source>
+        <translation>Remove from map</translation>
+    </message>
+    <message>
+        <location filename="../map-widget/tokenitem.cpp" line="145"/>
+        <source>No title</source>
+        <translation>No title</translation>
+    </message>
+    <message>
+        <location filename="../map-widget/tokenitem.cpp" line="147"/>
+        <source>On hover</source>
+        <translation>On hover</translation>
+    </message>
+    <message>
+        <location filename="../map-widget/tokenitem.cpp" line="149"/>
+        <source>Always</source>
+        <translation>Always</translation>
+    </message>
+    <message>
+        <location filename="../map-widget/tokenitem.cpp" line="151"/>
+        <source>N/A</source>
+        <translation>N/A</translation>
     </message>
 </context>
 <context>

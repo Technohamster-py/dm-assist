@@ -501,7 +501,7 @@ void MapScene::fromJson(const QJsonObject& obj) {
         step = std::floor((99 - 35) / itemsArray.count());
     currentProgress = 36;
     for (const auto& val : itemsArray) {
-        emit progressChanged(currentProgress+=step, "Populating map with graphics");
+        emit progressChanged(currentProgress+=step, tr("Populating map with graphics"));
         QJsonObject itemObj = val.toObject();
         QString type = itemObj["type"].toString();
 
