@@ -28,6 +28,7 @@ void ThemeManager::applyPreset(ThemeManager::PresetTheme theme) {
             palette.setColor(QPalette::ButtonText, Qt::black);
             palette.setColor(QPalette::Highlight, QColor("#2196f3"));
             palette.setColor(QPalette::HighlightedText, Qt::white);
+            palette.setColor(QPalette::PlaceholderText, QColor("#9f9f9f"));
             break;
         case PresetTheme::Dark:
             palette.setColor(QPalette::Window, QColor("#1e1f22"));
