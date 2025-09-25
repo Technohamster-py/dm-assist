@@ -377,8 +377,14 @@ QJsonObject MapScene::toJson() {
         m_activeTool->deactivate(this);
 
 
+    int currentProgress, step;
+    if (items().count() > 0)
+        step = std::floor((80 - 12) / items().count());
+    currentProgress = 12;
+
     QJsonArray itemsArray;
     for (auto item : items()) {
+        emit progressChanged(currentProgress+=step, "Collecting graphic objects");
         QJsonObject itemObj;
 
         if (auto* light = dynamic_cast<LightSourceItem*>(item)) {
@@ -578,10 +584,12 @@ void MapScene::fromJson(const QJsonObject& obj) {
  */
 bool MapScene::saveToFile(const QString& path) {
     QFile file(path);
+    emit progressChanged(5, tr("Opening file"));
     if (!file.open(QIODevice::WriteOnly)) {
+        emit progressChanged(0, tr("Failed to open file"));
         return false;
     }
-
+    emit progressChanged(10, tr("Collecting graphic objects"));
     QJsonObject mapJson = this->toJson();
     QJsonDocument doc(mapJson);
     QByteArray jsonData = doc.toJson(QJsonDocument::Compact);
@@ -598,11 +606,15 @@ bool MapScene::saveToFile(const QString& path) {
 
     QDataStream stream(&file);
     stream.setByteOrder(QDataStream::LittleEndian);
+    emit progressChanged(80, tr("Writing signature"));
     stream.writeRawData(reinterpret_cast<char*>(&header), sizeof(header));
+    emit progressChanged(85, tr("Writing graphics data"));
     stream.writeRawData(jsonData.constData(), jsonData.size());
+    emit progressChanged(90, tr("Writing map image"));
     stream.writeRawData(imageData.constData(), imageData.size());
 
     file.close();
+    emit progressChanged(100, tr("Done!"));
     return true;
 }
 

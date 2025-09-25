@@ -73,6 +73,8 @@ public slots:
 
     void handleUpdates(bool hasUpdates) const;
 
+    void slotUpdateProgressBar(int percent, const QString& message = "");
+
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dropEvent(QDropEvent *event) override;
