@@ -1,4 +1,4 @@
-#include "charaсterparser.h"
+#include "characterparser.h"
 
 #include <QFile>
 #include <QJsonDocument>

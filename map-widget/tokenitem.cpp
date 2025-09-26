@@ -2,7 +2,7 @@
 #include "mapscene.h"
 #include "abstractcharsheetwidget.h"
 #include "fvttparser.h"
-#include "charaсterparser.h"
+#include "characterparser.h"
 #include <QGraphicsSceneContextMenuEvent>
 #include <QPen>
 #include <QMenu>

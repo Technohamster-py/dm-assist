@@ -7,7 +7,7 @@
 #include <QStandardItemModel>
 
 #include "dndcharsheetdialogs.h"
-#include "charaсterparser.h"
+#include "characterparser.h"
 #include <themediconmanager.h>
 
 

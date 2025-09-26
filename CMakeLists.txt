@@ -29,7 +29,7 @@ set(FILES
         campaign-tree-widget/campaigntreewidget.cpp campaign-tree-widget/campaigntreewidget.h
         campaign-tree-widget/hoverwidget.cpp    campaign-tree-widget/hoverwidget.h
         charsheet-widget/abstractcharsheetwidget.h
-        charsheet-widget/charaсterparser.h  charsheet-widget/charaсterparser.cpp
+        charsheet-widget/characterparser.h charsheet-widget/characterparser.cpp
         charsheet-widget/dndcharsheetwidget.h charsheet-widget/dndcharsheetwidget.cpp
         charsheet-widget/dndcharsheetdialogs.h charsheet-widget/dndcharsheetdialogs.cpp
         charsheet-widget/dndmodels.h charsheet-widget/dndmodels.cpp
