@@ -46,6 +46,10 @@ MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
+    ui->splitter->setStretchFactor(0, 1);
+    ui->splitter->setStretchFactor(1, 10);
+    ui->splitter->setStretchFactor(2, 1);
+
     progressBar = new QProgressBar(this);
     progressBar->setRange(0, 100);
     progressBar->setVisible(false);
