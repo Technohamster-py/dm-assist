@@ -49,6 +49,8 @@ broadcast music during an online game.
 ![settings-appearance.png](illustrations/settings-appearance.png)
 - **Theme** sets the application theme. Click _browse_ to choose a new, non-default theme in XML format.
 The file will be copied into the program's folder and will later be available in the settings menu.
+- **Style** defines the style of rendering graphical interface elements. **_ Recommended style is fusion_**
+- **Token name mode** and **Token font size** are responsible for the mode and parameters of drawing signatures with the names of characters on the map (for more information, see [Tokens](#using-tokens))
 
 ### Initiative Tracker
 ![settings-tracker.png](illustrations/settings-tracker.png)
@@ -232,6 +234,24 @@ To add files to a campaign, place them in the correct subfolder. Each file type 
 After adding new files, reload the campaign via `Campaign -> Reload from disk`.
 
 To move a campaign, just move the whole folder to a new location.
+
+### Using tokens
+To add a character token to the map, drag its element from the campaign tree onto the open map. If the character image has already been downloaded and is located in the campaign `Tokens` folder, it will be applied. If the image is missing, a stub will be applied.
+
+If the grid is enabled on the map, the token will be magnetically attached to it.
+
+![tokens.png](illustrations/tokens.png)
+
+For tokens, you can change the display mode and font size of the name signature in [settings](#appearance). There are 3 display options in total
+- Always display
+- Display on hover in a suggestion
+- Do not display
+
+By right-clicking on the token, a context menu is opened, from which you can
+- Add a character to the encounter
+- Open the character editor
+- Change the token size
+- Remove the token from the card
 
 ## Character Editor
 Character files use a format compatible with [LSS](https://longstoryshort.app/).
