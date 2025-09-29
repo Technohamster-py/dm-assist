@@ -64,7 +64,7 @@ protected:
     bool eventFilter(QObject* obj, QEvent* event) override;
 
 private:
-    ThemedIconManager(QObject* parent = nullptr);
+    explicit ThemedIconManager(QObject* parent = nullptr);
 
     struct IconTarget {
         QString path;
@@ -76,7 +76,7 @@ private:
 
     QList<IconTarget> m_targets;
 
-    void regenerateAndApplyIcon(const IconTarget& target) const;
+    static void regenerateAndApplyIcon(const IconTarget& target) ;
     void updateAllIcons();
 
 static QColor themeColor();

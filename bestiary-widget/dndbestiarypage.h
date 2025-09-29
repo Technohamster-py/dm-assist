@@ -17,7 +17,7 @@ Q_OBJECT
 
 public:
     explicit DndBestiaryPage(QWidget *parent = nullptr);
-    explicit DndBestiaryPage(QString filePath, QWidget* parent = nullptr);
+    explicit DndBestiaryPage(const QString& filePath, QWidget* parent = nullptr);
 
     ~DndBestiaryPage() override;
 

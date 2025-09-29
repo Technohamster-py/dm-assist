@@ -11,7 +11,7 @@
  * saving the configuration, and canceling the operation, as well as a label for
  * displaying warnings or errors.
  */
-SaveConfigDialog::SaveConfigDialog(QWidget *parent, QString baseDir) : QDialog(parent), warningLabel(nullptr) {
+SaveConfigDialog::SaveConfigDialog(QWidget *parent, const QString& baseDir) : QDialog(parent), warningLabel(nullptr) {
     setWindowTitle(tr("Сохранение проекта"));
     resize(400, 200);
 

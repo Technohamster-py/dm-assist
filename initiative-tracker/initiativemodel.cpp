@@ -160,10 +160,10 @@ QVariant InitiativeModel::data(const QModelIndex &index, int role) const {
 
     if (role == Qt::DecorationRole && index.column() == fields::statuses){
        QStringList iconPaths;
-        for (const auto status : characters[index.row()].statuses) {
+        for (const auto& status : characters[index.row()].statuses) {
             iconPaths << status.iconPath;
         }
-        return ThemedIconManager::instance().renderIconGrid(iconPaths, QSize(m_iconHeight, m_iconHeight), m_iconSpacing, m_iconsPerRow);
+        return ThemedIconManager::renderIconGrid(iconPaths, QSize(m_iconHeight, m_iconHeight), m_iconSpacing, m_iconsPerRow);
     }
 
     if (role == Qt::SizeHintRole && index.column() == fields::statuses){
@@ -436,7 +436,7 @@ bool InitiativeModel::saveToFile(const QString &filename) const {
         charElem.setAttribute("hp", c.hp);
         charElem.setAttribute("maxhp", c.maxHp);
 
-        for (auto status : c.statuses) {
+        for (const auto& status : c.statuses) {
             QDomElement statElem = doc.createElement("status");
             statElem.setAttribute("title", status.title);
             statElem.setAttribute("icon", status.iconPath);

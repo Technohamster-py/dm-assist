@@ -173,9 +173,9 @@ void MainWindow::coverMapWithFog(bool hide) {
     MapScene* scene = currentView->getScene();
 
     if (hide)
-        fogTool->hideAll(scene);
+        FogTool::hideAll(scene);
     else
-        fogTool->revealAll(scene);
+        FogTool::revealAll(scene);
 }
 
 /**
@@ -835,7 +835,7 @@ void MainWindow::saveSettings() {
  * @param campaignRoot The root directory of the campaign to be set up.
  *                     It should be a valid and accessible directory path.
  */
-void MainWindow::setupCampaign(const QString campaignRoot) {
+void MainWindow::setupCampaign(const QString &campaignRoot) {
     if (campaignRoot.isEmpty())
         return;
 
@@ -1267,7 +1267,7 @@ void MainWindow::setupToolbar() {
         QAction* chosen = contextMenu.exec(brushButton->mapToGlobal(pos));
         if (chosen == clearAllAction){
             auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
-            brushTool->clearAll(currentView->getScene());
+            BrushTool::clearAll(currentView->getScene());
         }
     });
 
@@ -1599,7 +1599,7 @@ void MainWindow::showSourcesMessageBox(const QMap<QString, QString> &sources)
     msgBox.setText("List of used sources:");
 
 
-    QTextBrowser *textBrowser = new QTextBrowser;
+    auto *textBrowser = new QTextBrowser;
     textBrowser->setHtml(html);
     textBrowser->setOpenExternalLinks(true);
 

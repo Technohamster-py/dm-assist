@@ -52,8 +52,8 @@ protected:
 class LineShapeTool : public SpellShapeTool {
 Q_OBJECT
 public:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override;
 };
 
 /**

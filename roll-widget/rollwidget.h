@@ -25,7 +25,7 @@ public:
         return QRandomGenerator::global()->bounded(1, diceValue+1);
     };
 
-    QString compactExpression(QString original);
+    QString compactExpression(const QString& original);
     bool compactMode() const {return m_compactMode;};
 
 public slots:
@@ -37,9 +37,9 @@ public slots:
 protected:
     QString m_lastRoll = "";
 
-    QRegularExpression tokenPattern = QRegularExpression(R"(([+\-]?[\d]*[d|к|д]\d+|[+\-]?\d+))", QRegularExpression::CaseInsensitiveOption);
-    QRegularExpression dicePattern = QRegularExpression(R"(([+\-]?)\s*(\d*)[d|к|д](\d+))", QRegularExpression::CaseInsensitiveOption);
-    QRegularExpression modifierPattern = QRegularExpression(R"([+\-]?\s*\d+)", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpression m_tokenPattern = QRegularExpression(R"(([+\-]?[\d]*[d|к|д]\d+|[+\-]?\d+))", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpression m_dicePattern = QRegularExpression(R"(([+\-]?)\s*(\d*)[d|к|д](\d+))", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpression m_modifierPattern = QRegularExpression(R"([+\-]?\s*\d+)", QRegularExpression::CaseInsensitiveOption);
 private:
     Ui::RollWidget *ui;
     bool m_compactMode = false;

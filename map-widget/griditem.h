@@ -23,8 +23,8 @@ public:
     static int modesCount() {return GridType::Hex;}
     static QString stringMode(int mode);
 private:
-    void paintSquareGrid(QPainter* p, const QRectF& rect, qreal stepPx);
-    void paintHexGrid(QPainter* p, const QRectF& rect, qreal flatToFlatPx);
+    static void paintSquareGrid(QPainter* p, const QRectF& rect, qreal stepPx);
+    static void paintHexGrid(QPainter* p, const QRectF& rect, qreal flatToFlatPx);
 
 private:
     QRectF m_rect;

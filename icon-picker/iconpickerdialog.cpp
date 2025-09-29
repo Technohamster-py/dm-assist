@@ -112,12 +112,12 @@ IconPickerDialog::IconPickerDialog(QWidget *parent)
     setAcceptDrops(true);
     setMinimumSize(400, 300);
 
-    QWidget *container = new QWidget();
+    auto *container = new QWidget();
     container->setLayout(gridLayout);
     scrollArea->setWidget(container);
     scrollArea->setWidgetResizable(true);
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    auto *mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(scrollArea);
     setLayout(mainLayout);
 
@@ -170,7 +170,7 @@ void IconPickerDialog::loadIcons() {
  */
 void IconPickerDialog::addIconToGrid(const QString &filePath) {
 
-    IconLabel *iconLabel = new IconLabel(filePath, this);
+    auto *iconLabel = new IconLabel(filePath, this);
 
     int index = gridLayout->count();
     int row = index / 4;

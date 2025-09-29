@@ -71,8 +71,8 @@ private:
 class UpdateBannerWidget : public QWidget {
     Q_OBJECT
 public:
-    explicit UpdateBannerWidget(QWidget *parent, const QString &versionUrl = "https://github.com/Technohamster-py/dm-assist/releases/latest", const QString &currentVersion = "0.0",
-                                const QString &latestVersion = "0.1");
+    explicit UpdateBannerWidget(QWidget *parent, QString versionUrl = "https://github.com/Technohamster-py/dm-assist/releases/latest", QString currentVersion = "0.0",
+                                QString latestVersion = "0.1");
 
     void setUrl(QString url) {m_versionUrl = std::move(url); updateLabel();};
     void setCurrentVersion(QString version) {m_currentVersion = std::move(version); updateLabel();};

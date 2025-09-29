@@ -7,6 +7,7 @@
 #include <QEvent>
 #include <QDebug>
 #include <QPalette>
+#include <utility>
 
 /**
  * Constructs a ThemedIconManager instance.
@@ -68,7 +69,7 @@ void ThemedIconManager::updateAllIcons() {
  *               the size for the pixmap, and the methods to apply the QIcon or QPixmap.
  *               If the target receiver is null, the operation is aborted.
  */
-void ThemedIconManager::regenerateAndApplyIcon(const IconTarget& target) const {
+void ThemedIconManager::regenerateAndApplyIcon(const IconTarget& target) {
     if (!target.receiver)
         return;
 
@@ -147,12 +148,11 @@ void ThemedIconManager::addPixmapTarget(const QString &svgPath, QObject *receive
                                        return t.receiver == receiver;
                                    }),
                     m_targets.end());
-
     IconTarget target;
     target.path = svgPath;
     target.size = size;
     target.receiver = receiver;
-    target.applyPixmap = applyPixmap;
+    target.applyPixmap = std::move(applyPixmap);
 
     m_targets.append(target);
     regenerateAndApplyIcon(m_targets.last());

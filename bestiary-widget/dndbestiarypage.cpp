@@ -31,7 +31,7 @@ DndBestiaryPage::~DndBestiaryPage() {
  *
  * @return A new instance of DndBestiaryPage configured with the given parent widget.
  */
-DndBestiaryPage::DndBestiaryPage(QString filePath, QWidget *parent) : AbstractCharsheetWidget(parent), ui(new Ui::DndBestiaryPage) {
+DndBestiaryPage::DndBestiaryPage(const QString& filePath, QWidget *parent) : AbstractCharsheetWidget(parent), ui(new Ui::DndBestiaryPage) {
     ui->setupUi(this);
     m_manager = new QNetworkAccessManager(this);
     connect(ui->infoField, &RollTextBrowser::rollRequested, [=](const QString& expr){emit rollRequested(expr);});

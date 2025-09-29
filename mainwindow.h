@@ -115,7 +115,7 @@ private:
 
     QProgressBar* progressBar;
 
-    void setupCampaign(QString campaignRoot);
+    void setupCampaign(const QString &campaignRoot);
     void setupPlayers();
     void setupTracker();
     void setupToolbar();

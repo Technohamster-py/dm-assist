@@ -135,5 +135,5 @@ void HeightMapTool::mouseReleaseEvent(QGraphicsSceneMouseEvent *event, QGraphics
 
     auto* region = new HeightRegionItem(polygon, h);
 
-    static_cast<MapScene*>(scene)->addUndoableItem(region);
+    dynamic_cast<MapScene*>(scene)->addUndoableItem(region);
 }

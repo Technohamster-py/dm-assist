@@ -102,7 +102,7 @@ struct InitiativeCharacter {
         writer.writeTextElement("AC", QString::number(ac));
         writer.writeTextElement("HP", hp);
         writer.writeTextElement("MaxHP", QString::number(maxHp));
-        for (auto status : statuses)
+        for (const auto& status : statuses)
             status.writeToXml(writer);
         writer.writeEndElement();
     }

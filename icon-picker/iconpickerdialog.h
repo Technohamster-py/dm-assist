@@ -84,7 +84,7 @@ public:
     explicit IconPickerDialog(QWidget *parent = nullptr);
 
 signals:
-    void iconSelected(const QString path);
+    void iconSelected(QString path);
 
 protected:
     void focusOutEvent(QFocusEvent *event) override;

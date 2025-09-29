@@ -429,7 +429,7 @@ void InitiativeTrackerWidget::setupHeaderStretchPolicy() {
     }
 }
 
-void InitiativeTrackerWidget::setBaseDir(QString dirPath) {
+void InitiativeTrackerWidget::setBaseDir(const QString& dirPath) {
     if (dirPath.isEmpty())
         m_baseDirectoryPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     else

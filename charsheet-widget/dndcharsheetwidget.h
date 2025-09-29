@@ -28,7 +28,7 @@ Q_OBJECT
 
 public:
     explicit DndCharsheetWidget(QWidget* parent = nullptr);
-    DndCharsheetWidget(const QString& filePath, QWidget* parent = nullptr);
+    explicit DndCharsheetWidget(const QString& filePath, QWidget* parent = nullptr);
     ~DndCharsheetWidget() override;
 
     void loadFromFile(const QString &path) override;

@@ -36,7 +36,7 @@ public:
     };
 
     explicit DndAttackModel(QObject* parent = nullptr);
-    DndAttackModel(const QJsonArray& attackList, QObject *parent = nullptr);
+    explicit DndAttackModel(const QJsonArray& attackList, QObject *parent = nullptr);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override {return m_attackList.size();};
     int columnCount(const QModelIndex &parent = QModelIndex()) const override {return 5;};

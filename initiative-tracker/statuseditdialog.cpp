@@ -83,7 +83,7 @@ bool StatusModel::setData(const QModelIndex &index, const QVariant &value, int r
 }
 
 void StatusModel::addStatus(const Status &status) {
-    for (int row; row < statuses.size(); ++row) {
+    for (int row = 0; row < statuses.size(); ++row) {
         if (status == statuses[row]){
             statuses[row].iconPath = status.iconPath;
             statuses[row].remainingRounds = status.remainingRounds;
@@ -218,7 +218,7 @@ void StatusEditDialog::populate() {
 QList<Status> StatusEditDialog::statuses() const {
     QList<Status> result;
 
-    for (auto standardStatus : standardStatuses) {
+    for (const auto& standardStatus : standardStatuses) {
         Status status;
         status.iconPath = standardStatusIcons[standardStatus];
         status.title = standardStatus;

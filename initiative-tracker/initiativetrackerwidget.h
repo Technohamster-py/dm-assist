@@ -33,7 +33,7 @@ Q_OBJECT
 public:
     explicit InitiativeTrackerWidget(QWidget *parent = nullptr, InitiativeModel *sharedModel = nullptr);
 
-    void setBaseDir(QString dirPath = "");
+    void setBaseDir(const QString& dirPath = "");
 
 signals:
     void fieldVisibilityChanged(int field, bool hidden);

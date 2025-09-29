@@ -42,6 +42,6 @@ private:
     QString m_rootPath;
     QString m_campaignName;
 
-    bool isValidCampaignRoot(const QString &rootPath);
-    QString loadCampaignName(const QString &rootPath);
+    static bool isValidCampaignRoot(const QString &rootPath);
+    static QString loadCampaignName(const QString &rootPath);
 };

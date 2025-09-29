@@ -106,17 +106,17 @@ void StatusDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 
     QVariant data = index.data(Qt::UserRole + 1);
     if (data.canConvert<QList<Status>>()) {
-        QList<Status> statuses = data.value<QList<Status>>();
+        auto statuses = data.value<QList<Status>>();
 
         int x = option.rect.x();
         int y = option.rect.y();
         int iconSize = option.rect.height();
 
         QStringList iconPaths;
-        for (const auto status : statuses) {
+        for (const auto& status : statuses) {
             iconPaths << status.iconPath;
         }
-        QPixmap icon = ThemedIconManager::instance().renderIconGrid(iconPaths);
+        QPixmap icon = ThemedIconManager::renderIconGrid(iconPaths);
         QRect iconRect(x, y, icon.width(), iconSize);
         painter->drawPixmap(iconRect, icon);
     }
@@ -133,7 +133,7 @@ bool StatusDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const
         QVariant statusData = index.data(Qt::UserRole + 1);
         if (statusData.canConvert<QList<Status>>()) {
             QString tooltip;
-            const QList<Status> statuses = statusData.value<QList<Status>>();
+            const auto statuses = statusData.value<QList<Status>>();
             for (const auto &status : statuses) {
                 tooltip += tr("%1 (%2 rounds)").arg(status.title).arg(status.remainingRounds) + "\n";
             }

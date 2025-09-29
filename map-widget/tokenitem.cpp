@@ -126,11 +126,6 @@ void TokenItem::setTitleDisplayMode(int mode) {
                 labelItem->setVisible(false);
             setToolTip(labelItem ? labelItem->toPlainText() : QString());
             break;
-        case TokenTitleDisplayMode::always:
-            if (labelItem)
-                labelItem->setVisible(true);
-            setToolTip(QString());
-            break;
         default:
             if (labelItem)
                 labelItem->setVisible(true);

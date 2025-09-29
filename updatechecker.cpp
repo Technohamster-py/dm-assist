@@ -4,10 +4,11 @@
 #include <QPushButton>
 #include <QDesktopServices>
 #include <QUrl>
+#include <utility>
 
-UpdateBannerWidget::UpdateBannerWidget(QWidget *parent, const QString &versionUrl, const QString &currentVersion,
-                                       const QString &latestVersion)
-        : QWidget(parent), m_versionUrl(versionUrl), m_currentVersion(currentVersion), m_latestVersion(latestVersion) {
+UpdateBannerWidget::UpdateBannerWidget(QWidget *parent, QString versionUrl, QString currentVersion,
+                                       QString latestVersion)
+        : QWidget(parent), m_versionUrl(std::move(versionUrl)), m_currentVersion(std::move(currentVersion)), m_latestVersion(std::move(latestVersion)) {
 
     setAttribute(Qt::WA_StyledBackground, true);
     setStyleSheet(R"(

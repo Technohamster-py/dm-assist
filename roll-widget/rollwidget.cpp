@@ -43,13 +43,13 @@ int RollWidget::executeRoll(QString command) {
     m_lastRoll.clear();
     QStringList rollParts;
 
-    auto it = tokenPattern.globalMatch(command);
+    auto it = m_tokenPattern.globalMatch(command);
     while (it.hasNext()) {
         auto match = it.next();
         QString token = match.captured(1).trimmed();
 
-        auto diceMatch = dicePattern.match(token);
-        auto modMatch = modifierPattern.match(token);
+        auto diceMatch = m_dicePattern.match(token);
+        auto modMatch = m_modifierPattern.match(token);
 
         if (diceMatch.hasMatch()) {
             QString signStr = diceMatch.captured(1);
@@ -106,15 +106,15 @@ int RollWidget::executeRoll(QString command) {
  * @return A QString representing the compacted dice roll expression. Dice terms are grouped, and modifiers
  *         are appended at the end. The resulting expression is simplified and formatted without unnecessary spaces.
  */
-QString RollWidget::compactExpression(QString original) {
-    auto it = tokenPattern.globalMatch(original);
+QString RollWidget::compactExpression(const QString& original) {
+    auto it = m_tokenPattern.globalMatch(original);
     QMap<QString, QMap<int, int>> diceGroups;
     QStringList modifiers;
 
     while (it.hasNext()) {
         QString token = it.next().captured(0).trimmed();
-        auto diceMatch = dicePattern.match(token);
-        auto modMatch = modifierPattern.match(token);
+        auto diceMatch = m_dicePattern.match(token);
+        auto modMatch = m_modifierPattern.match(token);
 
         if (diceMatch.hasMatch()) {
             QString signStr = diceMatch.captured(1);
@@ -175,7 +175,6 @@ void RollWidget::addDieToExpression(const QString &dieCode, bool rightClick) {
         return;
     }
 
-    QRegularExpression lastDiePattern(R"(([+\-]?)(\d*)(" + dieCode + R")\b)", QRegularExpression::CaseInsensitiveOption);
     QRegularExpression dicePattern(R"(([+\-]?)(\d*)d(\d+))");
 
     QRegularExpressionMatchIterator it = dicePattern.globalMatch(text);

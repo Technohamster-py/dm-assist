@@ -54,8 +54,8 @@ struct Settings{
         QString showHpComboBox = "initiative/showHpCombo";         ///< bool Показывать комбобокс с выбором режима в основном виджете
         QString sharedWindows = "initiative/sharedWindowsCount";   ///< uint8 - Количество открытых расшаренных окон (UNUSED)
         QString customStatuses = "initiative/customStatuses";      ///< list - Список кастомных статусов с названиями и иконками
-        QString customStatusTitle = "title";                       ///<
-        QString customStatusIcon = "icon";                         ///<
+            QString customStatusTitle = "title";                   ///< QString - Название кастомного статуса в списке
+            QString customStatusIcon = "icon";                     ///< QString - Путь к иконке кастомного статуса в списке
     };
     Initiative initiative;
 
