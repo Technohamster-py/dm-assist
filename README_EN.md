@@ -1,6 +1,10 @@
-
 # DM-assist
 A tool to assist dungeon masters in tabletop role-playing games
+
+# Thanks
+Thanks to [TTG Club](https://ttg.club/) for the icons applied in the initiative table!
+
+You can help the project [here](https://technohamster.taplink.ws). This is voluntary and does not affect the functionality of the application in any way.
 
 # Short Description
 This tool originated from the idea that it's inconvenient to make several clicks to switch music during a tabletop RPG session.
