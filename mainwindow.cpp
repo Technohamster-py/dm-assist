@@ -420,6 +420,7 @@ void MainWindow::loadSettings() {
     changeLanguage(settings.value(paths.general.lang, "ru_RU").toString());
     /// Initiative tracker
     initiativeTrackerWidget->setHpDisplayMode(settings.value(paths.initiative.hpBarMode, 0).toInt());
+    initiativeTrackerWidget->setHpComboBoxVisible(settings.value(paths.initiative.showHpComboBox, true).toBool());
     autoRoll = settings.value(paths.initiative.autoInitiative, false).toBool();
     int initiativeFields = settings.value(paths.initiative.fields, 7).toInt();
     initiativeTrackerWidget->setSharedFieldVisible(0, initiativeFields & iniFields::name);

@@ -379,7 +379,7 @@ void InitiativeTrackerWidget::setHpDisplayMode(int mode) {
  *
  * @param visible An integer indicating whether the HP combo box should be visible (true/non-zero) or hidden (false/zero).
  */
-void InitiativeTrackerWidget::setHpComboBoxVisible(int visible) {
+void InitiativeTrackerWidget::setHpComboBoxVisible(bool visible) {
     ui->hpModeBox->setVisible(visible);
 }
 

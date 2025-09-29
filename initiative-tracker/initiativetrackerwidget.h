@@ -48,7 +48,7 @@ public slots:
 
     void setSharedFieldVisible(int index, bool visible);
     void setHpDisplayMode(int mode);
-    void setHpComboBoxVisible(int visible);
+    void setHpComboBoxVisible(bool visible);
 
     void addCharacter(const QJsonDocument& characterDocument);
     void addCharacter(QString name, int maxHp, int ac = 10, int hp = 0, int initiative = 0, int speed = 30);
