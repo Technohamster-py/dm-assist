@@ -156,7 +156,7 @@ void CampaignTreeWidget::populateTree(const QString &path, QTreeWidgetItem *pare
         auto *item = new QTreeWidgetItem();
         parentItem->addChild(item);
 
-        auto *widget = new HoverWidget(entry.fileName(), type);
+        auto *widget = new HoverWidget(entry.fileName().split(".")[0], type);
         setItemWidget(item, 0, widget);
 
         QString fullPath = entry.absoluteFilePath();
