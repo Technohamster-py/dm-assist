@@ -118,7 +118,9 @@ MainWindow::MainWindow(QWidget *parent) :
     showMaximized();
 
     loadSettings();
+    setupCampaign(currentCampaignDir);
     saveSettings();
+
 
     updateChecker->checkFotUpdates();
 }
@@ -452,7 +454,6 @@ void MainWindow::loadSettings() {
 
     /// Campaign
     currentCampaignDir = settings.value(paths.session.campaign, "").toString();
-    setupCampaign(currentCampaignDir);
 
     /// Rolls
     rollWidget->setCompactMode(settings.value(paths.rolls.compactMode).toBool());
