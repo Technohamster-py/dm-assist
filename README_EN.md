@@ -64,13 +64,13 @@ The file will be copied into the program's folder and will later be available in
 [details](#hp-display-modes)
 
 ## Music
-Press ▶ to start playback. You can also use the shortcut `ctrl + playlist_number`. The number is shown to the left of the playlist name for convenience.
+Press <img alt="play.png" height="20" src="static/play.svg" width="20"/> to start playback. You can also use the shortcut `ctrl + playlist_number`. The number is shown to the left of the playlist name for convenience.
 
 Each playlist can have its volume adjusted independently using its individual slider. Additionally, you can adjust the overall volume using the large slider below all players.
 
 ![img.png](illustrations/music-widget.png)
 
-Click 🖊 to open the playlist editing window. Here, you can set the display name, add (+), delete (select and press -), and reorder (drag and drop) tracks.
+Click <img alt="edit.png" height="20" src="static/edit.svg" width="20"/> to open the playlist editing window. Here, you can set the display name, add (+), delete (select and press -), and reorder (drag and drop) tracks.
 After closing the dialog, selected files are copied to the program’s working folder. This folder is cleared when the program is closed.
 
 ![img.png](illustrations/playlist-edit.png)

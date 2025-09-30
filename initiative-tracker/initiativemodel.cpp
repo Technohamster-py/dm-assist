@@ -116,7 +116,7 @@ QVariant InitiativeModel::headerData(int section, Qt::Orientation orientation, i
  *   - Column `3` (HP column): Evaluates the expression if possible and returns the HP value.
  *     - If `Qt::UserRole` is used, it returns the character's maximum HP.
  *   - Column `4`: Returns the maximum HP value.
- *   - Column `5`: Returns the delete symbol ("❌").
+ *   - Column `5`: Returns the delete symbol ("X").
  * - For `Qt::BackgroundRole`:
  *   - Highlights the row for the current index with a specific background color.
  *
