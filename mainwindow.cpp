@@ -46,6 +46,10 @@ MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
+    ui->splitter->setStretchFactor(0, 1);
+    ui->splitter->setStretchFactor(1, 10);
+    ui->splitter->setStretchFactor(2, 1);
+
     progressBar = new QProgressBar(this);
     progressBar->setRange(0, 100);
     progressBar->setVisible(false);
@@ -444,6 +448,8 @@ void MainWindow::loadSettings() {
     QString style = settings.value(paths.appearance.style, "Fusion").toString();
     QApplication::setStyle(QStyleFactory::create(style));
 
+    ui->splitter->restoreState(settings.value(paths.appearance.stretch).toByteArray());
+
     /// Campaign
     currentCampaignDir = settings.value(paths.session.campaign, "").toString();
     setupCampaign(currentCampaignDir);
@@ -810,6 +816,7 @@ void MainWindow::saveSettings() {
     settings.setValue(paths.general.defaultCampaignDir, defaultCampaignDir);
     settings.setValue(paths.session.campaign, campaignTreeWidget->root());
     settings.setValue(paths.rolls.compactMode, rollWidget->compactMode());
+    settings.setValue(paths.appearance.stretch, ui->splitter->saveState());
     settings.sync();
 }
 
