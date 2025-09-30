@@ -448,6 +448,8 @@ void MainWindow::loadSettings() {
     QString style = settings.value(paths.appearance.style, "Fusion").toString();
     QApplication::setStyle(QStyleFactory::create(style));
 
+    ui->splitter->restoreState(settings.value(paths.appearance.stretch).toByteArray());
+
     /// Campaign
     currentCampaignDir = settings.value(paths.session.campaign, "").toString();
     setupCampaign(currentCampaignDir);
@@ -814,6 +816,7 @@ void MainWindow::saveSettings() {
     settings.setValue(paths.general.defaultCampaignDir, defaultCampaignDir);
     settings.setValue(paths.session.campaign, campaignTreeWidget->root());
     settings.setValue(paths.rolls.compactMode, rollWidget->compactMode());
+    settings.setValue(paths.appearance.stretch, ui->splitter->saveState());
     settings.sync();
 }
 

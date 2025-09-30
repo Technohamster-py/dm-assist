@@ -44,6 +44,7 @@ struct Settings{
     struct Appearance{
         QString theme = "appearance/theme";
         QString style = "appearance/style";
+        QString stretch = "appearance/mainStretch";
     };
     Appearance appearance;
 
