@@ -21,6 +21,7 @@ DndBestiaryPage::DndBestiaryPage(QWidget *parent) : AbstractCharsheetWidget(pare
 }
 
 DndBestiaryPage::~DndBestiaryPage() {
+    delete m_manager;
     delete ui;
 }
 
