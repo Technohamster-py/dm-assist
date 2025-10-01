@@ -41,13 +41,7 @@ void TokenItem::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
     else if (selected == sheet) emit openCharSheet(m_filePath);
     else if (selected == size) {
         m_realSize = QInputDialog::getInt(nullptr, "Creature size", "Set creature size in feet", m_realSize, 1, 100);
-        qreal sizePx = m_realSize * m_pxPerFoot;
-        QPixmap scaled = originalPixmap.scaled(sizePx, sizePx, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-        pixmapItem->setPixmap(scaled);
-        pixmapItem->setOffset(-pixmapItem->boundingRect().width()/2, -pixmapItem->boundingRect().height()/2);
-        labelItem->setPos(0, pixmapItem->boundingRect().height() / 2.0 + 4);
-        update();
-        scene()->update();
+        updateSize();
     }
     else if (selected == del){
         scene()->removeItem(this);
@@ -163,4 +157,19 @@ void TokenItem::setFontSize(int size) {
 void TokenItem::setRealSize(qreal size) {
     m_realSize = size;
     scene()->update();
+}
+
+void TokenItem::updateSize() {
+    qreal sizePx = m_realSize * m_pxPerFoot;
+    QPixmap scaled = originalPixmap.scaled(sizePx, sizePx, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    pixmapItem->setPixmap(scaled);
+    pixmapItem->setOffset(-pixmapItem->boundingRect().width()/2, -pixmapItem->boundingRect().height()/2);
+    labelItem->setPos(0, pixmapItem->boundingRect().height() / 2.0 + 4);
+    update();
+    scene()->update();
+}
+
+void TokenItem::updateScaleFactor(qreal footPerPx) {
+    m_pxPerFoot = 1/footPerPx;
+    updateSize();
 }

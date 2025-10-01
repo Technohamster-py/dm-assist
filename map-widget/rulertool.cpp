@@ -70,6 +70,13 @@ void RulerTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene 
             lineItem->setData(0, QVariant::fromValue<QGraphicsItem*>(label));
             label->setData(0, QVariant::fromValue<QGraphicsItem*>(lineItem));
 
+            connect(mapScene, &MapScene::scaleChanged, [lineItem, label, mapScene](qreal newScale){
+                double distance = lineItem->line().length() * mapScene->getScaleFactor();
+                qreal dz = abs(mapScene->heightAt(lineItem->line().p1()) - mapScene->heightAt(lineItem->line().p2()));
+                distance = std::sqrt(distance*distance + dz*dz);
+                label->setPlainText(QString("%1 ft").arg(distance, 0, 'f', 1));
+            });
+
             permanentItems.append(lineItem);
             permanentItems.append(label);
 

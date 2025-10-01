@@ -818,6 +818,7 @@ void MapScene::addToken(const TokenStruct &tokenStruct, const QString &filePath,
 
     connect(token, &TokenItem::openCharSheet, this, &MapScene::openCharseetRequested);
     connect(token, &TokenItem::addToTracker, this, &MapScene::addToEncounterRequested);
+    connect(this, &MapScene::scaleChanged, token, &TokenItem::updateScaleFactor);
     token->setTitleDisplayMode(m_tokenMode);
 
     token->setZValue(mapLayers::Tokens);
