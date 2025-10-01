@@ -133,6 +133,8 @@ void MapScene::setScaleFactor(double factor) {
     m_scaleFactor = factor;
     if (m_gridItem)
         m_gridItem->setPixelsPerFoot(1/m_scaleFactor);
+
+    emit scaleChanged(m_scaleFactor);
 }
 
 /**
@@ -816,6 +818,7 @@ void MapScene::addToken(const TokenStruct &tokenStruct, const QString &filePath,
 
     connect(token, &TokenItem::openCharSheet, this, &MapScene::openCharseetRequested);
     connect(token, &TokenItem::addToTracker, this, &MapScene::addToEncounterRequested);
+    connect(this, &MapScene::scaleChanged, token, &TokenItem::updateScaleFactor);
     token->setTitleDisplayMode(m_tokenMode);
 
     token->setZValue(mapLayers::Tokens);

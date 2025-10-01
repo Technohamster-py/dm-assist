@@ -38,6 +38,9 @@ signals:
     void addToTracker(const QString&);
     void openCharSheet(const QString&);
 
+public slots:
+    void updateScaleFactor(qreal footPerPx);
+
 protected:
     void contextMenuEvent(QGraphicsSceneContextMenuEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
@@ -52,6 +55,9 @@ private:
     QString m_filePath;
     int m_gridStep = 5;
     int m_mode = TokenTitleDisplayMode::always;
+
+
+    void updateSize();
 };
 
 
