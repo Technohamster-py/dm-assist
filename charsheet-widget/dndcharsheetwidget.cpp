@@ -26,6 +26,8 @@ DndCharsheetWidget::DndCharsheetWidget(QWidget* parent) :
     ui->resourcesView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->resourcesView->setDropIndicatorShown(true);
 
+    m_manager = new QNetworkAccessManager(this);
+
     setupShortcuts();
     connectSignals();
 
@@ -89,6 +91,9 @@ DndCharsheetWidget::DndCharsheetWidget(const QString& filePath, QWidget *parent)
 }
 
 DndCharsheetWidget::~DndCharsheetWidget() {
+    delete m_manager;
+    delete attackModel;
+    delete resourceModel;
     delete ui;
 }
 
@@ -290,7 +295,8 @@ void DndCharsheetWidget::populateWidget(const DndCharacterData& data) {
     attackModel->fromJson(data.weapons);
     resourceModel->fromJson(data.resourcesObj);
 
-    downloadToken(data.tokenUrl);
+    if (!data.tokenUrl.isEmpty())
+        downloadToken(data.tokenUrl);
 }
 
 DndCharacterData DndCharsheetWidget::collectData() {
@@ -749,7 +755,6 @@ bool DndCharsheetWidget::downloadToken(const QString &link) {
 
     // async download
     QNetworkRequest req(qurl);
-    if (!m_manager) m_manager = new QNetworkAccessManager;
     auto reply = m_manager->get(req);
 
     connect(reply, &QNetworkReply::finished, this, [=]() {
