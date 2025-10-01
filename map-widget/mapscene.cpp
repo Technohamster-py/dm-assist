@@ -133,6 +133,8 @@ void MapScene::setScaleFactor(double factor) {
     m_scaleFactor = factor;
     if (m_gridItem)
         m_gridItem->setPixelsPerFoot(1/m_scaleFactor);
+
+    emit scaleChanged(m_scaleFactor);
 }
 
 /**
