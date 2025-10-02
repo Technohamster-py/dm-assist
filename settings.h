@@ -33,18 +33,19 @@ enum iniFields{
 
 struct Settings{
     struct General{
-        QString audioDevice = "common/audioDevice";    ///< int Выбранное аудиоустройство
-        QString dir = "common/dir";                    ///< String рабочая папка
-        QString lang = "common/lang";                  ///< String язык
-        QString volume = "common/volume";              ///< int основной ползунок громкости
-        QString defaultCampaignDir = "common/defaultCampaignDir"; ///< String папка в которую будут сохраняться кампании по-умолчанию
+        QString audioDevice = "common/audioDevice";                ///< int Выбранное аудиоустройство
+        QString dir = "common/dir";                                ///< String рабочая папка
+        QString lang = "common/lang";                              ///< String язык
+        QString volume = "common/volume";                          ///< int основной ползунок громкости
+        QString defaultCampaignDir = "common/defaultCampaignDir";  ///< String папка в которую будут сохраняться кампании по-умолчанию
+        QString openLastMap = "common/openLastMap";                ///< bool
     };
     General general;
 
     struct Appearance{
-        QString theme = "appearance/theme";
-        QString style = "appearance/style";
-        QString stretch = "appearance/mainStretch";
+        QString theme = "appearance/theme";                        ///< string
+        QString style = "appearance/style";                        ///< string
+        QString stretch = "appearance/mainStretch";                ///< byteArray
     };
     Appearance appearance;
 
@@ -67,11 +68,31 @@ struct Settings{
         QString color = "map/color";                        ///< string цвет инструментов
         QString tokenTitleMode = "map/tokenTitleMode";      ///< int режим отображения имени у токенов на карте
         QString tokenFontSize = "map/tokenFontSize";        ///< int размер шрифта токенов
+        QString masterFogOpacity = "map/masterFogOpacity";  ///< int %
+        QString playerFogOpacity = "map/playerFogOpacity";  ///< int %
+        QString fogColor = "map/fogColor";                  ///< string
+        QString defaultGridSize = "map/defaultGridSize";    ///< int
     };
     Map map;
 
+    struct Hotkeys{
+        QString ruler = "hotkeys/tools/ruler";              ///< string
+        QString height = "hotkeys/tools/height";            ///< string
+        QString brush = "hotkeys/tools/brush";              ///< string
+        QString fogHide = "hotkeys/tools/fogHide";          ///< string
+        QString fogReveal = "hotkeys/tools/fogReveal";      ///< string
+        QString light = "hotkeys/tools/light";              ///< string
+        QString line = "hotkeys/tools/line";                ///< string
+        QString circle = "hotkeys/tools/circle";            ///< string
+        QString square = "hotkeys/tools/square";            ///< string
+        QString triangle = "hotkeys/tools/triangle";        ///< string
+    };
+    Hotkeys hotkeys;
+
     struct LastSession {
-        QString campaign = "session/campaign";
+        QString campaign = "session/campaign";              ///< string
+        QString recent = "session/recent";                  ///< list
+            QString path = "path";                          ///< string
     };
     LastSession session;
 
