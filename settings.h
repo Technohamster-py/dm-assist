@@ -30,6 +30,11 @@ enum iniFields{
     del = 32
 };
 
+enum startActions{
+    openLast = 0,
+    showRecent,
+    showEmptyWindow
+};
 
 struct Settings{
     struct General{
@@ -39,6 +44,8 @@ struct Settings{
         QString volume = "common/volume";                          ///< int основной ползунок громкости
         QString defaultCampaignDir = "common/defaultCampaignDir";  ///< String папка в которую будут сохраняться кампании по-умолчанию
         QString openLastMap = "common/openLastMap";                ///< bool
+        QString startAction = "common/doOnStart";                  ///< int
+        QString checkForUpdates = "common/checkForUpdates";        ///< bool
     };
     General general;
 
@@ -46,11 +53,13 @@ struct Settings{
         QString theme = "appearance/theme";                        ///< string
         QString style = "appearance/style";                        ///< string
         QString stretch = "appearance/mainStretch";                ///< byteArray
+        QString scale = "appearance/scale";                        ///< int
     };
     Appearance appearance;
 
     struct Initiative {
-        QString autoInitiative = "initiative/autoRoll";            ///< uint8 (0:7) Автоматические броски инициативы для NPC/Монстров/Игроков
+        QString autoInitiative = "initiative/autoRoll/character";  ///< bool Автоматические броски инициативы для Игроков
+        QString beastAutoInitiative = "initiative/autoRoll/beast"; ///< bool Автоматические броски инициативы для Монстров
         QString fields = "initiative/fields";                      ///< uint8 Режим отображения полей в трекере инициативы
         QString hpBarMode = "initiative/hpBar";                    ///< uint8 (0:2) Режим отображения здоровья
         QString showHpComboBox = "initiative/showHpCombo";         ///< bool Показывать комбобокс с выбором режима в основном виджете
@@ -68,8 +77,8 @@ struct Settings{
         QString color = "map/color";                        ///< string цвет инструментов
         QString tokenTitleMode = "map/tokenTitleMode";      ///< int режим отображения имени у токенов на карте
         QString tokenFontSize = "map/tokenFontSize";        ///< int размер шрифта токенов
-        QString masterFogOpacity = "map/masterFogOpacity";  ///< int %
-        QString playerFogOpacity = "map/playerFogOpacity";  ///< int %
+        QString masterFogOpacity = "map/FogOpacity/master"; ///< int %
+        QString playerFogOpacity = "map/FogOpacity/player"; ///< int %
         QString fogColor = "map/fogColor";                  ///< string
         QString defaultGridSize = "map/defaultGridSize";    ///< int
     };

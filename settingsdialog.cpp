@@ -99,9 +99,12 @@ void SettingsDialog::loadSettings() {
     int index = ui->languageComboBox->findData(currentLanguage);
     if (index != -1)
         ui->languageComboBox->setCurrentIndex(index);
+    ui->startActionComboBox->setCurrentIndex(settings.value(paths.general.startAction, startActions::showEmptyWindow).toInt());
+    ui->updateCheckerBox->setChecked(settings.value(paths.general.checkForUpdates, true).toBool());
 
     /// Initiative
     ui->characterAutoRoll->setChecked(settings.value(paths.initiative.autoInitiative, false).toBool());
+    ui->beastAutoRoll->setChecked(settings.value(paths.initiative.beastAutoInitiative, false).toBool());
     int initiativeFields = settings.value(paths.initiative.fields, 7).toInt();
     ui->nameCheckBox->setChecked(initiativeFields & iniFields::name);
     ui->initiativeCheckBox->setChecked(initiativeFields & iniFields::init);
@@ -124,8 +127,28 @@ void SettingsDialog::loadSettings() {
     if (index != -1)
         ui->styleComboBox->setCurrentIndex(index);
 
+    ui->scaleSlider->setValue(settings.value(paths.appearance.scale, 100).toInt());
+
+    /// Map
     ui->tokenComboBox->setCurrentIndex(settings.value(paths.map.tokenTitleMode, 0).toInt());
     ui->fontSizeSpinBox->setValue(settings.value(paths.map.tokenFontSize, 12).toInt());
+    ui->masterFogSlider->setValue(settings.value(paths.map.masterFogOpacity, 40).toInt());
+    ui->playerFogSlider->setValue(settings.value(paths.map.playerFogOpacity, 100).toInt());
+    ui->fogColorButton->setText(settings.value(paths.map.fogColor, "#000000").toString());
+    ui->lastMapCheckBox->setChecked(settings.value(paths.general.openLastMap, false).toBool());
+    ui->gridSizeBox->setValue(settings.value(paths.map.defaultGridSize, 5).toInt());
+
+    /// Hotkeys
+    ui->rulerEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.ruler).toString()));
+    ui->heightEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.height).toString()));
+    ui->brushEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.brush).toString()));
+    ui->fogHideEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.fogHide).toString()));
+    ui->fogRevealEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.fogReveal).toString()));
+    ui->lightEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.light).toString()));
+    ui->lightEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.light).toString()));
+    ui->circleEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.circle).toString()));
+    ui->squareEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.square).toString()));
+    ui->triangleEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.triangle).toString()));
 }
 
 /**
@@ -210,31 +233,54 @@ void SettingsDialog::saveSettings() {
     settings.setValue(paths.general.audioDevice, deviceIndices[ui->deviceComboBox->currentIndex()]);
     settings.setValue(paths.general.dir, ui->folderEdit->text());
     settings.setValue(paths.general.lang, ui->languageComboBox->currentData().toString());
+    settings.setValue(paths.general.startAction, ui->startActionComboBox->currentIndex());
+    settings.setValue(paths.general.checkForUpdates, ui->updateCheckerBox->isChecked());
 
     /// Initiative
     int initiativeFields = 0;
     if (ui->nameCheckBox->isChecked())
-        initiativeFields = initiativeFields + 1;
+        initiativeFields = initiativeFields + iniFields::name;
     if (ui->initiativeCheckBox->isChecked())
-        initiativeFields = initiativeFields + 2;
+        initiativeFields = initiativeFields + iniFields::init;
     if (ui->acCheckBox->isChecked())
-        initiativeFields = initiativeFields + 4;
+        initiativeFields = initiativeFields + iniFields::ac;
     if (ui->hpCheckBox->isChecked())
-        initiativeFields = initiativeFields + 8;
+        initiativeFields = initiativeFields + iniFields::hp;
     if (ui->maxhpCheckBox->isChecked())
-        initiativeFields = initiativeFields + 16;
+        initiativeFields = initiativeFields + iniFields::maxHp;
     if (ui->deleteCheckBox->isChecked())
-        initiativeFields = initiativeFields + 32;
+        initiativeFields = initiativeFields + iniFields::del;
     settings.setValue(paths.initiative.fields, initiativeFields);
     settings.setValue(paths.initiative.hpBarMode, ui->hpModeComboBox->currentIndex());
     settings.setValue(paths.initiative.showHpComboBox, ui->showControlCheckBox->isChecked());
     settings.setValue(paths.initiative.autoInitiative, ui->characterAutoRoll->isChecked());
+    settings.setValue(paths.initiative.beastAutoInitiative, ui->beastAutoRoll->isChecked());
 
     /// Appearance
     settings.setValue(paths.appearance.theme, ui->themeComboBox->currentData().toString());
     settings.setValue(paths.appearance.style, ui->styleComboBox->currentData().toString());
+    settings.setValue(paths.appearance.scale, ui->scaleSlider->value());
+
+    /// Map
     settings.setValue(paths.map.tokenTitleMode, ui->tokenComboBox->currentIndex());
     settings.setValue(paths.map.tokenFontSize, ui->fontSizeSpinBox->value());
+    settings.setValue(paths.map.masterFogOpacity, ui->masterFogSlider->value());
+    settings.setValue(paths.map.playerFogOpacity, ui->playerFogSlider->value());
+    settings.setValue(paths.map.fogColor, ui->fogColorButton->text());
+    settings.setValue(paths.map.defaultGridSize, ui->gridSizeBox->value());
+    settings.setValue(paths.general.openLastMap, ui->lastMapCheckBox->isChecked());
+
+    /// Hotkeys
+    settings.setValue(paths.hotkeys.ruler, ui->rulerEdit->keySequence().toString());
+    settings.setValue(paths.hotkeys.height, ui->heightEdit->keySequence().toString());
+    settings.setValue(paths.hotkeys.brush, ui->brushEdit->keySequence().toString());
+    settings.setValue(paths.hotkeys.fogHide, ui->fogHideEdit->keySequence().toString());
+    settings.setValue(paths.hotkeys.fogReveal, ui->fogRevealEdit->keySequence().toString());
+    settings.setValue(paths.hotkeys.light, ui->lightEdit->keySequence().toString());
+    settings.setValue(paths.hotkeys.line, ui->lineEdit->keySequence().toString());
+    settings.setValue(paths.hotkeys.circle, ui->circleEdit->keySequence().toString());
+    settings.setValue(paths.hotkeys.square, ui->squareEdit->keySequence().toString());
+    settings.setValue(paths.hotkeys.triangle, ui->triangleEdit->keySequence().toString());
 
     settings.sync();
 }
