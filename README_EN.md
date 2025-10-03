@@ -244,6 +244,10 @@ To add a character token to the map, drag its element from the campaign tree ont
 
 If the grid is enabled on the map, the token will be magnetically attached to it.
 
+#### Change/ add tokens
+To add/replace an image to a character, upload the image to the Tokens folder of your campaign.
+> Important: When using character files with LSS, tokens may not be downloaded automatically due to server unavailability. In this case, download the image manually to the Tokens folder **with exactly the file name that LSS suggests.**
+
 ![tokens.png](illustrations/tokens.png)
 
 For tokens, you can change the display mode and font size of the name signature in [settings](#appearance). There are 3 display options in total
