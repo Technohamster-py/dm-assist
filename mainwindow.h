@@ -86,6 +86,7 @@ private:
     QString currentLanguage;
     QString currentCampaignDir;
     QString defaultCampaignDir;
+    bool openLastMap = false;
 
     int deviceIndex = -1;
     QVector<MusicPlayerWidget*> players;

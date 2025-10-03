@@ -417,6 +417,7 @@ void MainWindow::loadSettings() {
     if (!dir.exists())
         dir.mkpath(".");
     defaultCampaignDir = settings.value(paths.general.defaultCampaignDir, "").toString();
+    openLastMap = settings.value(paths.general.openLastMap, false).toBool();
     /// Music
     for (MusicPlayerWidget *player : players) {
         player->setAudioOutput(settings.value(paths.general.audioDevice, 0).toInt());
@@ -730,9 +731,28 @@ void MainWindow::closeCampaign() {
     removeDirectoryRecursively(rootPath + "/Music", false);
     saveMusicConfigFile(rootPath + "/Music/playerConfig.xml");
 
-    for (int i = 0; i < mapTabWidget->count(); ++i) {
-        exportMap(rootPath + "/Maps/" + mapTabWidget->widget(i)->objectName(), i);
+    QFile file(rootPath + "/campaign.json");
+    QJsonArray lastMaps;
+    QJsonDocument doc;
+    QJsonObject obj;
+    if (file.open(QIODevice::ReadOnly)){
+        doc = QJsonDocument::fromJson(file.readAll());
+        obj = doc.object();
     }
+    file.close();
+
+    for (int i = 0; i < mapTabWidget->count(); ++i) {
+        lastMaps.append(rootPath + "/Maps/" + mapTabWidget->tabText(i) + ".dam");
+        exportMap(rootPath + "/Maps/" + mapTabWidget->tabText(i) + ".dam", i);
+    }
+    obj["openedMaps"] = lastMaps;
+    doc = QJsonDocument(obj);
+
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)){
+        file.write(doc.toJson(QJsonDocument::Indented));
+        file.close();
+    }
+
 
     currentCampaignDir = "";
     campaignTreeWidget->clear();
@@ -868,6 +888,22 @@ void MainWindow::setupCampaign(const QString &campaignRoot) {
 
     foreach(MusicPlayerWidget* player, players){
         removeDirectoryRecursively(player->getLocalDirPath());
+    }
+
+    QFile file(campaignRoot + "/campaign.json");
+    QJsonArray lastMaps;
+    if (file.open(QIODevice::ReadOnly)){
+        QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+        QJsonObject obj = doc.object();
+        lastMaps = obj.value("openedMaps").toArray();
+    }
+    file.close();
+
+    if (openLastMap && !lastMaps.isEmpty())
+    {
+        for (const auto& fileRef : lastMaps) {
+            openMapFromFile(fileRef.toString());
+        }
     }
 
     QString musicConfigFile = campaignRoot + "/Music/playerConfig.xml";
