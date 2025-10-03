@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QTreeWidget>
+#include <QKeySequenceEdit>
 #include "settings.h"
 
 QT_BEGIN_NAMESPACE
@@ -39,6 +40,8 @@ private slots:
     void on_folderButton_clicked();
     void on_themeButton_clicked();
 
+    void onKeySequenceChanged(QKeySequence newSeq);
+
 private:
     Ui::SettingsDialog *ui;
 
@@ -48,6 +51,9 @@ private:
     void populateAudioDevices();
     QStringList deviceNames;
     QVector<int> deviceIndices;
+
+    QHash<QKeySequenceEdit*, QString> m_hotkeyHash;
+    bool validateKeySequences();
 
     void populateLanguages();
     void populateThemes();

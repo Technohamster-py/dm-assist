@@ -2,6 +2,7 @@
 #include "ui_settingsdialog.h"
 
 #include <QSettings>
+#include <QToolTip>
 #include <QStandardPaths>
 #include <QFileDialog>
 #include <QStyleFactory>
@@ -30,6 +31,10 @@ SettingsDialog::SettingsDialog(QString organisationName, QString applicationName
 
     ui->navTree->expandAll();
     ui->navTree->setColumnHidden(1, true);
+
+    for (auto * edit : ui->hotkeysPage->findChildren<QKeySequenceEdit*>()){
+        connect(edit, &QKeySequenceEdit::keySequenceChanged, this, &SettingsDialog::onKeySequenceChanged);
+    }
 
     populateAudioDevices();
     populateLanguages();
@@ -339,6 +344,10 @@ void SettingsDialog::populateAudioDevices() {
  *   the dialog and emits the `accepted()` signal to notify that the dialog was confirmed.
  */
 void SettingsDialog::on_applyButton_clicked() {
+    if (!validateKeySequences()){
+        ui->applyButton->setEnabled(false);
+        return;
+    }
     saveSettings();
     accept();
 }
@@ -407,6 +416,35 @@ void SettingsDialog::populateTokenModes() {
     for (int i = 0; i <= TokenTitleDisplayMode::noTitle; i++){
         ui->tokenComboBox->addItem(TokenItem::stringMode(i));
     }
+}
+
+void SettingsDialog::onKeySequenceChanged(QKeySequence newSeq) {
+    auto *editSender = qobject_cast<QKeySequenceEdit*>(sender());
+    if (!editSender) return;
+
+    QString key = newSeq.toString(QKeySequence::NativeText);
+    m_hotkeyHash[editSender] = key;
+
+    ui->applyButton->setEnabled(validateKeySequences());
+}
+
+bool SettingsDialog::validateKeySequences() {
+    bool ok = true;
+    QHash<QString, int> countHash;
+    for (auto it = m_hotkeyHash.begin(); it != m_hotkeyHash.end(); ++it) {
+        if (!it.value().isEmpty())
+            countHash[it.value()]++;
+    }
+
+    for (auto it = m_hotkeyHash.begin(); it != m_hotkeyHash.end(); ++it) {
+        if (countHash[it.value()] > 1) {
+            it.key()->setStyleSheet("color: #FF0000"); ///< Error
+            ok = false;
+        } else {
+            it.key()->setStyleSheet("color: palette(text)"); ///< OK
+        }
+    }
+    return ok;
 }
 
 
