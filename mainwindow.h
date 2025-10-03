@@ -111,6 +111,17 @@ private:
     HeightMapTool* heightMapTool;
     QActionGroup *toolGroup;
 
+    QToolButton* rulerButton;
+    QToolButton* fogHideButton;
+    QToolButton* fogRevealButton;
+    QToolButton* lightButton;
+    QToolButton* lineButton;
+    QToolButton* circleButton;
+    QToolButton* squareButton;
+    QToolButton* triangleButton;
+    QToolButton* brushButton;
+    QToolButton* heightButton;
+
     RollWidget* rollWidget;
 
     QProgressBar* progressBar;

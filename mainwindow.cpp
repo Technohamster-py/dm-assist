@@ -467,6 +467,18 @@ void MainWindow::loadSettings() {
         currentView->getScene()->setTokenTitleMode(currentTokenTitleMode);
         currentView->getScene()->setTokenTextSize(currentTokenFontSize);
     }
+
+    /// Hotkeys
+    rulerButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.ruler).toString()));
+    heightButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.height).toString()));
+    brushButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.brush).toString()));
+    fogHideButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.fogHide).toString()));
+    fogRevealButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.fogReveal).toString()));
+    lightButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.light).toString()));
+    lineButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.line).toString()));
+    circleButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.circle).toString()));
+    squareButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.square).toString()));
+    triangleButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.triangle).toString()));
 }
 
 /**
@@ -993,7 +1005,7 @@ void MainWindow::setupToolbar() {
 
 
     /// Ruler tool
-    auto *rulerButton = new QToolButton(this);
+    rulerButton = new QToolButton(this);
     rulerButton->setCheckable(true);
     rulerButton->setToolTip(tr("ruler"));
 
@@ -1041,7 +1053,7 @@ void MainWindow::setupToolbar() {
     ThemedIconManager::instance().addIconTarget(":/map/fog_hide.svg", fogHideAction, &QAction::setIcon);
     toolGroup->addAction(fogHideAction);
 
-    auto* fogHideButton = new QToolButton(this);
+    fogHideButton = new QToolButton(this);
     fogHideButton->setCheckable(true);
     fogHideButton->setToolTip(tr("Add fog to map"));
     fogHideButton->setDefaultAction(fogHideAction);
@@ -1075,7 +1087,7 @@ void MainWindow::setupToolbar() {
     ThemedIconManager::instance().addIconTarget(":/map/fog_reveal.svg", fogRevealAction, &QAction::setIcon);
     toolGroup->addAction(fogRevealAction);
 
-    auto* fogRevealButton = new QToolButton(this);
+    fogRevealButton = new QToolButton(this);
     fogRevealButton->setCheckable(true);
     fogRevealButton->setToolTip(tr("Remove fog from map"));
     fogRevealButton->setDefaultAction(fogRevealAction);
@@ -1110,7 +1122,7 @@ void MainWindow::setupToolbar() {
     ThemedIconManager::instance().addIconTarget(":/map/torch.svg", lightAction, &QAction::setIcon);
     toolGroup->addAction(lightAction);
 
-    auto* lightButton = new QToolButton(this);
+    lightButton = new QToolButton(this);
     lightButton->setCheckable(true);
     lightButton->setToolTip(tr("Edit light sources"));
     lightButton->setDefaultAction(lightAction);
@@ -1174,7 +1186,7 @@ void MainWindow::setupToolbar() {
     ThemedIconManager::instance().addIconTarget(":/map/line.svg", lineAction, &QAction::setIcon);
     toolGroup->addAction(lineAction);
 
-    auto* lineButton = new QToolButton(this);
+    lineButton = new QToolButton(this);
     lineButton->setCheckable(true);
     lineButton->setToolTip(tr("Draw line"));
     lineButton->setDefaultAction(lineAction);
@@ -1196,7 +1208,7 @@ void MainWindow::setupToolbar() {
     ThemedIconManager::instance().addIconTarget(":/map/sphere.svg", circleAction, &QAction::setIcon);
     toolGroup->addAction(circleAction);
 
-    auto* circleButton = new QToolButton(this);
+    circleButton = new QToolButton(this);
     circleButton->setCheckable(true);
     circleButton->setToolTip(tr("Draw circle"));
     circleButton->setDefaultAction(circleAction);
@@ -1218,7 +1230,7 @@ void MainWindow::setupToolbar() {
     ThemedIconManager::instance().addIconTarget(":/map/cube.svg", squareAction, &QAction::setIcon);
     toolGroup->addAction(squareAction);
 
-    auto* squareButton = new QToolButton(this);
+    squareButton = new QToolButton(this);
     squareButton->setCheckable(true);
     squareButton->setToolTip(tr("Draw square"));
     squareButton->setDefaultAction(squareAction);
@@ -1240,7 +1252,7 @@ void MainWindow::setupToolbar() {
     ThemedIconManager::instance().addIconTarget(":/map/cone.svg", triangleAction, &QAction::setIcon);
     toolGroup->addAction(triangleAction);
 
-    auto* triangleButton = new QToolButton(this);
+    triangleButton = new QToolButton(this);
     triangleButton->setCheckable(true);
     triangleButton->setToolTip(tr("Draw triangle"));
     triangleButton->setDefaultAction(triangleAction);
@@ -1262,7 +1274,7 @@ void MainWindow::setupToolbar() {
     ThemedIconManager::instance().addIconTarget(":/map/brush.svg", brushAction, &QAction::setIcon);
     toolGroup->addAction(brushAction);
 
-    auto* brushButton = new QToolButton(this);
+    brushButton = new QToolButton(this);
     brushButton->setCheckable(true);
     brushButton->setToolTip(tr("Brush"));
     brushButton->setDefaultAction(brushAction);
@@ -1328,7 +1340,7 @@ void MainWindow::setupToolbar() {
     ThemedIconManager::instance().addIconTarget(":map/mountain.svg", heightMapAction, &QAction::setIcon);
     toolGroup->addAction(heightMapAction);
 
-    auto* heightButton = new QToolButton(this);
+    heightButton = new QToolButton(this);
     heightButton->setCheckable(true);
     heightButton->setToolTip(tr("Height"));
     heightButton->setDefaultAction(heightMapAction);
