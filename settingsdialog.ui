@@ -106,7 +106,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>4</number>
        </property>
        <widget class="QWidget" name="generalPage">
         <layout class="QFormLayout" name="formLayout">
@@ -557,8 +557,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>172</width>
-              <height>444</height>
+              <width>476</width>
+              <height>474</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -599,7 +599,11 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QKeySequenceEdit" name="rulerEdit"/>
+                  <widget class="QKeySequenceEdit" name="rulerEdit">
+                   <property name="keySequence">
+                    <string>R</string>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </item>
@@ -638,7 +642,11 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QKeySequenceEdit" name="heightEdit"/>
+                  <widget class="QKeySequenceEdit" name="heightEdit">
+                   <property name="keySequence">
+                    <string>H</string>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </item>
@@ -683,7 +691,11 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QKeySequenceEdit" name="brushEdit"/>
+                  <widget class="QKeySequenceEdit" name="brushEdit">
+                   <property name="keySequence">
+                    <string>B</string>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </item>
@@ -722,57 +734,22 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QKeySequenceEdit" name="fogHideEdit"/>
+                  <widget class="QKeySequenceEdit" name="fogHideEdit">
+                   <property name="keySequence">
+                    <string>F</string>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </item>
                <item row="4" column="0">
-                <widget class="QLabel" name="lightLabel">
-                 <property name="text">
-                  <string>Light</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="1">
-                <layout class="QHBoxLayout" name="lightLayout">
-                 <item>
-                  <widget class="QLabel" name="lightIcon">
-                   <property name="minimumSize">
-                    <size>
-                     <width>30</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>30</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="pixmap">
-                    <pixmap resource="static/app_resources.qrc">:/map/torch.svg</pixmap>
-                   </property>
-                   <property name="scaledContents">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QKeySequenceEdit" name="lightEdit"/>
-                 </item>
-                </layout>
-               </item>
-               <item row="5" column="0">
                 <widget class="QLabel" name="fogRevealLabel">
                  <property name="text">
                   <string>Fog reveal</string>
                  </property>
                 </widget>
                </item>
-               <item row="5" column="1">
+               <item row="4" column="1">
                 <layout class="QHBoxLayout" name="fogRevealLayout">
                  <item>
                   <widget class="QLabel" name="fogRevealIcon">
@@ -800,7 +777,54 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QKeySequenceEdit" name="fogRevealEdit"/>
+                  <widget class="QKeySequenceEdit" name="fogRevealEdit">
+                   <property name="keySequence">
+                    <string>Alt+F</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="5" column="0">
+                <widget class="QLabel" name="lightLabel">
+                 <property name="text">
+                  <string>Light</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="1">
+                <layout class="QHBoxLayout" name="lightLayout">
+                 <item>
+                  <widget class="QLabel" name="lightIcon">
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="pixmap">
+                    <pixmap resource="static/app_resources.qrc">:/map/torch.svg</pixmap>
+                   </property>
+                   <property name="scaledContents">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QKeySequenceEdit" name="lightEdit">
+                   <property name="keySequence">
+                    <string>L</string>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </item>
@@ -847,7 +871,11 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QKeySequenceEdit" name="lineEdit"/>
+                   <widget class="QKeySequenceEdit" name="lineEdit">
+                    <property name="keySequence">
+                     <string>I</string>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </item>
@@ -886,7 +914,11 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QKeySequenceEdit" name="circleEdit"/>
+                   <widget class="QKeySequenceEdit" name="circleEdit">
+                    <property name="keySequence">
+                     <string>O</string>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </item>
@@ -925,7 +957,11 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QKeySequenceEdit" name="squareEdit"/>
+                   <widget class="QKeySequenceEdit" name="squareEdit">
+                    <property name="keySequence">
+                     <string>K</string>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </item>
@@ -964,7 +1000,11 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QKeySequenceEdit" name="triangleEdit"/>
+                   <widget class="QKeySequenceEdit" name="triangleEdit">
+                    <property name="keySequence">
+                     <string>J</string>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </item>
