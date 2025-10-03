@@ -59,6 +59,8 @@ private:
     void populateThemes();
     void populateStyles();
     void populateTokenModes();
+
+    void setupIcons();
 };
 
 

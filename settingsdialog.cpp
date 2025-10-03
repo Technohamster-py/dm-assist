@@ -9,6 +9,7 @@
 #include <utility>
 #include "lib/bass/include/bass.h"
 #include "map-widget/tokenitem.h"
+#include "themediconmanager.h"
 
 
 /**
@@ -31,6 +32,7 @@ SettingsDialog::SettingsDialog(QString organisationName, QString applicationName
 
     ui->navTree->expandAll();
     ui->navTree->setColumnHidden(1, true);
+    setupIcons();
 
     for (auto * edit : ui->hotkeysPage->findChildren<QKeySequenceEdit*>()){
         connect(edit, &QKeySequenceEdit::keySequenceChanged, this, &SettingsDialog::onKeySequenceChanged);
@@ -445,6 +447,19 @@ bool SettingsDialog::validateKeySequences() {
         }
     }
     return ok;
+}
+
+void SettingsDialog::setupIcons() {
+    ThemedIconManager::instance().addPixmapTarget(":/map/ruler.svg", ui->rulerIcon, [label = ui->rulerIcon](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/map/mountain.svg", ui->heightIcon, [label = ui->heightIcon](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/map/brush.svg", ui->brushIcon, [label = ui->brushIcon](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/map/fog_hide.svg", ui->fogHideIcon, [label = ui->fogHideIcon](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/map/fog_reveal.svg", ui->fogRevealIcon, [label = ui->fogRevealIcon](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/map/torch.svg", ui->lightIcon, [label = ui->lightIcon](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/map/line.svg", ui->lineIcon, [label = ui->lineIcon](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/map/sphere.svg", ui->circleIcon, [label = ui->circleIcon](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/map/cube.svg", ui->squareIcon, [label = ui->squareIcon](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/map/cone.svg", ui->triangleIcon, [label = ui->triangleIcon](const QPixmap& px){label->setPixmap(px);});
 }
 
 
