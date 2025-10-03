@@ -18,7 +18,7 @@ public:
         connect(m_manager, &QNetworkAccessManager::finished, this, &UpdateChecker::onReplyFinished);
     }
 
-    void checkFotUpdates(){
+    void checkForUpdates(){
         QNetworkRequest request(m_repoUrl);
         request.setHeader(QNetworkRequest::UserAgentHeader, "QtApp");
         m_manager->get(request);

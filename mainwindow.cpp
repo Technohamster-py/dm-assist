@@ -86,7 +86,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::setVolumeDivider);
     connect(ui->actionReload, &QAction::triggered, [=](){setupCampaign(campaignTreeWidget->root());});
     connect(ui->actionAddCharacter, &QAction::triggered, this, &MainWindow::addCharacter);
-    connect(ui->actionCheck, &QAction::triggered, [=](){updateChecker->checkFotUpdates();});
+    connect(ui->actionCheck, &QAction::triggered, [=](){ updateChecker->checkForUpdates();});
     connect(updateChecker, &UpdateChecker::updateCheckFinished, this, &MainWindow::handleUpdates);
 
     connect(campaignTreeWidget, &CampaignTreeWidget::characterAddRequested, this, [=](const QString& path) {
@@ -121,8 +121,8 @@ MainWindow::MainWindow(QWidget *parent) :
     setupCampaign(currentCampaignDir);
     saveSettings();
 
-
-    updateChecker->checkFotUpdates();
+    if (m_checkForUpdates)
+        updateChecker->checkForUpdates();
 }
 
 /**
@@ -418,6 +418,10 @@ void MainWindow::loadSettings() {
         dir.mkpath(".");
     defaultCampaignDir = settings.value(paths.general.defaultCampaignDir, "").toString();
     openLastMap = settings.value(paths.general.openLastMap, false).toBool();
+    m_checkForUpdates = settings.value(paths.general.checkForUpdates, true).toBool();
+    if (m_checkForUpdates)
+        updateChecker->checkForUpdates();
+
     /// Music
     for (MusicPlayerWidget *player : players) {
         player->setAudioOutput(settings.value(paths.general.audioDevice, 0).toInt());

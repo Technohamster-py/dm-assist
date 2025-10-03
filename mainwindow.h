@@ -83,6 +83,7 @@ private:
     Ui::MainWindow *ui;
     QTranslator translator;
     UpdateChecker* updateChecker;
+    bool m_checkForUpdates;
     QString currentLanguage;
     QString currentCampaignDir;
     QString defaultCampaignDir;
