@@ -479,6 +479,7 @@ void SettingsDialog::exportSettings() {
 
     QSettings settings(m_organisationName, m_applicationName);
     XmlSettingsWriter writer(this);
+    writer.excludeKeys(m_excludedKeys);
     QString error;
     if (!writer.exportToFile(file, settings, &error))
         QMessageBox::critical(this,
@@ -526,6 +527,7 @@ bool SettingsDialog::exportSettingsToFile(QString &filePath) {
 
     QSettings settings(m_organisationName, m_applicationName);
     XmlSettingsWriter writer(this);
+    writer.excludeKeys(m_excludedKeys);
     return writer.exportToFile(filePath, settings);
 }
 
@@ -562,15 +564,6 @@ QVariant XmlSettingsWriter::deserializeVariant(const QString &text, const QStrin
     return QVariant(text);
 }
 
-/*
- * Excluding:
- * - audioDevice
- * - lang
- * - dir
- * - volume
- * - defaultCampaignDir
- * - stretch
- */
 bool XmlSettingsWriter::exportToFile(const QString &filePath, QSettings &settings, QString *errorString) {
     QFile file(filePath);
     if (!file.open(QIODevice::WriteOnly)){

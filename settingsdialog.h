@@ -68,6 +68,16 @@ private:
     void populateTokenModes();
 
     void setupIcons();
+
+    QStringList m_excludedKeys {
+        paths.general.audioDevice,
+        paths.general.lang,
+        paths.general.dir,
+        paths.general.defaultCampaignDir,
+        paths.appearance.stretch,
+        paths.session.recent,
+        paths.session.campaign
+    };
 };
 
 
