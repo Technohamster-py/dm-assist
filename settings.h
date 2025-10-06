@@ -13,6 +13,7 @@
 #define ISSUES_URL  "https://github.com/Technohamster-py/dm-assist/issues"
 #define RELEASES_URL "https://api.github.com/repos/Technohamster-py/dm-assist/releases/latest"
 #define VERSION "1.3"
+#define SETTINGS_VERSION "1.0"
 
 enum hpBarMode {
     bar = 0,
@@ -34,6 +35,14 @@ enum startActions{
     openLast = 0,
     showRecent,
     showEmptyWindow
+};
+
+enum settingsPages{
+    general = 0,
+    appearance,
+    tracker,
+    map,
+    hotkeys
 };
 
 struct Settings{

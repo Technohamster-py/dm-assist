@@ -5,7 +5,10 @@
 #include <QToolTip>
 #include <QStandardPaths>
 #include <QFileDialog>
+#include <QMessageBox>
 #include <QStyleFactory>
+#include <QXmlStreamWriter>
+#include <QXmlStreamReader>
 #include <utility>
 #include "lib/bass/include/bass.h"
 #include "map-widget/tokenitem.h"
@@ -48,6 +51,8 @@ SettingsDialog::SettingsDialog(QString organisationName, QString applicationName
 
     connect(ui->navTree, &QTreeWidget::currentItemChanged, this, &SettingsDialog::onTreeItemSelected);
     connect(ui->cancelButton, &QPushButton::clicked, this, &QDialog::reject);
+    connect(ui->exportButton, &QPushButton::clicked, this, &SettingsDialog::exportSettings);
+    connect(ui->importButton, &QPushButton::clicked, this, &SettingsDialog::importSettings);
 }
 
 SettingsDialog::~SettingsDialog() {
@@ -348,6 +353,7 @@ void SettingsDialog::populateAudioDevices() {
 void SettingsDialog::on_applyButton_clicked() {
     if (!validateKeySequences()){
         ui->applyButton->setEnabled(false);
+        ui->stackedWidget->setCurrentIndex(settingsPages::hotkeys);
         return;
     }
     saveSettings();
@@ -463,3 +469,179 @@ void SettingsDialog::setupIcons() {
 }
 
 
+void SettingsDialog::exportSettings() {
+    QString file = QFileDialog::getSaveFileName(this,
+                                                tr("Export settings to file"),
+                                                QString(),
+                                                tr("XML files (*.xml)"));
+
+    if (file.isEmpty()) return;
+
+    QSettings settings(m_organisationName, m_applicationName);
+    XmlSettingsWriter writer(this);
+    QString error;
+    if (!writer.exportToFile(file, settings, &error))
+        QMessageBox::critical(this,
+                              tr("Export failed"),
+                              tr("failed to export settings: \n%1").arg(error));
+    else
+        QMessageBox::information(this,
+                                 tr("Export finished"),
+                                 tr("Settings exported to \n%1").arg(file));
+}
+
+void SettingsDialog::importSettings() {
+    QString file = QFileDialog::getOpenFileName(this,
+                                                tr("Import settings from file"),
+                                                QString(),
+                                                tr("XML files (*.xml)"));
+    if (file.isEmpty()) return;
+    QString backup = QDir::homePath() + "/dm-assist-settings-backup-" + QDateTime::currentDateTime().toString("yyyyMMdd-HHmmss") + ".xml";
+
+    auto res = QMessageBox::question(this, tr("Import settings"),
+                                     tr("Import will overwrite existing settings \n"
+                                        "Current settings backup will be saved to: \n %1 \n\n"
+                                        "Do you want to import settings?").arg(backup));
+    if (res == QMessageBox::No) return;
+
+
+    exportSettingsToFile(backup);
+    QSettings settings(m_organisationName, m_applicationName);
+    XmlSettingsWriter importer(this);
+    QString err;
+    if (!importer.importFromFile(file, settings, &err))
+        QMessageBox::critical(this,
+                              tr("Import failed"),
+                              tr("Failed to import settings \n %1").arg(err));
+    else
+        QMessageBox::information(this,
+                                 tr("Import finished"),
+                                 tr("Settings imported successfully from \n%1").arg(file));
+    settings.sync();
+    on_applyButton_clicked();
+}
+
+bool SettingsDialog::exportSettingsToFile(QString &filePath) {
+    if (filePath.isEmpty()) return false;
+
+    QSettings settings(m_organisationName, m_applicationName);
+    XmlSettingsWriter writer(this);
+    return writer.exportToFile(filePath, settings);
+}
+
+bool SettingsDialog::importSettingsFromFile(QString &filePath) {
+    if (filePath.isEmpty()) return false;
+
+    QSettings settings(m_organisationName, m_applicationName);
+    XmlSettingsWriter importer(this);
+    return importer.importFromFile(filePath, settings);
+}
+
+QString XmlSettingsWriter::serializeVariant(const QVariant &v) const {
+    if (v.typeId() == QMetaType::QStringList)
+        return v.toStringList().join(";");
+    return v.toString();
+}
+
+QVariant XmlSettingsWriter::deserializeVariant(const QString &text, const QString &type) const {
+    if (type == "bool" || type == "QBool")
+        return QVariant(text.toLower() == "true" || text == "1");
+    if (type == "int" || type == "QInt"){
+        bool ok = false;
+        int x = text.toInt(&ok);
+        return ok ? QVariant(x) : QVariant(text);
+    }
+    if (type == "double" || type == "QDouble") {
+        bool ok = false;
+        double d = text.toDouble(&ok);
+        return  ok ? QVariant(d) : QVariant(text);
+    }
+    if (type == "QStringList")
+        return QVariant(text.split(";", Qt::SkipEmptyParts));
+
+    return QVariant(text);
+}
+
+/*
+ * Excluding:
+ * - audioDevice
+ * - lang
+ * - dir
+ * - volume
+ * - defaultCampaignDir
+ * - stretch
+ */
+bool XmlSettingsWriter::exportToFile(const QString &filePath, QSettings &settings, QString *errorString) {
+    QFile file(filePath);
+    if (!file.open(QIODevice::WriteOnly)){
+        if (errorString) *errorString = file.errorString();
+        return false;
+    }
+
+    QXmlStreamWriter xml(&file);
+    xml.setAutoFormatting(true);
+    xml.writeStartDocument();
+    xml.writeStartElement("settings");
+    xml.writeAttribute("version", SETTINGS_VERSION);
+
+    const QStringList keys = settings.allKeys();
+
+    for (const QString& key : keys) {
+        if (m_excludedKeys.contains(key))
+            continue;
+        QVariant v = settings.value(key);
+        QString typeName = v.typeName();
+        QString serialized = serializeVariant(v);
+
+        xml.writeStartElement("entry");
+        xml.writeAttribute("key", key);
+        xml.writeAttribute("type", typeName);
+        xml.writeCharacters(serialized);
+        xml.writeEndElement(); // entry
+    }
+    xml.writeEndElement(); // settings
+    xml.writeEndDocument();
+    file.close();
+    return true;
+}
+
+bool XmlSettingsWriter::importFromFile(const QString &filePath, QSettings &settings, QString *errorString) {
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly)){
+        if (errorString) *errorString = file.errorString();
+        return false;
+    }
+    QXmlStreamReader xml(&file);
+
+    while (!xml.atEnd() && !xml.hasError()){
+        QXmlStreamReader::TokenType token = xml.readNext();
+
+        if (token == QXmlStreamReader::StartElement){
+            if (xml.name().toString() == "entry"){
+                QXmlStreamAttributes attributes = xml.attributes();
+                QString key = attributes.value("key").toString();
+                QString type = attributes.value("type").toString();
+                QString textValue = xml.readElementText(QXmlStreamReader::SkipChildElements);
+
+                QVariant v = deserializeVariant(textValue, type);
+                settings.setValue(key, v);
+            }
+        }
+    }
+    if (xml.hasError()){
+        if (errorString) *errorString = xml.errorString();
+        file.close();
+        return false;
+    }
+    file.close();
+    settings.sync();
+    return true;
+}
+
+void XmlSettingsWriter::excludeKeys(const QStringList &keys) {
+    m_excludedKeys = keys;
+}
+
+void XmlSettingsWriter::addExcludedKeys(const QStringList &addKeys) {
+    m_excludedKeys.append(addKeys);
+}

@@ -28,6 +28,10 @@ public:
     explicit SettingsDialog(QString organisationName, QString applicationName, QWidget *parent = nullptr);
     ~SettingsDialog() override;
 
+public slots:
+    bool exportSettingsToFile(QString& filePath);
+    bool importSettingsFromFile(QString& filePath);
+
 protected:
     void loadSettings();
     void saveSettings();
@@ -39,6 +43,9 @@ private slots:
 
     void on_folderButton_clicked();
     void on_themeButton_clicked();
+
+    void exportSettings();
+    void importSettings();
 
     void onKeySequenceChanged(QKeySequence newSeq);
 
@@ -61,6 +68,25 @@ private:
     void populateTokenModes();
 
     void setupIcons();
+};
+
+
+class XmlSettingsWriter : public QObject {
+    Q_OBJECT
+public:
+    explicit XmlSettingsWriter(QObject* parent = nullptr) {};
+
+    bool exportToFile(const QString &filePath, QSettings &settings, QString *errorString = nullptr);
+    bool importFromFile(const QString& filePath, QSettings& settings, QString* errorString = nullptr);
+
+    void excludeKeys(const QStringList& keys);
+    void addExcludedKeys(const QStringList& addKeys);
+
+private:
+    QString serializeVariant(const QVariant& v) const;
+    QVariant deserializeVariant(const QString& text, const QString& type) const;
+
+    QStringList m_excludedKeys = {};
 };
 
 
