@@ -5,7 +5,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
-RecentCampaignDialog::RecentCampaignDialog(const QStringList &recent, QWidget *parent) {
+RecentCampaignDialog::RecentCampaignDialog(const QStringList &recent, QWidget *parent) : QDialog(parent), m_recent(recent){
     setWindowTitle(tr("Выбор кампании"));
     resize(500, 400);
 

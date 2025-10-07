@@ -115,8 +115,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/player/Volume-1.svg", ui->muteButton, &QAbstractButton::setIcon);
     ThemedIconManager::instance().addPixmapTarget(":/player/Volume-2.svg", ui->volMaxLabel, [label = ui->volMaxLabel](const QPixmap& px){label->setPixmap(px);});
 
-    showMaximized();
-
     loadSettings();
 //    setupCampaign(currentCampaignDir);
     saveSettings();
