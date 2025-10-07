@@ -459,6 +459,8 @@ void MainWindow::loadSettings() {
 
     /// Campaign
     currentCampaignDir = settings.value(paths.session.campaign, "").toString();
+    m_recentCampaignList = settings.value(paths.session.recent).toStringList();
+    updateRecentMenu();
 
     /// Rolls
     rollWidget->setCompactMode(settings.value(paths.rolls.compactMode).toBool());
@@ -852,6 +854,7 @@ void MainWindow::saveSettings() {
     settings.setValue(paths.general.volume, ui->volumeSlider->value());
     settings.setValue(paths.general.defaultCampaignDir, defaultCampaignDir);
     settings.setValue(paths.session.campaign, campaignTreeWidget->root());
+    settings.setValue(paths.session.recent, m_recentCampaignList);
     settings.setValue(paths.rolls.compactMode, rollWidget->compactMode());
     settings.setValue(paths.appearance.stretch, ui->splitter->saveState());
     settings.sync();
@@ -917,6 +920,8 @@ void MainWindow::setupCampaign(const QString &campaignRoot) {
         saveMusicConfigFile(musicConfigFile);
 
     currentCampaignDir = campaignRoot;
+    addCampaignToRecentList(currentCampaignDir);
+    updateRecentMenu();
     initiativeTrackerWidget->setBaseDir(currentCampaignDir + "/Encounters");
     campaignTreeWidget->setVisible(true);
 }
@@ -1696,6 +1701,39 @@ void MainWindow::slotUpdateProgressBar(int percent, const QString &message) {
     progressBar->setFormat(QString("%1: %2%").arg(message).arg(percent));
     if (percent == 100 || percent == 0)
         QTimer::singleShot(1500, progressBar, [=](){progressBar->setVisible(false);});
+}
+
+void MainWindow::addCampaignToRecentList(const QString &path) {
+    m_recentCampaignList.removeAll(path);
+    m_recentCampaignList.prepend(path);
+    while (m_recentCampaignList.size() > 15)
+        m_recentCampaignList.removeLast();
+}
+
+void MainWindow::updateRecentMenu() {
+    ui->menuRecent->clear();
+
+    if (m_recentCampaignList.isEmpty())
+    {
+        QAction* emptyAction = new QAction(tr("None"), this);
+        emptyAction->setEnabled(false);
+        ui->menuRecent->addAction(emptyAction);
+        return;
+    }
+
+    for (const QString& path : m_recentCampaignList) {
+        QAction* action = new QAction(path, this);
+        connect(action, &QAction::triggered, [this, path](){ setupCampaign(path);});
+        ui->menuRecent->addAction(action);
+    }
+
+    ui->menuRecent->addSeparator();
+    QAction* clearAction = new QAction(tr("clear list"), this);
+    connect(clearAction, &QAction::triggered, [=]() {
+        m_recentCampaignList.clear();
+        updateRecentMenu();
+    });
+    ui->menuRecent->addAction(clearAction);
 }
 
 
