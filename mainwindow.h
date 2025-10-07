@@ -57,6 +57,7 @@ public:
 
     void changeLanguage(const QString &languageCode);
     QStringList recentCampaigns() const {return m_recentCampaignList;}
+    void openCampaign(const QString& campaignRootDir = "");
 
 signals:
     void translatorChanged();

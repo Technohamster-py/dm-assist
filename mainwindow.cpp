@@ -118,7 +118,7 @@ MainWindow::MainWindow(QWidget *parent) :
     showMaximized();
 
     loadSettings();
-    setupCampaign(currentCampaignDir);
+//    setupCampaign(currentCampaignDir);
     saveSettings();
 
     if (m_checkForUpdates)
@@ -853,8 +853,8 @@ void MainWindow::saveSettings() {
     settings.setValue(paths.general.dir, workingDir);
     settings.setValue(paths.general.volume, ui->volumeSlider->value());
     settings.setValue(paths.general.defaultCampaignDir, defaultCampaignDir);
-    settings.setValue(paths.session.campaign, campaignTreeWidget->root());
     settings.setValue(paths.session.recent, m_recentCampaignList);
+    settings.setValue(paths.session.campaign, currentCampaignDir);
     settings.setValue(paths.rolls.compactMode, rollWidget->compactMode());
     settings.setValue(paths.appearance.stretch, ui->splitter->saveState());
     settings.sync();
@@ -886,7 +886,7 @@ void MainWindow::setupCampaign(const QString &campaignRoot) {
     if (campaignRoot.isEmpty())
         return;
 
-    if (!currentCampaignDir.isEmpty()){
+    if (!campaignTreeWidget->root().isEmpty()){
         closeCampaign();
     }
 
@@ -1703,6 +1703,7 @@ void MainWindow::slotUpdateProgressBar(int percent, const QString &message) {
         QTimer::singleShot(1500, progressBar, [=](){progressBar->setVisible(false);});
 }
 
+
 void MainWindow::addCampaignToRecentList(const QString &path) {
     m_recentCampaignList.removeAll(path);
     m_recentCampaignList.prepend(path);
@@ -1734,6 +1735,13 @@ void MainWindow::updateRecentMenu() {
         updateRecentMenu();
     });
     ui->menuRecent->addAction(clearAction);
+}
+
+void MainWindow::openCampaign(const QString &campaignRootDir) {
+    if (campaignRootDir.isEmpty())
+        setupCampaign(currentCampaignDir);
+    else
+        setupCampaign(campaignRootDir);
 }
 
 
