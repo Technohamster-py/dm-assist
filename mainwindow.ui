@@ -361,8 +361,14 @@
      <addaction name="actionAddMap"/>
      <addaction name="actionAddCharacter"/>
     </widget>
+    <widget class="QMenu" name="menuRecent">
+     <property name="title">
+      <string>Recent campaigns</string>
+     </property>
+    </widget>
     <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
+    <addaction name="menuRecent"/>
     <addaction name="actionClose"/>
     <addaction name="actionReload"/>
     <addaction name="separator"/>
@@ -525,6 +531,11 @@
   <action name="actionCheck">
    <property name="text">
     <string>Check for updates</string>
+   </property>
+  </action>
+  <action name="actiond">
+   <property name="text">
+    <string>d</string>
    </property>
   </action>
  </widget>

@@ -56,6 +56,7 @@ public:
     ~MainWindow() override;
 
     void changeLanguage(const QString &languageCode);
+    QStringList recentCampaigns() const {return m_recentCampaignList;}
     void openCampaign(const QString& campaignRootDir = "");
 
 signals:
@@ -130,6 +131,9 @@ private:
     QProgressBar* progressBar;
 
     void setupCampaign(const QString &campaignRoot);
+    void addCampaignToRecentList(const QString& path);
+    QStringList m_recentCampaignList;
+    void updateRecentMenu();
     void setupPlayers();
     void setupTracker();
     void setupToolbar();
