@@ -35,7 +35,7 @@ public slots:
 protected:
     void loadSettings();
     void saveSettings();
-    Settings paths;
+    const Settings paths;
 
 private slots:
     void onTreeItemSelected(QTreeWidgetItem *current, QTreeWidgetItem *previous);

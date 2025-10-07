@@ -56,6 +56,7 @@ public:
     ~MainWindow() override;
 
     void changeLanguage(const QString &languageCode);
+    void openCampaign(const QString& campaignRootDir = "");
 
 signals:
     void translatorChanged();
