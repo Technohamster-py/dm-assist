@@ -67,6 +67,8 @@ set(FILES
         theme-manager/thememanager.h theme-manager/thememanager.cpp
         theme-manager/themediconmanager.h theme-manager/themediconmanager.cpp
         updatechecker.h updatechecker.cpp
+        recentcampaigndialog.cpp
+        recentcampaigndialog.h
 )
 
 set(UI_FILES
