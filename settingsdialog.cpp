@@ -41,6 +41,13 @@ SettingsDialog::SettingsDialog(QString organisationName, QString applicationName
         connect(edit, &QKeySequenceEdit::keySequenceChanged, this, &SettingsDialog::onKeySequenceChanged);
     }
 
+    connect(ui->navTree, &QTreeWidget::currentItemChanged, this, &SettingsDialog::onTreeItemSelected);
+    connect(ui->cancelButton, &QPushButton::clicked, this, &QDialog::reject);
+    connect(ui->exportButton, &QPushButton::clicked, this, &SettingsDialog::exportSettings);
+    connect(ui->importButton, &QPushButton::clicked, this, &SettingsDialog::importSettings);
+    connect(ui->masterFogSlider, &QSlider::valueChanged, [=](int value){ui->masterFogValueLabel->setText(QString("%1 \%").arg(value));});
+    connect(ui->playerFogSlider, &QSlider::valueChanged, [=](int value){ui->playerFogValueLabel->setText(QString("%1 \%").arg(value));});
+
     populateAudioDevices();
     populateLanguages();
     populateThemes();
@@ -48,11 +55,6 @@ SettingsDialog::SettingsDialog(QString organisationName, QString applicationName
     populateTokenModes();
 
     loadSettings();
-
-    connect(ui->navTree, &QTreeWidget::currentItemChanged, this, &SettingsDialog::onTreeItemSelected);
-    connect(ui->cancelButton, &QPushButton::clicked, this, &QDialog::reject);
-    connect(ui->exportButton, &QPushButton::clicked, this, &SettingsDialog::exportSettings);
-    connect(ui->importButton, &QPushButton::clicked, this, &SettingsDialog::importSettings);
 }
 
 SettingsDialog::~SettingsDialog() {
