@@ -9,6 +9,7 @@
 #include <QStyleFactory>
 #include <QXmlStreamWriter>
 #include <QXmlStreamReader>
+#include <QColorDialog>
 #include <utility>
 #include "lib/bass/include/bass.h"
 #include "map-widget/tokenitem.h"
@@ -41,6 +42,20 @@ SettingsDialog::SettingsDialog(QString organisationName, QString applicationName
         connect(edit, &QKeySequenceEdit::keySequenceChanged, this, &SettingsDialog::onKeySequenceChanged);
     }
 
+    connect(ui->navTree, &QTreeWidget::currentItemChanged, this, &SettingsDialog::onTreeItemSelected);
+    connect(ui->cancelButton, &QPushButton::clicked, this, &QDialog::reject);
+    connect(ui->exportButton, &QPushButton::clicked, this, &SettingsDialog::exportSettings);
+    connect(ui->importButton, &QPushButton::clicked, this, &SettingsDialog::importSettings);
+    connect(ui->masterFogSlider, &QSlider::valueChanged, [=](int value){ui->masterFogValueLabel->setText(QString("%1 \%").arg(value));});
+    connect(ui->playerFogSlider, &QSlider::valueChanged, [=](int value){ui->playerFogValueLabel->setText(QString("%1 \%").arg(value));});
+    connect(ui->fogColorButton, &QPushButton::clicked, [=](){
+        QColor chosen = QColorDialog::getColor(QColor(ui->fogColorButton->text()), this);
+        if (chosen.isValid()) {
+            ui->fogColorButton->setStyleSheet(QString("background-color: %1").arg(chosen.name()));
+            ui->fogColorButton->setText(chosen.name());
+        }
+    });
+
     populateAudioDevices();
     populateLanguages();
     populateThemes();
@@ -48,11 +63,6 @@ SettingsDialog::SettingsDialog(QString organisationName, QString applicationName
     populateTokenModes();
 
     loadSettings();
-
-    connect(ui->navTree, &QTreeWidget::currentItemChanged, this, &SettingsDialog::onTreeItemSelected);
-    connect(ui->cancelButton, &QPushButton::clicked, this, &QDialog::reject);
-    connect(ui->exportButton, &QPushButton::clicked, this, &SettingsDialog::exportSettings);
-    connect(ui->importButton, &QPushButton::clicked, this, &SettingsDialog::importSettings);
 }
 
 SettingsDialog::~SettingsDialog() {
@@ -146,7 +156,9 @@ void SettingsDialog::loadSettings() {
     ui->fontSizeSpinBox->setValue(settings.value(paths.map.tokenFontSize, 12).toInt());
     ui->masterFogSlider->setValue(settings.value(paths.map.masterFogOpacity, 40).toInt());
     ui->playerFogSlider->setValue(settings.value(paths.map.playerFogOpacity, 100).toInt());
-    ui->fogColorButton->setText(settings.value(paths.map.fogColor, "#000000").toString());
+    QString fogColorName = settings.value(paths.map.fogColor, "#000000").toString();
+    ui->fogColorButton->setText(fogColorName);
+    ui->fogColorButton->setStyleSheet(QString("background-color: %1").arg(fogColorName));
     ui->lastMapCheckBox->setChecked(settings.value(paths.general.openLastMap, false).toBool());
     ui->gridSizeBox->setValue(settings.value(paths.map.defaultGridSize, 5).toInt());
 

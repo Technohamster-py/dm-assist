@@ -106,7 +106,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>4</number>
+        <number>3</number>
        </property>
        <widget class="QWidget" name="generalPage">
         <layout class="QFormLayout" name="formLayout">
@@ -460,24 +460,10 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
-          <widget class="QSlider" name="masterFogSlider">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
          <item row="3" column="0">
           <widget class="QLabel" name="playerFogLabel">
            <property name="text">
             <string>Fog opacity (players)</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QSlider" name="playerFogSlider">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
            </property>
           </widget>
          </item>
@@ -491,7 +477,7 @@
          <item row="4" column="1">
           <widget class="QPushButton" name="fogColorButton">
            <property name="text">
-            <string>Choose</string>
+            <string>#000000</string>
            </property>
           </widget>
          </item>
@@ -525,6 +511,48 @@
          <item row="6" column="1">
           <widget class="QSpinBox" name="gridSizeBox"/>
          </item>
+         <item row="3" column="1">
+          <layout class="QHBoxLayout" name="playerFogOpacitylayout">
+           <item>
+            <widget class="QLabel" name="playerFogValueLabel">
+             <property name="text">
+              <string>TextLabel</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSlider" name="playerFogSlider">
+             <property name="maximum">
+              <number>100</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="2" column="1">
+          <layout class="QHBoxLayout" name="masterFogOpacitylayout">
+           <item>
+            <widget class="QLabel" name="masterFogValueLabel">
+             <property name="text">
+              <string>TextLabel</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSlider" name="masterFogSlider">
+             <property name="maximum">
+              <number>100</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
         </layout>
        </widget>
        <widget class="QWidget" name="hotkeysPage">
@@ -557,8 +585,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>476</width>
-              <height>474</height>
+              <width>172</width>
+              <height>444</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_2">
