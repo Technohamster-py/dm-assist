@@ -254,6 +254,7 @@ bool InitiativeModel::setData(const QModelIndex &index, const QVariant &value, i
     }
 
     emit dataChanged(index, index);
+    if (autoSort) sortByInitiative();
     return true;
 }
 
@@ -552,6 +553,11 @@ void InitiativeModel::decrementStatuses() {
         }
     }
     emit dataChanged(index(0, fields::statuses), index(rowCount()-1, fields::statuses));
+}
+
+void InitiativeModel::setAutoSort(bool enabled) {
+    autoSort = enabled;
+    if (autoSort) sortByInitiative();
 }
 
 

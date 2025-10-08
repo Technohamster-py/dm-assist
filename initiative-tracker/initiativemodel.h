@@ -55,6 +55,8 @@ public:
     bool loadFromFile(const QString &filename);
     bool addFromFile(const QString &filename);
 
+    void setAutoSort(bool enabled = true);
+
     void decrementStatuses();
 
     int iconsPerRow() const {return m_iconsPerRow;};
@@ -81,6 +83,8 @@ private:
     int m_iconsPerRow = 3;
     int m_iconHeight = 16;
     int m_iconSpacing = 2;
+
+    bool autoSort = false;
 };
 
 

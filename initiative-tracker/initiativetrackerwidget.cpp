@@ -439,3 +439,8 @@ void InitiativeTrackerWidget::setBaseDir(const QString& dirPath) {
 void InitiativeTrackerWidget::updateTranslator() {
     ui->retranslateUi(this);
 }
+
+void InitiativeTrackerWidget::setAutoSort(bool enabled) {
+    model->setAutoSort(enabled);
+    ui->sortButton->setVisible(!enabled);
+}
