@@ -146,6 +146,8 @@ private:
 
     int currentTokenTitleMode = 0;
     int currentTokenFontSize = 12;
+    qreal m_masterFogOpacity = 0.4;
+    qreal m_playerFogOpacity = 1.0;
 
 private slots:
     void newCampaign();
