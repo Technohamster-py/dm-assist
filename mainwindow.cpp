@@ -128,8 +128,8 @@ MainWindow::MainWindow(QWidget *parent) :
  * @details При закрытии окна производится сохранение конфигурационного файла
  */
 MainWindow::~MainWindow() {
-    closeCampaign();
     saveSettings();
+    closeCampaign();
     foreach(MusicPlayerWidget* player, players){
         removeDirectoryRecursively(player->getLocalDirPath());
         delete player;
