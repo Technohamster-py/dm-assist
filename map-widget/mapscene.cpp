@@ -904,18 +904,18 @@ void MapScene::setFogColor(const QColor &color) {
 void MapScene::updateFogTexture() {
     if (m_fogImage.isNull()) return;
 
-    QImage newfog(m_fogImage.size(), QImage::Format_ARGB32);
-    newfog.fill(Qt::transparent);
-    QPainter p(&newfog);
+    QImage newFog(m_fogImage.size(), QImage::Format_ARGB32);
+    newFog.fill(Qt::transparent);
+    QPainter p(&newFog);
 
     p.setCompositionMode(QPainter::CompositionMode_Source);
-    p.fillRect(newfog.rect(), m_fogColor);
+    p.fillRect(newFog.rect(), m_fogColor);
 
     p.setCompositionMode(QPainter::CompositionMode_DestinationIn);
     p.drawImage(0, 0, m_fogImage);
 
     p.end();
 
-    m_fogImage = newfog;
+    m_fogImage = newFog;
     update();
 }
