@@ -276,7 +276,7 @@ void MapView::drawForeground(QPainter *painter, const QRectF &rect) {
 
     if (!scene->getFogImage().isNull()){
         painter->save();
-        painter->setOpacity(0.4);
+        painter->setOpacity(m_fogOpacity);
         painter->drawImage(QPointF(0, 0), scene->getFogImage());
         painter->restore();
     }

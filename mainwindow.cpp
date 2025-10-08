@@ -463,15 +463,23 @@ void MainWindow::loadSettings() {
     /// Rolls
     rollWidget->setCompactMode(settings.value(paths.rolls.compactMode).toBool());
 
-    /// Tokens
+    /// Map
     currentTokenTitleMode = settings.value(paths.map.tokenTitleMode, 0).toInt();
     currentTokenFontSize = settings.value(paths.map.tokenFontSize, 12).toInt();
     for (int i = 0; i < mapTabWidget->count(); i++){
         auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(i));
-        if (!currentView) return;
+        if (!currentView) continue;
         currentView->getScene()->setTokenTitleMode(currentTokenTitleMode);
         currentView->getScene()->setTokenTextSize(currentTokenFontSize);
     }
+
+    m_masterFogOpacity = settings.value(paths.map.masterFogOpacity, 0.4).toDouble() / 100;
+    for (int i = 0; i < mapTabWidget->count(); ++i) {
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(i));
+        if (!currentView) continue;
+        currentView->setFogOpacity(m_masterFogOpacity);
+    }
+    m_playerFogOpacity = settings.value(paths.map.playerFogOpacity, 1.0).toDouble() / 100;
 
     /// Hotkeys
     rulerButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.ruler).toString()));
@@ -612,6 +620,7 @@ void MainWindow::openMapFromFile(const QString& fileName) {
     QString ext = fileInfo.suffix().toLower();
 
     auto *view = new MapView(this);
+    view->setFogOpacity(m_masterFogOpacity);
     bool success;
 
     connect(view, &MapView::progressChanged, this, &MainWindow::slotUpdateProgressBar);
@@ -695,6 +704,7 @@ void MainWindow::openSharedMapWindow(int index) {
     auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
     if (!sharedMapWindow){
         sharedMapWindow = new SharedMapWindow(currentView->getScene());
+        sharedMapWindow->setFogOpacity(m_playerFogOpacity);
         sharedMapWindow->show();
         sharedMapWindow->resize(800, 600);
 
