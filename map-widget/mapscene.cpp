@@ -175,8 +175,8 @@ void MapScene::setActiveTool(AbstractMapTool *tool) {
  * The default opacity of the fog is set to 0.5.
  */
 void MapScene::initializeFog(const QSize &size) {
-    fogImage = QImage(size, QImage::Format_ARGB32_Premultiplied);
-    fogImage.fill(Qt::transparent);
+    m_fogImage = QImage(size, QImage::Format_ARGB32_Premultiplied);
+    m_fogImage.fill(Qt::transparent);
 }
 
 /**
@@ -197,10 +197,10 @@ void MapScene::initializeFog(const QSize &size) {
  * @param hide A boolean indicating whether the fog should be hidden (black) or revealed (transparent).
  */
 void MapScene::drawFogCircle(const QPointF &scenePos, int radius, bool hide) {
-    QPainter painter(&fogImage);
+    QPainter painter(&m_fogImage);
     painter.setRenderHint(QPainter::Antialiasing, true);
     QPoint center = scenePos.toPoint();
-    QBrush brush(hide ? Qt::black : Qt::transparent);
+    QBrush brush(hide ? m_fogColor : Qt::transparent);
     QPen pen(Qt::NoPen);
     painter.setCompositionMode(hide ? QPainter::CompositionMode_SourceOver
                                     : QPainter::CompositionMode_Clear);
@@ -209,7 +209,7 @@ void MapScene::drawFogCircle(const QPointF &scenePos, int radius, bool hide) {
     painter.drawEllipse(center, radius, radius);
     painter.end();
 
-    emit fogUpdated(fogImage);
+    emit fogUpdated(m_fogImage);
     update();
 }
 
@@ -247,10 +247,10 @@ QPixmap MapScene::getMapPixmap() const {
  * @param hide Boolean flag indicating whether to hide (true) or reveal (false) the fog along the specified path.
  */
 void MapScene::drawFogPath(const QPainterPath &path, bool hide) {
-    QPainter painter(&fogImage);
+    QPainter painter(&m_fogImage);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(Qt::NoPen);
-    painter.setBrush(hide ? Qt::black : Qt::transparent);
+    painter.setBrush(hide ? m_fogColor : Qt::transparent);
     painter.setCompositionMode(hide ? QPainter::CompositionMode_SourceOver
                                     : QPainter::CompositionMode_Clear);
     painter.drawPath(path);
@@ -272,9 +272,9 @@ void MapScene::drawFogPath(const QPainterPath &path, bool hide) {
  */
 void MapScene::clearFog(bool clear) {
     if (clear)
-        fogImage.fill(Qt::transparent);
+        m_fogImage.fill(Qt::transparent);
     else
-        fogImage.fill(Qt::black);
+        m_fogImage.fill(Qt::black);
 
     update();
 }
@@ -442,11 +442,11 @@ QJsonObject MapScene::toJson() {
     obj["items"] = itemsArray;
 
 
-    if (!fogImage.isNull()) {
+    if (!m_fogImage.isNull()) {
         QByteArray byteArray;
         QBuffer buffer(&byteArray);
         buffer.open(QIODevice::WriteOnly);
-        fogImage.save(&buffer, "PNG");
+        m_fogImage.save(&buffer, "PNG");
         obj["fog"] = QString::fromLatin1(byteArray.toBase64());
     }
     return obj;
@@ -559,7 +559,7 @@ void MapScene::fromJson(const QJsonObject& obj) {
         QByteArray byteArray = QByteArray::fromBase64(obj["fog"].toString().toLatin1());
         QImage img;
         if (img.loadFromData(byteArray, "PNG")) {
-            fogImage = img;
+            m_fogImage = img;
         }
     }
 
@@ -892,4 +892,30 @@ QPointF MapScene::snapToGrid(const QPointF &pos, qreal objSizeFeet) const {
 
         return QPointF(centerX, centerY);
     }
+}
+
+void MapScene::setFogColor(const QColor &color) {
+    if (m_fogColor == color) return;
+
+    m_fogColor = color;
+    updateFogTexture();
+}
+
+void MapScene::updateFogTexture() {
+    if (m_fogImage.isNull()) return;
+
+    QImage newfog(m_fogImage.size(), QImage::Format_ARGB32);
+    newfog.fill(Qt::transparent);
+    QPainter p(&newfog);
+
+    p.setCompositionMode(QPainter::CompositionMode_Source);
+    p.fillRect(newfog.rect(), m_fogColor);
+
+    p.setCompositionMode(QPainter::CompositionMode_DestinationIn);
+    p.drawImage(0, 0, m_fogImage);
+
+    p.end();
+
+    m_fogImage = newfog;
+    update();
 }
