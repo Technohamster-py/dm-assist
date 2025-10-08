@@ -478,6 +478,7 @@ void MainWindow::loadSettings() {
         currentView->getScene()->setFogColor(m_fogColor);
     }
     m_playerFogOpacity = settings.value(paths.map.playerFogOpacity, 1.0).toDouble() / 100;
+    m_defaultGridSize = settings.value(paths.map.defaultGridSize, 5).toInt();
 
     /// Hotkeys
     rulerButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.ruler).toString()));
@@ -637,6 +638,7 @@ void MainWindow::openMapFromFile(const QString& fileName) {
         view->getScene()->setTokenTitleMode(currentTokenTitleMode);
         view->getScene()->setTokenTextSize(currentTokenFontSize);
         view->getScene()->setFogColor(m_fogColor);
+        view->getScene()->setGridSize(m_defaultGridSize);
 
         connect(view->getScene(), &MapScene::toolChanged, this, [=](const AbstractMapTool* tool){
             if (!tool){
