@@ -466,18 +466,16 @@ void MainWindow::loadSettings() {
     /// Map
     currentTokenTitleMode = settings.value(paths.map.tokenTitleMode, 0).toInt();
     currentTokenFontSize = settings.value(paths.map.tokenFontSize, 12).toInt();
+    m_masterFogOpacity = settings.value(paths.map.masterFogOpacity, 0.4).toDouble() / 100;
+    m_fogColor = QColor(settings.value(paths.map.fogColor, "#000000").toString());
     for (int i = 0; i < mapTabWidget->count(); i++){
         auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(i));
         if (!currentView) continue;
+
+        currentView->setFogOpacity(m_masterFogOpacity);
         currentView->getScene()->setTokenTitleMode(currentTokenTitleMode);
         currentView->getScene()->setTokenTextSize(currentTokenFontSize);
-    }
-
-    m_masterFogOpacity = settings.value(paths.map.masterFogOpacity, 0.4).toDouble() / 100;
-    for (int i = 0; i < mapTabWidget->count(); ++i) {
-        auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(i));
-        if (!currentView) continue;
-        currentView->setFogOpacity(m_masterFogOpacity);
+        currentView->getScene()->setFogColor(m_fogColor);
     }
     m_playerFogOpacity = settings.value(paths.map.playerFogOpacity, 1.0).toDouble() / 100;
 
@@ -637,6 +635,8 @@ void MainWindow::openMapFromFile(const QString& fileName) {
         updateVisibility();
         mapTabWidget->setCurrentIndex(mapTabWidget->count() - 1);
         view->getScene()->setTokenTitleMode(currentTokenTitleMode);
+        view->getScene()->setTokenTextSize(currentTokenFontSize);
+        view->getScene()->setFogColor(m_fogColor);
 
         connect(view->getScene(), &MapScene::toolChanged, this, [=](const AbstractMapTool* tool){
             if (!tool){

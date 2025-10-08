@@ -477,7 +477,7 @@
          <item row="4" column="1">
           <widget class="QPushButton" name="fogColorButton">
            <property name="text">
-            <string>Choose</string>
+            <string>#000000</string>
            </property>
           </widget>
          </item>

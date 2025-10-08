@@ -148,6 +148,7 @@ private:
     int currentTokenFontSize = 12;
     qreal m_masterFogOpacity = 0.4;
     qreal m_playerFogOpacity = 1.0;
+    QColor m_fogColor = Qt::black;
 
 private slots:
     void newCampaign();
