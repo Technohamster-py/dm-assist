@@ -46,6 +46,8 @@ public slots:
 
     void addFromFile(const QString& filename);
 
+    void setAutoSort(bool enabled = true);
+
     void setSharedFieldVisible(int index, bool visible);
     void setHpDisplayMode(int mode);
     void setHpComboBoxVisible(bool visible);

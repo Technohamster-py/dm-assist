@@ -438,6 +438,7 @@ void MainWindow::loadSettings() {
     initiativeTrackerWidget->setSharedFieldVisible(3, initiativeFields & iniFields::hp);
     initiativeTrackerWidget->setSharedFieldVisible(4, initiativeFields & iniFields::maxHp);
     initiativeTrackerWidget->setSharedFieldVisible(5, initiativeFields & iniFields::del);
+    initiativeTrackerWidget->setAutoSort(settings.value(paths.initiative.autoSort, true).toBool());
 
     /// Appearance
     QString theme = settings.value(paths.appearance.theme, "Light").toString();

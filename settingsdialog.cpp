@@ -126,6 +126,7 @@ void SettingsDialog::loadSettings() {
     ui->deleteCheckBox->setChecked(initiativeFields & iniFields::del);
     ui->hpModeComboBox->setCurrentIndex(settings.value(paths.initiative.hpBarMode, 0).toInt());
     ui->showControlCheckBox->setChecked(settings.value(paths.initiative.showHpComboBox, true).toBool());
+    ui->autoSortBox->setChecked(settings.value(paths.initiative.autoSort, true).toBool());
 
 
     /// Appearance
@@ -267,6 +268,7 @@ void SettingsDialog::saveSettings() {
     settings.setValue(paths.initiative.showHpComboBox, ui->showControlCheckBox->isChecked());
     settings.setValue(paths.initiative.autoInitiative, ui->characterAutoRoll->isChecked());
     settings.setValue(paths.initiative.beastAutoInitiative, ui->beastAutoRoll->isChecked());
+    settings.setValue(paths.initiative.autoSort, ui->autoSortBox->isChecked());
 
     /// Appearance
     settings.setValue(paths.appearance.theme, ui->themeComboBox->currentData().toString());
