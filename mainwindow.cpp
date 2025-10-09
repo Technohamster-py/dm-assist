@@ -91,7 +91,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(campaignTreeWidget, &CampaignTreeWidget::characterAddRequested, this, [=](const QString& path) {
         DndCharsheetWidget character(path);
-        character.addToInitiative(initiativeTrackerWidget, autoRoll);
+        character.addToInitiative(initiativeTrackerWidget, m_autoRollCharacter);
     });
     connect(campaignTreeWidget, &CampaignTreeWidget::characterOpenRequested, this, [=](const QString& path){
         auto* charsheetWidget = new DndCharsheetWidget(path);
@@ -102,7 +102,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);
     connect(campaignTreeWidget, &CampaignTreeWidget::beastAddRequested, [=](const QString& path) {
         DndBestiaryPage beast(path);
-        beast.addToInitiative(initiativeTrackerWidget, autoRoll);
+        beast.addToInitiative(initiativeTrackerWidget, m_autoRollBeast);
     });
     connect(campaignTreeWidget, &CampaignTreeWidget::beastOpenRequested, [=](const QString& path){
         auto* bestiaryPage = new DndBestiaryPage(path);
@@ -430,7 +430,8 @@ void MainWindow::loadSettings() {
     /// Initiative tracker
     initiativeTrackerWidget->setHpDisplayMode(settings.value(paths.initiative.hpBarMode, 0).toInt());
     initiativeTrackerWidget->setHpComboBoxVisible(settings.value(paths.initiative.showHpComboBox, true).toBool());
-    autoRoll = settings.value(paths.initiative.autoInitiative, false).toBool();
+    m_autoRollCharacter = settings.value(paths.initiative.autoInitiative, false).toBool();
+    m_autoRollBeast = settings.value(paths.initiative.beastAutoInitiative, false).toBool();
     int initiativeFields = settings.value(paths.initiative.fields, 7).toInt();
     initiativeTrackerWidget->setSharedFieldVisible(0, initiativeFields & iniFields::name);
     initiativeTrackerWidget->setSharedFieldVisible(1, initiativeFields & iniFields::init);
@@ -438,6 +439,13 @@ void MainWindow::loadSettings() {
     initiativeTrackerWidget->setSharedFieldVisible(3, initiativeFields & iniFields::hp);
     initiativeTrackerWidget->setSharedFieldVisible(4, initiativeFields & iniFields::maxHp);
     initiativeTrackerWidget->setSharedFieldVisible(5, initiativeFields & iniFields::del);
+    initiativeTrackerWidget->setAutoSort(settings.value(paths.initiative.autoSort, true).toBool());
+
+    QString activeColorName = settings.value(paths.initiative.activeColor).toString();
+    QColor activeColor = QApplication::palette().color(QPalette::Highlight);
+    if (!activeColorName.isEmpty() && QColor(activeColorName).isValid())
+        activeColor = QColor(activeColorName);
+    initiativeTrackerWidget->setActiveColor(activeColor);
 
     /// Appearance
     QString theme = settings.value(paths.appearance.theme, "Light").toString();
@@ -673,11 +681,11 @@ void MainWindow::openMapFromFile(const QString& fileName) {
             switch (CampaignTreeWidget::determieNodeType(path)){
                 case NodeType::Character:
                     charsheetWidget = new DndCharsheetWidget(path);
-                    charsheetWidget->addToInitiative(initiativeTrackerWidget, autoRoll);
+                    charsheetWidget->addToInitiative(initiativeTrackerWidget, m_autoRollCharacter);
                     break;
                 case NodeType::Beast:
                     charsheetWidget = new DndBestiaryPage(path);
-                    charsheetWidget->addToInitiative(initiativeTrackerWidget, autoRoll);
+                    charsheetWidget->addToInitiative(initiativeTrackerWidget, m_autoRollBeast);
                     break;
                 default:
                     return;

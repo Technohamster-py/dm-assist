@@ -69,10 +69,12 @@ struct Settings{
     struct Initiative {
         QString autoInitiative = "initiative/autoRoll/character";  ///< bool Автоматические броски инициативы для Игроков
         QString beastAutoInitiative = "initiative/autoRoll/beast"; ///< bool Автоматические броски инициативы для Монстров
+        QString autoSort = "initiative/autosort";
         QString fields = "initiative/fields";                      ///< uint8 Режим отображения полей в трекере инициативы
         QString hpBarMode = "initiative/hpBar";                    ///< uint8 (0:2) Режим отображения здоровья
         QString showHpComboBox = "initiative/showHpCombo";         ///< bool Показывать комбобокс с выбором режима в основном виджете
         QString sharedWindows = "initiative/sharedWindowsCount";   ///< uint8 - Количество открытых расшаренных окон (UNUSED)
+        QString activeColor = "initiative/activeColor";
         QString customStatuses = "initiative/customStatuses";      ///< list - Список кастомных статусов с названиями и иконками
             QString customStatusTitle = "title";                   ///< QString - Название кастомного статуса в списке
             QString customStatusIcon = "icon";                     ///< QString - Путь к иконке кастомного статуса в списке

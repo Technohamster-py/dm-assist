@@ -7,6 +7,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QStyleFactory>
+#include <QColorDialog>
 #include <QXmlStreamWriter>
 #include <QXmlStreamReader>
 #include <QColorDialog>
@@ -63,6 +64,22 @@ SettingsDialog::SettingsDialog(QString organisationName, QString applicationName
     populateTokenModes();
 
     loadSettings();
+
+    connect(ui->navTree, &QTreeWidget::currentItemChanged, this, &SettingsDialog::onTreeItemSelected);
+    connect(ui->cancelButton, &QPushButton::clicked, this, &QDialog::reject);
+    connect(ui->exportButton, &QPushButton::clicked, this, &SettingsDialog::exportSettings);
+    connect(ui->importButton, &QPushButton::clicked, this, &SettingsDialog::importSettings);
+    connect(ui->activeColorButton, &QPushButton::clicked, [=](){
+        QColor color = QColorDialog::getColor(ui->colorExamplewidget->item(0)->background().color(), this);
+        if (color.isValid()) {
+            ui->colorExamplewidget->item(0)->setBackground(QBrush(color));
+        }
+    });
+    connect(ui->defaultColorCheckbox, &QCheckBox::stateChanged, [=](bool active){
+        ui->activeColorButton->setEnabled(!active);
+        if (active)
+            ui->colorExamplewidget->item(0)->setBackground(QApplication::palette().color(QPalette::Highlight));
+    });
 }
 
 SettingsDialog::~SettingsDialog() {
@@ -136,7 +153,13 @@ void SettingsDialog::loadSettings() {
     ui->deleteCheckBox->setChecked(initiativeFields & iniFields::del);
     ui->hpModeComboBox->setCurrentIndex(settings.value(paths.initiative.hpBarMode, 0).toInt());
     ui->showControlCheckBox->setChecked(settings.value(paths.initiative.showHpComboBox, true).toBool());
+    ui->autoSortBox->setChecked(settings.value(paths.initiative.autoSort, true).toBool());
 
+    QString activeColorName = settings.value(paths.initiative.activeColor).toString();
+    QColor activeColor = QApplication::palette().color(QPalette::Highlight);
+    if (!activeColorName.isEmpty() && QColor(activeColorName).isValid())
+        activeColor = QColor(activeColorName);
+    ui->colorExamplewidget->item(0)->setBackground(QBrush(activeColor));
 
     /// Appearance
     QString currentTheme = settings.value(paths.appearance.theme, "Light").toString();
@@ -279,6 +302,8 @@ void SettingsDialog::saveSettings() {
     settings.setValue(paths.initiative.showHpComboBox, ui->showControlCheckBox->isChecked());
     settings.setValue(paths.initiative.autoInitiative, ui->characterAutoRoll->isChecked());
     settings.setValue(paths.initiative.beastAutoInitiative, ui->beastAutoRoll->isChecked());
+    settings.setValue(paths.initiative.autoSort, ui->autoSortBox->isChecked());
+    settings.setValue(paths.initiative.activeColor, ui->colorExamplewidget->item(0)->background().color().name());
 
     /// Appearance
     settings.setValue(paths.appearance.theme, ui->themeComboBox->currentData().toString());

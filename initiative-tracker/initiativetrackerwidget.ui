@@ -348,9 +348,15 @@
      </item>
      <item>
       <widget class="QPushButton" name="resetButton">
-       <property name="maximumSize">
+       <property name="minimumSize">
         <size>
          <width>50</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>80</width>
          <height>16777215</height>
         </size>
        </property>
