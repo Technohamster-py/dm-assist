@@ -37,15 +37,16 @@ protected:
     void saveSettings();
     const Settings paths;
 
+protected slots:
+    void exportSettings();
+    void importSettings();
+
 private slots:
     void onTreeItemSelected(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_applyButton_clicked();
 
     void on_folderButton_clicked();
     void on_themeButton_clicked();
-
-    void exportSettings();
-    void importSettings();
 
     void onKeySequenceChanged(QKeySequence newSeq);
 
