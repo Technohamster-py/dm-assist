@@ -441,6 +441,12 @@ void MainWindow::loadSettings() {
     initiativeTrackerWidget->setSharedFieldVisible(5, initiativeFields & iniFields::del);
     initiativeTrackerWidget->setAutoSort(settings.value(paths.initiative.autoSort, true).toBool());
 
+    QString activeColorName = settings.value(paths.initiative.activeColor).toString();
+    QColor activeColor = QApplication::palette().color(QPalette::Highlight);
+    if (!activeColorName.isEmpty() && QColor(activeColorName).isValid())
+        activeColor = QColor(activeColorName);
+    initiativeTrackerWidget->setActiveColor(activeColor);
+
     /// Appearance
     QString theme = settings.value(paths.appearance.theme, "Light").toString();
     if (theme == "Light")

@@ -66,6 +66,8 @@ public:
     int iconSpacing() const {return m_iconSpacing;};
     void setIconSpacing(int spacingPx) {m_iconSpacing = spacingPx;};
 
+    void setActiveColor(const QColor& color);
+
 signals:
     void dataChangedExternally();
 
@@ -85,6 +87,8 @@ private:
     int m_iconSpacing = 2;
 
     bool autoSort = false;
+
+    QColor m_activeColor;
 };
 
 

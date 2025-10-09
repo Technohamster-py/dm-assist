@@ -12,6 +12,8 @@
 
 InitiativeModel::InitiativeModel(QObject *parent)
         : QAbstractTableModel(parent) {
+    m_activeColor = QApplication::palette().color(QPalette::Highlight);
+
     m_characterHeaderIcon = QIcon(":/human.svg");
     m_initHeaderIcon = QIcon(":/d20.svg");
     m_acHeaderIcon = QIcon(":/shield.svg");
@@ -155,7 +157,7 @@ QVariant InitiativeModel::data(const QModelIndex &index, int role) const {
     }
 
     if (role == Qt::BackgroundRole && index.row() == currentIndex) {
-        return QBrush(QApplication::palette().color(QPalette::Highlight)); // Подсветка текущего
+        return QBrush(m_activeColor);   ///< Active character highlight
     }
 
     if (role == Qt::DecorationRole && index.column() == fields::statuses){
@@ -558,6 +560,12 @@ void InitiativeModel::decrementStatuses() {
 void InitiativeModel::setAutoSort(bool enabled) {
     autoSort = enabled;
     if (autoSort) sortByInitiative();
+}
+
+void InitiativeModel::setActiveColor(const QColor &color) {
+    if (!color.isValid()) return;
+    m_activeColor = color;
+    emit dataChanged(this->index(currentIndex, 0), this->index(currentIndex, columnCount()-1));
 }
 
 
