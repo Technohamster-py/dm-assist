@@ -46,6 +46,8 @@ public slots:
 
     void addFromFile(const QString& filename);
 
+    void setAutoSort(bool enabled = true);
+
     void setSharedFieldVisible(int index, bool visible);
     void setHpDisplayMode(int mode);
     void setHpComboBoxVisible(bool visible);
@@ -54,6 +56,8 @@ public slots:
     void addCharacter(QString name, int maxHp, int ac = 10, int hp = 0, int initiative = 0, int speed = 30);
 
     void updateTranslator();
+
+    void setActiveColor(const QColor& color) { if (model) model->setActiveColor(color);};
 
 protected:
     int m_currentRound = 1;

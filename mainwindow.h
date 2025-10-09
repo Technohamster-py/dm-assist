@@ -56,6 +56,8 @@ public:
     ~MainWindow() override;
 
     void changeLanguage(const QString &languageCode);
+    QStringList recentCampaigns() const {return m_recentCampaignList;}
+    void openCampaign(const QString& campaignRootDir = "");
 
 signals:
     void translatorChanged();
@@ -83,9 +85,11 @@ private:
     Ui::MainWindow *ui;
     QTranslator translator;
     UpdateChecker* updateChecker;
+    bool m_checkForUpdates;
     QString currentLanguage;
     QString currentCampaignDir;
     QString defaultCampaignDir;
+    bool openLastMap = false;
 
     int deviceIndex = -1;
     QVector<MusicPlayerWidget*> players;
@@ -95,7 +99,8 @@ private:
     CampaignTreeWidget* campaignTreeWidget;
 
     InitiativeTrackerWidget* initiativeTrackerWidget;
-    bool autoRoll = false;
+    bool m_autoRollCharacter = false;
+    bool m_autoRollBeast = false;
 
     TabWidget *mapTabWidget;
     SharedMapWindow* sharedMapWindow = nullptr;
@@ -111,11 +116,25 @@ private:
     HeightMapTool* heightMapTool;
     QActionGroup *toolGroup;
 
+    QToolButton* rulerButton;
+    QToolButton* fogHideButton;
+    QToolButton* fogRevealButton;
+    QToolButton* lightButton;
+    QToolButton* lineButton;
+    QToolButton* circleButton;
+    QToolButton* squareButton;
+    QToolButton* triangleButton;
+    QToolButton* brushButton;
+    QToolButton* heightButton;
+
     RollWidget* rollWidget;
 
     QProgressBar* progressBar;
 
     void setupCampaign(const QString &campaignRoot);
+    void addCampaignToRecentList(const QString& path);
+    QStringList m_recentCampaignList;
+    void updateRecentMenu();
     void setupPlayers();
     void setupTracker();
     void setupToolbar();
@@ -128,6 +147,10 @@ private:
 
     int currentTokenTitleMode = 0;
     int currentTokenFontSize = 12;
+    int m_defaultGridSize = 5;
+    qreal m_masterFogOpacity = 0.4;
+    qreal m_playerFogOpacity = 1.0;
+    QColor m_fogColor = Qt::black;
 
 private slots:
     void newCampaign();

@@ -10,6 +10,9 @@ class SharedMapView : public QGraphicsView {
     Q_OBJECT
 public:
     explicit SharedMapView(MapScene* scene, QWidget* parent = nullptr) : QGraphicsView(parent), m_scene(scene) { setScene(scene);}
+
+    void setOpacity(qreal opacity) {m_opacity = opacity;}
+    qreal opacity() const {return m_opacity;}
 protected:
     void drawForeground(QPainter* painter, const QRectF& rect) override {
         Q_UNUSED(rect);
@@ -17,13 +20,14 @@ protected:
 
         if (!m_scene->getFogImage().isNull()){
             painter->save();
-            painter->setOpacity(1.0);
+            painter->setOpacity(m_opacity);
             painter->drawImage(QPointF(0, 0), m_scene->getFogImage());
             painter->restore();
         }
     }
 private:
     MapScene *m_scene;
+    qreal m_opacity = 1.0;
 };
 
 /**
@@ -40,6 +44,7 @@ class SharedMapWindow : public QWidget{
 Q_OBJECT
 public:
     explicit SharedMapWindow(MapScene *originalScene, QWidget *parent = nullptr);
+    void setFogOpacity(qreal opacity) {view->setOpacity(opacity);}
 public slots:
     void updateFogImage(const QImage &fog);
 private:

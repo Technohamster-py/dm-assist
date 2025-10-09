@@ -86,12 +86,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::setVolumeDivider);
     connect(ui->actionReload, &QAction::triggered, [=](){setupCampaign(campaignTreeWidget->root());});
     connect(ui->actionAddCharacter, &QAction::triggered, this, &MainWindow::addCharacter);
-    connect(ui->actionCheck, &QAction::triggered, [=](){updateChecker->checkFotUpdates();});
+    connect(ui->actionCheck, &QAction::triggered, [=](){ updateChecker->checkForUpdates();});
     connect(updateChecker, &UpdateChecker::updateCheckFinished, this, &MainWindow::handleUpdates);
 
     connect(campaignTreeWidget, &CampaignTreeWidget::characterAddRequested, this, [=](const QString& path) {
         DndCharsheetWidget character(path);
-        character.addToInitiative(initiativeTrackerWidget, autoRoll);
+        character.addToInitiative(initiativeTrackerWidget, m_autoRollCharacter);
     });
     connect(campaignTreeWidget, &CampaignTreeWidget::characterOpenRequested, this, [=](const QString& path){
         auto* charsheetWidget = new DndCharsheetWidget(path);
@@ -102,7 +102,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);
     connect(campaignTreeWidget, &CampaignTreeWidget::beastAddRequested, [=](const QString& path) {
         DndBestiaryPage beast(path);
-        beast.addToInitiative(initiativeTrackerWidget, autoRoll);
+        beast.addToInitiative(initiativeTrackerWidget, m_autoRollBeast);
     });
     connect(campaignTreeWidget, &CampaignTreeWidget::beastOpenRequested, [=](const QString& path){
         auto* bestiaryPage = new DndBestiaryPage(path);
@@ -115,14 +115,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/player/Volume-1.svg", ui->muteButton, &QAbstractButton::setIcon);
     ThemedIconManager::instance().addPixmapTarget(":/player/Volume-2.svg", ui->volMaxLabel, [label = ui->volMaxLabel](const QPixmap& px){label->setPixmap(px);});
 
-    showMaximized();
-
     loadSettings();
-    setupCampaign(currentCampaignDir);
+//    setupCampaign(currentCampaignDir);
     saveSettings();
 
-
-    updateChecker->checkFotUpdates();
+    if (m_checkForUpdates)
+        updateChecker->checkForUpdates();
 }
 
 /**
@@ -130,8 +128,8 @@ MainWindow::MainWindow(QWidget *parent) :
  * @details При закрытии окна производится сохранение конфигурационного файла
  */
 MainWindow::~MainWindow() {
-    closeCampaign();
     saveSettings();
+    closeCampaign();
     foreach(MusicPlayerWidget* player, players){
         removeDirectoryRecursively(player->getLocalDirPath());
         delete player;
@@ -417,6 +415,11 @@ void MainWindow::loadSettings() {
     if (!dir.exists())
         dir.mkpath(".");
     defaultCampaignDir = settings.value(paths.general.defaultCampaignDir, "").toString();
+    openLastMap = settings.value(paths.general.openLastMap, false).toBool();
+    m_checkForUpdates = settings.value(paths.general.checkForUpdates, true).toBool();
+    if (m_checkForUpdates)
+        updateChecker->checkForUpdates();
+
     /// Music
     for (MusicPlayerWidget *player : players) {
         player->setAudioOutput(settings.value(paths.general.audioDevice, 0).toInt());
@@ -427,7 +430,8 @@ void MainWindow::loadSettings() {
     /// Initiative tracker
     initiativeTrackerWidget->setHpDisplayMode(settings.value(paths.initiative.hpBarMode, 0).toInt());
     initiativeTrackerWidget->setHpComboBoxVisible(settings.value(paths.initiative.showHpComboBox, true).toBool());
-    autoRoll = settings.value(paths.initiative.autoInitiative, false).toBool();
+    m_autoRollCharacter = settings.value(paths.initiative.autoInitiative, false).toBool();
+    m_autoRollBeast = settings.value(paths.initiative.beastAutoInitiative, false).toBool();
     int initiativeFields = settings.value(paths.initiative.fields, 7).toInt();
     initiativeTrackerWidget->setSharedFieldVisible(0, initiativeFields & iniFields::name);
     initiativeTrackerWidget->setSharedFieldVisible(1, initiativeFields & iniFields::init);
@@ -435,6 +439,13 @@ void MainWindow::loadSettings() {
     initiativeTrackerWidget->setSharedFieldVisible(3, initiativeFields & iniFields::hp);
     initiativeTrackerWidget->setSharedFieldVisible(4, initiativeFields & iniFields::maxHp);
     initiativeTrackerWidget->setSharedFieldVisible(5, initiativeFields & iniFields::del);
+    initiativeTrackerWidget->setAutoSort(settings.value(paths.initiative.autoSort, true).toBool());
+
+    QString activeColorName = settings.value(paths.initiative.activeColor).toString();
+    QColor activeColor = QApplication::palette().color(QPalette::Highlight);
+    if (!activeColorName.isEmpty() && QColor(activeColorName).isValid())
+        activeColor = QColor(activeColorName);
+    initiativeTrackerWidget->setActiveColor(activeColor);
 
     /// Appearance
     QString theme = settings.value(paths.appearance.theme, "Light").toString();
@@ -454,19 +465,40 @@ void MainWindow::loadSettings() {
 
     /// Campaign
     currentCampaignDir = settings.value(paths.session.campaign, "").toString();
+    m_recentCampaignList = settings.value(paths.session.recent).toStringList();
+    updateRecentMenu();
 
     /// Rolls
     rollWidget->setCompactMode(settings.value(paths.rolls.compactMode).toBool());
 
-    /// Tokens
+    /// Map
     currentTokenTitleMode = settings.value(paths.map.tokenTitleMode, 0).toInt();
     currentTokenFontSize = settings.value(paths.map.tokenFontSize, 12).toInt();
+    m_masterFogOpacity = settings.value(paths.map.masterFogOpacity, 0.4).toDouble() / 100;
+    m_fogColor = QColor(settings.value(paths.map.fogColor, "#000000").toString());
     for (int i = 0; i < mapTabWidget->count(); i++){
         auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(i));
-        if (!currentView) return;
+        if (!currentView) continue;
+
+        currentView->setFogOpacity(m_masterFogOpacity);
         currentView->getScene()->setTokenTitleMode(currentTokenTitleMode);
         currentView->getScene()->setTokenTextSize(currentTokenFontSize);
+        currentView->getScene()->setFogColor(m_fogColor);
     }
+    m_playerFogOpacity = settings.value(paths.map.playerFogOpacity, 1.0).toDouble() / 100;
+    m_defaultGridSize = settings.value(paths.map.defaultGridSize, 5).toInt();
+
+    /// Hotkeys
+    rulerButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.ruler).toString()));
+    heightButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.height).toString()));
+    brushButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.brush).toString()));
+    fogHideButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.fogHide).toString()));
+    fogRevealButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.fogReveal).toString()));
+    lightButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.light).toString()));
+    lineButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.line).toString()));
+    circleButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.circle).toString()));
+    squareButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.square).toString()));
+    triangleButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.triangle).toString()));
 }
 
 /**
@@ -595,6 +627,7 @@ void MainWindow::openMapFromFile(const QString& fileName) {
     QString ext = fileInfo.suffix().toLower();
 
     auto *view = new MapView(this);
+    view->setFogOpacity(m_masterFogOpacity);
     bool success;
 
     connect(view, &MapView::progressChanged, this, &MainWindow::slotUpdateProgressBar);
@@ -611,6 +644,9 @@ void MainWindow::openMapFromFile(const QString& fileName) {
         updateVisibility();
         mapTabWidget->setCurrentIndex(mapTabWidget->count() - 1);
         view->getScene()->setTokenTitleMode(currentTokenTitleMode);
+        view->getScene()->setTokenTextSize(currentTokenFontSize);
+        view->getScene()->setFogColor(m_fogColor);
+        view->getScene()->setGridSize(m_defaultGridSize);
 
         connect(view->getScene(), &MapScene::toolChanged, this, [=](const AbstractMapTool* tool){
             if (!tool){
@@ -645,11 +681,11 @@ void MainWindow::openMapFromFile(const QString& fileName) {
             switch (CampaignTreeWidget::determieNodeType(path)){
                 case NodeType::Character:
                     charsheetWidget = new DndCharsheetWidget(path);
-                    charsheetWidget->addToInitiative(initiativeTrackerWidget, autoRoll);
+                    charsheetWidget->addToInitiative(initiativeTrackerWidget, m_autoRollCharacter);
                     break;
                 case NodeType::Beast:
                     charsheetWidget = new DndBestiaryPage(path);
-                    charsheetWidget->addToInitiative(initiativeTrackerWidget, autoRoll);
+                    charsheetWidget->addToInitiative(initiativeTrackerWidget, m_autoRollBeast);
                     break;
                 default:
                     return;
@@ -678,6 +714,7 @@ void MainWindow::openSharedMapWindow(int index) {
     auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
     if (!sharedMapWindow){
         sharedMapWindow = new SharedMapWindow(currentView->getScene());
+        sharedMapWindow->setFogOpacity(m_playerFogOpacity);
         sharedMapWindow->show();
         sharedMapWindow->resize(800, 600);
 
@@ -718,9 +755,28 @@ void MainWindow::closeCampaign() {
     removeDirectoryRecursively(rootPath + "/Music", false);
     saveMusicConfigFile(rootPath + "/Music/playerConfig.xml");
 
-    for (int i = 0; i < mapTabWidget->count(); ++i) {
-        exportMap(rootPath + "/Maps/" + mapTabWidget->widget(i)->objectName(), i);
+    QFile file(rootPath + "/campaign.json");
+    QJsonArray lastMaps;
+    QJsonDocument doc;
+    QJsonObject obj;
+    if (file.open(QIODevice::ReadOnly)){
+        doc = QJsonDocument::fromJson(file.readAll());
+        obj = doc.object();
     }
+    file.close();
+
+    for (int i = 0; i < mapTabWidget->count(); ++i) {
+        lastMaps.append(rootPath + "/Maps/" + mapTabWidget->tabText(i) + ".dam");
+        exportMap(rootPath + "/Maps/" + mapTabWidget->tabText(i) + ".dam", i);
+    }
+    obj["openedMaps"] = lastMaps;
+    doc = QJsonDocument(obj);
+
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)){
+        file.write(doc.toJson(QJsonDocument::Indented));
+        file.close();
+    }
+
 
     currentCampaignDir = "";
     campaignTreeWidget->clear();
@@ -815,7 +871,8 @@ void MainWindow::saveSettings() {
     settings.setValue(paths.general.dir, workingDir);
     settings.setValue(paths.general.volume, ui->volumeSlider->value());
     settings.setValue(paths.general.defaultCampaignDir, defaultCampaignDir);
-    settings.setValue(paths.session.campaign, campaignTreeWidget->root());
+    settings.setValue(paths.session.recent, m_recentCampaignList);
+    settings.setValue(paths.session.campaign, currentCampaignDir);
     settings.setValue(paths.rolls.compactMode, rollWidget->compactMode());
     settings.setValue(paths.appearance.stretch, ui->splitter->saveState());
     settings.sync();
@@ -847,7 +904,7 @@ void MainWindow::setupCampaign(const QString &campaignRoot) {
     if (campaignRoot.isEmpty())
         return;
 
-    if (!currentCampaignDir.isEmpty()){
+    if (!campaignTreeWidget->root().isEmpty()){
         closeCampaign();
     }
 
@@ -858,6 +915,22 @@ void MainWindow::setupCampaign(const QString &campaignRoot) {
         removeDirectoryRecursively(player->getLocalDirPath());
     }
 
+    QFile file(campaignRoot + "/campaign.json");
+    QJsonArray lastMaps;
+    if (file.open(QIODevice::ReadOnly)){
+        QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+        QJsonObject obj = doc.object();
+        lastMaps = obj.value("openedMaps").toArray();
+    }
+    file.close();
+
+    if (openLastMap && !lastMaps.isEmpty())
+    {
+        for (const auto& fileRef : lastMaps) {
+            openMapFromFile(fileRef.toString());
+        }
+    }
+
     QString musicConfigFile = campaignRoot + "/Music/playerConfig.xml";
     if (QFile(musicConfigFile).exists())
         loadMusicConfigFile(musicConfigFile);
@@ -865,6 +938,8 @@ void MainWindow::setupCampaign(const QString &campaignRoot) {
         saveMusicConfigFile(musicConfigFile);
 
     currentCampaignDir = campaignRoot;
+    addCampaignToRecentList(currentCampaignDir);
+    updateRecentMenu();
     initiativeTrackerWidget->setBaseDir(currentCampaignDir + "/Encounters");
     campaignTreeWidget->setVisible(true);
 }
@@ -993,7 +1068,7 @@ void MainWindow::setupToolbar() {
 
 
     /// Ruler tool
-    auto *rulerButton = new QToolButton(this);
+    rulerButton = new QToolButton(this);
     rulerButton->setCheckable(true);
     rulerButton->setToolTip(tr("ruler"));
 
@@ -1041,7 +1116,7 @@ void MainWindow::setupToolbar() {
     ThemedIconManager::instance().addIconTarget(":/map/fog_hide.svg", fogHideAction, &QAction::setIcon);
     toolGroup->addAction(fogHideAction);
 
-    auto* fogHideButton = new QToolButton(this);
+    fogHideButton = new QToolButton(this);
     fogHideButton->setCheckable(true);
     fogHideButton->setToolTip(tr("Add fog to map"));
     fogHideButton->setDefaultAction(fogHideAction);
@@ -1075,7 +1150,7 @@ void MainWindow::setupToolbar() {
     ThemedIconManager::instance().addIconTarget(":/map/fog_reveal.svg", fogRevealAction, &QAction::setIcon);
     toolGroup->addAction(fogRevealAction);
 
-    auto* fogRevealButton = new QToolButton(this);
+    fogRevealButton = new QToolButton(this);
     fogRevealButton->setCheckable(true);
     fogRevealButton->setToolTip(tr("Remove fog from map"));
     fogRevealButton->setDefaultAction(fogRevealAction);
@@ -1110,7 +1185,7 @@ void MainWindow::setupToolbar() {
     ThemedIconManager::instance().addIconTarget(":/map/torch.svg", lightAction, &QAction::setIcon);
     toolGroup->addAction(lightAction);
 
-    auto* lightButton = new QToolButton(this);
+    lightButton = new QToolButton(this);
     lightButton->setCheckable(true);
     lightButton->setToolTip(tr("Edit light sources"));
     lightButton->setDefaultAction(lightAction);
@@ -1174,7 +1249,7 @@ void MainWindow::setupToolbar() {
     ThemedIconManager::instance().addIconTarget(":/map/line.svg", lineAction, &QAction::setIcon);
     toolGroup->addAction(lineAction);
 
-    auto* lineButton = new QToolButton(this);
+    lineButton = new QToolButton(this);
     lineButton->setCheckable(true);
     lineButton->setToolTip(tr("Draw line"));
     lineButton->setDefaultAction(lineAction);
@@ -1196,7 +1271,7 @@ void MainWindow::setupToolbar() {
     ThemedIconManager::instance().addIconTarget(":/map/sphere.svg", circleAction, &QAction::setIcon);
     toolGroup->addAction(circleAction);
 
-    auto* circleButton = new QToolButton(this);
+    circleButton = new QToolButton(this);
     circleButton->setCheckable(true);
     circleButton->setToolTip(tr("Draw circle"));
     circleButton->setDefaultAction(circleAction);
@@ -1218,7 +1293,7 @@ void MainWindow::setupToolbar() {
     ThemedIconManager::instance().addIconTarget(":/map/cube.svg", squareAction, &QAction::setIcon);
     toolGroup->addAction(squareAction);
 
-    auto* squareButton = new QToolButton(this);
+    squareButton = new QToolButton(this);
     squareButton->setCheckable(true);
     squareButton->setToolTip(tr("Draw square"));
     squareButton->setDefaultAction(squareAction);
@@ -1240,7 +1315,7 @@ void MainWindow::setupToolbar() {
     ThemedIconManager::instance().addIconTarget(":/map/cone.svg", triangleAction, &QAction::setIcon);
     toolGroup->addAction(triangleAction);
 
-    auto* triangleButton = new QToolButton(this);
+    triangleButton = new QToolButton(this);
     triangleButton->setCheckable(true);
     triangleButton->setToolTip(tr("Draw triangle"));
     triangleButton->setDefaultAction(triangleAction);
@@ -1262,7 +1337,7 @@ void MainWindow::setupToolbar() {
     ThemedIconManager::instance().addIconTarget(":/map/brush.svg", brushAction, &QAction::setIcon);
     toolGroup->addAction(brushAction);
 
-    auto* brushButton = new QToolButton(this);
+    brushButton = new QToolButton(this);
     brushButton->setCheckable(true);
     brushButton->setToolTip(tr("Brush"));
     brushButton->setDefaultAction(brushAction);
@@ -1328,7 +1403,7 @@ void MainWindow::setupToolbar() {
     ThemedIconManager::instance().addIconTarget(":map/mountain.svg", heightMapAction, &QAction::setIcon);
     toolGroup->addAction(heightMapAction);
 
-    auto* heightButton = new QToolButton(this);
+    heightButton = new QToolButton(this);
     heightButton->setCheckable(true);
     heightButton->setToolTip(tr("Height"));
     heightButton->setDefaultAction(heightMapAction);
@@ -1644,6 +1719,47 @@ void MainWindow::slotUpdateProgressBar(int percent, const QString &message) {
     progressBar->setFormat(QString("%1: %2%").arg(message).arg(percent));
     if (percent == 100 || percent == 0)
         QTimer::singleShot(1500, progressBar, [=](){progressBar->setVisible(false);});
+}
+
+
+void MainWindow::addCampaignToRecentList(const QString &path) {
+    m_recentCampaignList.removeAll(path);
+    m_recentCampaignList.prepend(path);
+    while (m_recentCampaignList.size() > 15)
+        m_recentCampaignList.removeLast();
+}
+
+void MainWindow::updateRecentMenu() {
+    ui->menuRecent->clear();
+
+    if (m_recentCampaignList.isEmpty())
+    {
+        QAction* emptyAction = new QAction(tr("None"), this);
+        emptyAction->setEnabled(false);
+        ui->menuRecent->addAction(emptyAction);
+        return;
+    }
+
+    for (const QString& path : m_recentCampaignList) {
+        QAction* action = new QAction(path, this);
+        connect(action, &QAction::triggered, [this, path](){ setupCampaign(path);});
+        ui->menuRecent->addAction(action);
+    }
+
+    ui->menuRecent->addSeparator();
+    QAction* clearAction = new QAction(tr("clear list"), this);
+    connect(clearAction, &QAction::triggered, [=]() {
+        m_recentCampaignList.clear();
+        updateRecentMenu();
+    });
+    ui->menuRecent->addAction(clearAction);
+}
+
+void MainWindow::openCampaign(const QString &campaignRootDir) {
+    if (campaignRootDir.isEmpty())
+        setupCampaign(currentCampaignDir);
+    else
+        setupCampaign(campaignRootDir);
 }
 
 

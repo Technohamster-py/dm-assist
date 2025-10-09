@@ -43,6 +43,9 @@ public:
 
     [[nodiscard]] MapScene* getScene() const {return scene;};
     bool loadSceneFromFile(const QString& path);
+
+    void setFogOpacity(qreal opacity) {m_fogOpacity = opacity;}
+    qreal fogOpacity() const {return m_fogOpacity;}
 signals:
     void progressChanged(int percent, const QString& message);
 
@@ -83,6 +86,7 @@ private:
     bool dragging;                        /**< Whether the view is currently panning */
     QPoint lastMousePos;                  /**< Last mouse position for drag calculation */
     QLabel* heightLabel;
+    qreal m_fogOpacity = 0.4;
 };
 
 #endif // MAPVIEW_H

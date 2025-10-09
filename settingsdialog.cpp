@@ -2,12 +2,19 @@
 #include "ui_settingsdialog.h"
 
 #include <QSettings>
+#include <QToolTip>
 #include <QStandardPaths>
 #include <QFileDialog>
+#include <QMessageBox>
 #include <QStyleFactory>
+#include <QColorDialog>
+#include <QXmlStreamWriter>
+#include <QXmlStreamReader>
+#include <QColorDialog>
 #include <utility>
 #include "lib/bass/include/bass.h"
 #include "map-widget/tokenitem.h"
+#include "themediconmanager.h"
 
 
 /**
@@ -30,6 +37,25 @@ SettingsDialog::SettingsDialog(QString organisationName, QString applicationName
 
     ui->navTree->expandAll();
     ui->navTree->setColumnHidden(1, true);
+    setupIcons();
+
+    for (auto * edit : ui->hotkeysPage->findChildren<QKeySequenceEdit*>()){
+        connect(edit, &QKeySequenceEdit::keySequenceChanged, this, &SettingsDialog::onKeySequenceChanged);
+    }
+
+    connect(ui->navTree, &QTreeWidget::currentItemChanged, this, &SettingsDialog::onTreeItemSelected);
+    connect(ui->cancelButton, &QPushButton::clicked, this, &QDialog::reject);
+    connect(ui->exportButton, &QPushButton::clicked, this, &SettingsDialog::exportSettings);
+    connect(ui->importButton, &QPushButton::clicked, this, &SettingsDialog::importSettings);
+    connect(ui->masterFogSlider, &QSlider::valueChanged, [=](int value){ui->masterFogValueLabel->setText(QString("%1 \%").arg(value));});
+    connect(ui->playerFogSlider, &QSlider::valueChanged, [=](int value){ui->playerFogValueLabel->setText(QString("%1 \%").arg(value));});
+    connect(ui->fogColorButton, &QPushButton::clicked, [=](){
+        QColor chosen = QColorDialog::getColor(QColor(ui->fogColorButton->text()), this);
+        if (chosen.isValid()) {
+            ui->fogColorButton->setStyleSheet(QString("background-color: %1").arg(chosen.name()));
+            ui->fogColorButton->setText(chosen.name());
+        }
+    });
 
     populateAudioDevices();
     populateLanguages();
@@ -41,6 +67,19 @@ SettingsDialog::SettingsDialog(QString organisationName, QString applicationName
 
     connect(ui->navTree, &QTreeWidget::currentItemChanged, this, &SettingsDialog::onTreeItemSelected);
     connect(ui->cancelButton, &QPushButton::clicked, this, &QDialog::reject);
+    connect(ui->exportButton, &QPushButton::clicked, this, &SettingsDialog::exportSettings);
+    connect(ui->importButton, &QPushButton::clicked, this, &SettingsDialog::importSettings);
+    connect(ui->activeColorButton, &QPushButton::clicked, [=](){
+        QColor color = QColorDialog::getColor(ui->colorExamplewidget->item(0)->background().color(), this);
+        if (color.isValid()) {
+            ui->colorExamplewidget->item(0)->setBackground(QBrush(color));
+        }
+    });
+    connect(ui->defaultColorCheckbox, &QCheckBox::stateChanged, [=](bool active){
+        ui->activeColorButton->setEnabled(!active);
+        if (active)
+            ui->colorExamplewidget->item(0)->setBackground(QApplication::palette().color(QPalette::Highlight));
+    });
 }
 
 SettingsDialog::~SettingsDialog() {
@@ -99,9 +138,12 @@ void SettingsDialog::loadSettings() {
     int index = ui->languageComboBox->findData(currentLanguage);
     if (index != -1)
         ui->languageComboBox->setCurrentIndex(index);
+    ui->startActionComboBox->setCurrentIndex(settings.value(paths.general.startAction, startActions::showEmptyWindow).toInt());
+    ui->updateCheckerBox->setChecked(settings.value(paths.general.checkForUpdates, true).toBool());
 
     /// Initiative
     ui->characterAutoRoll->setChecked(settings.value(paths.initiative.autoInitiative, false).toBool());
+    ui->beastAutoRoll->setChecked(settings.value(paths.initiative.beastAutoInitiative, false).toBool());
     int initiativeFields = settings.value(paths.initiative.fields, 7).toInt();
     ui->nameCheckBox->setChecked(initiativeFields & iniFields::name);
     ui->initiativeCheckBox->setChecked(initiativeFields & iniFields::init);
@@ -111,7 +153,13 @@ void SettingsDialog::loadSettings() {
     ui->deleteCheckBox->setChecked(initiativeFields & iniFields::del);
     ui->hpModeComboBox->setCurrentIndex(settings.value(paths.initiative.hpBarMode, 0).toInt());
     ui->showControlCheckBox->setChecked(settings.value(paths.initiative.showHpComboBox, true).toBool());
+    ui->autoSortBox->setChecked(settings.value(paths.initiative.autoSort, true).toBool());
 
+    QString activeColorName = settings.value(paths.initiative.activeColor).toString();
+    QColor activeColor = QApplication::palette().color(QPalette::Highlight);
+    if (!activeColorName.isEmpty() && QColor(activeColorName).isValid())
+        activeColor = QColor(activeColorName);
+    ui->colorExamplewidget->item(0)->setBackground(QBrush(activeColor));
 
     /// Appearance
     QString currentTheme = settings.value(paths.appearance.theme, "Light").toString();
@@ -124,8 +172,30 @@ void SettingsDialog::loadSettings() {
     if (index != -1)
         ui->styleComboBox->setCurrentIndex(index);
 
+    ui->scaleSlider->setValue(settings.value(paths.appearance.scale, 100).toInt());
+
+    /// Map
     ui->tokenComboBox->setCurrentIndex(settings.value(paths.map.tokenTitleMode, 0).toInt());
     ui->fontSizeSpinBox->setValue(settings.value(paths.map.tokenFontSize, 12).toInt());
+    ui->masterFogSlider->setValue(settings.value(paths.map.masterFogOpacity, 40).toInt());
+    ui->playerFogSlider->setValue(settings.value(paths.map.playerFogOpacity, 100).toInt());
+    QString fogColorName = settings.value(paths.map.fogColor, "#000000").toString();
+    ui->fogColorButton->setText(fogColorName);
+    ui->fogColorButton->setStyleSheet(QString("background-color: %1").arg(fogColorName));
+    ui->lastMapCheckBox->setChecked(settings.value(paths.general.openLastMap, false).toBool());
+    ui->gridSizeBox->setValue(settings.value(paths.map.defaultGridSize, 5).toInt());
+
+    /// Hotkeys
+    ui->rulerEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.ruler).toString()));
+    ui->heightEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.height).toString()));
+    ui->brushEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.brush).toString()));
+    ui->fogHideEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.fogHide).toString()));
+    ui->fogRevealEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.fogReveal).toString()));
+    ui->lightEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.light).toString()));
+    ui->lightEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.light).toString()));
+    ui->circleEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.circle).toString()));
+    ui->squareEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.square).toString()));
+    ui->triangleEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.triangle).toString()));
 }
 
 /**
@@ -210,31 +280,56 @@ void SettingsDialog::saveSettings() {
     settings.setValue(paths.general.audioDevice, deviceIndices[ui->deviceComboBox->currentIndex()]);
     settings.setValue(paths.general.dir, ui->folderEdit->text());
     settings.setValue(paths.general.lang, ui->languageComboBox->currentData().toString());
+    settings.setValue(paths.general.startAction, ui->startActionComboBox->currentIndex());
+    settings.setValue(paths.general.checkForUpdates, ui->updateCheckerBox->isChecked());
 
     /// Initiative
     int initiativeFields = 0;
     if (ui->nameCheckBox->isChecked())
-        initiativeFields = initiativeFields + 1;
+        initiativeFields = initiativeFields + iniFields::name;
     if (ui->initiativeCheckBox->isChecked())
-        initiativeFields = initiativeFields + 2;
+        initiativeFields = initiativeFields + iniFields::init;
     if (ui->acCheckBox->isChecked())
-        initiativeFields = initiativeFields + 4;
+        initiativeFields = initiativeFields + iniFields::ac;
     if (ui->hpCheckBox->isChecked())
-        initiativeFields = initiativeFields + 8;
+        initiativeFields = initiativeFields + iniFields::hp;
     if (ui->maxhpCheckBox->isChecked())
-        initiativeFields = initiativeFields + 16;
+        initiativeFields = initiativeFields + iniFields::maxHp;
     if (ui->deleteCheckBox->isChecked())
-        initiativeFields = initiativeFields + 32;
+        initiativeFields = initiativeFields + iniFields::del;
     settings.setValue(paths.initiative.fields, initiativeFields);
     settings.setValue(paths.initiative.hpBarMode, ui->hpModeComboBox->currentIndex());
     settings.setValue(paths.initiative.showHpComboBox, ui->showControlCheckBox->isChecked());
     settings.setValue(paths.initiative.autoInitiative, ui->characterAutoRoll->isChecked());
+    settings.setValue(paths.initiative.beastAutoInitiative, ui->beastAutoRoll->isChecked());
+    settings.setValue(paths.initiative.autoSort, ui->autoSortBox->isChecked());
+    settings.setValue(paths.initiative.activeColor, ui->colorExamplewidget->item(0)->background().color().name());
 
     /// Appearance
     settings.setValue(paths.appearance.theme, ui->themeComboBox->currentData().toString());
     settings.setValue(paths.appearance.style, ui->styleComboBox->currentData().toString());
+    settings.setValue(paths.appearance.scale, ui->scaleSlider->value());
+
+    /// Map
     settings.setValue(paths.map.tokenTitleMode, ui->tokenComboBox->currentIndex());
     settings.setValue(paths.map.tokenFontSize, ui->fontSizeSpinBox->value());
+    settings.setValue(paths.map.masterFogOpacity, ui->masterFogSlider->value());
+    settings.setValue(paths.map.playerFogOpacity, ui->playerFogSlider->value());
+    settings.setValue(paths.map.fogColor, ui->fogColorButton->text());
+    settings.setValue(paths.map.defaultGridSize, ui->gridSizeBox->value());
+    settings.setValue(paths.general.openLastMap, ui->lastMapCheckBox->isChecked());
+
+    /// Hotkeys
+    settings.setValue(paths.hotkeys.ruler, ui->rulerEdit->keySequence().toString());
+    settings.setValue(paths.hotkeys.height, ui->heightEdit->keySequence().toString());
+    settings.setValue(paths.hotkeys.brush, ui->brushEdit->keySequence().toString());
+    settings.setValue(paths.hotkeys.fogHide, ui->fogHideEdit->keySequence().toString());
+    settings.setValue(paths.hotkeys.fogReveal, ui->fogRevealEdit->keySequence().toString());
+    settings.setValue(paths.hotkeys.light, ui->lightEdit->keySequence().toString());
+    settings.setValue(paths.hotkeys.line, ui->lineEdit->keySequence().toString());
+    settings.setValue(paths.hotkeys.circle, ui->circleEdit->keySequence().toString());
+    settings.setValue(paths.hotkeys.square, ui->squareEdit->keySequence().toString());
+    settings.setValue(paths.hotkeys.triangle, ui->triangleEdit->keySequence().toString());
 
     settings.sync();
 }
@@ -293,6 +388,11 @@ void SettingsDialog::populateAudioDevices() {
  *   the dialog and emits the `accepted()` signal to notify that the dialog was confirmed.
  */
 void SettingsDialog::on_applyButton_clicked() {
+    if (!validateKeySequences()){
+        ui->applyButton->setEnabled(false);
+        ui->stackedWidget->setCurrentIndex(settingsPages::hotkeys);
+        return;
+    }
     saveSettings();
     accept();
 }
@@ -363,4 +463,215 @@ void SettingsDialog::populateTokenModes() {
     }
 }
 
+void SettingsDialog::onKeySequenceChanged(QKeySequence newSeq) {
+    auto *editSender = qobject_cast<QKeySequenceEdit*>(sender());
+    if (!editSender) return;
 
+    QString key = newSeq.toString(QKeySequence::NativeText);
+    m_hotkeyHash[editSender] = key;
+
+    ui->applyButton->setEnabled(validateKeySequences());
+}
+
+bool SettingsDialog::validateKeySequences() {
+    bool ok = true;
+    QHash<QString, int> countHash;
+    for (auto it = m_hotkeyHash.begin(); it != m_hotkeyHash.end(); ++it) {
+        if (!it.value().isEmpty())
+            countHash[it.value()]++;
+    }
+
+    for (auto it = m_hotkeyHash.begin(); it != m_hotkeyHash.end(); ++it) {
+        if (countHash[it.value()] > 1) {
+            it.key()->setStyleSheet("color: #FF0000"); ///< Error
+            ok = false;
+        } else {
+            it.key()->setStyleSheet("color: palette(text)"); ///< OK
+        }
+    }
+    return ok;
+}
+
+void SettingsDialog::setupIcons() {
+    ThemedIconManager::instance().addPixmapTarget(":/map/ruler.svg", ui->rulerIcon, [label = ui->rulerIcon](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/map/mountain.svg", ui->heightIcon, [label = ui->heightIcon](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/map/brush.svg", ui->brushIcon, [label = ui->brushIcon](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/map/fog_hide.svg", ui->fogHideIcon, [label = ui->fogHideIcon](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/map/fog_reveal.svg", ui->fogRevealIcon, [label = ui->fogRevealIcon](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/map/torch.svg", ui->lightIcon, [label = ui->lightIcon](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/map/line.svg", ui->lineIcon, [label = ui->lineIcon](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/map/sphere.svg", ui->circleIcon, [label = ui->circleIcon](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/map/cube.svg", ui->squareIcon, [label = ui->squareIcon](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addPixmapTarget(":/map/cone.svg", ui->triangleIcon, [label = ui->triangleIcon](const QPixmap& px){label->setPixmap(px);});
+}
+
+
+void SettingsDialog::exportSettings() {
+    QString file = QFileDialog::getSaveFileName(this,
+                                                tr("Export settings to file"),
+                                                QString(),
+                                                tr("XML files (*.xml)"));
+
+    if (file.isEmpty()) return;
+
+    QSettings settings(m_organisationName, m_applicationName);
+    XmlSettingsWriter writer(this);
+    writer.excludeKeys(m_excludedKeys);
+    QString error;
+    if (!writer.exportToFile(file, settings, &error))
+        QMessageBox::critical(this,
+                              tr("Export failed"),
+                              tr("failed to export settings: \n%1").arg(error));
+    else
+        QMessageBox::information(this,
+                                 tr("Export finished"),
+                                 tr("Settings exported to \n%1").arg(file));
+}
+
+void SettingsDialog::importSettings() {
+    QString file = QFileDialog::getOpenFileName(this,
+                                                tr("Import settings from file"),
+                                                QString(),
+                                                tr("XML files (*.xml)"));
+    if (file.isEmpty()) return;
+    QString backup = QDir::homePath() + "/dm-assist-settings-backup-" + QDateTime::currentDateTime().toString("yyyyMMdd-HHmmss") + ".xml";
+
+    auto res = QMessageBox::question(this, tr("Import settings"),
+                                     tr("Import will overwrite existing settings \n"
+                                        "Current settings backup will be saved to: \n %1 \n\n"
+                                        "Do you want to import settings?").arg(backup));
+    if (res == QMessageBox::No) return;
+
+
+    exportSettingsToFile(backup);
+    QSettings settings(m_organisationName, m_applicationName);
+    XmlSettingsWriter importer(this);
+    QString err;
+    if (!importer.importFromFile(file, settings, &err))
+        QMessageBox::critical(this,
+                              tr("Import failed"),
+                              tr("Failed to import settings \n %1").arg(err));
+    else
+        QMessageBox::information(this,
+                                 tr("Import finished"),
+                                 tr("Settings imported successfully from \n%1").arg(file));
+    settings.sync();
+    on_applyButton_clicked();
+}
+
+bool SettingsDialog::exportSettingsToFile(QString &filePath) {
+    if (filePath.isEmpty()) return false;
+
+    QSettings settings(m_organisationName, m_applicationName);
+    XmlSettingsWriter writer(this);
+    writer.excludeKeys(m_excludedKeys);
+    return writer.exportToFile(filePath, settings);
+}
+
+bool SettingsDialog::importSettingsFromFile(QString &filePath) {
+    if (filePath.isEmpty()) return false;
+
+    QSettings settings(m_organisationName, m_applicationName);
+    XmlSettingsWriter importer(this);
+    return importer.importFromFile(filePath, settings);
+}
+
+QString XmlSettingsWriter::serializeVariant(const QVariant &v) const {
+    if (v.typeId() == QMetaType::QStringList)
+        return v.toStringList().join(";");
+    return v.toString();
+}
+
+QVariant XmlSettingsWriter::deserializeVariant(const QString &text, const QString &type) const {
+    if (type == "bool" || type == "QBool")
+        return QVariant(text.toLower() == "true" || text == "1");
+    if (type == "int" || type == "QInt"){
+        bool ok = false;
+        int x = text.toInt(&ok);
+        return ok ? QVariant(x) : QVariant(text);
+    }
+    if (type == "double" || type == "QDouble") {
+        bool ok = false;
+        double d = text.toDouble(&ok);
+        return  ok ? QVariant(d) : QVariant(text);
+    }
+    if (type == "QStringList")
+        return QVariant(text.split(";", Qt::SkipEmptyParts));
+
+    return QVariant(text);
+}
+
+bool XmlSettingsWriter::exportToFile(const QString &filePath, QSettings &settings, QString *errorString) {
+    QFile file(filePath);
+    if (!file.open(QIODevice::WriteOnly)){
+        if (errorString) *errorString = file.errorString();
+        return false;
+    }
+
+    QXmlStreamWriter xml(&file);
+    xml.setAutoFormatting(true);
+    xml.writeStartDocument();
+    xml.writeStartElement("settings");
+    xml.writeAttribute("version", SETTINGS_VERSION);
+
+    const QStringList keys = settings.allKeys();
+
+    for (const QString& key : keys) {
+        if (m_excludedKeys.contains(key))
+            continue;
+        QVariant v = settings.value(key);
+        QString typeName = v.typeName();
+        QString serialized = serializeVariant(v);
+
+        xml.writeStartElement("entry");
+        xml.writeAttribute("key", key);
+        xml.writeAttribute("type", typeName);
+        xml.writeCharacters(serialized);
+        xml.writeEndElement(); // entry
+    }
+    xml.writeEndElement(); // settings
+    xml.writeEndDocument();
+    file.close();
+    return true;
+}
+
+bool XmlSettingsWriter::importFromFile(const QString &filePath, QSettings &settings, QString *errorString) {
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly)){
+        if (errorString) *errorString = file.errorString();
+        return false;
+    }
+    QXmlStreamReader xml(&file);
+
+    while (!xml.atEnd() && !xml.hasError()){
+        QXmlStreamReader::TokenType token = xml.readNext();
+
+        if (token == QXmlStreamReader::StartElement){
+            if (xml.name().toString() == "entry"){
+                QXmlStreamAttributes attributes = xml.attributes();
+                QString key = attributes.value("key").toString();
+                QString type = attributes.value("type").toString();
+                QString textValue = xml.readElementText(QXmlStreamReader::SkipChildElements);
+
+                QVariant v = deserializeVariant(textValue, type);
+                settings.setValue(key, v);
+            }
+        }
+    }
+    if (xml.hasError()){
+        if (errorString) *errorString = xml.errorString();
+        file.close();
+        return false;
+    }
+    file.close();
+    settings.sync();
+    return true;
+}
+
+void XmlSettingsWriter::excludeKeys(const QStringList &keys) {
+    m_excludedKeys = keys;
+}
+
+void XmlSettingsWriter::addExcludedKeys(const QStringList &addKeys) {
+    m_excludedKeys.append(addKeys);
+}

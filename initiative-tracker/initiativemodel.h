@@ -55,6 +55,8 @@ public:
     bool loadFromFile(const QString &filename);
     bool addFromFile(const QString &filename);
 
+    void setAutoSort(bool enabled = true);
+
     void decrementStatuses();
 
     int iconsPerRow() const {return m_iconsPerRow;};
@@ -63,6 +65,8 @@ public:
     void setIconHeight(int heightPx) {m_iconHeight = heightPx;};
     int iconSpacing() const {return m_iconSpacing;};
     void setIconSpacing(int spacingPx) {m_iconSpacing = spacingPx;};
+
+    void setActiveColor(const QColor& color);
 
 signals:
     void dataChangedExternally();
@@ -81,6 +85,10 @@ private:
     int m_iconsPerRow = 3;
     int m_iconHeight = 16;
     int m_iconSpacing = 2;
+
+    bool autoSort = false;
+
+    QColor m_activeColor;
 };
 
 
