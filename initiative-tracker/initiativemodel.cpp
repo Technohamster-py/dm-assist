@@ -563,6 +563,7 @@ void InitiativeModel::setAutoSort(bool enabled) {
 }
 
 void InitiativeModel::setActiveColor(const QColor &color) {
+    if (!color.isValid()) return;
     m_activeColor = color;
     emit dataChanged(this->index(currentIndex, 0), this->index(currentIndex, columnCount()-1));
 }

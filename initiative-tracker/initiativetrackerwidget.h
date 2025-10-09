@@ -57,6 +57,8 @@ public slots:
 
     void updateTranslator();
 
+    void setActiveColor(const QColor& color) { if (model) model->setActiveColor(color);};
+
 protected:
     int m_currentRound = 1;
     virtual void setupHeaderStretchPolicy();
