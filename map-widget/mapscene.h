@@ -86,7 +86,7 @@ public:
     void drawFogPath(const QPainterPath &path, bool hide);
     void clearFog(bool clear = true);
 
-    QImage getFogImage() const { return fogImage; };
+    QImage getFogImage() const { return m_fogImage; };
     QPixmap getMapPixmap() const;
     QRectF mapRect() const;
 
@@ -102,9 +102,11 @@ public:
     qreal heightAt(const QPointF &pos) const;
     qreal lineWidth() const {return m_lineWidth;};
 
-
+    void setFogColor(const QColor &color);
+    QColor fogColor() const {return m_fogColor;}
+    void updateFogTexture();
 signals:
-    void fogUpdated(const QImage &fogImage);
+    void fogUpdated(const QImage &m_fogImage);
     void toolChanged(const AbstractMapTool *);
     void progressChanged(int percent, const QString& message);
     void scaleChanged(qreal scaleFactor);
@@ -126,7 +128,6 @@ protected:
     void dragEnterEvent(QGraphicsSceneDragDropEvent *event) override;
     void dragMoveEvent(QGraphicsSceneDragDropEvent* event) override;
     void dropEvent(QGraphicsSceneDragDropEvent *event) override;
-
 private:
     AbstractMapTool *m_activeTool = nullptr;
     double m_scaleFactor = 1.0;           ///< Scale [feet/px]
@@ -138,7 +139,8 @@ private:
     int m_gridType = GridItem::GridType::Square;
     qreal m_gridSize = 5.0;     ///< Feet
 
-    QImage fogImage;
+    QImage m_fogImage;
+    QColor m_fogColor = Qt::black;
 
     UndoStack undoStack;
 

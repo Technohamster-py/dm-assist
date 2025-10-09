@@ -128,8 +128,8 @@ MainWindow::MainWindow(QWidget *parent) :
  * @details При закрытии окна производится сохранение конфигурационного файла
  */
 MainWindow::~MainWindow() {
-    closeCampaign();
     saveSettings();
+    closeCampaign();
     foreach(MusicPlayerWidget* player, players){
         removeDirectoryRecursively(player->getLocalDirPath());
         delete player;
@@ -471,15 +471,22 @@ void MainWindow::loadSettings() {
     /// Rolls
     rollWidget->setCompactMode(settings.value(paths.rolls.compactMode).toBool());
 
-    /// Tokens
+    /// Map
     currentTokenTitleMode = settings.value(paths.map.tokenTitleMode, 0).toInt();
     currentTokenFontSize = settings.value(paths.map.tokenFontSize, 12).toInt();
+    m_masterFogOpacity = settings.value(paths.map.masterFogOpacity, 0.4).toDouble() / 100;
+    m_fogColor = QColor(settings.value(paths.map.fogColor, "#000000").toString());
     for (int i = 0; i < mapTabWidget->count(); i++){
         auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(i));
-        if (!currentView) return;
+        if (!currentView) continue;
+
+        currentView->setFogOpacity(m_masterFogOpacity);
         currentView->getScene()->setTokenTitleMode(currentTokenTitleMode);
         currentView->getScene()->setTokenTextSize(currentTokenFontSize);
+        currentView->getScene()->setFogColor(m_fogColor);
     }
+    m_playerFogOpacity = settings.value(paths.map.playerFogOpacity, 1.0).toDouble() / 100;
+    m_defaultGridSize = settings.value(paths.map.defaultGridSize, 5).toInt();
 
     /// Hotkeys
     rulerButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.ruler).toString()));
@@ -620,6 +627,7 @@ void MainWindow::openMapFromFile(const QString& fileName) {
     QString ext = fileInfo.suffix().toLower();
 
     auto *view = new MapView(this);
+    view->setFogOpacity(m_masterFogOpacity);
     bool success;
 
     connect(view, &MapView::progressChanged, this, &MainWindow::slotUpdateProgressBar);
@@ -636,6 +644,9 @@ void MainWindow::openMapFromFile(const QString& fileName) {
         updateVisibility();
         mapTabWidget->setCurrentIndex(mapTabWidget->count() - 1);
         view->getScene()->setTokenTitleMode(currentTokenTitleMode);
+        view->getScene()->setTokenTextSize(currentTokenFontSize);
+        view->getScene()->setFogColor(m_fogColor);
+        view->getScene()->setGridSize(m_defaultGridSize);
 
         connect(view->getScene(), &MapScene::toolChanged, this, [=](const AbstractMapTool* tool){
             if (!tool){
@@ -703,6 +714,7 @@ void MainWindow::openSharedMapWindow(int index) {
     auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
     if (!sharedMapWindow){
         sharedMapWindow = new SharedMapWindow(currentView->getScene());
+        sharedMapWindow->setFogOpacity(m_playerFogOpacity);
         sharedMapWindow->show();
         sharedMapWindow->resize(800, 600);
 
