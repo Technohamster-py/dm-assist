@@ -1,4 +1,6 @@
 #include "fvttparser.h"
+#include <QJsonArray>
+#include <QJsonObject>
 
 BestiaryPageData Fvtt10Parser::parse(const QJsonObject &root) {
     BestiaryPageData data;

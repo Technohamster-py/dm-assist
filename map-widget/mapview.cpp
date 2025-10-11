@@ -270,6 +270,16 @@ bool MapView::loadSceneFromFile(const QString &path) {
     return false;
 }
 
+/**
+ * @brief Renders additional elements in the foreground of the scene.
+ *
+ * This method overlays the map scene with a fog layer, if present. It uses the
+ * provided QPainter to draw the fog image with a specified opacity. If the fog
+ * image is not available or the scene pointer is null, no operation is performed.
+ *
+ * @param painter Pointer to the QPainter object used for rendering.
+ * @param rect The portion of the scene to redraw. This parameter is currently unused.
+ */
 void MapView::drawForeground(QPainter *painter, const QRectF &rect) {
     Q_UNUSED(rect);
     if (!scene) return;

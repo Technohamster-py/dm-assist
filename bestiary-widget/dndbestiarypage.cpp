@@ -21,6 +21,7 @@ DndBestiaryPage::DndBestiaryPage(QWidget *parent) : AbstractCharsheetWidget(pare
 }
 
 DndBestiaryPage::~DndBestiaryPage() {
+    delete m_parser;
     delete m_manager;
     delete ui;
 }
@@ -41,10 +42,16 @@ DndBestiaryPage::DndBestiaryPage(const QString& filePath, QWidget *parent) : Abs
     loadFromFile(filePath);
 }
 
+
 /**
- * Loads bestiary data from the specified file path and populates the widget with the parsed data.
+ * Loads bestiary data from a file and populates the UI with the parsed content.
  *
- * @param path The file path of the bestiary data file to load.
+ * This method reads the provided bestiary file, determines the parsing approach
+ * based on the file's content, and updates the widget with the extracted data.
+ * If the file cannot be opened or parsed, it shows an error message.
+ *
+ * @param path The file path of the bestiary to load. The file should be in a valid format
+ *             supported by the system.
  */
 void DndBestiaryPage::loadFromFile(const QString &path) {
     QFile beastFile(path);

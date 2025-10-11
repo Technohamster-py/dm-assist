@@ -5,6 +5,17 @@
 #include <QListWidget>
 #include <QPushButton>
 
+/**
+ * @class RecentCampaignDialog
+ *
+ * @brief A dialog class that displays and manages recent campaigns.
+ *
+ * This class provides an interface to display, interact with,
+ * and manage the recent campaigns the user has accessed or created.
+ * It may include features such as listing recent campaigns,
+ * selecting a campaign to load, or removing a campaign from the list.
+ *
+ */
 class RecentCampaignDialog : public QDialog{
     Q_OBJECT
 public:
