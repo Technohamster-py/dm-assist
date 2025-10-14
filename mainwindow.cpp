@@ -1378,11 +1378,11 @@ void MainWindow::setupToolbar() {
 
 
     /// Shape color button
-    auto *ShapeToolColorButton = new QPushButton();
-    ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/map/palette.svg", ShapeToolColorButton, &QAbstractButton::setIcon);
-    ui->toolBar->addWidget(ShapeToolColorButton);
+    auto *shapeToolColorButton = new QPushButton();
+    ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/map/palette.svg", shapeToolColorButton, &QAbstractButton::setIcon);
+    ui->toolBar->addWidget(shapeToolColorButton);
 
-    connect(ShapeToolColorButton, &QPushButton::clicked, this, [=]() {
+    connect(shapeToolColorButton, &QPushButton::clicked, this, [=]() {
         QColor chosen = QColorDialog::getColor(lightTool->color(), this);
         if (chosen.isValid()) {
             lineShapeTool->setColor(chosen);
@@ -1393,6 +1393,15 @@ void MainWindow::setupToolbar() {
         }
     });
 
+    auto *shapeTextureButton = new QPushButton();
+    ui->toolBar->addWidget(shapeTextureButton);
+    connect(shapeTextureButton, &QPushButton::clicked, [=](){
+       QString textureName = "none"; // TODO: dialog
+
+       circleShapeTool->setTexture(textureName);
+       squareShapeTool->setTexture(textureName);
+       triangleShapeTool->setTexture(textureName);
+    });
 
     ui->toolBar->addSeparator();
 
