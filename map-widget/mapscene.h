@@ -105,6 +105,8 @@ public:
     void setFogColor(const QColor &color);
     QColor fogColor() const {return m_fogColor;}
     void updateFogTexture();
+
+    void setLayerOpacity(mapLayers layer, qreal opacity);
 signals:
     void fogUpdated(const QImage &m_fogImage);
     void toolChanged(const AbstractMapTool *);

@@ -919,3 +919,10 @@ void MapScene::updateFogTexture() {
     m_fogImage = newFog;
     update();
 }
+
+void MapScene::setLayerOpacity(mapLayers layer, qreal opacity) {
+    for (auto* pItem : items()) {
+        if (pItem->zValue() == layer)
+            pItem->setOpacity(opacity);
+    }
+}

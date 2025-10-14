@@ -1397,10 +1397,14 @@ void MainWindow::setupToolbar() {
     ui->toolBar->addWidget(shapeTextureButton);
     connect(shapeTextureButton, &QPushButton::clicked, [=](){
        QString textureName = "none"; // TODO: dialog
-
+       qreal opacity = 0.7;
        circleShapeTool->setTexture(textureName);
        squareShapeTool->setTexture(textureName);
        triangleShapeTool->setTexture(textureName);
+
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (!currentView) return;
+        currentView->getScene()->setLayerOpacity(mapLayers::Shapes, opacity);
     });
 
     ui->toolBar->addSeparator();
