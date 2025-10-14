@@ -30,6 +30,7 @@ public:
 
 protected:
     QColor color = Qt::cyan;
+    QString currentTextureName = "fire";
     QGraphicsItem *previewShape = nullptr;
     QGraphicsTextItem *previewLabel = nullptr;
 
@@ -38,6 +39,7 @@ protected:
 
     void clearPreview(QGraphicsScene *scene);
     static bool clearShapeAt(QGraphicsScene *scene, QPointF point);
+    QBrush getBrush();
 };
 
 

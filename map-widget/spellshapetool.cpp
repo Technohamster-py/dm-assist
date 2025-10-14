@@ -1,4 +1,5 @@
 #include "spellshapetool.h"
+#include "texturemanager.h"
 #include "mapscene.h"
 
 SpellShapeTool::SpellShapeTool(QObject *parent)
@@ -93,6 +94,19 @@ void SpellShapeTool::rightClickEvent(QGraphicsSceneMouseEvent *event, QGraphicsS
             return;
         }
     }
+}
+
+QBrush SpellShapeTool::getBrush() {
+    auto pixmap = TextureManager::instance().getTexture(currentTextureName);
+    QBrush brush;
+    if (!pixmap.isNull()){
+        brush = QBrush(pixmap);
+        brush.setStyle(Qt::TexturePattern);
+        brush.setColor(QColor(255, 255, 255, 50));
+    } else {
+        brush = QBrush(color, Qt::Dense4Pattern);
+    }
+    return brush;
 }
 
 
@@ -228,7 +242,7 @@ void CircleShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphics
 
         auto item = new QGraphicsEllipseItem(rect.normalized());
         item->setPen(QPen(color));
-        item->setBrush(QBrush(color, Qt::Dense4Pattern));
+        item->setBrush(getBrush());
         item->setZValue(mapLayers::Shapes);
 
         dynamic_cast<MapScene*>(scene)->addUndoableItem(item);
@@ -331,7 +345,7 @@ void TriangleShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphi
 
         auto item = new QGraphicsPolygonItem(triangle);
         item->setPen(QPen(color));
-        item->setBrush(QBrush(color, Qt::Dense4Pattern));
+        item->setBrush(getBrush());
         item->setZValue(mapLayers::Shapes);
 
         dynamic_cast<MapScene*>(scene)->addUndoableItem(item);
@@ -459,7 +473,7 @@ void SquareShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphics
 
         auto item = new QGraphicsPolygonItem(square);
         item->setPen(QPen(color));
-        item->setBrush(QBrush(color, Qt::Dense4Pattern));
+        item->setBrush(getBrush());
         item->setZValue(mapLayers::Shapes);
 
         dynamic_cast<MapScene*>(scene)->addUndoableItem(item);
