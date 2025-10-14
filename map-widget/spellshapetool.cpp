@@ -244,7 +244,8 @@ void CircleShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphics
         item->setPen(QPen(color));
         item->setBrush(getBrush());
         item->setZValue(mapLayers::Shapes);
-
+        if (getBrush().isOpaque())
+            item->setOpacity(0.5);
         dynamic_cast<MapScene*>(scene)->addUndoableItem(item);
 
         hasFirstPoint = false;
@@ -347,7 +348,8 @@ void TriangleShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphi
         item->setPen(QPen(color));
         item->setBrush(getBrush());
         item->setZValue(mapLayers::Shapes);
-
+        if (getBrush().isOpaque())
+            item->setOpacity(0.5);
         dynamic_cast<MapScene*>(scene)->addUndoableItem(item);
 
         hasFirstPoint = false;
@@ -475,7 +477,8 @@ void SquareShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphics
         item->setPen(QPen(color));
         item->setBrush(getBrush());
         item->setZValue(mapLayers::Shapes);
-
+        if (getBrush().isOpaque())
+            item->setOpacity(0.5);
         dynamic_cast<MapScene*>(scene)->addUndoableItem(item);
         hasFirstPoint = false;
         clearPreview(scene);
