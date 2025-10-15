@@ -1,5 +1,4 @@
 #include "spellshapetool.h"
-#include "texturemanager.h"
 #include "mapscene.h"
 
 SpellShapeTool::SpellShapeTool(QObject *parent)
@@ -97,7 +96,7 @@ void SpellShapeTool::rightClickEvent(QGraphicsSceneMouseEvent *event, QGraphicsS
 }
 
 QBrush SpellShapeTool::getBrush() {
-    auto pixmap = TextureManager::instance().getTexture(currentTextureName);
+    QPixmap pixmap(currentTextureName);
     QBrush brush;
     if (!pixmap.isNull()){
         brush = QBrush(pixmap);

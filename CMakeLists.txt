@@ -55,7 +55,6 @@ set(FILES
         map-widget/rulertool.h map-widget/rulertool.cpp
         map-widget/sharedmapwindow.h    map-widget/sharedmapwindow.cpp
         map-widget/spellshapetool.h     map-widget/spellshapetool.cpp
-        map-widget/texturemanager.h
         map-widget/tokenitem.h  map-widget/tokenitem.cpp
         map-widget/undostack.h
         music-widget/musicwidget.h music-widget/musicwidget.cpp
@@ -71,6 +70,7 @@ set(FILES
         updatechecker.h updatechecker.cpp
         recentcampaigndialog.cpp
         recentcampaigndialog.h
+        map-widget/texturepickerdialog.h
 )
 
 set(UI_FILES
