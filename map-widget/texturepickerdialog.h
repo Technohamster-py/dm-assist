@@ -20,7 +20,13 @@ public:
     explicit TexturePickerDialog(QWidget* parent = nullptr)
             : QDialog(parent)
     {
-        QGridLayout* layout = new QGridLayout(this);
+        layout = new QGridLayout(this);
+        populateTextures();
+    }
+
+    QString selectedTexture() const { return m_selected; }
+protected:
+    void populateTextures(){
         QDir dir("textures");
         QStringList filters = {"*.png", "*.jpg", "*.bmp"};
         QFileInfoList files = dir.entryInfoList(filters, QDir::Files);
@@ -39,11 +45,9 @@ public:
             });
         }
     }
-
-    QString selectedTexture() const { return m_selected; }
-
 private:
     QString m_selected;
+    QGridLayout* layout;
 };
 
 

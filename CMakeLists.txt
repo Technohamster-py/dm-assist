@@ -71,6 +71,8 @@ set(FILES
         recentcampaigndialog.cpp
         recentcampaigndialog.h
         map-widget/texturepickerdialog.h
+        map-widget/effectgrapchicsitem.cpp
+        map-widget/effectgrapchicsitem.h
 )
 
 set(UI_FILES
