@@ -206,7 +206,7 @@ void MainWindow::createNewMapTab() {
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open Map Image"),
                                                     QStandardPaths::writableLocation(QStandardPaths::PicturesLocation),
-                                                    tr("Map Files (*.dam);;Images (*.png *.jpg *.bmp)"));
+                                                    tr("Map Files and images (*.dam *.png *.jpg *.bmp)"));
 
     if (fileName.isEmpty()) return;
 
