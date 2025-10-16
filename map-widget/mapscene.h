@@ -19,7 +19,7 @@
 #pragma pack(push, 1)
 struct MapFileHeader {
     quint32 magic = 0x444D414D; // 'DMAM'
-    quint32 version = 2;
+    quint32 version = 3;
     quint32 jsonSize;
     quint32 imageSize;
 };

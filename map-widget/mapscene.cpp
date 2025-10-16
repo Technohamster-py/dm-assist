@@ -18,6 +18,8 @@
 
 #include <QDebug>
 
+#include "effectgrapchicsitem.h"
+
 /**
  * @brief Constructs a MapScene object with the specified parent and initializes its background.
  *
@@ -405,6 +407,10 @@ QJsonObject MapScene::toJson() {
             itemObj["points"] = points;
             itemObj["height"] = heightRegion->height();
         }
+        else if (auto* effectItem = dynamic_cast<EffectGraphicsItem*>(item))
+        {
+            itemObj = effectItem->toJson();
+        }
         else if (auto* polyItem = qgraphicsitem_cast<QGraphicsPolygonItem*>(item)) {
             itemObj["type"] = "polygon";
 
@@ -423,7 +429,6 @@ QJsonObject MapScene::toJson() {
             itemObj["radius"] = r.width() / 2; // предполагаем круг
             itemObj["color"] = ellipse->pen().color().name();
             itemObj["z"] = ellipse->zValue();
-
         }
         else if (auto* line = qgraphicsitem_cast<QGraphicsLineItem*>(item)) {
             itemObj["type"] = "line";
@@ -432,7 +437,6 @@ QJsonObject MapScene::toJson() {
             itemObj["end"]   = QJsonArray{ l.p2().x(), l.p2().y() };
             itemObj["color"] = line->pen().color().name();
             itemObj["z"] = line->zValue();
-
         }
 
         if (!itemObj.isEmpty())
@@ -496,7 +500,6 @@ void MapScene::fromJson(const QJsonObject& obj) {
     m_scaleFactor = obj["scaleFactor"].toDouble(1.0);
     m_gridSize = obj["gridCellSie"].toDouble(5.0);
 
-
     QJsonArray itemsArray = obj["items"].toArray();
     int currentProgress, step;
     if (itemsArray.count() > 0)
@@ -553,6 +556,18 @@ void MapScene::fromJson(const QJsonObject& obj) {
             auto* heightRegion = new HeightRegionItem(polygon, height);
             addItem(heightRegion);
         }
+        else if (type == "effect_polygon")
+        {
+            auto* polygon = new EffectPolygonItem();
+            polygon->fromJson(itemObj);
+            addItem(polygon);
+        }
+        else if (type == "effect_ellipse")
+        {
+            auto* ellipse = new EffectEllipseItem();
+            ellipse->fromJson(itemObj);
+            addItem(ellipse);
+        }
     }
 
     if (obj.contains("fog")) {
@@ -568,6 +583,8 @@ void MapScene::fromJson(const QJsonObject& obj) {
 
     if (obj.contains("grid"))
         setGridType(obj["grid"].toInt());
+
+    setLayerOpacity(mapLayers::Shapes, 0.5);
 
     update();
 }

@@ -1,4 +1,5 @@
 #include "spellshapetool.h"
+#include "effectgrapchicsitem.h"
 #include "mapscene.h"
 
 SpellShapeTool::SpellShapeTool(QObject *parent)
@@ -239,9 +240,7 @@ void CircleShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphics
 
         QRectF rect = circleRect(event->scenePos());
 
-        auto item = new QGraphicsEllipseItem(rect.normalized());
-        item->setPen(QPen(color));
-        item->setBrush(getBrush());
+        auto item = new EffectEllipseItem(rect.normalized(), color, currentTextureName);
         item->setZValue(mapLayers::Shapes);
         if (getBrush().isOpaque())
             item->setOpacity(0.5);
@@ -343,9 +342,7 @@ void TriangleShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphi
 
         QPolygonF triangle = buildTriangle(event->scenePos());
 
-        auto item = new QGraphicsPolygonItem(triangle);
-        item->setPen(QPen(color));
-        item->setBrush(getBrush());
+        auto item = new EffectPolygonItem(triangle, color, currentTextureName);
         item->setZValue(mapLayers::Shapes);
         if (getBrush().isOpaque())
             item->setOpacity(0.5);
@@ -472,9 +469,7 @@ void SquareShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphics
 
         QPolygonF square = buildSquare(firstPoint, event->scenePos());
 
-        auto item = new QGraphicsPolygonItem(square);
-        item->setPen(QPen(color));
-        item->setBrush(getBrush());
+        auto item = new EffectPolygonItem(square, color, currentTextureName);
         item->setZValue(mapLayers::Shapes);
         if (getBrush().isOpaque())
             item->setOpacity(0.5);

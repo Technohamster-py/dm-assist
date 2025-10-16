@@ -31,6 +31,7 @@ protected:
 
 
 class EffectPolygonItem : public QGraphicsPolygonItem, public EffectGraphicsItem {
+public:
     EffectPolygonItem(const QPolygonF& polygon = {}, const QColor& color = Qt::red, const QString& texture = {}, QGraphicsItem* parent = nullptr);
     void updateBrush() override;
     QJsonObject toJson() const override;
@@ -39,6 +40,7 @@ class EffectPolygonItem : public QGraphicsPolygonItem, public EffectGraphicsItem
 
 
 class EffectEllipseItem : public QGraphicsEllipseItem, public EffectGraphicsItem {
+public:
     EffectEllipseItem(const QRectF& rect = {}, const QColor& color = Qt::green, const QString& texture = {}, QGraphicsItem* parent = nullptr);
     void updateBrush() override;
     QJsonObject toJson() const override;
