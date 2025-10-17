@@ -475,7 +475,8 @@ void MainWindow::loadSettings() {
     /// Map
     currentTokenTitleMode = settings.value(paths.map.tokenTitleMode, 0).toInt();
     currentTokenFontSize = settings.value(paths.map.tokenFontSize, 12).toInt();
-    m_masterFogOpacity = settings.value(paths.map.masterFogOpacity, 0.4).toDouble() / 100;
+    m_masterFogOpacity = settings.value(paths.map.masterFogOpacity, 40).toDouble() / 100;
+    m_textureOpacity = settings.value(paths.map.textureOpacity, 50).toDouble() / 100;
     m_fogColor = QColor(settings.value(paths.map.fogColor, "#000000").toString());
     for (int i = 0; i < mapTabWidget->count(); i++){
         auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(i));
@@ -485,8 +486,9 @@ void MainWindow::loadSettings() {
         currentView->getScene()->setTokenTitleMode(currentTokenTitleMode);
         currentView->getScene()->setTokenTextSize(currentTokenFontSize);
         currentView->getScene()->setFogColor(m_fogColor);
+        currentView->getScene()->setLayerOpacity(mapLayers::Shapes, m_textureOpacity);
     }
-    m_playerFogOpacity = settings.value(paths.map.playerFogOpacity, 1.0).toDouble() / 100;
+    m_playerFogOpacity = settings.value(paths.map.playerFogOpacity, 100).toDouble() / 100;
     m_defaultGridSize = settings.value(paths.map.defaultGridSize, 5).toInt();
 
     /// Hotkeys
@@ -648,6 +650,7 @@ void MainWindow::openMapFromFile(const QString& fileName) {
         view->getScene()->setTokenTextSize(currentTokenFontSize);
         view->getScene()->setFogColor(m_fogColor);
         view->getScene()->setGridSize(m_defaultGridSize);
+        view->getScene()->setLayerOpacity(mapLayers::Shapes, m_textureOpacity);
 
         connect(view->getScene(), &MapScene::toolChanged, this, [=](const AbstractMapTool* tool){
             if (!tool){

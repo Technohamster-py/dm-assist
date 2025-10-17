@@ -584,8 +584,6 @@ void MapScene::fromJson(const QJsonObject& obj) {
     if (obj.contains("grid"))
         setGridType(obj["grid"].toInt());
 
-    setLayerOpacity(mapLayers::Shapes, 0.5);
-
     update();
 }
 

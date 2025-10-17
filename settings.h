@@ -92,6 +92,7 @@ struct Settings{
         QString playerFogOpacity = "map/FogOpacity/player"; ///< int %
         QString fogColor = "map/fogColor";                  ///< string
         QString defaultGridSize = "map/defaultGridSize";    ///< int
+        QString textureOpacity = "map/textureOpacity";      ///< int %
     };
     Map map;
 

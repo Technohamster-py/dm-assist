@@ -49,6 +49,7 @@ SettingsDialog::SettingsDialog(QString organisationName, QString applicationName
     connect(ui->importButton, &QPushButton::clicked, this, &SettingsDialog::importSettings);
     connect(ui->masterFogSlider, &QSlider::valueChanged, [=](int value){ui->masterFogValueLabel->setText(QString("%1 \%").arg(value));});
     connect(ui->playerFogSlider, &QSlider::valueChanged, [=](int value){ui->playerFogValueLabel->setText(QString("%1 \%").arg(value));});
+    connect(ui->textureOpacitySlider, &QSlider::valueChanged, [=](int value){ui->textureOpacityValueLabel->setText(QString("%1 \%").arg(value));});
     connect(ui->fogColorButton, &QPushButton::clicked, [=](){
         QColor chosen = QColorDialog::getColor(QColor(ui->fogColorButton->text()), this);
         if (chosen.isValid()) {
@@ -65,10 +66,6 @@ SettingsDialog::SettingsDialog(QString organisationName, QString applicationName
 
     loadSettings();
 
-    connect(ui->navTree, &QTreeWidget::currentItemChanged, this, &SettingsDialog::onTreeItemSelected);
-    connect(ui->cancelButton, &QPushButton::clicked, this, &QDialog::reject);
-    connect(ui->exportButton, &QPushButton::clicked, this, &SettingsDialog::exportSettings);
-    connect(ui->importButton, &QPushButton::clicked, this, &SettingsDialog::importSettings);
     connect(ui->activeColorButton, &QPushButton::clicked, [=](){
         QColor color = QColorDialog::getColor(ui->colorExamplewidget->item(0)->background().color(), this);
         if (color.isValid()) {
@@ -179,6 +176,7 @@ void SettingsDialog::loadSettings() {
     ui->fontSizeSpinBox->setValue(settings.value(paths.map.tokenFontSize, 12).toInt());
     ui->masterFogSlider->setValue(settings.value(paths.map.masterFogOpacity, 40).toInt());
     ui->playerFogSlider->setValue(settings.value(paths.map.playerFogOpacity, 100).toInt());
+    ui->textureOpacitySlider->setValue(settings.value(paths.map.textureOpacity, 50).toInt());
     QString fogColorName = settings.value(paths.map.fogColor, "#000000").toString();
     ui->fogColorButton->setText(fogColorName);
     ui->fogColorButton->setStyleSheet(QString("background-color: %1").arg(fogColorName));
@@ -318,6 +316,7 @@ void SettingsDialog::saveSettings() {
     settings.setValue(paths.map.fogColor, ui->fogColorButton->text());
     settings.setValue(paths.map.defaultGridSize, ui->gridSizeBox->value());
     settings.setValue(paths.general.openLastMap, ui->lastMapCheckBox->isChecked());
+    settings.setValue(paths.map.textureOpacity, ui->textureOpacitySlider->value());
 
     /// Hotkeys
     settings.setValue(paths.hotkeys.ruler, ui->rulerEdit->keySequence().toString());

@@ -151,6 +151,7 @@ private:
     qreal m_masterFogOpacity = 0.4;
     qreal m_playerFogOpacity = 1.0;
     QColor m_fogColor = Qt::black;
+    qreal m_textureOpacity = 0.5;
 
 private slots:
     void newCampaign();
