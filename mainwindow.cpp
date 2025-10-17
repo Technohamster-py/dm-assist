@@ -1383,6 +1383,7 @@ void MainWindow::setupToolbar() {
 
     /// Shape color button
     auto *shapeToolColorButton = new QPushButton();
+    auto *shapeTextureButton = new QPushButton();
     ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/map/palette.svg", shapeToolColorButton, &QAbstractButton::setIcon);
     ui->toolBar->addWidget(shapeToolColorButton);
 
@@ -1394,23 +1395,21 @@ void MainWindow::setupToolbar() {
             squareShapeTool->setColor(chosen);
             triangleShapeTool->setColor(chosen);
             brushTool->setColor(chosen);
+
+            shapeTextureButton->setIcon(QIcon());
+            circleShapeTool->setTexture();
+            squareShapeTool->setTexture();
+            triangleShapeTool->setTexture();
         }
     });
 
-    auto *shapeTextureButton = new QPushButton();
     ui->toolBar->addWidget(shapeTextureButton);
     connect(shapeTextureButton, &QPushButton::clicked, [=](){
         QString textureName = TexturePickerDialog::getTexture(this);
-        if (!textureName.isEmpty()) shapeTextureButton->setIcon(QIcon(textureName));
-
-        qreal opacity = 0.7;
+        shapeTextureButton->setIcon(QIcon(textureName));
         circleShapeTool->setTexture(textureName);
         squareShapeTool->setTexture(textureName);
         triangleShapeTool->setTexture(textureName);
-
-        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
-        if (!currentView) return;
-        currentView->getScene()->setLayerOpacity(mapLayers::Shapes, opacity);
     });
 
     ui->toolBar->addSeparator();

@@ -27,7 +27,7 @@ public:
     void deactivate(QGraphicsScene *scene) override { clearPreview(scene);};
 
     void setColor(QColor c);
-    void setTexture(const QString& textureName) {currentTextureName = textureName;};
+    void setTexture(const QString& textureName = "") {currentTextureName = textureName;};
 
 protected:
     QColor color = Qt::cyan;
