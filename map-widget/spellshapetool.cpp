@@ -3,88 +3,21 @@
 #include "mapscene.h"
 
 SpellShapeTool::SpellShapeTool(QObject *parent)
-        : AbstractMapTool(parent) {
-    color.setAlpha(180);
-}
+        : AreaShapeTool(parent) {}
+
 
 /**
- * @brief Clears the preview elements from the provided QGraphicsScene.
- *
- * This function removes and deletes the `previewShape` and `previewLabel`
- * objects from the specified graphics scene. After deletion, the respective
- * pointers are set to `nullptr` to ensure they are not accessed again.
- *
- * @param scene A pointer to the QGraphicsScene from which the preview elements
- *              should be removed.
- */
-void SpellShapeTool::clearPreview(QGraphicsScene *scene) {
-    if (previewShape) {
-        scene->removeItem(previewShape);
-        delete previewShape;
-        previewShape = nullptr;
-    }
-    if (previewLabel) {
-        scene->removeItem(previewLabel);
-        delete previewLabel;
-        previewLabel = nullptr;
-    }
-}
-
-/**
- * @brief Sets the shape color and updates its transparency.
- *
- * This function updates the `color` property of the `SpellShapeTool` class.
- * It assigns the provided color to the `color` variable and then ensures
- * that the alpha (transparency) value is set to 180. This is used to ensure
- * a consistent semi-transparency for rendering purposes.
- *
- * @param c The new color to be assigned to the shape, of type `QColor`.
- */
-void SpellShapeTool::setColor(QColor c) {
-    color = c;
-    color.setAlpha(180);
-}
-
-/**
- * @brief Removes a shape at a specified position in the given scene.
- *
- * This function attempts to clear a shape located at the specified point
- * within the provided QGraphicsScene. It iterates over the items at the
- * given point, validating their z-value to ensure they are within a
- * designated range. If a valid item is found, it is removed as an undoable
- * action using a MapScene-specific method.
- *
- * @param scene Pointer to the QGraphicsScene where the operation is performed.
- * @param point The position in the scene where the shape should be cleared.
- * @return True if a shape was successfully removed; false otherwise.
- */
-bool SpellShapeTool::clearShapeAt(QGraphicsScene *scene, QPointF point) {
-    QList<QGraphicsItem*> items = scene->items(point);
-
-    for (QGraphicsItem* item : items) {
-        if (!item) return false;
-
-        if (item->zValue() < -99 || item->zValue() > 99) continue;
-
-
-        dynamic_cast<MapScene *>(scene)->removeUndoableItem(item);
-        return true;
-    }
-    return false;
-}
-
-/**
- * Handles the right-click event for the SpellShapeTool on a QGraphicsScene.
- *
- * This method processes a right-click mouse event and performs specific actions
- * based on the state of the SpellShapeTool. If the tool has a first point initialized
- * (`hasFirstPoint == true`) and the mouse click corresponds to the right button,
- * it clears the shape at the clicked position, disables the first point, and removes
- * any preview shapes or labels from the scene.
- *
- * @param event The mouse event triggered by the user's right-click.
- * @param scene The graphics scene on which the mouse event occurred.
- */
+* Handles the right-click event for the SpellShapeTool on a QGraphicsScene.
+*
+* This method processes a right-click mouse event and performs specific actions
+* based on the state of the SpellShapeTool. If the tool has a first point initialized
+* (`hasFirstPoint == true`) and the mouse click corresponds to the right button,
+* it clears the shape at the clicked position, disables the first point, and removes
+* any preview shapes or labels from the scene.
+*
+* @param event The mouse event triggered by the user's right-click.
+* @param scene The graphics scene on which the mouse event occurred.
+*/
 void SpellShapeTool::rightClickEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) {
     if (hasFirstPoint){
         if (event->button() == Qt::RightButton) {
@@ -95,20 +28,6 @@ void SpellShapeTool::rightClickEvent(QGraphicsSceneMouseEvent *event, QGraphicsS
         }
     }
 }
-
-QBrush SpellShapeTool::getBrush() {
-    QPixmap pixmap(currentTextureName);
-    QBrush brush;
-    if (!pixmap.isNull()){
-        brush = QBrush(pixmap);
-        brush.setStyle(Qt::TexturePattern);
-        brush.setColor(QColor(255, 255, 255, 50));
-    } else {
-        brush = QBrush(color, Qt::Dense4Pattern);
-    }
-    return brush;
-}
-
 
 /**
  * @brief Handles mouse press events to interact with the scene for drawing or clearing line shapes.

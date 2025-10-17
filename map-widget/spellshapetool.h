@@ -1,7 +1,7 @@
 #ifndef DM_ASSIST_SPELLSHAPETOOL_H
 #define DM_ASSIST_SPELLSHAPETOOL_H
 
-#include "abstractmaptool.h"
+#include "areashapetool.h"
 
 /**
  * @class SpellShapeTool
@@ -14,33 +14,14 @@
  *
  * The tool is abstract and requires derived classes to implement specific behavior for certain mouse events.
  */
-class SpellShapeTool : public AbstractMapTool {
+class SpellShapeTool : public AreaShapeTool {
 Q_OBJECT
 public:
     explicit SpellShapeTool(QObject *parent = nullptr);
-
-    void mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override = 0;
     void rightClickEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override = 0;
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override {};
-    void wheelEvent(QGraphicsSceneWheelEvent *event, QGraphicsScene *scene) override {};
-    void deactivate(QGraphicsScene *scene) override { clearPreview(scene);};
-
-    void setColor(QColor c);
-    void setTexture(const QString& textureName = "") {currentTextureName = textureName;};
-
 protected:
-    QColor color = Qt::cyan;
-    QString currentTextureName = "fire";
-    QGraphicsItem *previewShape = nullptr;
-    QGraphicsTextItem *previewLabel = nullptr;
-
     QPointF firstPoint;
     bool hasFirstPoint = false;
-
-    void clearPreview(QGraphicsScene *scene);
-    static bool clearShapeAt(QGraphicsScene *scene, QPointF point);
-    QBrush getBrush();
 };
 
 

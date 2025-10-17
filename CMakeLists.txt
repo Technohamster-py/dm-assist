@@ -73,6 +73,8 @@ set(FILES
         map-widget/texturepickerdialog.h
         map-widget/effectgrapchicsitem.cpp
         map-widget/effectgrapchicsitem.h
+        map-widget/areashapetool.cpp
+        map-widget/areashapetool.h
 )
 
 set(UI_FILES
