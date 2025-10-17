@@ -2,6 +2,8 @@
 #define DM_ASSIST_AREASHAPETOOL_H
 
 #include "abstractmaptool.h"
+#include <QPainterPath>
+#include <QGraphicsPathItem>
 
 class AreaShapeTool : public AbstractMapTool{
 Q_OBJECT
@@ -27,5 +29,16 @@ protected:
     QBrush getBrush();
 };
 
+
+class LassoTool : public AreaShapeTool {
+    Q_OBJECT
+public:
+    void mousePressEvent(QGraphicsSceneMouseEvent* event, QGraphicsScene* scene) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override;
+protected:
+    QPainterPath path;
+    QGraphicsPathItem* preview = nullptr;
+};
 
 #endif //DM_ASSIST_AREASHAPETOOL_H
