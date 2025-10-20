@@ -169,8 +169,6 @@ void SettingsDialog::loadSettings() {
     if (index != -1)
         ui->styleComboBox->setCurrentIndex(index);
 
-    ui->scaleSlider->setValue(settings.value(paths.appearance.scale, 100).toInt());
-
     /// Map
     ui->tokenComboBox->setCurrentIndex(settings.value(paths.map.tokenTitleMode, 0).toInt());
     ui->fontSizeSpinBox->setValue(settings.value(paths.map.tokenFontSize, 12).toInt());
@@ -307,7 +305,6 @@ void SettingsDialog::saveSettings() {
     /// Appearance
     settings.setValue(paths.appearance.theme, ui->themeComboBox->currentData().toString());
     settings.setValue(paths.appearance.style, ui->styleComboBox->currentData().toString());
-    settings.setValue(paths.appearance.scale, ui->scaleSlider->value());
 
     /// Map
     settings.setValue(paths.map.tokenTitleMode, ui->tokenComboBox->currentIndex());

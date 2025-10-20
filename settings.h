@@ -62,7 +62,6 @@ struct Settings{
         QString theme = "appearance/theme";                        ///< string
         QString style = "appearance/style";                        ///< string
         QString stretch = "appearance/mainStretch";                ///< byteArray
-        QString scale = "appearance/scale";                        ///< int
     };
     Appearance appearance;
 

@@ -109,7 +109,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>4</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="generalPage">
         <layout class="QFormLayout" name="formLayout">
@@ -272,40 +272,6 @@
          </item>
          <item row="1" column="1">
           <widget class="QComboBox" name="styleComboBox"/>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="scaleLabel">
-           <property name="text">
-            <string>Interface scale</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <layout class="QHBoxLayout" name="horizontalLayout_5">
-           <item>
-            <widget class="QLabel" name="scaleValueLabel">
-             <property name="text">
-              <string>TextLabel</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QSlider" name="scaleSlider">
-             <property name="minimum">
-              <number>10</number>
-             </property>
-             <property name="maximum">
-              <number>300</number>
-             </property>
-             <property name="singleStep">
-              <number>10</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-          </layout>
          </item>
         </layout>
        </widget>
