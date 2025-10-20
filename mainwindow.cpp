@@ -477,6 +477,12 @@ void MainWindow::loadSettings() {
     currentTokenFontSize = settings.value(paths.map.tokenFontSize, 12).toInt();
     m_masterFogOpacity = settings.value(paths.map.masterFogOpacity, 40).toDouble() / 100;
     m_textureOpacity = settings.value(paths.map.textureOpacity, 50).toDouble() / 100;
+
+    circleShapeTool->setOpacity(m_textureOpacity);
+    squareShapeTool->setOpacity(m_textureOpacity);
+    triangleShapeTool->setOpacity(m_textureOpacity);
+    lassoTool->setOpacity(m_textureOpacity);
+
     m_fogColor = QColor(settings.value(paths.map.fogColor, "#000000").toString());
     for (int i = 0; i < mapTabWidget->count(); i++){
         auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(i));
@@ -1065,6 +1071,7 @@ void MainWindow::setupToolbar() {
     circleShapeTool = new CircleShapeTool();
     squareShapeTool = new SquareShapeTool();
     triangleShapeTool = new TriangleShapeTool();
+    lassoTool = new LassoTool();
     heightMapTool = new HeightMapTool();
 
     toolGroup = new QActionGroup(this);
@@ -1381,6 +1388,28 @@ void MainWindow::setupToolbar() {
     });
 
 
+    /// Lasso tool
+    auto* lassoAction = new QAction(this);
+    lassoAction->setCheckable(true);
+//    ThemedIconManager::instance().addIconTarget(":player/play.svg", lassoAction, &QAction::setIcon);
+    toolGroup->addAction(lassoAction);
+
+    lassoButton = new QToolButton(this);
+    lassoButton->setCheckable(true);
+    lassoButton->setToolTip(tr("Lasso"));
+    lassoButton->setDefaultAction(lassoAction);
+    ui->toolBar->addWidget(lassoButton);
+
+    connect(lassoAction, &QAction::triggered, [=](bool checked){
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (!currentView) return;
+        if (checked)
+            currentView->setActiveTool(lassoTool);
+        else
+            currentView->setActiveTool(nullptr);
+    });
+
+
     /// Shape color button
     auto *shapeToolColorButton = new QPushButton();
     auto *shapeTextureButton = new QPushButton();
@@ -1410,6 +1439,7 @@ void MainWindow::setupToolbar() {
         circleShapeTool->setTexture(textureName);
         squareShapeTool->setTexture(textureName);
         triangleShapeTool->setTexture(textureName);
+        lassoTool->setTexture(textureName);
     });
 
     ui->toolBar->addSeparator();

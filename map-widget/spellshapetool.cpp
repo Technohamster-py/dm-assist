@@ -162,7 +162,7 @@ void CircleShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphics
         auto item = new EffectEllipseItem(rect.normalized(), color, currentTextureName);
         item->setZValue(mapLayers::Shapes);
         if (getBrush().isOpaque())
-            item->setOpacity(0.5);
+            item->setOpacity(m_opacity);
         dynamic_cast<MapScene*>(scene)->addUndoableItem(item);
 
         hasFirstPoint = false;
@@ -264,7 +264,7 @@ void TriangleShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphi
         auto item = new EffectPolygonItem(triangle, color, currentTextureName);
         item->setZValue(mapLayers::Shapes);
         if (getBrush().isOpaque())
-            item->setOpacity(0.5);
+            item->setOpacity(m_opacity);
         dynamic_cast<MapScene*>(scene)->addUndoableItem(item);
 
         hasFirstPoint = false;
@@ -391,7 +391,7 @@ void SquareShapeTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphics
         auto item = new EffectPolygonItem(square, color, currentTextureName);
         item->setZValue(mapLayers::Shapes);
         if (getBrush().isOpaque())
-            item->setOpacity(0.5);
+            item->setOpacity(m_opacity);
         dynamic_cast<MapScene*>(scene)->addUndoableItem(item);
         hasFirstPoint = false;
         clearPreview(scene);

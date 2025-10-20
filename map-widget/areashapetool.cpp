@@ -128,5 +128,8 @@ void LassoTool::mouseReleaseEvent(QGraphicsSceneMouseEvent *event, QGraphicsScen
     preview = nullptr;
 
     auto * area = new EffectPolygonItem(polygon, color, currentTextureName);
+    area->setZValue(mapLayers::Shapes);
+    if (getBrush().isOpaque())
+        area->setOpacity(m_opacity);
     dynamic_cast<MapScene*>(scene)->addUndoableItem(area);
 }

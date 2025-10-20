@@ -16,10 +16,12 @@ public:
     void deactivate(QGraphicsScene *scene) override { clearPreview(scene);};
 
     void setColor(QColor c);
+    void setOpacity(qreal opacity) {m_opacity = opacity;};
     void setTexture(const QString& textureName = "") {currentTextureName = textureName;};
 
 protected:
     QColor color = Qt::cyan;
+    qreal m_opacity = 0.5;
     QString currentTextureName = "fire";
     QGraphicsItem *previewShape = nullptr;
     QGraphicsTextItem *previewLabel = nullptr;

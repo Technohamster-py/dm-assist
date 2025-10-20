@@ -113,6 +113,7 @@ private:
     CircleShapeTool* circleShapeTool;
     SquareShapeTool* squareShapeTool;
     TriangleShapeTool* triangleShapeTool;
+    LassoTool* lassoTool;
     HeightMapTool* heightMapTool;
     QActionGroup *toolGroup;
 
@@ -124,6 +125,7 @@ private:
     QToolButton* circleButton;
     QToolButton* squareButton;
     QToolButton* triangleButton;
+    QToolButton* lassoButton;
     QToolButton* brushButton;
     QToolButton* heightButton;
 
