@@ -747,11 +747,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QKeySequenceEdit" name="rulerEdit">
-                   <property name="keySequence">
-                    <string>R</string>
-                   </property>
-                  </widget>
+                  <widget class="QKeySequenceEdit" name="rulerEdit"/>
                  </item>
                 </layout>
                </item>
@@ -790,11 +786,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QKeySequenceEdit" name="heightEdit">
-                   <property name="keySequence">
-                    <string>H</string>
-                   </property>
-                  </widget>
+                  <widget class="QKeySequenceEdit" name="heightEdit"/>
                  </item>
                 </layout>
                </item>
@@ -839,11 +831,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QKeySequenceEdit" name="brushEdit">
-                   <property name="keySequence">
-                    <string>B</string>
-                   </property>
-                  </widget>
+                  <widget class="QKeySequenceEdit" name="brushEdit"/>
                  </item>
                 </layout>
                </item>
@@ -882,11 +870,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QKeySequenceEdit" name="fogHideEdit">
-                   <property name="keySequence">
-                    <string>F</string>
-                   </property>
-                  </widget>
+                  <widget class="QKeySequenceEdit" name="fogHideEdit"/>
                  </item>
                 </layout>
                </item>
@@ -925,11 +909,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QKeySequenceEdit" name="fogRevealEdit">
-                   <property name="keySequence">
-                    <string>Alt+F</string>
-                   </property>
-                  </widget>
+                  <widget class="QKeySequenceEdit" name="fogRevealEdit"/>
                  </item>
                 </layout>
                </item>
@@ -968,11 +948,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QKeySequenceEdit" name="lightEdit">
-                   <property name="keySequence">
-                    <string>L</string>
-                   </property>
-                  </widget>
+                  <widget class="QKeySequenceEdit" name="lightEdit"/>
                  </item>
                 </layout>
                </item>
@@ -1052,11 +1028,7 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QKeySequenceEdit" name="lineEdit">
-                    <property name="keySequence">
-                     <string>I</string>
-                    </property>
-                   </widget>
+                   <widget class="QKeySequenceEdit" name="lineEdit"/>
                   </item>
                  </layout>
                 </item>
@@ -1095,11 +1067,7 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QKeySequenceEdit" name="circleEdit">
-                    <property name="keySequence">
-                     <string>O</string>
-                    </property>
-                   </widget>
+                   <widget class="QKeySequenceEdit" name="circleEdit"/>
                   </item>
                  </layout>
                 </item>
@@ -1138,11 +1106,7 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QKeySequenceEdit" name="squareEdit">
-                    <property name="keySequence">
-                     <string>K</string>
-                    </property>
-                   </widget>
+                   <widget class="QKeySequenceEdit" name="squareEdit"/>
                   </item>
                  </layout>
                 </item>
@@ -1183,7 +1147,7 @@
                   <item>
                    <widget class="QKeySequenceEdit" name="triangleEdit">
                     <property name="keySequence">
-                     <string>J</string>
+                     <string>Ctrl+S</string>
                     </property>
                    </widget>
                   </item>

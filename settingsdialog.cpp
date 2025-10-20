@@ -184,17 +184,17 @@ void SettingsDialog::loadSettings() {
     ui->gridSizeBox->setValue(settings.value(paths.map.defaultGridSize, 5).toInt());
 
     /// Hotkeys
-    ui->rulerEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.ruler).toString()));
-    ui->heightEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.height).toString()));
-    ui->brushEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.brush).toString()));
-    ui->fogHideEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.fogHide).toString()));
-    ui->fogRevealEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.fogReveal).toString()));
-    ui->lightEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.light).toString()));
-    ui->lightEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.light).toString()));
-    ui->circleEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.circle).toString()));
-    ui->squareEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.square).toString()));
-    ui->triangleEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.triangle).toString()));
-    ui->lassoEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.lasso).toString()));
+    ui->rulerEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.ruler, "R").toString()));
+    ui->heightEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.height, "H").toString()));
+    ui->brushEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.brush, "B").toString()));
+    ui->fogHideEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.fogHide, "F").toString()));
+    ui->fogRevealEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.fogReveal, "Alt+F").toString()));
+    ui->lightEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.light, "L").toString()));
+    ui->lineEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.light, "I").toString()));
+    ui->circleEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.circle, "O").toString()));
+    ui->squareEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.square, "K").toString()));
+    ui->triangleEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.triangle, "J").toString()));
+    ui->lassoEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.lasso, "Q").toString()));
 }
 
 /**
