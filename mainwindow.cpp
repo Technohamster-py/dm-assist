@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "map-widget/mapview.h"
+#include "map-widget/texturepickerdialog.h"
 #include "charsheet-widget/dndcharsheetwidget.h"
 #include "bestiary-widget/dndbestiarypage.h"
 
@@ -205,7 +206,7 @@ void MainWindow::createNewMapTab() {
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open Map Image"),
                                                     QStandardPaths::writableLocation(QStandardPaths::PicturesLocation),
-                                                    tr("Map Files (*.dam);;Images (*.png *.jpg *.bmp)"));
+                                                    tr("Map Files and images (*.dam *.png *.jpg *.bmp)"));
 
     if (fileName.isEmpty()) return;
 
@@ -474,7 +475,14 @@ void MainWindow::loadSettings() {
     /// Map
     currentTokenTitleMode = settings.value(paths.map.tokenTitleMode, 0).toInt();
     currentTokenFontSize = settings.value(paths.map.tokenFontSize, 12).toInt();
-    m_masterFogOpacity = settings.value(paths.map.masterFogOpacity, 0.4).toDouble() / 100;
+    m_masterFogOpacity = settings.value(paths.map.masterFogOpacity, 40).toDouble() / 100;
+    m_textureOpacity = settings.value(paths.map.textureOpacity, 50).toDouble() / 100;
+
+    circleShapeTool->setOpacity(m_textureOpacity);
+    squareShapeTool->setOpacity(m_textureOpacity);
+    triangleShapeTool->setOpacity(m_textureOpacity);
+    lassoTool->setOpacity(m_textureOpacity);
+
     m_fogColor = QColor(settings.value(paths.map.fogColor, "#000000").toString());
     for (int i = 0; i < mapTabWidget->count(); i++){
         auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(i));
@@ -484,8 +492,9 @@ void MainWindow::loadSettings() {
         currentView->getScene()->setTokenTitleMode(currentTokenTitleMode);
         currentView->getScene()->setTokenTextSize(currentTokenFontSize);
         currentView->getScene()->setFogColor(m_fogColor);
+        currentView->getScene()->setLayerOpacity(mapLayers::Shapes, m_textureOpacity);
     }
-    m_playerFogOpacity = settings.value(paths.map.playerFogOpacity, 1.0).toDouble() / 100;
+    m_playerFogOpacity = settings.value(paths.map.playerFogOpacity, 100).toDouble() / 100;
     m_defaultGridSize = settings.value(paths.map.defaultGridSize, 5).toInt();
 
     /// Hotkeys
@@ -499,6 +508,7 @@ void MainWindow::loadSettings() {
     circleButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.circle).toString()));
     squareButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.square).toString()));
     triangleButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.triangle).toString()));
+    lassoButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.lasso).toString()));
 }
 
 /**
@@ -647,6 +657,7 @@ void MainWindow::openMapFromFile(const QString& fileName) {
         view->getScene()->setTokenTextSize(currentTokenFontSize);
         view->getScene()->setFogColor(m_fogColor);
         view->getScene()->setGridSize(m_defaultGridSize);
+        view->getScene()->setLayerOpacity(mapLayers::Shapes, m_textureOpacity);
 
         connect(view->getScene(), &MapScene::toolChanged, this, [=](const AbstractMapTool* tool){
             if (!tool){
@@ -1061,6 +1072,7 @@ void MainWindow::setupToolbar() {
     circleShapeTool = new CircleShapeTool();
     squareShapeTool = new SquareShapeTool();
     triangleShapeTool = new TriangleShapeTool();
+    lassoTool = new LassoTool();
     heightMapTool = new HeightMapTool();
 
     toolGroup = new QActionGroup(this);
@@ -1377,12 +1389,35 @@ void MainWindow::setupToolbar() {
     });
 
 
-    /// Shape color button
-    auto *ShapeToolColorButton = new QPushButton();
-    ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/map/palette.svg", ShapeToolColorButton, &QAbstractButton::setIcon);
-    ui->toolBar->addWidget(ShapeToolColorButton);
+    /// Lasso tool
+    auto* lassoAction = new QAction(this);
+    lassoAction->setCheckable(true);
+//    ThemedIconManager::instance().addIconTarget(":player/play.svg", lassoAction, &QAction::setIcon);
+    toolGroup->addAction(lassoAction);
 
-    connect(ShapeToolColorButton, &QPushButton::clicked, this, [=]() {
+    lassoButton = new QToolButton(this);
+    lassoButton->setCheckable(true);
+    lassoButton->setToolTip(tr("Lasso"));
+    lassoButton->setDefaultAction(lassoAction);
+    ui->toolBar->addWidget(lassoButton);
+
+    connect(lassoAction, &QAction::triggered, [=](bool checked){
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        if (!currentView) return;
+        if (checked)
+            currentView->setActiveTool(lassoTool);
+        else
+            currentView->setActiveTool(nullptr);
+    });
+
+
+    /// Shape color button
+    auto *shapeToolColorButton = new QPushButton();
+    auto *shapeTextureButton = new QPushButton();
+    ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/map/palette.svg", shapeToolColorButton, &QAbstractButton::setIcon);
+    ui->toolBar->addWidget(shapeToolColorButton);
+
+    connect(shapeToolColorButton, &QPushButton::clicked, this, [=]() {
         QColor chosen = QColorDialog::getColor(lightTool->color(), this);
         if (chosen.isValid()) {
             lineShapeTool->setColor(chosen);
@@ -1390,9 +1425,23 @@ void MainWindow::setupToolbar() {
             squareShapeTool->setColor(chosen);
             triangleShapeTool->setColor(chosen);
             brushTool->setColor(chosen);
+
+            shapeTextureButton->setIcon(QIcon());
+            circleShapeTool->setTexture();
+            squareShapeTool->setTexture();
+            triangleShapeTool->setTexture();
         }
     });
 
+    ui->toolBar->addWidget(shapeTextureButton);
+    connect(shapeTextureButton, &QPushButton::clicked, [=](){
+        QString textureName = TexturePickerDialog::getTexture(this);
+        shapeTextureButton->setIcon(QIcon(textureName));
+        circleShapeTool->setTexture(textureName);
+        squareShapeTool->setTexture(textureName);
+        triangleShapeTool->setTexture(textureName);
+        lassoTool->setTexture(textureName);
+    });
 
     ui->toolBar->addSeparator();
 

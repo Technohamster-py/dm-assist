@@ -1,11 +1,8 @@
 #ifndef DM_ASSIST_HEIGHTMAPTOOL_H
 #define DM_ASSIST_HEIGHTMAPTOOL_H
 
-#include "abstractmaptool.h"
+#include "areashapetool.h"
 #include "mapscene.h"
-#include <QPainterPath>
-#include <QGraphicsPathItem>
-
 
 class HeightRegionItem : public QGraphicsPolygonItem {
 public:
@@ -19,17 +16,10 @@ private:
     void updateColor();
 };
 
-class HeightMapTool : public  AbstractMapTool{
+class HeightMapTool : public LassoTool {
 public:
     void mousePressEvent(QGraphicsSceneMouseEvent* event, QGraphicsScene* scene) override;
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) override;
-    void wheelEvent(QGraphicsSceneWheelEvent *event, QGraphicsScene *scene) override {};
-    void deactivate(QGraphicsScene *scene) override {};
-//    void cancel();
-private:
-    QPainterPath path;
-    QGraphicsPathItem* preview = nullptr;
 };
 
 

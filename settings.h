@@ -92,6 +92,7 @@ struct Settings{
         QString playerFogOpacity = "map/FogOpacity/player"; ///< int %
         QString fogColor = "map/fogColor";                  ///< string
         QString defaultGridSize = "map/defaultGridSize";    ///< int
+        QString textureOpacity = "map/textureOpacity";      ///< int %
     };
     Map map;
 
@@ -106,6 +107,7 @@ struct Settings{
         QString circle = "hotkeys/tools/circle";            ///< string
         QString square = "hotkeys/tools/square";            ///< string
         QString triangle = "hotkeys/tools/triangle";        ///< string
+        QString lasso = "hotkeys/tools/lasso";              ///< string
     };
     Hotkeys hotkeys;
 

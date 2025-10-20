@@ -10,6 +10,7 @@ set(CMAKE_AUTOUIC ON)
 set(BASS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass/include)
 set(TEMPLATE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/file-templates)
 set(ICON_DIR ${CMAKE_CURRENT_SOURCE_DIR}/iconset)
+set(TEXTURES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/textures)
 if (WIN32)
     set(CMAKE_PREFIX_PATH "C:/Qt/Qt6/6.9.0/mingw_64/lib/cmake")
     set(BASS_DLL "${CMAKE_SOURCE_DIR}/lib/bass/win/bass.dll")
@@ -69,6 +70,11 @@ set(FILES
         updatechecker.h updatechecker.cpp
         recentcampaigndialog.cpp
         recentcampaigndialog.h
+        map-widget/texturepickerdialog.h
+        map-widget/effectgrapchicsitem.cpp
+        map-widget/effectgrapchicsitem.h
+        map-widget/areashapetool.cpp
+        map-widget/areashapetool.h
 )
 
 set(UI_FILES
@@ -219,6 +225,12 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${ICON_DIR}"
         "${CMAKE_BINARY_DIR}/iconset"
+)
+
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${TEXTURES_DIR}"
+        "${CMAKE_BINARY_DIR}/textures"
 )
 
 

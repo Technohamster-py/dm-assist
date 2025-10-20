@@ -19,7 +19,7 @@
 #pragma pack(push, 1)
 struct MapFileHeader {
     quint32 magic = 0x444D414D; // 'DMAM'
-    quint32 version = 2;
+    quint32 version = 3;
     quint32 jsonSize;
     quint32 imageSize;
 };
@@ -105,6 +105,8 @@ public:
     void setFogColor(const QColor &color);
     QColor fogColor() const {return m_fogColor;}
     void updateFogTexture();
+
+    void setLayerOpacity(mapLayers layer, qreal opacity);
 signals:
     void fogUpdated(const QImage &m_fogImage);
     void toolChanged(const AbstractMapTool *);

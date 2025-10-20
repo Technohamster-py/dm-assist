@@ -46,6 +46,9 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
      <attribute name="headerVisible">
       <bool>false</bool>
      </attribute>
@@ -106,7 +109,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>2</number>
+        <number>4</number>
        </property>
        <widget class="QWidget" name="generalPage">
         <layout class="QFormLayout" name="formLayout">
@@ -549,56 +552,33 @@
            </property>
           </widget>
          </item>
+         <item row="2" column="1">
+          <layout class="QHBoxLayout" name="masterFogOpacitylayout">
+           <item>
+            <widget class="QLabel" name="masterFogValueLabel">
+             <property name="text">
+              <string>TextLabel</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSlider" name="masterFogSlider">
+             <property name="maximum">
+              <number>100</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
          <item row="3" column="0">
           <widget class="QLabel" name="playerFogLabel">
            <property name="text">
             <string>Fog opacity (players)</string>
            </property>
           </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="fogColorLabel">
-           <property name="text">
-            <string>Fog color</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="1">
-          <widget class="QPushButton" name="fogColorButton">
-           <property name="text">
-            <string>#000000</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="0">
-          <widget class="QCheckBox" name="lastMapCheckBox">
-           <property name="text">
-            <string>Open last map</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="1">
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="6" column="0">
-          <widget class="QLabel" name="gridSizeLabel">
-           <property name="text">
-            <string>Default grid size (feet)</string>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="1">
-          <widget class="QSpinBox" name="gridSizeBox"/>
          </item>
          <item row="3" column="1">
           <layout class="QHBoxLayout" name="playerFogOpacitylayout">
@@ -621,17 +601,68 @@
            </item>
           </layout>
          </item>
-         <item row="2" column="1">
-          <layout class="QHBoxLayout" name="masterFogOpacitylayout">
+         <item row="5" column="0">
+          <widget class="QLabel" name="fogColorLabel">
+           <property name="text">
+            <string>Fog color</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QPushButton" name="fogColorButton">
+           <property name="text">
+            <string>#000000</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0">
+          <widget class="QCheckBox" name="lastMapCheckBox">
+           <property name="text">
+            <string>Open last map</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="1">
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="7" column="0">
+          <widget class="QLabel" name="gridSizeLabel">
+           <property name="text">
+            <string>Default grid size (feet)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="1">
+          <widget class="QSpinBox" name="gridSizeBox"/>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="textureOpacityLabel">
+           <property name="text">
+            <string>Texture layer opacity</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <layout class="QHBoxLayout" name="textureOpacityLayout">
            <item>
-            <widget class="QLabel" name="masterFogValueLabel">
+            <widget class="QLabel" name="textureOpacityValueLabel">
              <property name="text">
               <string>TextLabel</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QSlider" name="masterFogSlider">
+            <widget class="QSlider" name="textureOpacitySlider">
              <property name="maximum">
               <number>100</number>
              </property>
@@ -674,8 +705,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>172</width>
-              <height>444</height>
+              <width>501</width>
+              <height>482</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -816,14 +847,14 @@
                  </item>
                 </layout>
                </item>
-               <item row="3" column="0">
+               <item row="4" column="0">
                 <widget class="QLabel" name="fogHideLabel">
                  <property name="text">
                   <string>Fog hide</string>
                  </property>
                 </widget>
                </item>
-               <item row="3" column="1">
+               <item row="4" column="1">
                 <layout class="QHBoxLayout" name="fogHideLayout">
                  <item>
                   <widget class="QLabel" name="fogHideIcon">
@@ -859,14 +890,14 @@
                  </item>
                 </layout>
                </item>
-               <item row="4" column="0">
+               <item row="5" column="0">
                 <widget class="QLabel" name="fogRevealLabel">
                  <property name="text">
                   <string>Fog reveal</string>
                  </property>
                 </widget>
                </item>
-               <item row="4" column="1">
+               <item row="5" column="1">
                 <layout class="QHBoxLayout" name="fogRevealLayout">
                  <item>
                   <widget class="QLabel" name="fogRevealIcon">
@@ -902,14 +933,14 @@
                  </item>
                 </layout>
                </item>
-               <item row="5" column="0">
+               <item row="6" column="0">
                 <widget class="QLabel" name="lightLabel">
                  <property name="text">
                   <string>Light</string>
                  </property>
                 </widget>
                </item>
-               <item row="5" column="1">
+               <item row="6" column="1">
                 <layout class="QHBoxLayout" name="lightLayout">
                  <item>
                   <widget class="QLabel" name="lightIcon">
@@ -942,6 +973,39 @@
                     <string>L</string>
                    </property>
                   </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="lassoLabel">
+                 <property name="text">
+                  <string>Lasso</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <layout class="QHBoxLayout" name="lassoLayout">
+                 <item>
+                  <widget class="QLabel" name="lassoIcon">
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>lasso</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QKeySequenceEdit" name="lassoEdit"/>
                  </item>
                 </layout>
                </item>

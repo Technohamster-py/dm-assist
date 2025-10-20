@@ -91,19 +91,7 @@ void HeightMapTool::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsSc
     scene->addItem(preview);
 }
 
-/**
- * Handles mouse move events within the scene and updates the drawing path.
- * This method extends the current path to the position of the mouse,
- * and updates the preview item if it exists, to reflect the new path.
- *
- * @param event The mouse event containing information about the mouse position.
- * @param scene The graphical scene in which the mouse event occurred.
- */
-void HeightMapTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, QGraphicsScene *scene) {
-    path.lineTo(event->scenePos());
-    if (preview)
-        preview->setPath(path);
-}
+
 
 /**
  * Handles the mouse release event when defining a height region on the map.
