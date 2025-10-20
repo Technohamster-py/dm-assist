@@ -107,6 +107,7 @@ struct Settings{
         QString circle = "hotkeys/tools/circle";            ///< string
         QString square = "hotkeys/tools/square";            ///< string
         QString triangle = "hotkeys/tools/triangle";        ///< string
+        QString lasso = "hotkeys/tools/lasso";              ///< string
     };
     Hotkeys hotkeys;
 

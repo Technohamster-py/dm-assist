@@ -508,6 +508,7 @@ void MainWindow::loadSettings() {
     circleButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.circle).toString()));
     squareButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.square).toString()));
     triangleButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.triangle).toString()));
+    lassoButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.lasso).toString()));
 }
 
 /**

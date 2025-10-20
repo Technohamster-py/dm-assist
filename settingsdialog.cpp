@@ -194,6 +194,7 @@ void SettingsDialog::loadSettings() {
     ui->circleEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.circle).toString()));
     ui->squareEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.square).toString()));
     ui->triangleEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.triangle).toString()));
+    ui->lassoEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.lasso).toString()));
 }
 
 /**
@@ -329,6 +330,7 @@ void SettingsDialog::saveSettings() {
     settings.setValue(paths.hotkeys.circle, ui->circleEdit->keySequence().toString());
     settings.setValue(paths.hotkeys.square, ui->squareEdit->keySequence().toString());
     settings.setValue(paths.hotkeys.triangle, ui->triangleEdit->keySequence().toString());
+    settings.setValue(paths.hotkeys.lasso, ui->lassoEdit->keySequence().toString());
 
     settings.sync();
 }
