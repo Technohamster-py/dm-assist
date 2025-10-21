@@ -5,14 +5,14 @@
 #include <QMessageBox>
 
 RecentCampaignDialog::RecentCampaignDialog(const QStringList &recent, QWidget *parent) : QDialog(parent), m_recent(recent){
-    setWindowTitle(tr("Выбор кампании"));
+    setWindowTitle(tr("Choose campaign"));
     resize(500, 400);
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     m_list = new QListWidget(this);
     layout->addWidget(m_list);
 
-    m_browseButton = new QPushButton(tr("Открыть другую..."), this);
+    m_browseButton = new QPushButton(tr("Open another..."), this);
     layout->addWidget(m_browseButton);
 
 

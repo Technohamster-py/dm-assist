@@ -19,8 +19,7 @@
  * The interface does not itself perform any parsing logic. It is intended to
  * be implemented by classes that require FVTT parsing functionality.
  */
-class IFvttParser : public QObject{
-    Q_OBJECT
+class IFvttParser{
 public:
     virtual ~IFvttParser() = default;
     virtual BestiaryPageData parse(const QJsonObject& root) = 0;
@@ -46,33 +45,33 @@ protected:
     };
 
     QMap<QString, QString> skillTitles {
-            {"acr", tr("Acrobatics")},
-            {"ani", tr("Animal handling")},
-            {"arc", tr("Arcana")},
-            {"ath", tr("Athletics")},
-            {"dec", tr("Deception")},
-            {"his", tr("History")},
-            {"ins", tr("Insight")},
-            {"itm", tr("Intimidation")},
-            {"inv", tr("Investigation")},
-            {"med", tr("Medicine")},
-            {"nat", tr("Nature")},
-            {"prc", tr("Perception")},
-            {"prf", tr("Performance")},
-            {"per", tr("Persuasion")},
-            {"rel", tr("Religion")},
-            {"slt", tr("Sleight of hand")},
-            {"ste", tr("Stealth")},
-            {"sur", tr("Survival")}
+            {"acr", QObject::tr("Acrobatics")},
+            {"ani", QObject::tr("Animal handling")},
+            {"arc", QObject::tr("Arcana")},
+            {"ath", QObject::tr("Athletics")},
+            {"dec", QObject::tr("Deception")},
+            {"his", QObject::tr("History")},
+            {"ins", QObject::tr("Insight")},
+            {"itm", QObject::tr("Intimidation")},
+            {"inv", QObject::tr("Investigation")},
+            {"med", QObject::tr("Medicine")},
+            {"nat", QObject::tr("Nature")},
+            {"prc", QObject::tr("Perception")},
+            {"prf", QObject::tr("Performance")},
+            {"per", QObject::tr("Persuasion")},
+            {"rel", QObject::tr("Religion")},
+            {"slt", QObject::tr("Sleight of hand")},
+            {"ste", QObject::tr("Stealth")},
+            {"sur", QObject::tr("Survival")}
     };
 
     QMap<QString, QString> typeToHeader {
-            {"action", tr("Actions")},
-            {"feat", tr("Feats")},
-            {"lair", tr("Lair actions")},
-            {"legendary", tr("Legendary actions")},
-            {"spell", tr("Spells")},
-            {"trait", tr("Traits")}
+            {"action", QObject::tr("Actions")},
+            {"feat", QObject::tr("Feats")},
+            {"lair", QObject::tr("Lair actions")},
+            {"legendary", QObject::tr("Legendary actions")},
+            {"spell", QObject::tr("Spells")},
+            {"trait", QObject::tr("Traits")}
     };
 };
 

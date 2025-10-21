@@ -16,7 +16,7 @@
  * selecting a campaign to load, or removing a campaign from the list.
  *
  */
-class RecentCampaignDialog : public QDialog{
+class RecentCampaignDialog : public QDialog {
     Q_OBJECT
 public:
     RecentCampaignDialog(const QStringList& recent, QWidget *parent = nullptr);

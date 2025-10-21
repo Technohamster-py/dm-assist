@@ -533,11 +533,6 @@
     <string>Check for updates</string>
    </property>
   </action>
-  <action name="actiond">
-   <property name="text">
-    <string>d</string>
-   </property>
-  </action>
  </widget>
  <customwidgets>
   <customwidget>

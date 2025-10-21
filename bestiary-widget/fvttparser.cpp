@@ -29,19 +29,19 @@ BestiaryPageData Fvtt10Parser::parse(const QJsonObject &root) {
     QString speed = "";
 
     if (speedObj.value("walk").toInt() > 0)
-        speed += tr("Walk: %1 %2").arg(QString::number(speedObj.value("walk").toInt()), "ft");
+        speed += QObject::tr("Walk: %1 %2").arg(QString::number(speedObj.value("walk").toInt()), "ft");
 
     if (speedObj.value("burrow").toInt() > 0)
-        speed += tr(", Burrow: %1 %2").arg(QString::number(speedObj.value("burrow").toInt()), "ft");
+        speed += QObject::tr(", Burrow: %1 %2").arg(QString::number(speedObj.value("burrow").toInt()), "ft");
 
     if (speedObj.value("climb").toInt() > 0)
-        speed += tr(", climb: %1 %2").arg(QString::number(speedObj.value("climb").toInt()), "ft");
+        speed += QObject::tr(", climb: %1 %2").arg(QString::number(speedObj.value("climb").toInt()), "ft");
 
     if (speedObj.value("fly").toInt() > 0)
-        speed += tr(", fly: %1 %2").arg(QString::number(speedObj.value("fly").toInt()), "ft");
+        speed += QObject::tr(", fly: %1 %2").arg(QString::number(speedObj.value("fly").toInt()), "ft");
 
     if (speedObj.value("swim").toInt() > 0)
-        speed += tr(", swim: %1 %2").arg(QString::number(speedObj.value("swim").toInt()), "ft");
+        speed += QObject::tr(", swim: %1 %2").arg(QString::number(speedObj.value("swim").toInt()), "ft");
 
     data.speed = speed;
 
@@ -218,19 +218,19 @@ BestiaryPageData Fvtt11Parser::parse(const QJsonObject &root) {
     QString units = movementObj.value("units").toString();
 
     if (movementObj.value("walk").toInt() > 0)
-        speed += tr("Walk: %1 %2").arg(QString::number(movementObj.value("walk").toInt()), units);
+        speed += QObject::tr("Walk: %1 %2").arg(QString::number(movementObj.value("walk").toInt()), units);
 
     if (movementObj.value("burrow").toInt() > 0)
-        speed += tr(", Burrow: %1 %2").arg(QString::number(movementObj.value("burrow").toInt()), units);
+        speed += QObject::tr(", Burrow: %1 %2").arg(QString::number(movementObj.value("burrow").toInt()), units);
 
     if (movementObj.value("climb").toInt() > 0)
-        speed += tr(", climb: %1 %2").arg(QString::number(movementObj.value("climb").toInt()), units);
+        speed += QObject::tr(", climb: %1 %2").arg(QString::number(movementObj.value("climb").toInt()), units);
 
     if (movementObj.value("fly").toInt() > 0)
-        speed += tr(", fly: %1 %2").arg(QString::number(movementObj.value("fly").toInt()), units);
+        speed += QObject::tr(", fly: %1 %2").arg(QString::number(movementObj.value("fly").toInt()), units);
 
     if (movementObj.value("swim").toInt() > 0)
-        speed += tr(", swim: %1 %2").arg(QString::number(movementObj.value("swim").toInt()), units);
+        speed += QObject::tr(", swim: %1 %2").arg(QString::number(movementObj.value("swim").toInt()), units);
 
     data.speed = speed;
 
@@ -240,16 +240,16 @@ BestiaryPageData Fvtt11Parser::parse(const QJsonObject &root) {
     units = sensesObj.value("units").toString();
 
     if (sensesObj.value("darkvision").toInt() > 0)
-        senses += tr("Dark vision %1 %2").arg(QString::number(sensesObj.value("darkvision").toInt()), units);
+        senses += QObject::tr("Dark vision %1 %2").arg(QString::number(sensesObj.value("darkvision").toInt()), units);
 
     if (sensesObj.value("blindsight").toInt() > 0)
-        senses += tr("Blindsight %1 %2").arg(QString::number(sensesObj.value("blindsight").toInt()), units);
+        senses += QObject::tr("Blindsight %1 %2").arg(QString::number(sensesObj.value("blindsight").toInt()), units);
 
     if (sensesObj.value("tremorsense").toInt() > 0)
-        senses += tr("Tremorsense %1 %2").arg(QString::number(sensesObj.value("tremorsense").toInt()), units);
+        senses += QObject::tr("Tremorsense %1 %2").arg(QString::number(sensesObj.value("tremorsense").toInt()), units);
 
     if (sensesObj.value("truesight").toInt() > 0)
-        senses += tr("Truesight %1 %2").arg(QString::number(sensesObj.value("truesight").toInt()), units);
+        senses += QObject::tr("Truesight %1 %2").arg(QString::number(sensesObj.value("truesight").toInt()), units);
 
     senses += sensesObj.value("special").toString();
 
