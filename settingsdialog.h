@@ -37,6 +37,16 @@ protected:
     void saveSettings();
     const Settings paths;
 
+    QStringList m_excludedKeys {
+            paths.general.audioDevice,
+            paths.general.lang,
+            paths.general.dir,
+            paths.general.defaultCampaignDir,
+            paths.appearance.stretch,
+            paths.session.recent,
+            paths.session.campaign
+    };
+
 protected slots:
     void exportSettings();
     void importSettings();
@@ -69,16 +79,6 @@ private:
     void populateTokenModes();
 
     void setupIcons();
-
-    QStringList m_excludedKeys {
-        paths.general.audioDevice,
-        paths.general.lang,
-        paths.general.dir,
-        paths.general.defaultCampaignDir,
-        paths.appearance.stretch,
-        paths.session.recent,
-        paths.session.campaign
-    };
 };
 
 
