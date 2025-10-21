@@ -188,7 +188,7 @@ void SettingsDialog::loadSettings() {
     ui->fogHideEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.fogHide, "F").toString()));
     ui->fogRevealEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.fogReveal, "Alt+F").toString()));
     ui->lightEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.light, "L").toString()));
-    ui->lineEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.light, "I").toString()));
+    ui->lineEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.line, "I").toString()));
     ui->circleEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.circle, "O").toString()));
     ui->squareEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.square, "K").toString()));
     ui->triangleEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.triangle, "J").toString()));
