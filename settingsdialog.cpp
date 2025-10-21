@@ -491,6 +491,9 @@ bool SettingsDialog::validateKeySequences() {
 }
 
 void SettingsDialog::setupIcons() {
+    ThemedIconManager::instance().addIconTarget<QPushButton>(":/folder.svg", ui->folderButton, &QAbstractButton::setIcon);
+    ThemedIconManager::instance().addIconTarget<QPushButton>(":/folder.svg", ui->themeButton, &QAbstractButton::setIcon);
+    ThemedIconManager::instance().addIconTarget<QPushButton>(":/map/palette.svg", ui->activeColorButton, &QAbstractButton::setIcon);
     ThemedIconManager::instance().addPixmapTarget(":/map/ruler.svg", ui->rulerIcon, [label = ui->rulerIcon](const QPixmap& px){label->setPixmap(px);});
     ThemedIconManager::instance().addPixmapTarget(":/map/mountain.svg", ui->heightIcon, [label = ui->heightIcon](const QPixmap& px){label->setPixmap(px);});
     ThemedIconManager::instance().addPixmapTarget(":/map/brush.svg", ui->brushIcon, [label = ui->brushIcon](const QPixmap& px){label->setPixmap(px);});
