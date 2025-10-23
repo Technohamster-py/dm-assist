@@ -467,7 +467,7 @@
     <string>Settings (ctrl+alt+s)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Alt+S</string>
+    <string notr="true">Ctrl+Alt+S</string>
    </property>
   </action>
   <action name="actionCharacterBuilder">

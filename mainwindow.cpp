@@ -1703,7 +1703,6 @@ void MainWindow::dropEvent(QDropEvent *event) {
     }
 }
 
-
 /**
  * @brief Displays a message box with a list of sources as clickable links.
  *
@@ -1769,7 +1768,6 @@ void MainWindow::slotUpdateProgressBar(int percent, const QString &message) {
     if (percent == 100 || percent == 0)
         QTimer::singleShot(1500, progressBar, [=](){progressBar->setVisible(false);});
 }
-
 
 void MainWindow::addCampaignToRecentList(const QString &path) {
     m_recentCampaignList.removeAll(path);

@@ -10,6 +10,12 @@
 #include <utility>
 #include <QLabel>
 
+/**
+ * @class UpdateChecker
+ * @brief class for auto check version on github
+ *
+ *
+ */
 class UpdateChecker : public QObject{
     Q_OBJECT
 public:

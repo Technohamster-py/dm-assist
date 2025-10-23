@@ -9,13 +9,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>743</width>
-    <height>529</height>
+    <width>900</width>
+    <height>387</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>500</width>
+    <width>900</width>
     <height>200</height>
    </size>
   </property>
@@ -42,7 +42,7 @@
      </property>
      <property name="maximumSize">
       <size>
-       <width>300</width>
+       <width>200</width>
        <height>16777215</height>
       </size>
      </property>
@@ -109,7 +109,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>4</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="generalPage">
         <layout class="QFormLayout" name="formLayout">
@@ -287,6 +287,9 @@
           <widget class="QLabel" name="fieldsLabel">
            <property name="text">
             <string>Display fields in shared view</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -671,7 +674,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>501</width>
+              <width>172</width>
               <height>482</height>
              </rect>
             </property>
