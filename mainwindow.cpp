@@ -24,8 +24,8 @@
 #include <QJsonDocument>
 #include <QProgressBar>
 
-#include "theme-manager/thememanager.h"
-#include "theme-manager/themediconmanager.h"
+#include "thememanager.h"
+#include "themediconmanager.h"
 
 #include <QDebug>
 

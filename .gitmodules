@@ -1,0 +1,3 @@
+[submodule "AdaptiveThemeLib"]
+	path = AdaptiveThemeLib
+	url = https://github.com/Technohamster-py/AdaptiveThemeLib

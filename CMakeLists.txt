@@ -65,8 +65,6 @@ set(FILES
         saveconfigdialog.h saveconfigdialog.cpp
         settingsdialog.h    settingsdialog.cpp
         settings.h
-        theme-manager/thememanager.h theme-manager/thememanager.cpp
-        theme-manager/themediconmanager.h theme-manager/themediconmanager.cpp
         updatechecker.h updatechecker.cpp
         recentcampaigndialog.cpp
         recentcampaigndialog.h
@@ -99,6 +97,8 @@ set(TS_FILES
 
 
 set(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/static/app_resources.qrc)
+
+add_subdirectory(AdaptiveThemeLib)
 
 find_package(Qt6 COMPONENTS
         Core
@@ -154,6 +154,7 @@ target_link_libraries(${PROJECT_NAME}
         Qt6::Xml
         ${BASS_LIBRARY}
         Qt6::Qml
+        AdaptiveThemeLib::AdaptiveThemeLib
 )
 
 if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
