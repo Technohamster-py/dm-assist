@@ -1392,7 +1392,7 @@ void MainWindow::setupToolbar() {
     /// Lasso tool
     auto* lassoAction = new QAction(this);
     lassoAction->setCheckable(true);
-//    ThemedIconManager::instance().addIconTarget(":player/play.svg", lassoAction, &QAction::setIcon);
+    ThemedIconManager::instance().addIconTarget(":map/lasso.svg", lassoAction, &QAction::setIcon);
     toolGroup->addAction(lassoAction);
 
     lassoButton = new QToolButton(this);
