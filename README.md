@@ -43,7 +43,7 @@ DM helper.
 ### Общие
 ![settings-common.png](illustrations/settings-common.png)
 - **Язык** определяет локализацию приложения. Из коробки доступны русская и английская версии.
-[Как добавить новую локализацию](https://github.com/Technohamster-py/dm-assist/wiki/%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BD%D0%BE%D0%B2%D0%BE%D0%B9-%D0%BB%D0%BE%D0%BA%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8)
+[Как добавить новую локализацию](https://github.com/Technohamster-py/dm-assist/wiki/Loacalization)
 - **Аудио выход** определяет устройство, на котором будет воспроизводиться музыка из плееров.
 Используя [виртуальный кабель](https://vb-audio.com/Cable/) можно подключить аудиовыход к микрофону discord и 
 транслировать музыку при онлайн-игре.
