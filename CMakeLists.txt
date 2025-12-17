@@ -65,6 +65,7 @@ set(FILES
         saveconfigdialog.h saveconfigdialog.cpp
         settingsdialog.h    settingsdialog.cpp
         settings.h
+        spell-book-widget/spelleditwidget.h spell-book-widget/spelleditwidget.cpp
         updatechecker.h updatechecker.cpp
         recentcampaigndialog.cpp
         recentcampaigndialog.h
@@ -88,6 +89,7 @@ set(UI_FILES
         settingsdialog.ui
         bestiary-widget/dndbestiarypage.ui
         charsheet-widget/dndCharacterData.h
+        spell-book-widget/spelleditwidget.ui
 )
 
 set(TS_FILES

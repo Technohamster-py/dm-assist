@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SpellEditWidget</class>
+ <widget class="QWidget" name="SpellEditWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>450</width>
+    <height>692</height>
+   </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>450</width>
+    <height>700</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>SpellEditWidget</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_3">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="iconButton">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../static/app_resources.qrc">
+         <normaloff>:/charSheet/shortrest.svg</normaloff>:/charSheet/shortrest.svg</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="titleEdit">
+       <property name="placeholderText">
+        <string>Title</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="levelBox">
+       <property name="minimumSize">
+        <size>
+         <width>70</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QCheckBox" name="verbalCheckBox">
+         <property name="text">
+          <string>Verbal</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="somaticCheckBox">
+         <property name="text">
+          <string>Somatic</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="materialCheckBox">
+         <property name="text">
+          <string>Material</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="materialList">
+         <property name="maximumSize">
+          <size>
+           <width>300</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="placeholderText">
+          <string>Material components</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="line">
+         <property name="frameShadow">
+          <enum>QFrame::Plain</enum>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QFormLayout" name="formLayout">
+         <item row="0" column="0">
+          <widget class="QLabel" name="timeLabel">
+           <property name="text">
+            <string>Casting time</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QSpinBox" name="timeBox"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="durationLabel">
+           <property name="text">
+            <string>Duration</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QSpinBox" name="durationBox"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="rangeLabel">
+           <property name="text">
+            <string>Range</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QSpinBox" name="rangeBox"/>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="aoeLabel">
+           <property name="text">
+            <string>Area of effect</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QSpinBox" name="aoeBox"/>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="Line" name="line_2">
+       <property name="frameShadow">
+        <enum>QFrame::Plain</enum>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QComboBox" name="shapeComboBox">
+         <item>
+          <property name="text">
+           <string>Line</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../static/app_resources.qrc">
+            <normaloff>:/map/line.svg</normaloff>:/map/line.svg</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Cone</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../static/app_resources.qrc">
+            <normaloff>:/map/cone.svg</normaloff>:/map/cone.svg</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Sphere</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../static/app_resources.qrc">
+            <normaloff>:/map/sphere.svg</normaloff>:/map/sphere.svg</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Cube</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../static/app_resources.qrc">
+            <normaloff>:/map/cube.svg</normaloff>:/map/cube.svg</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Cylinder</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../static/app_resources.qrc">
+            <normaloff>:/map/cylinder.svg</normaloff>:/map/cylinder.svg</iconset>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="textureButton">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../textures/fire.png</normaloff>../textures/fire.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>100</width>
+           <height>100</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QTextEdit" name="descriptionEdit">
+     <property name="placeholderText">
+      <string>Description</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../static/app_resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>
