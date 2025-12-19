@@ -110,7 +110,50 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QSpinBox" name="timeBox"/>
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <item>
+            <widget class="QSpinBox" name="castingTimeBox"/>
+           </item>
+           <item>
+            <widget class="QComboBox" name="castingUnitsBox">
+             <property name="maxCount">
+              <number>20</number>
+             </property>
+             <item>
+              <property name="text">
+               <string>Action</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Reaction</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Bonus action</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Minutes</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Hours</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="ritualCheckBox">
+             <property name="text">
+              <string>Ritual</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="durationLabel">
@@ -119,18 +162,12 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
-          <widget class="QSpinBox" name="durationBox"/>
-         </item>
          <item row="2" column="0">
           <widget class="QLabel" name="rangeLabel">
            <property name="text">
             <string>Range</string>
            </property>
           </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QSpinBox" name="rangeBox"/>
          </item>
          <item row="3" column="0">
           <widget class="QLabel" name="aoeLabel">
@@ -139,8 +176,100 @@
            </property>
           </widget>
          </item>
+         <item row="1" column="1">
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <item>
+            <widget class="QSpinBox" name="durationBox"/>
+           </item>
+           <item>
+            <widget class="QComboBox" name="durationUnitsBox">
+             <property name="currentIndex">
+              <number>0</number>
+             </property>
+             <property name="maxCount">
+              <number>20</number>
+             </property>
+             <item>
+              <property name="text">
+               <string>Rounds</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Minutes</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Hours</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Days</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Years</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Permanent</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="2" column="1">
+          <layout class="QHBoxLayout" name="horizontalLayout_6">
+           <item>
+            <widget class="QSpinBox" name="rangeBox"/>
+           </item>
+           <item>
+            <widget class="QComboBox" name="rangeUnitsBox">
+             <property name="maxCount">
+              <number>10</number>
+             </property>
+             <item>
+              <property name="text">
+               <string>Feet</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Miles</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </item>
          <item row="3" column="1">
-          <widget class="QSpinBox" name="aoeBox"/>
+          <layout class="QHBoxLayout" name="horizontalLayout_7">
+           <item>
+            <widget class="QSpinBox" name="aoeBox"/>
+           </item>
+           <item>
+            <widget class="QComboBox" name="aoeUnitsBox">
+             <property name="maxCount">
+              <number>10</number>
+             </property>
+             <item>
+              <property name="text">
+               <string>Feet</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Miles</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>
@@ -173,6 +302,9 @@
        </item>
        <item>
         <widget class="QComboBox" name="shapeComboBox">
+         <property name="maxCount">
+          <number>20</number>
+         </property>
          <item>
           <property name="text">
            <string>Line</string>
@@ -248,7 +380,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QTextEdit" name="descriptionEdit">
+    <widget class="RollTextBrowser" name="descriptionEdit">
      <property name="placeholderText">
       <string>Description</string>
      </property>
@@ -256,6 +388,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>RollTextBrowser</class>
+   <extends>QTextBrowser</extends>
+   <header location="global">../bestiary-widget/rolltextbrowser.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../static/app_resources.qrc"/>
  </resources>

@@ -30,6 +30,7 @@ set(FILES
         campaign-tree-widget/campaigntreewidget.cpp campaign-tree-widget/campaigntreewidget.h
         campaign-tree-widget/hoverwidget.cpp    campaign-tree-widget/hoverwidget.h
         charsheet-widget/abstractcharsheetwidget.h
+        charsheet-widget/dndCharacterData.h
         charsheet-widget/characterparser.h charsheet-widget/characterparser.cpp
         charsheet-widget/dndcharsheetwidget.h charsheet-widget/dndcharsheetwidget.cpp
         charsheet-widget/dndcharsheetdialogs.h charsheet-widget/dndcharsheetdialogs.cpp
@@ -42,8 +43,10 @@ set(FILES
         initiative-tracker/statusmanager.cpp    initiative-tracker/statusmanager.h
         mainwindow.h    mainwindow.cpp
         map-widget/abstractmaptool.h
+        map-widget/areashapetool.h  map-widget/areashapetool.cpp
         map-widget/brushtool.h  map-widget/brushtool.cpp
         map-widget/calibrationtool.h    map-widget/calibrationtool.cpp
+        map-widget/effectgrapchicsitem.h    map-widget/effectgrapchicsitem.cpp
         map-widget/fixedsizetextitem.h          map-widget/fixedsizetextitem.cpp
         map-widget/fogtool.h    map-widget/fogtool.cpp
         map-widget/griditem.h   map-widget/griditem.cpp
@@ -55,11 +58,13 @@ set(FILES
         map-widget/rulertool.h map-widget/rulertool.cpp
         map-widget/sharedmapwindow.h    map-widget/sharedmapwindow.cpp
         map-widget/spellshapetool.h     map-widget/spellshapetool.cpp
+        map-widget/texturepickerdialog.h
         map-widget/tokenitem.h  map-widget/tokenitem.cpp
         map-widget/undostack.h
         music-widget/musicwidget.h music-widget/musicwidget.cpp
         icon-picker/iconpickerdialog.h  icon-picker/iconpickerdialog.cpp
         initiative-tracker/initiativetrackerwidget.h initiative-tracker/initiativetrackerwidget.cpp
+        recentcampaigndialog.h  recentcampaigndialog.cpp
         roll-widget/rollwidget.h    roll-widget/rollwidget.cpp
         initiative-tracker/initiativedelegates.h initiative-tracker/initiativedelegates.cpp
         saveconfigdialog.h saveconfigdialog.cpp
@@ -67,28 +72,20 @@ set(FILES
         settings.h
         spell-book-widget/spelleditwidget.h spell-book-widget/spelleditwidget.cpp
         updatechecker.h updatechecker.cpp
-        recentcampaigndialog.cpp
-        recentcampaigndialog.h
-        map-widget/texturepickerdialog.h
-        map-widget/effectgrapchicsitem.cpp
-        map-widget/effectgrapchicsitem.h
-        map-widget/areashapetool.cpp
-        map-widget/areashapetool.h
 )
 
 set(UI_FILES
+        bestiary-widget/dndbestiarypage.ui
         charsheet-widget/dndcharsheetwidget.ui
         charsheet-widget/attackdialog.ui
         charsheet-widget/resourcedialog.ui
+        initiative-tracker/initiativetrackerwidget.ui
+        initiative-tracker/statuseditdialog.ui
         mainwindow.ui
         music-widget/musicplayer.ui
         music-widget/playlisteditdialog.ui
-        initiative-tracker/initiativetrackerwidget.ui
         roll-widget/rollwidget.ui
-        initiative-tracker/statuseditdialog.ui
         settingsdialog.ui
-        bestiary-widget/dndbestiarypage.ui
-        charsheet-widget/dndCharacterData.h
         spell-book-widget/spelleditwidget.ui
 )
 
