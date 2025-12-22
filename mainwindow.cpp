@@ -4,6 +4,7 @@
 #include "map-widget/texturepickerdialog.h"
 #include "charsheet-widget/dndcharsheetwidget.h"
 #include "bestiary-widget/dndbestiarypage.h"
+#include "spell-book-widget/spelleditwidget.h"
 
 #include <QDesktopServices>
 #include "QDomDocument"
@@ -110,6 +111,10 @@ MainWindow::MainWindow(QWidget *parent) :
         connect(bestiaryPage, &DndCharsheetWidget::rollRequested, rollWidget, &RollWidget::executeRoll);
         connect(this, &MainWindow::translatorChanged, bestiaryPage, &DndBestiaryPage::updateTranslator);
         bestiaryPage->show();
+    });
+    connect(campaignTreeWidget, &CampaignTreeWidget::spellOpenRequested, [=](const QString& path){
+        auto* spellEdit = new SpellEditWidget(path);
+        spellEdit->show();
     });
     ui->campaignLayout->addWidget(campaignTreeWidget);
 
@@ -555,7 +560,7 @@ void MainWindow::newCampaign() {
 
     QDir dir(dialog.directoryPath);
 
-    QStringList subdirs = {"Characters", "Maps", "Encounters", "Music"};
+    QStringList subdirs = {"Characters", "Maps", "Encounters", "Music", "Spells"};
     for (const QString& sub : subdirs){
         if (!dir.mkpath(sub)){
             QMessageBox::warning(this, "Error", tr("Can't create subdirectory: ") + sub);

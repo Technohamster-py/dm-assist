@@ -1,7 +1,10 @@
 #include "spelleditwidget.h"
 #include "ui_spelleditwidget.h"
 
+#include <QJsonDocument>
 #include <QJsonObject>
+#include <QFile>
+#include <QMessageBox>
 #include "../map-widget/texturepickerdialog.h"
 #include "iconpickerdialog.h"
 #include "themediconmanager.h"
@@ -21,6 +24,17 @@ SpellEditWidget::SpellEditWidget(QWidget *parent) :
         QString icon = IconPickerDialog::getSelectedIcon(this);
         ThemedIconManager::instance().addIconTarget<QAbstractButton>(icon, ui->iconButton, &QAbstractButton::setIcon);
     });
+}
+
+SpellEditWidget::SpellEditWidget(QString path, QWidget *parent) : SpellEditWidget(parent){
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly)){
+        QMessageBox::warning(this, "error", "Can't open spell file");
+        return;
+    }
+    QJsonDocument document = QJsonDocument::fromJson(file.readAll());
+    QJsonObject root = document.object();
+    parseFromJson(root);
 }
 
 SpellEditWidget::~SpellEditWidget() {

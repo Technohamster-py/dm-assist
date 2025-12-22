@@ -12,6 +12,7 @@ enum class NodeType {
     Map,
     Music,
     Beast,
+    Spell,
     Unknown
 };
 

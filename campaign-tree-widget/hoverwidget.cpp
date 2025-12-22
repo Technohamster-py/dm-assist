@@ -104,11 +104,19 @@ void HoverWidget::setupButtons(NodeType type) {
             ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/edit.svg", action1, &QAbstractButton::setIcon);
             action1->setToolTip(tr("Edit"));
             action2->hide();
+            break;
         case NodeType::Beast:
             ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/edit.svg", action1, &QAbstractButton::setIcon);
             action1->setToolTip(tr("View"));
             ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/add.svg", action2, &QAbstractButton::setIcon);
             action2->setToolTip(tr("Add to current encounter"));
+            break;
+        case NodeType::Spell:
+            ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/edit.svg", action1, &QAbstractButton::setIcon);
+            action1->setToolTip(tr("Edit"));
+            ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/add.svg", action2, &QAbstractButton::setIcon);
+            action2->setToolTip(tr("Set as painter"));
+            break;
         default:
             action1->hide();
             action2->hide();

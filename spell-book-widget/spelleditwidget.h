@@ -13,6 +13,7 @@ Q_OBJECT
 
 public:
     explicit SpellEditWidget(QWidget *parent = nullptr);
+    SpellEditWidget(QString path, QWidget *parent = nullptr);
 
     ~SpellEditWidget() override;
 

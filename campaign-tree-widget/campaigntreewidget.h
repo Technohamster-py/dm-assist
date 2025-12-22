@@ -27,6 +27,9 @@ signals:
     void beastOpenRequested(const QString& path);
     void beastAddRequested(const QString& path);
 
+    void spellOpenRequested(const QString& path);
+    void spellSelectRequested(const QString& path);
+
     void campaignLoaded(const QString &name);
 
 public slots:

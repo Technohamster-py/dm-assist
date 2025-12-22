@@ -67,6 +67,8 @@ NodeType CampaignTreeWidget::determieNodeType(const QString &path)
         return NodeType::Music;
     if (path.contains("/Bestiary"))
         return NodeType::Beast;
+    if (path.contains("/Spells/"))
+        return NodeType::Spell;
     return NodeType::Unknown;
 }
 
@@ -178,6 +180,10 @@ void CampaignTreeWidget::populateTree(const QString &path, QTreeWidgetItem *pare
                 connect(widget, &HoverWidget::action1Clicked, [=](){emit beastOpenRequested(fullPath);});
                 connect(widget, &HoverWidget::action2Clicked, [=](){emit beastAddRequested(fullPath);});
                 item->setData(0, Qt::UserRole, fullPath);
+                break;
+            case NodeType::Spell:
+                connect(widget, &HoverWidget::action1Clicked, [=](){emit spellOpenRequested(fullPath);});
+                connect(widget, &HoverWidget::action2Clicked, [=](){emit spellSelectRequested(fullPath);});
             default:
                 break;
         }
