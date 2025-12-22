@@ -3,15 +3,23 @@
 
 #include <QJsonObject>
 #include "../map-widget/texturepickerdialog.h"
+#include "iconpickerdialog.h"
+#include "themediconmanager.h"
 
 SpellEditWidget::SpellEditWidget(QWidget *parent) :
         QWidget(parent), ui(new Ui::SpellEditWidget) {
     ui->setupUi(this);
 
+    ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/charSheet/shortrest.svg", ui->iconButton, &QAbstractButton::setIcon);
+
     connect(ui->materialCheckBox, &QCheckBox::toggled, ui->materialList, &QTextEdit::setEnabled);
     connect(ui->textureButton, &QPushButton::clicked, [=](){
         QString textureName = TexturePickerDialog::getTexture(this);
         ui->textureButton->setIcon(QIcon(textureName));
+    });
+    connect(ui->iconButton, &QPushButton::clicked, [=](){
+        QString icon = IconPickerDialog::getSelectedIcon(this);
+        ThemedIconManager::instance().addIconTarget<QAbstractButton>(icon, ui->iconButton, &QAbstractButton::setIcon);
     });
 }
 
@@ -32,6 +40,7 @@ bool SpellEditWidget::parseFromJson(QJsonObject json) {
 
     ui->castingUnitsBox->setCurrentIndex(m_casting[json["activation"].toObject().value("type").toString()]);
     ui->castingTimeBox->setValue(json["activation"].toObject().value("cost").toInt());
+    ui->ritualCheckBox->setChecked(json["components"].toObject().value("ritual").toBool());
 
     ui->durationBox->setValue(json["duration"].toObject().value("value").toInt());
     ui->durationUnitsBox->setCurrentIndex(m_duration[json["duration"].toObject().value("units").toString()]);
