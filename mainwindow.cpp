@@ -723,6 +723,7 @@ void MainWindow::openMapFromFile(const QString& fileName) {
  */
 void MainWindow::openSharedMapWindow(int index) {
     auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
+    if (!currentView) return;
     if (!sharedMapWindow){
         sharedMapWindow = new SharedMapWindow(currentView->getScene());
         sharedMapWindow->setFogOpacity(m_playerFogOpacity);
@@ -733,6 +734,7 @@ void MainWindow::openSharedMapWindow(int index) {
             sharedMapWindow = nullptr;
         });
     } else{
+        sharedMapWindow->changeMap(currentView->getScene());
         sharedMapWindow->raise();
         sharedMapWindow->activateWindow();
     }
