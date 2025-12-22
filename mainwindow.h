@@ -104,6 +104,7 @@ private:
 
     TabWidget *mapTabWidget;
     SharedMapWindow* sharedMapWindow = nullptr;
+    bool autoSharedMapMapMode = false;
     BrushTool* brushTool;
     CalibrationTool* calibrationTool;
     FogTool* fogTool;

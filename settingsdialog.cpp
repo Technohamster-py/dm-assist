@@ -180,6 +180,7 @@ void SettingsDialog::loadSettings() {
     ui->fogColorButton->setStyleSheet(QString("background-color: %1").arg(fogColorName));
     ui->lastMapCheckBox->setChecked(settings.value(paths.general.openLastMap, false).toBool());
     ui->gridSizeBox->setValue(settings.value(paths.map.defaultGridSize, 5).toInt());
+    ui->sharedViewModeCheckBox->setChecked(settings.value(paths.map.sharedMapSwitchMode, false).toBool());
 
     /// Hotkeys
     ui->rulerEdit->setKeySequence(QKeySequence(settings.value(paths.hotkeys.ruler, "R").toString()));
@@ -315,6 +316,7 @@ void SettingsDialog::saveSettings() {
     settings.setValue(paths.map.defaultGridSize, ui->gridSizeBox->value());
     settings.setValue(paths.general.openLastMap, ui->lastMapCheckBox->isChecked());
     settings.setValue(paths.map.textureOpacity, ui->textureOpacitySlider->value());
+    settings.setValue(paths.map.sharedMapSwitchMode, ui->sharedViewModeCheckBox->isChecked());
 
     /// Hotkeys
     settings.setValue(paths.hotkeys.ruler, ui->rulerEdit->keySequence().toString());
