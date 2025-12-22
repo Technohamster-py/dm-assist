@@ -483,6 +483,8 @@ void MainWindow::loadSettings() {
     triangleShapeTool->setOpacity(m_textureOpacity);
     lassoTool->setOpacity(m_textureOpacity);
 
+    autoSharedMapMapMode = settings.value(paths.map.sharedMapSwitchMode, false).toBool();
+
     m_fogColor = QColor(settings.value(paths.map.fogColor, "#000000").toString());
     for (int i = 0; i < mapTabWidget->count(); i++){
         auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(i));
@@ -723,6 +725,7 @@ void MainWindow::openMapFromFile(const QString& fileName) {
  */
 void MainWindow::openSharedMapWindow(int index) {
     auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
+    if (!currentView) return;
     if (!sharedMapWindow){
         sharedMapWindow = new SharedMapWindow(currentView->getScene());
         sharedMapWindow->setFogOpacity(m_playerFogOpacity);
@@ -733,6 +736,7 @@ void MainWindow::openSharedMapWindow(int index) {
             sharedMapWindow = nullptr;
         });
     } else{
+        sharedMapWindow->changeMap(currentView->getScene());
         sharedMapWindow->raise();
         sharedMapWindow->activateWindow();
     }
@@ -1012,6 +1016,15 @@ void MainWindow::setupMaps() {
     connect(mapTabWidget, &TabWidget::share, this, &MainWindow::openSharedMapWindow);
     connect(mapTabWidget, &TabWidget::save, this, &MainWindow::slotExportMap);
     connect(mapTabWidget, &TabWidget::dropAccepted, this, &MainWindow::openMapFromFile);
+    connect(mapTabWidget, &QTabWidget::currentChanged, [=](int index){
+        if (!autoSharedMapMapMode) return;
+        if (!sharedMapWindow) return;
+        auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
+        if (!currentView) return;
+        sharedMapWindow->changeMap(currentView->getScene());
+        sharedMapWindow->raise();
+        sharedMapWindow->activateWindow();
+    });
     updateVisibility();
 }
 

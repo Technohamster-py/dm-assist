@@ -63,3 +63,8 @@ void SharedMapWindow::resizeEvent(QResizeEvent *event) {
 void SharedMapWindow::updateFogImage(const QImage &fog) {
     fogItem->setPixmap(QPixmap::fromImage(fog));
 }
+
+void SharedMapWindow::changeMap(MapScene *newScene) {
+    view->updateMap(newScene);
+    view->fitInView(newScene->mapRect(), Qt::KeepAspectRatio);
+}
