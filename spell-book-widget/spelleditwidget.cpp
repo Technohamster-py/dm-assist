@@ -43,28 +43,31 @@ SpellEditWidget::~SpellEditWidget() {
 
 bool SpellEditWidget::parseFromJson(QJsonObject json) {
     ui->titleEdit->setText(json.value("name").toString());
-    ui->levelBox->setValue(json.value("level").toInt());
-    ui->descriptionEdit->setCustomHtml(json["description"].toObject().value("value").toString());
 
-    ui->verbalCheckBox->setChecked(json["components"].toObject().value("vocal").toBool());
-    ui->somaticCheckBox->setChecked(json["components"].toObject().value("somatic").toBool());
-    ui->materialCheckBox->setChecked(json["components"].toObject().value("material").toBool());
+    QJsonObject systemObj = json["system"].toObject();
+
+    ui->levelBox->setValue(systemObj.value("level").toInt());
+    ui->descriptionEdit->setCustomHtml(systemObj["description"].toObject().value("value").toString());
+
+    ui->verbalCheckBox->setChecked(systemObj["components"].toObject().value("vocal").toBool());
+    ui->somaticCheckBox->setChecked(systemObj["components"].toObject().value("somatic").toBool());
+    ui->materialCheckBox->setChecked(systemObj["components"].toObject().value("material").toBool());
     if (ui->materialCheckBox->isChecked())
-        ui->materialList->setText(json["materials"].toObject().value("value").toString());
+        ui->materialList->setText(systemObj["materials"].toObject().value("value").toString());
 
-    ui->castingUnitsBox->setCurrentIndex(m_casting[json["activation"].toObject().value("type").toString()]);
-    ui->castingTimeBox->setValue(json["activation"].toObject().value("cost").toInt());
-    ui->ritualCheckBox->setChecked(json["components"].toObject().value("ritual").toBool());
+    ui->castingUnitsBox->setCurrentIndex(m_casting[systemObj["activation"].toObject().value("type").toString()]);
+    ui->castingTimeBox->setValue(systemObj["activation"].toObject().value("cost").toInt());
+    ui->ritualCheckBox->setChecked(systemObj["components"].toObject().value("ritual").toBool());
 
-    ui->durationBox->setValue(json["duration"].toObject().value("value").toInt());
-    ui->durationUnitsBox->setCurrentIndex(m_duration[json["duration"].toObject().value("units").toString()]);
+    ui->durationBox->setValue(systemObj["duration"].toObject().value("value").toInt());
+    ui->durationUnitsBox->setCurrentIndex(m_duration[systemObj["duration"].toObject().value("units").toString()]);
 
-    ui->rangeBox->setValue(json["range"].toObject().value("value").toInt());
-    ui->rangeUnitsBox->setCurrentIndex(m_units[json["range"].toObject().value("units").toString()]);
+    ui->rangeBox->setValue(systemObj["range"].toObject().value("value").toInt());
+    ui->rangeUnitsBox->setCurrentIndex(m_units[systemObj["range"].toObject().value("units").toString()]);
 
-    ui->aoeBox->setValue(json["target"].toObject().value("value").toInt());
-    ui->aoeUnitsBox->setCurrentIndex(m_units[json["target"].toObject().value("units").toString()]);
-    ui->shapeComboBox->setCurrentIndex(m_shapes[json["target"].toObject().value("type").toString()]);
+    ui->aoeBox->setValue(systemObj["target"].toObject().value("value").toInt());
+    ui->aoeUnitsBox->setCurrentIndex(m_units[systemObj["target"].toObject().value("units").toString()]);
+    ui->shapeComboBox->setCurrentIndex(m_shapes[systemObj["target"].toObject().value("type").toString()]);
 
     return true;
 }
