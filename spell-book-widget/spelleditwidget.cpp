@@ -26,13 +26,15 @@ SpellEditWidget::SpellEditWidget(QWidget *parent) :
     });
 }
 
-SpellEditWidget::SpellEditWidget(QString path, QWidget *parent) : SpellEditWidget(parent){
+SpellEditWidget::SpellEditWidget(const QString& path, QWidget *parent) : SpellEditWidget(parent){
+    m_file = path;
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly)){
         QMessageBox::warning(this, "error", "Can't open spell file");
         return;
     }
     QJsonDocument document = QJsonDocument::fromJson(file.readAll());
+    file.close();
     QJsonObject root = document.object();
     parseFromJson(root);
 }
@@ -68,6 +70,19 @@ bool SpellEditWidget::parseFromJson(QJsonObject json) {
     ui->aoeBox->setValue(systemObj["target"].toObject().value("value").toInt());
     ui->aoeUnitsBox->setCurrentIndex(m_units[systemObj["target"].toObject().value("units").toString()]);
     ui->shapeComboBox->setCurrentIndex(m_shapes[systemObj["target"].toObject().value("type").toString()]);
+
+    return true;
+}
+
+bool SpellEditWidget::saveToFile() {
+    QFile file(m_file);
+    if (!file.open(QIODevice::ReadOnly)){
+        QMessageBox::warning(this, "error", "Can't open spell file");
+        return false;
+    }
+    QJsonDocument document = QJsonDocument::fromJson(file.readAll());
+    file.close();
+    QJsonObject root = document.object();
 
     return true;
 }

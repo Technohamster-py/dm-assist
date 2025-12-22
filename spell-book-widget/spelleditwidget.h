@@ -13,12 +13,13 @@ Q_OBJECT
 
 public:
     explicit SpellEditWidget(QWidget *parent = nullptr);
-    SpellEditWidget(QString path, QWidget *parent = nullptr);
+    SpellEditWidget(const QString& path, QWidget *parent = nullptr);
 
     ~SpellEditWidget() override;
 
 protected:
     bool parseFromJson(QJsonObject json);
+    bool saveToFile();
 private:
     Ui::SpellEditWidget *ui;
 
@@ -52,6 +53,8 @@ private:
             {"cylinder", 4},
             {"wall", 0}
     };
+
+    QString m_file;
 };
 
 
