@@ -3,9 +3,12 @@
 
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QCoreApplication>
 #include <QFile>
+#include <QFileInfo>
 #include <QMessageBox>
 #include "../map-widget/texturepickerdialog.h"
+#include "../charsheet-widget/abstractcharsheetwidget.h"
 #include "iconpickerdialog.h"
 #include "themediconmanager.h"
 
@@ -19,6 +22,8 @@ SpellEditWidget::SpellEditWidget(QWidget *parent) :
     connect(ui->textureButton, &QPushButton::clicked, [=](){
         QString textureName = TexturePickerDialog::getTexture(this);
         ui->textureButton->setIcon(QIcon(textureName));
+        QFileInfo info(textureName);
+        m_textureFileName = info.fileName();
     });
     connect(ui->iconButton, &QPushButton::clicked, [=](){
         QString icon = IconPickerDialog::getSelectedIcon(this);
@@ -27,26 +32,36 @@ SpellEditWidget::SpellEditWidget(QWidget *parent) :
 }
 
 SpellEditWidget::SpellEditWidget(const QString& path, QWidget *parent) : SpellEditWidget(parent){
-    m_file = path;
-    QFile file(path);
-    if (!file.open(QIODevice::ReadOnly)){
-        QMessageBox::warning(this, "error", "Can't open spell file");
-        return;
-    }
-    QJsonDocument document = QJsonDocument::fromJson(file.readAll());
-    file.close();
-    QJsonObject root = document.object();
-    parseFromJson(root);
+    parseFromJson(path);
 }
 
 SpellEditWidget::~SpellEditWidget() {
     delete ui;
 }
 
-bool SpellEditWidget::parseFromJson(QJsonObject json) {
-    ui->titleEdit->setText(json.value("name").toString());
+bool SpellEditWidget::parseFromJson(const QString& jsonFilePath) {
+    m_file = jsonFilePath;
+    QFile jsonFile(jsonFilePath);
+    if (!jsonFile.open(QIODevice::ReadOnly)){
+        QMessageBox::warning(this, "error", "Can't open spell file");
+        return false;
+    }
+    QJsonDocument document = QJsonDocument::fromJson(jsonFile.readAll());
+    jsonFile.close();
+    QJsonObject root = document.object();
 
-    QJsonObject systemObj = json["system"].toObject();
+    ui->titleEdit->setText(root.value("name").toString());
+
+    if (root.contains("texture")){
+        m_textureFileName = root.value("texture").toString();
+        QString texturePath = QCoreApplication::applicationDirPath() + "/textures/" + m_textureFileName;
+        if (QFile::exists(texturePath))
+            ui->textureButton->setIcon(QIcon(texturePath));
+        else
+            ui->textureButton->setIcon(QIcon(":/notexture.png"));
+    }
+
+    QJsonObject systemObj = root["system"].toObject();
 
     ui->levelBox->setValue(systemObj.value("level").toInt());
     ui->descriptionEdit->setCustomHtml(systemObj["description"].toObject().value("value").toString());
@@ -82,7 +97,67 @@ bool SpellEditWidget::saveToFile() {
     }
     QJsonDocument document = QJsonDocument::fromJson(file.readAll());
     file.close();
+
     QJsonObject root = document.object();
+    QJsonObject systemObj = root["system"].toObject();
+
+    root["name"] = ui->titleEdit->text();
+
+    systemObj["level"] = ui->levelBox->value();
+    systemObj["description"].toObject()["value"] =
+            ui->descriptionEdit->toHtml();
+
+    QJsonObject componentsObj;
+    componentsObj["vocal"] = ui->verbalCheckBox->isChecked();
+    componentsObj["somatic"] = ui->somaticCheckBox->isChecked();
+    componentsObj["material"] = ui->materialCheckBox->isChecked();
+    componentsObj["ritual"] = ui->ritualCheckBox->isChecked();
+    systemObj["components"] = componentsObj;
+
+    if (ui->materialCheckBox->isChecked()) {
+        QJsonObject materialsObj;
+        materialsObj["value"] = ui->materialList->toPlainText();
+        systemObj["materials"] = materialsObj;
+    }
+
+    QJsonObject activationObj;
+    activationObj["type"] = m_casting.key(ui->castingUnitsBox->currentIndex());
+    activationObj["cost"] = ui->castingTimeBox->value();
+    systemObj["activation"] = activationObj;
+
+    QJsonObject durationObj;
+    durationObj["value"] = ui->durationBox->value();
+    durationObj["units"] = m_duration.key(ui->durationUnitsBox->currentIndex());
+    systemObj["duration"] = durationObj;
+
+    QJsonObject rangeObj;
+    rangeObj["value"] = ui->rangeBox->value();
+    rangeObj["units"] = m_units.key(ui->rangeUnitsBox->currentIndex());
+    systemObj["range"] = rangeObj;
+
+    QJsonObject targetObj;
+    targetObj["value"] = ui->aoeBox->value();
+    targetObj["units"] = m_units.key(ui->aoeUnitsBox->currentIndex());
+    targetObj["type"] = m_shapes.key(ui->shapeComboBox->currentIndex());
+    systemObj["target"] = targetObj;
+
+    root["system"] = systemObj;
+
+    if (!m_textureFileName.isEmpty())
+        root["texture"] = m_textureFileName;
+    else
+        root.remove("texture");
+
+    file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+    file.write(QJsonDocument(root).toJson(QJsonDocument::Indented));
+    file.close();
 
     return true;
+}
+
+void SpellEditWidget::closeEvent(QCloseEvent *event) {
+    if (!m_file.isEmpty())
+        saveToFile();
+
+    QWidget::closeEvent(event);
 }

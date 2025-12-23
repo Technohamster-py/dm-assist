@@ -2,6 +2,7 @@
 #define DM_ASSIST_SPELLEDITWIDGET_H
 
 #include <QWidget>
+#include <QFile>
 
 
 QT_BEGIN_NAMESPACE
@@ -18,8 +19,9 @@ public:
     ~SpellEditWidget() override;
 
 protected:
-    bool parseFromJson(QJsonObject json);
+    bool parseFromJson(const QString& jsonFile);
     bool saveToFile();
+    void closeEvent(QCloseEvent *event);
 private:
     Ui::SpellEditWidget *ui;
 
@@ -55,6 +57,7 @@ private:
     };
 
     QString m_file;
+    QString m_textureFileName;
 };
 
 

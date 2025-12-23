@@ -22,6 +22,7 @@
         <file>shield.svg</file>
         <file>sword.svg</file>
         <file>upload.svg</file>
+        <file>notexture.png</file>
     </qresource>
     <qresource prefix="player">
         <file>next.svg</file>
