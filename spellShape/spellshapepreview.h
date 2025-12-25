@@ -5,7 +5,7 @@
 #include "spellshapefactory.h"
 #include "../map-widget/griditem.h"
 
-class SpellShapePreview : QGraphicsView{
+class SpellShapePreview : public QGraphicsView {
 Q_OBJECT
 public:
     explicit SpellShapePreview(QWidget* parent = nullptr);

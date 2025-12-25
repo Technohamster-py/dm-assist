@@ -18,8 +18,12 @@ public:
 
     ~SpellEditWidget() override;
 
-protected:
     bool parseFromJson(const QString& jsonFile);
+
+public slots:
+    void setShape();
+
+protected:
     bool saveToFile();
     void closeEvent(QCloseEvent *event);
 private:

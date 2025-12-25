@@ -305,51 +305,6 @@
          <property name="maxCount">
           <number>20</number>
          </property>
-         <item>
-          <property name="text">
-           <string>Line</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../static/app_resources.qrc">
-            <normaloff>:/map/line.svg</normaloff>:/map/line.svg</iconset>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Cone</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../static/app_resources.qrc">
-            <normaloff>:/map/cone.svg</normaloff>:/map/cone.svg</iconset>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Sphere</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../static/app_resources.qrc">
-            <normaloff>:/map/sphere.svg</normaloff>:/map/sphere.svg</iconset>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Cube</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../static/app_resources.qrc">
-            <normaloff>:/map/cube.svg</normaloff>:/map/cube.svg</iconset>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Cylinder</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../static/app_resources.qrc">
-            <normaloff>:/map/cylinder.svg</normaloff>:/map/cylinder.svg</iconset>
-          </property>
-         </item>
         </widget>
        </item>
        <item>
@@ -376,7 +331,7 @@
         </widget>
        </item>
        <item>
-        <widget class="MapView" name="preview">
+        <widget class="SpellShapePreview" name="preview">
          <property name="frameShadow">
           <enum>QFrame::Plain</enum>
          </property>
@@ -411,9 +366,9 @@
    <header location="global">../bestiary-widget/rolltextbrowser.h</header>
   </customwidget>
   <customwidget>
-   <class>MapView</class>
+   <class>SpellShapePreview</class>
    <extends>QGraphicsView</extends>
-   <header location="global">../map-widget/mapview.h</header>
+   <header location="global">../spellShape/spellshapepreview.h</header>
   </customwidget>
  </customwidgets>
  <resources>

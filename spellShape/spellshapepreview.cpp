@@ -4,6 +4,7 @@
 SpellShapePreview::SpellShapePreview(QWidget *parent) : QGraphicsView(parent){
 
     m_scene = new QGraphicsScene(this);
+    setScene(m_scene);
 }
 
 void SpellShapePreview::setShape(SpellShapeType type, int feetSize, QColor color, QString textureName) {
@@ -15,14 +16,14 @@ void SpellShapePreview::setShape(SpellShapeType type, int feetSize, QColor color
     p.color = color;
     p.textureName = textureName;
 
-    auto* item = SpellShapeFactory::createShape(m_scene, p);
+    SpellShapeFactory::createShape(m_scene, p);
     QRectF bounds = SpellShapeFactory::shapeBoudingRect(type, feetSize, m_feetToPx);
 
     fitInView(bounds.adjusted(-20, -20, 20, 20), Qt::KeepAspectRatio);
 
-    delete m_gridItem;
 
     if (!m_gridItem){
+        delete m_gridItem;
         m_gridItem = new GridItem(bounds.adjusted(-20, -20, 20, 20));
         m_gridItem->setZValue(mapLayers::Grid);
         m_scene->addItem(m_gridItem);
@@ -31,4 +32,6 @@ void SpellShapePreview::setShape(SpellShapeType type, int feetSize, QColor color
         m_gridItem->setGridType(GridItem::GridType::Square);
         m_gridItem->setVisible(false);
     }
+
+
 }

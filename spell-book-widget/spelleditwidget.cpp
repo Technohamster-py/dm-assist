@@ -18,6 +18,12 @@ SpellEditWidget::SpellEditWidget(QWidget *parent) :
 
     ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/charSheet/shortrest.svg", ui->iconButton, &QAbstractButton::setIcon);
 
+    ui->shapeComboBox->addItem(tr("Line"), QVariant::fromValue(SpellShapeType::Line));
+    ui->shapeComboBox->addItem(tr("Cone"), QVariant::fromValue(SpellShapeType::Triangle));
+    ui->shapeComboBox->addItem(tr("Sphere"), QVariant::fromValue(SpellShapeType::Circle));
+    ui->shapeComboBox->addItem(tr("Cube"), QVariant::fromValue(SpellShapeType::Square));
+    ui->shapeComboBox->addItem(tr("Cylinder"), QVariant::fromValue(SpellShapeType::Circle));
+
     connect(ui->materialCheckBox, &QCheckBox::toggled, ui->materialList, &QTextEdit::setEnabled);
     connect(ui->textureButton, &QPushButton::clicked, [=](){
         QString textureName = TexturePickerDialog::getTexture(this);
@@ -30,7 +36,8 @@ SpellEditWidget::SpellEditWidget(QWidget *parent) :
         ThemedIconManager::instance().addIconTarget<QAbstractButton>(icon, ui->iconButton, &QAbstractButton::setIcon);
     });
 
-    ui->preview->getScene()->setGridType(GridItem::GridType::Square);
+    connect(ui->shapeComboBox, &QComboBox::currentIndexChanged, this, &SpellEditWidget::setShape);
+
     ui->preview->setInteractive(false);
     ui->preview->setDragMode(QGraphicsView::NoDrag);
     ui->preview->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -167,4 +174,9 @@ void SpellEditWidget::closeEvent(QCloseEvent *event) {
         saveToFile();
 
     QWidget::closeEvent(event);
+}
+
+void SpellEditWidget::setShape() {
+    SpellShapeType type = ui->shapeComboBox->currentData().value<SpellShapeType>();
+    ui->preview->setShape(type, ui->aoeBox->value(), QColor(Qt::red), "");
 }

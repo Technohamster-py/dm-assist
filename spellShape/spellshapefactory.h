@@ -7,10 +7,9 @@
 
 enum class SpellShapeType {
     Line,
+    Triangle,
     Circle,
     Square,
-    Cone,
-    Triangle
 };
 
 class SpellShapeFactory {
