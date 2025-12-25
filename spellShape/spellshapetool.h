@@ -1,7 +1,7 @@
 #ifndef DM_ASSIST_SPELLSHAPETOOL_H
 #define DM_ASSIST_SPELLSHAPETOOL_H
 
-#include "areashapetool.h"
+#include "map-widget/areashapetool.h"
 
 /**
  * @class SpellShapeTool

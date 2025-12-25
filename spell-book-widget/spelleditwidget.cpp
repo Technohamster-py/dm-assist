@@ -29,6 +29,13 @@ SpellEditWidget::SpellEditWidget(QWidget *parent) :
         QString icon = IconPickerDialog::getSelectedIcon(this);
         ThemedIconManager::instance().addIconTarget<QAbstractButton>(icon, ui->iconButton, &QAbstractButton::setIcon);
     });
+
+    ui->preview->getScene()->setGridType(GridItem::GridType::Square);
+    ui->preview->setInteractive(false);
+    ui->preview->setDragMode(QGraphicsView::NoDrag);
+    ui->preview->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->preview->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->preview->setAcceptDrops(false);
 }
 
 SpellEditWidget::SpellEditWidget(const QString& path, QWidget *parent) : SpellEditWidget(parent){

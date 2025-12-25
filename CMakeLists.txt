@@ -46,7 +46,7 @@ set(FILES
         map-widget/areashapetool.h  map-widget/areashapetool.cpp
         map-widget/brushtool.h  map-widget/brushtool.cpp
         map-widget/calibrationtool.h    map-widget/calibrationtool.cpp
-        map-widget/effectgrapchicsitem.h    map-widget/effectgrapchicsitem.cpp
+        spellShape/effectgrapchicsitem.h spellShape/effectgrapchicsitem.cpp
         map-widget/fixedsizetextitem.h          map-widget/fixedsizetextitem.cpp
         map-widget/fogtool.h    map-widget/fogtool.cpp
         map-widget/griditem.h   map-widget/griditem.cpp
@@ -57,7 +57,7 @@ set(FILES
         map-widget/maptabwidget.h   map-widget/maptabwidget.cpp
         map-widget/rulertool.h map-widget/rulertool.cpp
         map-widget/sharedmapwindow.h    map-widget/sharedmapwindow.cpp
-        map-widget/spellshapetool.h     map-widget/spellshapetool.cpp
+        spellShape/spellshapetool.h spellShape/spellshapetool.cpp
         map-widget/texturepickerdialog.h
         map-widget/tokenitem.h  map-widget/tokenitem.cpp
         map-widget/undostack.h
@@ -72,6 +72,10 @@ set(FILES
         settings.h
         spell-book-widget/spelleditwidget.h spell-book-widget/spelleditwidget.cpp
         updatechecker.h updatechecker.cpp
+        spellShape/spellshapefactory.cpp
+        spellShape/spellshapefactory.h
+        spellShape/spellshapepreview.cpp
+        spellShape/spellshapepreview.h
 )
 
 set(UI_FILES
@@ -128,6 +132,7 @@ include_directories(
         theme-manager
         icon-picker
         charsheet-widget
+        spellShape
 )
 
 qt_add_translation(QM_FILES ${TS_FILES})

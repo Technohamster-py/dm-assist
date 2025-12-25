@@ -1,6 +1,6 @@
 #include "spellshapetool.h"
 #include "effectgrapchicsitem.h"
-#include "mapscene.h"
+#include "map-widget/mapscene.h"
 
 SpellShapeTool::SpellShapeTool(QObject *parent)
         : AreaShapeTool(parent) {}

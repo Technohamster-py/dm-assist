@@ -12,7 +12,7 @@ public:
 
     explicit GridItem(const QRectF& size, QGraphicsItem *parent = nullptr);
 
-    void setGridType(int t)            { m_type = t; update(); }
+    void setGridType(int t)                 { m_type = t; update(); }
     void setCellFeet(qreal feet)            { m_cellFeet = feet; update(); }
     void setPixelsPerFoot(qreal ppf)        { m_pixelsPerFoot = qMax<qreal>(ppf, 0.0001); update(); }
     void setLineColor(const QColor& c)      { m_pen.setColor(c); update(); }

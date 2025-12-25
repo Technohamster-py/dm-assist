@@ -16,7 +16,7 @@
 #include "map-widget/lighttool.h"
 #include "map-widget/rulertool.h"
 #include "map-widget/sharedmapwindow.h"
-#include "map-widget/spellshapetool.h"
+#include "spellshapetool.h"
 #include "map-widget/heightmaptool.h"
 #include "initiative-tracker/initiativetrackerwidget.h"
 #include "music-widget/musicwidget.h"
