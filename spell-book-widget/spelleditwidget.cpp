@@ -100,6 +100,7 @@ bool SpellEditWidget::parseFromJson(const QString& jsonFilePath) {
     ui->aoeUnitsBox->setCurrentIndex(m_units[systemObj["target"].toObject().value("units").toString()]);
     ui->shapeComboBox->setCurrentIndex(m_shapes[systemObj["target"].toObject().value("type").toString()]);
 
+    setShape();
     return true;
 }
 
@@ -172,7 +173,6 @@ bool SpellEditWidget::saveToFile() {
 void SpellEditWidget::closeEvent(QCloseEvent *event) {
     if (!m_file.isEmpty())
         saveToFile();
-
     QWidget::closeEvent(event);
 }
 
