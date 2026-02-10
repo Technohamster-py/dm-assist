@@ -65,7 +65,7 @@ NodeType CampaignTreeWidget::determieNodeType(const QString &path)
         return NodeType::Map;
     if (path.contains("/Music"))
         return NodeType::Music;
-    if (path.contains("/Bestiary"))
+    if (path.contains("/Bestiary/"))
         return NodeType::Beast;
     return NodeType::Unknown;
 }
