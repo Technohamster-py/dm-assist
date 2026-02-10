@@ -671,7 +671,7 @@ void MainWindow::openMapFromFile(const QString& fileName) {
 
         connect(view->getScene(), &MapScene::openCharseetRequested, [=](const QString& path){
             AbstractCharsheetWidget* charsheetWidget;
-            switch (CampaignTreeWidget::determieNodeType(path)) {
+            switch (CampaignTreeWidget::determieNodeType(path, campaignTreeWidget->root())) {
                 case NodeType::Character:
                     charsheetWidget = new DndCharsheetWidget(path);
                     connect(charsheetWidget, &DndCharsheetWidget::rollRequested, rollWidget, &RollWidget::executeRoll);
@@ -691,7 +691,7 @@ void MainWindow::openMapFromFile(const QString& fileName) {
 
         connect(view->getScene(), &MapScene::addToEncounterRequested, [=](const QString& path){
             AbstractCharsheetWidget* charsheetWidget;
-            switch (CampaignTreeWidget::determieNodeType(path)){
+            switch (CampaignTreeWidget::determieNodeType(path, campaignTreeWidget->root())){
                 case NodeType::Character:
                     charsheetWidget = new DndCharsheetWidget(path);
                     charsheetWidget->addToInitiative(initiativeTrackerWidget, m_autoRollCharacter);

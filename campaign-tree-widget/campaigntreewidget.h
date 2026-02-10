@@ -18,6 +18,15 @@ static const QList<CampaignDir> CAMPAIGN_STRUCTURE = {
         {"Tokens", {}}
 };
 
+static const QHash<QString, NodeType> DIR_TYPE_MAP = {
+        {"bestiary",    NodeType::Beast},
+        {"characters",  NodeType::Character},
+        {"encounters",  NodeType::Encounter},
+        {"maps",        NodeType::Map},
+        {"music",       NodeType::Music},
+        {"tokens",      NodeType::Token},
+};
+
 class CampaignTreeWidget : public QTreeWidget{
     Q_OBJECT
 public:
@@ -27,7 +36,7 @@ public:
     QString root() const {return m_rootPath;};
     QString campaignName() const {return m_campaignName;};
 
-    static NodeType determieNodeType(const QString& path);
+    static NodeType determieNodeType(const QString &absolutePath, const QString &rootPath);
 signals:
 
     void characterOpenRequested(const QString& path);
