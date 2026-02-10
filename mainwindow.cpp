@@ -550,39 +550,14 @@ void MainWindow::newCampaign() {
     SaveConfigDialog dialog(this, defaultCampaignDir);
     QString fileName = "";
 
-    if (dialog.exec() == QDialog::Accepted)
-        fileName = dialog.filename;
+    if (dialog.exec() != QDialog::Accepted) return;
+    if (fileName.isEmpty() || dialog.directoryPath.isEmpty()) return;
 
-    if (fileName.isEmpty()) return;
+    if (!campaignTreeWidget->createNewCampaign(dialog.directoryPath, dialog.projectName)) return;
 
     QDir dir(dialog.directoryPath);
-
-    QStringList subdirs = {"Characters", "Maps", "Encounters", "Music"};
-    for (const QString& sub : subdirs){
-        if (!dir.mkpath(sub)){
-            QMessageBox::warning(this, "Error", tr("Can't create subdirectory: ") + sub);
-            return;
-        }
-    }
-
-    fileName = dir.filePath("campaign.json");
-
-    QFile configFile(fileName);
-    if (!configFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        QMessageBox::critical(this, tr("Open file error"), configFile.errorString());
-        return;
-    }
-
-    QJsonObject obj;
-    obj["name"] = dialog.projectName;
-
-    QJsonDocument doc(obj);
-    configFile.write(doc.toJson(QJsonDocument::Indented));
-    configFile.close();
-
     dir.cdUp();
     defaultCampaignDir = dir.absolutePath();
-
     setupCampaign(dialog.directoryPath);
 }
 

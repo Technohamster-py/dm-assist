@@ -37,6 +37,8 @@ public:
     QString campaignName() const {return m_campaignName;};
 
     static NodeType determieNodeType(const QString &absolutePath, const QString &rootPath);
+
+    bool createNewCampaign(const QString& dirPath, const QString& campaignName);
 signals:
 
     void characterOpenRequested(const QString& path);
