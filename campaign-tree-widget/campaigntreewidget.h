@@ -4,6 +4,20 @@
 #include <QDir>
 #include "hoverwidget.h"
 
+struct CampaignDir {
+    QString name = "";
+    QList<CampaignDir> children;
+};
+
+static const QList<CampaignDir> CAMPAIGN_STRUCTURE = {
+        {"Bestiary", {}},
+        {"Characters", {}},
+        {"Encounters", {}},
+        {"Maps", {}},
+        {"Music", {}},
+        {"Tokens", {}}
+};
+
 class CampaignTreeWidget : public QTreeWidget{
     Q_OBJECT
 public:
@@ -14,8 +28,8 @@ public:
     QString campaignName() const {return m_campaignName;};
 
     static NodeType determieNodeType(const QString& path);
-
 signals:
+
     void characterOpenRequested(const QString& path);
     void characterAddRequested(const QString& path);
 
@@ -38,6 +52,8 @@ protected:
 private:
     void populateTree(const QString &path, QTreeWidgetItem *parentItem);
     bool ignore(const QFileInfo& info);
+
+    void updateCampaignStructure(const QString& root, const QList<CampaignDir>& structure);
 
     QString m_rootPath;
     QString m_campaignName;

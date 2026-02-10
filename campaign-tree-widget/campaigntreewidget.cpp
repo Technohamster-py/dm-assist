@@ -215,6 +215,8 @@ bool CampaignTreeWidget::setRootDir(const QString &rootPath)
 
     clear();
     m_rootPath = QDir(rootPath).absolutePath();
+    updateCampaignStructure(m_rootPath, CAMPAIGN_STRUCTURE);
+
     m_campaignName = loadCampaignName(m_rootPath);
 
     auto *rootItem = new QTreeWidgetItem(this);
@@ -292,4 +294,15 @@ void CampaignTreeWidget::startDrag(Qt::DropActions) {
     auto* drag = new QDrag(this);
     drag->setMimeData(mimeData);
     drag->exec(Qt::CopyAction);
+}
+
+void CampaignTreeWidget::updateCampaignStructure(const QString &root, const QList<CampaignDir> &structure) {
+    if (structure.isEmpty()) return;
+    for (const CampaignDir& dir : structure) {
+        QString dirPath = root + "/" + dir.name;
+        QDir d(dirPath);
+        if (!d.exists())
+            QDir().mkpath(dirPath);
+        updateCampaignStructure(dirPath, dir.children);
+    }
 }
