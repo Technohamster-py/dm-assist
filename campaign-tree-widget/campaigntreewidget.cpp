@@ -302,3 +302,31 @@ void CampaignTreeWidget::updateCampaignStructure(const QString &root, const QLis
         updateCampaignStructure(dirPath, dir.children);
     }
 }
+
+bool CampaignTreeWidget::createNewCampaign(const QString &dirPath, const QString &campaignName) {
+    QDir dir(dirPath);
+
+    if (!dir.exists()){
+        if (!QDir().mkpath(dirPath)) {
+            QMessageBox::critical(this, tr("Error"), tr("Cannot create campaign directory"));
+            return false;
+        }
+    }
+
+    updateCampaignStructure(dir.absolutePath(), CAMPAIGN_STRUCTURE);
+
+    QFile configFile(dir.filePath("campaign.json"));
+    if (!configFile.open(QIODevice::WriteOnly | QIODevice::Text)){
+        QMessageBox::critical(this, tr("Open file error"), configFile.errorString());
+        return false;
+    }
+
+    QJsonObject obj;
+    obj["name"] = campaignName;
+    obj["schemaVersion"] = 1;
+    QJsonDocument doc(obj);
+    configFile.write(doc.toJson(QJsonDocument::Indented));
+    configFile.close();
+
+    return setRootDir(dir.absolutePath());
+}
