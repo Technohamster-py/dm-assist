@@ -132,9 +132,9 @@ MainWindow::~MainWindow() {
     saveSettings();
     closeCampaign();
     foreach(MusicPlayerWidget* player, players){
-        removeDirectoryRecursively(player->getLocalDirPath());
         delete player;
     }
+    removeDirectoryRecursively(QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + QString("/dm_assist_files/playlists/tmp"));
     delete ui;
 }
 
@@ -767,6 +767,9 @@ void MainWindow::closeCampaign() {
         file.close();
     }
 
+    foreach(MusicPlayerWidget* player, players){
+        player->clear();
+    }
 
     currentCampaignDir = "";
     campaignTreeWidget->clear();
@@ -902,7 +905,7 @@ void MainWindow::setupCampaign(const QString &campaignRoot) {
         return;
 
     foreach(MusicPlayerWidget* player, players){
-        removeDirectoryRecursively(player->getLocalDirPath());
+        player->clear();
     }
 
     QFile file(campaignRoot + "/campaign.json");
@@ -1866,22 +1869,23 @@ static void moveAllFiles(const QString& sourcePath, const QString& destPath){
  */
 static bool removeDirectoryRecursively(const QString &directoryPath, bool deleteSelf) {
     QDir dir(directoryPath);
-
+    qDebug() << directoryPath;
     if (!dir.exists()) {
      return false;
     }
 
-         foreach (QString file, dir.entryList(QDir::NoDotAndDotDot | QDir::AllEntries)) {
-         QString fullPath = dir.absoluteFilePath(file);
-         if (QFileInfo(fullPath).isDir()) {
-             if (!removeDirectoryRecursively(fullPath)) {
-                 return false;
-             }
-         } else {
-             if (!QFile::remove(fullPath)) {
-                 return false;
-             }
+    foreach (QString file, dir.entryList(QDir::NoDotAndDotDot | QDir::AllEntries)) {
+        QString fullPath = dir.absoluteFilePath(file);
+        qDebug() << fullPath;
+        if (QFileInfo(fullPath).isDir()) {
+         if (!removeDirectoryRecursively(fullPath)) {
+             return false;
          }
+        } else {
+         if (!QFile::remove(fullPath)) {
+             return false;
+         }
+        }
      }
     if(deleteSelf)
         return dir.rmdir(".");

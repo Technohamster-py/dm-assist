@@ -92,6 +92,7 @@ MusicPlayerWidget::~MusicPlayerWidget() {
     stop();
     freeStreams();
     BASS_Free();
+    clear();
     delete ui;
 }
 
