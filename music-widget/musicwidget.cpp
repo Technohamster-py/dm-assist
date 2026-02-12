@@ -614,6 +614,21 @@ void MusicPlayerWidget::updateTranslator() {
     ui->retranslateUi(this);
 }
 
+void MusicPlayerWidget::clear() {
+    setPlaylistName("Player");
+    stop();
+    freeStreams();
+    filePaths.clear();
+    QDir dir(localDir);
+    if (!dir.exists()) return;
+
+    foreach (QString file, dir.entryList(QDir::NoDotAndDotDot | QDir::AllEntries)){
+        QString fullPath = dir.absoluteFilePath(file);
+        QFile::remove(fullPath);
+    }
+    dir.rmdir(".");
+}
+
 ////////////////////////////////////////////////
 /////////       PlaylistEditDialog            ///////
 ////////////////////////////////////////////////
@@ -689,7 +704,6 @@ QStringList PlaylistEditDialog::getUpdatedPlaylist() const {
         QListWidgetItem *item = ui->playlistWidget->item(i);
         result << item->data(Qt::UserRole).toString();
     }
-    qDebug() << result;
     return result;
 }
 
