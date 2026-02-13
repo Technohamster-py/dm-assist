@@ -59,6 +59,8 @@ public:
     QStringList recentCampaigns() const {return m_recentCampaignList;}
     void openCampaign(const QString& campaignRootDir = "");
 
+    static void clearTmp();
+
 signals:
     void translatorChanged();
 

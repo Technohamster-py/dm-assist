@@ -52,7 +52,7 @@ MusicPlayerWidget::MusicPlayerWidget(QWidget *parent, int id, QString title)
 
     setAcceptDrops(true);
 
-    localDir = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + QString("/dm_assist_files/playlists/tmp/%1").arg(playlistName);
+    localDir = tempDirLocation() + QString("/%1").arg(playlistName);
     QDir().mkpath(localDir);
 
     BASS_Free();
@@ -631,7 +631,7 @@ void MusicPlayerWidget::clear() {
 }
 
 ////////////////////////////////////////////////
-/////////       PlaylistEditDialog            ///////
+/////////       PlaylistEditDialog       ///////
 ////////////////////////////////////////////////
 
 /**

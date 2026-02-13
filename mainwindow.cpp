@@ -134,7 +134,7 @@ MainWindow::~MainWindow() {
     foreach(MusicPlayerWidget* player, players){
         delete player;
     }
-    removeDirectoryRecursively(QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + QString("/dm_assist_files/playlists/tmp"));
+    clearTmp();
     delete ui;
 }
 
@@ -1800,6 +1800,11 @@ void MainWindow::openCampaign(const QString &campaignRootDir) {
         setupCampaign(campaignRootDir);
 }
 
+void MainWindow::clearTmp() {
+    QDir dir(QCoreApplication::applicationDirPath() + "/tmp");
+    dir.removeRecursively();
+}
+
 
 /**
  * Copies all files from a source directory to a destination directory.
@@ -1878,7 +1883,7 @@ static bool removeDirectoryRecursively(const QString &directoryPath, bool delete
         QString fullPath = dir.absoluteFilePath(file);
         qDebug() << fullPath;
         if (QFileInfo(fullPath).isDir()) {
-         if (!removeDirectoryRecursively(fullPath)) {
+         if (!removeDirectoryRecursively(fullPath, deleteSelf)) {
              return false;
          }
         } else {
