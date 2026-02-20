@@ -1874,14 +1874,12 @@ static void moveAllFiles(const QString& sourcePath, const QString& destPath){
  */
 static bool removeDirectoryRecursively(const QString &directoryPath, bool deleteSelf) {
     QDir dir(directoryPath);
-    qDebug() << directoryPath;
     if (!dir.exists()) {
      return false;
     }
 
     foreach (QString file, dir.entryList(QDir::NoDotAndDotDot | QDir::AllEntries)) {
         QString fullPath = dir.absoluteFilePath(file);
-        qDebug() << fullPath;
         if (QFileInfo(fullPath).isDir()) {
          if (!removeDirectoryRecursively(fullPath, deleteSelf)) {
              return false;
