@@ -90,14 +90,29 @@
         <translation type="vanished">Campaign structure</translation>
     </message>
     <message>
-        <location filename="../campaign-tree-widget/campaigntreewidget.cpp" line="212"/>
+        <location filename="../campaign-tree-widget/campaigntreewidget.cpp" line="208"/>
         <source>The selected folder does not contain campaign.json is not a campaign</source>
         <translation>The selected folder does not contain campaign.json is not a campaign</translation>
     </message>
     <message>
-        <location filename="../campaign-tree-widget/campaigntreewidget.cpp" line="276"/>
+        <location filename="../campaign-tree-widget/campaigntreewidget.cpp" line="274"/>
         <source>Show in file system</source>
         <translation>Show in file system</translation>
+    </message>
+    <message>
+        <location filename="../campaign-tree-widget/campaigntreewidget.cpp" line="311"/>
+        <source>Error</source>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <location filename="../campaign-tree-widget/campaigntreewidget.cpp" line="311"/>
+        <source>Cannot create campaign directory</source>
+        <translation>Cannot create campaign directory</translation>
+    </message>
+    <message>
+        <location filename="../campaign-tree-widget/campaigntreewidget.cpp" line="320"/>
+        <source>Open file error</source>
+        <translation>Open file error</translation>
     </message>
 </context>
 <context>
@@ -712,77 +727,63 @@
 <context>
     <name>Fvtt10Parser</name>
     <message>
-        <location filename="../bestiary-widget/fvttparser.cpp" line="32"/>
         <source>Walk: %1 %2</source>
-        <translation>Walk: %1 %2</translation>
+        <translation type="vanished">Walk: %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/fvttparser.cpp" line="35"/>
         <source>, Burrow: %1 %2</source>
-        <translation>, Burrow: %1 %2</translation>
+        <translation type="vanished">, Burrow: %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/fvttparser.cpp" line="38"/>
         <source>, climb: %1 %2</source>
-        <translation>, climb: %1 %2</translation>
+        <translation type="vanished">, climb: %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/fvttparser.cpp" line="41"/>
         <source>, fly: %1 %2</source>
-        <translation>, fly: %1 %2</translation>
+        <translation type="vanished">, fly: %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/fvttparser.cpp" line="44"/>
         <source>, swim: %1 %2</source>
-        <translation>, swim: %1 %2</translation>
+        <translation type="vanished">, swim: %1 %2</translation>
     </message>
 </context>
 <context>
     <name>Fvtt11Parser</name>
     <message>
-        <location filename="../bestiary-widget/fvttparser.cpp" line="221"/>
         <source>Walk: %1 %2</source>
-        <translation>Walk: %1 %2</translation>
+        <translation type="vanished">Walk: %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/fvttparser.cpp" line="224"/>
         <source>, Burrow: %1 %2</source>
-        <translation>, Burrow: %1 %2</translation>
+        <translation type="vanished">, Burrow: %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/fvttparser.cpp" line="227"/>
         <source>, climb: %1 %2</source>
-        <translation>, climb: %1 %2</translation>
+        <translation type="vanished">, climb: %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/fvttparser.cpp" line="230"/>
         <source>, fly: %1 %2</source>
-        <translation>, fly: %1 %2</translation>
+        <translation type="vanished">, fly: %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/fvttparser.cpp" line="233"/>
         <source>, swim: %1 %2</source>
-        <translation>, swim: %1 %2</translation>
+        <translation type="vanished">, swim: %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/fvttparser.cpp" line="243"/>
         <source>Dark vision %1 %2</source>
-        <translation>Dark vision %1 %2</translation>
+        <translation type="vanished">Dark vision %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/fvttparser.cpp" line="246"/>
         <source>Blindsight %1 %2</source>
-        <translation>Blindsight %1 %2</translation>
+        <translation type="vanished">Blindsight %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/fvttparser.cpp" line="249"/>
         <source>Tremorsense %1 %2</source>
-        <translation>Tremorsense %1 %2</translation>
+        <translation type="vanished">Tremorsense %1 %2</translation>
     </message>
     <message>
-        <location filename="../bestiary-widget/fvttparser.cpp" line="252"/>
         <source>Truesight %1 %2</source>
-        <translation>Truesight %1 %2</translation>
+        <translation type="vanished">Truesight %1 %2</translation>
     </message>
 </context>
 <context>
@@ -1241,8 +1242,7 @@
         <translation>Open file error</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="570"/>
-        <location filename="../mainwindow.cpp" line="838"/>
+        <location filename="../mainwindow.cpp" line="820"/>
         <source>Open file error</source>
         <translation></translation>
     </message>
@@ -1262,170 +1262,165 @@
         <translation>Open campaign directory</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="561"/>
-        <source>Can&apos;t create subdirectory: </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="709"/>
+        <location filename="../mainwindow.cpp" line="686"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="709"/>
+        <location filename="../mainwindow.cpp" line="686"/>
         <source>Failed to open map file.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1085"/>
+        <location filename="../mainwindow.cpp" line="1076"/>
         <source>ruler</source>
         <translation>Ruler</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1097"/>
+        <location filename="../mainwindow.cpp" line="1088"/>
         <source>calibrate</source>
         <translation>Calibrate</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1133"/>
+        <location filename="../mainwindow.cpp" line="1124"/>
         <source>Add fog to map</source>
         <translation>Add fog to map</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1140"/>
+        <location filename="../mainwindow.cpp" line="1131"/>
         <source>Hide all</source>
         <translation>Hide all</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1167"/>
+        <location filename="../mainwindow.cpp" line="1158"/>
         <source>Remove fog from map</source>
         <translation>Remove fog from map</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1174"/>
+        <location filename="../mainwindow.cpp" line="1165"/>
         <source>Reveal all</source>
         <translation>Reveal all</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1202"/>
+        <location filename="../mainwindow.cpp" line="1193"/>
         <source>Edit light sources</source>
         <translation>Edit light sources</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1207"/>
+        <location filename="../mainwindow.cpp" line="1198"/>
         <source>Bright radius</source>
         <translation>Bright light radius</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1214"/>
+        <location filename="../mainwindow.cpp" line="1205"/>
         <source>Dim radius</source>
         <translation>Dim light radius</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1248"/>
+        <location filename="../mainwindow.cpp" line="1239"/>
         <source>Update fog</source>
         <translation>Update fog</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1266"/>
+        <location filename="../mainwindow.cpp" line="1257"/>
         <source>Draw line</source>
         <translation>Draw line</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1288"/>
+        <location filename="../mainwindow.cpp" line="1279"/>
         <source>Draw circle</source>
         <translation>Draw circle</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1310"/>
+        <location filename="../mainwindow.cpp" line="1301"/>
         <source>Draw square</source>
         <translation>Draw square</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1332"/>
+        <location filename="../mainwindow.cpp" line="1323"/>
         <source>Draw triangle</source>
         <translation>Draw triangle</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1354"/>
+        <location filename="../mainwindow.cpp" line="1345"/>
         <source>Brush</source>
         <translation>Brush</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1361"/>
+        <location filename="../mainwindow.cpp" line="1352"/>
         <source>Clear all</source>
         <translation>Clear all</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1383"/>
+        <location filename="../mainwindow.cpp" line="1374"/>
         <source>Brush opacity</source>
         <translation>Brush opacity</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1400"/>
+        <location filename="../mainwindow.cpp" line="1391"/>
         <source>Lasso</source>
         <translation>Lasso</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1457"/>
+        <location filename="../mainwindow.cpp" line="1448"/>
         <source>Height</source>
         <translation>Height</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1488"/>
+        <location filename="../mainwindow.cpp" line="1479"/>
         <source>Grid cell size (feet)</source>
         <translation>Grid cell size (feet)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1599"/>
+        <location filename="../mainwindow.cpp" line="1590"/>
         <source>Chose character name</source>
         <translation>Chose character name</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1600"/>
+        <location filename="../mainwindow.cpp" line="1591"/>
         <source>Character name:</source>
         <translation>Character name:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1608"/>
-        <location filename="../mainwindow.cpp" line="1620"/>
-        <location filename="../mainwindow.cpp" line="1630"/>
+        <location filename="../mainwindow.cpp" line="1599"/>
+        <location filename="../mainwindow.cpp" line="1611"/>
+        <location filename="../mainwindow.cpp" line="1621"/>
         <source>Can&apos;t add character</source>
         <translation>Can&apos;t add character</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1608"/>
+        <location filename="../mainwindow.cpp" line="1599"/>
         <source>Open campaign first!</source>
         <translation>Open campaign first!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1620"/>
+        <location filename="../mainwindow.cpp" line="1611"/>
         <source>Character already exists 
  Override?</source>
         <translation>Character already exists \n Override?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1630"/>
+        <location filename="../mainwindow.cpp" line="1621"/>
         <source>Unknown error</source>
         <translation>Unknown error</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1698"/>
+        <location filename="../mainwindow.cpp" line="1689"/>
         <source>Load campaign?</source>
         <translation>Load campaign?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1699"/>
+        <location filename="../mainwindow.cpp" line="1690"/>
         <source>Load campaign from %1?</source>
         <translation>Load campaign from %1?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1786"/>
+        <location filename="../mainwindow.cpp" line="1775"/>
         <source>None</source>
         <translation>None</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1799"/>
+        <location filename="../mainwindow.cpp" line="1788"/>
         <source>clear list</source>
         <translation>Сlear list</translation>
     </message>
@@ -1443,11 +1438,6 @@
         <location filename="../mainwindow.ui" line="467"/>
         <source>Settings (ctrl+alt+s)</source>
         <translation>Settings (Ctrl + Alt + S)</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="470"/>
-        <source>Ctrl+Alt+S</source>
-        <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="478"/>
@@ -1800,6 +1790,56 @@
         <source>Traits</source>
         <translation>Traits</translation>
     </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="32"/>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="221"/>
+        <source>Walk: %1 %2</source>
+        <translation>Walk: %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="35"/>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="224"/>
+        <source>, Burrow: %1 %2</source>
+        <translation>, Burrow: %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="38"/>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="227"/>
+        <source>, climb: %1 %2</source>
+        <translation>, climb: %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="41"/>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="230"/>
+        <source>, fly: %1 %2</source>
+        <translation>, fly: %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="44"/>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="233"/>
+        <source>, swim: %1 %2</source>
+        <translation>, swim: %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="243"/>
+        <source>Dark vision %1 %2</source>
+        <translation>Dark vision %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="246"/>
+        <source>Blindsight %1 %2</source>
+        <translation>Blindsight %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="249"/>
+        <source>Tremorsense %1 %2</source>
+        <translation>Tremorsense %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../bestiary-widget/fvttparser.cpp" line="252"/>
+        <source>Truesight %1 %2</source>
+        <translation>Truesight %1 %2</translation>
+    </message>
 </context>
 <context>
     <name>QPlayer</name>
@@ -2146,7 +2186,7 @@
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="220"/>
-        <location filename="../settingsdialog.cpp" line="537"/>
+        <location filename="../settingsdialog.cpp" line="542"/>
         <source>Import settings</source>
         <translation>Import settings</translation>
     </message>
@@ -2166,32 +2206,32 @@
         <translation>Style</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="395"/>
+        <location filename="../settingsdialog.ui" line="398"/>
         <source>Bestiary</source>
         <translation>Bestiary</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="404"/>
+        <location filename="../settingsdialog.ui" line="407"/>
         <source>Auto sort</source>
         <translation>Auto sort</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="414"/>
+        <location filename="../settingsdialog.ui" line="417"/>
         <source>Color of active character</source>
         <translation>Color of active character</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="484"/>
+        <location filename="../settingsdialog.ui" line="487"/>
         <source>Use default palette</source>
         <translation>Use default palette</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="497"/>
+        <location filename="../settingsdialog.ui" line="500"/>
         <source>Token title display mode</source>
         <translation>Token title display mode</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="507"/>
+        <location filename="../settingsdialog.ui" line="510"/>
         <source>Token text font size</source>
         <translation>Token text font size</translation>
     </message>
@@ -2201,67 +2241,67 @@
         <translation>Display fields in shared view</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="298"/>
+        <location filename="../settingsdialog.ui" line="301"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="305"/>
+        <location filename="../settingsdialog.ui" line="308"/>
         <source>Iinitiative</source>
         <translation>Initiative</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="312"/>
+        <location filename="../settingsdialog.ui" line="315"/>
         <source>Armor Class</source>
         <translation>Armor class</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="319"/>
+        <location filename="../settingsdialog.ui" line="322"/>
         <source>Hit Points</source>
         <translation>Hit points</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="326"/>
+        <location filename="../settingsdialog.ui" line="329"/>
         <source>max Hit Points</source>
         <translation>max hit points</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="333"/>
+        <location filename="../settingsdialog.ui" line="336"/>
         <source>Delete</source>
         <translation>Delete</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="342"/>
+        <location filename="../settingsdialog.ui" line="345"/>
         <source>Hp display mode</source>
         <translation>HP display mode</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="352"/>
+        <location filename="../settingsdialog.ui" line="355"/>
         <source>Numeric</source>
         <translation>Numeric</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="357"/>
+        <location filename="../settingsdialog.ui" line="360"/>
         <source>Text status</source>
         <translation>Text status</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="362"/>
+        <location filename="../settingsdialog.ui" line="365"/>
         <source>Progress bar</source>
         <translation>Progress bar</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="370"/>
+        <location filename="../settingsdialog.ui" line="373"/>
         <source>Show control in main widget</source>
         <translation>Show control in main widget</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="388"/>
+        <location filename="../settingsdialog.ui" line="391"/>
         <source>Characters</source>
         <translation>Characters</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="379"/>
+        <location filename="../settingsdialog.ui" line="382"/>
         <source>Auto initiative rolls</source>
         <translation>Auto initiative roll</translation>
     </message>
@@ -2271,7 +2311,7 @@
         <translation>Open last campaign</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="517"/>
+        <location filename="../settingsdialog.ui" line="520"/>
         <source>Fog opacity (master)</source>
         <translation>Fog opacity (master)</translation>
     </message>
@@ -2280,152 +2320,157 @@
         <translation type="obsolete">Title</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="545"/>
+        <location filename="../settingsdialog.ui" line="548"/>
         <source>Fog opacity (players)</source>
         <translation>Fog opacity (players)</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="573"/>
+        <location filename="../settingsdialog.ui" line="576"/>
         <source>Fog color</source>
         <translation>Fog color</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="587"/>
+        <location filename="../settingsdialog.ui" line="590"/>
         <source>Open last map</source>
         <translation>Open last map</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="607"/>
+        <location filename="../settingsdialog.ui" line="610"/>
         <source>Default grid size (feet)</source>
         <translation>Default grid size (feet)</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="617"/>
+        <location filename="../settingsdialog.ui" line="620"/>
         <source>Texture layer opacity</source>
         <translation>Texture layer opacity</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="684"/>
+        <location filename="../settingsdialog.ui" line="648"/>
+        <source>Update shared view if tab changed</source>
+        <translation>Update shared view if tab changed</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="707"/>
         <source>Ruler</source>
         <translation>Ruler</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="723"/>
+        <location filename="../settingsdialog.ui" line="746"/>
         <source>Height map</source>
         <translation>Height map</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="768"/>
+        <location filename="../settingsdialog.ui" line="791"/>
         <source>Brush</source>
         <translation>Brush</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="807"/>
+        <location filename="../settingsdialog.ui" line="830"/>
         <source>Fog hide</source>
         <translation>Fog hide</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="846"/>
+        <location filename="../settingsdialog.ui" line="869"/>
         <source>Fog reveal</source>
         <translation>Fog reveal</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="885"/>
+        <location filename="../settingsdialog.ui" line="908"/>
         <source>Light</source>
         <translation>Light</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="924"/>
+        <location filename="../settingsdialog.ui" line="947"/>
         <source>Lasso</source>
         <translation>Lasso</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="959"/>
+        <location filename="../settingsdialog.ui" line="982"/>
         <source>Shapes</source>
         <translation>Shapes</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="965"/>
+        <location filename="../settingsdialog.ui" line="988"/>
         <source>Line</source>
         <translation>Line</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="1004"/>
+        <location filename="../settingsdialog.ui" line="1027"/>
         <source>Circle</source>
         <translation>Circle</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="1043"/>
+        <location filename="../settingsdialog.ui" line="1066"/>
         <source>Square</source>
         <translation>Square</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="1082"/>
+        <location filename="../settingsdialog.ui" line="1105"/>
         <source>Triangle</source>
         <translation>Triangle</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="1160"/>
+        <location filename="../settingsdialog.ui" line="1183"/>
         <source>Apply</source>
         <translation>Apply</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="1167"/>
+        <location filename="../settingsdialog.ui" line="1190"/>
         <source>Cancel</source>
         <translation>Cancel</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="210"/>
+        <location filename="../settingsdialog.cpp" line="211"/>
         <source>Select folder</source>
         <translation>Select folder</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="234"/>
+        <location filename="../settingsdialog.cpp" line="235"/>
         <source>Select theme file</source>
         <translation>Select theme file</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="509"/>
+        <location filename="../settingsdialog.cpp" line="514"/>
         <source>Export settings to file</source>
         <translation>Export settings to file</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="511"/>
-        <location filename="../settingsdialog.cpp" line="533"/>
+        <location filename="../settingsdialog.cpp" line="516"/>
+        <location filename="../settingsdialog.cpp" line="538"/>
         <source>XML files (*.xml)</source>
         <translation>XML files (*.xml)</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="521"/>
+        <location filename="../settingsdialog.cpp" line="526"/>
         <source>Export failed</source>
         <translation>Export failed</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="522"/>
+        <location filename="../settingsdialog.cpp" line="527"/>
         <source>failed to export settings: 
 %1</source>
         <translation>failed to export settings: 
 %1</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="525"/>
+        <location filename="../settingsdialog.cpp" line="530"/>
         <source>Export finished</source>
         <translation>Export finished</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="526"/>
+        <location filename="../settingsdialog.cpp" line="531"/>
         <source>Settings exported to 
 %1</source>
         <translation>Settings exported to 
 %1</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="531"/>
+        <location filename="../settingsdialog.cpp" line="536"/>
         <source>Import settings from file</source>
         <translation>Import settings from file</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="538"/>
+        <location filename="../settingsdialog.cpp" line="543"/>
         <source>Import will overwrite existing settings 
 Current settings backup will be saved to: 
  %1 
@@ -2438,24 +2483,24 @@ Current settings backup will be saved to:
 Do you want to import settings?</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="550"/>
+        <location filename="../settingsdialog.cpp" line="555"/>
         <source>Import failed</source>
         <translation>Import failed</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="551"/>
+        <location filename="../settingsdialog.cpp" line="556"/>
         <source>Failed to import settings 
  %1</source>
         <translation>Failed to import settings 
  %1</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="554"/>
+        <location filename="../settingsdialog.cpp" line="559"/>
         <source>Import finished</source>
         <translation>Import finished</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="555"/>
+        <location filename="../settingsdialog.cpp" line="560"/>
         <source>Settings imported successfully from 
 %1</source>
         <translation>Settings imported successfully from 
