@@ -52,7 +52,7 @@ MusicPlayerWidget::MusicPlayerWidget(QWidget *parent, int id, QString title)
 
     setAcceptDrops(true);
 
-    localDir = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + QString("/dm_assist_files/playlists/tmp/%1").arg(playlistName);
+    localDir = tempDirLocation() + QString("/%1").arg(playlistName);
     QDir().mkpath(localDir);
 
     BASS_Free();
@@ -92,6 +92,7 @@ MusicPlayerWidget::~MusicPlayerWidget() {
     stop();
     freeStreams();
     BASS_Free();
+    clear();
     delete ui;
 }
 
@@ -614,8 +615,23 @@ void MusicPlayerWidget::updateTranslator() {
     ui->retranslateUi(this);
 }
 
+void MusicPlayerWidget::clear() {
+    setPlaylistName("Player");
+    stop();
+    freeStreams();
+    filePaths.clear();
+    QDir dir(localDir);
+    if (!dir.exists()) return;
+
+    foreach (QString file, dir.entryList(QDir::NoDotAndDotDot | QDir::AllEntries)){
+        QString fullPath = dir.absoluteFilePath(file);
+        QFile::remove(fullPath);
+    }
+    dir.rmdir(".");
+}
+
 ////////////////////////////////////////////////
-/////////       PlaylistEditDialog            ///////
+/////////       PlaylistEditDialog       ///////
 ////////////////////////////////////////////////
 
 /**
@@ -689,7 +705,6 @@ QStringList PlaylistEditDialog::getUpdatedPlaylist() const {
         QListWidgetItem *item = ui->playlistWidget->item(i);
         result << item->data(Qt::UserRole).toString();
     }
-    qDebug() << result;
     return result;
 }
 

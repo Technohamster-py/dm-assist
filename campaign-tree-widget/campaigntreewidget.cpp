@@ -47,7 +47,7 @@ CampaignTreeWidget::CampaignTreeWidget(QWidget *parent) : QTreeWidget(parent)
  * "Maps", and "Music". If no match is found, the node type is classified as
  * "Unknown".
  *
- * @param path The file path to analyze for determining the node type.
+ * @param absolutePath The file path to analyze for determining the node type.
  * @return The determined NodeType, which can be one of the following:
  *         - NodeType::Character: Indicates the file path belongs to the "Characters" category.
  *         - NodeType::Encounter: Indicates the file path belongs to the "Encounters" category.
@@ -55,19 +55,15 @@ CampaignTreeWidget::CampaignTreeWidget(QWidget *parent) : QTreeWidget(parent)
  *         - NodeType::Music: Indicates the file path belongs to the "Music" category.
  *         - NodeType::Unknown: Indicates the file path does not match any known category.
  */
-NodeType CampaignTreeWidget::determieNodeType(const QString &path)
+NodeType CampaignTreeWidget::determieNodeType(const QString &absolutePath, const QString &rootPath)
 {
-    if (path.contains("/Characters/"))
-        return NodeType::Character;
-    if (path.contains("/Encounters/"))
-        return NodeType::Encounter;
-    if (path.contains("/Maps/"))
-        return NodeType::Map;
-    if (path.contains("/Music"))
-        return NodeType::Music;
-    if (path.contains("/Bestiary"))
-        return NodeType::Beast;
-    return NodeType::Unknown;
+    QDir root(rootPath);
+    QString relative = root.relativeFilePath(absolutePath);
+    QStringList dirs = QDir::cleanPath(relative).split("/");
+    if (dirs.isEmpty()) return NodeType::Unknown;
+
+    QString topLevelDir = dirs.first().toLower();
+    return DIR_TYPE_MAP.value(topLevelDir, NodeType::Unknown);
 }
 
 /**
@@ -152,7 +148,7 @@ void CampaignTreeWidget::populateTree(const QString &path, QTreeWidgetItem *pare
         if (ignore(entry))
             continue;
 
-        NodeType type = determieNodeType(entry.absoluteFilePath());
+        NodeType type = determieNodeType(entry.absoluteFilePath(), m_rootPath);
         auto *item = new QTreeWidgetItem();
         parentItem->addChild(item);
 
@@ -215,6 +211,8 @@ bool CampaignTreeWidget::setRootDir(const QString &rootPath)
 
     clear();
     m_rootPath = QDir(rootPath).absolutePath();
+    updateCampaignStructure(m_rootPath, CAMPAIGN_STRUCTURE);
+
     m_campaignName = loadCampaignName(m_rootPath);
 
     auto *rootItem = new QTreeWidgetItem(this);
@@ -292,4 +290,43 @@ void CampaignTreeWidget::startDrag(Qt::DropActions) {
     auto* drag = new QDrag(this);
     drag->setMimeData(mimeData);
     drag->exec(Qt::CopyAction);
+}
+
+void CampaignTreeWidget::updateCampaignStructure(const QString &root, const QList<CampaignDir> &structure) {
+    if (structure.isEmpty()) return;
+    for (const CampaignDir& dir : structure) {
+        QString dirPath = root + "/" + dir.name;
+        QDir d(dirPath);
+        if (!d.exists())
+            QDir().mkpath(dirPath);
+        updateCampaignStructure(dirPath, dir.children);
+    }
+}
+
+bool CampaignTreeWidget::createNewCampaign(const QString &dirPath, const QString &campaignName) {
+    QDir dir(dirPath);
+
+    if (!dir.exists()){
+        if (!QDir().mkpath(dirPath)) {
+            QMessageBox::critical(this, tr("Error"), tr("Cannot create campaign directory"));
+            return false;
+        }
+    }
+
+    updateCampaignStructure(dir.absolutePath(), CAMPAIGN_STRUCTURE);
+
+    QFile configFile(dir.filePath("campaign.json"));
+    if (!configFile.open(QIODevice::WriteOnly | QIODevice::Text)){
+        QMessageBox::critical(this, tr("Open file error"), configFile.errorString());
+        return false;
+    }
+
+    QJsonObject obj;
+    obj["name"] = campaignName;
+    obj["schemaVersion"] = 1;
+    QJsonDocument doc(obj);
+    configFile.write(doc.toJson(QJsonDocument::Indented));
+    configFile.close();
+
+    return setRootDir(dir.absolutePath());
 }

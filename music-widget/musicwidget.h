@@ -31,6 +31,11 @@ public:
     explicit MusicPlayerWidget(QWidget *parent = nullptr, int id = 0, QString title = "Playlist");
     ~MusicPlayerWidget() override;
 
+    static QString tempDirLocation() {
+        static QString path = QCoreApplication::applicationDirPath() + "/tmp/playlists";
+        return path;
+    };
+
     QString getPlaylistName() const { return playlistName; }
     void setPlaylistName(const QString &name);
     int getPlaylistId() const {return id;}
@@ -50,9 +55,9 @@ public:
     QString currentDeviceName() const;
     static QStringList availableAudioDevices() ;
 
-
     void playTrackAt(int index);
 
+    void clear();
 signals:
     void playerStarted(int id);
     void playerStopped();

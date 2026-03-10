@@ -132,9 +132,9 @@ MainWindow::~MainWindow() {
     saveSettings();
     closeCampaign();
     foreach(MusicPlayerWidget* player, players){
-        removeDirectoryRecursively(player->getLocalDirPath());
         delete player;
     }
+    clearTmp();
     delete ui;
 }
 
@@ -548,41 +548,16 @@ void MainWindow::loadSettings() {
  */
 void MainWindow::newCampaign() {
     SaveConfigDialog dialog(this, defaultCampaignDir);
-    QString fileName = "";
 
-    if (dialog.exec() == QDialog::Accepted)
-        fileName = dialog.filename;
+    if (dialog.exec() != QDialog::Accepted) return;
+    if (dialog.projectName.isEmpty() || dialog.directoryPath.isEmpty()) return;
 
-    if (fileName.isEmpty()) return;
+    if (!campaignTreeWidget->createNewCampaign(dialog.directoryPath, dialog.projectName)) return;
 
     QDir dir(dialog.directoryPath);
-
-    QStringList subdirs = {"Characters", "Maps", "Encounters", "Music"};
-    for (const QString& sub : subdirs){
-        if (!dir.mkpath(sub)){
-            QMessageBox::warning(this, "Error", tr("Can't create subdirectory: ") + sub);
-            return;
-        }
-    }
-
-    fileName = dir.filePath("campaign.json");
-
-    QFile configFile(fileName);
-    if (!configFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        QMessageBox::critical(this, tr("Open file error"), configFile.errorString());
-        return;
-    }
-
-    QJsonObject obj;
-    obj["name"] = dialog.projectName;
-
-    QJsonDocument doc(obj);
-    configFile.write(doc.toJson(QJsonDocument::Indented));
-    configFile.close();
-
     dir.cdUp();
-    defaultCampaignDir = dir.absolutePath();
 
+    defaultCampaignDir = dir.absolutePath();
     setupCampaign(dialog.directoryPath);
 }
 
@@ -671,7 +646,7 @@ void MainWindow::openMapFromFile(const QString& fileName) {
 
         connect(view->getScene(), &MapScene::openCharseetRequested, [=](const QString& path){
             AbstractCharsheetWidget* charsheetWidget;
-            switch (CampaignTreeWidget::determieNodeType(path)) {
+            switch (CampaignTreeWidget::determieNodeType(path, campaignTreeWidget->root())) {
                 case NodeType::Character:
                     charsheetWidget = new DndCharsheetWidget(path);
                     connect(charsheetWidget, &DndCharsheetWidget::rollRequested, rollWidget, &RollWidget::executeRoll);
@@ -691,7 +666,7 @@ void MainWindow::openMapFromFile(const QString& fileName) {
 
         connect(view->getScene(), &MapScene::addToEncounterRequested, [=](const QString& path){
             AbstractCharsheetWidget* charsheetWidget;
-            switch (CampaignTreeWidget::determieNodeType(path)){
+            switch (CampaignTreeWidget::determieNodeType(path, campaignTreeWidget->root())){
                 case NodeType::Character:
                     charsheetWidget = new DndCharsheetWidget(path);
                     charsheetWidget->addToInitiative(initiativeTrackerWidget, m_autoRollCharacter);
@@ -792,6 +767,9 @@ void MainWindow::closeCampaign() {
         file.close();
     }
 
+    foreach(MusicPlayerWidget* player, players){
+        player->clear();
+    }
 
     currentCampaignDir = "";
     campaignTreeWidget->clear();
@@ -927,7 +905,7 @@ void MainWindow::setupCampaign(const QString &campaignRoot) {
         return;
 
     foreach(MusicPlayerWidget* player, players){
-        removeDirectoryRecursively(player->getLocalDirPath());
+        player->clear();
     }
 
     QFile file(campaignRoot + "/campaign.json");
@@ -1822,6 +1800,11 @@ void MainWindow::openCampaign(const QString &campaignRootDir) {
         setupCampaign(campaignRootDir);
 }
 
+void MainWindow::clearTmp() {
+    QDir dir(QCoreApplication::applicationDirPath() + "/tmp");
+    dir.removeRecursively();
+}
+
 
 /**
  * Copies all files from a source directory to a destination directory.
@@ -1891,22 +1874,21 @@ static void moveAllFiles(const QString& sourcePath, const QString& destPath){
  */
 static bool removeDirectoryRecursively(const QString &directoryPath, bool deleteSelf) {
     QDir dir(directoryPath);
-
     if (!dir.exists()) {
      return false;
     }
 
-         foreach (QString file, dir.entryList(QDir::NoDotAndDotDot | QDir::AllEntries)) {
-         QString fullPath = dir.absoluteFilePath(file);
-         if (QFileInfo(fullPath).isDir()) {
-             if (!removeDirectoryRecursively(fullPath)) {
-                 return false;
-             }
-         } else {
-             if (!QFile::remove(fullPath)) {
-                 return false;
-             }
+    foreach (QString file, dir.entryList(QDir::NoDotAndDotDot | QDir::AllEntries)) {
+        QString fullPath = dir.absoluteFilePath(file);
+        if (QFileInfo(fullPath).isDir()) {
+         if (!removeDirectoryRecursively(fullPath, deleteSelf)) {
+             return false;
          }
+        } else {
+         if (!QFile::remove(fullPath)) {
+             return false;
+         }
+        }
      }
     if(deleteSelf)
         return dir.rmdir(".");
