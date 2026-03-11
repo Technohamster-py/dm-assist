@@ -1,9 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "map-widget/mapview.h"
-#include "map-widget/texturepickerdialog.h"
-#include "charsheet-widget/dndcharsheetwidget.h"
-#include "bestiary-widget/dndbestiarypage.h"
+#include "src/modules/map/map-widget/mapview.h"
+#include "src/modules/map/map-widget/texturepickerdialog.h"
+#include "src/modules/characters/charsheet-widget/dndcharsheetwidget.h"
+#include "src/modules/bestiary/bestiary-widget/dndbestiarypage.h"
 
 #include <QDesktopServices>
 #include "QDomDocument"
@@ -15,7 +15,7 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QMimeData>
-#include "saveconfigdialog.h"
+#include "src/core/dialogs/save-config-dialog/saveconfigdialog.h"
 #include <QStyleFactory>
 #include <QTextStream>
 #include <QTextBrowser>
@@ -56,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent) :
     progressBar->setVisible(false);
     ui->statusbar->addPermanentWidget(progressBar);
 
-    updateChecker = new UpdateChecker(VERSION, RELEASES_URL, this);
+    updateManager = new UpdateManager(VERSION, RELEASES_URL, this);
     ui->updateBanner->hide();
 
     rollWidget = new RollWidget(ui->leftAsideWidget);
@@ -87,8 +87,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::setVolumeDivider);
     connect(ui->actionReload, &QAction::triggered, [=](){setupCampaign(campaignTreeWidget->root());});
     connect(ui->actionAddCharacter, &QAction::triggered, this, &MainWindow::addCharacter);
-    connect(ui->actionCheck, &QAction::triggered, [=](){ updateChecker->checkForUpdates();});
-    connect(updateChecker, &UpdateChecker::updateCheckFinished, this, &MainWindow::handleUpdates);
+    connect(ui->actionCheck, &QAction::triggered, [=](){ updateManager->checkForUpdates();});
+    connect(updateManager, &UpdateManager::updateCheckFinished, this, &MainWindow::handleUpdates);
 
     connect(campaignTreeWidget, &CampaignTreeWidget::characterAddRequested, this, [=](const QString& path) {
         DndCharsheetWidget character(path);
@@ -121,7 +121,7 @@ MainWindow::MainWindow(QWidget *parent) :
     saveSettings();
 
     if (m_checkForUpdates)
-        updateChecker->checkForUpdates();
+        updateManager->checkForUpdates();
 }
 
 /**
@@ -419,7 +419,7 @@ void MainWindow::loadSettings() {
     openLastMap = settings.value(paths.general.openLastMap, false).toBool();
     m_checkForUpdates = settings.value(paths.general.checkForUpdates, true).toBool();
     if (m_checkForUpdates)
-        updateChecker->checkForUpdates();
+        updateManager->checkForUpdates();
 
     /// Music
     for (MusicPlayerWidget *player : players) {
@@ -1743,8 +1743,8 @@ void MainWindow::showSourcesMessageBox(const QMap<QString, QString> &sources)
  */
 void MainWindow::handleUpdates(bool hasUpdates) const {
     if (hasUpdates){
-        QString latest = updateChecker->latestVersion();
-        QString latestUrl = updateChecker->latestUrl();
+        QString latest = updateManager->latestVersion();
+        QString latestUrl = updateManager->latestUrl();
         ui->updateBanner->setCurrentVersion(VERSION);
         ui->updateBanner->setLatestVersion(latest);
         ui->updateBanner->setUrl(latestUrl);

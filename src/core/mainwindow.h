@@ -8,21 +8,21 @@
 #include <QShortcut>
 #include <QTranslator>
 #include <QProgressBar>
-#include "campaign-tree-widget/campaigntreewidget.h"
-#include "map-widget/maptabwidget.h"
-#include "map-widget/fogtool.h"
-#include "map-widget/brushtool.h"
-#include "map-widget/calibrationtool.h"
-#include "map-widget/lighttool.h"
-#include "map-widget/rulertool.h"
-#include "map-widget/sharedmapwindow.h"
-#include "map-widget/spellshapetool.h"
-#include "map-widget/heightmaptool.h"
-#include "initiative-tracker/initiativetrackerwidget.h"
-#include "music-widget/musicwidget.h"
-#include "roll-widget/rollwidget.h"
-#include "settingsdialog.h"
-#include "updatechecker.h"
+#include "src/modules/campaign/campaign-tree-widget/campaigntreewidget.h"
+#include "src/modules/map/map-widget/maptabwidget.h"
+#include "src/modules/map/map-widget/fogtool.h"
+#include "src/modules/map/map-widget/brushtool.h"
+#include "src/modules/map/map-widget/calibrationtool.h"
+#include "src/modules/map/map-widget/lighttool.h"
+#include "src/modules/map/map-widget/rulertool.h"
+#include "src/modules/map/map-widget/sharedmapwindow.h"
+#include "src/modules/map/map-widget/spellshapetool.h"
+#include "src/modules/map/map-widget/heightmaptool.h"
+#include "src/modules/encounter/initiative-tracker/initiativetrackerwidget.h"
+#include "src/modules/music/music-widget/musicwidget.h"
+#include "src/modules/rolls/roll-widget/rollwidget.h"
+#include "src/core/dialogs/settings-dialog/settingsdialog.h"
+#include "src/core/update-manager/updatemanager.h"
 
 
 static QMap<QString, QString> sourcesMap = {
@@ -86,7 +86,7 @@ protected:
 private:
     Ui::MainWindow *ui;
     QTranslator translator;
-    UpdateChecker* updateChecker;
+    UpdateManager* updateManager;
     bool m_checkForUpdates;
     QString currentLanguage;
     QString currentCampaignDir;

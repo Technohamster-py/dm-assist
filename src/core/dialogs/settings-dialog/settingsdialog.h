@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <QTreeWidget>
 #include <QKeySequenceEdit>
-#include "settings.h"
+#include "src/core/settings.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class SettingsDialog; }

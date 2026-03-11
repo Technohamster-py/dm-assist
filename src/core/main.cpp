@@ -1,7 +1,7 @@
 #include <QApplication>
 
 #include "mainwindow.h"
-#include "recentcampaigndialog.h"
+#include "src/core/dialogs/startup-dialog/recentcampaigndialog.h"
 #include "settings.h"
 
 int main(int argc, char *argv[]) {

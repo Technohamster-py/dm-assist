@@ -1,6 +1,6 @@
 #include "statusmanager.h"
 #include <QSettings>
-#include "../settings.h"
+#include "src/core/settings.h"
 
 StatusManager::StatusManager() {
     load();

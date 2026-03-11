@@ -5,7 +5,7 @@
 
 #include "initiativetrackerwidget.h"
 #include "initiativedelegates.h"
-#include <themediconmanager.h>
+#include "AdaptiveThemeLib/include/themediconmanager.h"
 #include "ui_initiativetrackerwidget.h"
 
 

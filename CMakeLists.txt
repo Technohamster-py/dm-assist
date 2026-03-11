@@ -7,96 +7,96 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 
-set(BASS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass/include)
-set(TEMPLATE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/file-templates)
-set(ICON_DIR ${CMAKE_CURRENT_SOURCE_DIR}/iconset)
-set(TEXTURES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/textures)
+set(BASS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/bass/include)
+set(TEMPLATE_DIR resources/file-templates)
+set(ICON_DIR resources/iconset)
+set(TEXTURES_DIR resources/textures)
 if (WIN32)
     set(CMAKE_PREFIX_PATH "C:/Qt/Qt6/6.9.0/mingw_64/lib/cmake")
-    set(BASS_DLL "${CMAKE_SOURCE_DIR}/lib/bass/win/bass.dll")
+    set(BASS_DLL "${CMAKE_SOURCE_DIR}/3rdparty/bass/win/bass.dll")
     set(BASS_LIBRARY ${CMAKE_SOURCE_DIR}/lib/bass/win/bass.lib)
 elseif (UNIX AND NOT APPLE)
     set(CMAKE_PREFIX_PATH "/usr/local/qt/Qt-6.6.1")
-    set(BASS_LIBRARY ${CMAKE_SOURCE_DIR}/lib/bass/linux/libbass.so)
-    set(BASS_DLL "${CMAKE_SOURCE_DIR}/lib/bass/linux/libbass.so")
+    set(BASS_LIBRARY ${CMAKE_SOURCE_DIR}/3rdparty/bass/linux/libbass.so)
+    set(BASS_DLL "${CMAKE_SOURCE_DIR}/3rdparty/bass/linux/libbass.so")
 endif ()
 
 
 set(FILES
-        bestiary-widget/fvttparser.h    bestiary-widget/fvttparser.cpp
-        bestiary-widget/dndbestiarypage.h bestiary-widget/dndbestiarypage.cpp
-        bestiary-widget/dndbeaststructure.h
-        bestiary-widget/rolltextbrowser.h bestiary-widget/rolltextbrowser.cpp
-        campaign-tree-widget/campaigntreewidget.cpp campaign-tree-widget/campaigntreewidget.h
-        campaign-tree-widget/hoverwidget.cpp    campaign-tree-widget/hoverwidget.h
-        charsheet-widget/abstractcharsheetwidget.h
-        charsheet-widget/characterparser.h charsheet-widget/characterparser.cpp
-        charsheet-widget/dndcharsheetwidget.h charsheet-widget/dndcharsheetwidget.cpp
-        charsheet-widget/dndcharsheetdialogs.h charsheet-widget/dndcharsheetdialogs.cpp
-        charsheet-widget/dndmodels.h charsheet-widget/dndmodels.cpp
-        charsheet-widget/textclickablecheckbox.h    charsheet-widget/textclickablecheckbox.cpp
-        error-handler/errorhandler.h    error-handler/errorhandler.cpp
-        initiative-tracker/initiativemodel.h    initiative-tracker/initiativemodel.cpp
-        initiative-tracker/initiativestructures.h
-        initiative-tracker/statuseditdialog.h   initiative-tracker/statuseditdialog.cpp
-        initiative-tracker/statusmanager.cpp    initiative-tracker/statusmanager.h
-        mainwindow.h    mainwindow.cpp
-        map-widget/abstractmaptool.h
-        map-widget/brushtool.h  map-widget/brushtool.cpp
-        map-widget/calibrationtool.h    map-widget/calibrationtool.cpp
-        map-widget/fixedsizetextitem.h          map-widget/fixedsizetextitem.cpp
-        map-widget/fogtool.h    map-widget/fogtool.cpp
-        map-widget/griditem.h   map-widget/griditem.cpp
-        map-widget/heightmaptool.h  map-widget/heightmaptool.cpp
-        map-widget/lighttool.h  map-widget/lighttool.cpp
-        map-widget/mapview.h    map-widget/mapview.cpp
-        map-widget/mapscene.h   map-widget/mapscene.cpp
-        map-widget/maptabwidget.h   map-widget/maptabwidget.cpp
-        map-widget/rulertool.h map-widget/rulertool.cpp
-        map-widget/sharedmapwindow.h    map-widget/sharedmapwindow.cpp
-        map-widget/spellshapetool.h     map-widget/spellshapetool.cpp
-        map-widget/tokenitem.h  map-widget/tokenitem.cpp
-        map-widget/undostack.h
-        music-widget/musicwidget.h music-widget/musicwidget.cpp
-        icon-picker/iconpickerdialog.h  icon-picker/iconpickerdialog.cpp
-        initiative-tracker/initiativetrackerwidget.h initiative-tracker/initiativetrackerwidget.cpp
-        roll-widget/rollwidget.h    roll-widget/rollwidget.cpp
-        initiative-tracker/initiativedelegates.h initiative-tracker/initiativedelegates.cpp
-        saveconfigdialog.h saveconfigdialog.cpp
-        settingsdialog.h    settingsdialog.cpp
-        settings.h
-        updatechecker.h updatechecker.cpp
-        recentcampaigndialog.cpp
-        recentcampaigndialog.h
-        map-widget/texturepickerdialog.h
-        map-widget/effectgrapchicsitem.cpp
-        map-widget/effectgrapchicsitem.h
-        map-widget/areashapetool.cpp
-        map-widget/areashapetool.h
+        src/modules/bestiary/bestiary-widget/fvttparser.h src/modules/bestiary/bestiary-widget/fvttparser.cpp
+        src/modules/bestiary/bestiary-widget/dndbestiarypage.h src/modules/bestiary/bestiary-widget/dndbestiarypage.cpp
+        src/modules/bestiary/bestiary-widget/dndbeaststructure.h
+        src/modules/bestiary/bestiary-widget/rolltextbrowser.h src/modules/bestiary/bestiary-widget/rolltextbrowser.cpp
+        src/modules/campaign/campaign-tree-widget/campaigntreewidget.cpp src/modules/campaign/campaign-tree-widget/campaigntreewidget.h
+        src/modules/campaign/campaign-tree-widget/hoverwidget.cpp src/modules/campaign/campaign-tree-widget/hoverwidget.h
+        src/modules/characters/charsheet-widget/abstractcharsheetwidget.h
+        src/modules/characters/charsheet-widget/characterparser.h src/modules/characters/charsheet-widget/characterparser.cpp
+        src/modules/characters/charsheet-widget/dndcharsheetwidget.h src/modules/characters/charsheet-widget/dndcharsheetwidget.cpp
+        src/modules/characters/charsheet-widget/dndcharsheetdialogs.h src/modules/characters/charsheet-widget/dndcharsheetdialogs.cpp
+        src/modules/characters/charsheet-widget/dndmodels.h src/modules/characters/charsheet-widget/dndmodels.cpp
+        src/modules/characters/charsheet-widget/textclickablecheckbox.h src/modules/characters/charsheet-widget/textclickablecheckbox.cpp
+        src/utils/error-handler/errorhandler.h src/utils/error-handler/errorhandler.cpp
+        src/modules/encounter/initiative-tracker/initiativemodel.h src/modules/encounter/initiative-tracker/initiativemodel.cpp
+        src/modules/encounter/initiative-tracker/initiativestructures.h
+        src/modules/encounter/initiative-tracker/statuseditdialog.h src/modules/encounter/initiative-tracker/statuseditdialog.cpp
+        src/modules/encounter/initiative-tracker/statusmanager.cpp src/modules/encounter/initiative-tracker/statusmanager.h
+        src/core/mainwindow.h src/core/mainwindow.cpp
+        src/modules/map/map-widget/abstractmaptool.h
+        src/modules/map/map-widget/brushtool.h src/modules/map/map-widget/brushtool.cpp
+        src/modules/map/map-widget/calibrationtool.h src/modules/map/map-widget/calibrationtool.cpp
+        src/modules/map/map-widget/fixedsizetextitem.h src/modules/map/map-widget/fixedsizetextitem.cpp
+        src/modules/map/map-widget/fogtool.h src/modules/map/map-widget/fogtool.cpp
+        src/modules/map/map-widget/griditem.h src/modules/map/map-widget/griditem.cpp
+        src/modules/map/map-widget/heightmaptool.h src/modules/map/map-widget/heightmaptool.cpp
+        src/modules/map/map-widget/lighttool.h src/modules/map/map-widget/lighttool.cpp
+        src/modules/map/map-widget/mapview.h src/modules/map/map-widget/mapview.cpp
+        src/modules/map/map-widget/mapscene.h src/modules/map/map-widget/mapscene.cpp
+        src/modules/map/map-widget/maptabwidget.h src/modules/map/map-widget/maptabwidget.cpp
+        src/modules/map/map-widget/rulertool.h src/modules/map/map-widget/rulertool.cpp
+        src/modules/map/map-widget/sharedmapwindow.h src/modules/map/map-widget/sharedmapwindow.cpp
+        src/modules/map/map-widget/spellshapetool.h src/modules/map/map-widget/spellshapetool.cpp
+        src/modules/map/map-widget/tokenitem.h src/modules/map/map-widget/tokenitem.cpp
+        src/modules/map/map-widget/undostack.h
+        src/modules/music/music-widget/musicwidget.h src/modules/music/music-widget/musicwidget.cpp
+        src/dialogs/icon-picker/iconpickerdialog.h src/dialogs/icon-picker/iconpickerdialog.cpp
+        src/modules/encounter/initiative-tracker/initiativetrackerwidget.h src/modules/encounter/initiative-tracker/initiativetrackerwidget.cpp
+        src/modules/rolls/roll-widget/rollwidget.h src/modules/rolls/roll-widget/rollwidget.cpp
+        src/modules/encounter/initiative-tracker/initiativedelegates.h src/modules/encounter/initiative-tracker/initiativedelegates.cpp
+        src/core/dialogs/save-config-dialog/saveconfigdialog.h src/core/dialogs/save-config-dialog/saveconfigdialog.cpp
+        src/core/dialogs/settings-dialog/settingsdialog.h src/core/dialogs/settings-dialog/settingsdialog.cpp
+        src/core/settings.h
+        src/core/update-manager/updatemanager.h src/core/update-manager/updatemanager.cpp
+        src/core/dialogs/startup-dialog/recentcampaigndialog.cpp
+        src/core/dialogs/startup-dialog/recentcampaigndialog.h
+        src/modules/map/map-widget/texturepickerdialog.h
+        src/modules/map/map-widget/effectgrapchicsitem.cpp
+        src/modules/map/map-widget/effectgrapchicsitem.h
+        src/modules/map/map-widget/areashapetool.cpp
+        src/modules/map/map-widget/areashapetool.h
 )
 
 set(UI_FILES
-        charsheet-widget/dndcharsheetwidget.ui
-        charsheet-widget/attackdialog.ui
-        charsheet-widget/resourcedialog.ui
-        mainwindow.ui
-        music-widget/musicplayer.ui
-        music-widget/playlisteditdialog.ui
-        initiative-tracker/initiativetrackerwidget.ui
-        roll-widget/rollwidget.ui
-        initiative-tracker/statuseditdialog.ui
-        settingsdialog.ui
-        bestiary-widget/dndbestiarypage.ui
-        charsheet-widget/dndCharacterData.h
+        src/modules/characters/charsheet-widget/dndcharsheetwidget.ui
+        src/modules/characters/charsheet-widget/attackdialog.ui
+        src/modules/characters/charsheet-widget/resourcedialog.ui
+        src/core/mainwindow.ui
+        src/modules/music/music-widget/musicplayer.ui
+        src/modules/music/music-widget/playlisteditdialog.ui
+        src/modules/encounter/initiative-tracker/initiativetrackerwidget.ui
+        src/modules/rolls/roll-widget/rollwidget.ui
+        src/modules/encounter/initiative-tracker/statuseditdialog.ui
+        src/core/dialogs/settings-dialog/settingsdialog.ui
+        src/modules/bestiary/bestiary-widget/dndbestiarypage.ui
+        src/modules/characters/charsheet-widget/dndCharacterData.h
 )
 
 set(TS_FILES
-        translations/dm-assist_en_US.ts
-        translations/dm-assist_ru_RU.ts
+        resources/translations/dm-assist_en_US.ts
+        resources/translations/dm-assist_ru_RU.ts
 )
 
 
-set(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/static/app_resources.qrc)
+set(RESOURCES resources/static/app_resources.qrc)
 
 add_subdirectory(AdaptiveThemeLib)
 
@@ -122,13 +122,13 @@ include_directories(
         ${Qt6Multimedia_INCLUDE_DIRS}
         ${BASS_INCLUDE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}
-        bestiary-widget
-        error-handler
-        translations
-        static
+        src/modules/bestiary/bestiary-widget
+        src/utils/error-handler
+        resources/translations
+        resources/static
         theme-manager
-        icon-picker
-        charsheet-widget
+        src/dialogs/icon-picker
+        src/modules/characters/charsheet-widget
 )
 
 qt_add_translation(QM_FILES ${TS_FILES})
@@ -136,7 +136,7 @@ qt_add_translation(QM_FILES ${TS_FILES})
 
 add_executable(${PROJECT_NAME}
         WIN32
-        main.cpp
+        src/core/main.cpp
         ${FILES}
         ${UI_FILES}
         ${RESOURCES_ADD}
@@ -186,7 +186,7 @@ if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     endforeach (QT_LIB)
 
 
-    set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/static/win_resources.rc")
+    set(APP_ICON_RESOURCE_WINDOWS "resources/static/win_resources.rc")
     target_sources(${PROJECT_NAME} PRIVATE ${APP_ICON_RESOURCE_WINDOWS})
 endif ()
 

@@ -12,8 +12,8 @@
 #include <QXmlStreamReader>
 #include <QColorDialog>
 #include <utility>
-#include "lib/bass/include/bass.h"
-#include "map-widget/tokenitem.h"
+#include "3rdparty/bass/include/bass.h"
+#include "src/modules/map/map-widget/tokenitem.h"
 #include "themediconmanager.h"
 
 

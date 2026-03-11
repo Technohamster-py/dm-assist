@@ -11,7 +11,7 @@
 #include <QLabel>
 #include <QMenu>
 
-#include <themediconmanager.h>
+#include "AdaptiveThemeLib/include/themediconmanager.h"
 
 /**
  * @class TabWidget

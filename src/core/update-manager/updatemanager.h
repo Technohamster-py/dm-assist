@@ -1,5 +1,5 @@
-#ifndef DM_ASSIST_UPDATECHECKER_H
-#define DM_ASSIST_UPDATECHECKER_H
+#ifndef DM_ASSIST_UPDATEMANAGER_H
+#define DM_ASSIST_UPDATEMANAGER_H
 
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -11,17 +11,17 @@
 #include <QLabel>
 
 /**
- * @class UpdateChecker
+ * @class UpdateManager
  * @brief class for auto check version on github
  *
  *
  */
-class UpdateChecker : public QObject{
+class UpdateManager : public QObject{
     Q_OBJECT
 public:
-    UpdateChecker(const QString& currentVersion, const QString& repoUrl, QObject* parent = nullptr) : QObject(parent), m_currentVersionNumber(QVersionNumber::fromString(currentVersion)), m_repoUrl(repoUrl){
+    UpdateManager(const QString& currentVersion, const QString& repoUrl, QObject* parent = nullptr) : QObject(parent), m_currentVersionNumber(QVersionNumber::fromString(currentVersion)), m_repoUrl(repoUrl){
         m_manager = new QNetworkAccessManager(this);
-        connect(m_manager, &QNetworkAccessManager::finished, this, &UpdateChecker::onReplyFinished);
+        connect(m_manager, &QNetworkAccessManager::finished, this, &UpdateManager::onReplyFinished);
     }
 
     void checkForUpdates(){
@@ -96,4 +96,4 @@ private:
     QLabel *label;
 };
 
-#endif //DM_ASSIST_UPDATECHECKER_H
+#endif //DM_ASSIST_UPDATEMANAGER_H

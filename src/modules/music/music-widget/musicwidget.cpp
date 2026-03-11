@@ -14,8 +14,8 @@
 #include <QRegularExpressionValidator>
 
 #include "bass.h"
-#include <themediconmanager.h>
-#include <errorhandler.h>
+#include "AdaptiveThemeLib/include/themediconmanager.h"
+#include "src/utils/error-handler/errorhandler.h"
 
 #define BASS_DEVICE_INDEX 1
 

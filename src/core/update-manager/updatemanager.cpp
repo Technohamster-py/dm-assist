@@ -1,4 +1,4 @@
-#include "updatechecker.h"
+#include "updatemanager.h"
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>

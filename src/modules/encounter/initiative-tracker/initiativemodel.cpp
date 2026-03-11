@@ -7,7 +7,7 @@
 #include <QRegularExpression>
 #include <QTextStream>
 #include <QJSEngine>
-#include <themediconmanager.h>
+#include "AdaptiveThemeLib/include/themediconmanager.h"
 
 
 InitiativeModel::InitiativeModel(QObject *parent)

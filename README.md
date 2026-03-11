@@ -11,7 +11,7 @@
 Постепенно проект обрастал новыми функциями, в итоге вылившись в более удобный, современный и интуитивно-понятный аналог
 DM helper.
 
-![img.png](illustrations/main-screen.png)
+![img.png](resources/illustrations/main-screen.png)
 
 # Оглавление
 - [Поддержка](#поддержка)
@@ -41,7 +41,7 @@ DM helper.
 Настройки можно открыть через паннель меню ```Кампания -> Настройки``` или использовав шорткат ```ctrl+alt+s```
 
 ### Общие
-![settings-common.png](illustrations/settings-common.png)
+![settings-common.png](resources/illustrations/settings-common.png)
 - **Язык** определяет локализацию приложения. Из коробки доступны русская и английская версии.
 [Как добавить новую локализацию](https://github.com/Technohamster-py/dm-assist/wiki/Loacalization)
 - **Аудио выход** определяет устройство, на котором будет воспроизводиться музыка из плееров.
@@ -52,13 +52,13 @@ DM helper.
 - **Проверять обновления при старте** - если включено - приложение будет проверять обновления при запуске и покажет, если есть более актуальная версия
 
 ### Внешний вид
-![settings-appearance.png](illustrations/settings-appearance.png)
+![settings-appearance.png](resources/illustrations/settings-appearance.png)
 - **Тема** определяет тему приложения. По нажатию кнопки _обзор_ можно выбрать новую, не предустановленную тему в формате 
 файла xml. Файл будет скопирован в папку программы и в дальнейшем тема будет доступна из меню настроек.
 - **Стиль** определяет стиль отрисовки графических элементов интерфейса. **_Рекомендуемый стиль - fusion_**
 
 ### Трекер инициативы
-![settings-tracker.png](illustrations/settings-tracker.png)
+![settings-tracker.png](resources/illustrations/settings-tracker.png)
 - **Поля в совместном доступе** - определяет, какие поля трекера будут показаны в окне, предназначенном для игроков.
 [подробнее](#совместный-доступ).
 - **Режим отображения хитов** - определяет, как будет отображаться здоровье персонажей в окне, предназначенном для игроков
@@ -68,11 +68,11 @@ DM helper.
 - **Цвет активного персонажа** - Можно задать свой или же использовать включенный в палитру
 
 ### Карта
-![settings-map.png](illustrations/settings-map.png)
+![settings-map.png](resources/illustrations/settings-map.png)
 - *Режим имен токенов** и **Размер шрифта токенов** отвечают за режим и параметры отрисовки подписей с именами к токенам персонажей на карте (подробнее в разделе [Токены](#использование-токенов))
 
 ### Горячие клавиши
-![settings-hotkeys.png](illustrations/settings-hotkeys.png)
+![settings-hotkeys.png](resources/illustrations/settings-hotkeys.png)
 - Определяет горячие клавиши для инструментов карты
 
 ## Музыка
@@ -82,32 +82,32 @@ DM helper.
 Каждый плейлист можно регулировать по громкости независимо от других, используя персональный слайдер. Так же можно
 регулировать общий уровень громкости, используя общий большой слайдер, расположенный под всеми плеерами.
 
-![img.png](illustrations/music-widget.png)
+![img.png](resources/illustrations/music-widget.png)
 
 Нажмите <img alt="edit.png" height="20" src="static/edit.svg" width="20"/> чтобы открыть окно редактирования плейлиста. Здесь вы можете задать отображаемое название, добавлять (+),
 удалять (выберите и нажмите -) и менять местами (зажмите и перетащите) треки.
 После закрытия диалога выбранные файлы скопируются в рабочую папку программы. После закрытия программы данная папка
 очищается. 
 
-![img.png](illustrations/playlist-edit.png)
+![img.png](resources/illustrations/playlist-edit.png)
 
 ## Трекер инициативы
-<img src="illustrations/tracker.png" width="400">
+<img src="resources/illustrations/tracker.png" width="400">
 
 
 Описание столбцов:
 - Активный в данный момент персонаж подсвечиваются.
-- <img src="static/d20.svg" width="20"> - столбец инициативы
-- <img src="static/run.svg" width="20"> - столбец скорости персонажа
-- <img src="static/shield.svg" width="20"> - столбец класса брони
-- <img src="static/heart-broken.svg" width="20"> - столбец текущего здоровья
-- <img src="static/heart.svg" width="20"> - столбец максимального здоровья
+- <img src="resources/static/d20.svg" width="20"> - столбец инициативы
+- <img src="resources/static/run.svg" width="20"> - столбец скорости персонажа
+- <img src="resources/static/shield.svg" width="20"> - столбец класса брони
+- <img src="resources/static/heart-broken.svg" width="20"> - столбец текущего здоровья
+- <img src="resources/static/heart.svg" width="20"> - столбец максимального здоровья
 - statuses - столбец состояний
 
 В столбец текущего здоровья для удобства подстчета можно вводить простые арифметические выражения, которые будут
 вычисляться после снятия фокуса с ячейки
 
-![evaluation.png](illustrations/evaluation.png) -> ![img.png](illustrations/evaluation-complete.png)
+![evaluation.png](resources/illustrations/evaluation.png) -> ![img.png](resources/illustrations/evaluation-complete.png)
 
 Контроль:
 - Нажмите <img src="static/forward.svg" width="20"> или <img src="static/back.svg" width="20"> чтобы переходить 
@@ -123,7 +123,7 @@ DM helper.
 ### Совместный доступ
 Нажмите <img src="static/share.svg" width="20"> для открытия окна общего доступа
 
-<img src="illustrations/shared-tracker-standard.png">
+<img src="resources/illustrations/shared-tracker-standard.png">
 
 Это всплывающий виджет для демонстрации трекера игрокам. Здесь можно настраивать видимость каждого из столбцов.
 
@@ -137,7 +137,7 @@ DM helper.
 Редактирование статусов осуществляется двойным кликом по ячейке. 
 При наведении на ячейку в подсказке показываются названия статусов и оставшееся время (в раундах) 
 
-![status-edit.png](illustrations/status-edit.png)
+![status-edit.png](resources/illustrations/status-edit.png)
 
 В открывшемся диалоге можно установить количество раундов, которое будет длиться тот или иной эффект/статус.
 
@@ -151,7 +151,7 @@ DM helper.
 Кастомные статусы сохраняются глобально и будут доступны во всех энкаунтерах.
 
 ## Карта
-![map-main.png](illustrations/map-main.png)
+![map-main.png](resources/illustrations/map-main.png)
 
 Открыть новую карту, можно нажав соответствующую кнопку если карты еще не открыты или по нажатию кнопки **+** справа от 
 всех вкладок с картами или, если нужно добавить карту к кампании, через пункт меню ```Кампания -> Добавить -> карта```.
@@ -178,7 +178,7 @@ DM helper.
 После калибровки линейка автоматически переходит в режим измерения. 
 
 В режиме измерения после отметки двумя кликами точек на карте будет отображено расстояние. 
-![measure.png](illustrations/measure.png)
+![measure.png](resources/illustrations/measure.png)
 
 Для удаления линий и текста нажмите ПКМ с активным инструментом _линейка_ по элементу.
 
@@ -189,7 +189,7 @@ DM helper.
 и выбрав **скрыть все** или **проявить все**
 
 ### Свет
-![light.png](illustrations/light.png)
+![light.png](resources/illustrations/light.png)
 
 Инструмент _свет_ <img src="static/torch.svg" width="20"> позволяет добавлять источники света на карту. Клик и перетаскивание
 с активным инструментом _свет_ по имеющегося источника позволяют перемещать источник по карте. 
@@ -206,7 +206,7 @@ DM helper.
 
 ### Формы эффектов
 
-![shapes.png](illustrations/shapes.png)
+![shapes.png](resources/illustrations/shapes.png)
 
 Инструмент _формы_ позволяет рисовать формы заклинаний на карте.
 
@@ -225,7 +225,7 @@ DM helper.
 Для удаления формы нажмите ПКМ по форме.
 
 ### Кисть
-![brush.png](illustrations/brush.png)
+![brush.png](resources/illustrations/brush.png)
 
 Инструмент _кисть_ <img src="static/brush.svg" width="20"> позволяет свободно рисовать по карте.
 
@@ -241,7 +241,7 @@ DM helper.
 Цвет или текстура лассо синхронизированы с остальными инструментами. 
 
 ### Карта высот
-![height.png](illustrations/height.png)
+![height.png](resources/illustrations/height.png)
 
 Инструмент _карта высот_ <img src="static/mountain.svg" width="20"> позволяет рисовать замкнутые контуры на карте (замыкаются автоматически)
 и задавать им виртуальную "высоту" в диапазоне -100...100. Высота отображается в виде градиента от синего (низ) к красному (верх).
@@ -254,8 +254,8 @@ DM helper.
 Инструмент "Рулетка" учитывает перепад высоты при измерении расстояния
 
 ### Сетка
-![grid-square.png](illustrations/grid-square.png)
-![grid-hex.png](illustrations/grid-hex.png)
+![grid-square.png](resources/illustrations/grid-square.png)
+![grid-hex.png](resources/illustrations/grid-hex.png)
 
 На карту можно наложить квадратную или шестиугольную сетку. Выбор режима осуществляется переключением выпадающего списка.
 
@@ -268,7 +268,7 @@ DM helper.
 ### Создание новой кампании
 Для создания новой кампании выберите пункт меню ```Кампания -> Новая``` или нажмите ```ctrl + N```. 
 
-![create-campaign-dialog.png](illustrations/create-campaign-dialog.png)
+![create-campaign-dialog.png](resources/illustrations/create-campaign-dialog.png)
 
 В открывшемся диалоге укажите имя и папку проекта. Обратите внимание, что папка кампании должна быть или пуста или не 
 существовать. Если папка не существует программа сама ее создаст. 
@@ -286,7 +286,7 @@ DM helper.
 
 В левой части основного окна появится дерево навигации по кампании.
 
-![campaign-tree.png](illustrations/campaign-tree.png)
+![campaign-tree.png](resources/illustrations/campaign-tree.png)
 
 По наведению на элемент дерева отображаются кнопки для взаимодействия.
 
@@ -311,7 +311,7 @@ DM helper.
 
 Если на карте включена сетка, то токен будет магнититься к ней.
 
-![tokens.png](illustrations/tokens.png)
+![tokens.png](resources/illustrations/tokens.png)
 
 Для токенов можно изменить режим отображения и размер шрифта подписи с именем в [настройках](#внешний-вид). Всего существует 3 варианта отображения
 - Отображать всегда
@@ -335,7 +335,7 @@ DM helper.
 
 Для открытия листа персонажа нажмите <img src="static/edit.svg" width="20"> в дереве кампейна.
 
-![charsheet.png](illustrations/charsheet.png)
+![charsheet.png](resources/illustrations/charsheet.png)
 
 Все бонусы характеристик, бонусы атак (кроме бонусов к урону), способности высчитываются автоматически на основе значений,
 характеристик, указанных в спинбоксах.
@@ -354,14 +354,14 @@ DM helper.
 для жирного, курсива и подчеркнутого текста соответственно.
 
 ## Бестиарий
-![bestiary.png](illustrations/bestiary.png)
+![bestiary.png](resources/illustrations/bestiary.png)
 
 Окно страницы бестиария позволяет просматривать статлист монстра или NPC, сохраненный в формате FVTT11.
 Такие статлисты можно скачать, например, с [ttg](https://5e14.ttg.club/bestiary/)
 > ВАЖНО! Отображаемая информация на ttg не всегда совпадает с информацией в скачанном файле, имейте это ввиду!
 
 ## Виджет бросков
-![roll-widget.png](illustrations/roll-widget.png)
+![roll-widget.png](resources/illustrations/roll-widget.png)
 
 Модуль позволяет генерировать случайные числа (броски).
 

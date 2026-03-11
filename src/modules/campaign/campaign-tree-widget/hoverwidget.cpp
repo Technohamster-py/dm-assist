@@ -1,5 +1,5 @@
 #include "hoverwidget.h"
-#include <themediconmanager.h>
+#include "AdaptiveThemeLib/include/themediconmanager.h"
 
 /**
  * @brief Constructor for the HoverWidget class.

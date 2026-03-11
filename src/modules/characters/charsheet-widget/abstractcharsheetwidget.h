@@ -6,7 +6,7 @@
 #include <QWidget>
 #include <QRandomGenerator>
 #include <QtNetwork>
-#include "../initiative-tracker/initiativetrackerwidget.h"
+#include "src/modules/encounter/initiative-tracker/initiativetrackerwidget.h"
 
 /**
  * @class AbstractCharsheetWidget
