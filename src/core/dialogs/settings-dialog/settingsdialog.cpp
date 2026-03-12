@@ -13,7 +13,7 @@
 #include <QColorDialog>
 #include <utility>
 #include "3rdparty/bass/include/bass.h"
-#include "src/modules/map/map-widget/tokenitem.h"
+#include "src/modules/map/graphics/token/tokenitem.h"
 #include "themediconmanager.h"
 
 

@@ -23,71 +23,68 @@ endif ()
 
 
 set(FILES
-        src/modules/bestiary/bestiary-widget/fvttparser.h src/modules/bestiary/bestiary-widget/fvttparser.cpp
-        src/modules/bestiary/bestiary-widget/dndbestiarypage.h src/modules/bestiary/bestiary-widget/dndbestiarypage.cpp
-        src/modules/bestiary/bestiary-widget/dndbeaststructure.h
-        src/modules/bestiary/bestiary-widget/rolltextbrowser.h src/modules/bestiary/bestiary-widget/rolltextbrowser.cpp
-        src/modules/campaign/campaign-tree-widget/campaigntreewidget.cpp src/modules/campaign/campaign-tree-widget/campaigntreewidget.h
-        src/modules/campaign/campaign-tree-widget/hoverwidget.cpp src/modules/campaign/campaign-tree-widget/hoverwidget.h
-        src/modules/characters/charsheet-widget/abstractcharsheetwidget.h
-        src/modules/characters/charsheet-widget/characterparser.h src/modules/characters/charsheet-widget/characterparser.cpp
-        src/modules/characters/charsheet-widget/dndcharsheetwidget.h src/modules/characters/charsheet-widget/dndcharsheetwidget.cpp
-        src/modules/characters/charsheet-widget/dndcharsheetdialogs.h src/modules/characters/charsheet-widget/dndcharsheetdialogs.cpp
-        src/modules/characters/charsheet-widget/dndmodels.h src/modules/characters/charsheet-widget/dndmodels.cpp
-        src/modules/characters/charsheet-widget/textclickablecheckbox.h src/modules/characters/charsheet-widget/textclickablecheckbox.cpp
-        src/utils/error-handler/errorhandler.h src/utils/error-handler/errorhandler.cpp
-        src/modules/encounter/initiative-tracker/initiativemodel.h src/modules/encounter/initiative-tracker/initiativemodel.cpp
-        src/modules/encounter/initiative-tracker/initiativestructures.h
-        src/modules/encounter/initiative-tracker/statuseditdialog.h src/modules/encounter/initiative-tracker/statuseditdialog.cpp
-        src/modules/encounter/initiative-tracker/statusmanager.cpp src/modules/encounter/initiative-tracker/statusmanager.h
-        src/core/mainwindow.h src/core/mainwindow.cpp
-        src/modules/map/map-widget/abstractmaptool.h
-        src/modules/map/map-widget/brushtool.h src/modules/map/map-widget/brushtool.cpp
-        src/modules/map/map-widget/calibrationtool.h src/modules/map/map-widget/calibrationtool.cpp
-        src/modules/map/map-widget/fixedsizetextitem.h src/modules/map/map-widget/fixedsizetextitem.cpp
-        src/modules/map/map-widget/fogtool.h src/modules/map/map-widget/fogtool.cpp
-        src/modules/map/map-widget/griditem.h src/modules/map/map-widget/griditem.cpp
-        src/modules/map/map-widget/heightmaptool.h src/modules/map/map-widget/heightmaptool.cpp
-        src/modules/map/map-widget/lighttool.h src/modules/map/map-widget/lighttool.cpp
-        src/modules/map/map-widget/mapview.h src/modules/map/map-widget/mapview.cpp
-        src/modules/map/map-widget/mapscene.h src/modules/map/map-widget/mapscene.cpp
-        src/modules/map/map-widget/maptabwidget.h src/modules/map/map-widget/maptabwidget.cpp
-        src/modules/map/map-widget/rulertool.h src/modules/map/map-widget/rulertool.cpp
-        src/modules/map/map-widget/sharedmapwindow.h src/modules/map/map-widget/sharedmapwindow.cpp
-        src/modules/map/map-widget/spellshapetool.h src/modules/map/map-widget/spellshapetool.cpp
-        src/modules/map/map-widget/tokenitem.h src/modules/map/map-widget/tokenitem.cpp
-        src/modules/map/map-widget/undostack.h
-        src/modules/music/music-widget/musicwidget.h src/modules/music/music-widget/musicwidget.cpp
-        src/dialogs/icon-picker/iconpickerdialog.h src/dialogs/icon-picker/iconpickerdialog.cpp
-        src/modules/encounter/initiative-tracker/initiativetrackerwidget.h src/modules/encounter/initiative-tracker/initiativetrackerwidget.cpp
-        src/modules/rolls/roll-widget/rollwidget.h src/modules/rolls/roll-widget/rollwidget.cpp
-        src/modules/encounter/initiative-tracker/initiativedelegates.h src/modules/encounter/initiative-tracker/initiativedelegates.cpp
-        src/core/dialogs/save-config-dialog/saveconfigdialog.h src/core/dialogs/save-config-dialog/saveconfigdialog.cpp
-        src/core/dialogs/settings-dialog/settingsdialog.h src/core/dialogs/settings-dialog/settingsdialog.cpp
+        src/core/dialogs/save-config-dialog/saveconfigdialog.cpp src/core/dialogs/save-config-dialog/saveconfigdialog.h
+        src/core/dialogs/settings-dialog/settingsdialog.cpp src/core/dialogs/settings-dialog/settingsdialog.h
+        src/core/dialogs/startup-dialog/recentcampaigndialog.cpp src/core/dialogs/startup-dialog/recentcampaigndialog.h
+        src/core/mainwindow.cpp src/core/mainwindow.h
         src/core/settings.h
-        src/core/update-manager/updatemanager.h src/core/update-manager/updatemanager.cpp
-        src/core/dialogs/startup-dialog/recentcampaigndialog.cpp
-        src/core/dialogs/startup-dialog/recentcampaigndialog.h
-        src/modules/map/map-widget/texturepickerdialog.h
-        src/modules/map/map-widget/effectgrapchicsitem.cpp
-        src/modules/map/map-widget/effectgrapchicsitem.h
-        src/modules/map/map-widget/areashapetool.cpp
-        src/modules/map/map-widget/areashapetool.h
+        src/core/update-manager/updatemanager.cpp src/core/update-manager/updatemanager.h
+        src/utils/dialogs/icon-picker/iconpickerdialog.cpp src/utils/dialogs/icon-picker/iconpickerdialog.h
+        src/utils/parsers/fvtt/dndbeaststructure.h
+        src/modules/bestiary/widget/dndbestiarypage.cpp src/modules/bestiary/widget/dndbestiarypage.h
+        src/modules/campaign/hover-widget/hoverwidget.cpp src/modules/campaign/hover-widget/hoverwidget.h
+        src/modules/campaign/tree-widget/campaigntreewidget.cpp src/modules/campaign/tree-widget/campaigntreewidget.h
+        src/modules/characters/dialogs/dndcharsheetdialogs.cpp src/modules/characters/dialogs/dndcharsheetdialogs.h
+        src/modules/characters/models/dndmodels.cpp src/modules/characters/models/dndmodels.h
+        src/modules/characters/widgets/abstractcharsheetwidget.h
+        src/modules/characters/widgets/dndcharsheetwidget.cpp src/modules/characters/widgets/dndcharsheetwidget.h
+        src/modules/encounter/delegates/initiativedelegates.cpp src/modules/encounter/delegates/initiativedelegates.h
+        src/modules/encounter/dialogs/statuseditdialog.cpp src/modules/encounter/dialogs/statuseditdialog.h
+        src/modules/encounter/initiativestructures.h
+        src/modules/encounter/models/initiative-model/initiativemodel.cpp src/modules/encounter/models/initiative-model/initiativemodel.h
+        src/modules/encounter/models/status-manager/statusmanager.cpp src/modules/encounter/models/status-manager/statusmanager.h
+        src/modules/encounter/widget/initiativetrackerwidget.cpp src/modules/encounter/widget/initiativetrackerwidget.h
+        src/modules/map/graphics/effects/effectgraphicsitem.cpp src/modules/map/graphics/effects/effectgraphicsitem.h
+        src/modules/map/graphics/grid/griditem.cpp src/modules/map/graphics/grid/griditem.h
+        src/modules/map/graphics/text/fixedsizetextitem.cpp src/modules/map/graphics/text/fixedsizetextitem.h
+        src/modules/map/graphics/token/tokenitem.cpp src/modules/map/graphics/token/tokenitem.h
+        src/modules/map/scene/mapscene.cpp src/modules/map/scene/mapscene.h
+        src/modules/map/scene/mapview.cpp src/modules/map/scene/mapview.h
+        src/modules/map/utils/undostack.h
+        src/modules/map/tools/abstractmaptool.h
+        src/modules/map/tools/area-shape/areashapetool.cpp src/modules/map/tools/area-shape/areashapetool.h
+        src/modules/map/tools/brush/brushtool.cpp src/modules/map/tools/brush/brushtool.h
+        src/modules/map/tools/calibration/calibrationtool.cpp src/modules/map/tools/calibration/calibrationtool.h
+        src/modules/map/tools/fog/fogtool.cpp src/modules/map/tools/fog/fogtool.h
+        src/modules/map/tools/height-map/heightmaptool.cpp src/modules/map/tools/height-map/heightmaptool.h
+        src/modules/map/tools/light/lighttool.cpp src/modules/map/tools/light/lighttool.h
+        src/modules/map/tools/ruler/rulertool.cpp src/modules/map/tools/ruler/rulertool.h
+        src/modules/map/tools/spell-shape/spellshapetool.cpp src/modules/map/tools/spell-shape/spellshapetool.h
+        src/modules/map/widgets/map-tab-widget/maptabwidget.cpp src/modules/map/widgets/map-tab-widget/maptabwidget.h
+        src/modules/map/widgets/shared-map-window/sharedmapwindow.cpp src/modules/map/widgets/shared-map-window/sharedmapwindow.h
+        src/modules/map/dialogs/texturepickerdialog.h
+        src/modules/music/widget/musicwidget.cpp src/modules/music/widget/musicwidget.h
+        src/modules/rolls/roll-widget/rollwidget.cpp src/modules/rolls/roll-widget/rollwidget.h
+        src/utils/error-handler/errorhandler.cpp src/utils/error-handler/errorhandler.h
+        src/utils/parsers/character/characterparser.cpp src/utils/parsers/character/characterparser.h
+        src/utils/parsers/fvtt/fvttparser.cpp src/utils/parsers/fvtt/fvttparser.h
+        src/utils/widgets/roll-text-browser/rolltextbrowser.cpp src/utils/widgets/roll-text-browser/rolltextbrowser.h
+        src/utils/widgets/text-clickable-checkbox/textclickablecheckbox.cpp src/utils/widgets/text-clickable-checkbox/textclickablecheckbox.h
 )
 
 set(UI_FILES
-        src/modules/characters/charsheet-widget/dndcharsheetwidget.ui
-        src/modules/characters/charsheet-widget/attackdialog.ui
-        src/modules/characters/charsheet-widget/resourcedialog.ui
+        src/modules/characters/widgets/dndcharsheetwidget.ui
+        src/modules/characters/dialogs/attackdialog.ui
+        src/modules/characters/dialogs/resourcedialog.ui
         src/core/mainwindow.ui
-        src/modules/music/music-widget/musicplayer.ui
-        src/modules/music/music-widget/playlisteditdialog.ui
-        src/modules/encounter/initiative-tracker/initiativetrackerwidget.ui
+        src/modules/music/widget/musicplayer.ui
+        src/modules/music/widget/playlisteditdialog.ui
+        src/modules/encounter/widget/initiativetrackerwidget.ui
         src/modules/rolls/roll-widget/rollwidget.ui
-        src/modules/encounter/initiative-tracker/statuseditdialog.ui
+        src/modules/encounter/dialogs/statuseditdialog.ui
         src/core/dialogs/settings-dialog/settingsdialog.ui
-        src/modules/bestiary/bestiary-widget/dndbestiarypage.ui
-        src/modules/characters/charsheet-widget/dndCharacterData.h
+        src/modules/bestiary/widget/dndbestiarypage.ui
+        src/utils/parsers/character/dndCharacterData.h
 )
 
 set(TS_FILES
@@ -122,13 +119,11 @@ include_directories(
         ${Qt6Multimedia_INCLUDE_DIRS}
         ${BASS_INCLUDE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}
-        src/modules/bestiary/bestiary-widget
-        src/utils/error-handler
         resources/translations
         resources/static
-        theme-manager
-        src/dialogs/icon-picker
-        src/modules/characters/charsheet-widget
+        src/core/update-manager
+        src/utils/widgets/roll-text-browser
+        src/utils/widgets/text-clickable-checkbox
 )
 
 qt_add_translation(QM_FILES ${TS_FILES})
@@ -213,8 +208,6 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         "${CMAKE_BINARY_DIR}"
         COMMENT "Copying bass..."
 )
-
-
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory

@@ -267,7 +267,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="static/app_resources.qrc">
+               <iconset resource="../../resources/static/app_resources.qrc">
                 <normaloff>:/player/Volume-1.svg</normaloff>:/player/Volume-1.svg</iconset>
               </property>
               <property name="iconSize">
@@ -309,7 +309,7 @@
                <string/>
               </property>
               <property name="pixmap">
-               <pixmap resource="static/app_resources.qrc">:/player/Volume-2.svg</pixmap>
+               <pixmap resource="../../resources/static/app_resources.qrc">:/player/Volume-2.svg</pixmap>
               </property>
              </widget>
             </item>
@@ -508,7 +508,7 @@
   </action>
   <action name="actionReload">
    <property name="icon">
-    <iconset resource="static/app_resources.qrc">
+    <iconset resource="../../resources/static/app_resources.qrc">
      <normaloff>:/reload.svg</normaloff>:/reload.svg</iconset>
    </property>
    <property name="text">
@@ -538,11 +538,12 @@
   <customwidget>
    <class>UpdateBannerWidget</class>
    <extends>QWidget</extends>
-   <header location="global">updatechecker.h</header>
+   <header location="global">updatemanager.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>
+  <include location="../../resources/static/app_resources.qrc"/>
   <include location="static/app_resources.qrc"/>
  </resources>
  <connections/>

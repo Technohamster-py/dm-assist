@@ -1,9 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "src/modules/map/map-widget/mapview.h"
-#include "src/modules/map/map-widget/texturepickerdialog.h"
-#include "src/modules/characters/charsheet-widget/dndcharsheetwidget.h"
-#include "src/modules/bestiary/bestiary-widget/dndbestiarypage.h"
+#include "src/modules/map/scene/mapview.h"
+#include "src/modules/map/dialogs/texturepickerdialog.h"
+#include "src/modules/characters/widgets/dndcharsheetwidget.h"
+#include "src/modules/bestiary/widget/dndbestiarypage.h"
 
 #include <QDesktopServices>
 #include "QDomDocument"
