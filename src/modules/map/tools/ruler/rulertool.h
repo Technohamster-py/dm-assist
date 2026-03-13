@@ -2,7 +2,6 @@
 #define DM_ASSIST_RULERTOOL_H
 
 #include "src/modules/map/tools/abstractmaptool.h"
-#include <QGraphicsLineItem>
 #include <QGraphicsTextItem>
 
 /**

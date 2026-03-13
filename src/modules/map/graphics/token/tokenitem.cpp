@@ -6,7 +6,6 @@
 #include <QGraphicsSceneContextMenuEvent>
 #include <QPen>
 #include <QMenu>
-#include <QUrl>
 #include <QInputDialog>
 
 TokenItem::TokenItem(const QString &filePath, const QString &name, const QPixmap &pixmap, qreal realSize, qreal pxPerFoot)

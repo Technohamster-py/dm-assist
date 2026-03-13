@@ -1,5 +1,6 @@
 #include "errorhandler.h"
 #include <QDateTime>
+#include <QMessageBox>
 
 quint64 ErrorHandler::lastErrorTime = 0;
 

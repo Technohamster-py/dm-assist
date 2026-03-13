@@ -3,7 +3,6 @@
 
 #include <QGraphicsItem>
 #include <QPen>
-#include <QtMath>
 
 class GridItem : public QGraphicsItem
 {

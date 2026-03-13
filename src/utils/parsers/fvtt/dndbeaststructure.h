@@ -3,7 +3,6 @@
 
 #include <QString>
 #include <QMap>
-#include <QObject>
 
 struct BestiaryItem {
     QString name;

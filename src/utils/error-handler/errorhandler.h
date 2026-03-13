@@ -1,7 +1,6 @@
 #ifndef DM_ASSIST_ERRORHANDLER_H
 #define DM_ASSIST_ERRORHANDLER_H
 
-#include <QMessageBox>
 #include <QString>
 
 class ErrorHandler {

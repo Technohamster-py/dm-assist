@@ -4,6 +4,7 @@
 #include <QPainter>
 #include <QMouseEvent>
 #include <QMessageBox>
+#include <QMimeData>
 
 #include "themediconmanager.h"
 

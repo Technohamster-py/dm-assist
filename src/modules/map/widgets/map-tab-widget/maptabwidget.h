@@ -2,16 +2,9 @@
 #define DM_ASSIST_MAPTABWIDGET_H
 
 #include <QApplication>
-#include <QDragEnterEvent>
 #include <QDropEvent>
 #include <QTabWidget>
 #include <QTabBar>
-#include <QToolButton>
-#include <QVBoxLayout>
-#include <QLabel>
-#include <QMenu>
-
-#include "AdaptiveThemeLib/include/themediconmanager.h"
 
 /**
  * @class TabWidget

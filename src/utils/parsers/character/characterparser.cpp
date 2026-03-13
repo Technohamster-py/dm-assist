@@ -4,8 +4,6 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
-#include <QTextDocument>
-#include <QTextBlock>
 #include <QTextList>
 
 QVariantMap LssDndParser::parse(const QString &filePath) {

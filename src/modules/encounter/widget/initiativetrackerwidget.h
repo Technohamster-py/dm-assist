@@ -2,14 +2,12 @@
 #define DM_ASSIST_INITIATIVETRACKERWIDGET_H
 
 #include <QWidget>
-#include <QSortFilterProxyModel>
 #include <QStandardPaths>
 #include <QStyledItemDelegate>
 #include <QPainter>
 #include <QList>
 #include <QPointer>
 #include "src/modules/encounter/models/initiative-model/initiativemodel.h"
-#include <QJsonDocument>
 #include <QJsonObject>
 
 

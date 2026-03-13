@@ -5,6 +5,7 @@
 #include <QActionGroup>
 #include <QTranslator>
 #include <QProgressBar>
+#include <QToolButton>
 #include "src/modules/campaign/tree-widget/campaigntreewidget.h"
 #include "src/modules/map/widgets/map-tab-widget/maptabwidget.h"
 #include "src/modules/map/tools/fog/fogtool.h"

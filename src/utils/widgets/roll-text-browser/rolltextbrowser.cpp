@@ -1,4 +1,5 @@
 #include "rolltextbrowser.h"
+#include <QRegularExpression>
 
 RollTextBrowser::RollTextBrowser(QWidget *parent) : QTextBrowser(parent) {
     setOpenLinks(false);

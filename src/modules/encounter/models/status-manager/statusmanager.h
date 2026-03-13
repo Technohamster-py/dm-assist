@@ -1,8 +1,6 @@
 #ifndef DM_ASSIST_STATUSMANAGER_H
 #define DM_ASSIST_STATUSMANAGER_H
 
-#include <QObject>
-#include <QList>
 #include "src/modules/encounter/initiativestructures.h"
 
 class StatusManager{

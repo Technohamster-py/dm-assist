@@ -2,7 +2,6 @@
 #define DM_ASSIST_AREASHAPETOOL_H
 
 #include "src/modules/map/tools/abstractmaptool.h"
-#include <QPainterPath>
 #include <QGraphicsPathItem>
 
 class AreaShapeTool : public AbstractMapTool{

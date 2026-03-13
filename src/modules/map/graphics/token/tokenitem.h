@@ -1,7 +1,6 @@
 #ifndef DM_ASSIST_TOKENITEM_H
 #define DM_ASSIST_TOKENITEM_H
 
-#include <QGraphicsObject>
 #include <QJsonObject>
 #include "src/modules/map/graphics/text/fixedsizetextitem.h"
 

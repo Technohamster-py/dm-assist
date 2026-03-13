@@ -4,8 +4,6 @@
 #include <QGraphicsView>
 #include "src/modules/map/scene/mapscene.h"
 
-
-
 class SharedMapView : public QGraphicsView {
     Q_OBJECT
 public:

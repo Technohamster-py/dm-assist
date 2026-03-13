@@ -7,10 +7,7 @@
 #define MAPVIEW_H
 
 #include <QGraphicsView>
-#include <QWheelEvent>
-#include <QKeyEvent>
 #include <QLabel>
-#include <QGraphicsPixmapItem>
 #include "mapscene.h"
 #include "src/modules/map/tools/abstractmaptool.h"
 

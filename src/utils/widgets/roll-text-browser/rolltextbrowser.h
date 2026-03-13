@@ -2,7 +2,6 @@
 #define DM_ASSIST_ROLLTEXTBROWSER_H
 
 #include <QTextBrowser>
-#include <QRegularExpression>
 
 class RollTextBrowser : public QTextBrowser{
     Q_OBJECT

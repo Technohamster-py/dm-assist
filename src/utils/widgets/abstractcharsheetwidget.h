@@ -1,8 +1,6 @@
 #ifndef DM_ASSIST_ABSTRACTCHARSHEETWIDGET_H
 #define DM_ASSIST_ABSTRACTCHARSHEETWIDGET_H
 
-#include <QDir>
-#include <QFileInfo>
 #include <QtNetwork>
 #include "src/modules/encounter/widget/initiativetrackerwidget.h"
 

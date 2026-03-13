@@ -1,9 +1,7 @@
 #pragma once
 
-#include <QWidget>
 #include <QPushButton>
 #include <QLabel>
-#include <QHBoxLayout>
 #include <QEvent>
 
 enum class NodeType {

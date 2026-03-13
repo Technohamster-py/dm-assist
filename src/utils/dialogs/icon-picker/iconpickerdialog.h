@@ -9,12 +9,6 @@
 #include <QScrollArea>
 #include <QLabel>
 #include <QDir>
-#include <QFileInfo>
-#include <QDragEnterEvent>
-#include <QDropEvent>
-#include <QMimeData>
-#include <QFile>
-#include <QPointer>
 
 /**
  * @class IconLabel

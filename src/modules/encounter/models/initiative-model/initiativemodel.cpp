@@ -1,5 +1,4 @@
 #include "initiativemodel.h"
-#include <QBrush>
 #include <QApplication>
 #include <QDomDocument>
 #include <QFile>

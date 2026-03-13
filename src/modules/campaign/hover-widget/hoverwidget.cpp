@@ -1,6 +1,8 @@
 #include "hoverwidget.h"
 #include "AdaptiveThemeLib/include/themediconmanager.h"
 
+#include <QHBoxLayout>
+
 /**
  * @brief Constructor for the HoverWidget class.
  *

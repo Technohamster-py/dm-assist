@@ -3,12 +3,12 @@
 #include "ui_playlisteditdialog.h"
 
 #include <QFileDialog>
-#include <QMessageBox>
 #include <QMimeData>
 #include <QFileInfo>
 #include <QDir>
 #include <QFile>
 #include <QStandardPaths>
+#include  <QDragEnterEvent>
 
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>

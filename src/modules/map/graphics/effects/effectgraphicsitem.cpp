@@ -1,5 +1,4 @@
 #include "effectgraphicsitem.h"
-#include <QBrush>
 #include <QPen>
 #include <QJsonObject>
 #include <QJsonArray>

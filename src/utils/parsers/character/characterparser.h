@@ -1,8 +1,6 @@
 #ifndef DM_ASSIST_CHARAСTERPARSER_H
 #define DM_ASSIST_CHARAСTERPARSER_H
 
-#include <QVariant>
-#include <QMap>
 #include <QFileInfo>
 
 #include "dndCharacterData.h"

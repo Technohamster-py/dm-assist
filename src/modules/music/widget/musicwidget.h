@@ -4,8 +4,6 @@
 #include <QCoreApplication>
 #include <QDialog>
 #include <QDomDocument>
-#include <QDragEnterEvent>
-#include <QDropEvent>
 #include <QListWidget>
 #include <QShortcut>
 #include <QStandardPaths>

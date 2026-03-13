@@ -3,8 +3,6 @@
 
 #include <QFile>
 #include <QMessageBox>
-#include <QJsonArray>
-
 
 /**
  * Constructs a DndBestiaryPage widget.

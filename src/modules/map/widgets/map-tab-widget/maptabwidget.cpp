@@ -1,6 +1,10 @@
 #include "maptabwidget.h"
 #include <QMimeData>
 #include <QFileInfo>
+#include <QToolButton>
+#include <QMenu>
+#include <QHBoxLayout>
+#include "themediconmanager.h"
 
 TabWidget::TabWidget(QWidget *parent) : QTabWidget(parent) {
     setTabsClosable(true);

@@ -2,8 +2,6 @@
 #include "src/modules/map/scene/mapscene.h"
 #include <QPainter>
 #include <QRadialGradient>
-#include <QStyleOptionProgressBar>
-
 #include <QDebug>
 
 /**

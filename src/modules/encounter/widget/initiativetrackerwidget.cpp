@@ -1,16 +1,12 @@
 #include <QItemSelectionModel>
 #include <QFileDialog>
 #include <QMessageBox>
-#include <utility>
+#include <QJsonDocument>
 
 #include "initiativetrackerwidget.h"
 #include "src/modules/encounter/delegates/initiativedelegates.h"
 #include "AdaptiveThemeLib/include/themediconmanager.h"
 #include "ui_initiativetrackerwidget.h"
-
-
-#include <qdebug.h>
-
 
 
 /**

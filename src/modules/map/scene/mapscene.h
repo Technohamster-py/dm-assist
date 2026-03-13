@@ -6,9 +6,6 @@
 #ifndef MAPSCENE_H
 #define MAPSCENE_H
 
-#include <QGraphicsScene>
-#include <QGraphicsSceneMouseEvent>
-#include <QGraphicsItem>
 #include <QJsonObject>
 
 #include "src/modules/map/tools/abstractmaptool.h"
