@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QTreeWidget>
 #include <QKeySequenceEdit>
+#include <QSettings>
 #include "src/core/settings.h"
 
 QT_BEGIN_NAMESPACE
