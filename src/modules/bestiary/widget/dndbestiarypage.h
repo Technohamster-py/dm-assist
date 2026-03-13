@@ -1,10 +1,7 @@
 #ifndef DM_ASSIST_DNDBESTIARYPAGE_H
 #define DM_ASSIST_DNDBESTIARYPAGE_H
 
-#include <utility>
-
-
-#include "src/modules/characters/widgets/abstractcharsheetwidget.h"
+#include "src/utils/widgets/abstractcharsheetwidget.h"
 #include "src/utils/parsers/fvtt/fvttparser.h"
 
 

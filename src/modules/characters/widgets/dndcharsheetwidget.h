@@ -1,9 +1,9 @@
 #ifndef DM_ASSIST_DNDCHARSHEETWIDGET_H
 #define DM_ASSIST_DNDCHARSHEETWIDGET_H
 
-#include "abstractcharsheetwidget.h"
+#include "src/utils/widgets/abstractcharsheetwidget.h"
 #include "src/modules/characters/models/dndmodels.h"
-#include "../../../utils/parsers/character/dndCharacterData.h"
+#include "src/utils/parsers/character/dndCharacterData.h"
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QCheckBox>

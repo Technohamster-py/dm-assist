@@ -1,6 +1,6 @@
 #include "tokenitem.h"
 #include "src/modules/map/scene/mapscene.h"
-#include "src/modules/characters/widgets/abstractcharsheetwidget.h"
+#include "src/utils/widgets/abstractcharsheetwidget.h"
 #include "src/utils/parsers/fvtt/fvttparser.h"
 #include "src/utils/parsers/character/characterparser.h"
 #include <QGraphicsSceneContextMenuEvent>
