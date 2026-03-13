@@ -36,7 +36,7 @@ set(FILES
         src/modules/campaign/tree-widget/campaigntreewidget.cpp src/modules/campaign/tree-widget/campaigntreewidget.h
         src/modules/characters/dialogs/dndcharsheetdialogs.cpp src/modules/characters/dialogs/dndcharsheetdialogs.h
         src/modules/characters/models/dndmodels.cpp src/modules/characters/models/dndmodels.h
-        src/modules/characters/widgets/abstractcharsheetwidget.h
+        src/utils/widgets/abstractcharsheetwidget.h
         src/modules/characters/widgets/dndcharsheetwidget.cpp src/modules/characters/widgets/dndcharsheetwidget.h
         src/modules/encounter/delegates/initiativedelegates.cpp src/modules/encounter/delegates/initiativedelegates.h
         src/modules/encounter/dialogs/statuseditdialog.cpp src/modules/encounter/dialogs/statuseditdialog.h
@@ -211,20 +211,23 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
-        "${TEMPLATE_DIR}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/${TEMPLATE_DIR}"
         "${CMAKE_BINARY_DIR}/file-templates"
+        COMMENT "Copying file templates..."
 )
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
-        "${ICON_DIR}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/${ICON_DIR}"
         "${CMAKE_BINARY_DIR}/iconset"
+        COMMENT "Copying icons..."
 )
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
-        "${TEXTURES_DIR}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/${TEXTURES_DIR}"
         "${CMAKE_BINARY_DIR}/textures"
+        COMMENT "Copying textures..."
 )
 
 
