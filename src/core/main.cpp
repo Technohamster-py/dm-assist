@@ -1,5 +1,3 @@
-#include <QApplication>
-
 #include "mainwindow.h"
 #include "src/core/dialogs/startup-dialog/recentcampaigndialog.h"
 #include "settings.h"

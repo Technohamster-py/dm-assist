@@ -4,7 +4,6 @@
 #include <QPushButton>
 #include <QDesktopServices>
 #include <QUrl>
-#include <utility>
 
 UpdateBannerWidget::UpdateBannerWidget(QWidget *parent, QString versionUrl, QString currentVersion,
                                        QString latestVersion)

@@ -1,7 +1,6 @@
 #ifndef DM_ASSIST_UPDATEMANAGER_H
 #define DM_ASSIST_UPDATEMANAGER_H
 
-#include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QJsonDocument>
 #include <QJsonObject>

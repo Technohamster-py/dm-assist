@@ -1,6 +1,9 @@
 #include "saveconfigdialog.h"
 #include "QStandardPaths"
 
+#include <QPushButton>
+#include <QHBoxLayout>
+
 /**
  * @class SaveConfigDialog
  * @brief A dialog window for saving project configurations.

@@ -4,12 +4,8 @@
 #include <QFileDialog>
 #include <QDialog>
 #include <QLineEdit>
-#include <QPushButton>
 #include <QLabel>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
 #include <QDir>
-#include <QFile>
 
 /**
  * @class SaveConfigDialog

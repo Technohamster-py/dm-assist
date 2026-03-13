@@ -8,7 +8,6 @@
 #include <QDesktopServices>
 #include "QDomDocument"
 #include <QFile>
-#include <QFileDialog>
 #include <QColorDialog>
 #include <QCheckBox>
 #include <QFileInfo>
@@ -26,8 +25,6 @@
 
 #include "thememanager.h"
 #include "themediconmanager.h"
-
-#include <QDebug>
 
 static void copyAllFiles(const QString& sourcePath, const QString& destPath);
 static void moveAllFiles(const QString& sourcePath, const QString& destPath);

@@ -1,11 +1,8 @@
 #ifndef DM_ASSIST_MAINWINDOW_H
 #define DM_ASSIST_MAINWINDOW_H
 
-#include "QAction"
 #include <QMainWindow>
 #include <QActionGroup>
-#include <QSettings>
-#include <QShortcut>
 #include <QTranslator>
 #include <QProgressBar>
 #include "src/modules/campaign/tree-widget/campaigntreewidget.h"

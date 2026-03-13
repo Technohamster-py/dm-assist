@@ -2,13 +2,10 @@
 #include "ui_settingsdialog.h"
 
 #include <QSettings>
-#include <QToolTip>
 #include <QStandardPaths>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QStyleFactory>
-#include <QColorDialog>
-#include <QXmlStreamWriter>
 #include <QXmlStreamReader>
 #include <QColorDialog>
 #include <utility>

@@ -2,7 +2,6 @@
 #define DM_ASSIST_SETTINGS_H
 
 #include <QString>
-#include <QSettings>
 
 #define ORGANIZATION_NAME "Technohamster"
 #define ORGANIZATION_DOMAIN "github.com/Technohamster-py"
