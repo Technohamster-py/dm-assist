@@ -7,96 +7,93 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 
-set(BASS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/bass/include)
-set(TEMPLATE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/file-templates)
-set(ICON_DIR ${CMAKE_CURRENT_SOURCE_DIR}/iconset)
-set(TEXTURES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/textures)
+set(BASS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/bass/include)
+set(TEMPLATE_DIR resources/file-templates)
+set(ICON_DIR resources/iconset)
+set(TEXTURES_DIR resources/textures)
 if (WIN32)
     set(CMAKE_PREFIX_PATH "C:/Qt/Qt6/6.9.0/mingw_64/lib/cmake")
-    set(BASS_DLL "${CMAKE_SOURCE_DIR}/lib/bass/win/bass.dll")
+    set(BASS_DLL "${CMAKE_SOURCE_DIR}/3rdparty/bass/win/bass.dll")
     set(BASS_LIBRARY ${CMAKE_SOURCE_DIR}/lib/bass/win/bass.lib)
 elseif (UNIX AND NOT APPLE)
     set(CMAKE_PREFIX_PATH "/usr/local/qt/Qt-6.6.1")
-    set(BASS_LIBRARY ${CMAKE_SOURCE_DIR}/lib/bass/linux/libbass.so)
-    set(BASS_DLL "${CMAKE_SOURCE_DIR}/lib/bass/linux/libbass.so")
+    set(BASS_LIBRARY ${CMAKE_SOURCE_DIR}/3rdparty/bass/linux/libbass.so)
+    set(BASS_DLL "${CMAKE_SOURCE_DIR}/3rdparty/bass/linux/libbass.so")
 endif ()
 
 
 set(FILES
-        bestiary-widget/fvttparser.h    bestiary-widget/fvttparser.cpp
-        bestiary-widget/dndbestiarypage.h bestiary-widget/dndbestiarypage.cpp
-        bestiary-widget/dndbeaststructure.h
-        bestiary-widget/rolltextbrowser.h bestiary-widget/rolltextbrowser.cpp
-        campaign-tree-widget/campaigntreewidget.cpp campaign-tree-widget/campaigntreewidget.h
-        campaign-tree-widget/hoverwidget.cpp    campaign-tree-widget/hoverwidget.h
-        charsheet-widget/abstractcharsheetwidget.h
-        charsheet-widget/characterparser.h charsheet-widget/characterparser.cpp
-        charsheet-widget/dndcharsheetwidget.h charsheet-widget/dndcharsheetwidget.cpp
-        charsheet-widget/dndcharsheetdialogs.h charsheet-widget/dndcharsheetdialogs.cpp
-        charsheet-widget/dndmodels.h charsheet-widget/dndmodels.cpp
-        charsheet-widget/textclickablecheckbox.h    charsheet-widget/textclickablecheckbox.cpp
-        error-handler/errorhandler.h    error-handler/errorhandler.cpp
-        initiative-tracker/initiativemodel.h    initiative-tracker/initiativemodel.cpp
-        initiative-tracker/initiativestructures.h
-        initiative-tracker/statuseditdialog.h   initiative-tracker/statuseditdialog.cpp
-        initiative-tracker/statusmanager.cpp    initiative-tracker/statusmanager.h
-        mainwindow.h    mainwindow.cpp
-        map-widget/abstractmaptool.h
-        map-widget/brushtool.h  map-widget/brushtool.cpp
-        map-widget/calibrationtool.h    map-widget/calibrationtool.cpp
-        map-widget/fixedsizetextitem.h          map-widget/fixedsizetextitem.cpp
-        map-widget/fogtool.h    map-widget/fogtool.cpp
-        map-widget/griditem.h   map-widget/griditem.cpp
-        map-widget/heightmaptool.h  map-widget/heightmaptool.cpp
-        map-widget/lighttool.h  map-widget/lighttool.cpp
-        map-widget/mapview.h    map-widget/mapview.cpp
-        map-widget/mapscene.h   map-widget/mapscene.cpp
-        map-widget/maptabwidget.h   map-widget/maptabwidget.cpp
-        map-widget/rulertool.h map-widget/rulertool.cpp
-        map-widget/sharedmapwindow.h    map-widget/sharedmapwindow.cpp
-        map-widget/spellshapetool.h     map-widget/spellshapetool.cpp
-        map-widget/tokenitem.h  map-widget/tokenitem.cpp
-        map-widget/undostack.h
-        music-widget/musicwidget.h music-widget/musicwidget.cpp
-        icon-picker/iconpickerdialog.h  icon-picker/iconpickerdialog.cpp
-        initiative-tracker/initiativetrackerwidget.h initiative-tracker/initiativetrackerwidget.cpp
-        roll-widget/rollwidget.h    roll-widget/rollwidget.cpp
-        initiative-tracker/initiativedelegates.h initiative-tracker/initiativedelegates.cpp
-        saveconfigdialog.h saveconfigdialog.cpp
-        settingsdialog.h    settingsdialog.cpp
-        settings.h
-        updatechecker.h updatechecker.cpp
-        recentcampaigndialog.cpp
-        recentcampaigndialog.h
-        map-widget/texturepickerdialog.h
-        map-widget/effectgrapchicsitem.cpp
-        map-widget/effectgrapchicsitem.h
-        map-widget/areashapetool.cpp
-        map-widget/areashapetool.h
+        src/core/dialogs/save-config-dialog/saveconfigdialog.cpp src/core/dialogs/save-config-dialog/saveconfigdialog.h
+        src/core/dialogs/settings-dialog/settingsdialog.cpp src/core/dialogs/settings-dialog/settingsdialog.h
+        src/core/dialogs/startup-dialog/recentcampaigndialog.cpp src/core/dialogs/startup-dialog/recentcampaigndialog.h
+        src/core/mainwindow.cpp src/core/mainwindow.h
+        src/core/settings.h
+        src/core/update-manager/updatemanager.cpp src/core/update-manager/updatemanager.h
+        src/utils/dialogs/icon-picker/iconpickerdialog.cpp src/utils/dialogs/icon-picker/iconpickerdialog.h
+        src/utils/parsers/fvtt/dndbeaststructure.h
+        src/modules/bestiary/widget/dndbestiarypage.cpp src/modules/bestiary/widget/dndbestiarypage.h
+        src/modules/campaign/hover-widget/hoverwidget.cpp src/modules/campaign/hover-widget/hoverwidget.h
+        src/modules/campaign/tree-widget/campaigntreewidget.cpp src/modules/campaign/tree-widget/campaigntreewidget.h
+        src/modules/characters/dialogs/dndcharsheetdialogs.cpp src/modules/characters/dialogs/dndcharsheetdialogs.h
+        src/modules/characters/models/dndmodels.cpp src/modules/characters/models/dndmodels.h
+        src/utils/widgets/abstractcharsheetwidget.h
+        src/modules/characters/widgets/dndcharsheetwidget.cpp src/modules/characters/widgets/dndcharsheetwidget.h
+        src/modules/encounter/delegates/initiativedelegates.cpp src/modules/encounter/delegates/initiativedelegates.h
+        src/modules/encounter/dialogs/statuseditdialog.cpp src/modules/encounter/dialogs/statuseditdialog.h
+        src/modules/encounter/initiativestructures.h
+        src/modules/encounter/models/initiative-model/initiativemodel.cpp src/modules/encounter/models/initiative-model/initiativemodel.h
+        src/modules/encounter/models/status-manager/statusmanager.cpp src/modules/encounter/models/status-manager/statusmanager.h
+        src/modules/encounter/widget/initiativetrackerwidget.cpp src/modules/encounter/widget/initiativetrackerwidget.h
+        src/modules/map/graphics/effects/effectgraphicsitem.cpp src/modules/map/graphics/effects/effectgraphicsitem.h
+        src/modules/map/graphics/grid/griditem.cpp src/modules/map/graphics/grid/griditem.h
+        src/modules/map/graphics/text/fixedsizetextitem.cpp src/modules/map/graphics/text/fixedsizetextitem.h
+        src/modules/map/graphics/token/tokenitem.cpp src/modules/map/graphics/token/tokenitem.h
+        src/modules/map/scene/mapscene.cpp src/modules/map/scene/mapscene.h
+        src/modules/map/scene/mapview.cpp src/modules/map/scene/mapview.h
+        src/modules/map/utils/undostack.h
+        src/modules/map/tools/abstractmaptool.h
+        src/modules/map/tools/area-shape/areashapetool.cpp src/modules/map/tools/area-shape/areashapetool.h
+        src/modules/map/tools/brush/brushtool.cpp src/modules/map/tools/brush/brushtool.h
+        src/modules/map/tools/calibration/calibrationtool.cpp src/modules/map/tools/calibration/calibrationtool.h
+        src/modules/map/tools/fog/fogtool.cpp src/modules/map/tools/fog/fogtool.h
+        src/modules/map/tools/height-map/heightmaptool.cpp src/modules/map/tools/height-map/heightmaptool.h
+        src/modules/map/tools/light/lighttool.cpp src/modules/map/tools/light/lighttool.h
+        src/modules/map/tools/ruler/rulertool.cpp src/modules/map/tools/ruler/rulertool.h
+        src/modules/map/tools/spell-shape/spellshapetool.cpp src/modules/map/tools/spell-shape/spellshapetool.h
+        src/modules/map/widgets/map-tab-widget/maptabwidget.cpp src/modules/map/widgets/map-tab-widget/maptabwidget.h
+        src/modules/map/widgets/shared-map-window/sharedmapwindow.cpp src/modules/map/widgets/shared-map-window/sharedmapwindow.h
+        src/modules/map/dialogs/texturepickerdialog.h
+        src/modules/music/widget/musicwidget.cpp src/modules/music/widget/musicwidget.h
+        src/modules/rolls/roll-widget/rollwidget.cpp src/modules/rolls/roll-widget/rollwidget.h
+        src/utils/error-handler/errorhandler.cpp src/utils/error-handler/errorhandler.h
+        src/utils/parsers/character/characterparser.cpp src/utils/parsers/character/characterparser.h
+        src/utils/parsers/fvtt/fvttparser.cpp src/utils/parsers/fvtt/fvttparser.h
+        src/utils/widgets/roll-text-browser/rolltextbrowser.cpp src/utils/widgets/roll-text-browser/rolltextbrowser.h
+        src/utils/widgets/text-clickable-checkbox/textclickablecheckbox.cpp src/utils/widgets/text-clickable-checkbox/textclickablecheckbox.h
 )
 
 set(UI_FILES
-        charsheet-widget/dndcharsheetwidget.ui
-        charsheet-widget/attackdialog.ui
-        charsheet-widget/resourcedialog.ui
-        mainwindow.ui
-        music-widget/musicplayer.ui
-        music-widget/playlisteditdialog.ui
-        initiative-tracker/initiativetrackerwidget.ui
-        roll-widget/rollwidget.ui
-        initiative-tracker/statuseditdialog.ui
-        settingsdialog.ui
-        bestiary-widget/dndbestiarypage.ui
-        charsheet-widget/dndCharacterData.h
+        src/modules/characters/widgets/dndcharsheetwidget.ui
+        src/modules/characters/dialogs/attackdialog.ui
+        src/modules/characters/dialogs/resourcedialog.ui
+        src/core/mainwindow.ui
+        src/modules/music/widget/musicplayer.ui
+        src/modules/music/widget/playlisteditdialog.ui
+        src/modules/encounter/widget/initiativetrackerwidget.ui
+        src/modules/rolls/roll-widget/rollwidget.ui
+        src/modules/encounter/dialogs/statuseditdialog.ui
+        src/core/dialogs/settings-dialog/settingsdialog.ui
+        src/modules/bestiary/widget/dndbestiarypage.ui
+        src/utils/parsers/character/dndCharacterData.h
 )
 
 set(TS_FILES
-        translations/dm-assist_en_US.ts
-        translations/dm-assist_ru_RU.ts
+        resources/translations/dm-assist_en_US.ts
+        resources/translations/dm-assist_ru_RU.ts
 )
 
 
-set(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/static/app_resources.qrc)
+set(RESOURCES resources/static/app_resources.qrc)
 
 add_subdirectory(AdaptiveThemeLib)
 
@@ -122,13 +119,11 @@ include_directories(
         ${Qt6Multimedia_INCLUDE_DIRS}
         ${BASS_INCLUDE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}
-        bestiary-widget
-        error-handler
-        translations
-        static
-        theme-manager
-        icon-picker
-        charsheet-widget
+        resources/translations
+        resources/static
+        src/core/update-manager
+        src/utils/widgets/roll-text-browser
+        src/utils/widgets/text-clickable-checkbox
 )
 
 qt_add_translation(QM_FILES ${TS_FILES})
@@ -136,7 +131,7 @@ qt_add_translation(QM_FILES ${TS_FILES})
 
 add_executable(${PROJECT_NAME}
         WIN32
-        main.cpp
+        src/core/main.cpp
         ${FILES}
         ${UI_FILES}
         ${RESOURCES_ADD}
@@ -186,7 +181,7 @@ if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     endforeach (QT_LIB)
 
 
-    set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/static/win_resources.rc")
+    set(APP_ICON_RESOURCE_WINDOWS "resources/static/win_resources.rc")
     target_sources(${PROJECT_NAME} PRIVATE ${APP_ICON_RESOURCE_WINDOWS})
 endif ()
 
@@ -214,24 +209,25 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMENT "Copying bass..."
 )
 
-
-
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
-        "${TEMPLATE_DIR}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/${TEMPLATE_DIR}"
         "${CMAKE_BINARY_DIR}/file-templates"
+        COMMENT "Copying file templates..."
 )
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
-        "${ICON_DIR}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/${ICON_DIR}"
         "${CMAKE_BINARY_DIR}/iconset"
+        COMMENT "Copying icons..."
 )
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
-        "${TEXTURES_DIR}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/${TEXTURES_DIR}"
         "${CMAKE_BINARY_DIR}/textures"
+        COMMENT "Copying textures..."
 )
 
 

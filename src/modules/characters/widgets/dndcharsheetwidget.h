@@ -1,0 +1,74 @@
+#ifndef DM_ASSIST_DNDCHARSHEETWIDGET_H
+#define DM_ASSIST_DNDCHARSHEETWIDGET_H
+
+#include "src/utils/widgets/abstractcharsheetwidget.h"
+#include "src/modules/characters/models/dndmodels.h"
+#include "src/utils/parsers/character/dndCharacterData.h"
+#include <QJsonDocument>
+#include <QCheckBox>
+#include <QShortcut>
+#include <QSpinBox>
+#include <QTextEdit>
+
+QT_BEGIN_NAMESPACE
+namespace Ui { class DndCharsheetWidget; }
+QT_END_NAMESPACE
+
+/**
+ * @brief Represents a widget for managing and displaying Dungeons & Dragons character sheet.
+ *
+ * This widget provides functionality to load, save, and manipulate character sheets
+ * for Dungeons & Dragons gameplay. It offers derived features such as interaction
+ * with initiative trackers, dynamic UI updates, and handling of character-specific data.
+ */
+class DndCharsheetWidget : public AbstractCharsheetWidget {
+Q_OBJECT
+
+public:
+    explicit DndCharsheetWidget(QWidget* parent = nullptr);
+    explicit DndCharsheetWidget(const QString& filePath, QWidget* parent = nullptr);
+    ~DndCharsheetWidget() override;
+
+    void loadFromFile(const QString &path) override;
+    void saveToFile(QString path) override;
+
+    void addToInitiative(InitiativeTrackerWidget *initiativeTrackerWidget, bool autoRoll = false) override;
+    void setTokenPixmap(const QString& filePath) override;
+
+    static int bonusFromStat(int statValue) {return (statValue >= 10) ? (statValue - 10) / 2 : (statValue - 11) / 2;};
+    static QString bonusFromString(const QString& string);
+    static int proficiencyByLevel(int level) {return level / 5 + 2;};
+
+public slots:
+    void updateTranslator() override;
+
+protected:
+    bool downloadToken(const QString &link) override;
+private:
+    Ui::DndCharsheetWidget *ui;
+
+    QJsonDocument m_originalDocument;
+    QJsonObject m_dataObject;
+
+    void populateWidget(const DndCharacterData& data);
+    void connectSignals();
+    void setupShortcuts();
+    void updateCheckBox(QCheckBox* checkBox, QSpinBox* baseSpinBox);
+    void updateCheckBoxes();
+
+    static QTextEdit* getFocusedEdit();
+
+    QShortcut* m_boldShortcut;
+    QShortcut* m_italicShortcut;
+    QShortcut* m_underlineShortcut;
+
+    DndAttackModel* attackModel;
+    DndResourceModel* resourceModel;
+
+    DndCharacterData collectData();
+
+    void closeEvent(QCloseEvent *event) override;
+};
+
+
+#endif //DM_ASSIST_DNDCHARSHEETWIDGET_H

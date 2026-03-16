@@ -11,7 +11,7 @@ This tool originated from the idea that it's inconvenient to make several clicks
 Gradually, the project gained new features, eventually evolving into a more convenient, modern, and intuitive alternative to
 DM helper.
 
-![img.png](illustrations/main-screen.png)
+![img.png](resources/illustrations/main-screen.png)
 
 # Table of Contents
 - [Support](#support)
@@ -41,7 +41,7 @@ the DM-assist executable.
 Settings can be accessed via the menu panel `Campaign -> Settings` or by using the shortcut `ctrl+alt+s`
 
 ### General
-![settings-common.png](illustrations/settings-common.png)
+![settings-common.png](resources/illustrations/settings-common.png)
 - **Language** determines the localization of the application. Russian and English versions are available out of the box. You can download localization file [here](https://github.com/Technohamster-py/dm-assist/issues/42)  
 [How to add a new localization](https://github.com/Technohamster-py/dm-assist/wiki/Loacalisation)
 - **Audio output** determines the device that will play music from the players.
@@ -50,14 +50,14 @@ broadcast music during an online game.
 - **Working directory** determines where temporary files needed by the program will be stored.
 
 ### Appearance
-![settings-appearance.png](illustrations/settings-appearance.png)
+![settings-appearance.png](resources/illustrations/settings-appearance.png)
 - **Theme** sets the application theme. Click _browse_ to choose a new, non-default theme in XML format.
 The file will be copied into the program's folder and will later be available in the settings menu.
 - **Style** defines the style of rendering graphical interface elements. **_ Recommended style is fusion_**
 - **Token name mode** and **Token font size** are responsible for the mode and parameters of drawing signatures with the names of characters on the map (for more information, see [Tokens](#using-tokens))
 
 ### Initiative Tracker
-![settings-tracker.png](illustrations/settings-tracker.png)
+![settings-tracker.png](resources/illustrations/settings-tracker.png)
 - **Shared fields** – determines which tracker fields are shown in the player window.
 [details](#shared-access)
 - **HP display mode** – defines how character health is shown in the player window
@@ -68,25 +68,25 @@ Press <img alt="play.png" height="20" src="static/play.svg" width="20"/> to star
 
 Each playlist can have its volume adjusted independently using its individual slider. Additionally, you can adjust the overall volume using the large slider below all players.
 
-![img.png](illustrations/music-widget.png)
+![img.png](resources/illustrations/music-widget.png)
 
 Click <img alt="edit.png" height="20" src="static/edit.svg" width="20"/> to open the playlist editing window. Here, you can set the display name, add (+), delete (select and press -), and reorder (drag and drop) tracks.
 After closing the dialog, selected files are copied to the program’s working folder. This folder is cleared when the program is closed.
 
-![img.png](illustrations/playlist-edit.png)
+![img.png](resources/illustrations/playlist-edit.png)
 
 ## Initiative Tracker
-<img src="illustrations/tracker.png" width="400">
+<img src="resources/illustrations/tracker.png" width="400">
 
 Column descriptions:
 - The currently active character is highlighted.
-- <img src="static/d20.svg" width="20"> - initiative column
-- <img src="static/shield.svg" width="20"> - armor class column
-- <img src="static/heart.svg" width="20"> - current HP column
+- <img src="resources/static/d20.svg" width="20"> - initiative column
+- <img src="resources/static/shield.svg" width="20"> - armor class column
+- <img src="resources/static/heart.svg" width="20"> - current HP column
 
 You can enter simple arithmetic expressions in the HP column to ease calculations. They are evaluated once the cell loses focus.
 
-![evaluation.png](illustrations/evaluation.png) -> ![img.png](illustrations/evaluation-complete.png)
+![evaluation.png](resources/illustrations/evaluation.png) -> ![img.png](resources/illustrations/evaluation-complete.png)
 
 Controls:
 - Press <img src="static/forward.svg" width="20"> or <img src="static/back.svg" width="20"> to move to the next or previous character. You can also use `PageUp` and `PageDown`.
@@ -101,7 +101,7 @@ Controls:
 ### Shared Access
 Press <img src="static/share.svg" width="20"> to open the shared tracker window
 
-<img src="illustrations/shared-tracker-standard.png">
+<img src="resources/illustrations/shared-tracker-standard.png">
 
 This is a pop-up widget to show the tracker to players. You can configure visibility of each column.
 
@@ -112,7 +112,7 @@ In the shared view window, HP can be displayed as:
 - Progress bar
 
 ## Map
-![map-main.png](illustrations/map-main.png)
+![map-main.png](resources/illustrations/map-main.png)
 
 To open a new map, click the corresponding button if no maps are open, or click **+** to the right of all map tabs. To add a map to a campaign, use the menu `Campaign -> Add -> Map`.
 
@@ -138,7 +138,7 @@ Click twice on the map to mark a segment, then enter the distance in the dialog.
 After calibration, the ruler automatically enters measurement mode.
 
 Click twice on the map to show distance.
-![measure.png](illustrations/measure.png)
+![measure.png](resources/illustrations/measure.png)
 
 To delete lines or text, right-click them with the ruler tool active.
 
@@ -147,7 +147,7 @@ To add fog, use <img src="static/fog_hide.svg" width="20">, to remove use <img s
 You can hide or reveal the whole map by right-clicking the respective fog button and choosing **Hide all** or **Reveal all**.
 
 ### Light
-![light.png](illustrations/light.png)
+![light.png](resources/illustrations/light.png)
 
 The _light_ tool <img src="static/torch.svg" width="20"> adds light sources to the map. Drag existing sources with this tool to move them.
 
@@ -160,7 +160,7 @@ Check **_update fog_** so fog is automatically cleared when placing or moving li
 Right-click a light source with the tool active to delete it.
 
 ### Effect Shapes
-![shapes.png](illustrations/shapes.png)
+![shapes.png](resources/illustrations/shapes.png)
 
 The _shapes_ tool lets you draw spell areas on the map.
 
@@ -180,7 +180,7 @@ Right-click a shape to delete it.
 
 ### Brush
 
-![brush.png](illustrations/brush.png)
+![brush.png](resources/illustrations/brush.png)
 
 The _brush_ tool <img src="static/brush.svg" width="20"> allows freehand drawing on the map.
 
@@ -192,8 +192,8 @@ Right-click a drawn line to delete it.
 
 
 ### Grid
-![grid-square.png](illustrations/grid-square.png)
-![grid-hex.png](illustrations/grid-hex.png)
+![grid-square.png](resources/illustrations/grid-square.png)
+![grid-hex.png](resources/illustrations/grid-hex.png)
 
 A square or hexagonal grid can be applied to the map. The mode is selected by switching the drop-down list.
 
@@ -205,7 +205,7 @@ Campaigns allow you to store maps, characters, encounters, and playlists togethe
 ### Creating a New Campaign
 Select the menu `Campaign -> New` or press `ctrl + N`.
 
-![create-campaign-dialog.png](illustrations/create-campaign-dialog.png)
+![create-campaign-dialog.png](resources/illustrations/create-campaign-dialog.png)
 
 In the dialog, enter a name and project folder. The folder must be empty or not exist (the app will create it).
 
@@ -221,7 +221,7 @@ Playlists are automatically set when the campaign opens. All music-related work 
 
 A navigation tree appears on the left side.
 
-![campaign-tree.png](illustrations/campaign-tree.png)
+![campaign-tree.png](resources/illustrations/campaign-tree.png)
 
 Hovering over an element shows interaction buttons.
 
@@ -248,7 +248,7 @@ If the grid is enabled on the map, the token will be magnetically attached to it
 To add/replace an image to a character, upload the image to the Tokens folder of your campaign.
 > Important: When using character files with LSS, tokens may not be downloaded automatically due to server unavailability. In this case, download the image manually to the Tokens folder **with exactly the file name that LSS suggests.**
 
-![tokens.png](illustrations/tokens.png)
+![tokens.png](resources/illustrations/tokens.png)
 
 For tokens, you can change the display mode and font size of the name signature in [settings](#appearance). There are 3 display options in total
 - Always display
@@ -268,7 +268,7 @@ Note: Compatibility is one-way. Characters created here may not work in LSS.
 
 To open a character sheet, click <img src="static/edit.svg" width="20"> in the campaign tree.
 
-![charsheet.png](illustrations/charsheet.png)
+![charsheet.png](resources/illustrations/charsheet.png)
 
 All stat bonuses, attack bonuses (except damage), and abilities are calculated automatically based on inputs.
 
