@@ -508,6 +508,8 @@ void MainWindow::loadSettings() {
     squareButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.square).toString()));
     triangleButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.triangle).toString()));
     lassoButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.lasso).toString()));
+
+    ThemeManager::refreshStyleSheet();
 }
 
 /**
