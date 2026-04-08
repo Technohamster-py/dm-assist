@@ -252,9 +252,6 @@ foreach(qm ${QM_FILES})
     )
 endforeach()
 
-
-
-
 # Команда для обновления .ts файлов (переводов) с помощью lupdate
 find_program(LUPDATE_EXECUTABLE lupdate HINTS "${QT_INSTALL_PATH}/bin")
 
