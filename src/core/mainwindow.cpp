@@ -448,13 +448,15 @@ void MainWindow::loadSettings() {
     /// Appearance
     QString theme = settings.value(paths.appearance.theme, "Light").toString();
     if (theme == "Light")
-        ThemeManager::applyPreset(ThemeManager::PresetTheme::Light);
+        ThemeManager::instance().setPalettePreset(PaletteManager::PresetPalette::Light);
     else if (theme == "Dark")
-        ThemeManager::applyPreset(ThemeManager::PresetTheme::Dark);
+        ThemeManager::instance().setPalettePreset(PaletteManager::PresetPalette::Dark);
     else if (theme == "System")
-        ThemeManager::resetToSystemTheme();
+        ThemeManager::instance().resetToSystemTheme();
     else
-        ThemeManager::loadFromXml(theme);
+        ThemeManager::instance().setPaletteFile(theme);
+
+    ThemeManager::instance().refresh();
 
     QString style = settings.value(paths.appearance.style, "Fusion").toString();
     QApplication::setStyle(QStyleFactory::create(style));
@@ -508,8 +510,6 @@ void MainWindow::loadSettings() {
     squareButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.square).toString()));
     triangleButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.triangle).toString()));
     lassoButton->setShortcut(QKeySequence(settings.value(paths.hotkeys.lasso).toString()));
-
-    ThemeManager::refreshStyleSheet();
 }
 
 /**
