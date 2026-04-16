@@ -9,7 +9,10 @@ int main(int argc, char *argv[]) {
     qRegisterMetaType<QList<Status>>();
     QApplication a(argc, argv);
 
-    // QLoggingCategory::setFilterRules("*.debug=false");
+    QLoggingCategory::setFilterRules(
+        "*.debug=false\n"
+        // "*ui.*=false"
+        );
     qSetMessagePattern("[%{time yyyy.MM.dd h:mm:ss.zzz ttt} %{if-debug}D%{endif}%{if-info}I%{endif}%{if-warning}W%{endif}%{if-critical}C%{endif}%{if-fatal}F%{endif}]:: %{if-category}%{category}: %{endif}%{if-critical}|IN %{function}| %{endif}%{if-fatal}|IN %{function}| %{endif}%{message}");
 
     QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
