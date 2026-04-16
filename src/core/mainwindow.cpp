@@ -408,7 +408,6 @@ void MainWindow::loadMusicConfigFile(QString fileName) {
 void MainWindow::loadSettings() {
     QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
     /// General
-    workingDir = settings.value(paths.general.dir, workingDir).toString();
     QDir dir(workingDir);
     if (!dir.exists())
         dir.mkpath(".");
@@ -446,20 +445,8 @@ void MainWindow::loadSettings() {
     initiativeTrackerWidget->setActiveColor(activeColor);
 
     /// Appearance
-    QString theme = settings.value(paths.appearance.theme, "Light").toString();
-    if (theme == "Light")
-        ThemeManager::instance().setPalettePreset(PaletteManager::PresetPalette::Light);
-    else if (theme == "Dark")
-        ThemeManager::instance().setPalettePreset(PaletteManager::PresetPalette::Dark);
-    else if (theme == "System")
-        ThemeManager::instance().resetToSystemTheme();
-    else
-        ThemeManager::instance().setPaletteFile(theme);
-
-    ThemeManager::instance().refresh();
-
-    QString style = settings.value(paths.appearance.style, "Fusion").toString();
-    QApplication::setStyle(QStyleFactory::create(style));
+    ThemeManager::instance().applyStyle(settings.value(paths.appearance.style, "Fusion").toString());
+    ThemeManager::instance().applyPalette(settings.value(paths.appearance.theme, "Light").toString());
 
     ui->splitter->restoreState(settings.value(paths.appearance.stretch).toByteArray());
 
@@ -860,7 +847,6 @@ void MainWindow::saveMusicConfigFile(const QString& fileName) {
  */
 void MainWindow::saveSettings() {
     QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
-    settings.setValue(paths.general.dir, workingDir);
     settings.setValue(paths.general.volume, ui->volumeSlider->value());
     settings.setValue(paths.general.defaultCampaignDir, defaultCampaignDir);
     settings.setValue(paths.session.recent, m_recentCampaignList);

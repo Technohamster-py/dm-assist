@@ -49,7 +49,7 @@ Q_OBJECT
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-    QString workingDir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/dm_assist_files/";
+
 
     ~MainWindow() override;
 
@@ -85,6 +85,8 @@ private:
     Ui::MainWindow *ui;
     QTranslator translator;
     UpdateManager* updateManager;
+
+    QString workingDir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/dm_assist_files/";
     bool m_checkForUpdates;
     QString currentLanguage;
     QString currentCampaignDir;
