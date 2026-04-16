@@ -5,14 +5,17 @@
 #include <QStandardPaths>
 #include <QFileDialog>
 #include <QMessageBox>
-#include <QStyleFactory>
 #include <QXmlStreamReader>
 #include <QColorDialog>
 #include <utility>
 #include "3rdparty/bass/include/bass.h"
 #include "src/modules/map/graphics/token/tokenitem.h"
 #include "themediconmanager.h"
+#include "palettemanager.h"
+#include "thememanager.h"
 
+
+Q_LOGGING_CATEGORY(settingsCategory, "ui.settings")
 
 /**
  * @brief Constructor for the SettingsDialog class.
@@ -126,7 +129,6 @@ void SettingsDialog::loadSettings() {
     QSettings settings(m_organisationName, m_applicationName);
 
     /// General
-    ui->folderEdit->setText(settings.value(paths.general.dir, "").toString());
     ui->deviceComboBox->setCurrentIndex(settings.value(paths.general.audioDevice, 0).toInt());
     QString currentLanguage = settings.value(paths.general.lang, "ru_RU").toString();
     int index = ui->languageComboBox->findData(currentLanguage);
@@ -157,12 +159,12 @@ void SettingsDialog::loadSettings() {
 
     /// Appearance
     QString currentTheme = settings.value(paths.appearance.theme, "Light").toString();
-    index = ui->themeComboBox->findData(currentTheme);
+    index = ui->themeComboBox->findText(currentTheme);
     if (index != -1)
         ui->themeComboBox->setCurrentIndex(index);
 
     QString currentStyle = settings.value(paths.appearance.style, "Fusion").toString();
-    index = ui->styleComboBox->findData(currentStyle);
+    index = ui->styleComboBox->findText(currentStyle);
     if (index != -1)
         ui->styleComboBox->setCurrentIndex(index);
 
@@ -194,24 +196,6 @@ void SettingsDialog::loadSettings() {
 }
 
 /**
- * @brief Handles the click event for the folder selection button in the settings dialog.
- *
- * This method opens a QFileDialog to allow the user to select a directory. If the user selects
- * a valid directory, the selected folder path is set into the folder edit line in the dialog.
- *
- * The method ensures that:
- * - The initial directory displayed in the QFileDialog matches the text currently in the folder edit field.
- * - If the user cancels the dialog or doesn't select a folder, no changes are made to the dialog's folder edit field.
- */
-void SettingsDialog::on_folderButton_clicked() {
-    QString folderName = QFileDialog::getExistingDirectory(this,
-                                                           tr("Select folder"),
-                                                           ui->folderEdit->text().trimmed());
-    if (!folderName.isEmpty())
-        ui->folderEdit->setText(folderName);
-}
-
-/**
  * @brief Slot function triggered when the theme button is clicked.
  *
  * This function allows the user to select a theme file using a file dialog.
@@ -228,21 +212,21 @@ void SettingsDialog::on_folderButton_clicked() {
  * 6. Adds the theme name and its file path as an item in the themeComboBox.
  */
 void SettingsDialog::on_themeButton_clicked() {
-    QString themeFileName = QFileDialog::getOpenFileName(this,
-                                                         tr("Select theme file"),
+    QString paletteFileName = QFileDialog::getOpenFileName(this,
+                                                         tr("Select palette file"),
                                                          QStandardPaths::writableLocation(QStandardPaths::HomeLocation),
                                                          "Xml file (*.xml)");
-    QFileInfo info(themeFileName);
-    QString dest = QCoreApplication::applicationDirPath() + "/themes/" + info.fileName();
+    ThemeManager::instance().addCustomPalette(paletteFileName);
+    populateThemes();
+}
 
-    QDir destDir(QCoreApplication::applicationDirPath() + "/themes");
-    if (!destDir.exists())
-        destDir.mkpath(".");
-    QFile::copy(themeFileName, dest);
-
-    QString themeName = dest.mid(0, dest.length() - 4);
-    ui->themeComboBox->addItem(themeName, dest);
-
+void SettingsDialog::on_styleButton_clicked() {
+    QString styleFileName = QFileDialog::getOpenFileName(this,
+                                                         tr("Select stylesheet file"),
+                                                         QStandardPaths::writableLocation(QStandardPaths::HomeLocation),
+                                                         "Qss file (*.qss)");
+    ThemeManager::instance().addCustomStyle(styleFileName);
+    populateStyles();
 }
 
 /**
@@ -273,7 +257,6 @@ void SettingsDialog::saveSettings() {
     QSettings settings(m_organisationName, m_applicationName);
     /// General
     settings.setValue(paths.general.audioDevice, deviceIndices[ui->deviceComboBox->currentIndex()]);
-    settings.setValue(paths.general.dir, ui->folderEdit->text());
     settings.setValue(paths.general.lang, ui->languageComboBox->currentData().toString());
     settings.setValue(paths.general.startAction, ui->startActionComboBox->currentIndex());
     settings.setValue(paths.general.checkForUpdates, ui->updateCheckerBox->isChecked());
@@ -301,8 +284,8 @@ void SettingsDialog::saveSettings() {
     settings.setValue(paths.initiative.activeColor, ui->colorExamplewidget->item(0)->background().color().name());
 
     /// Appearance
-    settings.setValue(paths.appearance.theme, ui->themeComboBox->currentData().toString());
-    settings.setValue(paths.appearance.style, ui->styleComboBox->currentData().toString());
+    settings.setValue(paths.appearance.theme, ui->themeComboBox->currentText());
+    settings.setValue(paths.appearance.style, ui->styleComboBox->currentText());
 
     /// Map
     settings.setValue(paths.map.tokenTitleMode, ui->tokenComboBox->currentIndex());
@@ -434,23 +417,20 @@ void SettingsDialog::populateLanguages() {
  * are stored as the associated data for each item.
  */
 void SettingsDialog::populateThemes() {
-    QDir themesDir(QCoreApplication::applicationDirPath() + "/themes");
-    QFileInfoList themeFilesInfo = themesDir.entryInfoList(QStringList() << "*.xml", QDir::Files);
+    ui->themeComboBox->clear();
+    QStringList availableThemes = ThemeManager::instance().availablePalettes();
 
-    ui->themeComboBox->addItem("System", "System");
-    ui->themeComboBox->addItem("Light", "Light");
-    ui->themeComboBox->addItem("Dark", "Dark");
-
-    for (const QFileInfo &info: themeFilesInfo) {
-        ui->themeComboBox->addItem(info.completeBaseName(), info.absoluteFilePath());
+    for (const QString& theme : availableThemes) {
+        ui->themeComboBox->addItem(theme);
     }
 }
 
 void SettingsDialog::populateStyles() {
-    QStringList styles = QStyleFactory::keys();
+    ui->styleComboBox->clear();
+    QList<QssManager::StyleInfo> styles = ThemeManager::instance().availableStyles();
 
-    for (const QString& style : styles) {
-        ui->styleComboBox->addItem(style, style);
+    for (const QssManager::StyleInfo& style : styles) {
+        ui->styleComboBox->addItem(style.name);
     }
 }
 
@@ -490,8 +470,8 @@ bool SettingsDialog::validateKeySequences() {
 }
 
 void SettingsDialog::setupIcons() {
-    ThemedIconManager::instance().addIconTarget<QPushButton>(":/folder.svg", ui->folderButton, &QAbstractButton::setIcon);
     ThemedIconManager::instance().addIconTarget<QPushButton>(":/folder.svg", ui->themeButton, &QAbstractButton::setIcon);
+    ThemedIconManager::instance().addIconTarget<QPushButton>(":/folder.svg", ui->styleButton, &QAbstractButton::setIcon);
     ThemedIconManager::instance().addIconTarget<QPushButton>(":/map/palette.svg", ui->activeColorButton, &QAbstractButton::setIcon);
     ThemedIconManager::instance().addPixmapTarget(":/map/ruler.svg", ui->rulerIcon, [label = ui->rulerIcon](const QPixmap& px){label->setPixmap(px);});
     ThemedIconManager::instance().addPixmapTarget(":/map/mountain.svg", ui->heightIcon, [label = ui->heightIcon](const QPixmap& px){label->setPixmap(px);});

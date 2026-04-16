@@ -7,11 +7,13 @@
 #define MAPSCENE_H
 
 #include <QJsonObject>
+#include <QLoggingCategory>
 
 #include "src/modules/map/tools/abstractmaptool.h"
 #include "../utils/undostack.h"
 #include "src/modules/map/graphics/grid/griditem.h"
 
+Q_DECLARE_LOGGING_CATEGORY(mapSceneCategory)
 
 #pragma pack(push, 1)
 struct MapFileHeader {

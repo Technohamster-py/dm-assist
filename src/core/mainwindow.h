@@ -6,6 +6,7 @@
 #include <QTranslator>
 #include <QProgressBar>
 #include <QToolButton>
+#include <QLoggingCategory>
 #include "src/modules/campaign/tree-widget/campaigntreewidget.h"
 #include "src/modules/map/widgets/map-tab-widget/maptabwidget.h"
 #include "src/modules/map/tools/fog/fogtool.h"
@@ -21,6 +22,9 @@
 #include "src/modules/rolls/roll-widget/rollwidget.h"
 #include "src/core/dialogs/settings-dialog/settingsdialog.h"
 #include "src/core/update-manager/updatemanager.h"
+
+
+Q_DECLARE_LOGGING_CATEGORY(mainwindowCategory)
 
 
 static QMap<QString, QString> sourcesMap = {
@@ -49,7 +53,7 @@ Q_OBJECT
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-    QString workingDir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/dm_assist_files/";
+
 
     ~MainWindow() override;
 
@@ -85,6 +89,8 @@ private:
     Ui::MainWindow *ui;
     QTranslator translator;
     UpdateManager* updateManager;
+
+    QString workingDir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/dm_assist_files/";
     bool m_checkForUpdates;
     QString currentLanguage;
     QString currentCampaignDir;
