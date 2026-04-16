@@ -4,6 +4,7 @@
 #include <QFile>
 #include <QMessageBox>
 
+Q_LOGGING_CATEGORY(bestiaryCategory, "ui.charsheet.bestiary")
 /**
  * Constructs a DndBestiaryPage widget.
  *
@@ -107,26 +108,26 @@ void DndBestiaryPage::updateTranslator() {
 bool DndBestiaryPage::downloadToken(const QString &link) {
     QUrl qurl(link);
     if (!qurl.isValid()) {
-        qWarning() << "Invalid URL:" << link;
+        qCWarning(bestiaryCategory) << "Invalid URL:" << link;
         return false;
     }
 
     QString filename = qurl.fileName();
     if (filename.isEmpty()) {
-//        qWarning() << "URL does not contain filename:" << link;
+        qCWarning(bestiaryCategory) << "URL does not contain filename:" << link;
         return false;
     }
 
     QDir dir(m_campaignPath);
     if (!dir.exists()) {
-//        qWarning() << "Campaign dir does not exist:" << m_campaignPath;
+        qCWarning(bestiaryCategory) << "Campaign dir does not exist:" << m_campaignPath;
         return false;
     }
 
     // ensure tokens/ folder
     if (!dir.exists("Tokens")) {
         if (!dir.mkdir("Tokens")) {
-            qWarning() << "Cannot create tokens dir!";
+            qCWarning(bestiaryCategory) << "Cannot create tokens dir!";
             return false;
         }
     }
@@ -134,7 +135,7 @@ bool DndBestiaryPage::downloadToken(const QString &link) {
     QString fullPath = dir.filePath("Tokens/" + filename);
     QFileInfo fi(fullPath);
     if (fi.exists()) {
-//        qInfo() << "Token already exists:" << fullPath;
+        qCInfo(bestiaryCategory) << "Token already exists:" << fullPath;
         setTokenPixmap(fullPath);
         return false;
     }
@@ -145,7 +146,7 @@ bool DndBestiaryPage::downloadToken(const QString &link) {
 
     connect(reply, &QNetworkReply::finished, this, [=]() {
         if (reply->error() != QNetworkReply::NoError) {
-            qWarning() << "Download failed:" << reply->errorString();
+            qCWarning(bestiaryCategory) << "Download failed:" << reply->errorString();
             reply->deleteLater();
             return;
         }
@@ -153,13 +154,13 @@ bool DndBestiaryPage::downloadToken(const QString &link) {
 
         QFile f(fullPath);
         if (!f.open(QIODevice::WriteOnly)) {
-            qWarning() << "Cannot write file:" << fullPath;
+            qCWarning(bestiaryCategory) << "Cannot write file:" << fullPath;
             reply->deleteLater();
             return;
         }
         f.write(data);
         f.close();
-//        qInfo() << "Saved token:" << fullPath;
+        qCInfo(bestiaryCategory) << "Saved token:" << fullPath;
         setTokenPixmap(fullPath);
         reply->deleteLater();
     });

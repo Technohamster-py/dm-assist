@@ -5,7 +5,10 @@
 #include <QTreeWidget>
 #include <QKeySequenceEdit>
 #include <QSettings>
+#include <QLoggingCategory>
 #include "src/core/settings.h"
+
+Q_DECLARE_LOGGING_CATEGORY(settingsCategory)
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class SettingsDialog; }

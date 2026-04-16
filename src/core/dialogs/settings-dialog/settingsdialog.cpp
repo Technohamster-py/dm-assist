@@ -15,6 +15,8 @@
 #include "thememanager.h"
 
 
+Q_LOGGING_CATEGORY(settingsCategory, "ui.settings")
+
 /**
  * @brief Constructor for the SettingsDialog class.
  *

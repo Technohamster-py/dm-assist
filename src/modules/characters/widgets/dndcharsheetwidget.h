@@ -10,6 +10,8 @@
 #include <QSpinBox>
 #include <QTextEdit>
 
+Q_DECLARE_LOGGING_CATEGORY(charsheetCategory)
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class DndCharsheetWidget; }
 QT_END_NAMESPACE

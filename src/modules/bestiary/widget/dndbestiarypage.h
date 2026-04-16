@@ -4,6 +4,7 @@
 #include "src/utils/widgets/abstractcharsheetwidget.h"
 #include "src/utils/parsers/fvtt/fvttparser.h"
 
+Q_DECLARE_LOGGING_CATEGORY(bestiaryCategory)
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class DndBestiaryPage; }

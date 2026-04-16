@@ -20,6 +20,8 @@
 
 #include "src/modules/map/graphics/effects/effectgraphicsitem.h"
 
+Q_LOGGING_CATEGORY(mapSceneCategory, "ui.map.scene")
+
 /**
  * @brief Constructs a MapScene object with the specified parent and initializes its background.
  *
@@ -673,7 +675,7 @@ int MapScene::loadFromFile(const QString& path) {
     emit progressChanged(0, tr("Opening file"));
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly)) {
-        qWarning() << "Не удалось открыть файл для чтения:" << path;
+        qCWarning(mapSceneCategory) << "Couldn't open the file for reading:" << path;
         return mapErrorCodes::FileOpenError;
     }
     QDataStream stream(&file);
@@ -686,7 +688,7 @@ int MapScene::loadFromFile(const QString& path) {
 
     emit progressChanged(5, tr("Checking signature"));
     if (header.magic != 0x444D414D) {
-        qWarning() << "Файл не является картой DM-Assist.";
+        qCWarning(mapSceneCategory) << "The file" << path << "is not a DM-Assist map";
         return mapErrorCodes::FileSignatureError;
     }
 
@@ -701,7 +703,7 @@ int MapScene::loadFromFile(const QString& path) {
     QJsonParseError error;
     QJsonDocument doc = QJsonDocument::fromJson(jsonData, &error);
     if (error.error != QJsonParseError::NoError) {
-        qWarning() << "Ошибка разбора JSON:" << error.errorString();
+        qCWarning(mapSceneCategory) << "JSON parsing error:" << error.errorString();
         return mapErrorCodes::JsonParseError;
     }
 
