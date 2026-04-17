@@ -10,6 +10,7 @@
 #include "src/utils/parsers/character/characterparser.h"
 #include <themediconmanager.h>
 
+Q_LOGGING_CATEGORY(charsheetCategory, "ui.charsheet.character")
 
 DndCharsheetWidget::DndCharsheetWidget(QWidget* parent) :
         AbstractCharsheetWidget(parent), ui(new Ui::DndCharsheetWidget) {
@@ -729,26 +730,26 @@ bool DndCharsheetWidget::downloadToken(const QString &link) {
 
     QUrl qurl(link);
     if (!qurl.isValid()) {
-        qWarning() << "Invalid URL:" << link;
+        qCWarning(charsheetCategory) << "Invalid URL:" << link;
         return false;
     }
 
     QString filename = qurl.fileName();
     if (filename.isEmpty()) {
-//        qWarning() << "URL does not contain filename:" << link;
+        qCWarning(charsheetCategory) << "URL does not contain filename:" << link;
         return false;
     }
 
     QDir dir(m_campaignPath);
     if (!dir.exists()) {
-//        qWarning() << "Campaign dir does not exist:" << m_campaignPath;
+        qCWarning(charsheetCategory) << "Campaign dir does not exist:" << m_campaignPath;
         return false;
     }
 
     // ensure tokens/ folder
     if (!dir.exists("Tokens")) {
         if (!dir.mkdir("Tokens")) {
-            qWarning() << "Cannot create tokens dir!";
+            qCWarning(charsheetCategory) << "Cannot create tokens dir!";
             return false;
         }
     }
@@ -759,7 +760,7 @@ bool DndCharsheetWidget::downloadToken(const QString &link) {
 
     connect(reply, &QNetworkReply::finished, this, [=]() {
         if (reply->error() != QNetworkReply::NoError) {
-            qWarning() << "Download failed:" << reply->errorString();
+            qCWarning(charsheetCategory) << "Download failed:" << reply->errorString();
             reply->deleteLater();
             return;
         }
@@ -767,13 +768,13 @@ bool DndCharsheetWidget::downloadToken(const QString &link) {
 
         QFile f(fullPath);
         if (!f.open(QIODevice::WriteOnly)) {
-            qWarning() << "Cannot write file:" << fullPath;
+            qCWarning(charsheetCategory) << "Cannot write file:" << fullPath;
             reply->deleteLater();
             return;
         }
         f.write(data);
         f.close();
-//        qInfo() << "Saved token:" << fullPath;
+        qCInfo(charsheetCategory) << "Saved token:" << fullPath;
         setTokenPixmap(fullPath);
         reply->deleteLater();
     });

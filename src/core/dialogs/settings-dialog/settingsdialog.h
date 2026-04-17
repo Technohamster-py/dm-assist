@@ -5,7 +5,10 @@
 #include <QTreeWidget>
 #include <QKeySequenceEdit>
 #include <QSettings>
+#include <QLoggingCategory>
 #include "src/core/settings.h"
+
+Q_DECLARE_LOGGING_CATEGORY(settingsCategory)
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class SettingsDialog; }
@@ -41,7 +44,6 @@ protected:
     QStringList m_excludedKeys {
             paths.general.audioDevice,
             paths.general.lang,
-            paths.general.dir,
             paths.general.defaultCampaignDir,
             paths.appearance.stretch,
             paths.session.recent,
@@ -56,8 +58,8 @@ private slots:
     void onTreeItemSelected(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_applyButton_clicked();
 
-    void on_folderButton_clicked();
     void on_themeButton_clicked();
+    void on_styleButton_clicked();
 
     void onKeySequenceChanged(QKeySequence newSeq);
 

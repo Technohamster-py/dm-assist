@@ -2,7 +2,10 @@
 #define DM_ASSIST_ABSTRACTCHARSHEETWIDGET_H
 
 #include <QtNetwork>
+#include <QLoggingCategory>
 #include "src/modules/encounter/widget/initiativetrackerwidget.h"
+
+inline Q_LOGGING_CATEGORY(abstractCharsheetCategory, "ui.charsheet.abstract")
 
 /**
  * @class AbstractCharsheetWidget
@@ -95,26 +98,26 @@ protected:
     virtual bool downloadToken(const QString& link) {
         QUrl qurl(link);
         if (!qurl.isValid()) {
-            qWarning() << "Invalid URL:" << link;
+            qCWarning(abstractCharsheetCategory) << "Invalid URL:" << link;
             return false;
         }
 
         QString filename = qurl.fileName();
         if (filename.isEmpty()) {
-//        qWarning() << "URL does not contain filename:" << link;
+        qCWarning(abstractCharsheetCategory) << "URL does not contain filename:" << link;
             return false;
         }
 
         QDir dir(m_campaignPath);
         if (!dir.exists()) {
-//        qWarning() << "Campaign dir does not exist:" << m_campaignPath;
+        qCWarning(abstractCharsheetCategory) << "Campaign dir does not exist:" << m_campaignPath;
             return false;
         }
 
         // ensure tokens/ folder
         if (!dir.exists("Tokens")) {
             if (!dir.mkdir("Tokens")) {
-                qWarning() << "Cannot create tokens dir!";
+                qCWarning(abstractCharsheetCategory) << "Cannot create tokens dir!";
                 return false;
             }
         }
@@ -122,7 +125,7 @@ protected:
         QString fullPath = dir.filePath("Tokens/" + filename);
         QFileInfo fi(fullPath);
         if (fi.exists()) {
-//        qInfo() << "Token already exists:" << fullPath;
+        qCInfo(abstractCharsheetCategory) << "Token already exists:" << fullPath;
             return false;
         }
 
@@ -132,7 +135,7 @@ protected:
 
         connect(reply, &QNetworkReply::finished, this, [=]() {
             if (reply->error() != QNetworkReply::NoError) {
-                qWarning() << "Download failed:" << reply->errorString();
+                qCWarning(abstractCharsheetCategory) << "Download failed:" << reply->errorString();
                 reply->deleteLater();
                 return;
             }
@@ -140,13 +143,13 @@ protected:
 
             QFile f(fullPath);
             if (!f.open(QIODevice::WriteOnly)) {
-                qWarning() << "Cannot write file:" << fullPath;
+                qCWarning(abstractCharsheetCategory) << "Cannot write file:" << fullPath;
                 reply->deleteLater();
                 return;
             }
             f.write(data);
             f.close();
-//        qInfo() << "Saved token:" << fullPath;
+        qCInfo(abstractCharsheetCategory) << "Saved token:" << fullPath;
             reply->deleteLater();
         });
         return true;

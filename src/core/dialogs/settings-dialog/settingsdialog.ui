@@ -109,7 +109,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>3</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="generalPage">
         <layout class="QFormLayout" name="formLayout">
@@ -138,44 +138,13 @@
           </widget>
          </item>
          <item row="2" column="0">
-          <widget class="QLabel" name="folderLabel">
-           <property name="text">
-            <string>Working folder</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <layout class="QHBoxLayout" name="horizontalLayout">
-           <item>
-            <widget class="QLineEdit" name="folderEdit"/>
-           </item>
-           <item>
-            <widget class="QPushButton" name="folderButton">
-             <property name="toolTip">
-              <string>Browse</string>
-             </property>
-             <property name="text">
-              <string>Browse</string>
-             </property>
-             <property name="icon">
-              <iconset resource="static/app_resources.qrc">
-               <normaloff>:/folder.svg</normaloff>:/folder.svg</iconset>
-             </property>
-             <property name="flat">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item row="3" column="0">
           <widget class="QLabel" name="startActionLabel">
            <property name="text">
             <string>What to do when started</string>
            </property>
           </widget>
          </item>
-         <item row="3" column="1">
+         <item row="2" column="1">
           <widget class="QComboBox" name="startActionComboBox">
            <item>
             <property name="text">
@@ -194,14 +163,14 @@
            </item>
           </widget>
          </item>
-         <item row="4" column="0">
+         <item row="3" column="0">
           <widget class="QCheckBox" name="updateCheckerBox">
            <property name="text">
             <string>Check updates on start</string>
            </property>
           </widget>
          </item>
-         <item row="4" column="1">
+         <item row="3" column="1">
           <spacer name="horizontalSpacer">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -214,14 +183,14 @@
            </property>
           </spacer>
          </item>
-         <item row="5" column="0">
+         <item row="4" column="0">
           <widget class="QPushButton" name="importButton">
            <property name="text">
             <string>Import settings</string>
            </property>
           </widget>
          </item>
-         <item row="5" column="1">
+         <item row="4" column="1">
           <widget class="QPushButton" name="exportButton">
            <property name="text">
             <string>Export settings</string>
@@ -256,7 +225,31 @@
               <string>Browse</string>
              </property>
              <property name="icon">
-              <iconset resource="static/app_resources.qrc">
+              <iconset resource="../../../../resources/static/app_resources.qrc">
+               <normaloff>:/folder.svg</normaloff>:/folder.svg</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="1" column="1">
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <item>
+            <widget class="QComboBox" name="styleComboBox"/>
+           </item>
+           <item>
+            <widget class="QPushButton" name="styleButton">
+             <property name="maximumSize">
+              <size>
+               <width>150</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Browse</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../resources/static/app_resources.qrc">
                <normaloff>:/folder.svg</normaloff>:/folder.svg</iconset>
              </property>
             </widget>
@@ -269,9 +262,6 @@
             <string>Style</string>
            </property>
           </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QComboBox" name="styleComboBox"/>
          </item>
         </layout>
        </widget>
@@ -476,7 +466,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="static/app_resources.qrc">
+              <iconset resource="../../../../resources/static/app_resources.qrc">
                <normaloff>:/map/palette.svg</normaloff>:/map/palette.svg</iconset>
              </property>
             </widget>
@@ -728,7 +718,7 @@
                     <string/>
                    </property>
                    <property name="pixmap">
-                    <pixmap resource="static/app_resources.qrc">:/map/ruler.svg</pixmap>
+                    <pixmap resource="../../../../resources/static/app_resources.qrc">:/map/ruler.svg</pixmap>
                    </property>
                    <property name="scaledContents">
                     <bool>true</bool>
@@ -767,7 +757,7 @@
                     <string/>
                    </property>
                    <property name="pixmap">
-                    <pixmap resource="static/app_resources.qrc">:/map/mountain.svg</pixmap>
+                    <pixmap resource="../../../../resources/static/app_resources.qrc">:/map/mountain.svg</pixmap>
                    </property>
                    <property name="scaledContents">
                     <bool>true</bool>
@@ -812,7 +802,7 @@
                     <string/>
                    </property>
                    <property name="pixmap">
-                    <pixmap resource="static/app_resources.qrc">:/map/brush.svg</pixmap>
+                    <pixmap resource="../../../../resources/static/app_resources.qrc">:/map/brush.svg</pixmap>
                    </property>
                    <property name="scaledContents">
                     <bool>true</bool>
@@ -851,7 +841,7 @@
                     <string/>
                    </property>
                    <property name="pixmap">
-                    <pixmap resource="static/app_resources.qrc">:/map/fog_hide.svg</pixmap>
+                    <pixmap resource="../../../../resources/static/app_resources.qrc">:/map/fog_hide.svg</pixmap>
                    </property>
                    <property name="scaledContents">
                     <bool>true</bool>
@@ -890,7 +880,7 @@
                     <string/>
                    </property>
                    <property name="pixmap">
-                    <pixmap resource="static/app_resources.qrc">:/map/fog_reveal.svg</pixmap>
+                    <pixmap resource="../../../../resources/static/app_resources.qrc">:/map/fog_reveal.svg</pixmap>
                    </property>
                    <property name="scaledContents">
                     <bool>true</bool>
@@ -929,7 +919,7 @@
                     <string/>
                    </property>
                    <property name="pixmap">
-                    <pixmap resource="static/app_resources.qrc">:/map/torch.svg</pixmap>
+                    <pixmap resource="../../../../resources/static/app_resources.qrc">:/map/torch.svg</pixmap>
                    </property>
                    <property name="scaledContents">
                     <bool>true</bool>
@@ -1009,7 +999,7 @@
                      <string/>
                     </property>
                     <property name="pixmap">
-                     <pixmap resource="static/app_resources.qrc">:/map/line.svg</pixmap>
+                     <pixmap resource="../../../../resources/static/app_resources.qrc">:/map/line.svg</pixmap>
                     </property>
                     <property name="scaledContents">
                      <bool>true</bool>
@@ -1048,7 +1038,7 @@
                      <string/>
                     </property>
                     <property name="pixmap">
-                     <pixmap resource="static/app_resources.qrc">:/map/sphere.svg</pixmap>
+                     <pixmap resource="../../../../resources/static/app_resources.qrc">:/map/sphere.svg</pixmap>
                     </property>
                     <property name="scaledContents">
                      <bool>true</bool>
@@ -1087,7 +1077,7 @@
                      <string/>
                     </property>
                     <property name="pixmap">
-                     <pixmap resource="static/app_resources.qrc">:/map/cube.svg</pixmap>
+                     <pixmap resource="../../../../resources/static/app_resources.qrc">:/map/cube.svg</pixmap>
                     </property>
                     <property name="scaledContents">
                      <bool>true</bool>
@@ -1126,7 +1116,7 @@
                      <string/>
                     </property>
                     <property name="pixmap">
-                     <pixmap resource="static/app_resources.qrc">:/map/cone.svg</pixmap>
+                     <pixmap resource="../../../../resources/static/app_resources.qrc">:/map/cone.svg</pixmap>
                     </property>
                     <property name="scaledContents">
                      <bool>true</bool>
@@ -1198,7 +1188,8 @@
   </layout>
  </widget>
  <resources>
-  <include location="static/app_resources.qrc"/>
+  <include location="../../../../resources/static/app_resources.qrc"/>
+  <include location="../../../../resources/static/app_resources.qrc"/>
  </resources>
  <connections/>
 </ui>

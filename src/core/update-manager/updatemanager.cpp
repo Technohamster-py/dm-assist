@@ -5,6 +5,9 @@
 #include <QDesktopServices>
 #include <QUrl>
 
+Q_LOGGING_CATEGORY(updateCategory, "network.update")
+
+
 UpdateBannerWidget::UpdateBannerWidget(QWidget *parent, QString versionUrl, QString currentVersion,
                                        QString latestVersion)
         : QWidget(parent), m_versionUrl(std::move(versionUrl)), m_currentVersion(std::move(currentVersion)), m_latestVersion(std::move(latestVersion)) {

@@ -8,6 +8,9 @@
 #include <QWidget>
 #include <utility>
 #include <QLabel>
+#include <QLoggingCategory>
+
+Q_DECLARE_LOGGING_CATEGORY(updateCategory)
 
 /**
  * @class UpdateManager
@@ -39,6 +42,7 @@ private slots:
     void onReplyFinished(QNetworkReply* reply){
         if (reply->error()){
             reply->deleteLater();
+            qCWarning(updateCategory) << "Cannot connect to github:" << reply->errorString();
             emit updateCheckFinished(false);
             return;
         }
@@ -46,6 +50,7 @@ private slots:
         QJsonDocument jsonDocument = QJsonDocument::fromJson(reply->readAll());
         if (!jsonDocument.isObject()){
             reply->deleteLater();
+            qCWarning(updateCategory) << "Cannot parse json response:" << reply->readAll();
             emit updateCheckFinished(false);
             return;
         }
@@ -55,6 +60,7 @@ private slots:
         m_latestUrl = jsonObj["html_url"].toString();
         QVersionNumber latestVersion = QVersionNumber::fromString(m_latestVersion);
         if (latestVersion > m_currentVersionNumber){
+            qCDebug(updateCategory) << "latest version:" << latestVersion;
             emit updateCheckFinished(true);
         }
         else

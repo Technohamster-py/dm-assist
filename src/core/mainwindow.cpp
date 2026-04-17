@@ -26,9 +26,13 @@
 #include "thememanager.h"
 #include "themediconmanager.h"
 
-static void copyAllFiles(const QString& sourcePath, const QString& destPath);
-static void moveAllFiles(const QString& sourcePath, const QString& destPath);
-static bool removeDirectoryRecursively(const QString &directoryPath, bool deleteSelf=true);
+Q_LOGGING_CATEGORY(mainwindowCategory, "ui.main")
+
+static void copyAllFiles(const QString &sourcePath, const QString &destPath);
+
+static void moveAllFiles(const QString &sourcePath, const QString &destPath);
+
+static bool removeDirectoryRecursively(const QString &directoryPath, bool deleteSelf = true);
 
 
 /**
@@ -40,8 +44,7 @@ static bool removeDirectoryRecursively(const QString &directoryPath, bool delete
  * @param parent Pointer to the parent QWidget. Defaults to nullptr if not provided,
  * which means the MainWindow has no parent and will be a top-level window.
  */
-MainWindow::MainWindow(QWidget *parent) :
-        QMainWindow(parent), ui(new Ui::MainWindow) {
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
     ui->splitter->setStretchFactor(0, 1);
@@ -77,44 +80,48 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newCampaign);
     connect(ui->actionClose, &QAction::triggered, this, &MainWindow::closeCampaign);
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::loadCampaign);
-    connect(ui->actionHelp, &QAction::triggered, [](){QDesktopServices::openUrl(QUrl(HELP_URL));});
-    connect(ui->actionDonate, &QAction::triggered, [](){QDesktopServices::openUrl(QUrl(DONATE_URL));});
-    connect(ui->actionReport_bug, &QAction::triggered, [](){QDesktopServices::openUrl(QUrl(ISSUES_URL));});
-    connect(ui->actionSources, &QAction::triggered, [=]() { showSourcesMessageBox(sourcesMap);});
+    connect(ui->actionHelp, &QAction::triggered, []() { QDesktopServices::openUrl(QUrl(HELP_URL)); });
+    connect(ui->actionDonate, &QAction::triggered, []() { QDesktopServices::openUrl(QUrl(DONATE_URL)); });
+    connect(ui->actionReport_bug, &QAction::triggered, []() { QDesktopServices::openUrl(QUrl(ISSUES_URL)); });
+    connect(ui->actionSources, &QAction::triggered, [=]() { showSourcesMessageBox(sourcesMap); });
     connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::setVolumeDivider);
-    connect(ui->actionReload, &QAction::triggered, [=](){setupCampaign(campaignTreeWidget->root());});
+    connect(ui->actionReload, &QAction::triggered, [=]() { setupCampaign(campaignTreeWidget->root()); });
     connect(ui->actionAddCharacter, &QAction::triggered, this, &MainWindow::addCharacter);
-    connect(ui->actionCheck, &QAction::triggered, [=](){ updateManager->checkForUpdates();});
+    connect(ui->actionCheck, &QAction::triggered, [=]() { updateManager->checkForUpdates(); });
     connect(updateManager, &UpdateManager::updateCheckFinished, this, &MainWindow::handleUpdates);
 
-    connect(campaignTreeWidget, &CampaignTreeWidget::characterAddRequested, this, [=](const QString& path) {
+    connect(campaignTreeWidget, &CampaignTreeWidget::characterAddRequested, this, [=](const QString &path) {
         DndCharsheetWidget character(path);
         character.addToInitiative(initiativeTrackerWidget, m_autoRollCharacter);
     });
-    connect(campaignTreeWidget, &CampaignTreeWidget::characterOpenRequested, this, [=](const QString& path){
-        auto* charsheetWidget = new DndCharsheetWidget(path);
+    connect(campaignTreeWidget, &CampaignTreeWidget::characterOpenRequested, this, [=](const QString &path) {
+        auto *charsheetWidget = new DndCharsheetWidget(path);
         connect(charsheetWidget, &DndCharsheetWidget::rollRequested, rollWidget, &RollWidget::executeRoll);
         connect(this, &MainWindow::translatorChanged, charsheetWidget, &DndCharsheetWidget::updateTranslator);
         charsheetWidget->show();
     });
     connect(campaignTreeWidget, &CampaignTreeWidget::mapOpenRequested, this, &MainWindow::openMapFromFile);
-    connect(campaignTreeWidget, &CampaignTreeWidget::beastAddRequested, [=](const QString& path) {
+    connect(campaignTreeWidget, &CampaignTreeWidget::beastAddRequested, [=](const QString &path) {
         DndBestiaryPage beast(path);
         beast.addToInitiative(initiativeTrackerWidget, m_autoRollBeast);
     });
-    connect(campaignTreeWidget, &CampaignTreeWidget::beastOpenRequested, [=](const QString& path){
-        auto* bestiaryPage = new DndBestiaryPage(path);
+    connect(campaignTreeWidget, &CampaignTreeWidget::beastOpenRequested, [=](const QString &path) {
+        auto *bestiaryPage = new DndBestiaryPage(path);
         connect(bestiaryPage, &DndCharsheetWidget::rollRequested, rollWidget, &RollWidget::executeRoll);
         connect(this, &MainWindow::translatorChanged, bestiaryPage, &DndBestiaryPage::updateTranslator);
         bestiaryPage->show();
     });
     ui->campaignLayout->addWidget(campaignTreeWidget);
 
-    ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/player/Volume-1.svg", ui->muteButton, &QAbstractButton::setIcon);
-    ThemedIconManager::instance().addPixmapTarget(":/player/Volume-2.svg", ui->volMaxLabel, [label = ui->volMaxLabel](const QPixmap& px){label->setPixmap(px);});
+    ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/player/Volume-1.svg", ui->muteButton,
+                                                                 &QAbstractButton::setIcon);
+    ThemedIconManager::instance().addPixmapTarget(":/player/Volume-2.svg", ui->volMaxLabel,
+                                                  [label = ui->volMaxLabel](const QPixmap &px) {
+                                                      label->setPixmap(px);
+                                                  });
 
     loadSettings();
-//    setupCampaign(currentCampaignDir);
+    //    setupCampaign(currentCampaignDir);
     saveSettings();
 
     if (m_checkForUpdates)
@@ -128,7 +135,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow() {
     saveSettings();
     closeCampaign();
-    foreach(MusicPlayerWidget* player, players){
+    foreach(MusicPlayerWidget* player, players) {
         delete player;
     }
     clearTmp();
@@ -151,13 +158,14 @@ MainWindow::~MainWindow() {
  */
 void MainWindow::changeLanguage(const QString &languageCode) {
     qApp->removeTranslator(&translator);
-    if (translator.load(QCoreApplication::applicationDirPath() + "/translations/dm-assist_" + languageCode + ".qm"))
-    {
+    if (translator.load(QCoreApplication::applicationDirPath() + "/translations/dm-assist_" + languageCode + ".qm")) {
+        qCDebug(mainwindowCategory) << "Change language" << languageCode;
         qApp->installTranslator(&translator);
         currentLanguage = languageCode;
         ui->retranslateUi(this);
         emit translatorChanged();
     }
+    qCWarning(mainwindowCategory) << "Can't load translator with language" << languageCode;
 }
 
 /**
@@ -171,8 +179,8 @@ void MainWindow::changeLanguage(const QString &languageCode) {
  * @param hide If true, hides the fog layer completely; if false, reveals it.
  */
 void MainWindow::coverMapWithFog(bool hide) {
-    auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
-    MapScene* scene = currentView->getScene();
+    auto *currentView = qobject_cast<MapView *>(mapTabWidget->currentWidget());
+    MapScene *scene = currentView->getScene();
 
     if (hide)
         FogTool::hideAll(scene);
@@ -224,7 +232,7 @@ void MainWindow::createNewMapTab() {
 void MainWindow::deleteMapTab(int index) {
     QWidget *widget = mapTabWidget->widget(index);
 
-    if (!currentCampaignDir.isEmpty()){
+    if (!currentCampaignDir.isEmpty()) {
         exportMap(currentCampaignDir + "/Maps/" + mapTabWidget->tabText(index) + ".dam", index);
     }
 
@@ -247,11 +255,12 @@ void MainWindow::deleteMapTab(int index) {
  *       The exported file format is DM assist map file (*.dam).
  */
 void MainWindow::slotExportMap(int index) {
-    auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
-    if (currentView){
+    auto *currentView = qobject_cast<MapView *>(mapTabWidget->widget(index));
+    if (currentView) {
         QString filename = QFileDialog::getSaveFileName(this,
                                                         tr("Save map to file"),
-                                                        QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
+                                                        QStandardPaths::writableLocation(
+                                                            QStandardPaths::DocumentsLocation),
                                                         "DM assist map file (*.dam)");
         currentView->getScene()->saveToFile(filename);
     }
@@ -276,11 +285,11 @@ void MainWindow::slotExportMap(int index) {
  * @param path The file path where the map data should be exported. It must end with ".dam".
  * @param index The index of the tab in the map tab widget containing the map to export.
  */
-void MainWindow::exportMap(const QString& path, int index) {
+void MainWindow::exportMap(const QString &path, int index) {
     if (!path.endsWith(".dam")) return;
-    
-    auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
-    if (currentView){
+
+    auto *currentView = qobject_cast<MapView *>(mapTabWidget->widget(index));
+    if (currentView) {
         currentView->getScene()->saveToFile(path);
     }
 }
@@ -301,7 +310,8 @@ void MainWindow::exportMap(const QString& path, int index) {
 void MainWindow::loadCampaign() {
     QString campaignDir = QFileDialog::getExistingDirectory(this,
                                                             tr("Open campaign directory"),
-                                                            QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+                                                            QStandardPaths::writableLocation(
+                                                                QStandardPaths::DocumentsLocation));
     setupCampaign(campaignDir);
 }
 
@@ -324,53 +334,52 @@ void MainWindow::loadCampaign() {
 void MainWindow::loadMusicConfigFile(QString fileName) {
     if (fileName.isEmpty())
         fileName = QFileDialog::getOpenFileName(this,
-                                                    tr("Open player config file"),
-                                                    QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/dm_assist_files/saves",
-                                                    tr("Xml file (*.xml)"));
-    if(fileName.isEmpty())
+                                                tr("Open player config file"),
+                                                QStandardPaths::writableLocation(QStandardPaths::MusicLocation) +
+                                                "/dm_assist_files/saves",
+                                                tr("Xml file (*.xml)"));
+    if (fileName.isEmpty()) {
+        qCWarning(mainwindowCategory) << "No music config specified";
         return;
-    else
-    {
-        QFile configFile(fileName);
-        if (!configFile.open(QIODevice::ReadOnly))
-        {
-            QMessageBox::critical(this, tr("Open File error"), configFile.errorString());
-            return;
-        }
-        QDomDocument configDocument;
-        configDocument.setContent(&configFile);
-
-        QDomElement mainNode = configDocument.documentElement();
-        QDomNodeList playersNodeList = mainNode.childNodes();
-
-        for (int i=0; i < playersNodeList.count(); i++){
-            QDomElement playerNode = playersNodeList.at(i).toElement();
-            QString absolutePath = playerNode.firstChild().toText().data();
-
-            int playerId = playerNode.attribute("id").toInt();
-
-            players[playerId]->setVolume(playerNode.attribute("volume", "100").toInt());
-
-            QFileInfo dirInfo(absolutePath);
-            if (dirInfo.isDir()){
-                players[playerId]->setPlaylistName(dirInfo.fileName());
-            }
-
-            QDir playerDir(absolutePath);
-            if (!playerDir.exists()) {
-                players[playerId]->addMedia(QStringList());
-            }
-            else{
-                QStringList fileNames = playerDir.entryList(QDir::Files);
-                QStringList fullPaths;
-                for (const QString &musicFileName : fileNames) {
-                    fullPaths.append(playerDir.absoluteFilePath(musicFileName));
-                }
-                players[playerId]->addMedia(fullPaths);
-            }
-        }
-        configFile.close();
     }
+    QFile configFile(fileName);
+    if (!configFile.open(QIODevice::ReadOnly)) {
+        QMessageBox::critical(this, tr("Open File error"), configFile.errorString());
+        qCWarning(mainwindowCategory) << "Could not open music config file: " << configFile.errorString();
+        return;
+    }
+    QDomDocument configDocument;
+    configDocument.setContent(&configFile);
+
+    QDomElement mainNode = configDocument.documentElement();
+    QDomNodeList playersNodeList = mainNode.childNodes();
+
+    for (int i = 0; i < playersNodeList.count(); i++) {
+        QDomElement playerNode = playersNodeList.at(i).toElement();
+        QString absolutePath = playerNode.firstChild().toText().data();
+
+        int playerId = playerNode.attribute("id").toInt();
+
+        players[playerId]->setVolume(playerNode.attribute("volume", "100").toInt());
+
+        QFileInfo dirInfo(absolutePath);
+        if (dirInfo.isDir()) {
+            players[playerId]->setPlaylistName(dirInfo.fileName());
+        }
+
+        QDir playerDir(absolutePath);
+        if (!playerDir.exists()) {
+            players[playerId]->addMedia(QStringList());
+        } else {
+            QStringList fileNames = playerDir.entryList(QDir::Files);
+            QStringList fullPaths;
+            for (const QString &musicFileName: fileNames) {
+                fullPaths.append(playerDir.absoluteFilePath(musicFileName));
+            }
+            players[playerId]->addMedia(fullPaths);
+        }
+    }
+    configFile.close();
 }
 
 /**
@@ -408,10 +417,11 @@ void MainWindow::loadMusicConfigFile(QString fileName) {
 void MainWindow::loadSettings() {
     QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
     /// General
-    workingDir = settings.value(paths.general.dir, workingDir).toString();
     QDir dir(workingDir);
-    if (!dir.exists())
+    if (!dir.exists()) {
+        qCDebug(mainwindowCategory) << "Creating working dir";
         dir.mkpath(".");
+    }
     defaultCampaignDir = settings.value(paths.general.defaultCampaignDir, "").toString();
     openLastMap = settings.value(paths.general.openLastMap, false).toBool();
     m_checkForUpdates = settings.value(paths.general.checkForUpdates, true).toBool();
@@ -419,12 +429,14 @@ void MainWindow::loadSettings() {
         updateManager->checkForUpdates();
 
     /// Music
-    for (MusicPlayerWidget *player : players) {
+    for (MusicPlayerWidget *player: players) {
         player->setAudioOutput(settings.value(paths.general.audioDevice, 0).toInt());
     }
     ui->volumeSlider->setValue(settings.value(paths.general.volume, 100).toInt());
+
     ///Language
     changeLanguage(settings.value(paths.general.lang, "ru_RU").toString());
+
     /// Initiative tracker
     initiativeTrackerWidget->setHpDisplayMode(settings.value(paths.initiative.hpBarMode, 0).toInt());
     initiativeTrackerWidget->setHpComboBoxVisible(settings.value(paths.initiative.showHpComboBox, true).toBool());
@@ -446,18 +458,8 @@ void MainWindow::loadSettings() {
     initiativeTrackerWidget->setActiveColor(activeColor);
 
     /// Appearance
-    QString theme = settings.value(paths.appearance.theme, "Light").toString();
-    if (theme == "Light")
-        ThemeManager::applyPreset(ThemeManager::PresetTheme::Light);
-    else if (theme == "Dark")
-        ThemeManager::applyPreset(ThemeManager::PresetTheme::Dark);
-    else if (theme == "System")
-        ThemeManager::resetToSystemTheme();
-    else
-        ThemeManager::loadFromXml(theme);
-
-    QString style = settings.value(paths.appearance.style, "Fusion").toString();
-    QApplication::setStyle(QStyleFactory::create(style));
+    ThemeManager::instance().applyStyle(settings.value(paths.appearance.style, "Fusion").toString());
+    ThemeManager::instance().applyPalette(settings.value(paths.appearance.theme, "Light").toString());
 
     ui->splitter->restoreState(settings.value(paths.appearance.stretch).toByteArray());
 
@@ -483,8 +485,8 @@ void MainWindow::loadSettings() {
     autoSharedMapMapMode = settings.value(paths.map.sharedMapSwitchMode, false).toBool();
 
     m_fogColor = QColor(settings.value(paths.map.fogColor, "#000000").toString());
-    for (int i = 0; i < mapTabWidget->count(); i++){
-        auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(i));
+    for (int i = 0; i < mapTabWidget->count(); i++) {
+        auto *currentView = qobject_cast<MapView *>(mapTabWidget->widget(i));
         if (!currentView) continue;
 
         currentView->setFogOpacity(m_masterFogOpacity);
@@ -558,7 +560,6 @@ void MainWindow::newCampaign() {
     setupCampaign(dialog.directoryPath);
 }
 
-
 /**
  * @brief Handles the "Settings" action when triggered.
  *
@@ -581,14 +582,12 @@ void MainWindow::newCampaign() {
  */
 void MainWindow::on_actionSettings_triggered() {
     saveSettings();
-    if(!settingsDialog)
-    {
+    if (!settingsDialog) {
         settingsDialog = new SettingsDialog(ORGANIZATION_NAME, APPLICATION_NAME, this);
     }
     settingsDialog->exec();
     loadSettings();
 }
-
 
 /**
  * @brief Opens and loads a map file into the application.
@@ -606,7 +605,7 @@ void MainWindow::on_actionSettings_triggered() {
  *
  * @param fileName The path to the map file to load.
  */
-void MainWindow::openMapFromFile(const QString& fileName) {
+void MainWindow::openMapFromFile(const QString &fileName) {
     QFileInfo fileInfo(fileName);
     QString ext = fileInfo.suffix().toLower();
 
@@ -623,65 +622,69 @@ void MainWindow::openMapFromFile(const QString& fileName) {
         success = true;
     }
 
-    if (success) {
-        mapTabWidget->addTab(view, fileInfo.baseName());
-        updateVisibility();
-        mapTabWidget->setCurrentIndex(mapTabWidget->count() - 1);
-        view->getScene()->setTokenTitleMode(currentTokenTitleMode);
-        view->getScene()->setTokenTextSize(currentTokenFontSize);
-        view->getScene()->setFogColor(m_fogColor);
-        view->getScene()->setGridSize(m_defaultGridSize);
-        view->getScene()->setLayerOpacity(mapLayers::Shapes, m_textureOpacity);
-
-        connect(view->getScene(), &MapScene::toolChanged, this, [=](const AbstractMapTool* tool){
-            if (!tool){
-                for (QAction *action : toolGroup->actions()) {
-                    action->setChecked(false);
-                }
-            }
-        });
-
-        connect(view->getScene(), &MapScene::openCharseetRequested, [=](const QString& path){
-            AbstractCharsheetWidget* charsheetWidget;
-            switch (CampaignTreeWidget::determieNodeType(path, campaignTreeWidget->root())) {
-                case NodeType::Character:
-                    charsheetWidget = new DndCharsheetWidget(path);
-                    connect(charsheetWidget, &DndCharsheetWidget::rollRequested, rollWidget, &RollWidget::executeRoll);
-                    connect(this, &MainWindow::translatorChanged, charsheetWidget, &AbstractCharsheetWidget::updateTranslator);
-                    charsheetWidget->show();
-                    break;
-                case NodeType::Beast:
-                    charsheetWidget = new DndBestiaryPage(path);
-                    connect(charsheetWidget, &DndCharsheetWidget::rollRequested, rollWidget, &RollWidget::executeRoll);
-                    connect(this, &MainWindow::translatorChanged, charsheetWidget, &AbstractCharsheetWidget::updateTranslator);
-                    charsheetWidget->show();
-                    break;
-                default:
-                    return;
-            }
-        });
-
-        connect(view->getScene(), &MapScene::addToEncounterRequested, [=](const QString& path){
-            AbstractCharsheetWidget* charsheetWidget;
-            switch (CampaignTreeWidget::determieNodeType(path, campaignTreeWidget->root())){
-                case NodeType::Character:
-                    charsheetWidget = new DndCharsheetWidget(path);
-                    charsheetWidget->addToInitiative(initiativeTrackerWidget, m_autoRollCharacter);
-                    break;
-                case NodeType::Beast:
-                    charsheetWidget = new DndBestiaryPage(path);
-                    charsheetWidget->addToInitiative(initiativeTrackerWidget, m_autoRollBeast);
-                    break;
-                default:
-                    return;
-            }
-            delete charsheetWidget;
-        });
-
-    } else {
+    if (!success) {
         delete view;
         QMessageBox::warning(this, tr("Error"), tr("Failed to open map file."));
+        qCWarning(mainwindowCategory) << "Failed to open map file " << fileName;
+        return;
     }
+
+    mapTabWidget->addTab(view, fileInfo.baseName());
+    updateVisibility();
+    mapTabWidget->setCurrentIndex(mapTabWidget->count() - 1);
+    view->getScene()->setTokenTitleMode(currentTokenTitleMode);
+    view->getScene()->setTokenTextSize(currentTokenFontSize);
+    view->getScene()->setFogColor(m_fogColor);
+    view->getScene()->setGridSize(m_defaultGridSize);
+    view->getScene()->setLayerOpacity(mapLayers::Shapes, m_textureOpacity);
+
+    connect(view->getScene(), &MapScene::toolChanged, this, [=](const AbstractMapTool *tool) {
+        if (!tool) {
+            for (QAction *action: toolGroup->actions()) {
+                action->setChecked(false);
+            }
+        }
+    });
+
+    connect(view->getScene(), &MapScene::openCharseetRequested, [=](const QString &path) {
+        AbstractCharsheetWidget *charsheetWidget;
+        switch (CampaignTreeWidget::determieNodeType(path, campaignTreeWidget->root())) {
+            case NodeType::Character:
+                charsheetWidget = new DndCharsheetWidget(path);
+                connect(charsheetWidget, &DndCharsheetWidget::rollRequested, rollWidget, &RollWidget::executeRoll);
+                connect(this, &MainWindow::translatorChanged, charsheetWidget,
+                        &AbstractCharsheetWidget::updateTranslator);
+                charsheetWidget->show();
+                break;
+            case NodeType::Beast:
+                charsheetWidget = new DndBestiaryPage(path);
+                connect(charsheetWidget, &DndCharsheetWidget::rollRequested, rollWidget, &RollWidget::executeRoll);
+                connect(this, &MainWindow::translatorChanged, charsheetWidget,
+                        &AbstractCharsheetWidget::updateTranslator);
+                charsheetWidget->show();
+                break;
+            default:
+                return;
+        }
+    });
+
+    connect(view->getScene(), &MapScene::addToEncounterRequested, [=](const QString &path) {
+        AbstractCharsheetWidget *charsheetWidget;
+        switch (CampaignTreeWidget::determieNodeType(path, campaignTreeWidget->root())) {
+            case NodeType::Character:
+                charsheetWidget = new DndCharsheetWidget(path);
+                charsheetWidget->addToInitiative(initiativeTrackerWidget, m_autoRollCharacter);
+                break;
+            case NodeType::Beast:
+                charsheetWidget = new DndBestiaryPage(path);
+                charsheetWidget->addToInitiative(initiativeTrackerWidget, m_autoRollBeast);
+                break;
+            default:
+                return;
+        }
+        delete charsheetWidget;
+    });
+
 }
 
 /**
@@ -696,9 +699,9 @@ void MainWindow::openMapFromFile(const QString& fileName) {
  * @param index Index of the current map tab to get the corresponding map scene.
  */
 void MainWindow::openSharedMapWindow(int index) {
-    auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
+    auto *currentView = qobject_cast<MapView *>(mapTabWidget->widget(index));
     if (!currentView) return;
-    if (!sharedMapWindow){
+    if (!sharedMapWindow) {
         sharedMapWindow = new SharedMapWindow(currentView->getScene());
         sharedMapWindow->setFogOpacity(m_playerFogOpacity);
         sharedMapWindow->show();
@@ -707,7 +710,7 @@ void MainWindow::openSharedMapWindow(int index) {
         connect(sharedMapWindow, &QWidget::destroyed, this, [=]() {
             sharedMapWindow = nullptr;
         });
-    } else{
+    } else {
         sharedMapWindow->changeMap(currentView->getScene());
         sharedMapWindow->raise();
         sharedMapWindow->activateWindow();
@@ -746,7 +749,7 @@ void MainWindow::closeCampaign() {
     QJsonArray lastMaps;
     QJsonDocument doc;
     QJsonObject obj;
-    if (file.open(QIODevice::ReadOnly)){
+    if (file.open(QIODevice::ReadOnly)) {
         doc = QJsonDocument::fromJson(file.readAll());
         obj = doc.object();
     }
@@ -759,12 +762,12 @@ void MainWindow::closeCampaign() {
     obj["openedMaps"] = lastMaps;
     doc = QJsonDocument(obj);
 
-    if (file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)){
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
         file.write(doc.toJson(QJsonDocument::Indented));
         file.close();
     }
 
-    foreach(MusicPlayerWidget* player, players){
+    foreach(MusicPlayerWidget* player, players) {
         player->clear();
     }
 
@@ -807,14 +810,14 @@ void MainWindow::closeCampaign() {
  * - A new XML configuration file is created at the specified location.
  * - Local directories of all playlists are moved to the base directory.
  */
-void MainWindow::saveMusicConfigFile(const QString& fileName) {
-    if(fileName.isEmpty())
+void MainWindow::saveMusicConfigFile(const QString &fileName) {
+    if (fileName.isEmpty())
         return;
 
     QFile configFile(fileName);
-    if (!configFile.open(QIODevice::ReadWrite))
-    {
+    if (!configFile.open(QIODevice::ReadWrite)) {
         QMessageBox::critical(this, tr("Open file error"), configFile.errorString());
+        qCWarning(mainwindowCategory) << "Can not open file to save music config";
         return;
     }
 
@@ -858,7 +861,6 @@ void MainWindow::saveMusicConfigFile(const QString& fileName) {
  */
 void MainWindow::saveSettings() {
     QSettings settings(ORGANIZATION_NAME, APPLICATION_NAME);
-    settings.setValue(paths.general.dir, workingDir);
     settings.setValue(paths.general.volume, ui->volumeSlider->value());
     settings.setValue(paths.general.defaultCampaignDir, defaultCampaignDir);
     settings.setValue(paths.session.recent, m_recentCampaignList);
@@ -894,29 +896,28 @@ void MainWindow::setupCampaign(const QString &campaignRoot) {
     if (campaignRoot.isEmpty())
         return;
 
-    if (!campaignTreeWidget->root().isEmpty()){
+    if (!campaignTreeWidget->root().isEmpty()) {
         closeCampaign();
     }
 
     if (!campaignTreeWidget->setRootDir(campaignRoot))
         return;
 
-    foreach(MusicPlayerWidget* player, players){
+    foreach(MusicPlayerWidget* player, players) {
         player->clear();
     }
 
     QFile file(campaignRoot + "/campaign.json");
     QJsonArray lastMaps;
-    if (file.open(QIODevice::ReadOnly)){
+    if (file.open(QIODevice::ReadOnly)) {
         QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
         QJsonObject obj = doc.object();
         lastMaps = obj.value("openedMaps").toArray();
     }
     file.close();
 
-    if (openLastMap && !lastMaps.isEmpty())
-    {
-        for (const auto& fileRef : lastMaps) {
+    if (openLastMap && !lastMaps.isEmpty()) {
+        for (const auto &fileRef: lastMaps) {
             openMapFromFile(fileRef.toString());
         }
     }
@@ -991,10 +992,10 @@ void MainWindow::setupMaps() {
     connect(mapTabWidget, &TabWidget::share, this, &MainWindow::openSharedMapWindow);
     connect(mapTabWidget, &TabWidget::save, this, &MainWindow::slotExportMap);
     connect(mapTabWidget, &TabWidget::dropAccepted, this, &MainWindow::openMapFromFile);
-    connect(mapTabWidget, &QTabWidget::currentChanged, [=](int index){
+    connect(mapTabWidget, &QTabWidget::currentChanged, [=](int index) {
         if (!autoSharedMapMapMode) return;
         if (!sharedMapWindow) return;
-        auto* currentView = qobject_cast<MapView*>(mapTabWidget->widget(index));
+        auto *currentView = qobject_cast<MapView *>(mapTabWidget->widget(index));
         if (!currentView) return;
         sharedMapWindow->changeMap(currentView->getScene());
         sharedMapWindow->raise();
@@ -1086,15 +1087,15 @@ void MainWindow::setupToolbar() {
         QAction *chosen = contextMenu.exec(rulerButton->mapToGlobal(pos));
         if (chosen == calibrateAct) {
             // временно активируем CalibrationTool
-            auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+            auto *currentView = qobject_cast<MapView *>(mapTabWidget->currentWidget());
             if (!currentView) return;
-                currentView->setActiveTool(calibrationTool);
+            currentView->setActiveTool(calibrationTool);
             // отключим кнопку линейки на время
             rulerAction->setChecked(false);
         }
     });
-    connect(rulerAction, &QAction::triggered, [=](bool checked){
-        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    connect(rulerAction, &QAction::triggered, [=](bool checked) {
+        auto *currentView = qobject_cast<MapView *>(mapTabWidget->currentWidget());
         if (!currentView) return;
         if (checked)
             currentView->setActiveTool(rulerMapTool);
@@ -1102,7 +1103,7 @@ void MainWindow::setupToolbar() {
             currentView->setActiveTool(nullptr);
     });
     connect(calibrationTool, &AbstractMapTool::finished, [=]() {
-        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        auto *currentView = qobject_cast<MapView *>(mapTabWidget->currentWidget());
         if (currentView)
             currentView->setActiveTool(rulerMapTool);
         rulerAction->setChecked(true);
@@ -1111,7 +1112,7 @@ void MainWindow::setupToolbar() {
 
 
     /// Fog-hide tool
-    auto* fogHideAction = new QAction(this);
+    auto *fogHideAction = new QAction(this);
     fogHideAction->setCheckable(true);
     ThemedIconManager::instance().addIconTarget(":/map/fog_hide.svg", fogHideAction, &QAction::setIcon);
     toolGroup->addAction(fogHideAction);
@@ -1123,21 +1124,21 @@ void MainWindow::setupToolbar() {
     ui->toolBar->addWidget(fogHideButton);
 
     fogHideButton->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(fogHideButton, &QToolButton::customContextMenuRequested, this, [=](const QPoint pos){
+    connect(fogHideButton, &QToolButton::customContextMenuRequested, this, [=](const QPoint pos) {
         QMenu contextMenu;
-        QAction* hideAllAction = contextMenu.addAction(tr("Hide all"));
-        QAction* chosen = contextMenu.exec(fogHideButton->mapToGlobal(pos));
+        QAction *hideAllAction = contextMenu.addAction(tr("Hide all"));
+        QAction *chosen = contextMenu.exec(fogHideButton->mapToGlobal(pos));
         if (chosen == hideAllAction)
             coverMapWithFog(true);
     });
 
 
-    connect(fogHideAction, &QAction::triggered, this, [=](bool checked){
-        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    connect(fogHideAction, &QAction::triggered, this, [=](bool checked) {
+        auto *currentView = qobject_cast<MapView *>(mapTabWidget->currentWidget());
         if (!currentView) return;
-        if (!checked){
+        if (!checked) {
             currentView->setActiveTool(nullptr);
-        } else{
+        } else {
             fogTool->setMode(FogTool::Hide);
             currentView->setActiveTool(fogTool);
         }
@@ -1145,7 +1146,7 @@ void MainWindow::setupToolbar() {
 
 
     /// Fog-reveal tool
-    auto* fogRevealAction = new QAction(this);
+    auto *fogRevealAction = new QAction(this);
     fogRevealAction->setCheckable(true);
     ThemedIconManager::instance().addIconTarget(":/map/fog_reveal.svg", fogRevealAction, &QAction::setIcon);
     toolGroup->addAction(fogRevealAction);
@@ -1157,20 +1158,20 @@ void MainWindow::setupToolbar() {
     ui->toolBar->addWidget(fogRevealButton);
 
     fogRevealButton->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(fogRevealButton, &QToolButton::customContextMenuRequested, this, [=](const QPoint pos){
+    connect(fogRevealButton, &QToolButton::customContextMenuRequested, this, [=](const QPoint pos) {
         QMenu contextMenu;
-        QAction* revealAllAction = contextMenu.addAction(tr("Reveal all"));
-        QAction* chosen = contextMenu.exec(fogHideButton->mapToGlobal(pos));
+        QAction *revealAllAction = contextMenu.addAction(tr("Reveal all"));
+        QAction *chosen = contextMenu.exec(fogHideButton->mapToGlobal(pos));
         if (chosen == revealAllAction)
             coverMapWithFog(false);
     });
 
-    connect(fogRevealAction, &QAction::triggered, this, [=](bool checked){
-        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    connect(fogRevealAction, &QAction::triggered, this, [=](bool checked) {
+        auto *currentView = qobject_cast<MapView *>(mapTabWidget->currentWidget());
         if (!currentView) return;
-        if (!checked){
+        if (!checked) {
             currentView->setActiveTool(nullptr);
-        } else{
+        } else {
             fogTool->setMode(FogTool::Reveal);
             currentView->setActiveTool(fogTool);
         }
@@ -1180,7 +1181,7 @@ void MainWindow::setupToolbar() {
 
 
     /// Light tool
-    auto* lightAction = new QAction(this);
+    auto *lightAction = new QAction(this);
     lightAction->setCheckable(true);
     ThemedIconManager::instance().addIconTarget(":/map/torch.svg", lightAction, &QAction::setIcon);
     toolGroup->addAction(lightAction);
@@ -1206,11 +1207,12 @@ void MainWindow::setupToolbar() {
     ui->toolBar->addWidget(dimRadiusBox);
 
     auto *lightColorBtn = new QPushButton();
-    ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/map/palette.svg", lightColorBtn, &QAbstractButton::setIcon);
+    ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/map/palette.svg", lightColorBtn,
+                                                                 &QAbstractButton::setIcon);
     ui->toolBar->addWidget(lightColorBtn);
 
-    connect(lightAction, &QAction::triggered, [=](bool checked){
-        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    connect(lightAction, &QAction::triggered, [=](bool checked) {
+        auto *currentView = qobject_cast<MapView *>(mapTabWidget->currentWidget());
         if (!currentView) return;
         if (checked)
             currentView->setActiveTool(lightTool);
@@ -1218,7 +1220,7 @@ void MainWindow::setupToolbar() {
             currentView->setActiveTool(nullptr);
     });
 
-    connect(brightRadiusBox, QOverload<int>::of(&QSpinBox::valueChanged), this, [=](int value){
+    connect(brightRadiusBox, QOverload<int>::of(&QSpinBox::valueChanged), this, [=](int value) {
         dimRadiusBox->setMinimum(value);
         lightTool->setBrightRadius(value);
     });
@@ -1244,7 +1246,7 @@ void MainWindow::setupToolbar() {
 
     /// Spells
     /// LineShapeTool
-    auto* lineAction = new QAction(this);
+    auto *lineAction = new QAction(this);
     lineAction->setCheckable(true);
     ThemedIconManager::instance().addIconTarget(":/map/line.svg", lineAction, &QAction::setIcon);
     toolGroup->addAction(lineAction);
@@ -1255,8 +1257,8 @@ void MainWindow::setupToolbar() {
     lineButton->setDefaultAction(lineAction);
     ui->toolBar->addWidget(lineButton);
 
-    connect(lineAction, &QAction::triggered, this, [=](bool checked){
-        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    connect(lineAction, &QAction::triggered, this, [=](bool checked) {
+        auto *currentView = qobject_cast<MapView *>(mapTabWidget->currentWidget());
         if (!currentView) return;
         if (checked)
             currentView->setActiveTool(lineShapeTool);
@@ -1266,7 +1268,7 @@ void MainWindow::setupToolbar() {
 
 
     /// CircleShapeTool
-    auto* circleAction = new QAction(this);
+    auto *circleAction = new QAction(this);
     circleAction->setCheckable(true);
     ThemedIconManager::instance().addIconTarget(":/map/sphere.svg", circleAction, &QAction::setIcon);
     toolGroup->addAction(circleAction);
@@ -1277,8 +1279,8 @@ void MainWindow::setupToolbar() {
     circleButton->setDefaultAction(circleAction);
     ui->toolBar->addWidget(circleButton);
 
-    connect(circleAction, &QAction::triggered, this, [=](bool checked){
-        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    connect(circleAction, &QAction::triggered, this, [=](bool checked) {
+        auto *currentView = qobject_cast<MapView *>(mapTabWidget->currentWidget());
         if (!currentView) return;
         if (checked)
             currentView->setActiveTool(circleShapeTool);
@@ -1288,7 +1290,7 @@ void MainWindow::setupToolbar() {
 
 
     /// SquareShapeTool
-    auto* squareAction = new QAction(this);
+    auto *squareAction = new QAction(this);
     squareAction->setCheckable(true);
     ThemedIconManager::instance().addIconTarget(":/map/cube.svg", squareAction, &QAction::setIcon);
     toolGroup->addAction(squareAction);
@@ -1299,8 +1301,8 @@ void MainWindow::setupToolbar() {
     squareButton->setDefaultAction(squareAction);
     ui->toolBar->addWidget(squareButton);
 
-    connect(squareAction, &QAction::triggered, this, [=](bool checked){
-        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    connect(squareAction, &QAction::triggered, this, [=](bool checked) {
+        auto *currentView = qobject_cast<MapView *>(mapTabWidget->currentWidget());
         if (!currentView) return;
         if (checked)
             currentView->setActiveTool(squareShapeTool);
@@ -1310,7 +1312,7 @@ void MainWindow::setupToolbar() {
 
 
     /// TriangleShapeTool
-    auto* triangleAction = new QAction(this);
+    auto *triangleAction = new QAction(this);
     triangleAction->setCheckable(true);
     ThemedIconManager::instance().addIconTarget(":/map/cone.svg", triangleAction, &QAction::setIcon);
     toolGroup->addAction(triangleAction);
@@ -1321,8 +1323,8 @@ void MainWindow::setupToolbar() {
     triangleButton->setDefaultAction(triangleAction);
     ui->toolBar->addWidget(triangleButton);
 
-    connect(triangleAction, &QAction::triggered, this, [=](bool checked){
-        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    connect(triangleAction, &QAction::triggered, this, [=](bool checked) {
+        auto *currentView = qobject_cast<MapView *>(mapTabWidget->currentWidget());
         if (!currentView) return;
         if (checked)
             currentView->setActiveTool(triangleShapeTool);
@@ -1332,7 +1334,7 @@ void MainWindow::setupToolbar() {
 
 
     /// Brush tool
-    auto* brushAction = new QAction(this);
+    auto *brushAction = new QAction(this);
     brushAction->setCheckable(true);
     ThemedIconManager::instance().addIconTarget(":/map/brush.svg", brushAction, &QAction::setIcon);
     toolGroup->addAction(brushAction);
@@ -1346,16 +1348,16 @@ void MainWindow::setupToolbar() {
     brushButton->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(brushButton, &QToolButton::customContextMenuRequested, this, [=](const QPoint pos) {
         QMenu contextMenu;
-        QAction* clearAllAction = contextMenu.addAction(tr("Clear all"));
-        QAction* chosen = contextMenu.exec(brushButton->mapToGlobal(pos));
-        if (chosen == clearAllAction){
-            auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+        QAction *clearAllAction = contextMenu.addAction(tr("Clear all"));
+        QAction *chosen = contextMenu.exec(brushButton->mapToGlobal(pos));
+        if (chosen == clearAllAction) {
+            auto *currentView = qobject_cast<MapView *>(mapTabWidget->currentWidget());
             BrushTool::clearAll(currentView->getScene());
         }
     });
 
-    connect(brushAction, &QAction::triggered, this, [=](bool checked){
-        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    connect(brushAction, &QAction::triggered, this, [=](bool checked) {
+        auto *currentView = qobject_cast<MapView *>(mapTabWidget->currentWidget());
         if (!currentView) return;
         if (checked)
             currentView->setActiveTool(brushTool);
@@ -1365,7 +1367,7 @@ void MainWindow::setupToolbar() {
 
 
     /// Brush opacity
-    auto* opacitySlider = new QSlider(Qt::Horizontal);
+    auto *opacitySlider = new QSlider(Qt::Horizontal);
     opacitySlider->setRange(0, 100);
     opacitySlider->setValue(50);
     opacitySlider->setToolTip(tr("Brush opacity"));
@@ -1378,7 +1380,7 @@ void MainWindow::setupToolbar() {
 
 
     /// Lasso tool
-    auto* lassoAction = new QAction(this);
+    auto *lassoAction = new QAction(this);
     lassoAction->setCheckable(true);
     ThemedIconManager::instance().addIconTarget(":map/lasso.svg", lassoAction, &QAction::setIcon);
     toolGroup->addAction(lassoAction);
@@ -1389,8 +1391,8 @@ void MainWindow::setupToolbar() {
     lassoButton->setDefaultAction(lassoAction);
     ui->toolBar->addWidget(lassoButton);
 
-    connect(lassoAction, &QAction::triggered, [=](bool checked){
-        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    connect(lassoAction, &QAction::triggered, [=](bool checked) {
+        auto *currentView = qobject_cast<MapView *>(mapTabWidget->currentWidget());
         if (!currentView) return;
         if (checked)
             currentView->setActiveTool(lassoTool);
@@ -1402,7 +1404,8 @@ void MainWindow::setupToolbar() {
     /// Shape color button
     auto *shapeToolColorButton = new QPushButton();
     auto *shapeTextureButton = new QPushButton();
-    ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/map/palette.svg", shapeToolColorButton, &QAbstractButton::setIcon);
+    ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/map/palette.svg", shapeToolColorButton,
+                                                                 &QAbstractButton::setIcon);
     ui->toolBar->addWidget(shapeToolColorButton);
 
     connect(shapeToolColorButton, &QPushButton::clicked, this, [=]() {
@@ -1422,7 +1425,7 @@ void MainWindow::setupToolbar() {
     });
 
     ui->toolBar->addWidget(shapeTextureButton);
-    connect(shapeTextureButton, &QPushButton::clicked, [=](){
+    connect(shapeTextureButton, &QPushButton::clicked, [=]() {
         QString textureName = TexturePickerDialog::getTexture(this);
         shapeTextureButton->setIcon(QIcon(textureName));
         circleShapeTool->setTexture(textureName);
@@ -1435,7 +1438,7 @@ void MainWindow::setupToolbar() {
 
 
     /// Height Map
-    auto* heightMapAction = new QAction(this);
+    auto *heightMapAction = new QAction(this);
     heightMapAction->setCheckable(true);
     ThemedIconManager::instance().addIconTarget(":map/mountain.svg", heightMapAction, &QAction::setIcon);
     toolGroup->addAction(heightMapAction);
@@ -1446,8 +1449,8 @@ void MainWindow::setupToolbar() {
     heightButton->setDefaultAction(heightMapAction);
     ui->toolBar->addWidget(heightButton);
 
-    connect(heightMapAction, &QAction::triggered, [=](bool checked){
-        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    connect(heightMapAction, &QAction::triggered, [=](bool checked) {
+        auto *currentView = qobject_cast<MapView *>(mapTabWidget->currentWidget());
         if (!currentView) return;
         if (checked)
             currentView->setActiveTool(heightMapTool);
@@ -1457,35 +1460,35 @@ void MainWindow::setupToolbar() {
 
 
     /// Grid
-    auto* gridBox = new QComboBox(this);
+    auto *gridBox = new QComboBox(this);
     for (int i = 0; i <= GridItem::modesCount(); ++i) {
         gridBox->addItem(GridItem::stringMode(i));
     }
     gridBox->setMaximumWidth(80);
     gridBox->setCurrentIndex(GridItem::GridType::None);
-    connect(gridBox, &QComboBox::currentIndexChanged, [=](int mode){
-        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    connect(gridBox, &QComboBox::currentIndexChanged, [=](int mode) {
+        auto *currentView = qobject_cast<MapView *>(mapTabWidget->currentWidget());
         if (!currentView) return;
         currentView->getScene()->setGridType(mode);
     });
     ui->toolBar->addWidget(gridBox);
 
-    auto* gridSizeSpinBox = new QSpinBox(this);
+    auto *gridSizeSpinBox = new QSpinBox(this);
     gridSizeSpinBox->setRange(1, 100);
     gridSizeSpinBox->setSingleStep(1);
     gridSizeSpinBox->setToolTip(tr("Grid cell size (feet)"));
     gridSizeSpinBox->setMaximumWidth(40);
     ui->toolBar->addWidget(gridSizeSpinBox);
-    connect(gridSizeSpinBox, &QSpinBox::valueChanged, [=](int size){
-        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    connect(gridSizeSpinBox, &QSpinBox::valueChanged, [=](int size) {
+        auto *currentView = qobject_cast<MapView *>(mapTabWidget->currentWidget());
         if (!currentView) return;
         currentView->getScene()->setGridSize(size);
     });
 
 
     /// Connecting map change event
-    connect(mapTabWidget, &QTabWidget::currentChanged, [=](){
-        auto* currentView = qobject_cast<MapView*>(mapTabWidget->currentWidget());
+    connect(mapTabWidget, &QTabWidget::currentChanged, [=]() {
+        auto *currentView = qobject_cast<MapView *>(mapTabWidget->currentWidget());
         if (!currentView) return;
 
         gridBox->setCurrentIndex(currentView->getScene()->gridType());
@@ -1504,9 +1507,12 @@ void MainWindow::setupTracker() {
     initiativeTrackerWidget = new InitiativeTrackerWidget(this);
     ui->trackerLayout->addWidget(initiativeTrackerWidget);
 
-    connect(campaignTreeWidget, &CampaignTreeWidget::encounterReplaceRequested, initiativeTrackerWidget, &InitiativeTrackerWidget::loadFromFile);
-    connect(campaignTreeWidget, &CampaignTreeWidget::encounterAddRequested, initiativeTrackerWidget, &InitiativeTrackerWidget::addFromFile);
-    connect(campaignTreeWidget, &CampaignTreeWidget::encounterReplaceRequested, initiativeTrackerWidget, &InitiativeTrackerWidget::loadFromFile);
+    connect(campaignTreeWidget, &CampaignTreeWidget::encounterReplaceRequested, initiativeTrackerWidget,
+            &InitiativeTrackerWidget::loadFromFile);
+    connect(campaignTreeWidget, &CampaignTreeWidget::encounterAddRequested, initiativeTrackerWidget,
+            &InitiativeTrackerWidget::addFromFile);
+    connect(campaignTreeWidget, &CampaignTreeWidget::encounterReplaceRequested, initiativeTrackerWidget,
+            &InitiativeTrackerWidget::loadFromFile);
     connect(this, &MainWindow::translatorChanged, initiativeTrackerWidget, &InitiativeTrackerWidget::updateTranslator);
 }
 
@@ -1592,7 +1598,7 @@ void MainWindow::addCharacter() {
     if (!ok || characterName.isEmpty())
         return;
 
-    if (currentCampaignDir.isEmpty()){
+    if (currentCampaignDir.isEmpty()) {
         QMessageBox::warning(this, tr("Can't add character"), tr("Open campaign first!"));
         return;
     }
@@ -1603,9 +1609,9 @@ void MainWindow::addCharacter() {
     QString srcFilePath = srcDir.filePath("dnd-character-template.json");
     QString dstFilePath = dstDir.filePath(characterName + ".json");
 
-    if (QFile::exists(dstFilePath))
-    {
-        int ans = QMessageBox::warning(this, tr("Can't add character"), tr("Character already exists \n Override?"), QMessageBox::Yes | QMessageBox::Cancel);
+    if (QFile::exists(dstFilePath)) {
+        int ans = QMessageBox::warning(this, tr("Can't add character"), tr("Character already exists \n Override?"),
+                                       QMessageBox::Yes | QMessageBox::Cancel);
         if (ans == QMessageBox::Cancel)
             return;
         else
@@ -1614,7 +1620,7 @@ void MainWindow::addCharacter() {
 
     QFile src(srcFilePath);
 
-    if (!QFile::copy(srcFilePath, dstFilePath)){
+    if (!QFile::copy(srcFilePath, dstFilePath)) {
         QMessageBox::warning(this, tr("Can't add character"), tr("Unknown error"));
         return;
     }
@@ -1631,17 +1637,18 @@ void MainWindow::addCharacter() {
  * - If the application is not muted, saves the current volume level, sets the volume to zero, and updates the button icon to the mute icon.
  */
 void MainWindow::on_muteButton_clicked() {
-    if (isMuted){
+    if (isMuted) {
         isMuted = false;
         ui->volumeSlider->setValue(prevVolume);
-        ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/player/Volume-1.svg", ui->muteButton, &QAbstractButton::setIcon);
-    } else{
-        ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/player/mute.svg", ui->muteButton, &QAbstractButton::setIcon);
+        ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/player/Volume-1.svg", ui->muteButton,
+                                                                     &QAbstractButton::setIcon);
+    } else {
+        ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/player/mute.svg", ui->muteButton,
+                                                                     &QAbstractButton::setIcon);
         isMuted = true;
         prevVolume = ui->volumeSlider->value();
         ui->volumeSlider->setValue(0);
     }
-
 }
 
 /**
@@ -1671,7 +1678,7 @@ void MainWindow::dragEnterEvent(QDragEnterEvent *event) {
 void MainWindow::dropEvent(QDropEvent *event) {
     QStringList files;
     QString campaignPath = "";
-    for (const QUrl &url : event->mimeData()->urls()) {
+    for (const QUrl &url: event->mimeData()->urls()) {
         QString path = url.toLocalFile();
         QFileInfo info(path);
         if (info.exists() && info.isFile() && (info.suffix().toLower() == "json")) {
@@ -1679,7 +1686,7 @@ void MainWindow::dropEvent(QDropEvent *event) {
         }
     }
 
-    if (files.size() == 1){
+    if (files.size() == 1) {
         campaignPath = files[0];
 
         QMessageBox::StandardButton reply = QMessageBox::question(this,
@@ -1701,14 +1708,13 @@ void MainWindow::dropEvent(QDropEvent *event) {
  * @param sources A QMap where each key represents the display name of a source
  * and the corresponding value is the URL for that source.
  */
-void MainWindow::showSourcesMessageBox(const QMap<QString, QString> &sources)
-{
+void MainWindow::showSourcesMessageBox(const QMap<QString, QString> &sources) {
     QString html;
     html += "<html><body><ul>";
 
     for (auto it = sources.constBegin(); it != sources.constEnd(); ++it) {
-    html += QString("<li><a href=\"%1\">%2</a></li>")
-    .arg(it.value(), it.key());
+        html += QString("<li><a href=\"%1\">%2</a></li>")
+                .arg(it.value(), it.key());
     }
 
     html += "</ul></body></html>";
@@ -1739,7 +1745,7 @@ void MainWindow::showSourcesMessageBox(const QMap<QString, QString> &sources)
  * version and update details will be displayed in the update banner.
  */
 void MainWindow::handleUpdates(bool hasUpdates) const {
-    if (hasUpdates){
+    if (hasUpdates) {
         QString latest = updateManager->latestVersion();
         QString latestUrl = updateManager->latestUrl();
         ui->updateBanner->setCurrentVersion(VERSION);
@@ -1754,7 +1760,7 @@ void MainWindow::slotUpdateProgressBar(int percent, const QString &message) {
     progressBar->setValue(percent);
     progressBar->setFormat(QString("%1: %2%").arg(message).arg(percent));
     if (percent == 100 || percent == 0)
-        QTimer::singleShot(1500, progressBar, [=](){progressBar->setVisible(false);});
+        QTimer::singleShot(1500, progressBar, [=]() { progressBar->setVisible(false); });
 }
 
 void MainWindow::addCampaignToRecentList(const QString &path) {
@@ -1767,22 +1773,21 @@ void MainWindow::addCampaignToRecentList(const QString &path) {
 void MainWindow::updateRecentMenu() {
     ui->menuRecent->clear();
 
-    if (m_recentCampaignList.isEmpty())
-    {
-        QAction* emptyAction = new QAction(tr("None"), this);
+    if (m_recentCampaignList.isEmpty()) {
+        QAction *emptyAction = new QAction(tr("None"), this);
         emptyAction->setEnabled(false);
         ui->menuRecent->addAction(emptyAction);
         return;
     }
 
-    for (const QString& path : m_recentCampaignList) {
-        QAction* action = new QAction(path, this);
-        connect(action, &QAction::triggered, [this, path](){ setupCampaign(path);});
+    for (const QString &path: m_recentCampaignList) {
+        QAction *action = new QAction(path, this);
+        connect(action, &QAction::triggered, [this, path]() { setupCampaign(path); });
         ui->menuRecent->addAction(action);
     }
 
     ui->menuRecent->addSeparator();
-    QAction* clearAction = new QAction(tr("clear list"), this);
+    QAction *clearAction = new QAction(tr("clear list"), this);
     connect(clearAction, &QAction::triggered, [=]() {
         m_recentCampaignList.clear();
         updateRecentMenu();
@@ -1812,7 +1817,7 @@ void MainWindow::clearTmp() {
  * @param sourcePath The path of the source directory containing the files to be copied.
  * @param destPath The path of the destination directory where the files will be copied to.
  */
-static void copyAllFiles(const QString& sourcePath, const QString& destPath){
+static void copyAllFiles(const QString &sourcePath, const QString &destPath) {
     QDir sourceDir(sourcePath);
     if (!sourceDir.exists())
         return;
@@ -1822,7 +1827,7 @@ static void copyAllFiles(const QString& sourcePath, const QString& destPath){
         destDir.mkpath(".");
 
     QStringList files = sourceDir.entryList(QDir::Files);
-    foreach(const QString& file, files){
+    foreach(const QString& file, files) {
         QString srcFilePath = sourceDir.filePath(file);
         QString destFilePath = destDir.filePath(file);
 
@@ -1845,7 +1850,7 @@ static void copyAllFiles(const QString& sourcePath, const QString& destPath){
  * @param sourcePath The path of the source directory containing the files to be moved.
  * @param destPath The path of the destination directory where the files will be moved to.
  */
-static void moveAllFiles(const QString& sourcePath, const QString& destPath){
+static void moveAllFiles(const QString &sourcePath, const QString &destPath) {
     copyAllFiles(sourcePath, destPath);
 
     QDir sourceDir(sourcePath);
@@ -1872,22 +1877,22 @@ static void moveAllFiles(const QString& sourcePath, const QString& destPath){
 static bool removeDirectoryRecursively(const QString &directoryPath, bool deleteSelf) {
     QDir dir(directoryPath);
     if (!dir.exists()) {
-     return false;
+        return false;
     }
 
-    foreach (QString file, dir.entryList(QDir::NoDotAndDotDot | QDir::AllEntries)) {
+    foreach(QString file, dir.entryList(QDir::NoDotAndDotDot | QDir::AllEntries)) {
         QString fullPath = dir.absoluteFilePath(file);
         if (QFileInfo(fullPath).isDir()) {
-         if (!removeDirectoryRecursively(fullPath, deleteSelf)) {
-             return false;
-         }
+            if (!removeDirectoryRecursively(fullPath, deleteSelf)) {
+                return false;
+            }
         } else {
-         if (!QFile::remove(fullPath)) {
-             return false;
-         }
+            if (!QFile::remove(fullPath)) {
+                return false;
+            }
         }
-     }
-    if(deleteSelf)
+    }
+    if (deleteSelf)
         return dir.rmdir(".");
     else
         return true;

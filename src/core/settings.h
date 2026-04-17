@@ -47,7 +47,6 @@ enum settingsPages{
 struct Settings{
     struct General{
         QString audioDevice = "common/audioDevice";                ///< int Выбранное аудиоустройство
-        QString dir = "common/dir";                                ///< String рабочая папка
         QString lang = "common/lang";                              ///< String язык
         QString volume = "common/volume";                          ///< int основной ползунок громкости
         QString defaultCampaignDir = "common/defaultCampaignDir";  ///< String папка в которую будут сохраняться кампании по-умолчанию
