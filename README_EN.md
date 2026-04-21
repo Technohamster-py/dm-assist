@@ -1,301 +1,207 @@
-# DM-assist
-A tool to assist dungeon masters in tabletop role-playing games
+# DM Assist 🎲
 
-# Thanks
-Thanks to [TTG Club](https://ttg.club/) for the icons applied in the initiative table!
+**A tool for Masters (DM/GM) of tabletop role-playing games**
 
-You can help the project [here](https://technohamster.taplink.ws). This is voluntary and does not affect the functionality of the application in any way.
+[![Version](https://img.shields.io/github/v/release/Technohamster-py/dm-assist)](https://github.com/Technohamster-py/dm-assist/releases)
+[![C++ Standard](https://img.shields.io/badge/C%2B%2B-17-blue)](https://github.com/Technohamster-py/dm-assist)
+[![Qt Version](https://img.shields.io/badge/Qt-6.0%2B-brightgreen.svg)](https://www.qt.io/)
 
-# Short Description
-This tool originated from the idea that it's inconvenient to make several clicks to switch music during a tabletop RPG session.
-Gradually, the project gained new features, eventually evolving into a more convenient, modern, and intuitive alternative to
-DM helper.
+**DM Assist** is a modern, intuitive application designed to make gaming easier and more exciting. The project started as a convenient music player for changing tracks in one click, but has grown into a full-fledged system for managing music, combat, maps, and campaigns.
 
-![img.png](resources/illustrations/main-screen.png)
+> 🚀 **Current version:** v1.4.1 (last released on March 11, 2026)
 
-# Table of Contents
-- [Support](#support)
-- [Installation](#installation)
-- [Tutorial](#tutorial)
-  - [Settings](#settings)
-  - [Music](#music)
-  - [Initiative Tracker](#initiative-tracker)
-  - [Map](#map)
-  - [Campaigns](#campaigns)
-  - [Character Editor](#character-editor)
-- [Planned Features](#planned-features-and-supported-game-systems)
+---
 
-# Support
-- Windows 10
-- Linux (built for Ubuntu)
+## 📚 Table of Contents
 
-# Installation
-Go to the [releases](https://github.com/Technohamster-py/dm-assist/releases) page, choose the desired version
-(latest stable version is recommended), and download the installer (for Windows) or tar.gz archive (for Linux).
+- [Main Features](#-main-features)
+- [Supported systems](#-supported-gaming-systems)
+- [Installation](#-installation)
+- [Quick start](#-quick-start tutorial)
+- [Planned functions](#-planned-functions)
+- [Known Issues](#-known-issues)
+- [Project Support](#-project-support)
+- [Acknowledgements](#-acknowledgements)
 
-For the installer, run the file and follow the instructions. For the archive, extract it to a chosen folder and run
-the DM-assist executable.
+---
 
-# Tutorial:
-## Settings
-Settings can be accessed via the menu panel `Campaign -> Settings` or by using the shortcut `ctrl+alt+s`
+## ✨ Main features
 
-### General
-![settings-common.png](resources/illustrations/settings-common.png)
-- **Language** determines the localization of the application. Russian and English versions are available out of the box. You can download localization file [here](https://github.com/Technohamster-py/dm-assist/issues/42)  
-[How to add a new localization](https://github.com/Technohamster-py/dm-assist/wiki/Loacalisation)
-- **Audio output** determines the device that will play music from the players.
-Using a [virtual cable](https://vb-audio.com/Cable/), you can connect the audio output to the Discord microphone and 
-broadcast music during an online game.
-- **Working directory** determines where temporary files needed by the program will be stored.
+| Module                      | Description                                                                                                                                            |
+|-----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 🎵 **Music**                | Multi-channel player with independent volume, playlists and hotkeys (`Ctrl + playlist number').                                                        |
+| ⚔️ **Initiative Tracker**   | Battle management: hits, AC, statuses, sorting, player sharing, and field arithmetic (for example, `10+5-2`).                                          |
+| 🗺️ **A map with tools**    | Fog of War, dynamic lighting, ruler (taking into account heights!), grid, spell shapes, drawing and tokens.                                            |
+| 📁 **Campaigns**            | All in one place: maps, characters, encounters, and playlists. Just open the campaign folder and continue playing.                                     |
+| 📄 **Character Editor**     | Compatible with [LSS](https://longstoryshort.app /), automatic calculation of bonuses, resources (spells/cells), notes with formatting (`Ctrl+B/I/U`). |
+| 🎲 **The Throws Widget**    | Support for the notation `ndX+Y' (in Russian and English), cube grouping mode, integration with the character sheet.                                   |
+| 🌍 **Shared access**        | Separate windows for players with tracker and map (synchronization with the wizard).                                                                   |
 
-### Appearance
-![settings-appearance.png](resources/illustrations/settings-appearance.png)
-- **Theme** sets the application theme. Click _browse_ to choose a new, non-default theme in XML format.
-The file will be copied into the program's folder and will later be available in the settings menu.
-- **Style** defines the style of rendering graphical interface elements. **_ Recommended style is fusion_**
-- **Token name mode** and **Token font size** are responsible for the mode and parameters of drawing signatures with the names of characters on the map (for more information, see [Tokens](#using-tokens))
 
-### Initiative Tracker
-![settings-tracker.png](resources/illustrations/settings-tracker.png)
-- **Shared fields** – determines which tracker fields are shown in the player window.
-[details](#shared-access)
-- **HP display mode** – defines how character health is shown in the player window
-[details](#hp-display-modes)
+## 🎮 Supported game systems
 
-## Music
-Press <img alt="play.png" height="20" src="static/play.svg" width="20"/> to start playback. You can also use the shortcut `ctrl + playlist_number`. The number is shown to the left of the playlist name for convenience.
+The application (in particular, the bestiary and character sheets) is designed for **D&D 5e**, but flexible tools (statuses, map, throws) allow it to be used for most TTRPGS.
 
-Each playlist can have its volume adjusted independently using its individual slider. Additionally, you can adjust the overall volume using the large slider below all players.
+---
 
-![img.png](resources/illustrations/music-widget.png)
+## , Installation
 
-Click <img alt="edit.png" height="20" src="static/edit.svg" width="20"/> to open the playlist editing window. Here, you can set the display name, add (+), delete (select and press -), and reorder (drag and drop) tracks.
-After closing the dialog, selected files are copied to the program’s working folder. This folder is cleared when the program is closed.
+**Supported OS:** Windows 10/11, Linux (built for Ubuntu).
 
-![img.png](resources/illustrations/playlist-edit.png)
+1. Go to [releases page](https://github.com/Technohamster-py/dm-assist/releases ).
+2. Download the latest stable version:
+- For Windows: '.exe` installer.
+- For Linux: `.tar.gz `or `zip` archive.
+3. Install the downloaded file:
+- **Windows:** Run the installer and follow the instructions.
+- **Linux:** Unzip the archive and run the `DM-assist` executable file.
 
-## Initiative Tracker
-<img src="resources/illustrations/tracker.png" width="400">
+---
 
-Column descriptions:
-- The currently active character is highlighted.
-- <img src="resources/static/d20.svg" width="20"> - initiative column
-- <img src="resources/static/shield.svg" width="20"> - armor class column
-- <img src="resources/static/heart.svg" width="20"> - current HP column
+# Quick Start (Tutorial)
 
-You can enter simple arithmetic expressions in the HP column to ease calculations. They are evaluated once the cell loses focus.
+### 🎛️ Settings ('Ctrl+Alt+S' or 'Campaign → Settings`)
 
-![evaluation.png](resources/illustrations/evaluation.png) -> ![img.png](resources/illustrations/evaluation-complete.png)
+**General:**
+- **Language:** Russian / English (you can [add your own localization](https://github.com/Technohamster-py/dm-assist/wiki/Loacalization )).
+- **Audio output:** Select a device. Use a virtual cable to stream music to Discord.
+- **Check for updates** at startup.
+- **Launch action:** Choose whether to open an empty window, last campaign, or a list of recent campaigns.
 
-Controls:
-- Press <img src="static/forward.svg" width="20"> or <img src="static/back.svg" width="20"> to move to the next or previous character. You can also use `PageUp` and `PageDown`.
-- Press <img src="static/save.svg" width="20"> to save the current encounter as an XML file.
-- Press <img src="static/upload.svg" width="20"> to load an encounter from a file **_replacing the current one_**.
-- Press **sort** to sort characters by initiative.
-- Press **Add** to add a new character to the encounter.
-- Press <img src="static/folder.svg" width="20"> to **_append_** a saved encounter to the current one.
-- Use the dropdown list to set the HP display mode in the shared view.
-- Press <img src="static/share.svg" width="20"> to open the shared access window.
+**Appearance:**
+- **Theme:** You can choose from the pre-installed ones or download your own `.xml` theme.
+- **Style:** You can also add your own Qss style files. [More details](https://github.com/Technohamster-py/AdaptiveThemeLib )
+> It is not recommended to use the windows/ windows 11 style in conjunction with a dark theme due to incorrect color processing
 
-### Shared Access
-Press <img src="static/share.svg" width="20"> to open the shared tracker window
+**Initiative Tracker:**
+- Configure which fields are visible to the players (shared access).
+- Select the format for displaying health to players
+- Enable automatic throws and automatic sorting.
+- Adjust the backlight color of the active character or leave the preset theme
 
-<img src="resources/illustrations/shared-tracker-standard.png">
+**The map**
+- Configure the display of tokens
+- Adjust the transparency and color of the fog
+- Adjust the transparency of textures
+- Determine the size of one grid cell by default
+- Decide whether to open the latest maps automatically when loading the campaign
 
-This is a pop-up widget to show the tracker to players. You can configure visibility of each column.
+**Keyboard shortcuts:** Adjust the keys for the map tools.
 
-### HP Display Modes
-In the shared view window, HP can be displayed as:
-- Numeric (classic)
-- Text status (Good / Injured / Dead)
-- Progress bar
+### 🎵 Music
 
-## Map
+![music-widget.png](resources/illustrations/music-widget.png)
+
+- **Launch:** the ▶️ button or `Ctrl + playlist number'.
+- **Volume:** separately under each playlist + a shared master slider.
+- **Playlist editing:** button ✏️ - add, delete, change the order of tracks. The files are copied to the working folder.
+
+![playlist-edit.png](resources/illustrations/playlist-edit.png)
+
+### ⚔️ Initiative Tracker
+
+![tracker.png](resources/illustrations/tracker.png)
+
+- **Columns:** Initiative, speed, AC, current/maximum HP, statuses.
+- **HP input:** you can write expressions `10+5-2` — they will be calculated automatically.
+- **Management:** `PageUp` / `PageDown' to change the active character, **Sort** to sort, **Add** to add.
+- **Statuses:** Double-click on a cell. There are standard D&D statuses and their own (with SVG icons).
+
+![status-edit.png](resources/illustrations/status-edit.png)
+- **Shared access:** Share button — a window opens for players with customizable fields and the HP display mode (numbers / status/ progress bar).
+
+### 🗺️ Map and tools
+
 ![map-main.png](resources/illustrations/map-main.png)
 
-To open a new map, click the corresponding button if no maps are open, or click **+** to the right of all map tabs. To add a map to a campaign, use the menu `Campaign -> Add -> Map`.
-
-You can open any jpg, png, bmp image or the custom dam (DM-assist map) format.
-
-Tools are described below. Press `esc` to deactivate any tool.
-
-Move the map using LMB with no active tool, or MMB with an active tool. Zoom with the mouse wheel.
-
-The map is automatically saved in dam format on close if it was opened as part of a campaign.
-You can also manually save it by right-clicking the tab and choosing **_Save_**.
-
-### Shared Access
-To open a viewer window for players, right-click the map tab and choose **_Share_**.
-This window is view-only and doesn't allow scene editing. All actions from the main window are synced here.
-
-### Ruler
-A key tool for measuring distances.
-
-Right-click <img src="static/ruler.svg" width="20"> and choose **Calibrate**.
-Click twice on the map to mark a segment, then enter the distance in the dialog.
-
-After calibration, the ruler automatically enters measurement mode.
-
-Click twice on the map to show distance.
-![measure.png](resources/illustrations/measure.png)
-
-To delete lines or text, right-click them with the ruler tool active.
-
-### Fog of War
-To add fog, use <img src="static/fog_hide.svg" width="20">, to remove use <img src="static/fog_reveal.svg" width="20">. Change brush size with `ctrl + SCROLL`.
-You can hide or reveal the whole map by right-clicking the respective fog button and choosing **Hide all** or **Reveal all**.
-
-### Light
-![light.png](resources/illustrations/light.png)
-
-The _light_ tool <img src="static/torch.svg" width="20"> adds light sources to the map. Drag existing sources with this tool to move them.
-
-Adjust light radius using spinboxes. Light scales according to ruler calibration.
-
-Click <img src="static/palette.svg" width="20"> to change color.
-
-Check **_update fog_** so fog is automatically cleared when placing or moving lights.
-
-Right-click a light source with the tool active to delete it.
-
-### Effect Shapes
-![shapes.png](resources/illustrations/shapes.png)
-
-The _shapes_ tool lets you draw spell areas on the map.
-
-Each shape (line, circle, triangle, square) is drawn with two clicks. The first sets the origin point, the second defines size/distance.
-
-Shapes follow [area of effect rules](https://dnd.su/articles/mechanics/157-spellcasting/#areas-of-effect) from D&D.
-
-After the first click, a dynamic preview of the shape appears for convenience:
-- Radius for circles
-- Length for lines
-- Height for triangles
-- Edge length for squares
-
-To change color, click <img src="static/palette.svg" width="20"> in the drawing section.
-
-Right-click a shape to delete it.
-
-### Brush
-
-![brush.png](resources/illustrations/brush.png)
-
-The _brush_ tool <img src="static/brush.svg" width="20"> allows freehand drawing on the map.
-
-Brush color is synchronized with the effects tool. You can adjust opacity using a slider.
-
-Use `ctrl + SCROLL` to change brush size (similar to fog tool).
-
-Right-click a drawn line to delete it.
+- **Open a card:** `Campaign → Add → Map' or the '+` button on the tabs. Formats: `JPG, PNG, BMP, DAM'.
+- **Navigation:** LKM (without tools) or SCM — movement, wheel — zoom.
+- **Tools** (deactivation — `Esc', removal of `PCM` elements):
 
 
-### Grid
-![grid-square.png](resources/illustrations/grid-square.png)
-![grid-hex.png](resources/illustrations/grid-hex.png)
+| Tool                                                     | Action                                                                                          |
+|----------------------------------------------------------|-------------------------------------------------------------------------------------------------|
+| 📏 **Ruler**                                             | Calibration (PCM → set the segment and its length), then measuring distances based on heights.  |
+| 💡 **Light**                                             | Add sources with color and radius. The "update fog" option automatically opens the area.        |
+| 🔲 **Forms**                                             | Circles, lines, squares, triangles (like spells in D&D). They are drawn with two clicks.        |
+| ✏️ **Brush** / Free drawing with color and transparency. |
+| ✂️ **Lasso**                                             | Closed contours of any shape.                                                                   |
+| 🗻 **Elevation map**                                     | Areas with heights from -100 to 100 (gradient blue→red). Affects the measurements of the ruler. |
+| 🔲 **Grid**                                              | Square or hexagonal, with adjustable cell size.                                                 |
 
-A square or hexagonal grid can be applied to the map. The mode is selected by switching the drop-down list.
+- **Shared access:** Click on the maps → "share" tab. The player's window syncs with your actions.
 
-Next to the drop-down list, you can control the size of the grid cells.
+> The card is automatically saved in the `dam` format when closed if it was opened as part of a campaign. You can also manually save the map by clicking on the maps tab and selecting save.
 
-## Campaigns
-Campaigns allow you to store maps, characters, encounters, and playlists together and load everything at once.
-
-### Creating a New Campaign
-Select the menu `Campaign -> New` or press `ctrl + N`.
-
-![create-campaign-dialog.png](resources/illustrations/create-campaign-dialog.png)
-
-In the dialog, enter a name and project folder. The folder must be empty or not exist (the app will create it).
-
-The campaign opens automatically after creation.
-
-### Opening an Existing Campaign
-Choose `Campaign -> Open` or press `ctrl + O`.
-
-In the file dialog, select the root campaign folder (containing `campaign.json`).
-
-### Working with a Campaign
-Playlists are automatically set when the campaign opens. All music-related work will be saved with the campaign on exit.
-
-A navigation tree appears on the left side.
+### 📁 Campaigns
 
 ![campaign-tree.png](resources/illustrations/campaign-tree.png)
 
-Hovering over an element shows interaction buttons.
+**Create:** `Campaign → New' (`Ctrl+N') → specify a name and an empty folder.  
+**Open:** `Campaign → Open` (`Ctrl+O') → select the folder with `campaign.json`.
 
-- Click <img src="static/add.svg" width="20"> on a character to add them to the current encounter or
-  <img src="static/edit.svg" width="20"> to open the [editor](#character-editor).
+After opening:
+- The campaign tree appears on the left (characters, maps, encounters, playlists).
+- Buttons for the elements: add to encounter, open editor, open map.
+- **Tokens:** Drag the character from the tree onto the map. Take the images from the `Tokens` folder (you can replace them manually).
+- **Reload** campaign: `Campaign → Reload from disk' (after adding files manually).
 
-- Click <img src="static/add.svg" width="20"> on an encounter to add it or
-  <img src="static/upload.svg" width="20"> to replace the current one.
-
-- Click <img src="static/edit.svg" width="20"> on a map to open it in the main window.
-
-To add files to a campaign, place them in the correct subfolder. Each file type must be in its specific folder.
-
-After adding new files, reload the campaign via `Campaign -> Reload from disk`.
-
-To move a campaign, just move the whole folder to a new location.
-
-### Using tokens
-To add a character token to the map, drag its element from the campaign tree onto the open map. If the character image has already been downloaded and is located in the campaign `Tokens` folder, it will be applied. If the image is missing, a stub will be applied.
-
-If the grid is enabled on the map, the token will be magnetically attached to it.
-
-#### Change/ add tokens
-To add/replace an image to a character, upload the image to the Tokens folder of your campaign.
-> Important: When using character files with LSS, tokens may not be downloaded automatically due to server unavailability. In this case, download the image manually to the Tokens folder **with exactly the file name that LSS suggests.**
-
-![tokens.png](resources/illustrations/tokens.png)
-
-For tokens, you can change the display mode and font size of the name signature in [settings](#appearance). There are 3 display options in total
-- Always display
-- Display on hover in a suggestion
-- Do not display
-
-By right-clicking on the token, a context menu is opened, from which you can
-- Add a character to the encounter
-- Open the character editor
-- Change the token size
-- Remove the token from the card
-
-## Character Editor
-Character files use a format compatible with [LSS](https://longstoryshort.app/).
-
-Note: Compatibility is one-way. Characters created here may not work in LSS.
-
-To open a character sheet, click <img src="static/edit.svg" width="20"> in the campaign tree.
+### 📄 Character Editor
 
 ![charsheet.png](resources/illustrations/charsheet.png)
 
-All stat bonuses, attack bonuses (except damage), and abilities are calculated automatically based on inputs.
+- Opens from the campaign tree ( ✏️ button).
+- Compatible with the LSS format (not backwards — the character from DM Assist may not open on LSS).
+- Stats, attack and damage bonuses are calculated automatically.
+- **Resources** (spell cells, etc.): a table with a recovery mode (short/long rest).
+- **The rest buttons** restore resources according to the settings.
+- **Text formatting** in notes: `Ctrl+B' (bold), `Ctrl+I` (italics), `Ctrl+U` (underlined).
 
-Use the table to edit resources (spell slots, Ki points, etc.).
-Click the **_refill_** cell to toggle recovery mode (short/long rest).
+### 📖 Bestiary
 
-Restore resources by pressing the short or long rest button.
+![bestiary.png](resources/illustrations/bestiary.png)
 
-Click **Add** next to a table to add a new resource or attack.
+Opens monster stats in **FVTT11** and **FVTT12** format (can be downloaded, for example, from [TTG Club](https://ttg.club /)).
+The information on the TTG website may differ from the file.
 
-Click an attack to edit it.
+### 🎲 The Throws widget
 
-Use `ctrl + B`, `ctrl + I`, and `ctrl + U` for bold, italic, and underline formatting in note fields.
+![roll-widget.png](resources/illustrations/roll-widget.png)
 
-# Known Issues:
-- It is not recommended to use any style other than Fusion (the default) or Windows 11 with the dark theme.
-  Windows styles currently cause incorrect rendering.
+- Standard notation is supported: `2d6+4', `1k20+5-1d4'.
+- You can use the characters `d` and `k` instead of `d'.
+- **Compact mode:** Groups identical dice (`1d4+3d4 → 4d4`).
+  -**Character integration:** click on **the name** of a characteristic, skill, attack/damage bonus — the roll is automatically sent to the widget.
 
-# Planned Features and Supported Game Systems
-## D&D 5e
-- Extended initiative tracker
-- Character storage
-  - Fast level-up with feature selection per level
-  - Multiclass support
-## D&D 2024
-## Call of Cthulhu
-## Cyberpunk (RED, 2020)
-## World of Darkness (MtA, VtM etc.)
-## Pathfinder
-## Starfinder
+---
+
+## 📅 Planned functions
+
+### D&D 5e
+- [ ] Character storage with fast leveling (selection of upgrades, as in BG3).
+- [ ] Multiclass support.
+
+### Other systems
+The plans include special modes for:
+- [ ] Call of Cthulhu
+- [ ] Cyberpunk (RED, 2020)
+- [ ] World of Darkness (MtA, VtM, etc.)
+- [ ] Pathfinder / Starfinder
+
+---
+
+## 💖 Project support
+
+You can support the development with a voluntary donation. This does not affect the functionality in any way, but it helps the project a lot.  
+[Support link](https://technohamster.taplink.ws)
+
+---
+
+## 🙏 Thanks
+
+- **TTG Club** — for the icons used in the initiative table.
+- To all contributors and users who report bugs and suggest ideas.
+
+---
+
+**Happy GMing! 🐉**
