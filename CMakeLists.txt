@@ -21,77 +21,22 @@ elseif (UNIX AND NOT APPLE)
     set(BASS_DLL "${CMAKE_SOURCE_DIR}/3rdparty/bass/linux/libbass.so")
 endif ()
 
-
-set(FILES
-        src/core/dialogs/save-config-dialog/saveconfigdialog.cpp src/core/dialogs/save-config-dialog/saveconfigdialog.h
-        src/core/dialogs/settings-dialog/settingsdialog.cpp src/core/dialogs/settings-dialog/settingsdialog.h
-        src/core/dialogs/startup-dialog/recentcampaigndialog.cpp src/core/dialogs/startup-dialog/recentcampaigndialog.h
-        src/core/mainwindow.cpp src/core/mainwindow.h
-        src/core/settings.h
-        src/core/update-manager/updatemanager.cpp src/core/update-manager/updatemanager.h
-        src/utils/dialogs/icon-picker/iconpickerdialog.cpp src/utils/dialogs/icon-picker/iconpickerdialog.h
-        src/utils/parsers/fvtt/dndbeaststructure.h
-        src/modules/bestiary/widget/dndbestiarypage.cpp src/modules/bestiary/widget/dndbestiarypage.h
-        src/modules/campaign/hover-widget/hoverwidget.cpp src/modules/campaign/hover-widget/hoverwidget.h
-        src/modules/campaign/tree-widget/campaigntreewidget.cpp src/modules/campaign/tree-widget/campaigntreewidget.h
-        src/modules/characters/dialogs/dndcharsheetdialogs.cpp src/modules/characters/dialogs/dndcharsheetdialogs.h
-        src/modules/characters/models/dndmodels.cpp src/modules/characters/models/dndmodels.h
-        src/utils/widgets/abstractcharsheetwidget.h
-        src/modules/characters/widgets/dndcharsheetwidget.cpp src/modules/characters/widgets/dndcharsheetwidget.h
-        src/modules/encounter/delegates/initiativedelegates.cpp src/modules/encounter/delegates/initiativedelegates.h
-        src/modules/encounter/dialogs/statuseditdialog.cpp src/modules/encounter/dialogs/statuseditdialog.h
-        src/modules/encounter/initiativestructures.h
-        src/modules/encounter/models/initiative-model/initiativemodel.cpp src/modules/encounter/models/initiative-model/initiativemodel.h
-        src/modules/encounter/models/status-manager/statusmanager.cpp src/modules/encounter/models/status-manager/statusmanager.h
-        src/modules/encounter/widget/initiativetrackerwidget.cpp src/modules/encounter/widget/initiativetrackerwidget.h
-        src/modules/map/graphics/effects/effectgraphicsitem.cpp src/modules/map/graphics/effects/effectgraphicsitem.h
-        src/modules/map/graphics/grid/griditem.cpp src/modules/map/graphics/grid/griditem.h
-        src/modules/map/graphics/text/fixedsizetextitem.cpp src/modules/map/graphics/text/fixedsizetextitem.h
-        src/modules/map/graphics/token/tokenitem.cpp src/modules/map/graphics/token/tokenitem.h
-        src/modules/map/scene/mapscene.cpp src/modules/map/scene/mapscene.h
-        src/modules/map/scene/mapview.cpp src/modules/map/scene/mapview.h
-        src/modules/map/utils/undostack.h
-        src/modules/map/tools/abstractmaptool.h
-        src/modules/map/tools/area-shape/areashapetool.cpp src/modules/map/tools/area-shape/areashapetool.h
-        src/modules/map/tools/brush/brushtool.cpp src/modules/map/tools/brush/brushtool.h
-        src/modules/map/tools/calibration/calibrationtool.cpp src/modules/map/tools/calibration/calibrationtool.h
-        src/modules/map/tools/fog/fogtool.cpp src/modules/map/tools/fog/fogtool.h
-        src/modules/map/tools/height-map/heightmaptool.cpp src/modules/map/tools/height-map/heightmaptool.h
-        src/modules/map/tools/light/lighttool.cpp src/modules/map/tools/light/lighttool.h
-        src/modules/map/tools/ruler/rulertool.cpp src/modules/map/tools/ruler/rulertool.h
-        src/modules/map/tools/spell-shape/spellshapetool.cpp src/modules/map/tools/spell-shape/spellshapetool.h
-        src/modules/map/widgets/map-tab-widget/maptabwidget.cpp src/modules/map/widgets/map-tab-widget/maptabwidget.h
-        src/modules/map/widgets/shared-map-window/sharedmapwindow.cpp src/modules/map/widgets/shared-map-window/sharedmapwindow.h
-        src/modules/map/dialogs/texturepickerdialog.h
-        src/modules/music/widget/musicwidget.cpp src/modules/music/widget/musicwidget.h
-        src/modules/rolls/roll-widget/rollwidget.cpp src/modules/rolls/roll-widget/rollwidget.h
-        src/utils/error-handler/errorhandler.cpp src/utils/error-handler/errorhandler.h
-        src/utils/parsers/character/characterparser.cpp src/utils/parsers/character/characterparser.h
-        src/utils/parsers/fvtt/fvttparser.cpp src/utils/parsers/fvtt/fvttparser.h
-        src/utils/widgets/roll-text-browser/rolltextbrowser.cpp src/utils/widgets/roll-text-browser/rolltextbrowser.h
-        src/utils/widgets/text-clickable-checkbox/textclickablecheckbox.cpp src/utils/widgets/text-clickable-checkbox/textclickablecheckbox.h
-)
-
-set(UI_FILES
-        src/modules/characters/widgets/dndcharsheetwidget.ui
-        src/modules/characters/dialogs/attackdialog.ui
-        src/modules/characters/dialogs/resourcedialog.ui
-        src/core/mainwindow.ui
-        src/modules/music/widget/musicplayer.ui
-        src/modules/music/widget/playlisteditdialog.ui
-        src/modules/encounter/widget/initiativetrackerwidget.ui
-        src/modules/rolls/roll-widget/rollwidget.ui
-        src/modules/encounter/dialogs/statuseditdialog.ui
-        src/core/dialogs/settings-dialog/settingsdialog.ui
-        src/modules/bestiary/widget/dndbestiarypage.ui
-        src/utils/parsers/character/dndCharacterData.h
-)
+include(${PROJECT_SOURCE_DIR}/src/core/dialogs/dialogs.cmake)
+include(${PROJECT_SOURCE_DIR}/src/core/update-manager/updater.cmake)
+include(${PROJECT_SOURCE_DIR}/src/core/main-window/mainwindow.cmake)
+include(${PROJECT_SOURCE_DIR}/src/modules/bestiary/bestiary.cmake)
+include(${PROJECT_SOURCE_DIR}/src/modules/campaign/campaign.cmake)
+include(${PROJECT_SOURCE_DIR}/src/modules/characters/characters.cmake)
+include(${PROJECT_SOURCE_DIR}/src/modules/encounter/encounter.cmake)
+include(${PROJECT_SOURCE_DIR}/src/modules/map/map.cmake)
+include(${PROJECT_SOURCE_DIR}/src/modules/music/music.cmake)
+include(${PROJECT_SOURCE_DIR}/src/modules/rolls/rolls.cmake)
+include(${PROJECT_SOURCE_DIR}/src/utils/utils.cmake)
 
 set(TS_FILES
         resources/translations/dm-assist_en_US.ts
         resources/translations/dm-assist_ru_RU.ts
 )
-
 
 set(RESOURCES resources/static/app_resources.qrc)
 
@@ -132,8 +77,18 @@ qt_add_translation(QM_FILES ${TS_FILES})
 add_executable(${PROJECT_NAME}
         WIN32
         src/core/main.cpp
-        ${FILES}
-        ${UI_FILES}
+        src/core/settings.h
+        ${DIALOGS_SOURCES}
+        ${UPDATE_MANAGER_SOURCES}
+        ${MAINWINDOW_SOURCES}
+        ${BESTIARY_SOURCES}
+        ${CAMPAIGN_SOURCES}
+        ${CHARACTERS_SOURCES}
+        ${ENCOUNTER_SOURCES}
+        ${MAP_SOURCES}
+        ${MUSIC_SOURCES}
+        ${ROLLS_SOURCES}
+        ${UTILS_SOURCES}
         ${RESOURCES_ADD}
 )
 

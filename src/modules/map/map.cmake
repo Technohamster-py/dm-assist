@@ -1,0 +1,38 @@
+set(MAP_SOURCES
+        ${PROJECT_SOURCE_DIR}/src/modules/map/dialogs/texturepickerdialog.h
+        ${PROJECT_SOURCE_DIR}/src/modules/map/graphics/effects/effectgraphicsitem.h
+        ${PROJECT_SOURCE_DIR}/src/modules/map/graphics/grid/griditem.h
+        ${PROJECT_SOURCE_DIR}/src/modules/map/graphics/text/fixedsizetextitem.h
+        ${PROJECT_SOURCE_DIR}/src/modules/map/graphics/token/tokenitem.h
+        ${PROJECT_SOURCE_DIR}/src/modules/map/scene/mapscene.h
+        ${PROJECT_SOURCE_DIR}/src/modules/map/scene/mapview.h
+        ${PROJECT_SOURCE_DIR}/src/modules/map/tools/abstractmaptool.h
+        ${PROJECT_SOURCE_DIR}/src/modules/map/tools/area-shape/areashapetool.h
+        ${PROJECT_SOURCE_DIR}/src/modules/map/tools/brush/brushtool.h
+        ${PROJECT_SOURCE_DIR}/src/modules/map/tools/calibration/calibrationtool.h
+        ${PROJECT_SOURCE_DIR}/src/modules/map/tools/fog/fogtool.h
+        ${PROJECT_SOURCE_DIR}/src/modules/map/tools/height-map/heightmaptool.h
+        ${PROJECT_SOURCE_DIR}/src/modules/map/tools/light/lighttool.h
+        ${PROJECT_SOURCE_DIR}/src/modules/map/tools/ruler/rulertool.h
+        ${PROJECT_SOURCE_DIR}/src/modules/map/tools/spell-shape/spellshapetool.h
+        ${PROJECT_SOURCE_DIR}/src/modules/map/utils/undostack.h
+        ${PROJECT_SOURCE_DIR}/src/modules/map/widgets/map-tab-widget/maptabwidget.h
+        ${PROJECT_SOURCE_DIR}/src/modules/map/widgets/shared-map-window/sharedmapwindow.h
+
+        ${PROJECT_SOURCE_DIR}/src/modules/map/graphics/effects/effectgraphicsitem.cpp
+        ${PROJECT_SOURCE_DIR}/src/modules/map/graphics/grid/griditem.cpp
+        ${PROJECT_SOURCE_DIR}/src/modules/map/graphics/text/fixedsizetextitem.cpp
+        ${PROJECT_SOURCE_DIR}/src/modules/map/graphics/token/tokenitem.cpp
+        ${PROJECT_SOURCE_DIR}/src/modules/map/scene/mapscene.cpp
+        ${PROJECT_SOURCE_DIR}/src/modules/map/scene/mapview.cpp
+        ${PROJECT_SOURCE_DIR}/src/modules/map/tools/area-shape/areashapetool.cpp
+        ${PROJECT_SOURCE_DIR}/src/modules/map/tools/brush/brushtool.cpp
+        ${PROJECT_SOURCE_DIR}/src/modules/map/tools/calibration/calibrationtool.cpp
+        ${PROJECT_SOURCE_DIR}/src/modules/map/tools/fog/fogtool.cpp
+        ${PROJECT_SOURCE_DIR}/src/modules/map/tools/height-map/heightmaptool.cpp
+        ${PROJECT_SOURCE_DIR}/src/modules/map/tools/light/lighttool.cpp
+        ${PROJECT_SOURCE_DIR}/src/modules/map/tools/ruler/rulertool.cpp
+        ${PROJECT_SOURCE_DIR}/src/modules/map/tools/spell-shape/spellshapetool.cpp
+        ${PROJECT_SOURCE_DIR}/src/modules/map/widgets/map-tab-widget/maptabwidget.cpp
+        ${PROJECT_SOURCE_DIR}/src/modules/map/widgets/shared-map-window/sharedmapwindow.cpp
+)

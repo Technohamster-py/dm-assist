@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "main-window/mainwindow.h"
 #include "src/core/dialogs/startup-dialog/recentcampaigndialog.h"
 #include "settings.h"
 
