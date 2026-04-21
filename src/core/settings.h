@@ -11,7 +11,7 @@
 #define DONATE_URL "https://technohamster.taplink.ws"
 #define ISSUES_URL  "https://github.com/Technohamster-py/dm-assist/issues"
 #define RELEASES_URL "https://api.github.com/repos/Technohamster-py/dm-assist/releases/latest"
-#define VERSION "1.4.1"
+#define VERSION "1.5"
 #define SETTINGS_VERSION "2.0"
 
 enum hpBarMode {
