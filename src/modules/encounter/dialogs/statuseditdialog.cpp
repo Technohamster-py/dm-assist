@@ -3,7 +3,7 @@
 
 #include "src/utils/dialogs/icon-picker/iconpickerdialog.h"
 #include "themediconmanager.h"
-#include "src/modules/encounter/models/status-manager/statusmanager.h"
+#include "src/modules/encounter/status-manager/statusmanager.h"
 
 #include <utility>
 
