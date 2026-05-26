@@ -55,15 +55,6 @@ MusicPlayerWidget::MusicPlayerWidget(QWidget *parent, int id, QString title)
     localDir = tempDirLocation() + QString("/%1").arg(playlistName);
     QDir().mkpath(localDir);
 
-    BASS_Free();
-
-    if (!BASS_Init(BASS_DEVICE_INDEX, 44100, 0, nullptr, nullptr)) {
-        auto err = BASS_ErrorGetCode();
-        ErrorHandler::showError("BASS Init Failed",
-                  QString("Could not initialize BASS on selected device.\nError code: %1").arg(err));
-        return;
-    }
-
     playKey = new QShortcut(this);
 
     connect(playKey, SIGNAL(activated()), this, SLOT(playShortcutTriggered()));
@@ -74,6 +65,14 @@ MusicPlayerWidget::MusicPlayerWidget(QWidget *parent, int id, QString title)
     ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/player/play.svg", ui->playButton, &QAbstractButton::setIcon);
     ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/edit.svg", ui->editButton, &QAbstractButton::setIcon);
     ThemedIconManager::instance().addIconTarget<QAbstractButton>(":/player/Volume-1.svg", ui->muteButton, &QAbstractButton::setIcon);
+
+    BASS_Free();
+    if (!BASS_Init(BASS_DEVICE_INDEX, 44100, 0, nullptr, nullptr)) {
+        auto err = BASS_ErrorGetCode();
+        ErrorHandler::showError("BASS Init Failed",
+                  QString("Could not initialize BASS on selected device.\nError code: %1").arg(err));
+        return;
+    }
 }
 
 /**
