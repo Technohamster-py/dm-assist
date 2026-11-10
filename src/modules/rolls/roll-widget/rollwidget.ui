@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>602</width>
+    <width>246</width>
     <height>300</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>246</width>
+    <height>0</height>
+   </size>
   </property>
   <property name="maximumSize">
    <size>
@@ -59,6 +65,12 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QLineEdit" name="rollEdit">
+       <property name="minimumSize">
+        <size>
+         <width>30</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="placeholderText">
         <string>Example: 2d20 + 4</string>
        </property>
@@ -69,6 +81,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="commandButton">
+       <property name="minimumSize">
+        <size>
+         <width>30</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
          <width>50</width>
@@ -96,6 +114,12 @@
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="QPushButton" name="d4Button">
+       <property name="minimumSize">
+        <size>
+         <width>30</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="text">
         <string>d4</string>
        </property>
@@ -103,6 +127,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="d6Button">
+       <property name="minimumSize">
+        <size>
+         <width>30</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="text">
         <string>d6</string>
        </property>
@@ -110,6 +140,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="d8Button">
+       <property name="minimumSize">
+        <size>
+         <width>30</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="text">
         <string>d8</string>
        </property>
@@ -117,6 +153,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="d10Button">
+       <property name="minimumSize">
+        <size>
+         <width>30</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="text">
         <string>d10</string>
        </property>
@@ -124,6 +166,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="d12Button">
+       <property name="minimumSize">
+        <size>
+         <width>30</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="text">
         <string>d12</string>
        </property>
@@ -131,6 +179,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="d20Button">
+       <property name="minimumSize">
+        <size>
+         <width>30</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="text">
         <string>d20</string>
        </property>
@@ -138,6 +192,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="d100Button">
+       <property name="minimumSize">
+        <size>
+         <width>30</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="text">
         <string>d100</string>
        </property>
