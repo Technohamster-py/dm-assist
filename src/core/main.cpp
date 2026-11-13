@@ -4,6 +4,8 @@
 
 #include <QLoggingCategory>
 
+struct Status;
+
 int main(int argc, char *argv[]) {
     qRegisterMetaType<Status>();
     qRegisterMetaType<QList<Status>>();
