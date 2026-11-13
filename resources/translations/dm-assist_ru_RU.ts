@@ -1069,6 +1069,7 @@
 </context>
 <context>
     <name>MainWindow</name>
+    <message><source>Spell</source><translation>Заклинание</translation></message>
     <message>
         <location filename="../mainwindow.ui" line="380"/>
         <source>Glossary</source>

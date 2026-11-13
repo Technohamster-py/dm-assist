@@ -50,6 +50,8 @@ public slots:
     void setActiveTool(AbstractMapTool* tool);
 
 protected:
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    bool eventFilter(QObject *watched, QEvent *event) override;
     /**
      * @brief Handles mouse wheel events for zooming.
      * @param event Pointer to wheel event

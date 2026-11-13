@@ -1,3 +1,6 @@
+#include "../spells/spelleditwidget.h"
+#include <QSaveFile>
+#include <QUuid>
 #include "campaigntreewidget.h"
 #include <QDrag>
 #include <QFileInfo>
@@ -152,12 +155,20 @@ void CampaignTreeWidget::populateTree(const QString &path, QTreeWidgetItem *pare
         auto *item = new QTreeWidgetItem();
         parentItem->addChild(item);
 
-        auto *widget = new HoverWidget(entry.fileName().split(".")[0], type);
+        QString title = entry.completeBaseName();
+        if (type == NodeType::Spell && entry.isFile()) {
+            QFile file(entry.absoluteFilePath());
+            if (file.open(QIODevice::ReadOnly)) title = QJsonDocument::fromJson(file.readAll()).object()["name"].toString(title);
+        }
+        auto *widget = new HoverWidget(title, type);
         setItemWidget(item, 0, widget);
 
         QString fullPath = entry.absoluteFilePath();
 
         switch (type) {
+            case NodeType::Spell:
+                if (entry.isFile()) item->setData(0, Qt::UserRole, fullPath);
+                break;
             case NodeType::Character:
                 connect(widget, &HoverWidget::action1Clicked, this, [=](){ emit characterOpenRequested(fullPath); });
                 connect(widget, &HoverWidget::action2Clicked, this, [=](){ emit characterAddRequested(fullPath); });
@@ -268,8 +279,38 @@ QString CampaignTreeWidget::loadCampaignName(const QString &rootPath) {
 }
 
 
+void CampaignTreeWidget::editSpell(QString path) {
+    if (m_rootPath.isEmpty()) {
+        QMessageBox::warning(this, tr("Error"), tr("Open campaign first!"));
+        return;
+    }
+    SpellEditWidget editor(this);
+    if (!path.isEmpty()) {
+        QFile file(path);
+        if (!file.open(QIODevice::ReadOnly)) return;
+        auto doc = QJsonDocument::fromJson(file.readAll());
+        if (!doc.isObject()) { QMessageBox::warning(this, tr("Error"), tr("Invalid spell JSON")); return; }
+        editor.parseFromJson(doc.object());
+    }
+    if (editor.exec() != QDialog::Accepted) return;
+    if (path.isEmpty()) path = m_rootPath + "/Spells/" + QUuid::createUuid().toString(QUuid::WithoutBraces) + ".json";
+    QSaveFile file(path);
+    auto data = QJsonDocument(editor.toJson()).toJson();
+    if (!file.open(QIODevice::WriteOnly) || file.write(data) != data.size() || !file.commit()) {
+        QMessageBox::warning(this, tr("Error"), file.errorString()); return;
+    }
+    setRootDir(m_rootPath);
+}
+
 void CampaignTreeWidget::showContextMenu(const QPoint &pos) {
     QMenu menu;
+    if (!m_rootPath.isEmpty()) {
+        auto item = itemAt(pos);
+        QString path = item ? item->data(0, Qt::UserRole).toString() : QString();
+        if (determieNodeType(path, m_rootPath) == NodeType::Spell && QFileInfo(path).isFile())
+            menu.addAction(tr("Edit spell"), this, [this, path] { editSpell(path); });
+    }
+
 
     QAction *openAction = menu.addAction(tr("Show in file system"));
     connect(openAction, &QAction::triggered, [=](){
@@ -285,7 +326,7 @@ void CampaignTreeWidget::startDrag(Qt::DropActions) {
     if (item->data(0, Qt::UserRole).isNull()) return;
 
     auto* mimeData = new QMimeData();
-    mimeData->setData("application/x-character", item->data(0, Qt::UserRole).toByteArray());
+    mimeData->setData(determieNodeType(item->data(0, Qt::UserRole).toString(), m_rootPath) == NodeType::Spell ? "application/x-spell" : "application/x-character", item->data(0, Qt::UserRole).toByteArray());
 
     auto* drag = new QDrag(this);
     drag->setMimeData(mimeData);

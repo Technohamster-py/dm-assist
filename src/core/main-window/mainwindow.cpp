@@ -86,6 +86,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->actionSources, &QAction::triggered, [=]() { showSourcesMessageBox(sourcesMap); });
     connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::setVolumeDivider);
     connect(ui->actionReload, &QAction::triggered, [=]() { setupCampaign(campaignTreeWidget->root()); });
+    connect(ui->actionAddSpell, &QAction::triggered, this, [this] { campaignTreeWidget->editSpell(); });
     connect(ui->actionAddCharacter, &QAction::triggered, this, &MainWindow::addCharacter);
     connect(ui->actionCheck, &QAction::triggered, [=]() { updateManager->checkForUpdates(); });
     connect(updateManager, &UpdateManager::updateCheckFinished, this, &MainWindow::handleUpdates);

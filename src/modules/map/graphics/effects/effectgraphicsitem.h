@@ -5,6 +5,7 @@
 
 class EffectGraphicsItem{
 public:
+    enum { SpellScaleRole = Qt::UserRole + 101, SpellAnchorRole };
     ~EffectGraphicsItem() = default;
 
     virtual QString textureFileName() const {return m_textureName;};

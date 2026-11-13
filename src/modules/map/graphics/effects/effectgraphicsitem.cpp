@@ -33,10 +33,18 @@ QJsonObject EffectPolygonItem::toJson() const {
     }
     obj["points"] = points;
     obj["z"] = zValue();
+    if (data(SpellScaleRole).toDouble() > 0) {
+        obj["spellScale"] = data(SpellScaleRole).toDouble();
+        const QPointF anchor = data(SpellAnchorRole).toPointF();
+        obj["spellAnchor"] = QJsonArray{anchor.x(), anchor.y()};
+    }
     return obj;
 }
 
 void EffectPolygonItem::fromJson(const QJsonObject &obj) {
+    setData(SpellScaleRole, obj["spellScale"].toDouble());
+    const auto anchor = obj["spellAnchor"].toArray();
+    setData(SpellAnchorRole, QPointF(anchor.at(0).toDouble(), anchor.at(1).toDouble()));
     m_color = QColor(obj["color"].toString());
     m_textureName = obj["texture"].toString();
     QPolygonF polygon;
@@ -74,11 +82,19 @@ QJsonObject EffectEllipseItem::toJson() const {
     obj["color"] = m_color.name(QColor::HexArgb);
     obj["texture"] = m_textureName;
     obj["z"] = zValue();
+    if (data(SpellScaleRole).toDouble() > 0) {
+        obj["spellScale"] = data(SpellScaleRole).toDouble();
+        const QPointF anchor = data(SpellAnchorRole).toPointF();
+        obj["spellAnchor"] = QJsonArray{anchor.x(), anchor.y()};
+    }
 
     return obj;
 }
 
 void EffectEllipseItem::fromJson(const QJsonObject &obj) {
+    setData(SpellScaleRole, obj["spellScale"].toDouble());
+    const auto anchor = obj["spellAnchor"].toArray();
+    setData(SpellAnchorRole, QPointF(anchor.at(0).toDouble(), anchor.at(1).toDouble()));
     m_color = QColor(obj["color"].toString());
     m_textureName = obj["texture"].toString();
     auto arr = obj["rect"].toArray();

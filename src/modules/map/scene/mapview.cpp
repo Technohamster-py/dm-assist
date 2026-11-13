@@ -1,3 +1,5 @@
+#include <QApplication>
+#include <QDragEnterEvent>
 /**
  * @file mapview.cpp
  * @brief Implementation of MapView for viewing and interacting with RPG maps.
@@ -32,6 +34,7 @@ MapView::MapView(QWidget *parent)
     setRenderHint(QPainter::Antialiasing);
     setTransformationAnchor(AnchorUnderMouse);
     setAcceptDrops(true);
+    qApp->installEventFilter(this);
     mapPixmapItem = nullptr;
 
     heightLabel = new QLabel(this);
@@ -92,7 +95,7 @@ void MapView::loadMapImage(const QString &filePath)
  */
 void MapView::wheelEvent(QWheelEvent *event)
 {
-    if (event->modifiers() & Qt::ControlModifier) {
+    if (!(event->modifiers() & Qt::ControlModifier)) {
         QPointF scenePos = mapToScene(event->position().toPoint());
 
         QGraphicsSceneWheelEvent sceneEvent(QEvent::GraphicsSceneWheel);
@@ -290,4 +293,23 @@ void MapView::drawForeground(QPainter *painter, const QRectF &rect) {
         painter->drawImage(QPointF(0, 0), scene->getFogImage());
         painter->restore();
     }
+}
+
+// Native QDrag can deliver wheel events to the drag source rather than the view.
+bool MapView::eventFilter(QObject *watched, QEvent *event) {
+    if (event->type() == QEvent::Wheel && scene->hasSpellPreview()) {
+        auto *wheel = static_cast<QWheelEvent*>(event);
+        if (viewport()->rect().contains(viewport()->mapFromGlobal(wheel->globalPosition().toPoint()))) {
+            wheelEvent(wheel);
+            return true;
+        }
+    }
+    return QGraphicsView::eventFilter(watched, event);
+}
+
+
+void MapView::dragEnterEvent(QDragEnterEvent *event) {
+    // Install after Qt's drag filter so it cannot swallow the wheel first.
+    qApp->installEventFilter(this);
+    QGraphicsView::dragEnterEvent(event);
 }

@@ -15,6 +15,7 @@ static const QList<CampaignDir> CAMPAIGN_STRUCTURE = {
         {"Encounters", {}},
         {"Maps", {}},
         {"Music", {}},
+        {"Spells", {}},
         {"Tokens", {}}
 };
 
@@ -25,6 +26,7 @@ static const QHash<QString, NodeType> DIR_TYPE_MAP = {
         {"maps",        NodeType::Map},
         {"music",       NodeType::Music},
         {"tokens",      NodeType::Token},
+        {"spells", NodeType::Spell},
 };
 
 class CampaignTreeWidget : public QTreeWidget{
@@ -55,6 +57,7 @@ signals:
     void campaignLoaded(const QString &name);
 
 public slots:
+    void editSpell(QString path = {});
     void showContextMenu(const QPoint &pos);
 
 protected:

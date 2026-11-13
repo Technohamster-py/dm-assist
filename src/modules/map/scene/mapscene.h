@@ -64,6 +64,7 @@ public:
     explicit MapScene(QObject *parent = nullptr);
 
     void setActiveTool(AbstractMapTool *tool);
+    bool hasSpellPreview() const { return spellPreview != nullptr; }
     void setScaleFactor(double factor);
     [[nodiscard]] double getScaleFactor() const { return m_scaleFactor; };
 
@@ -126,6 +127,8 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
 
+    void dragLeaveEvent(QGraphicsSceneDragDropEvent *event) override;
+    QGraphicsItem *spellPreview = nullptr;
     void dragEnterEvent(QGraphicsSceneDragDropEvent *event) override;
     void dragMoveEvent(QGraphicsSceneDragDropEvent* event) override;
     void dropEvent(QGraphicsSceneDragDropEvent *event) override;

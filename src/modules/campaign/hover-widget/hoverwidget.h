@@ -11,6 +11,7 @@ enum class NodeType {
     Music,
     Beast,
     Token,
+    Spell,
     Unknown
 };
 

@@ -360,6 +360,7 @@
      </property>
      <addaction name="actionAddMap"/>
      <addaction name="actionAddCharacter"/>
+     <addaction name="actionAddSpell"/>
     </widget>
     <widget class="QMenu" name="menuRecent">
      <property name="title">
@@ -501,6 +502,7 @@
     <string>Report bug</string>
    </property>
   </action>
+  <action name="actionAddSpell"><property name="text"><string>Spell</string></property></action>
   <action name="actionAddMap">
    <property name="text">
     <string>Map</string>

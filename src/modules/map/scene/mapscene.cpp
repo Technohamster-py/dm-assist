@@ -1,3 +1,4 @@
+#include <cmath>
 /**
  * @file mapscene.cpp
  * @brief Implementation of MapScene class.
@@ -48,6 +49,18 @@ MapScene::MapScene(QObject *parent)
  * @param event The mouse press event to be handled.
  */
 void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+    if (event->button() == Qt::RightButton && !spellPreview) {
+        for (auto *item : items(event->scenePos())) {
+            if (item->zValue() != mapLayers::Shapes ||
+                !dynamic_cast<EffectGraphicsItem*>(item) ||
+                item->data(EffectGraphicsItem::SpellScaleRole).toDouble() <= 0)
+                continue;
+
+            removeUndoableItem(item);
+            event->accept();
+            return;
+        }
+    }
     if (m_activeTool) {
         m_activeTool->mousePressEvent(event, this);
     } else {
@@ -123,7 +136,13 @@ void MapScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
  * @param event The QGraphicsSceneWheelEvent to be processed.
  */
 void MapScene::wheelEvent(QGraphicsSceneWheelEvent *event) {
-    if (!(event->modifiers() & Qt::ControlModifier)) {
+    if (spellPreview) {
+        if (dynamic_cast<EffectPolygonItem*>(spellPreview))
+            spellPreview->setRotation(spellPreview->rotation() + event->delta() / 8.0);
+        event->accept();
+        return;
+    }
+    if (event->modifiers() & Qt::ControlModifier) {
         QGraphicsScene::wheelEvent(event);
         return;
     }
@@ -134,6 +153,21 @@ void MapScene::wheelEvent(QGraphicsSceneWheelEvent *event) {
 }
 
 void MapScene::setScaleFactor(double factor) {
+    if (!std::isfinite(factor) || factor <= 0) return;
+    for (auto *item : items()) {
+        const double previous = item->data(EffectGraphicsItem::SpellScaleRole).toDouble();
+        if (previous <= 0) continue;
+        const QPointF anchor = item->data(EffectGraphicsItem::SpellAnchorRole).toPointF();
+        QTransform transform;
+        transform.translate(anchor.x(), anchor.y());
+        transform.scale(previous / factor, previous / factor);
+        transform.translate(-anchor.x(), -anchor.y());
+        if (auto *polygon = dynamic_cast<EffectPolygonItem*>(item))
+            polygon->setPolygon(transform.map(polygon->polygon()));
+        else if (auto *ellipse = dynamic_cast<EffectEllipseItem*>(item))
+            ellipse->setRect(transform.mapRect(ellipse->rect()));
+        item->setData(EffectGraphicsItem::SpellScaleRole, factor);
+    }
     m_scaleFactor = factor;
     if (m_gridItem)
         m_gridItem->setPixelsPerFoot(1/m_scaleFactor);
@@ -714,6 +748,7 @@ int MapScene::loadFromFile(const QString& path) {
     if (mapImage.isNull())
         return mapErrorCodes::NoDataError;
 
+    spellPreview = nullptr;
     clear();
     QGraphicsPixmapItem* pixmapItem = addPixmap(QPixmap::fromImage(mapImage));
     pixmapItem->setZValue(mapLayers::Background);
@@ -793,14 +828,64 @@ void MapScene::initializeGrid() {
     }
 }
 
+void MapScene::dragLeaveEvent(QGraphicsSceneDragDropEvent *event) {
+    delete spellPreview;
+    spellPreview = nullptr;
+    event->accept();
+}
+
 void MapScene::dragEnterEvent(QGraphicsSceneDragDropEvent* event)
 {
+    if (event->mimeData()->hasFormat("application/x-spell")) {
+        delete spellPreview; spellPreview = nullptr;
+        QFile file(QString::fromUtf8(event->mimeData()->data("application/x-spell")));
+        if (!file.open(QIODevice::ReadOnly)) return;
+        auto json = QJsonDocument::fromJson(file.readAll()).object();
+        auto target = json["target"].toObject();
+        double length = target["value"].toDouble() / m_scaleFactor;
+        if (target["units"].toString() == "miles") length *= 5280;
+        double width = target["width"].toDouble(5) / m_scaleFactor;
+        if (!(length > 0) || !(width > 0)) return;
+        QString type = target["type"].toString(), texture = json["texture"].toString();
+        if (type == "sphere" || type == "cylinder")
+            spellPreview = new EffectEllipseItem(QRectF(-length, -length, length*2, length*2), Qt::cyan, texture);
+        else {
+            QPolygonF polygon;
+            if (type == "cone") polygon << QPointF(0,0) << QPointF(length,-length/2) << QPointF(length,length/2);
+            else if (type == "cube") polygon = QPolygonF(QRectF(0,0,length,length));
+            else if (type == "line" || type == "wall") polygon = QPolygonF(QRectF(0,-width/2,length,width));
+            else return;
+            spellPreview = new EffectPolygonItem(polygon, Qt::cyan, texture);
+        }
+        spellPreview->setData(EffectGraphicsItem::SpellScaleRole, m_scaleFactor);
+        spellPreview->setData(EffectGraphicsItem::SpellAnchorRole, QPointF());
+        spellPreview->setZValue(mapLayers::Shapes);
+        spellPreview->setPos(event->scenePos());
+        addItem(spellPreview);
+        event->acceptProposedAction();
+        return;
+    }
     if (event->mimeData()->hasFormat("application/x-character"))
         event->acceptProposedAction();
 }
 
 void MapScene::dropEvent(QGraphicsSceneDragDropEvent* event)
 {
+    if (spellPreview && event->mimeData()->hasFormat("application/x-spell")) {
+        auto item = spellPreview; spellPreview = nullptr;
+        item->setPos(event->scenePos());
+        // Bake the preview transform into geometry for existing map serialization.
+        if (auto polygon = dynamic_cast<EffectPolygonItem*>(item))
+            polygon->setPolygon(item->mapToScene(polygon->polygon()));
+        else if (auto ellipse = dynamic_cast<EffectEllipseItem*>(item))
+            ellipse->setRect(item->mapRectToScene(ellipse->rect()));
+        item->setData(EffectGraphicsItem::SpellAnchorRole, event->scenePos());
+        item->setPos(0,0); item->setRotation(0);
+        removeItem(item);
+        addUndoableItem(item);
+        event->acceptProposedAction();
+        return;
+    }
     if (!event->mimeData()->hasFormat("application/x-character"))
         return;
 
@@ -817,6 +902,11 @@ void MapScene::dropEvent(QGraphicsSceneDragDropEvent* event)
 }
 
 void MapScene::dragMoveEvent(QGraphicsSceneDragDropEvent *event) {
+    if (spellPreview && event->mimeData()->hasFormat("application/x-spell")) {
+        spellPreview->setPos(event->scenePos());
+        event->acceptProposedAction();
+        return;
+    }
     bool inside = sceneRect().contains(event->scenePos());
     if (event->mimeData()->hasFormat("application/x-character") && inside)
         event->acceptProposedAction();
